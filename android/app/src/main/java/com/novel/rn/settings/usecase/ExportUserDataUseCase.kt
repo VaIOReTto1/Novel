@@ -146,7 +146,14 @@ class ExportUserDataUseCase @Inject constructor(
     private fun getAppVersion(): String {
         return try {
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            "${packageInfo.versionName} (${packageInfo.longVersionCode})"
+            // 根据系统版本，安全地获取版本号
+            val versionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION") // 忽略旧版 versionCode 的“已过时”警告
+                packageInfo.versionCode.toLong()
+            }
+            "${packageInfo.versionName} ($versionCode)"
         } catch (e: Exception) {
             TimberLogger.e(TAG, "获取应用版本失败", e)
             "Unknown"

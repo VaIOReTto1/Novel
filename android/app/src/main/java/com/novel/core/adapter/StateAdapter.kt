@@ -2,6 +2,11 @@ package com.novel.core.adapter
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.facebook.react.BuildConfig
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -86,17 +91,22 @@ abstract class StateAdapter<S : MviState>(
 
     /** 
      * 创建稳定的 State<T> 对象
-     * 使用 collectAsState + derivedStateOf 避免不稳定的 StateFlow 参数
+     * 使用 collectAsStateWithLifecycle + derivedStateOf 确保响应 StateFlow 变化
      */
     @Composable
     fun <T> createStableState(
         selector: (S) -> T
-    ): androidx.compose.runtime.State<T> = 
-        androidx.compose.runtime.remember {
-            androidx.compose.runtime.derivedStateOf { 
-                selector(getCurrentSnapshot()) 
+    ): State<T> {
+        // 先收集 StateFlow 的变化，确保 UI 能响应状态更新
+        val currentState by stateFlow.collectAsStateWithLifecycle()
+        
+        // 基于收集到的状态，使用 derivedStateOf 进行转换，保持性能优化
+        return remember(currentState, selector) {
+            derivedStateOf { 
+                selector(currentState) 
             }
         }
+    }
     
     /** 
      * 创建稳定的 State<T> 对象，带缓存键
@@ -106,26 +116,31 @@ abstract class StateAdapter<S : MviState>(
     fun <T> createStableState(
         key: Any?,
         selector: (S) -> T
-    ): androidx.compose.runtime.State<T> = 
-        androidx.compose.runtime.remember(key) {
-            androidx.compose.runtime.derivedStateOf { 
-                selector(getCurrentSnapshot()) 
+    ): State<T> {
+        // 先收集 StateFlow 的变化，确保 UI 能响应状态更新
+        val currentState by stateFlow.collectAsStateWithLifecycle()
+        
+        // 基于收集到的状态和 key，使用 derivedStateOf 进行转换
+        return remember(currentState, key, selector) {
+            derivedStateOf { 
+                selector(currentState) 
             }
         }
+    }
     
     /** 
-     * 创建简单值的 State，避免 Flow.collectAsState()
+     * 创建简单值的 State，确保响应 StateFlow 变化
      */
     @Composable
-    fun createLoadingState(): androidx.compose.runtime.State<Boolean> = 
+    fun createLoadingState(): State<Boolean> = 
         createStableState { it.isLoading }
     
     @Composable  
-    fun createErrorState(): androidx.compose.runtime.State<String?> = 
+    fun createErrorState(): State<String?> = 
         createStableState { it.error }
         
     @Composable
-    fun createSuccessState(): androidx.compose.runtime.State<Boolean> = 
+    fun createSuccessState(): State<Boolean> = 
         createStableState { it.isSuccess }
     
     // endregion

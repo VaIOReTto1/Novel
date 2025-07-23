@@ -2,8 +2,6 @@ package com.novel.page.read.viewmodel
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import com.novel.core.adapter.StateAdapter
 import kotlinx.coroutines.flow.StateFlow
 
@@ -23,405 +21,348 @@ class ReaderStateAdapter(stateFlow: StateFlow<ReaderState>) : StateAdapter<Reade
      * 替代 isInitializing.collectAsState() 以提升性能
      */
     @Composable
-    fun isInitializingState(): State<Boolean> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            state.isLoading && state.bookId.isNotEmpty() && state.chapterList.isEmpty()
+    fun isInitializingState(): State<Boolean> = 
+        createStableState { 
+            it.isLoading && it.bookId.isNotEmpty() && it.chapterList.isEmpty()
         }
-    }
 
     /**
      * 是否初始化完成 - 优化版本
      */
     @Composable
-    fun isInitializedState(): State<Boolean> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
-            !state.isLoading && state.chapterList.isNotEmpty() && state.currentChapter != null
+    fun isInitializedState(): State<Boolean> = 
+        createStableState {
+            !it.isLoading && it.chapterList.isNotEmpty() && it.currentChapter != null
         }
-    }
 
     /**
      * 是否正在切换章节 - 优化版本
      */
     @Composable
-    fun isSwitchingChapterState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isSwitchingChapter }
-    }
+    fun isSwitchingChapterState(): State<Boolean> = 
+        createStableState { it.isSwitchingChapter }
 
     /**
      * 错误信息 - 优化版本
      */
     @Composable
-    fun errorMessageState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().error ?: "" }
-    }
+    fun errorMessageState(): State<String> = 
+        createStableState { it.error ?: "" }
 
     /**
      * 当前章节名称 - 优化版本
      */
     @Composable
-    fun currentChapterNameState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().currentChapter?.chapterName ?: "" }
-    }
+    fun currentChapterNameState(): State<String> = 
+        createStableState { it.currentChapter?.chapterName ?: "" }
 
     /**
      * 当前章节索引（从1开始） - 优化版本
      */
     @Composable
-    fun currentChapterNumberState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().currentChapterIndex + 1 }
-    }
+    fun currentChapterNumberState(): State<Int> = 
+        createStableState { it.currentChapterIndex + 1 }
 
     /**
      * 总章节数 - 优化版本
      */
     @Composable
-    fun totalChaptersState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().chapterList.size }
-    }
+    fun totalChaptersState(): State<Int> = 
+        createStableState { it.chapterList.size }
 
     /**
      * 章节进度文本 - 优化版本
      */
     @Composable
-    fun chapterProgressTextState(): State<String> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            "${state.currentChapterIndex + 1}/${state.chapterList.size}"
+    fun chapterProgressTextState(): State<String> = 
+        createStableState { 
+            "${it.currentChapterIndex + 1}/${it.chapterList.size}"
         }
-    }
 
     /**
      * 当前页码（从1开始） - 优化版本
      */
     @Composable
-    fun currentPageNumberState(): State<Int> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
+    fun currentPageNumberState(): State<Int> = 
+        createStableState {
             when {
-                state.currentPageIndex == -1 -> 0 // 书籍详情页
-                else -> state.currentPageIndex + 1
+                it.currentPageIndex == -1 -> 0 // 书籍详情页
+                else -> it.currentPageIndex + 1
             }
         }
-    }
 
     /**
      * 当前章节总页数 - 优化版本
      */
     @Composable
-    fun currentChapterTotalPagesState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().currentPageData?.pages?.size ?: 0 }
-    }
+    fun currentChapterTotalPagesState(): State<Int> = 
+        createStableState { it.currentPageData?.pages?.size ?: 0 }
 
     /**
      * 页面进度文本 - 优化版本
      */
     @Composable
-    fun pageProgressTextState(): State<String> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
+    fun pageProgressTextState(): State<String> = 
+        createStableState { 
             when {
-                state.currentPageIndex == -1 -> "详情页"
-                (state.currentPageData?.pages?.size ?: 0) > 0 -> "${state.currentPageIndex + 1}/${state.currentPageData!!.pages.size}"
+                it.currentPageIndex == -1 -> "详情页"
+                (it.currentPageData?.pages?.size ?: 0) > 0 -> "${it.currentPageIndex + 1}/${it.currentPageData!!.pages.size}"
                 else -> "0/0"
             }
         }
-    }
 
     /**
      * 阅读进度百分比（0-100） - 优化版本
      */
     @Composable
-    fun readingProgressPercentState(): State<Int> = remember {
-        derivedStateOf { (getCurrentSnapshot().computedReadingProgress * 100).toInt() }
-    }
+    fun readingProgressPercentState(): State<Int> = 
+        createStableState { (it.computedReadingProgress * 100).toInt() }
 
     /**
      * 阅读进度文本 - 优化版本
      */
     @Composable
-    fun readingProgressTextState(): State<String> = remember {
-        derivedStateOf { "${(getCurrentSnapshot().computedReadingProgress * 100).toInt()}%" }
-    }
+    fun readingProgressTextState(): State<String> = 
+        createStableState { "${(it.computedReadingProgress * 100).toInt()}%" }
 
     /**
      * 是否可以翻到上一页 - 优化版本
      */
     @Composable
-    fun canFlipToPreviousPageState(): State<Boolean> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
-            state.virtualPages.isNotEmpty() && state.virtualPageIndex > 0
+    fun canFlipToPreviousPageState(): State<Boolean> = 
+        createStableState {
+            it.virtualPages.isNotEmpty() && it.virtualPageIndex > 0
         }
-    }
 
     /**
      * 是否可以翻到下一页 - 优化版本
      */
     @Composable
-    fun canFlipToNextPageState(): State<Boolean> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
-            state.virtualPages.isNotEmpty() && state.virtualPageIndex < state.virtualPages.size - 1
+    fun canFlipToNextPageState(): State<Boolean> = 
+        createStableState {
+            it.virtualPages.isNotEmpty() && it.virtualPageIndex < it.virtualPages.size - 1
         }
-    }
 
     /**
      * 是否可以翻到上一章 - 优化版本
      */
     @Composable
-    fun canFlipToPreviousChapterState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().currentChapterIndex > 0 }
-    }
+    fun canFlipToPreviousChapterState(): State<Boolean> = 
+        createStableState { it.currentChapterIndex > 0 }
 
     /**
      * 是否可以翻到下一章 - 优化版本
      */
     @Composable
-    fun canFlipToNextChapterState(): State<Boolean> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            state.currentChapterIndex < state.chapterList.size - 1
+    fun canFlipToNextChapterState(): State<Boolean> = 
+        createStableState { 
+            it.currentChapterIndex < it.chapterList.size - 1
         }
-    }
 
     /**
      * 是否在第一页 - 优化版本
      */
     @Composable
-    fun isFirstPageState(): State<Boolean> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            state.currentPageIndex == 0 || state.currentPageIndex == -1
+    fun isFirstPageState(): State<Boolean> = 
+        createStableState { 
+            it.currentPageIndex == 0 || it.currentPageIndex == -1
         }
-    }
 
     /**
      * 是否在最后一页 - 优化版本
      */
     @Composable
-    fun isLastPageState(): State<Boolean> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
-            val pageData = state.currentPageData
-            pageData != null && state.currentPageIndex >= pageData.pages.size - 1
+    fun isLastPageState(): State<Boolean> = 
+        createStableState {
+            val pageData = it.currentPageData
+            pageData != null && it.currentPageIndex >= pageData.pages.size - 1
         }
-    }
 
     /**
      * 是否在书籍详情页 - 优化版本
      */
     @Composable
-    fun isOnBookDetailPageState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().currentPageIndex == -1 }
-    }
+    fun isOnBookDetailPageState(): State<Boolean> = 
+        createStableState { it.currentPageIndex == -1 }
 
     /**
      * 当前翻页效果 - 优化版本
      */
     @Composable
-    fun pageFlipEffectState(): State<PageFlipEffect> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.pageFlipEffect }
-    }
+    fun pageFlipEffectState(): State<PageFlipEffect> = 
+        createStableState { it.readerSettings.pageFlipEffect }
 
     /**
      * 是否为纵向滚动模式 - 优化版本
      */
     @Composable
-    fun isVerticalScrollModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.pageFlipEffect == PageFlipEffect.VERTICAL }
-    }
+    fun isVerticalScrollModeState(): State<Boolean> = 
+        createStableState { it.readerSettings.pageFlipEffect == PageFlipEffect.VERTICAL }
 
     /**
      * 是否为平移翻页模式 - 优化版本
      */
     @Composable
-    fun isSlideFlipModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.pageFlipEffect == PageFlipEffect.SLIDE }
-    }
+    fun isSlideFlipModeState(): State<Boolean> = 
+        createStableState { it.readerSettings.pageFlipEffect == PageFlipEffect.SLIDE }
 
     /**
      * 是否为覆盖翻页模式 - 优化版本
      */
     @Composable
-    fun isCoverFlipModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.pageFlipEffect == PageFlipEffect.COVER }
-    }
+    fun isCoverFlipModeState(): State<Boolean> = 
+        createStableState { it.readerSettings.pageFlipEffect == PageFlipEffect.COVER }
 
     /**
      * 是否为卷曲翻页模式 - 优化版本
      */
     @Composable
-    fun isPageCurlModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.pageFlipEffect == PageFlipEffect.PAGECURL }
-    }
+    fun isPageCurlModeState(): State<Boolean> = 
+        createStableState { it.readerSettings.pageFlipEffect == PageFlipEffect.PAGECURL }
 
     /**
      * 是否为无动画翻页模式 - 优化版本
      */
     @Composable
-    fun isNoAnimationModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.pageFlipEffect == PageFlipEffect.NONE }
-    }
+    fun isNoAnimationModeState(): State<Boolean> = 
+        createStableState { it.readerSettings.pageFlipEffect == PageFlipEffect.NONE }
 
     /**
      * 是否显示菜单 - 优化版本
      */
     @Composable
-    fun isMenuVisibleState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isMenuVisible }
-    }
+    fun isMenuVisibleState(): State<Boolean> = 
+        createStableState { it.isMenuVisible }
 
     /**
      * 是否显示章节列表 - 优化版本
      */
     @Composable
-    fun isChapterListVisibleState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isChapterListVisible }
-    }
+    fun isChapterListVisibleState(): State<Boolean> = 
+        createStableState { it.isChapterListVisible }
 
     /**
      * 是否显示设置面板 - 优化版本
      */
     @Composable
-    fun isSettingsPanelVisibleState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isSettingsPanelVisible }
-    }
+    fun isSettingsPanelVisibleState(): State<Boolean> = 
+        createStableState { it.isSettingsPanelVisible }
 
     /**
      * 是否有任何面板显示 - 优化版本
      */
     @Composable
-    fun hasAnyPanelVisibleState(): State<Boolean> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
-            state.isMenuVisible || state.isChapterListVisible || state.isSettingsPanelVisible
+    fun hasAnyPanelVisibleState(): State<Boolean> = 
+        createStableState {
+            it.isMenuVisible || it.isChapterListVisible || it.isSettingsPanelVisible
         }
-    }
 
     /**
      * 字体大小 - 优化版本
      */
     @Composable
-    fun fontSizeState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.fontSize }
-    }
+    fun fontSizeState(): State<Int> = 
+        createStableState { it.readerSettings.fontSize }
 
     /**
      * 亮度值 - 优化版本
      */
     @Composable
-    fun brightnessState(): State<Float> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.brightness }
-    }
+    fun brightnessState(): State<Float> = 
+        createStableState { it.readerSettings.brightness }
 
     /**
      * 亮度百分比 - 优化版本
      */
     @Composable
-    fun brightnessPercentState(): State<Int> = remember {
-        derivedStateOf { (getCurrentSnapshot().readerSettings.brightness * 100).toInt() }
-    }
+    fun brightnessPercentState(): State<Int> = 
+        createStableState { (it.readerSettings.brightness * 100).toInt() }
 
     /**
      * 背景颜色 - 优化版本
      */
     @Composable
-    fun backgroundColorState(): State<androidx.compose.ui.graphics.Color> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.backgroundColor }
-    }
+    fun backgroundColorState(): State<androidx.compose.ui.graphics.Color> = 
+        createStableState { it.readerSettings.backgroundColor }
 
     /**
      * 文字颜色 - 优化版本
      */
     @Composable
-    fun textColorState(): State<androidx.compose.ui.graphics.Color> = remember {
-        derivedStateOf { getCurrentSnapshot().readerSettings.textColor }
-    }
+    fun textColorState(): State<androidx.compose.ui.graphics.Color> = 
+        createStableState { it.readerSettings.textColor }
 
     /**
      * 是否有页数缓存 - 优化版本
      */
     @Composable
-    fun hasPageCountCacheState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().pageCountCache != null }
-    }
+    fun hasPageCountCacheState(): State<Boolean> = 
+        createStableState { it.pageCountCache != null }
 
     /**
      * 全书总页数 - 优化版本
      */
     @Composable
-    fun totalBookPagesState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().pageCountCache?.totalPages ?: 0 }
-    }
+    fun totalBookPagesState(): State<Int> = 
+        createStableState { it.pageCountCache?.totalPages ?: 0 }
 
     /**
      * 是否正在计算分页 - 优化版本
      */
     @Composable
-    fun isCalculatingPaginationState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().paginationState.isCalculating }
-    }
+    fun isCalculatingPaginationState(): State<Boolean> = 
+        createStableState { it.paginationState.isCalculating }
 
     /**
      * 分页计算进度 - 优化版本
      */
     @Composable
-    fun paginationProgressState(): State<Float> = remember {
-        derivedStateOf {
-            val state = getCurrentSnapshot()
-            if (state.paginationState.totalChapters > 0) {
-                state.paginationState.calculatedChapters.toFloat() / state.paginationState.totalChapters.toFloat()
+    fun paginationProgressState(): State<Float> = 
+        createStableState {
+            if (it.paginationState.totalChapters > 0) {
+                it.paginationState.calculatedChapters.toFloat() / it.paginationState.totalChapters.toFloat()
             } else 0f
         }
-    }
 
     /**
      * 分页计算进度百分比 - 优化版本
      */
     @Composable
-    fun paginationProgressPercentState(): State<Int> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            val progress = if (state.paginationState.totalChapters > 0) {
-                state.paginationState.calculatedChapters.toFloat() / state.paginationState.totalChapters.toFloat()
+    fun paginationProgressPercentState(): State<Int> = 
+        createStableState { 
+            val progress = if (it.paginationState.totalChapters > 0) {
+                it.paginationState.calculatedChapters.toFloat() / it.paginationState.totalChapters.toFloat()
             } else 0f
             (progress * 100).toInt()
         }
-    }
 
     /**
      * 已加载的章节数量 - 优化版本
      */
     @Composable
-    fun loadedChapterCountState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().loadedChapterData.size }
-    }
+    fun loadedChapterCountState(): State<Int> = 
+        createStableState { it.loadedChapterData.size }
 
     /**
      * 是否有预加载的下一章 - 优化版本
      */
     @Composable
-    fun hasPreloadedNextChapterState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().nextChapterData != null }
-    }
+    fun hasPreloadedNextChapterState(): State<Boolean> = 
+        createStableState { it.nextChapterData != null }
 
     /**
      * 是否有预加载的上一章 - 优化版本
      */
     @Composable
-    fun hasPreloadedPreviousChapterState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().previousChapterData != null }
-    }
+    fun hasPreloadedPreviousChapterState(): State<Boolean> = 
+        createStableState { it.previousChapterData != null }
 
     /**
      * 显示进度恢复提示 - 优化版本
      */
     @Composable
-    fun showProgressRestoredHintState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().showProgressRestoredHint }
-    }
+    fun showProgressRestoredHintState(): State<Boolean> = 
+        createStableState { it.showProgressRestoredHint }
 
     // endregion
 

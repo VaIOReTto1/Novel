@@ -3,8 +3,6 @@ package com.novel.page.login.viewmodel
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import com.novel.core.adapter.StateAdapter
 import kotlinx.coroutines.flow.StateFlow
 
@@ -29,185 +27,162 @@ class LoginStateAdapter(
      * 替代 isLoginMode.collectAsState() 以提升性能
      */
     @Composable
-    fun isLoginModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isLoginMode }
-    }
+    fun isLoginModeState(): State<Boolean> = 
+        createStableState { it.isLoginMode }
 
     /**
      * 是否为注册模式 - 优化版本
      */
     @Composable
-    fun isRegisterModeState(): State<Boolean> = remember {
-        derivedStateOf { !getCurrentSnapshot().isLoginMode }
-    }
+    fun isRegisterModeState(): State<Boolean> = 
+        createStableState { !it.isLoginMode }
 
     /**
      * 是否正在提交 - 优化版本
      */
     @Composable
-    fun isSubmittingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isSubmitting }
-    }
+    fun isSubmittingState(): State<Boolean> = 
+        createStableState { it.isSubmitting }
 
     /**
      * 提交错误信息 - 优化版本
      */
     @Composable
-    fun submitErrorState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().submitError }
-    }
+    fun submitErrorState(): State<String?> = 
+        createStableState { it.submitError }
 
     /**
      * 协议是否已同意 - 优化版本
      */
     @Composable
-    fun isAgreementAcceptedState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isAgreementAccepted }
-    }
+    fun isAgreementAcceptedState(): State<Boolean> = 
+        createStableState { it.isAgreementAccepted }
 
     /**
      * 当前激活的表单数据 - 优化版本
      */
     @Composable
-    fun activeFormState(): State<FormData> = remember {
-        derivedStateOf { getCurrentSnapshot().activeForm }
-    }
+    fun activeFormState(): State<FormData> = 
+        createStableState { it.activeForm }
 
     /**
      * 登录表单 - 优化版本
      */
     @Composable
-    fun loginFormState(): State<LoginForm> = remember {
-        derivedStateOf { getCurrentSnapshot().loginForm }
-    }
+    fun loginFormState(): State<LoginForm> = 
+        createStableState { it.loginForm }
 
     /**
      * 注册表单 - 优化版本
      */
     @Composable
-    fun registerFormState(): State<RegisterForm> = remember {
-        derivedStateOf { getCurrentSnapshot().registerForm }
-    }
+    fun registerFormState(): State<RegisterForm> = 
+        createStableState { it.registerForm }
 
     /**
      * 验证结果 - 优化版本
      */
     @Composable
-    fun validationResultsState(): State<ValidationResults> = remember {
-        derivedStateOf { getCurrentSnapshot().validationResults }
-    }
+    fun validationResultsState(): State<ValidationResults> = 
+        createStableState { it.validationResults }
 
     /**
      * 验证码状态 - 优化版本
      */
     @Composable
-    fun captchaStateState(): State<CaptchaState> = remember {
-        derivedStateOf { getCurrentSnapshot().captchaState }
-    }
+    fun captchaStateState(): State<CaptchaState> = 
+        createStableState { it.captchaState }
 
     /**
      * 验证码图片路径 - 优化版本
      */
     @Composable
-    fun captchaImagePathState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().captchaState.imagePath }
-    }
+    fun captchaImagePathState(): State<String> = 
+        createStableState { it.captchaState.imagePath }
 
     /**
      * 验证码会话ID - 优化版本
      */
     @Composable
-    fun captchaSessionIdState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().captchaState.sessionId }
-    }
+    fun captchaSessionIdState(): State<String> = 
+        createStableState { it.captchaState.sessionId }
 
     /**
      * 验证码是否正在加载 - 优化版本
      */
     @Composable
-    fun isCaptchaLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().captchaState.isLoading }
-    }
+    fun isCaptchaLoadingState(): State<Boolean> = 
+        createStableState { it.captchaState.isLoading }
 
     /**
      * 验证码错误信息 - 优化版本
      */
     @Composable
-    fun captchaErrorState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().captchaState.error }
-    }
+    fun captchaErrorState(): State<String?> = 
+        createStableState { it.captchaState.error }
 
     /**
      * 是否有有效验证码 - 优化版本
      */
     @Composable
-    fun hasValidCaptchaState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().captchaState.hasValidCaptcha }
-    }
+    fun hasValidCaptchaState(): State<Boolean> = 
+        createStableState { it.captchaState.hasValidCaptcha }
 
     /**
      * 手机信息 - 优化版本
      */
     @Composable
-    fun phoneInfoState(): State<PhoneInfo> = remember {
-        derivedStateOf { getCurrentSnapshot().phoneInfo }
-    }
+    fun phoneInfoState(): State<PhoneInfo> = 
+        createStableState { it.phoneInfo }
 
     /**
      * 手机号码 - 优化版本
      */
     @Composable
-    fun phoneNumberState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().phoneInfo.phoneNumber }
-    }
+    fun phoneNumberState(): State<String> = 
+        createStableState { it.phoneInfo.phoneNumber }
 
     /**
      * 运营商名称 - 优化版本
      */
     @Composable
-    fun operatorNameState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().phoneInfo.operatorName }
-    }
+    fun operatorNameState(): State<String> = 
+        createStableState { it.phoneInfo.operatorName }
 
     /**
      * 脱敏手机号 - 优化版本
      */
     @Composable
-    fun maskedPhoneNumberState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().phoneInfo.maskedPhoneNumber }
-    }
+    fun maskedPhoneNumberState(): State<String> = 
+        createStableState { it.phoneInfo.maskedPhoneNumber }
 
     /**
      * 提交按钮是否可用 - 优化版本
      */
     @Composable
-    fun isSubmitEnabledState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isSubmitEnabled }
-    }
+    fun isSubmitEnabledState(): State<Boolean> = 
+        createStableState { it.isSubmitEnabled }
 
     /**
      * 获取提交按钮文字 - 优化版本
      */
     @Composable
-    fun submitButtonTextState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().submitButtonText }
-    }
+    fun submitButtonTextState(): State<String> = 
+        createStableState { it.submitButtonText }
 
     /**
      * 获取模式切换按钮文字 - 优化版本
      */
     @Composable
-    fun switchModeButtonTextState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().switchModeButtonText }
-    }
+    fun switchModeButtonTextState(): State<String> = 
+        createStableState { it.switchModeButtonText }
 
     /**
      * 是否有验证错误 - 优化版本
      */
     @Composable
-    fun hasValidationErrorsState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().validationResults.hasErrors }
-    }
+    fun hasValidationErrorsState(): State<Boolean> = 
+        createStableState { it.validationResults.hasErrors }
 
     // endregion
     

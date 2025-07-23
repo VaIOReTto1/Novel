@@ -2,8 +2,6 @@ package com.novel.page.search.viewmodel
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.StateFlow
 import com.novel.core.adapter.StateAdapter
@@ -35,113 +33,100 @@ class SearchResultStateAdapter(
      * 替代 query.collectAsState() 以提升性能
      */
     @Composable
-    fun queryState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().query }
-    }
+    fun queryState(): State<String> = 
+        createStableState { it.query }
 
     /**
      * 搜索结果书籍列表 - 优化版本
      */
     @Composable
-    fun booksState(): State<ImmutableList<BookInfoRespDto>> = remember {
-        derivedStateOf { getCurrentSnapshot().books }
-    }
+    fun booksState(): State<ImmutableList<BookInfoRespDto>> = 
+        createStableState { it.books }
 
     /**
      * 总结果数量 - 优化版本
      */
     @Composable
-    fun totalResultsState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().totalResults }
-    }
+    fun totalResultsState(): State<Int> = 
+        createStableState { it.totalResults }
 
     /**
      * 是否还有更多数据 - 优化版本
      */
     @Composable
-    fun hasMoreState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().hasMore }
-    }
+    fun hasMoreState(): State<Boolean> = 
+        createStableState { it.hasMore }
 
     /**
      * 分页加载状态 - 优化版本
      */
     @Composable
-    fun isLoadingMoreState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isLoadingMore }
-    }
+    fun isLoadingMoreState(): State<Boolean> = 
+        createStableState { it.isLoadingMore }
 
     /**
      * 是否有搜索结果 - 优化版本
      */
     @Composable
-    fun hasResultsState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().books.isNotEmpty() }
-    }
+    fun hasResultsState(): State<Boolean> = 
+        createStableState { it.books.isNotEmpty() }
 
     /**
      * 当前选中的分类ID - 优化版本
      */
     @Composable
-    fun selectedCategoryIdState(): State<Int?> = remember {
-        derivedStateOf { getCurrentSnapshot().selectedCategoryId }
-    }
+    fun selectedCategoryIdState(): State<Int?> = 
+        createStableState { it.selectedCategoryId }
 
     /**
      * 分类筛选器列表 - 优化版本
      */
     @Composable
-    fun categoryFiltersState(): State<ImmutableList<CategoryFilter>> = remember {
-        derivedStateOf { getCurrentSnapshot().categoryFilters }
-    }
+    fun categoryFiltersState(): State<ImmutableList<CategoryFilter>> = 
+        createStableState { it.categoryFilters }
 
     /**
      * 当前筛选条件 - 优化版本
      */
     @Composable
-    fun filtersState(): State<FilterState> = remember {
-        derivedStateOf { getCurrentSnapshot().filters }
-    }
+    fun filtersState(): State<FilterState> = 
+        createStableState { it.filters }
 
     /**
      * 筛选面板是否打开 - 优化版本
      */
     @Composable
-    fun isFilterSheetOpenState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isFilterSheetOpen }
-    }
+    fun isFilterSheetOpenState(): State<Boolean> = 
+        createStableState { it.isFilterSheetOpen }
 
     /**
      * 是否应用了筛选条件 - 优化版本
      */
     @Composable
-    fun hasActiveFiltersState(): State<Boolean> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            with(state.filters) {
+    fun hasActiveFiltersState(): State<Boolean> = 
+        createStableState { 
+            with(it.filters) {
                 updateStatus != UpdateStatus.ALL ||
                 isVip != VipStatus.ALL ||
                 wordCountRange != WordCountRange.ALL ||
                 sortBy != SortBy.NULL
-            } || state.selectedCategoryId != null
+            } || it.selectedCategoryId != null
         }
-    }
 
     /**
      * 筛选条件摘要文本 - 优化版本
      */
     @Composable
-    fun filterSummaryState(): State<String> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
+    fun filterSummaryState(): State<String> = 
+        createStableState { 
             buildList {
-                state.selectedCategoryId?.let { categoryId ->
-                    val categoryName = state.categoryFilters
+                it.selectedCategoryId?.let { categoryId ->
+                    val categoryName = it.categoryFilters
                         .find { it.id == categoryId }?.name ?: "分类$categoryId"
                     add(categoryName)
                 }
                 
-                with(state.filters) {
+                with(it.filters) {
                     if (updateStatus != UpdateStatus.ALL) {
                         add(updateStatus.displayName)
                     }
@@ -157,7 +142,6 @@ class SearchResultStateAdapter(
                 }
             }.joinToString("、")
         }
-    }
 
     // endregion
     

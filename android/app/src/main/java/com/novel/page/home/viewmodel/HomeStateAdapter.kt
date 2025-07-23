@@ -3,8 +3,6 @@ package com.novel.page.home.viewmodel
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import kotlinx.coroutines.flow.StateFlow
 import com.novel.page.home.dao.HomeBookEntity
 import com.novel.page.home.dao.HomeCategoryEntity
@@ -45,201 +43,176 @@ class HomeStateAdapter(
      * 替代 categories.collectAsState() 以提升性能
      */
     @Composable
-    fun categoriesState(): State<ImmutableList<HomeCategoryEntity>> = remember {
-        derivedStateOf { getCurrentSnapshot().categories }
-    }
+    fun categoriesState(): State<ImmutableList<HomeCategoryEntity>> = 
+        createStableState { it.categories }
 
     /**
      * 分类筛选器列表 - 优化版本
      * 替代 categoryFilters.collectAsState() 以提升性能
      */
     @Composable
-    fun categoryFiltersState(): State<ImmutableList<CategoryInfo>> = remember {
-        derivedStateOf { getCurrentSnapshot().categoryFilters }
-    }
+    fun categoryFiltersState(): State<ImmutableList<CategoryInfo>> = 
+        createStableState { it.categoryFilters }
 
     /**
      * 当前选中的分类筛选器 - 优化版本
      */
     @Composable
-    fun selectedCategoryFilterState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().selectedCategoryFilter }
-    }
+    fun selectedCategoryFilterState(): State<String> = 
+        createStableState { it.selectedCategoryFilter }
 
     /**
      * 搜索关键词 - 优化版本
      */
     @Composable
-    fun searchQueryState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().searchQuery }
-    }
+    fun searchQueryState(): State<String> = 
+        createStableState { it.searchQuery }
 
     /**
      * 轮播图书籍列表 - 优化版本
      */
     @Composable
-    fun carouselBooksState(): State<ImmutableList<HomeBookEntity>> = remember {
-        derivedStateOf { getCurrentSnapshot().carouselBooks }
-    }
+    fun carouselBooksState(): State<ImmutableList<HomeBookEntity>> = 
+        createStableState { it.carouselBooks }
 
     /**
      * 热门书籍列表 - 优化版本
      */
     @Composable
-    fun hotBooksState(): State<ImmutableList<HomeBookEntity>> = remember {
-        derivedStateOf { getCurrentSnapshot().hotBooks }
-    }
+    fun hotBooksState(): State<ImmutableList<HomeBookEntity>> = 
+        createStableState { it.hotBooks }
 
     /**
      * 最新书籍列表 - 优化版本
      */
     @Composable
-    fun newBooksState(): State<ImmutableList<HomeBookEntity>> = remember {
-        derivedStateOf { getCurrentSnapshot().newBooks }
-    }
+    fun newBooksState(): State<ImmutableList<HomeBookEntity>> = 
+        createStableState { it.newBooks }
 
     /**
      * VIP书籍列表 - 优化版本
      */
     @Composable
-    fun vipBooksState(): State<ImmutableList<HomeBookEntity>> = remember {
-        derivedStateOf { getCurrentSnapshot().vipBooks }
-    }
+    fun vipBooksState(): State<ImmutableList<HomeBookEntity>> = 
+        createStableState { it.vipBooks }
 
     /**
      * 当前选中的榜单类型 - 优化版本
      */
     @Composable
-    fun selectedRankTypeState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().selectedRankType }
-    }
+    fun selectedRankTypeState(): State<String> = 
+        createStableState { it.selectedRankType }
 
     /**
      * 榜单书籍列表 - 优化版本
      */
     @Composable
-    fun rankBooksState(): State<ImmutableList<BookService.BookRank>> = remember {
-        derivedStateOf { getCurrentSnapshot().rankBooks }
-    }
+    fun rankBooksState(): State<ImmutableList<BookService.BookRank>> = 
+        createStableState { it.rankBooks }
 
     /**
      * 分类推荐书籍列表 - 优化版本
      */
     @Composable
-    fun recommendBooksState(): State<ImmutableList<SearchService.BookInfo>> = remember {
-        derivedStateOf { getCurrentSnapshot().recommendBooks }
-    }
+    fun recommendBooksState(): State<ImmutableList<SearchService.BookInfo>> = 
+        createStableState { it.recommendBooks }
 
     /**
      * 首页推荐书籍列表 - 优化版本
      */
     @Composable
-    fun homeRecommendBooksState(): State<ImmutableList<HomeService.HomeBook>> = remember {
-        derivedStateOf { getCurrentSnapshot().homeRecommendBooks }
-    }
+    fun homeRecommendBooksState(): State<ImmutableList<HomeService.HomeBook>> = 
+        createStableState { it.homeRecommendBooks }
 
     /**
      * 是否处于刷新状态 - 优化版本
      */
     @Composable
-    fun isRefreshingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isRefreshing }
-    }
+    fun isRefreshingState(): State<Boolean> = 
+        createStableState { it.isRefreshing }
 
     /**
      * 是否处于推荐模式 - 优化版本
      */
     @Composable
-    fun isRecommendModeState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isRecommendMode }
-    }
+    fun isRecommendModeState(): State<Boolean> = 
+        createStableState { it.isRecommendMode }
 
     /**
      * 分类数据加载状态 - 优化版本
      */
     @Composable
-    fun categoryLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().categoryLoading }
-    }
+    fun categoryLoadingState(): State<Boolean> = 
+        createStableState { it.categoryLoading }
 
     /**
      * 书籍数据加载状态 - 优化版本
      */
     @Composable
-    fun booksLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().booksLoading }
-    }
+    fun booksLoadingState(): State<Boolean> = 
+        createStableState { it.booksLoading }
 
     /**
      * 榜单数据加载状态 - 优化版本
      */
     @Composable
-    fun rankLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().rankLoading }
-    }
+    fun rankLoadingState(): State<Boolean> = 
+        createStableState { it.rankLoading }
 
     /**
      * 推荐书籍加载状态 - 优化版本
      */
     @Composable
-    fun recommendLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().recommendLoading }
-    }
+    fun recommendLoadingState(): State<Boolean> = 
+        createStableState { it.recommendLoading }
 
     /**
      * 首页推荐书籍加载状态 - 优化版本
      */
     @Composable
-    fun homeRecommendLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().homeRecommendLoading }
-    }
+    fun homeRecommendLoadingState(): State<Boolean> = 
+        createStableState { it.homeRecommendLoading }
 
     /**
      * 是否有更多推荐数据 - 优化版本
      */
     @Composable
-    fun hasMoreRecommendState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().hasMoreRecommend }
-    }
+    fun hasMoreRecommendState(): State<Boolean> = 
+        createStableState { it.hasMoreRecommend }
 
     /**
      * 是否有更多首页推荐数据 - 优化版本
      */
     @Composable
-    fun hasMoreHomeRecommendState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().hasMoreHomeRecommend }
-    }
+    fun hasMoreHomeRecommendState(): State<Boolean> = 
+        createStableState { it.hasMoreHomeRecommend }
 
     /**
      * 当前推荐页码 - 优化版本
      */
     @Composable
-    fun recommendPageState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().recommendPage }
-    }
+    fun recommendPageState(): State<Int> = 
+        createStableState { it.recommendPage }
 
     /**
      * 首页推荐页码 - 优化版本
      */
     @Composable
-    fun homeRecommendPageState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().homeRecommendPage }
-    }
+    fun homeRecommendPageState(): State<Int> = 
+        createStableState { it.homeRecommendPage }
 
     /**
      * 当前推荐书籍列表（根据模式） - 优化版本
      */
     @Composable
-    fun currentRecommendBooksState(): State<ImmutableList<RecommendItem>> = remember {
-        derivedStateOf {
-            val snapshot = getCurrentSnapshot()
-            if (snapshot.isRecommendMode) {
-                snapshot.homeRecommendBooks.map { HomeRecommendItem(it) }.toImmutableList()
+    fun currentRecommendBooksState(): State<ImmutableList<RecommendItem>> = 
+        createStableState { state ->
+            if (state.isRecommendMode) {
+                state.homeRecommendBooks.map { HomeRecommendItem(it) }.toImmutableList()
             } else {
-                snapshot.recommendBooks.map { CategoryRecommendItem(it) }.toImmutableList()
+                state.recommendBooks.map { CategoryRecommendItem(it) }.toImmutableList()
             }
         }
-    }
 
     // endregion
     

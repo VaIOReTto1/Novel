@@ -2,8 +2,6 @@ package com.novel.page.search.viewmodel
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.StateFlow
 import com.novel.page.search.component.SearchRankingItem
@@ -40,114 +38,100 @@ class SearchStateAdapter(
      * 替代 searchQuery.collectAsState() 以提升性能
      */
     @Composable
-    fun searchQueryState(): State<String> = remember {
-        derivedStateOf { getCurrentSnapshot().searchQuery }
-    }
+    fun searchQueryState(): State<String> = 
+        createStableState { it.searchQuery }
 
     /**
      * 搜索历史记录列表 - 优化版本
      */
     @Composable
-    fun searchHistoryState(): State<ImmutableList<String>> = remember {
-        derivedStateOf { getCurrentSnapshot().searchHistory }
-    }
+    fun searchHistoryState(): State<ImmutableList<String>> = 
+        createStableState { it.searchHistory }
 
     /**
      * 历史记录是否展开显示 - 优化版本
      */
     @Composable
-    fun isHistoryExpandedState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isHistoryExpanded }
-    }
+    fun isHistoryExpandedState(): State<Boolean> = 
+        createStableState { it.isHistoryExpanded }
 
     /**
      * 是否有搜索历史 - 优化版本
      */
     @Composable
-    fun hasSearchHistoryState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().searchHistory.isNotEmpty() }
-    }
+    fun hasSearchHistoryState(): State<Boolean> = 
+        createStableState { it.searchHistory.isNotEmpty() }
 
     /**
      * 显示的搜索历史（根据展开状态限制数量） - 优化版本
      */
     @Composable
-    fun displayedSearchHistoryState(): State<ImmutableList<String>> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            if (state.isHistoryExpanded) {
-                state.searchHistory
+    fun displayedSearchHistoryState(): State<ImmutableList<String>> = 
+        createStableState { 
+            if (it.isHistoryExpanded) {
+                it.searchHistory
             } else {
-                state.searchHistory.take(3).toImmutableList() // 收起时只显示前3条
+                it.searchHistory.take(3).toImmutableList() // 收起时只显示前3条
             }
         }
-    }
 
     /**
      * 小说榜单数据 - 优化版本
      */
     @Composable
-    fun novelRankingState(): State<ImmutableList<SearchRankingItem>> = remember {
-        derivedStateOf { getCurrentSnapshot().novelRanking }
-    }
+    fun novelRankingState(): State<ImmutableList<SearchRankingItem>> = 
+        createStableState { it.novelRanking }
 
     /**
      * 剧本榜单数据 - 优化版本
      */
     @Composable
-    fun dramaRankingState(): State<ImmutableList<SearchRankingItem>> = remember {
-        derivedStateOf { getCurrentSnapshot().dramaRanking }
-    }
+    fun dramaRankingState(): State<ImmutableList<SearchRankingItem>> = 
+        createStableState { it.dramaRanking }
 
     /**
      * 新书榜单数据 - 优化版本
      */
     @Composable
-    fun newBookRankingState(): State<ImmutableList<SearchRankingItem>> = remember {
-        derivedStateOf { getCurrentSnapshot().newBookRanking }
-    }
+    fun newBookRankingState(): State<ImmutableList<SearchRankingItem>> = 
+        createStableState { it.newBookRanking }
 
     /**
      * 榜单数据加载状态 - 优化版本
      */
     @Composable
-    fun rankingLoadingState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().rankingLoading }
-    }
+    fun rankingLoadingState(): State<Boolean> = 
+        createStableState { it.rankingLoading }
 
     /**
      * 是否有榜单数据 - 优化版本
      */
     @Composable
-    fun hasRankingDataState(): State<Boolean> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
-            state.novelRanking.isNotEmpty() || 
-            state.dramaRanking.isNotEmpty() || 
-            state.newBookRanking.isNotEmpty()
+    fun hasRankingDataState(): State<Boolean> = 
+        createStableState { 
+            it.novelRanking.isNotEmpty() || 
+            it.dramaRanking.isNotEmpty() || 
+            it.newBookRanking.isNotEmpty()
         }
-    }
 
     /**
      * 所有榜单数据（合并） - 优化版本
      */
     @Composable
-    fun allRankingDataState(): State<PersistentList<RankingSection>> = remember {
-        derivedStateOf { 
-            val state = getCurrentSnapshot()
+    fun allRankingDataState(): State<PersistentList<RankingSection>> = 
+        createStableState { 
             persistentListOf<RankingSection>().builder().apply {
-                if (state.novelRanking.isNotEmpty()) {
-                    add(RankingSection("小说榜", state.novelRanking))
+                if (it.novelRanking.isNotEmpty()) {
+                    add(RankingSection("小说榜", it.novelRanking))
                 }
-                if (state.dramaRanking.isNotEmpty()) {
-                    add(RankingSection("剧本榜", state.dramaRanking))
+                if (it.dramaRanking.isNotEmpty()) {
+                    add(RankingSection("剧本榜", it.dramaRanking))
                 }
-                if (state.newBookRanking.isNotEmpty()) {
-                    add(RankingSection("新书榜", state.newBookRanking))
+                if (it.newBookRanking.isNotEmpty()) {
+                    add(RankingSection("新书榜", it.newBookRanking))
                 }
             }.build()
         }
-    }
 
     // endregion
     

@@ -114,7 +114,7 @@ private fun RankBooksScrollableGrid(
     flipBookController: FlipBookAnimationController? = null
 ) {
     // 使用 derivedStateOf 优化书籍分组计算，仅在 books 变化时重新计算
-    val bookColumns by remember { derivedStateOf { books.chunked(4).map { it.toImmutableList() } } }
+    val bookColumns by remember(books) { derivedStateOf { books.chunked(4).map { it.toImmutableList() } } }
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()

@@ -4,8 +4,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -37,152 +35,129 @@ class BookDetailStateAdapter(
     
     /** 书籍基本信息 - 优化版本 */
     @Composable
-    fun bookInfoState(): State<BookDetailState.BookInfo?> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo }
-    }
+    fun bookInfoState(): State<BookDetailState.BookInfo?> = 
+        createStableState { it.bookInfo }
     
     /** 最新章节信息 - 优化版本 */
     @Composable
-    fun lastChapterState(): State<BookDetailState.LastChapter?> = remember {
-        derivedStateOf { getCurrentSnapshot().lastChapter }
-    }
+    fun lastChapterState(): State<BookDetailState.LastChapter?> = 
+        createStableState { it.lastChapter }
     
     /** 用户评价列表 - 优化版本 */
     @Composable
-    fun reviewsState(): State<ImmutableList<BookDetailState.BookReview>> = remember {
-        derivedStateOf { getCurrentSnapshot().reviews }
-    }
+    fun reviewsState(): State<ImmutableList<BookDetailState.BookReview>> = 
+        createStableState { it.reviews }
     
     /** 简介是否展开 - 优化版本 */
     @Composable
-    fun isDescriptionExpandedState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isDescriptionExpanded }
-    }
+    fun isDescriptionExpandedState(): State<Boolean> = 
+        createStableState { it.isDescriptionExpanded }
     
     /** 是否在书架中 - 优化版本 */
     @Composable
-    fun isInBookshelfState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isInBookshelf }
-    }
+    fun isInBookshelfState(): State<Boolean> = 
+        createStableState { it.isInBookshelf }
     
     /** 是否关注作者 - 优化版本 */
     @Composable
-    fun isAuthorFollowedState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().isAuthorFollowed }
-    }
+    fun isAuthorFollowedState(): State<Boolean> = 
+        createStableState { it.isAuthorFollowed }
     
     /** 当前书籍ID - 优化版本 */
     @Composable
-    fun currentBookIdState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().currentBookId }
-    }
+    fun currentBookIdState(): State<String?> = 
+        createStableState { it.currentBookId }
     
     /** 书籍名称 - 优化版本 */
     @Composable
-    fun bookNameState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.bookName }
-    }
+    fun bookNameState(): State<String?> = 
+        createStableState { it.bookInfo?.bookName }
     
     /** 作者名称 - 优化版本 */
     @Composable
-    fun authorNameState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.authorName }
-    }
+    fun authorNameState(): State<String?> = 
+        createStableState { it.bookInfo?.authorName }
     
     /** 书籍描述 - 优化版本 */
     @Composable
-    fun bookDescState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.bookDesc }
-    }
+    fun bookDescState(): State<String?> = 
+        createStableState { it.bookInfo?.bookDesc }
     
     /** 书籍封面URL - 优化版本 */
     @Composable
-    fun picUrlState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.picUrl }
-    }
+    fun picUrlState(): State<String?> = 
+        createStableState { it.bookInfo?.picUrl }
     
     /** 访问次数 - 优化版本 */
     @Composable
-    fun visitCountState(): State<Long> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.visitCount ?: 0L }
-    }
+    fun visitCountState(): State<Long> = 
+        createStableState { it.bookInfo?.visitCount ?: 0L }
     
     /** 字数统计 - 优化版本 */
     @Composable
-    fun wordCountState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.wordCount ?: 0 }
-    }
+    fun wordCountState(): State<Int> = 
+        createStableState { it.bookInfo?.wordCount ?: 0 }
     
     /** 分类名称 - 优化版本 */
     @Composable
-    fun categoryNameState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo?.categoryName }
-    }
+    fun categoryNameState(): State<String?> = 
+        createStableState { it.bookInfo?.categoryName }
     
     /** 是否有书籍信息 - 优化版本 */
     @Composable
-    fun hasBookInfoState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().bookInfo != null }
-    }
+    fun hasBookInfoState(): State<Boolean> = 
+        createStableState { it.bookInfo != null }
     
     /** 最新章节名称 - 优化版本 */
     @Composable
-    fun lastChapterNameState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().lastChapter?.chapterName }
-    }
+    fun lastChapterNameState(): State<String?> = 
+        createStableState { it.lastChapter?.chapterName }
     
     /** 最新章节更新时间 - 优化版本 */
     @Composable
-    fun lastChapterUpdateTimeState(): State<String?> = remember {
-        derivedStateOf { getCurrentSnapshot().lastChapter?.chapterUpdateTime }
-    }
+    fun lastChapterUpdateTimeState(): State<String?> = 
+        createStableState { it.lastChapter?.chapterUpdateTime }
     
-    /** 是否有最新章节信息 - 优化版本 */
+    /** 是否有最新章节 - 优化版本 */
     @Composable
-    fun hasLastChapterState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().lastChapter != null }
-    }
+    fun hasLastChapterState(): State<Boolean> = 
+        createStableState { it.lastChapter != null }
     
     /** 评价数量 - 优化版本 */
     @Composable
-    fun reviewCountState(): State<Int> = remember {
-        derivedStateOf { getCurrentSnapshot().reviews.size }
-    }
+    fun reviewCountState(): State<Int> = 
+        createStableState { it.reviews.size }
     
     /** 是否有评价 - 优化版本 */
     @Composable
-    fun hasReviewsState(): State<Boolean> = remember {
-        derivedStateOf { getCurrentSnapshot().reviews.isNotEmpty() }
-    }
+    fun hasReviewsState(): State<Boolean> = 
+        createStableState { it.reviews.isNotEmpty() }
     
     /** 平均评分 - 优化版本 */
     @Composable
-    fun averageRatingState(): State<Float> = remember {
-        derivedStateOf {
-            val reviews = getCurrentSnapshot().reviews
+    fun averageRatingState(): State<Float> = 
+        createStableState {
+            val reviews = it.reviews
             if (reviews.isEmpty()) {
                 0f
             } else {
-                reviews.map { it.rating }.average().toFloat()
+                reviews.map { review -> review.rating }.average().toFloat()
             }
         }
-    }
     
     /** 高评分评价（4星及以上）- 优化版本 */
     @Composable
-    fun highRatingReviewsState(): State<ImmutableList<BookDetailState.BookReview>> = remember {
-        derivedStateOf {
-            getCurrentSnapshot().reviews.filter { it.rating >= 4 }.toImmutableList()
+    fun highRatingReviewsState(): State<ImmutableList<BookDetailState.BookReview>> = 
+        createStableState {
+            it.reviews.filter { review -> review.rating >= 4 }.toImmutableList()
         }
-    }
     
     /** 最新评价（前3条）- 优化版本 */
     @Composable
-    fun latestReviewsState(): State<ImmutableList<BookDetailState.BookReview>> = remember {
-        derivedStateOf {
-            getCurrentSnapshot().reviews.take(3).toImmutableList()
+    fun latestReviewsState(): State<ImmutableList<BookDetailState.BookReview>> = 
+        createStableState {
+            it.reviews.take(3).toImmutableList()
         }
-    }
     
     // endregion
     

@@ -463,6 +463,7 @@ class AuthorService @Inject constructor() {
                 try {
                     callback(Gson().fromJson(response, clazz), null)
                 } catch (e: Exception) {
+                    TimberLogger.e("AuthorService", "JSON解析失败", e)
                     callback(null, e)
                 }
             }
@@ -472,4 +473,4 @@ class AuthorService @Inject constructor() {
         }
     }
     // endregion
-} 
+}

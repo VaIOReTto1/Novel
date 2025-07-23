@@ -73,9 +73,15 @@ class NovelDateFormatter
         val localDateTime = try {
             LocalDateTime.parse(dateString, parseFormatter)
         } catch (e: java.time.format.DateTimeParseException) {
+            TimberLogger.w(TAG, "主格式解析失败，尝试备用格式: $dateString", e)
             // 尝试解析 "yyyy-MM-dd HH:mm:ss" 格式
             val altFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            LocalDateTime.parse(dateString, altFormatter)
+            try {
+                LocalDateTime.parse(dateString, altFormatter)
+            } catch (e2: java.time.format.DateTimeParseException) {
+                TimberLogger.e(TAG, "所有日期格式解析失败: $dateString", e2)
+                throw e2
+            }
         }
         val dateTime = localDateTime.atZone(ZoneId.systemDefault())
         val now = ZonedDateTime.now(clock)

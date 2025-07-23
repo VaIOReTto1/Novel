@@ -199,6 +199,7 @@ class HomeService @Inject constructor(
                 try {
                     callback(gson.fromJson(response, clazz), null)
                 } catch (e: Exception) {
+                    TimberLogger.e("HomeService", "JSON解析失败", e)
                     callback(null, e)
                 }
             }

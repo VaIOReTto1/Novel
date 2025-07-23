@@ -111,6 +111,7 @@ object SearchUtils {
                 else -> "${diffInDays / 30}月前更新"
             }
         } catch (e: Exception) {
+            TimberLogger.w(TAG, "时间格式化失败: updateTime=$updateTime", e)
             "未知时间"
         }
     }
@@ -118,4 +119,4 @@ object SearchUtils {
     fun sanitizeSearchQuery(query: String): String {
         return query.trim().replace(Regex("[<>\"'&]"), "")
     }
-} 
+}

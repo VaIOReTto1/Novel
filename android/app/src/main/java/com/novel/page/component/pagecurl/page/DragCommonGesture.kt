@@ -104,6 +104,8 @@ internal suspend fun PointerInputScope.detectCurlGestures(
                         // 拖拽成功，完成翻页动画
                         try {
                             edge.animateTo(end)
+                        } catch (e: Exception) {
+                            TimberLogger.e(TAG, "翻页动画执行失败", e)
                         } finally {
                             onChange()
                             edge.snapTo(start)
@@ -112,6 +114,8 @@ internal suspend fun PointerInputScope.detectCurlGestures(
                         // 拖拽未成功，返回原始位置
                         try {
                             edge.animateTo(start)
+                        } catch (e: Exception) {
+                            TimberLogger.e(TAG, "返回原始位置动画失败", e)
                         } finally {
                             edge.snapTo(start)
                         }

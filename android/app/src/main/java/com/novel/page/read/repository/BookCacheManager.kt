@@ -173,6 +173,7 @@ class BookCacheManager @Inject constructor(
             
             cacheData
         } catch (e: Exception) {
+            TimberLogger.e("BookCacheManager", "缓存操作失败", e)
             null
         }
     }
@@ -185,7 +186,7 @@ class BookCacheManager @Inject constructor(
             val cacheFile = File(contentCacheDir, "${bookCacheData.bookId}.json")
             cacheFile.writeText(gson.toJson(bookCacheData))
         } catch (e: Exception) {
-            // 保存失败，静默处理
+            TimberLogger.e("BookCacheManager", "保存缓存失败", e)
         }
     }
     
@@ -215,6 +216,7 @@ class BookCacheManager @Inject constructor(
             
             cacheData
         } catch (e: Exception) {
+            TimberLogger.e("BookCacheManager", "获取章节缓存失败", e)
             null
         }
     }
@@ -232,7 +234,7 @@ class BookCacheManager @Inject constructor(
             val cacheFile = File(pageCountCacheDir, "${cacheKey}.json")
             cacheFile.writeText(gson.toJson(pageCountCacheData))
         } catch (e: Exception) {
-            // 保存失败，静默处理
+            TimberLogger.e("BookCacheManager", "保存页数缓存失败", e)
         }
     }
     
@@ -559,4 +561,4 @@ class BookCacheManager @Inject constructor(
             estimatedTotalPages = estimatedTotalPages
         )
     }
-} 
+}

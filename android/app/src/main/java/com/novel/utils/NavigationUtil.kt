@@ -80,6 +80,7 @@ fun NavigationSetup() {
             val rankingItems = try {
                 NavViewModel.decodeRankingData(encodedData)
             } catch (e: Exception) {
+                TimberLogger.e("NavigationUtil", "解码榜单数据失败: encodedData=$encodedData", e)
                 emptyList()
             }
 

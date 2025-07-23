@@ -10,6 +10,7 @@ import com.novel.page.read.service.common.*
 import com.novel.page.read.utils.PageSplitter
 import com.novel.page.read.viewmodel.Chapter
 import com.novel.page.read.viewmodel.ReaderSettings
+import com.novel.utils.TimberLogger
 import com.novel.utils.network.repository.CachedBookRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -280,7 +281,10 @@ class PaginationService @Inject constructor(
                                 containerSize
                             ) ?: 0
                             charPages
-                        } catch (_: Exception) { 0 }
+                        } catch (e: Exception) {
+                            TimberLogger.w(TAG, "获取章节页数缓存失败: chapterId=${it.chapterId}", e)
+                            0
+                        }
 
                         val calculatedChapters = fetchedChapters.size + cachedChapters.size
                         bookCacheManager.updateDynamicPaginationProgress(
@@ -449,4 +453,4 @@ class PaginationService @Inject constructor(
             }
         }
     }
-} 
+}

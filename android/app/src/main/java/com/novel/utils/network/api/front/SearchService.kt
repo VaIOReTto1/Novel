@@ -251,6 +251,7 @@ class SearchService @Inject constructor(
                 try {
                     callback(gson.fromJson(response, clazz), null)
                 } catch (e: Exception) {
+                    TimberLogger.e("SearchService", "JSON解析失败", e)
                     callback(null, e)
                 }
             }

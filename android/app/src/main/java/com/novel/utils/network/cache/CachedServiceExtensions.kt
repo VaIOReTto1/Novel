@@ -56,14 +56,26 @@ object CacheKeys {
  * - EXTRA_LONG_CACHE: 适用于基础配置数据
  */
 object CacheConfigs {
-    /** 短期缓存：5分钟，适用于排行榜等实时数据 */
-    val SHORT_CACHE = CacheConfig(maxAge = TimeUnit.MINUTES.toMillis(5))
-    /** 中期缓存：30分钟，适用于书籍信息等业务数据 */
-    val MEDIUM_CACHE = CacheConfig(maxAge = TimeUnit.MINUTES.toMillis(30))
-    /** 长期缓存：2小时，适用于章节内容等稳定数据 */
-    val LONG_CACHE = CacheConfig(maxAge = TimeUnit.HOURS.toMillis(2))
-    /** 超长期缓存：24小时，适用于分类等基础数据 */
-    val EXTRA_LONG_CACHE = CacheConfig(maxAge = TimeUnit.HOURS.toMillis(24))
+    /** 短期缓存：5分钟，适用于排行榜等实时数据，刷新阈值20% */
+    val SHORT_CACHE = CacheConfig(
+        maxAge = TimeUnit.MINUTES.toMillis(5),
+        refreshThreshold = 0.2
+    )
+    /** 中期缓存：30分钟，适用于书籍信息等业务数据，刷新阈值30% */
+    val MEDIUM_CACHE = CacheConfig(
+        maxAge = TimeUnit.MINUTES.toMillis(30),
+        refreshThreshold = 0.3
+    )
+    /** 长期缓存：2小时，适用于章节内容等稳定数据，刷新阈值50% */
+    val LONG_CACHE = CacheConfig(
+        maxAge = TimeUnit.HOURS.toMillis(2),
+        refreshThreshold = 0.5
+    )
+    /** 超长期缓存：24小时，适用于分类等基础数据，刷新阈值70% */
+    val EXTRA_LONG_CACHE = CacheConfig(
+        maxAge = TimeUnit.HOURS.toMillis(24),
+        refreshThreshold = 0.7
+    )
 }
 
 /**

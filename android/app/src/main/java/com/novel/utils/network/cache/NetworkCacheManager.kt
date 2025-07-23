@@ -34,7 +34,8 @@ data class CacheEntry<T>(
  */
 data class CacheConfig(
     val maxAge: Long = TimeUnit.HOURS.toMillis(1), // 默认1小时过期
-    val maxEntries: Int = 1000 // 最大缓存条目数
+    val maxEntries: Int = 1000, // 最大缓存条目数
+    val refreshThreshold: Double = 0.3 // 缓存刷新阈值：当剩余有效时间低于30%时才后台更新
 )
 
 /**
@@ -132,8 +133,15 @@ class NetworkCacheManager @Inject constructor(
                 val cachedData = getCachedDataInternal(key, typeToken = typeToken)
                 
                 if (cachedData != null && isValidData(cachedData)) {
-                    // 有有效缓存数据，异步更新网络数据
-                    updateCacheAsync(key, config, networkCall, onCacheUpdate, typeToken)
+                    // 检查缓存是否需要刷新
+                    val shouldRefresh = shouldRefreshCache(key, config)
+                    if (shouldRefresh) {
+                        // 只在缓存即将过期时才异步更新网络数据
+                        TimberLogger.d(TAG, "Cache is stale for key: $key, refreshing in background")
+                        updateCacheAsync(key, config, networkCall, onCacheUpdate, typeToken)
+                    } else {
+                        TimberLogger.d(TAG, "Cache is fresh for key: $key, skipping network update")
+                    }
                     return@withContext CacheResult.Success(cachedData, true)
                 } else {
                     // 缓存数据无效或不存在，同步获取网络数据
@@ -272,6 +280,61 @@ class NetworkCacheManager @Inject constructor(
     }
     
     /**
+     * 检查缓存是否需要刷新
+     * @param key 缓存键
+     * @param config 缓存配置
+     * @return true如果缓存需要刷新，false如果缓存仍然新鲜
+     */
+    private suspend fun shouldRefreshCache(key: String, config: CacheConfig): Boolean {
+        try {
+            // 先检查内存缓存
+            val memoryCacheEntry = memoryCache[key]
+            if (memoryCacheEntry != null) {
+                return isCacheStale(memoryCacheEntry.cacheTime, memoryCacheEntry.expiryTime, config)
+            }
+            
+            // 检查磁盘缓存
+            val diskCacheFile = File(cacheDir, "$key.json")
+            if (diskCacheFile.exists()) {
+                val cacheEntryJson = diskCacheFile.readText()
+                val type = object : TypeToken<CacheEntry<Any?>>() {}.type
+                val cacheEntry = gson.fromJson<CacheEntry<Any?>>(cacheEntryJson, type)
+                return isCacheStale(cacheEntry.cacheTime, cacheEntry.expiryTime, config)
+            }
+            
+            // 如果没有缓存，则需要刷新
+            return true
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "Failed to check cache staleness for key: $key", e)
+            return true // 出错时安全地选择刷新
+        }
+    }
+    
+    /**
+     * 检查缓存是否过期或即将过期
+     * @param cacheTime 缓存创建时间
+     * @param expiryTime 缓存过期时间
+     * @param config 缓存配置
+     * @return true如果缓存过期或即将过期需要刷新
+     */
+    private fun isCacheStale(cacheTime: Long, expiryTime: Long, config: CacheConfig): Boolean {
+        val currentTime = System.currentTimeMillis()
+        
+        // 如果已经过期，肯定需要刷新
+        if (currentTime >= expiryTime) {
+            return true
+        }
+        
+        // 计算缓存剩余有效时间占总有效时间的比例
+        val totalCacheAge = config.maxAge
+        val remainingAge = expiryTime - currentTime
+        val freshnessRatio = remainingAge.toDouble() / totalCacheAge
+        
+        // 如果剩余有效时间低于刷新阈值，则需要刷新
+        return freshnessRatio < config.refreshThreshold
+    }
+    
+    /**
      * 检查数据是否有效
      */
     private fun <T> isValidData(data: T?): Boolean {
@@ -329,47 +392,50 @@ class NetworkCacheManager @Inject constructor(
             val memoryCacheEntry = memoryCache[key] as? CacheEntry<T>
             if (memoryCacheEntry != null) {
                 if (!isCacheExpired(memoryCacheEntry.expiryTime) || allowExpired) {
+                    TimberLogger.d(TAG, "Cache hit from memory for key: $key")
                     return@withContext memoryCacheEntry.data
                 }
             }
             
-            // 从磁盘缓存获取
-            val diskCacheFile = File(cacheDir, "$key.json")
-            if (diskCacheFile.exists()) {
-                val cacheEntryJson = diskCacheFile.readText()
-                
-                // 使用具体的类型信息进行反序列化
-                val cacheEntry = if (typeToken != null) {
-                    // 构造 CacheEntry<T> 的完整类型
-                    val cacheEntryType = TypeToken.getParameterized(CacheEntry::class.java, typeToken.type).type
-                    gson.fromJson<CacheEntry<T>>(cacheEntryJson, cacheEntryType)
-                } else {
-                    // 兜底处理：尝试直接反序列化，但这可能导致类型转换错误
-                    val type = object : TypeToken<CacheEntry<T>>() {}.type
-                    try {
-                        gson.fromJson<CacheEntry<T>>(cacheEntryJson, type)
-                    } catch (e: ClassCastException) {
-                        TimberLogger.e(TAG, "ClassCastException during deserialization for key: $key, clearing cache", e)
+                            // 从磁盘缓存获取
+                val diskCacheFile = File(cacheDir, "$key.json")
+                if (diskCacheFile.exists()) {
+                    val cacheEntryJson = diskCacheFile.readText()
+                    
+                    // 使用具体的类型信息进行反序列化
+                    val cacheEntry = if (typeToken != null) {
+                        // 构造 CacheEntry<T> 的完整类型
+                        val cacheEntryType = TypeToken.getParameterized(CacheEntry::class.java, typeToken.type).type
+                        gson.fromJson<CacheEntry<T>>(cacheEntryJson, cacheEntryType)
+                    } else {
+                        // 兜底处理：尝试直接反序列化，但这可能导致类型转换错误
+                        val type = object : TypeToken<CacheEntry<T>>() {}.type
+                        try {
+                            gson.fromJson<CacheEntry<T>>(cacheEntryJson, type)
+                        } catch (e: ClassCastException) {
+                            TimberLogger.e(TAG, "ClassCastException during deserialization for key: $key, clearing cache", e)
+                            diskCacheFile.delete()
+                            memoryCache.remove(key)
+                            return@withContext null
+                        }
+                    }
+                    
+                    if (!isCacheExpired(cacheEntry.expiryTime)) {
+                        // 更新内存缓存
+                        memoryCache[key] = cacheEntry
+                        TimberLogger.d(TAG, "Cache hit from disk for key: $key")
+                        return@withContext cacheEntry.data
+                    } else if (allowExpired) {
+                        // 允许过期缓存时，仍然返回数据但不更新内存缓存
+                        TimberLogger.d(TAG, "Returning expired cache data for key: $key")
+                        return@withContext cacheEntry.data
+                    } else {
+                        // 过期则删除
                         diskCacheFile.delete()
                         memoryCache.remove(key)
-                        return@withContext null
+                        TimberLogger.d(TAG, "Cache expired and cleaned for key: $key")
                     }
                 }
-                
-                if (!isCacheExpired(cacheEntry.expiryTime)) {
-                    // 更新内存缓存
-                    memoryCache[key] = cacheEntry
-                    return@withContext cacheEntry.data
-                } else if (allowExpired) {
-                    // 允许过期缓存时，仍然返回数据但不更新内存缓存
-                    TimberLogger.d(TAG, "Returning expired cache data for key: $key")
-                    return@withContext cacheEntry.data
-                } else {
-                    // 过期则删除
-                    diskCacheFile.delete()
-                    memoryCache.remove(key)
-                }
-            }
             
             null
         } catch (e: Exception) {
@@ -424,7 +490,7 @@ class NetworkCacheManager @Inject constructor(
                 oldestKey?.let { memoryCache.remove(it) }
             }
             
-            TimberLogger.d(TAG, "Cache saved for key: $key")
+            TimberLogger.d(TAG, "Cache saved and verified for key: $key")
         } catch (e: Exception) {
             TimberLogger.e(TAG, "Failed to save cache for key: $key", e)
         }

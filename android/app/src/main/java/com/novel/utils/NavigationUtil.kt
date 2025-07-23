@@ -155,6 +155,14 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+        composable("history") {
+            ReactNativePage(
+                componentName = "HistoryPageComponent",
+                initialProps = mapOf("source" to "android_history"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -313,6 +321,17 @@ object NavViewModel : ViewModel() {
 
         navController.value?.navigate(route)
         TimberLogger.d("NavViewModel", "✅ 导航到阅读器命令已发送")
+        TimberLogger.d("NavViewModel", "==============================")
+    }
+
+    /**
+     * 导航到历史页面
+     */
+    fun navigateToHistory() {
+        TimberLogger.d("NavViewModel", "===== 导航到历史页面 =====")
+        
+        navController.value?.navigate("history")
+        TimberLogger.d("NavViewModel", "✅ 导航到历史页面命令已发送")
         TimberLogger.d("NavViewModel", "==============================")
     }
 

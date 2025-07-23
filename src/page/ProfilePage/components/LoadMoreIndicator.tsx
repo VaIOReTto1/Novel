@@ -5,20 +5,18 @@ import { LoadMoreIndicatorProps } from '../types';
 
 interface LoadMoreIndicatorComponentProps extends LoadMoreIndicatorProps {
   styles: any;
-  spinStyle: any;
 }
 
 export const LoadMoreIndicator: React.FC<LoadMoreIndicatorComponentProps> = React.memo(({
   loading,
   hasMore,
   styles,
-  spinStyle,
 }) => {
   if (loading) {
     return (
       <View style={styles.waterfallLoadingContainer}>
         <View style={styles.loadingSpinner}>
-          <Animated.Text style={[styles.spinnerText, spinStyle]}>⟳</Animated.Text>
+          <Animated.Text style={[styles.spinnerText]}>⟳</Animated.Text>
         </View>
         <Text style={styles.waterfallLoadingText}>加载中...</Text>
       </View>

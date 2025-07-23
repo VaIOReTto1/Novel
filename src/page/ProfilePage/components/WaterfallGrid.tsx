@@ -9,7 +9,6 @@ interface WaterfallGridProps {
   books: Book[];
   loading: boolean;
   hasMore: boolean;
-  spinStyle: any;
   onBookPress: (book: Book) => void;
 }
 
@@ -18,7 +17,6 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
   books,
   loading,
   hasMore,
-  spinStyle,
   onBookPress,
 }) => {
   const handleBookPress = useCallback((book: Book) => {
@@ -45,7 +43,7 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
         <View style={styles.waterfallColumn}>
           {leftColumnBooks.map((book, index) => (
             <BookItem
-              key={`left-${book.id}`}
+              key={`left-${book.id}-${index}`}
               book={book}
               index={index * 2}
               onPress={() => handleBookPress(book)}
@@ -58,7 +56,7 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
         <View style={styles.waterfallColumn}>
           {rightColumnBooks.map((book, index) => (
             <BookItem
-              key={`right-${book.id}`}
+              key={`right-${book.id}-${index}`}
               book={book}
               index={index * 2 + 1}
               onPress={() => handleBookPress(book)}
@@ -72,7 +70,6 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
         loading={loading}
         hasMore={hasMore}
         styles={styles}
-        spinStyle={spinStyle}
       />
     </View>
   );

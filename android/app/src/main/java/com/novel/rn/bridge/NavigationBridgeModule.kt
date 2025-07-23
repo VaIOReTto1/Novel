@@ -140,6 +140,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到历史页面
+     */
+    @ReactMethod
+    fun navigateToHistory() {
+        TimberLogger.d(TAG, "导航到历史页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToHistory()
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

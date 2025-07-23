@@ -157,7 +157,6 @@ const ProfilePage: React.FC = () => {
           books={convertedBooks}
           loading={homeRecommendLoading}
           hasMore={hasMoreHomeRecommend}
-          spinStyle={animations.spinStyle}
           onBookPress={handleBookPress}
         />
       </ScrollView>

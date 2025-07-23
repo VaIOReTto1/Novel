@@ -109,3 +109,4 @@ import '../page/SettingsPage/settingspage/SettingsPageComponent';
 import '../page/SettingsPage/TimeSwitchPage/TimedSwitchPageComponent';
 import '../page/SettingsPage/helpsupportPage/HelpSupportPageComponent';
 import '../page/SettingsPage/privacypolicyPage/PrivacyPolicyPageComponent';
+import '../page/ScrollBox/HistoryPage/HistoryPageComponent';

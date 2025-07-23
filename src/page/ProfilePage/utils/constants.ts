@@ -22,7 +22,17 @@ export const ICONS_DATA: IconData[] = [
   // 第一页的4个图标
   { id: 'wallet', name: '我的钱包', icon: 'wallet', onPress: () => console.log('钱包') },
   { id: 'download', name: '我的下载', icon: 'download', onPress: () => console.log('下载') },
-  { id: 'history', name: '游戏中心', icon: 'history', onPress: () => console.log('历史') },
+  { id: 'history', name: '浏览历史', icon: 'history', onPress: () => {
+    console.log('导航到浏览历史');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToHistory) {
+      NavigationBridge.navigateToHistory();
+    } else {
+      console.log('NavigationBridge.navigateToHistory not available');
+    }
+  }},
   { id: 'subscribe', name: '推书中心', icon: 'subscribe', onPress: () => console.log('订阅') },
 
   // 第二页的15个图标

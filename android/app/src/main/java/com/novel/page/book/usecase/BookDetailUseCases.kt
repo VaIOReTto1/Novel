@@ -38,7 +38,7 @@ class GetBookDetailUseCase @Inject constructor(
         
         val strategy = if (params.useCache) CacheStrategy.CACHE_FIRST else CacheStrategy.NETWORK_ONLY
         
-        val bookInfo = cachedBookRepository.getBookInfo(
+        val bookInfo = cachedBookRepository.getBookInfoWithIncrementalSync(
             bookId = params.bookId.toLong(),
             strategy = strategy
         )
@@ -112,7 +112,7 @@ class GetLastChapterUseCase @Inject constructor(
     override suspend fun execute(params: Params): Result {
         TimberLogger.d(TAG, "获取最新章节: bookId=${params.bookId}")
         
-        val chapters = cachedBookRepository.getBookChapters(
+        val chapters = cachedBookRepository.getBookChaptersWithIncrementalSync(
             bookId = params.bookId.toLong(),
             strategy = CacheStrategy.CACHE_FIRST
         )

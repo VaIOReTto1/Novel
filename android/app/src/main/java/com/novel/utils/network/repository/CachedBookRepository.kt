@@ -6,12 +6,18 @@ import com.novel.utils.TimberLogger
 import com.novel.core.asStable
 import com.novel.utils.network.api.front.BookService
 import com.novel.utils.network.api.front.SearchService
+import com.novel.utils.network.api.front.HomeService
+import com.novel.utils.network.api.front.NewsService
+import com.novel.utils.network.api.front.user.UserService
 import com.novel.utils.network.cache.NetworkCacheManager
 import com.novel.utils.network.cache.CacheStrategy
 import com.novel.utils.network.cache.CacheResult
-import com.novel.utils.network.cache.getBookByIdCached
-import com.novel.utils.network.cache.getBookChaptersCached
-import com.novel.utils.network.cache.getBookContentCached
+import com.novel.utils.network.cache.IntelligentPrefetcher
+import com.novel.utils.network.cache.ReadingBehaviorAnalyzer
+import com.novel.utils.network.cache.getBookByIdWithIncrementalSync
+import com.novel.utils.network.cache.getBookChaptersWithIncrementalSync
+import com.novel.utils.network.cache.getBookContentWithIncrementalSync
+// 保留其他缓存扩展方法用于兼容性
 import com.novel.utils.network.cache.getVisitRankBooksCached
 import com.novel.utils.network.cache.getUpdateRankBooksCached
 import com.novel.utils.network.cache.getNewestRankBooksCached
@@ -27,7 +33,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.novel.utils.network.cache.CacheConfigs
+import com.novel.utils.network.cache.IncrementalSyncResult
+import com.novel.utils.network.cache.CleanupStrategy
 /**
  * 缓存书籍数据仓库
  * 
@@ -51,7 +62,11 @@ class CachedBookRepository @Inject constructor(
     @Stable
     private val searchService: SearchService,
     @Stable
-    private val cacheManager: NetworkCacheManager
+    private val cacheManager: NetworkCacheManager,
+    @Stable
+    private val behaviorAnalyzer: ReadingBehaviorAnalyzer,
+    @Stable
+    private val intelligentPrefetcher: IntelligentPrefetcher
 ) {
     companion object {
         private const val TAG = "CachedBookRepository"
@@ -84,6 +99,71 @@ class CachedBookRepository @Inject constructor(
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow().asStable()
     
+    // 阅读会话管理
+    private var currentReadingSession: Long? = null
+    private var currentBookId: Long? = null
+    private var currentChapterId: Long? = null
+
+    /**
+     * 开始阅读会话
+     */
+    fun startReadingSession(bookId: Long, chapterId: Long) {
+        TimberLogger.d(TAG, "开始阅读会话: bookId=$bookId, chapterId=$chapterId")
+        
+        // 结束之前的会话
+        endCurrentReadingSession()
+        
+        // 开始新会话
+        currentReadingSession = behaviorAnalyzer.startReadingSession(bookId, chapterId)
+        currentBookId = bookId
+        currentChapterId = chapterId
+        
+        // 启动智能预取
+        startIntelligentPrefetch(bookId, chapterId)
+    }
+    
+    /**
+     * 结束当前阅读会话
+     */
+    fun endCurrentReadingSession() {
+        currentReadingSession?.let { sessionId ->
+            currentBookId?.let { bookId ->
+                currentChapterId?.let { chapterId ->
+                    behaviorAnalyzer.endReadingSession(sessionId, bookId, chapterId)
+                    TimberLogger.d(TAG, "结束阅读会话: bookId=$bookId, chapterId=$chapterId")
+                }
+            }
+        }
+        
+        currentReadingSession = null
+        currentBookId = null
+        currentChapterId = null
+    }
+    
+    /**
+     * 启动智能预取
+     */
+    private fun startIntelligentPrefetch(bookId: Long, chapterId: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // 获取书籍章节列表用于预取决策
+                val chaptersResult = getBookChaptersWithIncrementalSync(bookId)
+                val availableChapters = chaptersResult.map { it.id }
+                
+                // 启动智能预取
+                intelligentPrefetcher.startIntelligentPrefetch(
+                    currentBookId = bookId,
+                    currentChapterId = chapterId,
+                    availableChapters = availableChapters
+                )
+                
+                TimberLogger.d(TAG, "智能预取已启动: bookId=$bookId, chapterId=$chapterId")
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "启动智能预取失败", e)
+            }
+        }
+    }
+
     /**
      * 增强的数据获取方法，支持自动重试和兜底机制
      */
@@ -158,85 +238,138 @@ class CachedBookRepository @Inject constructor(
         }
     }
     
-    /**
-     * 获取书籍信息（增强兜底机制）
-     */
-    suspend fun getBookInfo(
-        bookId: Long,
-        strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
-    ): BookService.BookInfo? {
-        return executeWithLoading {
-            getDataWithFallback(
-                operation = {
-                    bookService.getBookByIdCached(
-                        bookId = bookId,
-                        cacheManager = cacheManager,
-                        strategy = strategy,
-                        onCacheUpdate = { response ->
-                            response.data?.let { _bookInfo.value = it }
-                            TimberLogger.d(TAG, "Book info cache updated for bookId: $bookId")
-                        }
-                    )
-                },
-                extractData = { response -> response.data },
-                updateState = { data -> _bookInfo.value = data as? BookService.BookInfo },
-                operationName = "getBookInfo(bookId=$bookId)"
-            )?.data
-        }
-    }
+
+    
+
     
     /**
-     * 获取书籍章节列表（增强兜底机制）
+     * 获取书籍内容（增强版 - 支持增量同步）
      */
-    suspend fun getBookChapters(
-        bookId: Long,
-        strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
-    ): ImmutableList<BookService.BookChapter> {
-        return executeWithLoading {
-            getDataWithFallback(
-                operation = {
-                    bookService.getBookChaptersCached(
-                        bookId = bookId,
-                        cacheManager = cacheManager,
-                        strategy = strategy,
-                        onCacheUpdate = { response ->
-                            response.data?.let { _bookChapters.value = it.toImmutableList() }
-                            TimberLogger.d(TAG, "Book chapters cache updated for bookId: $bookId")
-                        }
-                    )
-                },
-                extractData = { response -> response.data },
-                updateState = { data -> _bookChapters.value = (data as? List<BookService.BookChapter>)?.toImmutableList()
-                    ?: persistentListOf() },
-                operationName = "getBookChapters(bookId=$bookId)"
-            )?.data?.toImmutableList() ?: persistentListOf()
-        } ?: persistentListOf()
-    }
-    
-    /**
-     * 获取书籍内容（增强兜底机制）
-     */
-    suspend fun getBookContent(
+    suspend fun getBookContentWithIncrementalSync(
         chapterId: Long,
         strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
     ): BookService.BookContentAbout? {
         return executeWithLoading {
-            getDataWithFallback(
-                operation = {
-                    bookService.getBookContentCached(
-                        chapterId = chapterId,
-                        cacheManager = cacheManager,
-                        strategy = strategy,
-                        onCacheUpdate = {
-                            TimberLogger.d(TAG, "Book content cache updated for chapterId: $chapterId")
-                        }
-                    )
-                },
-                extractData = { response -> response.data },
-                updateState = { _ -> /* 书籍内容不需要更新状态流 */ },
-                operationName = "getBookContent(chapterId=$chapterId)"
-            )?.data
+            try {
+                val result = bookService.getBookContentWithIncrementalSync(
+                    chapterId = chapterId,
+                    cacheManager = cacheManager,
+                    config = CacheConfigs.LONG_CACHE,
+                    onCacheUpdate = {
+                        TimberLogger.d(TAG, "章节内容缓存更新: chapterId=$chapterId")
+                    }
+                )
+                
+                when (result) {
+                    is IncrementalSyncResult.Updated -> {
+                        TimberLogger.d(TAG, "章节内容增量同步完成: chapterId=$chapterId, hasChanged=${result.hasChanged}")
+                        result.newData.data
+                    }
+                    is IncrementalSyncResult.NoChange -> {
+                        TimberLogger.d(TAG, "章节内容未变化: chapterId=$chapterId")
+                        result.cachedData.data
+                    }
+                    is IncrementalSyncResult.Error -> {
+                        TimberLogger.e(TAG, "章节内容增量同步失败: chapterId=$chapterId", result.error)
+                        _error.value = result.error.message
+                        result.cachedData?.data
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "获取章节内容异常: chapterId=$chapterId", e)
+                _error.value = e.message
+                null
+            }
         }
+    }
+
+
+
+    /**
+     * 获取书籍信息（增量同步版本）
+     */
+    suspend fun getBookInfoWithIncrementalSync(
+        bookId: Long,
+        strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
+    ): BookService.BookInfo? {
+        return executeWithLoading {
+            try {
+                val result = bookService.getBookByIdWithIncrementalSync(
+                    bookId = bookId,
+                    cacheManager = cacheManager,
+                    config = CacheConfigs.MEDIUM_CACHE,
+                    onCacheUpdate = { response ->
+                        response.data?.let { _bookInfo.value = it }
+                    }
+                )
+                
+                when (result) {
+                    is IncrementalSyncResult.Updated -> {
+                        result.newData.data?.also { _bookInfo.value = it }
+                        result.newData.data
+                    }
+                    is IncrementalSyncResult.NoChange -> {
+                        result.cachedData.data?.also { _bookInfo.value = it }
+                        result.cachedData.data
+                    }
+                    is IncrementalSyncResult.Error -> {
+                        TimberLogger.e(TAG, "书籍信息增量同步失败: bookId=$bookId", result.error)
+                        _error.value = result.error.message
+                        result.cachedData?.data?.also { _bookInfo.value = it }
+                        result.cachedData?.data
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "获取书籍信息异常: bookId=$bookId", e)
+                _error.value = e.message
+                null
+            }
+        }
+    }
+
+    /**
+     * 获取书籍章节列表（增量同步版本）
+     */
+    suspend fun getBookChaptersWithIncrementalSync(
+        bookId: Long,
+        strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
+    ): ImmutableList<BookService.BookChapter> {
+        return executeWithLoading {
+            try {
+                val result = bookService.getBookChaptersWithIncrementalSync(
+                    bookId = bookId,
+                    cacheManager = cacheManager,
+                    config = CacheConfigs.MEDIUM_CACHE,
+                    onCacheUpdate = { response ->
+                        response.data?.let { _bookChapters.value = it.toImmutableList() }
+                    }
+                )
+                
+                when (result) {
+                    is IncrementalSyncResult.Updated -> {
+                        val chapters = result.newData.data?.toImmutableList() ?: persistentListOf()
+                        _bookChapters.value = chapters
+                        chapters
+                    }
+                    is IncrementalSyncResult.NoChange -> {
+                        val chapters = result.cachedData.data?.toImmutableList() ?: persistentListOf()
+                        _bookChapters.value = chapters
+                        chapters
+                    }
+                    is IncrementalSyncResult.Error -> {
+                        TimberLogger.e(TAG, "章节列表增量同步失败: bookId=$bookId", result.error)
+                        _error.value = result.error.message
+                        val chapters = result.cachedData?.data?.toImmutableList() ?: persistentListOf()
+                        _bookChapters.value = chapters
+                        chapters
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "获取章节列表异常: bookId=$bookId", e)
+                _error.value = e.message
+                persistentListOf()
+            }
+        } ?: persistentListOf()
     }
     
     /**
@@ -625,5 +758,34 @@ class CachedBookRepository @Inject constructor(
         } finally {
             _isLoading.value = false
         }
+    }
+    
+    /**
+     * 获取智能预取统计信息
+     */
+    fun getPrefetchStats() = intelligentPrefetcher.prefetchStats
+    
+    /**
+     * 获取阅读行为统计信息
+     */
+    fun getReadingStats() = behaviorAnalyzer.currentReadingStats
+    
+    /**
+     * 获取缓存清理统计信息
+     */
+    fun getCacheCleanupStats() = cacheManager.getCleanupStats()
+    
+    /**
+     * 手动执行缓存清理
+     */
+    suspend fun performManualCacheCleanup(strategy: CleanupStrategy = CleanupStrategy.SMART_HYBRID) {
+        cacheManager.performSmartCleanup(strategy)
+    }
+    
+    /**
+     * 取消所有预取任务
+     */
+    fun cancelAllPrefetchTasks() {
+        intelligentPrefetcher.cancelAllTasks()
     }
 }

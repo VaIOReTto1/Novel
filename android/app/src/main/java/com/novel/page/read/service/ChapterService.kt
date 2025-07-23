@@ -58,7 +58,7 @@ class ChapterService @Inject constructor(
             withPerformanceMonitoring("getChapterList") {
                 logger.logDebug("获取章节列表: bookId=$bookId", TAG)
                 
-                val chapters = cachedBookRepository.getBookChapters(
+                val chapters = cachedBookRepository.getBookChaptersWithIncrementalSync(
                     bookId = bookId.toLong(),
                     strategy = com.novel.utils.network.cache.CacheStrategy.NETWORK_FIRST
                 )
@@ -103,7 +103,7 @@ class ChapterService @Inject constructor(
             
             // 2. 从Repository获取
             val contentData = safeIo {
-                cachedBookRepository.getBookContent(
+                cachedBookRepository.getBookContentWithIncrementalSync(
                     chapterId = chapterId.toLong(),
                     strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
                 )
@@ -200,7 +200,7 @@ class ChapterService @Inject constructor(
                 logger.logDebug("开始预加载章节: chapterId=$chapterId", TAG)
                 
                 // 从Repository获取内容
-                val contentData = cachedBookRepository.getBookContent(
+                val contentData = cachedBookRepository.getBookContentWithIncrementalSync(
                     chapterId = chapterId.toLong(),
                     strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
                 )
@@ -290,7 +290,7 @@ class ChapterService @Inject constructor(
 
         return safeIo {
             withPerformanceMonitoring("loadBookInfo") {
-                val bookInfoData = cachedBookRepository.getBookInfo(bookIdLong)
+                val bookInfoData = cachedBookRepository.getBookInfoWithIncrementalSync(bookIdLong)
                 bookInfoData?.let {
                     PageData.BookInfo(
                         bookId = bookId,

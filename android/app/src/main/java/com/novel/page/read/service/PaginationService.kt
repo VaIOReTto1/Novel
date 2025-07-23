@@ -223,7 +223,7 @@ class PaginationService @Inject constructor(
                         maxRetries = 1, // 减少重试次数，避免雪崩
                         retryDelay = ReaderServiceConfig.RETRY_DELAY_MS
                     ) {
-                        val contentData = cachedBookRepository.getBookContent(
+                        val contentData = cachedBookRepository.getBookContentWithIncrementalSync(
                             chapterId = chapter.id.toLong(),
                             strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
                         )
@@ -305,7 +305,7 @@ class PaginationService @Inject constructor(
 
             // 获取书籍信息
             val bookInfoData = safeIo {
-                cachedBookRepository.getBookInfo(bookId.toLong())
+                cachedBookRepository.getBookInfoWithIncrementalSync(bookId.toLong())
             }
             
             val bookInfoForCache = bookInfoData?.let {

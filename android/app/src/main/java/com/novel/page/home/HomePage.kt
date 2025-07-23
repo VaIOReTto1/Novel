@@ -322,9 +322,12 @@ fun HomePage(
             
             // 5. 加载更多指示器 - 使用统一的状态
             item(key = "load_more_indicator_${canLoadMoreRecommend}") {
+                // 修复：isLoading应该直接使用对应模式的loading状态，而不是基于canLoadMoreRecommend计算
+                val isLoadingParam = if (isRecommendMode) homeRecommendLoading else recommendLoading
+                val hasMoreDataParam = canLoadMoreRecommend
                 HomeRecommendLoadMoreIndicator(
-                    isLoading = !canLoadMoreRecommend && currentRecommendBooks.isNotEmpty(),
-                    hasMoreData = canLoadMoreRecommend,
+                    isLoading = isLoadingParam,
+                    hasMoreData = hasMoreDataParam,
                     totalDataCount = currentRecommendBooks.size
                 )
             }

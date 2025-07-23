@@ -3,6 +3,8 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Android 8.0 及以上推荐使用 READ_PHONE_NUMBERS -->
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>

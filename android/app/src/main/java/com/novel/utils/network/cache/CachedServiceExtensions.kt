@@ -377,3 +377,85 @@ inline fun <T> CacheResult<T>.fold(
         is CacheResult.Error -> onError(error, cachedData)
     }
 }
+
+/**
+ * BookService 增量同步缓存扩展函数
+ * 
+ * 支持增量同步的高级缓存功能，显著减少网络传输
+ */
+
+/**
+ * 获取书籍详情（增量同步版本）
+ */
+suspend fun BookService.getBookByIdWithIncrementalSync(
+    bookId: Long,
+    cacheManager: NetworkCacheManager,
+    config: CacheConfig = CacheConfigs.MEDIUM_CACHE,
+    onCacheUpdate: ((BookService.BookInfoResponse) -> Unit)? = null
+): IncrementalSyncResult<BookService.BookInfoResponse> {
+    return cacheManager.getDataWithIncrementalSync(
+        key = CacheKeys.bookInfo(bookId),
+        config = config,
+        networkCall = { lastModified, eTag ->
+            getBookByIdWithCondition(bookId, lastModified, eTag)
+        },
+        typeToken = object : TypeToken<BookService.BookInfoResponse>() {}
+    ).also { result ->
+        // 处理缓存更新回调
+        when (result) {
+            is IncrementalSyncResult.Updated -> onCacheUpdate?.invoke(result.newData)
+            is IncrementalSyncResult.NoChange -> onCacheUpdate?.invoke(result.cachedData)
+            is IncrementalSyncResult.Error -> result.cachedData?.let { onCacheUpdate?.invoke(it) }
+        }
+    }
+}
+
+/**
+ * 获取书籍章节列表（增量同步版本）
+ */
+suspend fun BookService.getBookChaptersWithIncrementalSync(
+    bookId: Long,
+    cacheManager: NetworkCacheManager,
+    config: CacheConfig = CacheConfigs.MEDIUM_CACHE,
+    onCacheUpdate: ((BookService.BookChapterResponse) -> Unit)? = null
+): IncrementalSyncResult<BookService.BookChapterResponse> {
+    return cacheManager.getDataWithIncrementalSync(
+        key = CacheKeys.bookChapters(bookId),
+        config = config,
+        networkCall = { lastModified, eTag ->
+            getBookChaptersWithCondition(bookId, lastModified, eTag)
+        },
+        typeToken = object : TypeToken<BookService.BookChapterResponse>() {}
+    ).also { result ->
+        when (result) {
+            is IncrementalSyncResult.Updated -> onCacheUpdate?.invoke(result.newData)
+            is IncrementalSyncResult.NoChange -> onCacheUpdate?.invoke(result.cachedData)
+            is IncrementalSyncResult.Error -> result.cachedData?.let { onCacheUpdate?.invoke(it) }
+        }
+    }
+}
+
+/**
+ * 获取书籍内容（增量同步版本）
+ */
+suspend fun BookService.getBookContentWithIncrementalSync(
+    chapterId: Long,
+    cacheManager: NetworkCacheManager,
+    config: CacheConfig = CacheConfigs.LONG_CACHE,
+    onCacheUpdate: ((BookService.BookContentResponse) -> Unit)? = null
+): IncrementalSyncResult<BookService.BookContentResponse> {
+    return cacheManager.getDataWithIncrementalSync(
+        key = CacheKeys.bookContent(chapterId),
+        config = config,
+        networkCall = { lastModified, eTag ->
+            getBookContentWithCondition(chapterId, lastModified, eTag)
+        },
+        typeToken = object : TypeToken<BookService.BookContentResponse>() {}
+    ).also { result ->
+        when (result) {
+            is IncrementalSyncResult.Updated -> onCacheUpdate?.invoke(result.newData)
+            is IncrementalSyncResult.NoChange -> onCacheUpdate?.invoke(result.cachedData)
+            is IncrementalSyncResult.Error -> result.cachedData?.let { onCacheUpdate?.invoke(it) }
+        }
+    }
+}

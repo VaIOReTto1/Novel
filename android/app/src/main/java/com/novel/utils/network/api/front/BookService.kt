@@ -6,6 +6,8 @@ import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.novel.core.StableThrowable
+import com.novel.utils.network.cache.IncrementalNetworkResponse
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.Exception
@@ -537,6 +539,193 @@ class BookService @Inject constructor(
                 } else {
                     response?.let { cont.resumeWith(Result.success(it)) }
                         ?: cont.resumeWith(Result.failure(Exception("Response is null")))
+                }
+            }
+        }
+    }
+    // endregion
+
+    // region 增量同步支持的协程版本
+
+    /**
+     * 支持条件请求的获取章节内容（增量同步）
+     */
+    suspend fun getBookContentWithCondition(
+        chapterId: Long,
+        lastModified: String? = null,
+        eTag: String? = null
+    ): IncrementalNetworkResponse<BookContentResponse> {
+        return suspendCancellableCoroutine { cont ->
+            val headers = mutableMapOf<String, String>()
+            headers["Accept"] = "*/*"
+            
+            // 添加条件请求头
+            lastModified?.let { headers["If-Modified-Since"] = it }
+            eTag?.let { headers["If-None-Match"] = it }
+            
+            TimberLogger.d("BookService", "条件请求获取章节内容: chapterId=$chapterId, lastModified=$lastModified, eTag=$eTag")
+            
+            ApiService.get(
+                baseUrl = BASE_URL_FRONT,
+                endpoint = "book/content/$chapterId",
+                headers = headers
+            ) { response, error ->
+                when {
+                    error != null -> {
+                        if (error.message?.contains("304") == true || error.message?.contains("Not Modified") == true) {
+                            // 304 Not Modified
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.NotModified()))
+                        } else {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(error))))
+                        }
+                    }
+                    response != null -> {
+                        try {
+                            val bookContentResponse = gson.fromJson(response, BookContentResponse::class.java)
+                            // 模拟服务器返回的版本信息（实际项目中应从响应头获取）
+                            val serverVersion = System.currentTimeMillis().toString()
+                            val responseLastModified = System.currentTimeMillis().toString()
+                            val responseETag = "\"${response.hashCode()}\""
+                            
+                            cont.resumeWith(Result.success(
+                                IncrementalNetworkResponse.Modified(
+                                    data = bookContentResponse,
+                                    serverVersion = serverVersion,
+                                    lastModified = responseLastModified,
+                                    eTag = responseETag
+                                )
+                            ))
+                        } catch (e: Exception) {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(e))))
+                        }
+                    }
+                    else -> {
+                        cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(Exception("Response is null")))))
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 支持条件请求的获取书籍信息（增量同步）
+     */
+    suspend fun getBookByIdWithCondition(
+        bookId: Long,
+        lastModified: String? = null,
+        eTag: String? = null
+    ): IncrementalNetworkResponse<BookInfoResponse> {
+        return suspendCancellableCoroutine { cont ->
+            val headers = mutableMapOf<String, String>()
+            headers["Accept"] = "*/*"
+            
+            // 添加条件请求头
+            lastModified?.let { headers["If-Modified-Since"] = it }
+            eTag?.let { headers["If-None-Match"] = it }
+            
+            TimberLogger.d("BookService", "条件请求获取书籍信息: bookId=$bookId, lastModified=$lastModified, eTag=$eTag")
+            
+            ApiService.get(
+                baseUrl = BASE_URL_FRONT,
+                endpoint = "book/$bookId",
+                headers = headers
+            ) { response, error ->
+                when {
+                    error != null -> {
+                        if (error.message?.contains("304") == true || error.message?.contains("Not Modified") == true) {
+                            // 304 Not Modified
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.NotModified()))
+                        } else {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(error))))
+                        }
+                    }
+                    response != null -> {
+                        try {
+                            val bookInfoResponse = gson.fromJson(response, BookInfoResponse::class.java)
+                            // 模拟服务器返回的版本信息（实际项目中应从响应头获取）
+                            val serverVersion = bookInfoResponse.data?.updateTime ?: System.currentTimeMillis().toString()
+                            val responseLastModified = bookInfoResponse.data?.updateTime ?: System.currentTimeMillis().toString()
+                            val responseETag = "\"${response.hashCode()}\""
+                            
+                            cont.resumeWith(Result.success(
+                                IncrementalNetworkResponse.Modified(
+                                    data = bookInfoResponse,
+                                    serverVersion = serverVersion,
+                                    lastModified = responseLastModified,
+                                    eTag = responseETag
+                                )
+                            ))
+                        } catch (e: Exception) {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(e))))
+                        }
+                    }
+                    else -> {
+                        cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(Exception("Response is null")))))
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 支持条件请求的获取章节列表（增量同步）
+     */
+    suspend fun getBookChaptersWithCondition(
+        bookId: Long,
+        lastModified: String? = null,
+        eTag: String? = null
+    ): IncrementalNetworkResponse<BookChapterResponse> {
+        return suspendCancellableCoroutine { cont ->
+            val headers = mutableMapOf<String, String>()
+            headers["Accept"] = "*/*"
+            
+            // 添加条件请求头
+            lastModified?.let { headers["If-Modified-Since"] = it }
+            eTag?.let { headers["If-None-Match"] = it }
+            
+            TimberLogger.d("BookService", "条件请求获取章节列表: bookId=$bookId, lastModified=$lastModified, eTag=$eTag")
+            
+            ApiService.get(
+                baseUrl = BASE_URL_FRONT,
+                endpoint = "book/chapter/list",
+                params = mapOf("bookId" to bookId.toString()),
+                headers = headers
+            ) { response, error ->
+                when {
+                    error != null -> {
+                        if (error.message?.contains("304") == true || error.message?.contains("Not Modified") == true) {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.NotModified()))
+                        } else {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(error))))
+                        }
+                    }
+                    response != null -> {
+                        try {
+                            val bookChapterResponse = gson.fromJson(response, BookChapterResponse::class.java)
+                            // 使用最新章节的更新时间作为版本信息，安全处理null值
+                            val latestUpdateTime = bookChapterResponse.data
+                                ?.filter { it.chapterUpdateTime != null }
+                                ?.maxByOrNull { it.chapterUpdateTime ?: "" }
+                                ?.chapterUpdateTime
+                            val serverVersion = latestUpdateTime ?: System.currentTimeMillis().toString()
+                            val responseLastModified = latestUpdateTime ?: System.currentTimeMillis().toString()
+                            val responseETag = "\"${response.hashCode()}\""
+                            
+                            cont.resumeWith(Result.success(
+                                IncrementalNetworkResponse.Modified(
+                                    data = bookChapterResponse,
+                                    serverVersion = serverVersion,
+                                    lastModified = responseLastModified,
+                                    eTag = responseETag
+                                )
+                            ))
+                        } catch (e: Exception) {
+                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(e))))
+                        }
+                    }
+                    else -> {
+                        cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(Exception("Response is null")))))
+                    }
                 }
             }
         }

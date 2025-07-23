@@ -5,6 +5,8 @@ import com.novel.utils.network.repository.CachedBookRepository
 import com.novel.utils.network.api.front.BookService
 import com.novel.utils.network.api.front.SearchService
 import com.novel.utils.network.cache.NetworkCacheManager
+import com.novel.utils.network.cache.ReadingBehaviorAnalyzer
+import com.novel.utils.network.cache.IntelligentPrefetcher
 import com.novel.page.home.dao.IHomeRepository
 import com.novel.page.home.dao.HomeRepositoryImpl
 import dagger.Module
@@ -48,10 +50,12 @@ object RepositoryModule {
     fun provideCachedBookRepository(
         bookService: BookService,
         searchService: SearchService,
-        cacheManager: NetworkCacheManager
+        cacheManager: NetworkCacheManager,
+        behaviorAnalyzer: ReadingBehaviorAnalyzer,
+        intelligentPrefetcher: IntelligentPrefetcher
     ): CachedBookRepository {
         TimberLogger.d(TAG, "创建带缓存的书籍数据仓库")
-        return CachedBookRepository(bookService, searchService, cacheManager)
+        return CachedBookRepository(bookService, searchService, cacheManager, behaviorAnalyzer, intelligentPrefetcher)
     }
 
     /**

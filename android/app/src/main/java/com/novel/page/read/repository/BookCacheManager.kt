@@ -122,9 +122,9 @@ data class ChapterPageCountData(
 @Singleton
 @Stable
 class BookCacheManager @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val gson: Gson
 ) {
-    private val gson = Gson()
     private val cacheDir = File(context.cacheDir, "book_cache")
     private val contentCacheDir = File(cacheDir, "content")
     private val pageCountCacheDir = File(cacheDir, "page_count")
@@ -472,6 +472,7 @@ class BookCacheManager @Inject constructor(
         try {
             val cacheKey = generateChapterPageCountCacheKey(chapterId, fontSize, containerSize)
             val cacheFile = File(pageCountCacheDir, "chapter_${cacheKey}.json")
+            TimberLogger.d(TAG, "getChapterPageCountCache: $cacheKey")
             if (!cacheFile.exists()) return@withContext null
             
             val cacheData = gson.fromJson<ChapterPageCountData>(

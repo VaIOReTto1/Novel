@@ -65,6 +65,10 @@ class MainApplication : Application(), ReactApplication {
     @Stable
     @Inject
     lateinit var settingsUtils: SettingsUtils
+    
+    @Stable
+    @Inject
+    lateinit var gson: com.google.gson.Gson
 
     // 添加ReactRootView缓存管理
     @Stable
@@ -121,7 +125,8 @@ class MainApplication : Application(), ReactApplication {
         TimberLogger.d(TAG, "初始化RetrofitClient...")
         RetrofitClient.init(
             authInterceptor = authInterceptor,
-            tokenProvider = tokenProvider
+            tokenProvider = tokenProvider,
+            gson = gson
         )
         
         // 初始化SoLoader

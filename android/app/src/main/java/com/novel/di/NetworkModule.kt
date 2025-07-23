@@ -45,15 +45,17 @@ object NetworkModule {
      * - 缓存清理和过期管理
      * 
      * @param context 应用上下文
+     * @param gson JSON序列化工具
      * @return BookCacheManager实例
      */
     @Provides
     @Singleton
     fun provideBookCacheManager(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        gson: Gson
     ): BookCacheManager {
         TimberLogger.d(TAG, "创建书籍缓存管理器")
-        return BookCacheManager(context)
+        return BookCacheManager(context, gson)
     }
 
     /**
@@ -163,4 +165,4 @@ object NetworkModule {
             .registerTypeAdapterFactory(ImmutableListTypeAdapterFactory())
             .create()
     }
-} 
+}

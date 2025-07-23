@@ -110,19 +110,24 @@ object RetrofitClient {
     private lateinit var authInterceptor: AuthInterceptor
     /** Token提供器 */
     private lateinit var tokenProvider: TokenProvider
+    /** 配置好的Gson实例 */
+    private lateinit var gson: com.google.gson.Gson
 
     /**
      * 初始化方法，在Application中调用
      * @param authInterceptor 认证拦截器实例
      * @param tokenProvider Token提供器实例
+     * @param gson 配置好的Gson实例
      */
     fun init(
         authInterceptor: AuthInterceptor,
-        tokenProvider: TokenProvider
+        tokenProvider: TokenProvider,
+        gson: com.google.gson.Gson
     ) {
         TimberLogger.d(TAG, "初始化RetrofitClient")
         this.authInterceptor = authInterceptor
         this.tokenProvider = tokenProvider
+        this.gson = gson
     }
 
     /**
@@ -140,7 +145,7 @@ object RetrofitClient {
             Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(builder.build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }
 

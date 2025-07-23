@@ -124,7 +124,7 @@ private fun calculateGlobalPageNumber(
     
     // 如果没有缓存数据，使用估算
     if (currentChapterIndex != null && totalChapters != null) {
-        val estimatedPagesPerChapter = 10 // 假设每章平均10页
+        val estimatedPagesPerChapter = 5 // 假设每章平均5页
         val pageIndexInChapter = readerInfo.perChapterPageIndex.coerceAtLeast(0)
         return (currentChapterIndex * estimatedPagesPerChapter + pageIndexInChapter + 1).coerceAtLeast(1)
     }

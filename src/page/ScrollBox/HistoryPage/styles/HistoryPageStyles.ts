@@ -54,8 +54,8 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   tabsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: wp(12),
-    paddingVertical: wp(6),
+    paddingHorizontal: wp(16),
+    paddingVertical: wp(12),
     backgroundColor: colors.novelBackground,
   },
   tabsScrollArea: {
@@ -63,11 +63,13 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   },
   tabsScroll: {
     flexDirection: 'row',
-    paddingRight: wp(4),
+    paddingRight: wp(16),
   },
   tab: {
-    paddingHorizontal: wp(12),
+    paddingHorizontal: wp(14),
     paddingVertical: wp(6),
+    marginRight: wp(8),
+    minWidth: wp(60),
     alignItems: 'center',
   },
   activeTab: {
@@ -92,15 +94,16 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   viewControls: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: wp(6),
+    gap: wp(12),
   },
   viewToggleButton: {
-    paddingLeft: wp(12),
+    paddingHorizontal: wp(12),
     paddingVertical: wp(6),
+    minWidth: wp(50),
     alignItems: 'center',
   },
   viewToggleText: {
-    ...typography.labelLarge,
+    ...typography.labelSmall,
     color: colors.novelText,
     fontWeight: '600',
   },
@@ -110,12 +113,13 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     backgroundColor: colors.novelDivider,
   },
   staticButton: {
-    paddingRight: wp(12),
+    paddingHorizontal: wp(12),
     paddingVertical: wp(6),
+    minWidth: wp(50),
     alignItems: 'center',
   },
   staticButtonText: {
-    ...typography.labelLarge,
+    ...typography.labelSmall,
     color: colors.novelText,
     fontWeight: '600',
   },
@@ -142,13 +146,19 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     marginBottom: wp(12),
   },
   gridItem: {
-    width: (wp(350) - wp(32) - wp(12)) / 3, // 计算宽度
+    width: (wp(350) - wp(32) - wp(12)) / 2, // 计算宽度
+    backgroundColor: colors.novelSecondaryBackground,
+    borderRadius: sp(8),
+    overflow: 'hidden',
+    shadowColor: colors.novelText,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   gridCover: {
     width: '100%',
-    height: wp(135),
-    borderRadius: sp(8),
-    overflow: 'hidden',
+    height: wp(120),
     backgroundColor: colors.novelDivider,
   },
   gridCoverImage: {
@@ -156,20 +166,18 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     height: '100%',
   },
   gridInfo: {
-    paddingTop: wp(10),
+    padding: wp(10),
   },
   gridTitle: {
-    fontSize: wp(14),
+    ...typography.labelLarge,
     fontWeight: '600',
     color: colors.novelText,
     numberOfLines: 2,
-    ellipsizeMode: 'tail',
     lineHeight: fp(18),
     marginBottom: wp(4),
   },
   gridAuthor: {
-    paddingTop: wp(8),
-    fontSize: wp(10),
+    ...typography.labelSmall,
     color: colors.novelTextGray,
     numberOfLines: 1,
     marginBottom: wp(4),
@@ -186,11 +194,20 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   },
   listItem: {
     flexDirection: 'row',
+    backgroundColor: colors.novelSecondaryBackground,
+    borderRadius: sp(8),
+    marginBottom: wp(12),
     padding: wp(12),
+    alignItems: 'center',
+    shadowColor: colors.novelText,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   listCover: {
-    width: wp(65),
-    height: wp(87),
+    width: wp(60),
+    height: wp(80),
     borderRadius: sp(6),
     backgroundColor: colors.novelDivider,
     marginRight: wp(12),
@@ -204,8 +221,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     flex: 1,
   },
   listTitle: {
-    paddingTop: wp(12),
-    fontSize: wp(14),
+    ...typography.labelLarge,
     fontWeight: '600',
     color: colors.novelText,
     numberOfLines: 2,
@@ -213,8 +229,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     marginBottom: wp(4),
   },
   listAuthor: {
-    paddingTop: wp(8),
-    fontSize: wp(10),
+    ...typography.labelSmall,
     color: colors.novelTextGray,
     numberOfLines: 1,
     marginBottom: wp(4),

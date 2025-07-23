@@ -163,6 +163,14 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+        composable("message") {
+            ReactNativePage(
+                componentName = "MessagePageComponent",
+                initialProps = mapOf("source" to "android_message"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -332,6 +340,17 @@ object NavViewModel : ViewModel() {
         
         navController.value?.navigate("history")
         TimberLogger.d("NavViewModel", "✅ 导航到历史页面命令已发送")
+        TimberLogger.d("NavViewModel", "==============================")
+    }
+
+    /**
+     * 导航到消息页面
+     */
+    fun navigateToMessage() {
+        TimberLogger.d("NavViewModel", "===== 导航到消息页面 =====")
+        
+        navController.value?.navigate("message")
+        TimberLogger.d("NavViewModel", "✅ 导航到消息页面命令已发送")
         TimberLogger.d("NavViewModel", "==============================")
     }
 

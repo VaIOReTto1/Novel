@@ -20,7 +20,17 @@ export const MAX_HEIGHT = wp(250);
 // 图标数据
 export const ICONS_DATA: IconData[] = [
   // 第一页的4个图标
-  { id: 'wallet', name: '我的钱包', icon: 'wallet', onPress: () => console.log('钱包') },
+  { id: 'email', name: '我的消息', icon: 'email', onPress: () => {
+    console.log('导航到我的消息');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToMessage) {
+      NavigationBridge.navigateToMessage();
+    } else {
+      console.log('NavigationBridge.navigateToMessage not available');
+    }
+  }},
   { id: 'download', name: '我的下载', icon: 'download', onPress: () => console.log('下载') },
   { id: 'history', name: '浏览历史', icon: 'history', onPress: () => {
     console.log('导航到浏览历史');

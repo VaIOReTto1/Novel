@@ -152,6 +152,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到消息页面
+     */
+    @ReactMethod
+    fun navigateToMessage() {
+        TimberLogger.d(TAG, "导航到消息页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToMessage()
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

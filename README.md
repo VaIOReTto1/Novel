@@ -66,6 +66,8 @@
 | 模块 | 功能特性 | 技术实现 |
 |------|----------|----------|
 | **👤 我的页面** | 下拉刷新，瀑布流布局，滚动动画，主题系统 | `ProfilePage` + `Zustand` + TypeScript |
+| **🕒 浏览历史** | 瀑布流/列表视图切换，下拉刷新，数据懒加载 | `HistoryPage` + `Zustand` + `Reanimated` |
+| **💬 我的消息** | Sticky Tab，主/次消息分离，空状态，下拉刷新 | `MessagePage` + `Zustand` + `stickyHeaderIndices` |
 | **⚙️ 设置页面** | 混合架构，缓存管理，主题切换，应用设置 | `SettingsPage` + Android Compose 导航 |
 | **🔗 跨端通信** | Native ↔ RN 双向事件，状态同步，ReactRootView 复用 | `NavigationPackage` + `RCTDeviceEventEmitter` |
 

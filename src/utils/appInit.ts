@@ -105,9 +105,7 @@ export function cleanupApp() {
 }
 
 // 导入RN页面组件，确保它们被注册
-import '../page/SettingsPage/settingspage/SettingsPageComponent';
-import '../page/SettingsPage/TimeSwitchPage/TimedSwitchPageComponent';
-import '../page/SettingsPage/helpsupportPage/HelpSupportPageComponent';
-import '../page/SettingsPage/privacypolicyPage/PrivacyPolicyPageComponent';
 import '../page/ScrollBox/HistoryPage/HistoryPageComponent';
 import '../page/ScrollBox/MessagePage/MessagePageComponent';
+import '../page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent';
+import '../page/SettingsPage';

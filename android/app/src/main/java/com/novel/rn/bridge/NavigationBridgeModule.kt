@@ -164,6 +164,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到成为作家页面
+     */
+    @ReactMethod
+    fun navigateToBecomeWriter() {
+        TimberLogger.d(TAG, "导航到成为作家页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToBecomeWriter()
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

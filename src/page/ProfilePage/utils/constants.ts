@@ -31,7 +31,17 @@ export const ICONS_DATA: IconData[] = [
       console.log('NavigationBridge.navigateToMessage not available');
     }
   }},
-  { id: 'download', name: '我的下载', icon: 'download', onPress: () => console.log('下载') },
+  { id: 'be_writer', name: '成为作家', icon: 'be_writer', onPress: () => {
+    console.log('导航到成为作家');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToBecomeWriter) {
+      NavigationBridge.navigateToBecomeWriter();
+    } else {
+      console.log('NavigationBridge.navigateToBecomeWriter not available');
+    }
+  }},
   { id: 'history', name: '浏览历史', icon: 'history', onPress: () => {
     console.log('导航到浏览历史');
     // 调用原生导航方法

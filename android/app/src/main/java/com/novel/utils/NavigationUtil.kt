@@ -171,6 +171,14 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+        composable("becomewriter") {
+            ReactNativePage(
+                componentName = "BecomeWriterPageComponent",
+                initialProps = mapOf("source" to "android_becomewriter"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -351,6 +359,14 @@ object NavViewModel : ViewModel() {
         
         navController.value?.navigate("message")
         TimberLogger.d("NavViewModel", "✅ 导航到消息页面命令已发送")
+        TimberLogger.d("NavViewModel", "==============================")
+    }
+
+    fun navigateToBecomeWriter() {
+        TimberLogger.d("NavViewModel", "===== 导航到成为作家页面 =====")
+        
+        navController.value?.navigate("becomewriter")
+        TimberLogger.d("NavViewModel", "✅ 导航到成为作家页面命令已发送")
         TimberLogger.d("NavViewModel", "==============================")
     }
 

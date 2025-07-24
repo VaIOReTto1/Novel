@@ -69,6 +69,7 @@
 | **🕒 浏览历史** | 瀑布流/列表视图切换，下拉刷新，数据懒加载 | `HistoryPage` + `Zustand` + `Reanimated` |
 | **💬 我的消息** | Sticky Tab，主/次消息分离，空状态，下拉刷新 | `MessagePage` + `Zustand` + `stickyHeaderIndices` |
 | **⚙️ 设置页面** | 混合架构，缓存管理，主题切换，应用设置 | `SettingsPage` + Android Compose 导航 |
+| **✍️ 成为作家** | 多Tab切换，数据展开/收起，模态弹窗，状态管理 | `BecomeWriterPage` + `Zustand` + `immer` |
 | **🔗 跨端通信** | Native ↔ RN 双向事件，状态同步，ReactRootView 复用 | `NavigationPackage` + `RCTDeviceEventEmitter` |
 
 ## 🛠️ 技术栈

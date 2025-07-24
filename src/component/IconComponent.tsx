@@ -24,7 +24,6 @@ import OrderIcon from '../../assets/image/order.svg';
 import FeedbackIcon from '../../assets/image/feedback.svg';
 import RecommendBookIcon from '../../assets/image/recommend_book.svg';
 import SunModeIcon from '../../assets/image/sun_mode.svg';
-import email from '../../assets/image/email.svg';
 
 interface IconProps {
   name: string;
@@ -87,8 +86,6 @@ const IconComponent: React.FC<IconProps> = ({
         return <FeedbackIcon {...iconProps} />;
       case 'recommend_book':
         return <RecommendBookIcon {...iconProps} />;
-      case 'email':
-        return <EmailIcon {...iconProps} />;
       default:
         // 默认返回一个占位符
         return <View style={[styles.placeholder, { width, height }]} />;

@@ -7,7 +7,7 @@ import { PAGE_WIDTH } from '../utils/constants';
 export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: colors.novelSecondaryBackground,
     paddingHorizontal: wp(15),
   },
 
@@ -64,7 +64,7 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
     borderRadius: sp(10),
     width: PAGE_WIDTH,
     alignItems: 'center',
-    backgroundColor: colors.novelSecondaryBackground,
+    backgroundColor: colors.novelBackground,
     marginVertical: wp(10),
     paddingBottom: wp(15),
   },
@@ -122,12 +122,12 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
   pageIndicator: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: wp(3),
+    gap: wp(8),
   },
   dot: {
-    width: sp(3),
-    height: sp(3),
-    borderRadius: sp(3),
+    width: sp(3.5),
+    height: sp(3.5),
+    borderRadius: sp(3.5),
     backgroundColor: colors.novelMain,
   },
 
@@ -176,7 +176,7 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
   bottomBox: {
     width: PAGE_WIDTH,
     height: wp(200),
-    backgroundColor: colors.novelSecondaryBackground,
+    backgroundColor: colors.novelBackground,
     borderRadius: sp(10),
     padding: wp(20),
     alignSelf: 'center',
@@ -216,7 +216,7 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
     flex: 1,
   },
   waterfallBookItem: {
-    backgroundColor: colors.novelSecondaryBackground,
+    backgroundColor: colors.novelBackground,
     borderRadius: sp(8),
     marginBottom: wp(10),
     shadowColor: colors.novelText,
@@ -237,7 +237,7 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
   waterfallPlaceholderCover: {
     width: '100%',
     height: '100%',
-    backgroundColor: colors.novelDivider,
+    backgroundColor: colors.novelMain,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { View, ScrollView, NativeModules } from 'react-native';
 import { useMessageStore } from './store/messageStore';
 import { useNovelColors } from '../../../utils/theme/colors';
+import { wp } from '../../../utils/theme/dimensions';
 import { useRefreshLogic } from './hooks/useRefreshLogic';
 import { useMessageAnimations } from './hooks/useMessageAnimations';
 import { createMessagePageStyles } from './styles/MessagePageStyles';
@@ -24,6 +25,7 @@ const MessagePage: React.FC = () => {
   const scrollViewRef = useRef<any>(null);
   const tabsRef = useRef<any>(null);
   const [tabsYPosition, setTabsYPosition] = useState(0);
+  const [shouldScrollToTab, setShouldScrollToTab] = useState(false); // 控制是否需要滚动到tab
 
   // 二级tab状态管理
   const [secondaryTab, setSecondaryTab] = useState<'comment' | 'reply' | 'like'>('comment');
@@ -89,20 +91,39 @@ const MessagePage: React.FC = () => {
     const tabType = MESSAGE_TABS.find(tab => tab.id === tabId)?.type || 'comment';
     if (tabType === 'comment' || tabType === 'reply' || tabType === 'like') {
       setSecondaryTab(tabType);
+      setShouldScrollToTab(true); // 设置滚动标志
     }
   }, []);
 
-  // Scroll to tabs when secondaryTab, tabsYPosition, and topBarHeight are ready
+  // 只有在用户点击tab时才滚动
   useEffect(() => {
-    if (tabsYPosition > 0 && scrollViewRef.current) {
-      requestAnimationFrame(() => {
-        scrollViewRef.current.scrollTo({
-          y: tabsYPosition,
-          animated: true,
-        });
-      });
+    if (shouldScrollToTab && tabsYPosition > 0 && scrollViewRef.current) {
+      // 使用setTimeout确保布局完成后再滚动
+      setTimeout(() => {
+        if (scrollViewRef.current) {
+          console.log('[MessagePage] Scrolling to tabs position:', tabsYPosition);
+          scrollViewRef.current.scrollTo({
+            y: tabsYPosition,
+            animated: true,
+          });
+          setShouldScrollToTab(false); // 重置滚动标志
+        }
+      }, 100); // 延迟100ms确保内容渲染完成
+    } else if (shouldScrollToTab && tabsYPosition === 0 && scrollViewRef.current) {
+      // 如果tabsYPosition还没有获取到，使用估算位置进行滚动
+      setTimeout(() => {
+        if (scrollViewRef.current) {
+          const estimatedTabPosition = wp(56) + wp(120) + wp(8); // 大概位置
+          console.log('[MessagePage] Using estimated tab position:', estimatedTabPosition);
+          scrollViewRef.current.scrollTo({
+            y: estimatedTabPosition,
+            animated: true,
+          });
+          setShouldScrollToTab(false); // 重置滚动标志
+        }
+      }, 100);
     }
-  }, [secondaryTab, tabsYPosition]);
+  }, [shouldScrollToTab, tabsYPosition]);
 
   // 消息项点击
   const handleMessagePress = useCallback((message: MessageItem) => {
@@ -225,8 +246,11 @@ const MessagePage: React.FC = () => {
             ref={tabsRef}
             onLayout={(ev: { nativeEvent: { layout: { y: any; }; }; }) => {
               const y = ev.nativeEvent.layout.y;
-              console.log('tabsRef onLayout', y);
-              if (y > 0 && tabsYPosition === 0) setTabsYPosition(y);
+              console.log('[MessagePage] tabsRef onLayout y:', y, 'current tabsYPosition:', tabsYPosition);
+              // 总是更新位置，确保在内容变化时能获取到正确位置
+              if (y > 0) {
+                setTabsYPosition(y);
+              }
             }}
             style={{ backgroundColor: 'transparent' }}
           >

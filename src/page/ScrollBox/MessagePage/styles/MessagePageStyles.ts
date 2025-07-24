@@ -1,7 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { wp, fp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 export const createMessagePageStyles = (colors: NovelColors) => StyleSheet.create({
   container: {
@@ -168,6 +170,7 @@ export const createMessagePageStyles = (colors: NovelColors) => StyleSheet.creat
   },
   scrollContent: {
     paddingBottom: wp(32),
+    minHeight: screenHeight * 1.2, // 确保内容高度足够支持滚动
   },
 
   // 空状态

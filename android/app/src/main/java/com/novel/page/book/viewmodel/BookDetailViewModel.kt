@@ -7,6 +7,7 @@ import com.novel.page.book.usecase.*
 import com.novel.page.component.StateHolderImpl
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.repository.CachedBookRepository
+import com.novel.utils.network.api.front.BookService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -33,12 +34,13 @@ import javax.inject.Inject
 @HiltViewModel
 class BookDetailViewModel @Inject constructor(
     /** 带缓存的书籍数据仓库 */
-    private val cachedBookRepository: CachedBookRepository
+    private val cachedBookRepository: CachedBookRepository,
+    private val bookService: BookService
 ) : BaseMviViewModel<BookDetailIntent, BookDetailState, BookDetailEffect>() {
     
     // 手动创建UseCase实例，避免Hilt泛型问题
-    private val getBookDetailUseCase: GetBookDetailUseCase = GetBookDetailUseCase(cachedBookRepository)
-    private val getLastChapterUseCase: GetLastChapterUseCase = GetLastChapterUseCase(cachedBookRepository)
+    private val getBookDetailUseCase: GetBookDetailUseCase = GetBookDetailUseCase(cachedBookRepository, bookService)
+    private val getLastChapterUseCase: GetLastChapterUseCase = GetLastChapterUseCase(cachedBookRepository, bookService)
     private val addToBookshelfUseCase: AddToBookshelfUseCase = AddToBookshelfUseCase()
     private val removeFromBookshelfUseCase: RemoveFromBookshelfUseCase = RemoveFromBookshelfUseCase()
     private val checkBookInShelfUseCase: CheckBookInShelfUseCase = CheckBookInShelfUseCase()

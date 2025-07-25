@@ -21,6 +21,9 @@ import com.novel.utils.TimberLogger
 import com.novel.utils.network.cache.CacheStrategy
 import com.novel.utils.network.api.front.HomeService
 import com.novel.utils.network.api.front.BookService
+import com.novel.utils.network.api.getNewestRankBooksMediumPriority
+import com.novel.utils.network.api.getUpdateRankBooksMediumPriority
+import com.novel.utils.network.api.getVisitRankBooksMediumPriority
 
 /**
  * 稳定化首页仓库接口，保持原有实现签名
@@ -175,6 +178,8 @@ class HomeRepository @Inject constructor(
     @Stable
     private val cachedBookRepository: CachedBookRepository,
     @Stable
+    private val bookService: BookService,
+    @Stable
     private val cacheManager: NetworkCacheManager
 ) {
     
@@ -215,22 +220,38 @@ class HomeRepository @Inject constructor(
     ): List<com.novel.utils.network.api.front.BookService.BookRank> {
         return try {
             when (rankType) {
-                RANK_TYPE_VISIT -> cachedBookRepository.getVisitRankBooks(strategy)
-                RANK_TYPE_UPDATE -> cachedBookRepository.getUpdateRankBooks(strategy)
+                RANK_TYPE_VISIT -> {
+                    try {
+                        cachedBookRepository.getVisitRankBooks(strategy)
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "缓存获取访问榜失败，使用中等优先级网络请求: ${e.message}")
+                        bookService.getVisitRankBooksMediumPriority().data ?: emptyList()
+                    }
+                }
+                RANK_TYPE_UPDATE -> {
+                    try {
+                        cachedBookRepository.getUpdateRankBooks(strategy)
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "缓存获取更新榜失败，使用中等优先级网络请求: ${e.message}")
+                        bookService.getUpdateRankBooksMediumPriority().data ?: emptyList()
+                    }
+                }
                 RANK_TYPE_NEWEST -> {
                     try {
                         cachedBookRepository.getNewestRankBooks(strategy)
                     } catch (e: Exception) {
-                        TimberLogger.w(TAG, "新书榜首次加载失败，清理缓存后重试: ${e.message}")
-                        // 清理新书榜缓存
-                        cachedBookRepository.clearNewestRankCache()
-                        // 使用网络优先策略重试
-                        cachedBookRepository.getNewestRankBooks(CacheStrategy.NETWORK_ONLY)
+                        TimberLogger.w(TAG, "缓存获取新书榜失败，使用中等优先级网络请求: ${e.message}")
+                        bookService.getNewestRankBooksMediumPriority().data ?: emptyList()
                     }
                 }
                 else -> {
                     TimberLogger.w(TAG, "未知榜单类型: $rankType, 使用默认点击榜")
-                    cachedBookRepository.getVisitRankBooks(strategy)
+                    try {
+                        cachedBookRepository.getVisitRankBooks(strategy)
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "缓存获取默认榜单失败，使用中等优先级网络请求: ${e.message}")
+                        bookService.getVisitRankBooksMediumPriority().data ?: emptyList()
+                    }
                 }
             }.take(RANK_BOOK_LIMIT)
         } catch (e: Exception) {

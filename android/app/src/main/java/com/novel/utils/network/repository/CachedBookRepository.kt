@@ -25,6 +25,12 @@ import com.novel.utils.network.cache.getBookCategoriesCached
 import com.novel.utils.network.cache.searchBooksCached
 import com.novel.utils.network.cache.onSuccess
 import com.novel.utils.network.cache.onError
+// 导入优化服务扩展方法
+import com.novel.utils.network.api.getBookCategoriesHighPriority
+import com.novel.utils.network.api.searchBooksHighPriority
+import com.novel.utils.network.api.getVisitRankBooksHighPriority
+import com.novel.utils.network.api.getUpdateRankBooksHighPriority
+import com.novel.utils.network.api.getNewestRankBooksHighPriority
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -406,8 +412,13 @@ class CachedBookRepository @Inject constructor(
                 cacheManager.clearCache("visit_rank_books")
                 _visitRankBooks.value = persistentListOf()
                 try {
-                    // 直接从网络获取数据
-                    val response = bookService.getVisitRankBooksBlocking()
+                    // 使用高优先级网络请求
+                    val response = try {
+                        bookService.getVisitRankBooksHighPriority()
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "高优先级请求失败，使用普通请求: ${e.message}")
+                        bookService.getVisitRankBooksBlocking()
+                    }
                     response.data?.let { books ->
                         _visitRankBooks.value = books.toImmutableList()
                         books.toImmutableList()
@@ -459,8 +470,13 @@ class CachedBookRepository @Inject constructor(
                 cacheManager.clearCache("update_rank_books")
                 _updateRankBooks.value = persistentListOf()
                 try {
-                    // 直接从网络获取数据
-                    val response = bookService.getUpdateRankBooksBlocking()
+                    // 使用高优先级网络请求
+                    val response = try {
+                        bookService.getUpdateRankBooksHighPriority()
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "高优先级请求失败，使用普通请求: ${e.message}")
+                        bookService.getUpdateRankBooksBlocking()
+                    }
                     response.data?.let { books ->
                         _updateRankBooks.value = books.toImmutableList()
                         books.toImmutableList()
@@ -511,8 +527,13 @@ class CachedBookRepository @Inject constructor(
                 // 清理相关缓存
                 clearNewestRankCache()
                 try {
-                    // 直接从网络获取数据
-                    val response = bookService.getNewestRankBooksBlocking()
+                    // 使用高优先级网络请求
+                    val response = try {
+                        bookService.getNewestRankBooksHighPriority()
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "高优先级请求失败，使用普通请求: ${e.message}")
+                        bookService.getNewestRankBooksBlocking()
+                    }
                     response.data?.let { books ->
                         _newestRankBooks.value = books.toImmutableList()
                         books.toImmutableList()
@@ -566,8 +587,13 @@ class CachedBookRepository @Inject constructor(
                 cacheManager.clearCache("book_categories_$workDirection")
                 _bookCategories.value = persistentListOf()
                 try {
-                    // 直接从网络获取数据
-                    val response = bookService.getBookCategoriesBlocking(workDirection)
+                    // 使用高优先级网络请求
+                    val response = try {
+                        bookService.getBookCategoriesHighPriority(workDirection)
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "高优先级请求失败，使用普通请求: ${e.message}")
+                        bookService.getBookCategoriesBlocking(workDirection)
+                    }
                     response.data?.let { categories ->
                         _bookCategories.value = categories.toImmutableList()
                         categories.toImmutableList()
@@ -672,20 +698,37 @@ class CachedBookRepository @Inject constructor(
                 // 清理搜索缓存
                 clearSearchCache(keyword, workDirection, categoryId, isVip, bookStatus, wordCountMin, wordCountMax, updateTimeMin, sort, pageNum, pageSize)
                 try {
-                    // 直接从网络搜索
-                    val response = searchService.searchBooksBlocking(
-                        keyword = keyword,
-                        workDirection = workDirection,
-                        categoryId = categoryId,
-                        isVip = isVip,
-                        bookStatus = bookStatus,
-                        wordCountMin = wordCountMin,
-                        wordCountMax = wordCountMax,
-                        updateTimeMin = updateTimeMin,
-                        sort = sort,
-                        pageNum = pageNum,
-                        pageSize = pageSize
-                    )
+                    // 使用高优先级网络搜索
+                    val response = try {
+                        searchService.searchBooksHighPriority(
+                            keyword = keyword,
+                            workDirection = workDirection,
+                            categoryId = categoryId,
+                            isVip = isVip,
+                            bookStatus = bookStatus,
+                            wordCountMin = wordCountMin,
+                            wordCountMax = wordCountMax,
+                            updateTimeMin = updateTimeMin,
+                            sort = sort,
+                            pageNum = pageNum,
+                            pageSize = pageSize
+                        )
+                    } catch (e: Exception) {
+                        TimberLogger.w(TAG, "高优先级搜索失败，使用普通请求: ${e.message}")
+                        searchService.searchBooksBlocking(
+                            keyword = keyword,
+                            workDirection = workDirection,
+                            categoryId = categoryId,
+                            isVip = isVip,
+                            bookStatus = bookStatus,
+                            wordCountMin = wordCountMin,
+                            wordCountMax = wordCountMax,
+                            updateTimeMin = updateTimeMin,
+                            sort = sort,
+                            pageNum = pageNum,
+                            pageSize = pageSize
+                        )
+                    }
                     response.data ?: SearchService.PageResponse(0, 0, 0, persistentListOf(), 0)
                 } catch (networkError: Exception) {
                     TimberLogger.e(TAG, "Network fallback also failed for search", networkError)

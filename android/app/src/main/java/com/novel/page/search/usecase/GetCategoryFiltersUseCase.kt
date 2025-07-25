@@ -4,6 +4,9 @@ import androidx.compose.runtime.Stable
 import com.novel.utils.TimberLogger
 import com.novel.page.search.viewmodel.CategoryFilter
 import com.novel.utils.network.api.front.BookService
+import com.novel.utils.network.api.getBookCategoriesMediumPriority
+import com.novel.utils.network.repository.CachedBookRepository
+import com.novel.utils.network.cache.CacheStrategy
 import javax.inject.Inject
 
 /**
@@ -26,7 +29,8 @@ import javax.inject.Inject
  */
 @Stable
 class GetCategoryFiltersUseCase @Inject constructor(
-    @Stable private val bookService: BookService
+    @Stable private val bookService: BookService,
+    @Stable private val cachedBookRepository: CachedBookRepository
 ) {
     
     companion object {
@@ -48,9 +52,29 @@ class GetCategoryFiltersUseCase @Inject constructor(
         return try {
             TimberLogger.d(TAG, "开始获取书籍分类...")
             
-            val response = bookService.getBookCategoriesBlocking(0)
-            if (response.code == "0" && response.data != null) {
-                TimberLogger.d(TAG, "API获取分类成功，共${response.data.size}个分类")
+            // 优先使用缓存，失败时使用高优先级网络请求
+            val categoryData = try {
+                cachedBookRepository.getBookCategories(
+                    workDirection = 0,
+                    strategy = CacheStrategy.CACHE_FIRST
+                )
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "缓存获取分类失败，使用中等优先级网络请求: ${e.message}")
+                try {
+                    bookService.getBookCategoriesMediumPriority(0).data ?: emptyList()
+                } catch (networkError: Exception) {
+                    TimberLogger.w(TAG, "中等优先级网络请求也失败，使用阻塞请求: ${networkError.message}")
+                    val response = bookService.getBookCategoriesBlocking(0)
+                    if (response.code == "0" && response.data != null) {
+                        response.data
+                    } else {
+                        emptyList()
+                    }
+                }
+            }
+            
+            if (categoryData.isNotEmpty()) {
+                TimberLogger.d(TAG, "获取分类成功，共${categoryData.size}个分类")
                 
                 val categories = mutableListOf<CategoryFilter>()
                 
@@ -58,7 +82,7 @@ class GetCategoryFiltersUseCase @Inject constructor(
                 categories.add(CategoryFilter(id = -1, name = "所有"))
                 
                 // 添加从API获取的分类数据
-                response.data.forEach { category ->
+                categoryData.forEach { category ->
                     categories.add(
                         CategoryFilter(
                             id = category.id.toInt(),
@@ -70,8 +94,8 @@ class GetCategoryFiltersUseCase @Inject constructor(
                 TimberLogger.d(TAG, "分类数据处理完成，共${categories.size}个选项")
                 Result.success(categories)
             } else {
-                TimberLogger.w(TAG, "API返回失败，使用默认分类: ${response.code}")
-                // 如果API失败，返回默认分类
+                TimberLogger.w(TAG, "所有获取方式都失败，使用默认分类")
+                // 如果所有方式都失败，返回默认分类
                 Result.success(getDefaultCategories())
             }
         } catch (e: Exception) {

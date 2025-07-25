@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 import androidx.compose.runtime.Stable
+import com.novel.utils.network.api.searchBooksMediumPriority
 
 /**
  * 获取首页分类UseCase（整合分类获取）
@@ -148,7 +149,8 @@ class SendReactNativeDataUseCase @Inject constructor() : BaseUseCase<Unit, Unit>
 @Stable
 class GetCategoryRecommendBooksUseCase @Inject constructor(
     @Stable
-    private val cachedBookRepository: CachedBookRepository
+    private val cachedBookRepository: CachedBookRepository,
+    private val searchService: SearchService
 ) : BaseUseCase<GetCategoryRecommendBooksUseCase.Params, SearchService.PageResponse<SearchService.BookInfo>>() {
     
     @Stable
@@ -161,12 +163,28 @@ class GetCategoryRecommendBooksUseCase @Inject constructor(
     
     override suspend fun execute(params: Params): SearchService.PageResponse<SearchService.BookInfo> {
         return try {
-            cachedBookRepository.searchBooks(
-                categoryId = params.categoryId,
-                pageNum = params.pageNum,
-                pageSize = params.pageSize,
-                strategy = params.strategy
-            )
+            // 对于分类推荐，优先使用缓存，失败时使用高优先级搜索
+            try {
+                cachedBookRepository.searchBooks(
+                    categoryId = params.categoryId,
+                    pageNum = params.pageNum,
+                    pageSize = params.pageSize,
+                    strategy = params.strategy
+                )
+            } catch (e: Exception) {
+                TimberLogger.w("GetCategoryRecommendBooksUseCase", "缓存搜索失败，使用中等优先级网络搜索: ${e.message}")
+                searchService.searchBooksMediumPriority(
+                    categoryId = params.categoryId,
+                    pageNum = params.pageNum,
+                    pageSize = params.pageSize
+                ).data ?: SearchService.PageResponse(
+                    list = persistentListOf(),
+                    total = 0L,
+                    pages = 0L,
+                    pageNum = params.pageNum.toLong(),
+                    pageSize = params.pageSize.toLong()
+                )
+            }
         } catch (e: Exception) {
             TimberLogger.e("GetCategoryRecommendBooksUseCase", "获取分类推荐书籍失败", e)
             SearchService.PageResponse(

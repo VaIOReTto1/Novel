@@ -7,6 +7,7 @@ import com.novel.BuildConfig
 import com.google.gson.GsonBuilder
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.ApiService
+import com.novel.utils.network.ImmutableListTypeAdapterFactory
 import com.novel.utils.network.NetworkMonitor
 import com.novel.utils.network.TokenProvider
 import com.novel.utils.network.cache.*
@@ -14,6 +15,7 @@ import com.novel.utils.network.interceptor.*
 import com.novel.utils.network.priority.PriorityRequestDispatcher
 import com.novel.utils.network.api.front.*
 import com.novel.utils.network.api.front.user.UserService
+import com.novel.utils.network.api.author.AuthorService
 import com.novel.utils.network.repository.CachedBookRepository
 import dagger.Module
 import dagger.Provides
@@ -127,6 +129,7 @@ object NetworkModule {
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
+            .registerTypeAdapterFactory(ImmutableListTypeAdapterFactory())
             .setLenient()
             .create()
     }
@@ -278,32 +281,38 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun provideBookService(retrofit: Retrofit): BookService {
-        return retrofit.create(BookService::class.java)
+    fun provideBookService(gson: Gson): BookService {
+        return BookService(gson)
     }
     
     @Provides
     @Singleton
-    fun provideSearchService(retrofit: Retrofit): SearchService {
-        return retrofit.create(SearchService::class.java)
+    fun provideSearchService(gson: Gson): SearchService {
+        return SearchService(gson)
     }
     
     @Provides
     @Singleton
-    fun provideHomeService(retrofit: Retrofit): HomeService {
-        return retrofit.create(HomeService::class.java)
+    fun provideHomeService(gson: Gson): HomeService {
+        return HomeService(gson)
     }
     
     @Provides
     @Singleton
-    fun provideNewsService(retrofit: Retrofit): NewsService {
-        return retrofit.create(NewsService::class.java)
+    fun provideNewsService(gson: Gson): NewsService {
+        return NewsService(gson)
     }
     
     @Provides
     @Singleton
-    fun provideUserService(retrofit: Retrofit): UserService {
-        return retrofit.create(UserService::class.java)
+    fun provideUserService(gson: Gson): UserService {
+        return UserService(gson)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideAuthorService(retrofit: Retrofit): AuthorService {
+        return AuthorService()
     }
     
 

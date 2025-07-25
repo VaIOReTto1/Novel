@@ -12,6 +12,9 @@ import com.novel.page.read.viewmodel.Chapter
 import com.novel.page.read.viewmodel.ReaderSettings
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.repository.CachedBookRepository
+import com.novel.utils.network.api.getBookContentHighPriority
+import com.novel.utils.network.api.getBookByIdHighPriority
+import com.novel.utils.network.api.front.BookService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.StateFlow
@@ -41,6 +44,7 @@ import kotlinx.collections.immutable.toImmutableList
 class PaginationService @Inject constructor(
     private val bookCacheManager: BookCacheManager,
     private val cachedBookRepository: CachedBookRepository,
+    private val bookService: BookService,
     dispatchers: DispatcherProvider,
     logger: ServiceLogger
 ) : SafeService(dispatchers, logger) {
@@ -224,10 +228,16 @@ class PaginationService @Inject constructor(
                         maxRetries = 1, // 减少重试次数，避免雪崩
                         retryDelay = ReaderServiceConfig.RETRY_DELAY_MS
                     ) {
-                        val contentData = cachedBookRepository.getBookContentWithIncrementalSync(
-                            chapterId = chapter.id.toLong(),
-                            strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
-                        )
+                        // 获取章节内容，失败时使用高优先级请求
+                        val contentData = try {
+                            cachedBookRepository.getBookContentWithIncrementalSync(
+                                chapterId = chapter.id.toLong(),
+                                strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
+                            )
+                        } catch (e: Exception) {
+                            logger.logWarning("缓存获取内容失败，使用高优先级网络请求: ${e.message}", TAG)
+                            bookService.getBookContentHighPriority(chapter.id.toLong()).data
+                        }
                         
                         if (contentData != null) {
                             val chapterData = BookCacheData.ChapterContentData(
@@ -307,9 +317,14 @@ class PaginationService @Inject constructor(
             // 按章节序号排序
             cachedChapters.sortBy { it.chapterNum }
 
-            // 获取书籍信息
+            // 获取书籍信息，失败时使用高优先级请求
             val bookInfoData = safeIo {
-                cachedBookRepository.getBookInfoWithIncrementalSync(bookId.toLong())
+                try {
+                    cachedBookRepository.getBookInfoWithIncrementalSync(bookId.toLong())
+                } catch (e: Exception) {
+                    logger.logWarning("缓存获取书籍信息失败，使用高优先级网络请求: ${e.message}", TAG)
+                    bookService.getBookByIdHighPriority(bookId.toLong()).data
+                }
             }
             
             val bookInfoForCache = bookInfoData?.let {

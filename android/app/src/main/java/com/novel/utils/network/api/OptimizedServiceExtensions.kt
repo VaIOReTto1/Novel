@@ -9,6 +9,7 @@ import com.novel.utils.network.api.front.SearchService
 import com.novel.utils.network.api.front.HomeService
 import com.novel.utils.network.api.front.NewsService
 import com.novel.utils.network.api.front.user.UserService
+import com.novel.utils.network.api.front.resource.ResourceService
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
 
@@ -191,6 +192,16 @@ suspend fun BookService.getBookCategoriesHighPriority(workDirection: Int): BookS
 }
 
 /**
+ * 中等优先级获取分类（首页显示）
+ */
+suspend fun BookService.getBookCategoriesMediumPriority(workDirection: Int): BookService.BookCategoryResponse {
+    return OptimizedServiceExtensions.withPriority(RequestPriority.MEDIUM) {
+        TimberLogger.d("BookService", "中等优先级获取书籍分类: workDirection=$workDirection")
+        getBookCategoriesBlocking(workDirection)
+    }
+}
+
+/**
  * 低优先级获取分类（背景加载）
  */
 suspend fun BookService.getBookCategoriesLowPriority(workDirection: Int): BookService.BookCategoryResponse? {
@@ -227,6 +238,40 @@ suspend fun SearchService.searchBooksHighPriority(
 ): SearchService.BookSearchResponse {
     return OptimizedServiceExtensions.withPriority(RequestPriority.HIGH) {
         TimberLogger.d("SearchService", "高优先级搜索书籍: keyword=$keyword")
+        searchBooksBlocking(
+            keyword = keyword,
+            workDirection = workDirection,
+            categoryId = categoryId,
+            isVip = isVip,
+            bookStatus = bookStatus,
+            wordCountMin = wordCountMin,
+            wordCountMax = wordCountMax,
+            updateTimeMin = updateTimeMin,
+            sort = sort,
+            pageNum = pageNum,
+            pageSize = pageSize
+        )
+    }
+}
+
+/**
+ * 中等优先级搜索（分类推荐）
+ */
+suspend fun SearchService.searchBooksMediumPriority(
+    keyword: String? = null,
+    workDirection: Int? = null,
+    categoryId: Int? = null,
+    isVip: Int? = null,
+    bookStatus: Int? = null,
+    wordCountMin: Int? = null,
+    wordCountMax: Int? = null,
+    updateTimeMin: String? = null,
+    sort: String? = null,
+    pageNum: Int = 1,
+    pageSize: Int = 20
+): SearchService.BookSearchResponse {
+    return OptimizedServiceExtensions.withPriority(RequestPriority.MEDIUM) {
+        TimberLogger.d("SearchService", "中等优先级搜索书籍: keyword=$keyword")
         searchBooksBlocking(
             keyword = keyword,
             workDirection = workDirection,
@@ -378,6 +423,20 @@ suspend fun UserService.reportUserBehaviorLowPriority(
     } catch (e: Exception) {
         TimberLogger.w("UserService", "上报用户行为失败", e)
         false
+    }
+}
+
+/**
+ * ResourceService优化扩展
+ */
+
+/**
+ * 高优先级获取图片验证码（用户主动操作）
+ */
+suspend fun ResourceService.getImageVerifyCodeHighPriority(): ResourceService.ImageVerifyCodeResponse {
+    return OptimizedServiceExtensions.withPriority(RequestPriority.HIGH) {
+        TimberLogger.d("ResourceService", "高优先级获取图片验证码")
+        getImageVerifyCodeBlocking()
     }
 }
 

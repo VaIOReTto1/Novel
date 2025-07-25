@@ -7,14 +7,18 @@ import com.novel.core.domain.BaseUseCase
 import com.novel.page.book.viewmodel.BookDetailState
 import com.novel.utils.network.repository.CachedBookRepository
 import com.novel.utils.network.cache.CacheStrategy
+import com.novel.utils.network.api.front.BookService
 import com.novel.utils.TimberLogger
+import com.novel.utils.network.api.getBookByIdHighPriority
+import com.novel.utils.network.api.getBookChaptersHighPriority
 import javax.inject.Inject
 
 /**
  * 获取书籍详情UseCase
  */
 class GetBookDetailUseCase @Inject constructor(
-    private val cachedBookRepository: CachedBookRepository
+    private val cachedBookRepository: CachedBookRepository,
+    private val bookService: BookService
 ) : BaseUseCase<GetBookDetailUseCase.Params, GetBookDetailUseCase.Result>() {
     
     companion object {
@@ -36,12 +40,23 @@ class GetBookDetailUseCase @Inject constructor(
     override suspend fun execute(params: Params): Result {
         TimberLogger.d(TAG, "获取书籍详情: bookId=${params.bookId}, useCache=${params.useCache}")
         
-        val strategy = if (params.useCache) CacheStrategy.CACHE_FIRST else CacheStrategy.NETWORK_ONLY
-        
-        val bookInfo = cachedBookRepository.getBookInfoWithIncrementalSync(
-            bookId = params.bookId.toLong(),
-            strategy = strategy
-        )
+        // 对于用户主动查看详情的场景，使用高优先级请求
+        val bookInfo = if (params.useCache) {
+            // 先尝试从缓存获取，如果缓存没有则使用高优先级请求
+            try {
+                cachedBookRepository.getBookInfoWithIncrementalSync(
+                    bookId = params.bookId.toLong(),
+                    strategy = CacheStrategy.CACHE_FIRST
+                )
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "缓存获取失败，使用高优先级网络请求: ${e.message}")
+                bookService.getBookByIdHighPriority(params.bookId.toLong()).data
+            }
+        } else {
+            // 强制网络请求时使用高优先级
+            TimberLogger.d(TAG, "强制使用高优先级网络请求")
+            bookService.getBookByIdHighPriority(params.bookId.toLong()).data
+        }
         
         val bookDetailInfo = bookInfo?.let { info ->
             BookDetailState.BookInfo(
@@ -96,7 +111,8 @@ class GetBookDetailUseCase @Inject constructor(
  * 获取最新章节UseCase
  */
 class GetLastChapterUseCase @Inject constructor(
-    private val cachedBookRepository: CachedBookRepository
+    private val cachedBookRepository: CachedBookRepository,
+    private val bookService: BookService
 ) : BaseUseCase<GetLastChapterUseCase.Params, GetLastChapterUseCase.Result>() {
     
     companion object {
@@ -112,10 +128,16 @@ class GetLastChapterUseCase @Inject constructor(
     override suspend fun execute(params: Params): Result {
         TimberLogger.d(TAG, "获取最新章节: bookId=${params.bookId}")
         
-        val chapters = cachedBookRepository.getBookChaptersWithIncrementalSync(
-            bookId = params.bookId.toLong(),
-            strategy = CacheStrategy.CACHE_FIRST
-        )
+        // 获取章节列表，优先使用缓存，失败时使用高优先级请求
+        val chapters = try {
+            cachedBookRepository.getBookChaptersWithIncrementalSync(
+                bookId = params.bookId.toLong(),
+                strategy = CacheStrategy.CACHE_FIRST
+            )
+        } catch (e: Exception) {
+            TimberLogger.w(TAG, "缓存获取章节失败，使用高优先级网络请求: ${e.message}")
+            bookService.getBookChaptersHighPriority(params.bookId.toLong()).data ?: emptyList()
+        }
         
         val lastChapter = if (chapters.isNotEmpty()) {
             val chapter = chapters.last()

@@ -5,6 +5,10 @@ import com.novel.utils.TimberLogger
 import com.novel.page.search.component.SearchRankingItem
 import com.novel.utils.network.cache.CacheStrategy
 import com.novel.utils.network.repository.CachedBookRepository
+import com.novel.utils.network.api.front.BookService
+import com.novel.utils.network.api.getNewestRankBooksHighPriority
+import com.novel.utils.network.api.getUpdateRankBooksHighPriority
+import com.novel.utils.network.api.getVisitRankBooksHighPriority
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,7 +31,8 @@ import javax.inject.Singleton
 @Singleton
 class SearchService @Inject constructor(
     /** 缓存书籍仓库，提供带缓存的数据访问 */
-    private val cachedBookRepository: CachedBookRepository
+    private val cachedBookRepository: CachedBookRepository,
+    private val bookService: BookService
 ) {
     
     companion object {
@@ -43,7 +48,12 @@ class SearchService @Inject constructor(
     suspend fun getHotNovelRanking(): List<SearchRankingItem> {
         return try {
             TimberLogger.d(TAG, "开始获取热门小说榜单")
-            val rankBooks = cachedBookRepository.getVisitRankBooks(CacheStrategy.CACHE_FIRST)
+            val rankBooks = try {
+                cachedBookRepository.getVisitRankBooks(CacheStrategy.CACHE_FIRST)
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "缓存获取热门小说榜单失败，使用高优先级网络请求: ${e.message}")
+                bookService.getVisitRankBooksHighPriority().data ?: emptyList()
+            }
             
             val result = rankBooks.mapIndexed { index, book ->
                 SearchRankingItem(
@@ -71,7 +81,12 @@ class SearchService @Inject constructor(
     suspend fun getHotDramaRanking(): List<SearchRankingItem> {
         return try {
             TimberLogger.d(TAG, "开始获取热门短剧榜单")
-            val rankBooks = cachedBookRepository.getUpdateRankBooks(CacheStrategy.CACHE_FIRST)
+            val rankBooks = try {
+                cachedBookRepository.getUpdateRankBooks(CacheStrategy.CACHE_FIRST)
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "缓存获取热门短剧榜单失败，使用高优先级网络请求: ${e.message}")
+                bookService.getUpdateRankBooksHighPriority().data ?: emptyList()
+            }
             
             val result = rankBooks.mapIndexed { index, book ->
                 SearchRankingItem(
@@ -99,7 +114,12 @@ class SearchService @Inject constructor(
     suspend fun getNewBookRanking(): List<SearchRankingItem> {
         return try {
             TimberLogger.d(TAG, "开始获取新书榜单")
-            val rankBooks = cachedBookRepository.getNewestRankBooks(CacheStrategy.CACHE_FIRST)
+            val rankBooks = try {
+                cachedBookRepository.getNewestRankBooks(CacheStrategy.CACHE_FIRST)
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "缓存获取新书榜单失败，使用高优先级网络请求: ${e.message}")
+                bookService.getNewestRankBooksHighPriority().data ?: emptyList()
+            }
             
             val result = rankBooks.mapIndexed { index, book ->
                 SearchRankingItem(
@@ -117,4 +137,4 @@ class SearchService @Inject constructor(
             emptyList()
         }
     }
-} 
+}

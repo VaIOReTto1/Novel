@@ -30,7 +30,9 @@ open class HomeCompositeUseCase @Inject constructor(
     @Stable
     private val homeRepository: IHomeRepository,
     @Stable
-    private val cachedBookRepository: CachedBookRepository
+    private val cachedBookRepository: CachedBookRepository,
+    @Stable
+    private val searchService: SearchService
 ) : BaseUseCase<HomeCompositeUseCase.Params, HomeCompositeUseCase.Result>() {
     
     companion object {
@@ -89,7 +91,7 @@ open class HomeCompositeUseCase @Inject constructor(
     
     @Stable
     private val getCategoryRecommendBooksUseCase: GetCategoryRecommendBooksUseCase = 
-        GetCategoryRecommendBooksUseCase(cachedBookRepository)
+        GetCategoryRecommendBooksUseCase(cachedBookRepository, searchService)
     
     @Stable
     private val getCategoriesUseCase: GetCategoriesUseCase = 
@@ -427,4 +429,4 @@ class HomeStatusCheckUseCase @Inject constructor(
             )
         }
     }
-} 
+}

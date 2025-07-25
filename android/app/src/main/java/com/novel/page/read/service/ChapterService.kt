@@ -10,6 +10,9 @@ import com.novel.page.read.viewmodel.ChapterCache
 import com.novel.page.read.viewmodel.PageData
 import com.novel.page.read.viewmodel.ReaderSettings
 import com.novel.utils.network.repository.CachedBookRepository
+import com.novel.utils.network.api.getBookContentHighPriority
+import com.novel.utils.network.api.getBookChaptersHighPriority
+import com.novel.utils.network.api.front.BookService
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,6 +38,7 @@ import javax.inject.Singleton
 class ChapterService @Inject constructor(
     private val cachedBookRepository: CachedBookRepository,
     private val sessionCache: SessionCache<String, ChapterCache>,
+    private val bookService: BookService,
     dispatchers: DispatcherProvider,
     logger: ServiceLogger
 ) : SafeService(dispatchers, logger) {
@@ -58,10 +62,16 @@ class ChapterService @Inject constructor(
             withPerformanceMonitoring("getChapterList") {
                 logger.logDebug("获取章节列表: bookId=$bookId", TAG)
                 
-                val chapters = cachedBookRepository.getBookChaptersWithIncrementalSync(
-                    bookId = bookId.toLong(),
-                    strategy = com.novel.utils.network.cache.CacheStrategy.NETWORK_FIRST
-                )
+                // 获取章节列表，优先使用高优先级网络请求确保数据最新
+                val chapters = try {
+                    cachedBookRepository.getBookChaptersWithIncrementalSync(
+                        bookId = bookId.toLong(),
+                        strategy = com.novel.utils.network.cache.CacheStrategy.NETWORK_FIRST
+                    )
+                } catch (e: Exception) {
+                    logger.logWarning("缓存获取章节失败，使用高优先级网络请求: ${e.message}", TAG)
+                    bookService.getBookChaptersHighPriority(bookId.toLong()).data ?: emptyList()
+                }
                 
                 val result = chapters.map { chapter ->
                     Chapter(
@@ -101,12 +111,17 @@ class ChapterService @Inject constructor(
                 )
             }
             
-            // 2. 从Repository获取
+            // 2. 从Repository获取，失败时使用高优先级请求
             val contentData = safeIo {
-                cachedBookRepository.getBookContentWithIncrementalSync(
-                    chapterId = chapterId.toLong(),
-                    strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
-                )
+                try {
+                    cachedBookRepository.getBookContentWithIncrementalSync(
+                        chapterId = chapterId.toLong(),
+                        strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
+                    )
+                } catch (e: Exception) {
+                    logger.logWarning("缓存获取内容失败，使用高优先级网络请求: ${e.message}", TAG)
+                    bookService.getBookContentHighPriority(chapterId.toLong()).data
+                }
             }
             
             if (contentData != null) {
@@ -199,11 +214,16 @@ class ChapterService @Inject constructor(
                 
                 logger.logDebug("开始预加载章节: chapterId=$chapterId", TAG)
                 
-                // 从Repository获取内容
-                val contentData = cachedBookRepository.getBookContentWithIncrementalSync(
-                    chapterId = chapterId.toLong(),
-                    strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
-                )
+                // 从Repository获取内容，失败时使用高优先级请求
+                val contentData = try {
+                    cachedBookRepository.getBookContentWithIncrementalSync(
+                        chapterId = chapterId.toLong(),
+                        strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST
+                    )
+                } catch (e: Exception) {
+                    logger.logWarning("预加载缓存获取失败，使用高优先级网络请求: ${e.message}", TAG)
+                    bookService.getBookContentHighPriority(chapterId.toLong()).data
+                }
                 
                 if (contentData != null) {
                     val chapter = Chapter(
@@ -356,4 +376,4 @@ class ChapterService @Inject constructor(
         val chapterName: String,
         val content: String
     )
-} 
+}

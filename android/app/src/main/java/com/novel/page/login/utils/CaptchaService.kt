@@ -5,6 +5,7 @@ import android.util.Base64
 import androidx.compose.runtime.Stable
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.api.front.resource.ResourceService
+import com.novel.utils.network.api.getImageVerifyCodeHighPriority
 import com.novel.utils.security.SecurityConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +59,13 @@ class CaptchaService @Inject constructor(
         )
         
         runCatching {
-            val response = resourceService.getImageVerifyCodeBlocking()
+            // 使用高优先级请求获取验证码
+            val response = try {
+                resourceService.getImageVerifyCodeHighPriority()
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "高优先级验证码请求失败，使用普通请求: ${e.message}")
+                resourceService.getImageVerifyCodeBlocking()
+            }
             
             response.data?.let { data ->
                 // 验证数据安全性

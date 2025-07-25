@@ -16,7 +16,10 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -72,6 +75,11 @@ class NetworkMonitor @Inject constructor(
     private val _processedNetworkState = _networkState
         .debounce(DEBOUNCE_TIMEOUT_MS)
         .distinctUntilChanged()
+        .stateIn(
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = _networkState.value
+        )
     val networkState: StateFlow<NetworkState> = _processedNetworkState
 
     // 简化的网络类型流，向后兼容

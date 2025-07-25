@@ -108,8 +108,19 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     marginRight: wp(6),
     overflow: 'hidden',
   },
-  announcementText: {
+  announcementCarouselContainer: {
     flex: 1,
+    height: wp(20),
+    overflow: 'hidden',
+  },
+  announcementCarousel: {
+    flexDirection: 'column',
+  },
+  announcementItem: {
+    height: wp(20),
+    justifyContent: 'center',
+  },
+  announcementText: {
     fontSize: fp(10),
     color: colors.novelText,
   },

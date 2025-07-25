@@ -53,7 +53,17 @@ export const ICONS_DATA: IconData[] = [
       console.log('NavigationBridge.navigateToHistory not available');
     }
   }},
-  { id: 'subscribe', name: '推书中心', icon: 'subscribe', onPress: () => console.log('订阅') },
+  { id: 'subscribe', name: '推书中心', icon: 'subscribe', onPress: () => {
+    console.log('导航到推书中心');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToRecommendBook) {
+      NavigationBridge.navigateToRecommendBook();
+    } else {
+      console.log('NavigationBridge.navigateToRecommendBook not available');
+    }
+  }},
 
   // 第二页的15个图标
   { id: 'game', name: '我的', icon: 'game', onPress: () => console.log('游戏') },

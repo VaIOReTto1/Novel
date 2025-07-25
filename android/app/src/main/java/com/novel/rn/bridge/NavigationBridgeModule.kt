@@ -176,6 +176,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到推书中心页面
+     */
+    @ReactMethod
+    fun navigateToRecommendBook() {
+        TimberLogger.d(TAG, "导航到推书中心页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToRecommendBook()
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

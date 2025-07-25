@@ -179,6 +179,15 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+        
+        composable("recommendbook") {
+            ReactNativePage(
+                componentName = "RecommendBookPageComponent",
+                initialProps = mapOf("source" to "android_recommendbook"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -367,6 +376,14 @@ object NavViewModel : ViewModel() {
         
         navController.value?.navigate("becomewriter")
         TimberLogger.d("NavViewModel", "✅ 导航到成为作家页面命令已发送")
+        TimberLogger.d("NavViewModel", "==============================")
+    }
+
+        fun navigateToRecommendBook() {
+        TimberLogger.d("NavViewModel", "===== 导航到推荐书籍页面 =====")
+        
+        navController.value?.navigate("recommendbook")
+        TimberLogger.d("NavViewModel", "✅ 导航命令已发送")
         TimberLogger.d("NavViewModel", "==============================")
     }
 

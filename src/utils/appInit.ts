@@ -108,4 +108,5 @@ export function cleanupApp() {
 import '../page/ScrollBox/HistoryPage/HistoryPageComponent';
 import '../page/ScrollBox/MessagePage/MessagePageComponent';
 import '../page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent';
+import '../page/ScrollBox/RecommendBookPage/RecommendBookPageComponent';
 import '../page/SettingsPage';

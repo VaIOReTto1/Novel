@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import javax.inject.Qualifier
 
 /**
  * Token 提供者接口
@@ -292,18 +293,25 @@ data class MemoryCacheStats(
 }
 
 /**
+ * Qualifier for image-specific cache
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ImageCache
+
+/**
  * Hilt图片优化依赖提供模块
  * 配置图片加载所需的网络和优化组件
  */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkingModule {
-    @Provides @Singleton
+    @Provides @Singleton @ImageCache
     fun provideOkHttpCache(@ApplicationContext ctx: Context, config: ImageOptimizationConfig): Cache =
         Cache(ctx.cacheDir.resolve("http_cache"), config.diskCacheSizeMB * 1024 * 1024)
 
     @Provides @Singleton
-    fun provideOkHttpClient(cache: Cache): OkHttpClient =
+    fun provideOkHttpClient(@ImageCache cache: Cache): OkHttpClient =
         OkHttpClient.Builder()
             .cache(cache)
             .build()

@@ -153,6 +153,7 @@ fun NovelImageView(
         }
     }
 ) {
+    val imageUrl = if(imageUrl?.startsWith("/data/user") == true) imageUrl else "https://img.picui.cn/free/2025/06/22/6857c4dee81d8.jpg"
     TimberLogger.d("NovelImageView", "imageUrl: $imageUrl, strategy: $loadingStrategy")
     
     // 根据加载策略决定是否使用高级缓存

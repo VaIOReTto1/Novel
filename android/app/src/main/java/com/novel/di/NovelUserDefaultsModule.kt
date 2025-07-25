@@ -86,9 +86,26 @@ object NovelUserDefaultsModule {
      */
     @Provides
     @Singleton
-    fun provideTokenProvider(keyChain: NovelKeyChain): TokenProvider {
-        TimberLogger.d(TAG, "创建TokenProvider服务")
-        return TokenProvider(keyChain)
+    fun provideTokenProvider(userDefaults: NovelUserDefaults): TokenProvider {
+        return object : TokenProvider {
+            override fun getToken(): String? {
+                return userDefaults.getString("access_token")
+            }
+            
+            override fun accessToken(): String? {
+                return userDefaults.getString("access_token")
+            }
+            
+            override suspend fun saveToken(accessToken: String, refreshToken: String) {
+                userDefaults.setString("access_token", accessToken)
+                userDefaults.setString("refresh_token", refreshToken)
+            }
+            
+            override suspend fun clear() {
+                userDefaults.remove("access_token")
+                userDefaults.remove("refresh_token")
+            }
+        }
     }
 
     /**

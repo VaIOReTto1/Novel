@@ -1,74 +1,243 @@
 package com.novel.di
 
 import android.content.Context
-import com.novel.utils.TimberLogger
-import com.novel.page.read.repository.BookCacheManager
-import com.novel.utils.network.api.front.BookService
-import com.novel.utils.network.api.front.SearchService
-import com.novel.utils.network.api.front.HomeService
-import com.novel.utils.network.api.front.NewsService
-import com.novel.utils.network.api.front.user.UserService
-import com.novel.utils.network.cache.NetworkCacheManager
-import com.novel.utils.network.ImmutableListTypeAdapterFactory
+import androidx.compose.runtime.Stable
 import com.google.gson.Gson
+import com.novel.BuildConfig
 import com.google.gson.GsonBuilder
+import com.novel.utils.TimberLogger
+import com.novel.utils.network.ApiService
+import com.novel.utils.network.NetworkMonitor
+import com.novel.utils.network.TokenProvider
+import com.novel.utils.network.cache.*
+import com.novel.utils.network.interceptor.*
+import com.novel.utils.network.priority.PriorityRequestDispatcher
+import com.novel.utils.network.api.front.*
+import com.novel.utils.network.api.front.user.UserService
+import com.novel.utils.network.repository.CachedBookRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Cache
+import okhttp3.CertificatePinner
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 /**
- * 网络模块依赖注入配置
- * 
- * 负责提供小说应用的网络相关服务和工具：
- * - 各功能模块的API服务接口
- * - 网络数据缓存管理器
- * - 书籍内容缓存管理器
- * - JSON序列化工具
- * 
- * 所有网络组件都采用单例模式，提高性能和资源利用率
+ * 网络客户端类型限定符
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class OptimizedOkHttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class StandardOkHttpClient
+
+/**
+ * 网络模块 - 集成所有网络层优化
  */
 @Module
 @InstallIn(SingletonComponent::class)
+@Stable
 object NetworkModule {
-
+    
     private const val TAG = "NetworkModule"
-
+    private const val CACHE_SIZE = 50L * 1024 * 1024 // 50MB
+    private const val NETWORK_TIMEOUT = 30L // 30秒
+    
     /**
-     * 提供书籍缓存管理器
-     * 
-     * 用于管理书籍内容的本地缓存，支持：
-     * - 章节内容离线缓存
-     * - 图片资源本地存储
-     * - 缓存清理和过期管理
-     * 
-     * @param context 应用上下文
-     * @param gson JSON序列化工具
-     * @return BookCacheManager实例
+     * 提供网络监控器
      */
     @Provides
     @Singleton
-    fun provideBookCacheManager(
-        @ApplicationContext context: Context,
-        gson: Gson
-    ): BookCacheManager {
-        TimberLogger.d(TAG, "创建书籍缓存管理器")
-        return BookCacheManager(context, gson)
+    fun provideNetworkMonitor(@ApplicationContext context: Context): NetworkMonitor {
+        return NetworkMonitor(context)
+    }
+    
+    /**
+     * 提供请求合并器
+     */
+    @Provides
+    @Singleton
+    fun provideRequestCoalescer(): RequestCoalescer {
+        return RequestCoalescer()
+    }
+    
+    /**
+     * 提供优先级请求分发器
+     */
+    @Provides
+    @Singleton
+    fun providePriorityRequestDispatcher(networkMonitor: NetworkMonitor): PriorityRequestDispatcher {
+        TimberLogger.d(TAG, "创建优先级请求分发器")
+        return PriorityRequestDispatcher(networkMonitor)
+    }
+    
+    @Provides
+    @Singleton
+    fun providePriorityInterceptor(): PriorityInterceptor {
+        return PriorityInterceptor()
     }
 
     /**
+     * 提供智能重试拦截器
+     */
+    @Provides
+    @Singleton
+    fun provideSmartRetryInterceptor(networkMonitor: NetworkMonitor): SmartRetryInterceptor {
+        return SmartRetryInterceptor(networkMonitor)
+    }
+    
+    /**
+     * 提供请求合并拦截器
+     */
+    @Provides
+    @Singleton
+    fun provideRequestCoalescingInterceptor(requestCoalescer: RequestCoalescer): RequestCoalescingInterceptor {
+        return RequestCoalescingInterceptor(requestCoalescer)
+    }
+    
+    /**
+     * 提供认证拦截器
+     */
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor {
+        return AuthInterceptor(tokenProvider)
+    }
+    
+
+    
+    /**
+     * 提供Gson实例
+     */
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .setLenient()
+            .create()
+    }
+    
+    /**
+     * 提供HTTP缓存
+     */
+    @Provides
+    @Singleton
+    fun provideHttpCache(@ApplicationContext context: Context): Cache {
+        val cacheDir = File(context.cacheDir, "http")
+        return Cache(cacheDir, CACHE_SIZE)
+    }
+    
+    /**
+     * 提供证书锁定器（生产环境使用）
+     */
+    @Provides
+    @Singleton
+    fun provideCertificatePinner(): CertificatePinner {
+        return CertificatePinner.Builder()
+            // 示例：为生产环境添加证书锁定
+            // .add("reader.example.com", "sha256/AAAAAAAAAAAAAAAAAAAAAA=")
+            .build()
+    }
+    
+    /**
+     * 提供优化版OkHttpClient
+     */
+    @OptimizedOkHttpClient
+    @Provides
+    @Singleton
+    fun provideOptimizedOkHttpClient(
+        @ApplicationContext context: Context,
+        cache: Cache,
+        certificatePinner: CertificatePinner,
+        authInterceptor: AuthInterceptor,
+        priorityInterceptor: PriorityInterceptor,
+        smartRetryInterceptor: SmartRetryInterceptor,
+        coalescingInterceptor: RequestCoalescingInterceptor,
+        priorityDispatcher: PriorityRequestDispatcher,
+        networkMonitor: NetworkMonitor
+    ): OkHttpClient {
+        
+        // 超时配置 - 根据网络状态自适应
+        val timeouts = networkMonitor.getRecommendedTimeouts()
+        
+        // 创建优化的OkHttp客户端，集成所有网络优化功能
+        val builder = OkHttpClient.Builder()
+            .dispatcher(priorityDispatcher.createOkHttpDispatcher())
+            .cache(cache)
+            .certificatePinner(certificatePinner)
+            .connectTimeout(timeouts.connectTimeout, TimeUnit.MILLISECONDS)
+            .readTimeout(timeouts.readTimeout, TimeUnit.MILLISECONDS)
+            .callTimeout(timeouts.callTimeout, TimeUnit.MILLISECONDS)
+            .addInterceptor(authInterceptor)
+            .addInterceptor(priorityInterceptor)
+            .addInterceptor(smartRetryInterceptor)
+            .addInterceptor(coalescingInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor.Level.BODY
+                } else {
+                    HttpLoggingInterceptor.Level.NONE
+                }
+            })
+        
+        // 网络状态变化监听
+        setupNetworkStateListener(networkMonitor, priorityDispatcher)
+        
+        TimberLogger.d(TAG, "优化版OkHttpClient初始化完成")
+        return builder.build()
+    }
+    
+    /**
+     * 提供标准OkHttpClient（向后兼容）
+     */
+    @StandardOkHttpClient
+    @Provides
+    @Singleton
+    fun provideStandardOkHttpClient(
+        cache: Cache,
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .cache(cache)
+            .addInterceptor(authInterceptor)
+            .connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .callTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .build()
+    }
+    
+    /**
+     * 提供主要的Retrofit实例（使用优化客户端）
+     */
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+        @OptimizedOkHttpClient okHttpClient: OkHttpClient,
+        gson: Gson
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(ApiService.BASE_URL_FRONT)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+    }
+    
+    /**
      * 提供网络缓存管理器
-     * 
-     * 统一管理API请求的缓存策略：
-     * - 内存缓存：提高响应速度
-     * - 磁盘缓存：支持离线访问
-     * - 缓存策略：智能更新机制
-     * 
-     * @param context 应用上下文
-     * @param gson JSON序列化工具
-     * @return NetworkCacheManager实例
      */
     @Provides
     @Singleton
@@ -76,93 +245,118 @@ object NetworkModule {
         @ApplicationContext context: Context,
         gson: Gson
     ): NetworkCacheManager {
-        TimberLogger.d(TAG, "创建网络缓存管理器")
         return NetworkCacheManager(context, gson)
     }
+    
+    /**
+     * 提供阅读行为分析器
+     */
+    @Provides
+    @Singleton
+    fun provideReadingBehaviorAnalyzer(
+        @ApplicationContext context: Context,
+        userDefaults: com.novel.utils.Store.UserDefaults.NovelUserDefaults
+    ): ReadingBehaviorAnalyzer {
+        return ReadingBehaviorAnalyzer(context, userDefaults)
+    }
+    
+    /**
+     * 提供智能预取器
+     */
+    @Provides
+    @Singleton
+    fun provideIntelligentPrefetcher(
+        bookService: BookService,
+        cacheManager: NetworkCacheManager,
+        behaviorAnalyzer: ReadingBehaviorAnalyzer
+    ): IntelligentPrefetcher {
+        return IntelligentPrefetcher(bookService, cacheManager, behaviorAnalyzer)
+    }
+    
+    /**
+     * 提供各种Service实例
+     */
+    @Provides
+    @Singleton
+    fun provideBookService(retrofit: Retrofit): BookService {
+        return retrofit.create(BookService::class.java)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideHomeService(retrofit: Retrofit): HomeService {
+        return retrofit.create(HomeService::class.java)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideNewsService(retrofit: Retrofit): NewsService {
+        return retrofit.create(NewsService::class.java)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
+    }
+    
 
-    /**
-     * 提供书籍服务API
-     * 
-     * @param gson JSON序列化工具
-     * @return BookService - 书籍相关API接口
-     */
-    @Provides
-    @Singleton
-    fun provideBookService(gson: Gson): BookService {
-        TimberLogger.d(TAG, "创建书籍服务")
-        return BookService(gson)
-    }
     
     /**
-     * 提供搜索服务API
-     * 
-     * @param gson JSON序列化工具
-     * @return SearchService - 搜索相关API接口
+     * 设置网络状态变化监听
      */
-    @Provides
-    @Singleton
-    fun provideSearchService(gson: Gson): SearchService {
-        TimberLogger.d(TAG, "创建搜索服务")
-        return SearchService(gson)
-    }
-    
-    /**
-     * 提供首页服务API
-     * 
-     * @param gson JSON序列化工具
-     * @return HomeService - 首页数据API接口
-     */
-    @Provides
-    @Singleton
-    fun provideHomeService(gson: Gson): HomeService {
-        TimberLogger.d(TAG, "创建首页服务")
-        return HomeService(gson)
-    }
-    
-    /**
-     * 提供资讯服务API
-     * 
-     * @param gson JSON序列化工具
-     * @return NewsService - 资讯相关API接口
-     */
-    @Provides
-    @Singleton
-    fun provideNewsService(gson: Gson): NewsService {
-        TimberLogger.d(TAG, "创建资讯服务")
-        return NewsService(gson)
-    }
-    
-    /**
-     * 提供用户服务API
-     * 
-     * @param gson JSON序列化工具
-     * @return UserService - 用户相关API接口
-     */
-    @Provides
-    @Singleton
-    fun provideUserService(gson: Gson): UserService {
-        TimberLogger.d(TAG, "创建用户服务")
-        return UserService(gson)
-    }
-    
-    /**
-     * 提供JSON序列化工具
-     * 
-     * 全局统一的Gson实例，用于：
-     * - API响应数据解析
-     * - 缓存数据序列化
-     * - 配置数据持久化
-     * 
-     * 配置了ImmutableList的TypeAdapter以支持kotlinx.collections.immutable
-     * 
-     * @return Gson实例
-     */
-    @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        TimberLogger.d(TAG, "创建Gson序列化工具")
-        return GsonBuilder()
-            .registerTypeAdapterFactory(ImmutableListTypeAdapterFactory())
-            .create()
+    private fun setupNetworkStateListener(
+        networkMonitor: NetworkMonitor,
+        priorityDispatcher: PriorityRequestDispatcher
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            networkMonitor.networkState.collect { networkState ->
+                TimberLogger.d(TAG, "网络状态变化: $networkState")
+                
+                // 更新优先级分发器配置
+                priorityDispatcher.updateConfiguration()
+                
+                // 这里可以添加其他网络状态变化的处理逻辑
+                // 比如调整缓存策略、预取策略等
+            }
+        }
     }
 }
+
+/**
+ * 网络优化统计管理器
+ */
+@Singleton
+class NetworkOptimizationStats @javax.inject.Inject constructor(
+    private val requestCoalescer: RequestCoalescer,
+    private val priorityDispatcher: PriorityRequestDispatcher,
+    private val coalescingInterceptor: RequestCoalescingInterceptor
+) {
+    
+    /**
+     * 获取综合统计信息
+     */
+    fun getOverallStats(): NetworkOptimizationReport {
+        return NetworkOptimizationReport(
+            coalescingStats = coalescingInterceptor.getStats(),
+            priorityStats = priorityDispatcher.getStats(),
+            timestamp = System.currentTimeMillis()
+        )
+    }
+}
+
+/**
+ * 网络优化报告
+ */
+@Stable
+data class NetworkOptimizationReport(
+    val coalescingStats: CoalesceStats,
+    val priorityStats: com.novel.utils.network.priority.PriorityStats,
+    val timestamp: Long
+)

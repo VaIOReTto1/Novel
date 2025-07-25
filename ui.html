@@ -1,348 +1,158 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>成为作家 UI 示例</title>
-  <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Segoe UI", Roboto, "PingFang SC", sans-serif; background: #f0f6fb; color: #333; }
-    a { text-decoration: none; color: inherit; }
-    .container { padding: 16px; }
-    /* Sticky header */
-    header { position: sticky; top: 0; background: #f0f6fb; padding: 16px 0; text-align: center; font-size: 18px; font-weight: 500; }
-    header .back { position: absolute; left: 16px; top: 18px; font-size: 20px; cursor: pointer; }
-    /* User & announcement */
-    .profile { display: flex; align-items: center; background: #fff; border-radius: 8px; padding: 12px; margin-bottom: 16px; }
-    .profile img { width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; }
-    .profile .name { flex: 1; font-size: 16px; }
-    .profile .arrow { font-size: 16px; }
-    .ann { background: #fff; border-radius: 8px; padding: 8px 12px; margin-bottom: 16px; display: flex; align-items: center; }
-    .ann .tag { background: #eaf5ff; color: #1890ff; font-size: 12px; padding: 2px 4px; border-radius: 2px; margin-right: 6px; }
-    .ann .text { flex: 1; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ann .more { font-size: 14px; color: #999; }
-
-    /* 作品数据 */
-    .section { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-    .tabs { display: inline-flex; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; }
-    .tabs .tab { padding: 6px 16px; cursor: pointer; font-size: 14px; color: #777; }
-    .tabs .tab.active { background: #fff; font-weight: bold; color: #333; }
-    .stats { display: flex; justify-content: space-between; margin-top: 12px; }
-    .stats .item { flex: 1; text-align: center; }
-    .stats .item .num { font-size: 18px; }
-    .stats .item .label { font-size: 12px; color: #999; margin-top: 4px; }
-    .view-all { display: block; text-align: center; font-size: 12px; color: #1890ff; margin-top: 12px; }
-
-    /* 作家专属 */
-    .subtabs { display: flex; gap: 8px; margin-bottom: 12px; }
-    .subtabs .subtab { flex:1; text-align:center; padding:6px; border-radius:4px; font-size:14px; background:#f5f5f5; color:#777; cursor:pointer; }
-    .subtabs .subtab.active { background:#fff; font-weight:bold; color:#333; }
-    .subcontent > div { display:none; }
-    .subcontent > div.active { display:block; }
-
-    /* 超多福利 & 平台实力 icons */
-    .list-icon { display: flex; align-items: center; padding:8px 0; border-bottom:1px solid #f0f0f0; }
-    .list-icon:last-child { border-bottom:none; }
-    .list-icon i { font-size: 20px; width:24px; margin-right:8px; color:#1890ff; }
-    .list-icon .text { flex:1; font-size:14px; }
-
-    /* 成神之路 timeline */
-    .timeline { position: relative; margin-left: 12px; padding-left: 12px; border-left:2px solid #e0e0e0; }
-    .timeline-item { display: flex; align-items: flex-start; margin-bottom:16px; }
-    .timeline-item:last-child { margin-bottom:0; }
-    .timeline-item i { font-size: 16px; margin-right:8px; color:#1890ff; }
-    .timeline-item .text { font-size:14px; color:#555; }
-
-    /* 平台实力 logos */
-    .icons-row { display: flex; gap:16px; overflow-x:auto; padding:8px 0; }
-    .icons-row::-webkit-scrollbar { display:none; }
-    .icons-row .icon { flex: none; text-align:center; font-size:12px; }
-    .icons-row .icon img { width:40px; height:40px; border-radius:8px; }
-
-    /* 版权改编 grid */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(100px,1fr)); gap:12px; }
-    .grid img { width:100%; border-radius:4px; }
-    .grid .caption { font-size:12px; text-align:center; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
-
-    /* ====== 创作活动优化样式 ====== */
-    .section.activity {
-      padding: 16px;
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-    .activity-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .activity-header .title {
-      font-size: 16px;
-      font-weight: 500;
-    }
-    .activity-header .more {
-      font-size: 12px;
-      color: #999;
-    }
-    .activity-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .activity-tabs .tab {
-      padding: 6px 12px;
-      font-size: 14px;
-      border-radius: 16px;
-      background: #f5f5f5;
-      color: #777;
-      cursor: pointer;
-      user-select: none;
-    }
-    .activity-tabs .tab.active {
-      background: #FFF4EB;
-      color: #FF6600;
-    }
-    .activity-lists .list { display: none; }
-    .activity-lists .list.active { display: block; }
-    .activity-lists .item {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      margin-bottom: 12px;
-    }
-    .activity-lists .item img {
-      flex-shrink: 0;
-      width: 60px;
-      height: 60px;
-      border-radius: 4px;
-      margin-right: 12px;
-    }
-    .activity-lists .item .info { flex: 1; }
-    .activity-lists .item .info .title {
-      font-size: 14px;
-      color: #333;
-      line-height: 1.4;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 6px;
-    }
-    .activity-lists .item .info .time {
-      font-size: 12px;
-      color: #999;
-    }
-    .activity-lists .item .goto {
-      flex-shrink: 0;
-      padding: 4px 10px;
-      font-size: 12px;
-      color: #FF6600;
-      border: 1px solid #FF6600;
-      border-radius: 12px;
-    }
-
-    /* 作家课堂 */
-    .class-cards { display:flex; gap:12px; overflow-x:auto; padding-bottom:16px; }
-    .class-cards::-webkit-scrollbar { display:none; }
-    .card { flex:none; width:160px; background:#fff; border-radius:8px; overflow:hidden; }
-    .card img { width:100%; height:80px; object-fit:cover; }
-    .card .desc { padding:8px; font-size:12px; color:#333; }
-
-    /* 固定底部按钮 */
-    .bottom-btn { position:sticky; bottom:0; background:transparent; padding:16px; text-align:center; }
-    .bottom-btn button {
-      width:100%; padding:12px 0;
-      background:linear-gradient(90deg,#ff7e00,#ff3d00);
-      color:#fff; font-size:16px; border:none; border-radius:24px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>好友中心</title>
+<style>
+  :root{
+    --primary:#ff6a00;
+    --primary-light:#ffe6d0;
+    --bg:#f7f9fb;
+    --divider:#f0f0f0;
+    --muted:#999;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Segoe UI",Roboto,"PingFang SC",sans-serif;background:var(--bg);color:#222;}
+  a{text-decoration:none;color:inherit;}
+  header{position:sticky;top:0;background:#fff;padding:12px 48px 12px 12px;font-size:18px;font-weight:600;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  header .back{position:absolute;left:12px;top:14px;font-size:20px;cursor:pointer;}
+  .nav{display:flex;justify-content:space-around;background:#fff;border-bottom:1px solid var(--divider);}  
+  .nav span{flex:1;text-align:center;padding:10px 0;font-size:16px;color:var(--muted);cursor:pointer;position:relative;}
+  .nav span.active{color:#000;font-weight:600;}
+  .nav span.active::after{content:"";position:absolute;bottom:0;left:25%;width:50%;height:2px;background:var(--primary);border-radius:1px;}
+  .panel{padding:0 16px;}
+  /* 推荐列表 */
+  ul.recommend{list-style:none;padding:0;margin:0;}
+  ul.recommend li{display:flex;align-items:center;padding:14px 0;}
+  ul.recommend li+li{border-top:1px solid var(--divider);}  
+  .avatar-box{position:relative;margin-right:12px;}
+  .avatar-box img{width:48px;height:48px;border-radius:50%;object-fit:cover;}
+  .avatar-box .badge{position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;background:#1e90ff;color:#fff;font-size:11px;line-height:18px;text-align:center;border-radius:50%;font-weight:600;}
+  .info{flex:1;min-width:0;}
+  .info .name{font-size:15px;font-weight:500;}
+  .info .name .tag{margin-left:4px;padding:2px 4px;border-radius:3px;font-size:11px;color:#fff;vertical-align:1px;}
+  .tag.orange{background:var(--primary);} .tag.blue{background:#3491ff;} .tag.gray{background:#bbb;}
+  .info .desc{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .follow-btn{flex:none;padding:4px 18px;border-radius:22px;border:1px solid var(--primary-light);color:var(--primary);font-size:14px;cursor:pointer;display:flex;align-items:center;gap:4px;background:rgba(255,106,0,.06);}  
+  .follow-btn:hover{background:var(--primary-light);}
+  /* 空状态 */
+  .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;color:var(--muted);}  
+  .empty img{width:180px;height:180px;object-fit:contain;margin-bottom:12px;}
+</style>
 </head>
 <body>
-  <header><span class="back">←</span>成为作家</header>
-  <div class="container">
-    <!-- 用户信息 & 公告 -->
-    <section class="profile">
-      <img src="https://placehold.co/80x80" alt="头像">
-      <div class="name">安国的尹锋</div>
-      <div class="arrow">›</div>
-    </section>
-    <section class="ann">
-      <span class="tag">公告</span>
-      <div class="text">番茄小说2025殿堂·金番作家名单重磅揭晓！</div>
-      <div class="more">更多›</div>
-    </section>
-
-    <!-- 作品数据 -->
-    <section class="section">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>作品数据</div><div>数据说明ℹ</div>
-      </div>
-      <div class="tabs" id="dataTabs">
-        <div class="tab active" data-target="novel">小说</div>
-        <div class="tab" data-target="short">短故事</div>
-      </div>
-      <div id="novel" class="stats">
-        <div class="item"><div class="num">0</div><div class="label">7日浏览</div></div>
-        <div class="item"><div class="num">0</div><div class="label">7日点赞</div></div>
-        <div class="item"><div class="num">0</div><div class="label">7日收藏</div></div>
-        <div class="item"><div class="num">0</div><div class="label">7日评论</div></div>
-      </div>
-      <div id="short" class="stats" style="display:none;">
-        <div class="item"><div class="num">0</div><div class="label">短7日浏览</div></div>
-        <div class="item"><div class="num">0</div><div class="label">短7日点赞</div></div>
-        <div class="item"><div class="num">0</div><div class="label">短7日收藏</div></div>
-        <div class="item"><div class="num">0</div><div class="label">短7日评论</div></div>
-      </div>
-      <a href="#" class="view-all">查看全部›</a>
-    </section>
-
-    <!-- 作家专属 -->
-    <section class="section">
-      <div>作家专属</div><div style="font-size:12px;color:#999;margin-bottom:8px;">入驻番茄，享亿级现金扶持内容</div>
-      <div class="subtabs" id="authorTabs">
-        <div class="subtab active" data-target="benefits">超多福利</div>
-        <div class="subtab" data-target="road">成神之路</div>
-        <div class="subtab" data-target="platform">平台实力</div>
-      </div>
-      <div class="subcontent">
-        <div id="benefits" class="active">
-          <div class="list-icon"><i>✍️</i><div class="text">签约收益</div></div>
-          <div class="list-icon"><i>💰</i><div class="text">创作保障</div></div>
-          <div class="list-icon"><i>🎁</i><div class="text">番茄专属福利</div></div>
-          <div class="list-icon"><i>❤️</i><div class="text">作家关怀</div></div>
-          <div class="list-icon"><i>🌐</i><div class="text">全渠道影响力</div></div>
-        </div>
-        <div id="road">
-          <div class="timeline">
-            <div class="timeline-item"><i>💡</i><div class="text">开书灵感</div></div>
-            <div class="timeline-item"><i>🚩</i><div class="text">新手任务</div></div>
-            <div class="timeline-item"><i>📚</i><div class="text">作家课堂</div></div>
-            <div class="timeline-item"><i>⛺</i><div class="text">训练营</div></div>
-            <div class="timeline-item"><i>🏆</i><div class="text">创作者大会</div></div>
-          </div>
-        </div>
-        <div id="platform">
-          <div class="icons-row">
-            <div class="icon"><img src="https://placehold.co/80" alt="今日头条"><div>今日头条</div></div>
-            <div class="icon"><img src="https://placehold.co/80" alt="抖音"><div>抖音</div></div>
-            <div class="icon"><img src="https://placehold.co/80" alt="番茄小说"><div>番茄小说</div></div>
-            <div class="icon"><img src="https://placehold.co/80" alt="番茄畅听"><div>番茄畅听</div></div>
-            <div class="icon"><img src="https://placehold.co/80" alt="红果短剧"><<div>红果短剧</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 版权改编 -->
-    <section class="section">
-      <div>版权改编</div>
-      <div class="grid">
-        <div><img src="https://placehold.co/100" alt=""><div class="caption">《开局地摊卖…》</div></div>
-        <div><img src="https://placehold.co/100" alt=""><div class="caption">《我在精神病…》</div></div>
-        <div><img src="https://placehold.co/100" alt=""><div class="caption">《十日终焉…》</div></div>
-      </div>
-    </section>
-
-    <!-- ====== 优化后：创作活动 ====== -->
-    <section class="section activity">
-      <div class="activity-header">
-        <div class="title">创作活动</div>
-        <a href="#" class="more">更多›</a>
-      </div>
-      <div class="activity-tabs" id="actTabs">
-        <div class="tab active" data-target="actNovel">小说</div>
-        <div class="tab"      data-target="actShort">短故事</div>
-      </div>
-      <div class="activity-lists">
-        <div id="actNovel" class="list active">
-          <div class="item">
-            <img src="https://placehold.co/60" alt="活动封面">
-            <div class="info">
-              <div class="title">百日万元总奖金池扩大至85万 | 复活赛来袭</div>
-              <div class="time">活动时间：07.21-10.03</div>
-            </div>
-            <a href="#" class="goto">去查看</a>
-          </div>
-        </div>
-        <div id="actShort" class="list">
-          <div class="item">
-            <img src="https://placehold.co/60" alt="活动封面">
-            <div class="info">
-              <div class="title">番茄短故事「千字万金」五百万激励计划上线</div>
-              <div class="time">活动时间：06.21-09.20</div>
-            </div>
-            <a href="#" class="goto">去查看</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 作家课堂 -->
-    <section class="section">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div>作家课堂</div><div>更多›</div>
-      </div>
-      <div class="class-cards">
-        <div class="card"><img src="https://placehold.co/160x80" alt=""><div class="desc">开书不卡壳？大纲这样写才不崩</div></div>
-        <div class="card"><img src="https://placehold.co/160x80" alt=""><div class="desc">专访 | 作者爱哭的小十七</div></div>
-        <div class="card"><img src="https://placehold.co/160x80" alt=""><div class="desc">六维拆解开书前的准备工作</div></div>
-        <div class="card"><img src="https://placehold.co/160x80" alt=""><div class="desc">轻装写作技巧，心态是关键！</div></div>
-      </div>
-    </section>
+  <header><span class="back">←</span>安国的尹锋</header>
+  <div class="nav">
+    <span data-panel="p1" class="active">看过的人</span>
+    <span data-panel="p2">推荐</span>
+    <span data-panel="p3">关注</span>
+    <span data-panel="p4">粉丝</span>
   </div>
 
-  <div class="bottom-btn"><button>成为番茄作家</button></div>
+  <!-- 看过的人 空 -->
+  <div id="p1" class="panel">
+    <div class="empty"><img src="https://placehold.co/180" alt=""><div>暂无看过的人</div><button class="follow-btn" style="margin-top:20px;">查看更多推荐的人</button></div>
+  </div>
 
-  <script>
-    // 通用 Tabs 切换（作品数据）
-    function bindTabs(containerId) {
-      const tabs = document.querySelectorAll('#' + containerId + ' .tab');
-      tabs.forEach(tab => {
-        tab.onclick = () => {
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const target = tab.dataset.target;
-          document.querySelectorAll('#' + containerId + '~ *').forEach(sec => {
-            if (sec.id === target) sec.style.display = '';
-            else if (sec.id) sec.style.display = 'none';
-          });
-        }
-      });
-    }
-    bindTabs('dataTabs');
+  <!-- 推荐列表 -->
+  <div id="p2" class="panel" hidden>
+    <ul class="recommend">
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96" alt=""><span class="badge">V</span></div>
+        <div class="info">
+          <div class="name">番茄小说团队 <span class="tag blue">官方</span></div>
+          <div class="desc">TA累计拯救1.2万人书荒</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=JD" alt=""><span class="badge">V</span></div>
+        <div class="info">
+          <div class="name">天蚕土豆 <span class="tag orange">作家</span></div>
+          <div class="desc">TA被2.6万人点赞过</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=YL" alt=""></div>
+        <div class="info">
+          <div class="name">夜来风雨声丶 <span class="tag gray">金番作家</span></div>
+          <div class="desc">代表作《诡舍》</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=39" alt=""></div>
+        <div class="info">
+          <div class="name">三九音域 <span class="tag gray">殿堂作家</span></div>
+          <div class="desc">代表作《我在精神病院学斩神》</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=SC" alt=""></div>
+        <div class="info">
+          <div class="name">杀虫队队员 <span class="tag gray">殿堂作家</span></div>
+          <div class="desc">代表作《十日终焉》</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=PJ" alt=""><span class="badge">V</span></div>
+        <div class="info">
+          <div class="name">推书小番茄 <span class="tag blue">官方</span></div>
+          <div class="desc">TA累计拯救612.5万人书荒</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=19" alt=""></div>
+        <div class="info">
+          <div class="name">一月九十秋 <span class="tag gray">金番作家</span></div>
+          <div class="desc">代表作《诸神愚戏》</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=YR" alt=""></div>
+        <div class="info">
+          <div class="name">羲人烟火 <span class="tag gray">作家Lv.5</span></div>
+          <div class="desc">代表作《让你契约鬼，你契约钟馗？》</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+      <li>
+        <div class="avatar-box"><img src="https://placehold.co/96?text=XZ" alt=""></div>
+        <div class="info">
+          <div class="name">徐二家的猫 <span class="tag gray">金番作家</span></div>
+          <div class="desc">代表作《从前有座镇妖关》</div>
+        </div>
+        <button class="follow-btn">＋ 关注</button>
+      </li>
+    </ul>
+  </div>
 
-    // 作家专属 subtabs
-    document.querySelectorAll('#authorTabs .subtab').forEach(tab => {
-      tab.onclick = () => {
-        document.querySelectorAll('#authorTabs .subtab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const target = tab.dataset.target;
-        document.querySelectorAll('.subcontent > div').forEach(c => c.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
-      };
-    });
+  <!-- 关注 空 -->
+  <div id="p3" class="panel" hidden>
+    <div class="empty"><img src="https://placehold.co/180" alt=""><div>暂无关注的用户</div></div>
+  </div>
 
-    // 优化后：创作活动专用 Tabs 切换
-    ;(function(){
-      const tabs  = document.querySelectorAll('#actTabs .tab');
-      const lists = document.querySelectorAll('.activity-lists .list');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const target = tab.dataset.target;
-          lists.forEach(list => {
-            list.id === target
-              ? list.classList.add('active')
-              : list.classList.remove('active');
-          });
-        });
-      });
-    })();
-  </script>
+  <!-- 粉丝 空 -->
+  <div id="p4" class="panel" hidden>
+    <div class="empty"><img src="https://placehold.co/180" alt=""><div>暂无粉丝，多和书友互动吧</div></div>
+  </div>
+
+<script>
+  document.querySelectorAll('.nav span').forEach(tab=>{
+    tab.onclick=()=>{
+      document.querySelectorAll('.nav span').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const panelId=tab.dataset.panel;
+      document.querySelectorAll('.panel').forEach(p=>p.hidden=true);
+      document.getElementById(panelId).hidden=false;
+    };
+  });
+</script>
 </body>
 </html>

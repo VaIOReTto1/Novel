@@ -8,6 +8,9 @@ import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
 import com.novel.utils.network.TokenProvider
 import com.novel.utils.network.api.front.user.UserService
+import com.novel.utils.network.api.loginHighPriority
+import com.novel.utils.network.api.registerHighPriority
+import com.novel.utils.network.api.getUserInfoHighPriority
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -71,9 +74,17 @@ class AuthService @Inject constructor(
             try {
                 TimberLogger.d(TAG, "开始用户登录，用户名: $username")
                 
-                val response = userService.loginBlocking(
-                    UserService.LoginRequest(username, password)
-                )
+                // 对于登录这种用户主动操作，使用高优先级请求
+                val response = try {
+                    userService.loginHighPriority(
+                        UserService.LoginRequest(username, password)
+                    )
+                } catch (e: Exception) {
+                    TimberLogger.w(TAG, "高优先级登录请求失败，使用普通请求: ${e.message}")
+                    userService.loginBlocking(
+                        UserService.LoginRequest(username, password)
+                    )
+                }
 
                 if (response.ok == true && response.data != null) {
                     TimberLogger.d(TAG, "登录成功，用户ID: ${response.data.uid}")
@@ -114,14 +125,27 @@ class AuthService @Inject constructor(
         try {
             TimberLogger.d(TAG, "开始用户注册，用户名: ${request.username}")
             
-            val response = userService.registerBlocking(
-                UserService.RegisterRequest(
-                    username = request.username,
-                    password = request.password,
-                    sessionId = request.sessionId,
-                    velCode = request.verifyCode
+            // 对于注册这种用户主动操作，使用高优先级请求
+            val response = try {
+                userService.registerHighPriority(
+                    UserService.RegisterRequest(
+                        username = request.username,
+                        password = request.password,
+                        sessionId = request.sessionId,
+                        velCode = request.verifyCode
+                    )
                 )
-            )
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "高优先级注册请求失败，使用普通请求: ${e.message}")
+                userService.registerBlocking(
+                    UserService.RegisterRequest(
+                        username = request.username,
+                        password = request.password,
+                        sessionId = request.sessionId,
+                        velCode = request.verifyCode
+                    )
+                )
+            }
 
             if (response.ok == true && response.data != null) {
                 TimberLogger.d(TAG, "注册成功，用户ID: ${response.data.uid}")
@@ -229,7 +253,13 @@ class AuthService @Inject constructor(
         runCatching {
             TimberLogger.d(TAG, "开始加载用户详细信息")
             
-            val userInfo = userService.getUserInfoBlocking()
+            // 对于获取用户信息，使用高优先级请求
+            val userInfo = try {
+                userService.getUserInfoHighPriority()
+            } catch (e: Exception) {
+                TimberLogger.w(TAG, "高优先级获取用户信息失败，使用普通请求: ${e.message}")
+                userService.getUserInfoBlocking()
+            }
             userInfo?.data?.let { 
                 userRepository.cacheUser(it)
                 TimberLogger.d(TAG, "用户信息缓存成功")
@@ -247,7 +277,7 @@ class AuthService @Inject constructor(
             }
             
             // 同步到RN端
-            ReactNativeBridge.sendUserDataToRN(uid.toString(), token, nickname, photo, sex)
+            ReactNativeBridge.sendUserDataToRN(uid.toString(), token ?: "", nickname, photo, sex)
             TimberLogger.d(TAG, "用户数据已同步到RN端")
         }.onFailure { e ->
             TimberLogger.e(TAG, "加载用户信息失败", e)

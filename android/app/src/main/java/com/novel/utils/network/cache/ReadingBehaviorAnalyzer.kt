@@ -8,6 +8,7 @@ import androidx.compose.runtime.Stable
 import com.novel.utils.TimberLogger
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
+import com.novel.utils.network.NetworkType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,12 +39,7 @@ data class DeviceState(
     val availableStorage: Long // 字节
 )
 
-/**
- * 网络类型
- */
-enum class NetworkType {
-    WIFI, CELLULAR, NONE
-}
+// 使用全局的NetworkType枚举，不需要重复定义
 
 /**
  * 阅读统计信息
@@ -292,6 +288,7 @@ class ReadingBehaviorAnalyzer @Inject constructor(
         val baseCount = when (deviceState.networkType) {
             NetworkType.WIFI -> WIFI_PREFETCH_COUNT
             NetworkType.CELLULAR -> CELLULAR_PREFETCH_COUNT
+            NetworkType.ETHERNET -> WIFI_PREFETCH_COUNT // 以太网按WiFi处理
             NetworkType.NONE -> 0
         }
         

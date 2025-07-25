@@ -109,4 +109,5 @@ import '../page/ScrollBox/HistoryPage/HistoryPageComponent';
 import '../page/ScrollBox/MessagePage/MessagePageComponent';
 import '../page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent';
 import '../page/ScrollBox/RecommendBookPage/RecommendBookPageComponent';
+import '../page/ScrollBox/ViewedUsersPage/ViewedUsersPageComponent';
 import '../page/SettingsPage';

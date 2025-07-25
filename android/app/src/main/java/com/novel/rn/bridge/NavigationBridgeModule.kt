@@ -188,6 +188,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到看过的人页面
+     */
+    @ReactMethod
+    fun navigateToViewedUsers() {
+        TimberLogger.d(TAG, "导航到看过的人页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToViewedUsers()
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

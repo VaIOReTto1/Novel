@@ -23,4 +23,4 @@ export const ACTIVITY_TABS: TabData[] = [
 export const DEFAULT_AVATAR = 'https://placehold.co/80x80';
 
 // 默认封面图
-export const DEFAULT_COVER = 'https://placehold.co/100'; 
+export const DEFAULT_COVER = 'https://placehold.co/100';

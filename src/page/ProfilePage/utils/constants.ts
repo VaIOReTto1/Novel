@@ -74,7 +74,17 @@ export const ICONS_DATA: IconData[] = [
   { id: 'video_creation', name: '视频创作', icon: 'vedio_creation', onPress: () => console.log('视频创作') },
   { id: 'reading_preference', name: '阅读偏好', icon: 'reading_preference', onPress: () => console.log('阅读偏好') },
   { id: 'my_note', name: '我的笔记', icon: 'note', onPress: () => console.log('我的笔记') },
-  { id: 'who_seen', name: '看过的人', icon: 'who_have_seen', onPress: () => console.log('看过的人') },
+  { id: 'who_seen', name: '看过的人', icon: 'who_have_seen', onPress: () => {
+    console.log('导航到看过的人');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToViewedUsers) {
+      NavigationBridge.navigateToViewedUsers();
+    } else {
+      console.log('NavigationBridge.navigateToViewedUsers not available');
+    }
+  }},
   { id: 'liked_video', name: '赞过的视频', icon: 'vedio_have_favorited', onPress: () => console.log('赞过的视频') },
   { id: 'help_guide', name: '帮助指南', icon: 'guide', onPress: () => console.log('帮助指南') },
   { id: 'my_public_welfare', name: '我的公益', icon: 'public_welfare', onPress: () => console.log('我的公益') },

@@ -188,6 +188,15 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+
+        composable("viewedusers") {
+            ReactNativePage(
+                componentName = "ViewedUsersPageComponent",
+                initialProps = mapOf("source" to "android_viewedusers"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -381,8 +390,16 @@ object NavViewModel : ViewModel() {
 
         fun navigateToRecommendBook() {
         TimberLogger.d("NavViewModel", "===== 导航到推荐书籍页面 =====")
-        
+
         navController.value?.navigate("recommendbook")
+        TimberLogger.d("NavViewModel", "✅ 导航命令已发送")
+        TimberLogger.d("NavViewModel", "==============================")
+    }
+
+    fun navigateToViewedUsers() {
+        TimberLogger.d("NavViewModel", "===== 导航到看过的人页面 =====")
+
+        navController.value?.navigate("viewedusers")
         TimberLogger.d("NavViewModel", "✅ 导航命令已发送")
         TimberLogger.d("NavViewModel", "==============================")
     }

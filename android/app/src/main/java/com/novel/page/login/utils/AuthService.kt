@@ -12,6 +12,7 @@ import com.novel.utils.network.api.loginHighPriority
 import com.novel.utils.network.api.registerHighPriority
 import com.novel.utils.network.api.getUserInfoHighPriority
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -260,6 +261,7 @@ class AuthService @Inject constructor(
                 TimberLogger.w(TAG, "高优先级获取用户信息失败，使用普通请求: ${e.message}")
                 userService.getUserInfoBlocking()
             }
+
             userInfo?.data?.let { 
                 userRepository.cacheUser(it)
                 TimberLogger.d(TAG, "用户信息缓存成功")

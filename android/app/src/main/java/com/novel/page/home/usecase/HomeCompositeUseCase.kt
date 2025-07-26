@@ -13,6 +13,9 @@ import com.novel.utils.network.api.front.SearchService
 import com.novel.utils.network.cache.CacheStrategy
 import com.novel.utils.network.repository.CachedBookRepository
 import com.novel.utils.TimberLogger
+import com.novel.page.login.dao.UserRepository
+import com.novel.utils.network.TokenProvider
+import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -32,7 +35,13 @@ open class HomeCompositeUseCase @Inject constructor(
     @Stable
     private val cachedBookRepository: CachedBookRepository,
     @Stable
-    private val searchService: SearchService
+    private val searchService: SearchService,
+    @Stable
+    private val userRepository: UserRepository,
+    @Stable
+    private val tokenProvider: TokenProvider,
+    @Stable
+    private val userDefaults: NovelUserDefaults
 ) : BaseUseCase<HomeCompositeUseCase.Params, HomeCompositeUseCase.Result>() {
     
     companion object {
@@ -87,7 +96,7 @@ open class HomeCompositeUseCase @Inject constructor(
     
     @Stable
     private val sendReactNativeDataUseCase: SendReactNativeDataUseCase = 
-        SendReactNativeDataUseCase()
+        SendReactNativeDataUseCase(userRepository, tokenProvider, userDefaults)
     
     @Stable
     private val getCategoryRecommendBooksUseCase: GetCategoryRecommendBooksUseCase = 

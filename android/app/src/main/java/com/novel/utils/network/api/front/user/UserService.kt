@@ -67,7 +67,7 @@ class UserService @Inject constructor(
     @Stable
     data class LoginResponse(
         @SerializedName("code") val code: String?,
-        @SerializedName("msg") val msg: String?,
+        @SerializedName("message") val msg: String?,
         @SerializedName("data") val data: LoginData?,
         @SerializedName("ok") val ok: Boolean?
     )
@@ -91,7 +91,7 @@ class UserService @Inject constructor(
     @Stable
     data class RegisterResponse(
         @SerializedName("code") val code: String?,
-        @SerializedName("msg") val msg: String?,
+        @SerializedName("message") val msg: String?,
         @SerializedName("data") val data: RegisterData?,
         @SerializedName("ok") val ok: Boolean?
     )
@@ -106,7 +106,7 @@ class UserService @Inject constructor(
     @Stable
     data class UserInfoResponse(
         @SerializedName("code") val code: String,
-        @SerializedName("msg") val msg: String,
+        @SerializedName("message") val msg: String,
         @SerializedName("data") val data: UserInfoData?,
         @SerializedName("ok") val ok: Boolean?
     )
@@ -114,8 +114,8 @@ class UserService @Inject constructor(
     @Stable
     data class UserInfoData(
         @SerializedName("nickName") val nickName: String,
-        @SerializedName("userPhoto") val userPhoto: String,
-        @SerializedName("userSex") val userSex: Int,
+        @SerializedName("userPhoto") val userPhoto: String?,
+        @SerializedName("userSex") val userSex: Int?,
     )
 
     @Stable

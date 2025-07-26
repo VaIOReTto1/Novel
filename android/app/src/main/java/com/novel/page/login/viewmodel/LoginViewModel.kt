@@ -7,18 +7,19 @@ import com.novel.page.login.usecase.*
 import com.novel.utils.TimberLogger
 import com.novel.utils.PhoneInfoUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
  * Login模块ViewModel - MVI重构版本
- * 
+ *
  * 基于统一MVI框架重构，职责：
  * - 继承BaseMviViewModel，使用统一状态管理
  * - 协调各种UseCase处理业务逻辑
  * - 处理Intent到UseCase的调用转换
  * - 管理页面生命周期和资源清理
- * 
+ *
  * 重构要点：
  * - 移除原有的MutableStateFlow和Channel
  * - 使用BaseMviViewModel提供的状态管理
@@ -64,7 +65,7 @@ class LoginViewModel @Inject constructor(
 
     override fun onIntentProcessed(intent: LoginIntent, newState: LoginState) {
         super.onIntentProcessed(intent, newState)
-        
+
         // 根据Intent类型触发相应的UseCase
         viewModelScope.launch {
             when (intent) {
@@ -85,16 +86,16 @@ class LoginViewModel @Inject constructor(
     private suspend fun handleInitializePage() {
         try {
             TimberLogger.d(TAG, "开始初始化页面数据")
-            
+
             val result = initializePageUseCase(Unit)
-            
+
             // 更新手机信息
             val newState = LoginStateUpdater.updatePhoneInfo(getCurrentState(), result.phoneInfo)
             updateState(newState)
-            
+
             // 加载验证码
             handleRefreshCaptcha()
-            
+
             TimberLogger.d(TAG, "页面初始化完成")
         } catch (e: Exception) {
             TimberLogger.e(TAG, "页面初始化失败", e)
@@ -113,43 +114,55 @@ class LoginViewModel @Inject constructor(
     private suspend fun handleSubmitLogin(currentState: LoginState) {
         try {
             TimberLogger.d(TAG, "开始处理登录")
-            
+
             // 验证表单
             val validationResult = validateFormUseCase.validateLogin(
                 phone = currentState.loginForm.phone,
                 password = currentState.loginForm.password
-        )
-        
-        if (!validationResult.isValid) {
-                val newState = LoginStateUpdater.updateValidationResults(currentState, validationResult)
+            )
+
+            if (!validationResult.isValid) {
+                val newState =
+                    LoginStateUpdater.updateValidationResults(currentState, validationResult)
                 updateState(newState)
-            return
-        }
-        
-        // 执行登录
+                delay(500)
+                val result = LoginStateUpdater.updateLoginFailure(
+                    newState,
+                    "登录失败: 验证未通过"
+                )
+                updateState(result.newState)
+                result.effect?.let { sendEffect(it) }
+                return
+            }
+
+            // 执行登录
             val loginResult = loginUseCase(
                 LoginUseCase.Params(
                     username = currentState.loginForm.phone,
                     password = currentState.loginForm.password
                 )
             )
-            
+
             when (loginResult) {
                 is LoginUseCase.Result.Success -> {
-                    val result = LoginStateUpdater.updateLoginSuccess(currentState, loginResult.message)
+                    val result =
+                        LoginStateUpdater.updateLoginSuccess(currentState, loginResult.message)
                     updateState(result.newState)
                     result.effect?.let { sendEffect(it) }
                 }
+
                 is LoginUseCase.Result.Error -> {
-                    val result = LoginStateUpdater.updateLoginFailure(currentState, loginResult.message)
+                    val result =
+                        LoginStateUpdater.updateLoginFailure(currentState, loginResult.message)
                     updateState(result.newState)
                     result.effect?.let { sendEffect(it) }
                 }
             }
-            
+
         } catch (e: Exception) {
             TimberLogger.e(TAG, "登录处理异常", e)
-            val result = LoginStateUpdater.updateLoginFailure(currentState, "登录失败：${e.localizedMessage}")
+            val result =
+                LoginStateUpdater.updateLoginFailure(currentState, "登录失败：${e.localizedMessage}")
             updateState(result.newState)
             result.effect?.let { sendEffect(it) }
         }
@@ -161,22 +174,30 @@ class LoginViewModel @Inject constructor(
     private suspend fun handleSubmitRegister(currentState: LoginState) {
         try {
             TimberLogger.d(TAG, "开始处理注册")
-            
+
             // 验证表单
             val validationResult = validateFormUseCase.validateRegister(
                 phone = currentState.registerForm.phone,
                 password = currentState.registerForm.password,
                 passwordConfirm = currentState.registerForm.passwordConfirm,
                 verifyCode = currentState.registerForm.verifyCode
-        )
-        
-        if (!validationResult.isValid) {
-                val newState = LoginStateUpdater.updateValidationResults(currentState, validationResult)
+            )
+
+            if (!validationResult.isValid) {
+                val newState =
+                    LoginStateUpdater.updateValidationResults(currentState, validationResult)
                 updateState(newState)
-            return
-        }
-        
-        // 执行注册
+                delay(500)
+                val result = LoginStateUpdater.updateRegisterFailure(
+                    newState,
+                    "注册失败: 验证未通过"
+                )
+                updateState(result.newState)
+                result.effect?.let { sendEffect(it) }
+                return
+            }
+
+            // 执行注册
             val registerResult = registerUseCase(
                 RegisterUseCase.Params(
                     username = currentState.registerForm.phone,
@@ -185,23 +206,33 @@ class LoginViewModel @Inject constructor(
                     verifyCode = currentState.registerForm.verifyCode
                 )
             )
-            
+
             when (registerResult) {
                 is RegisterUseCase.Result.Success -> {
-                    val result = LoginStateUpdater.updateRegisterSuccess(currentState, registerResult.message)
+                    val result = LoginStateUpdater.updateRegisterSuccess(
+                        currentState,
+                        registerResult.message
+                    )
                     updateState(result.newState)
                     result.effect?.let { sendEffect(it) }
                 }
+
                 is RegisterUseCase.Result.Error -> {
-                    val result = LoginStateUpdater.updateRegisterFailure(currentState, registerResult.message)
+                    val result = LoginStateUpdater.updateRegisterFailure(
+                        currentState,
+                        registerResult.message
+                    )
                     updateState(result.newState)
                     result.effect?.let { sendEffect(it) }
                 }
             }
-            
+
         } catch (e: Exception) {
             TimberLogger.e(TAG, "注册处理异常", e)
-            val result = LoginStateUpdater.updateRegisterFailure(currentState, "注册失败：${e.localizedMessage}")
+            val result = LoginStateUpdater.updateRegisterFailure(
+                currentState,
+                "注册失败：${e.localizedMessage}"
+            )
             updateState(result.newState)
             result.effect?.let { sendEffect(it) }
         }
@@ -213,9 +244,9 @@ class LoginViewModel @Inject constructor(
     private suspend fun handleRefreshCaptcha() {
         try {
             TimberLogger.d(TAG, "开始刷新验证码")
-            
+
             val captchaResult = captchaUseCase.refreshCaptcha()
-            
+
             when (captchaResult) {
                 is CaptchaUseCase.Result.Success -> {
                     val newCaptchaState = CaptchaState(
@@ -224,9 +255,11 @@ class LoginViewModel @Inject constructor(
                         isLoading = false,
                         error = null
                     )
-                    val newState = LoginStateUpdater.updateCaptchaState(getCurrentState(), newCaptchaState)
+                    val newState =
+                        LoginStateUpdater.updateCaptchaState(getCurrentState(), newCaptchaState)
                     updateState(newState)
                 }
+
                 is CaptchaUseCase.Result.Error -> {
                     val newCaptchaState = CaptchaState(
                         imagePath = "",
@@ -234,7 +267,8 @@ class LoginViewModel @Inject constructor(
                         isLoading = false,
                         error = captchaResult.message
                     )
-                    val newState = LoginStateUpdater.updateCaptchaState(getCurrentState(), newCaptchaState)
+                    val newState =
+                        LoginStateUpdater.updateCaptchaState(getCurrentState(), newCaptchaState)
                     updateState(newState)
                     sendEffect(LoginEffect.ShowToast("验证码加载失败"))
                 }

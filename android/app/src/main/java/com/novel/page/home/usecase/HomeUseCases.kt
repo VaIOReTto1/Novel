@@ -5,11 +5,15 @@ import com.novel.core.domain.FlowUseCase
 import com.novel.page.home.dao.IHomeRepository
 import com.novel.page.home.dao.HomeCategoryEntity
 import com.novel.page.home.viewmodel.CategoryInfo
+import com.novel.page.login.dao.UserRepository
 import com.novel.utils.network.api.front.BookService
 import com.novel.utils.network.api.front.HomeService
 import com.novel.utils.network.api.front.SearchService
 import com.novel.utils.network.cache.CacheStrategy
 import com.novel.utils.network.repository.CachedBookRepository
+import com.novel.utils.network.TokenProvider
+import com.novel.utils.Store.UserDefaults.NovelUserDefaults
+import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
 import com.novel.rn.ReactNativeBridge
 import com.novel.utils.TimberLogger
 import kotlinx.collections.immutable.ImmutableList
@@ -128,12 +132,46 @@ class RefreshHomeDataUseCase @Inject constructor(
  * 发送React Native数据UseCase（RN数据发送）
  */
 @Stable
-class SendReactNativeDataUseCase @Inject constructor() : BaseUseCase<Unit, Unit>() {
+class SendReactNativeDataUseCase @Inject constructor(
+    @Stable
+    private val userRepository: UserRepository,
+    @Stable
+    private val tokenProvider: TokenProvider,
+    @Stable
+    private val userDefaults: NovelUserDefaults
+) : BaseUseCase<Unit, Unit>() {
     
     override suspend fun execute(params: Unit) {
         try {
             delay(2000) // 等待RN初始化完成
-            ReactNativeBridge.sendTestUserDataToRN()
+            
+            // 获取真实的用户数据
+            val currentUser = userRepository.getCurrentUser()
+            val uid = userDefaults.get<Int>(NovelUserDefaultsKey.USER_ID)
+            val token = tokenProvider.accessToken()
+            TimberLogger.d("SendReactNativeDataUseCase", "获取用户数据: $currentUser, $uid, $token")
+
+            if (currentUser != null && uid != null && !token.isNullOrEmpty()) {
+                // 发送真实用户数据
+                val sex = when (currentUser.userSex) {
+                    1 -> "男"
+                    2 -> "女"
+                    else -> "未知"
+                }
+                ReactNativeBridge.sendUserDataToRN(
+                    uid = uid.toString(),
+                    token = token,
+                    nickname = currentUser.nickName,
+                    photo = currentUser.userPhoto,
+                    sex = sex
+                )
+                TimberLogger.d("SendReactNativeDataUseCase", "发送真实用户数据完成: ${currentUser.nickName}")
+            } else {
+                // 如果没有用户数据，发送测试数据作为后备
+                ReactNativeBridge.sendTestUserDataToRN()
+                TimberLogger.w("SendReactNativeDataUseCase", "用户数据不完整，使用测试数据")
+            }
+            
             delay(500)
             ReactNativeBridge.sendTestRecommendBooksToRN()
             TimberLogger.d("SendReactNativeDataUseCase", "发送RN数据完成")

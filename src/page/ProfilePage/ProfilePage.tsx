@@ -85,8 +85,11 @@ const ProfilePage: React.FC = () => {
 
   // 登录函数
   const toLogin = useCallback(() => {
-    console.log('Navigate to login page');
-    // 这里实现跳转到登录页面的逻辑
+    if (NavigationBridge?.goToLogin) {
+      NavigationBridge.goToLogin();
+    } else {
+      console.log('NavigationBridge.goToLogin not available');
+    }
   }, []);
 
   // 书籍点击

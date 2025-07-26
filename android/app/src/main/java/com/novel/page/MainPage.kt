@@ -101,7 +101,6 @@ fun MainPage() {
                         // 传递全局动画控制器给首页
                         globalFlipBookController = globalFlipBookController
                     )
-                    2 -> LoginPage()          // 福利页面（登录相关）
                     4 -> ReactNativePage(
                         mviModuleType = MviModuleType.BRIDGE,
                     )    // 我的页面（React Native实现）
@@ -135,7 +134,7 @@ fun MainPage() {
                         NavButton(
                             onClick = {
                                 scope.launch { 
-                                    pagerState.animateScrollToPage(index) 
+                                    pagerState.scrollToPage(index)
                                 }
                             },
                             isSelect = pagerState.currentPage == index,

@@ -195,6 +195,7 @@ class UserRepository @Inject constructor(
  * 将网络层DTO转换为本地Entity
  * 
  * 确保数据转换的完整性和安全性
+ * 处理API响应中可能为null的字段
  * 
  * @param uid 用户唯一标识
  * @return 用户实体对象
@@ -202,8 +203,8 @@ class UserRepository @Inject constructor(
 private fun UserService.UserInfoData.toEntity(uid: String) = UserEntity(
     uid = uid,
     nickName = nickName,
-    userPhoto = userPhoto,
-    userSex = userSex
+    userPhoto = userPhoto ?: "", // 处理null值，使用空字符串作为默认值
+    userSex = userSex ?: 0 // 处理null值，使用0作为默认值（未知性别）
 )
 
 /**

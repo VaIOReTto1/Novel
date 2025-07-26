@@ -58,7 +58,7 @@ class AuthInterceptor @Inject constructor(
         
         // 添加认证头
         val authenticatedRequest = originalRequest.newBuilder()
-            .header(AUTHORIZATION_HEADER, "$BEARER_PREFIX$token")
+            .header(AUTHORIZATION_HEADER, token)
             .build()
         
         TimberLogger.d(TAG, "添加认证头: ${authenticatedRequest.url.encodedPath}")

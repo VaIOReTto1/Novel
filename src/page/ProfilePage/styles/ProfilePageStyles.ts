@@ -44,11 +44,13 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
   avatarImage: {
     width: '100%',
     height: '100%',
+    backgroundColor: colors.novelBookBackground,
+    borderRadius: sp(25),
   },
   defaultAvatar: {
     width: '100%',
     height: '100%',
-    backgroundColor: colors.novelMain,
+    backgroundColor: colors.novelBookBackground,
     borderRadius: sp(25),
   },
   loginButton: {

@@ -24,6 +24,8 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
 import com.novel.rn.settings.SettingsViewModel
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.launch
 
 /**
  * MVI模块类型枚举
@@ -78,6 +80,8 @@ fun ReactNativePage(
             hiltViewModel()
         } else null
 
+
+
     TimberLogger.d(
         TAG,
         "组件渲染 - componentName: $componentName, isContextReady: $isContextReady, destroyOnBack: $destroyOnBack, mviModule: $mviModuleType"
@@ -124,6 +128,14 @@ fun ReactNativePage(
         }
 
         mainApplication.getOrCreateReactRootView(componentName, bundle)
+    }
+
+    // 当RN上下文就绪时，发送用户数据到RN
+    LaunchedEffect(isContextReady, componentName, bridgeViewModel) {
+        if (isContextReady && bridgeViewModel != null) {
+            TimberLogger.d(TAG, "RN上下文已就绪，开始发送用户数据 for $componentName")
+            bridgeViewModel.sendUserDataToRN()
+        }
     }
 
     // 管理RN上下文监听器的生命周期

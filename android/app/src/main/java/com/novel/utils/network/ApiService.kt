@@ -8,6 +8,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -138,8 +139,16 @@ object RetrofitClient {
         retrofitInstances.getOrPut(baseUrl) {
             TimberLogger.d(TAG, "创建新的Retrofit实例: $baseUrl")
             // 组装OkHttpClient
+            // 添加日志拦截器
+            val logging = HttpLoggingInterceptor { message ->
+                TimberLogger.d(TAG, message)
+            }.apply {
+                level = HttpLoggingInterceptor.Level.BODY  // 打印 header 和 body
+            }
+
             val builder = OkHttpClient.Builder()
                 .addInterceptor(authInterceptor) // 自动加Token
+                .addInterceptor(logging)
 
             // 生成Retrofit实例
             Retrofit.Builder()

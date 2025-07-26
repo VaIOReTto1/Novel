@@ -14,6 +14,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,12 +30,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import com.novel.page.component.ImageLoadingStrategy
 import com.novel.page.component.NovelImageView
+import com.novel.page.component.NovelText
 import com.novel.page.component.NovelTextField
 import com.novel.page.login.viewmodel.CaptchaState
 import com.novel.page.login.viewmodel.LoginForm
 import com.novel.page.login.viewmodel.RegisterForm
 import com.novel.page.login.viewmodel.ValidationResults
+import com.novel.ui.theme.NovelColors
 import com.novel.utils.debounceClickable
+import com.novel.utils.ssp
 import com.novel.utils.wdp
 
 // 动画常量
@@ -97,7 +101,7 @@ fun InputSection(
             .padding(horizontal = 22.5.wdp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // 手机号输入
+        // 手机号输入区域
         NovelTextField(
             value = if (isLoginMode) loginForm.phone else registerForm.phone,
             onValueChange = onPhoneInput,
@@ -106,12 +110,28 @@ fun InputSection(
                 .width(329.wdp),
             placeText = "请输入手机号",
             isError = validationResults.phoneError != null,
-            errorMessage = validationResults.phoneError
+            errorMessage = null
         )
+        
+        // 手机号错误信息区域 - 使用Box避免弹跳效果
+        Box(
+            modifier = Modifier.height(19.wdp).fillMaxWidth()
+        ) {
+            // 手机号错误信息 - 显示在输入框下方
+            if (validationResults.phoneError != null) {
+                NovelText(
+                    text = validationResults.phoneError,
+                    color = NovelColors.NovelError,
+                    fontSize = 10.ssp,
+                    lineHeight = 10.ssp,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 8.wdp)
+                )
+            }
+        }
 
-        Spacer(modifier = Modifier.height(19.wdp))
-
-        // 密码输入
+        // 密码输入区域
         NovelTextField(
             value = if (isLoginMode) loginForm.password else registerForm.password,
             onValueChange = onPasswordInput,
@@ -121,9 +141,27 @@ fun InputSection(
             placeText = "请输入密码",
             isPassword = true,
             isError = validationResults.passwordError != null,
-            errorMessage = validationResults.passwordError
+            errorMessage = null
         )
         
+        // 密码错误信息区域 - 使用Box避免弹跳效果
+        Box(
+            modifier = Modifier.height(19.wdp).fillMaxWidth()
+        ) {
+            // 密码错误信息 - 显示在输入框下方
+            if (validationResults.passwordError != null) {
+                NovelText(
+                    text = validationResults.passwordError,
+                    color = NovelColors.NovelError,
+                    fontSize = 10.ssp,
+                    lineHeight = 10.ssp,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 8.wdp)
+                )
+            }
+        }
+
         // 注册模式的额外字段
         if (!isLoginMode)
             AnimatedVisibility(
@@ -158,11 +196,11 @@ fun InputSection(
                 Column(
                     modifier = Modifier
                         .offset(y = sectionOffset)
-                        .alpha(sectionAlpha)
+                        .alpha(sectionAlpha),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(modifier = Modifier.height(19.wdp))
 
-                    // 确认密码输入
+                    // 确认密码输入区域
                     NovelTextField(
                         value = registerForm.passwordConfirm,
                         onValueChange = onPasswordConfirmInput,
@@ -172,16 +210,32 @@ fun InputSection(
                         placeText = "再次输入密码",
                         isPassword = true,
                         isError = validationResults.passwordConfirmError != null,
-                        errorMessage = validationResults.passwordConfirmError
+                        errorMessage = null
                     )
+                    
+                    // 确认密码错误信息区域 - 使用Box避免弹跳效果
+                    Box(
+                        modifier = Modifier.height(19.wdp).fillMaxWidth()
+                    ) {
+                        // 确认密码错误信息 - 显示在输入框下方
+                        if (validationResults.passwordConfirmError != null) {
+                            NovelText(
+                                text = validationResults.passwordConfirmError,
+                                color = NovelColors.NovelError,
+                                fontSize = 10.ssp,
+                                lineHeight = 10.ssp,
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(start = 8.wdp)
+                            )
+                        }
+                    }
 
                     // 验证码输入区域
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier
-                            .padding(top = 19.wdp)
-                            .fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         NovelTextField(
                             value = registerForm.verifyCode,
@@ -191,7 +245,7 @@ fun InputSection(
                                 .width(180.wdp),
                             placeText = "输入验证码",
                             isError = validationResults.verifyCodeError != null,
-                            errorMessage = validationResults.verifyCodeError
+                            errorMessage = null
                         )
                         Spacer(modifier = Modifier.width(8.wdp))
                         NovelImageView(
@@ -205,6 +259,24 @@ fun InputSection(
                             modifier = Modifier.debounceClickable(onClick = onRefreshCaptcha),
                             onRetry = onRefreshCaptcha
                         )
+                    }
+                    
+                    // 验证码错误信息区域 - 使用Box避免弹跳效果
+                    Box(
+                        modifier = Modifier.height(16.wdp).fillMaxWidth()
+                    ) {
+                        // 验证码错误信息 - 显示在输入框下方
+                        if (validationResults.verifyCodeError != null) {
+                            NovelText(
+                                text = validationResults.verifyCodeError,
+                                color = NovelColors.NovelError,
+                                fontSize = 10.ssp,
+                                lineHeight = 10.ssp,
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(start = 8.wdp)
+                            )
+                        }
                     }
                 }
             }

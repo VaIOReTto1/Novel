@@ -12,6 +12,12 @@ import android.os.Handler
 import android.os.Looper
 import com.novel.utils.NavViewModel
 import kotlinx.coroutines.delay
+import com.novel.page.login.dao.UserRepository
+import com.novel.utils.network.TokenProvider
+import com.novel.utils.Store.UserDefaults.NovelUserDefaults
+import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
+import com.novel.rn.ReactNativeBridge
+import androidx.compose.runtime.Stable
 
 /**
  * 桥接ViewModel
@@ -22,7 +28,14 @@ import kotlinx.coroutines.delay
  * - 跨端状态同步
  */
 @HiltViewModel
-class BridgeViewModel @Inject constructor() : BaseMviViewModel<BridgeIntent, BridgeState, BridgeEffect>() {
+class BridgeViewModel @Inject constructor(
+    @Stable
+    private val userRepository: UserRepository,
+    @Stable
+    private val tokenProvider: TokenProvider,
+    @Stable
+    private val userDefaults: NovelUserDefaults
+) : BaseMviViewModel<BridgeIntent, BridgeState, BridgeEffect>() {
     
     companion object {
         private const val TAG = "BridgeViewModel"
@@ -185,6 +198,51 @@ class BridgeViewModel @Inject constructor() : BaseMviViewModel<BridgeIntent, Bri
         }
     }
     
+    /**
+     * 发送用户数据到RN端
+     * 当RN页面进入时调用，确保RN组件能够获取到最新的用户信息
+     */
+    fun sendUserDataToRN() {
+        viewModelScope.launch {
+            try {
+                delay(2000) // 等待RN初始化完成
+                
+                // 获取真实的用户数据
+                val currentUser = userRepository.getCurrentUser()
+                val uid = userDefaults.get<Int>(NovelUserDefaultsKey.USER_ID)
+                val token = tokenProvider.accessToken()
+                TimberLogger.d(TAG, "获取用户数据: $currentUser, $uid, $token")
+
+                if (currentUser != null && uid != null && !token.isNullOrEmpty()) {
+                    // 发送真实用户数据
+                    val sex = when (currentUser.userSex) {
+                        1 -> "男"
+                        2 -> "女"
+                        else -> "未知"
+                    }
+                    ReactNativeBridge.sendUserDataToRN(
+                        uid = uid.toString(),
+                        token = token,
+                        nickname = currentUser.nickName,
+                        photo = currentUser.userPhoto,
+                        sex = sex
+                    )
+                    TimberLogger.d(TAG, "发送真实用户数据完成: ${currentUser.nickName}")
+                } else {
+                    // 如果没有用户数据，发送测试数据作为后备
+                    ReactNativeBridge.sendTestUserDataToRN()
+                    TimberLogger.w(TAG, "用户数据不完整，使用测试数据")
+                }
+                
+                delay(500)
+                ReactNativeBridge.sendTestRecommendBooksToRN()
+                TimberLogger.d(TAG, "发送RN数据完成")
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "发送RN数据失败", e)
+            }
+        }
+    }
+    
     private fun performNavigation(action: () -> Unit) {
         // 确保在主线程执行导航
         Handler(Looper.getMainLooper()).post {
@@ -232,4 +290,4 @@ class BridgeViewModel @Inject constructor() : BaseMviViewModel<BridgeIntent, Bri
     
     // 添加公共方法供桥接模块使用
     fun getStateForBridge(): BridgeState = getCurrentState()
-} 
+}

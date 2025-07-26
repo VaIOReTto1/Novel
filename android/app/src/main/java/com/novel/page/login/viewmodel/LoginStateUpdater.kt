@@ -38,7 +38,7 @@ object LoginStateUpdater {
      * 更新验证结果
      */
     fun updateValidationResults(currentState: LoginState, validationResults: ValidationResults): LoginState {
-        TimberLogger.d(TAG, "更新验证结果，有错误: ${validationResults.hasErrors}")
+        TimberLogger.d(TAG, "更新验证结果，是否有效: ${validationResults.isValid}")
         
         return currentState.copy(
             version = currentState.version + 1,
@@ -71,7 +71,7 @@ object LoginStateUpdater {
             submitError = null
         )
         
-        val effect = LoginEffect.NavigateToHome
+        val effect = LoginEffect.NavigateBack
         
         return UpdateResult(newState, effect)
     }
@@ -82,10 +82,16 @@ object LoginStateUpdater {
     fun updateLoginFailure(currentState: LoginState, message: String): UpdateResult {
         TimberLogger.d(TAG, "登录失败: $message")
         
+        // 根据错误消息设置相应的验证错误
+        val validationResults = currentState.validationResults.copy(
+            phoneError = message
+        )
+
         val newState = currentState.copy(
             version = currentState.version + 1,
             isSubmitting = false,
-            submitError = message
+            submitError = message,
+            validationResults = validationResults
         )
         
         val effect = LoginEffect.ShowToast(message)
@@ -102,12 +108,10 @@ object LoginStateUpdater {
         val newState = currentState.copy(
             version = currentState.version + 1,
             isSubmitting = false,
-            submitError = null,
-            // 注册成功后切换到登录模式
-            isLoginMode = true
+            submitError = null
         )
         
-        val effect = LoginEffect.ShowToast("注册成功，请登录")
+        val effect = LoginEffect.NavigateBack
         
         return UpdateResult(newState, effect)
     }
@@ -118,14 +122,26 @@ object LoginStateUpdater {
     fun updateRegisterFailure(currentState: LoginState, message: String): UpdateResult {
         TimberLogger.d(TAG, "注册失败: $message")
         
+        // 根据错误消息设置相应的验证错误
+        val validationResults = when {
+            message.contains("用户验证码错误") -> currentState.validationResults.copy(
+                phoneError = "用户验证码错误"
+            )
+            message.contains("用户名已存在") -> currentState.validationResults.copy(
+                verifyCodeError = "用户名已存在"
+            )
+            else -> currentState.validationResults
+        }
+        
         val newState = currentState.copy(
             version = currentState.version + 1,
             isSubmitting = false,
-            submitError = message
+            submitError = message,
+            validationResults = validationResults
         )
         
         val effect = LoginEffect.ShowToast(message)
         
         return UpdateResult(newState, effect)
     }
-} 
+}

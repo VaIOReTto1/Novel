@@ -24,7 +24,8 @@ export const LoginBar: React.FC<LoginBarProps> = ({
         <View style={styles.defaultAvatar} />
       )}
     </View>
-    <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
+    <TouchableOpacity onPress={isLoggedIn ? undefined : onLogin} // 已登录不响应点击
+      disabled={isLoggedIn} style={styles.loginButton}>
       <Text style={styles.loginText}>
         {isLoggedIn && nickname ? nickname : '点击登录/注册'}
       </Text>

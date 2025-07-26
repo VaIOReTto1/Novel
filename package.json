@@ -1,6 +1,6 @@
 {
   "name": "Novel",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android --active-arch-only",
@@ -8,7 +8,14 @@
     "lint": "eslint .",
     "start": "react-native start",
     "web": "webpack serve --config webpack.config.js",
-    "test": "jest"
+    "test": "jest",
+    "version:show": "node scripts/version-sync.js show",
+    "version:patch": "node scripts/version-sync.js patch",
+    "version:minor": "node scripts/version-sync.js minor",
+    "version:major": "node scripts/version-sync.js major",
+    "version:sync": "node scripts/version-sync.js sync",
+    "build:android": "npm run version:patch && cd android && ./gradlew assembleRelease",
+    "build:android:bundle": "npm run version:patch && cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@babel/preset-react": "^7.27.1",

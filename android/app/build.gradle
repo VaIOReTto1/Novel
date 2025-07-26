@@ -11,6 +11,9 @@ apply plugin: "com.google.devtools.ksp"
 apply plugin: "kotlin-kapt"
 apply plugin: "androidx.baselineprofile"
 
+// 应用版本管理
+apply from: '../versioning.gradle'
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -92,8 +95,8 @@ android {
         applicationId "com.novel"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode
+        versionName appVersionName
         vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {

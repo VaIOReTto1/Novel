@@ -3,20 +3,25 @@ package com.novel.di
 import com.novel.page.read.service.common.*
 import com.novel.page.read.service.settings.*
 import com.novel.page.read.viewmodel.ChapterCache
+import com.novel.utils.performance.StartupPerformanceMonitor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 /**
- * Service层依赖注入模块
+ * 服务层依赖注入模块
  * 
- * 提供Service层所需的所有依赖：
- * - 调度器提供者
- * - 日志记录器
- * - 缓存实现
- * - 设置解析和保存器
+ * 负责提供应用的核心服务组件：
+ * - 网络请求相关服务
+ * - 数据缓存和存储服务
+ * - 业务逻辑处理服务
+ * - 性能监控服务
+ * 
+ * 所有服务采用单例模式，确保资源利用最优化
  */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -63,4 +68,18 @@ object ServiceModule {
         userDefaults: com.novel.utils.Store.UserDefaults.NovelUserDefaults,
         logger: ServiceLogger
     ): SettingsSaver = SettingsSaver(userDefaults, logger)
+
+    /**
+     * 提供启动性能监控器
+     * 
+     * @param context 应用上下文
+     * @return StartupPerformanceMonitor - 启动性能监控服务
+     */
+    @Provides
+    @Singleton
+    fun provideStartupPerformanceMonitor(
+        @ApplicationContext context: Context
+    ): StartupPerformanceMonitor {
+        return StartupPerformanceMonitor(context)
+    }
 } 

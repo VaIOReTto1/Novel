@@ -28,6 +28,11 @@ import com.facebook.react.bridge.ReactContext
 import com.facebook.react.ReactInstanceManager
 import com.novel.rn.settings.SettingsUtils
 import timber.log.Timber
+import kotlinx.coroutines.*
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
+import com.novel.utils.performance.StartupPerformanceMonitor
+import kotlinx.coroutines.runBlocking
 
 /**
  * 主应用类
@@ -36,12 +41,13 @@ import timber.log.Timber
  * - Hilt依赖注入管理
  * - React Native新架构支持
  * - 全局单例组件初始化
+ * - 冷启动优化：延迟初始化策略
+ * - 启动性能监控
  * 
  * 初始化流程：
- * 1. ThemeManager全局主题管理
- * 2. RetrofitClient网络服务
- * 3. SoLoader原生库加载
- * 4. React Native引擎初始化
+ * 1. 关键路径：Timber、ThemeManager、SoLoader（主线程）
+ * 2. 非关键路径：RetrofitClient、SettingsUtils（后台线程延迟初始化）
+ * 3. React Native引擎按需初始化
  */
 @Stable
 @HiltAndroidApp
@@ -70,9 +76,22 @@ class MainApplication : Application(), ReactApplication {
     @Inject
     lateinit var gson: com.google.gson.Gson
 
+    @Stable
+    @Inject
+    lateinit var startupPerformanceMonitor: StartupPerformanceMonitor
+
     // 添加ReactRootView缓存管理
     @Stable
     private val reactRootViewCache = ConcurrentHashMap<String, ReactRootView>()
+
+    // 冷启动优化：延迟初始化管理
+    private val lazyInitializationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val isNetworkInitialized = AtomicBoolean(false)
+    private val isSettingsInitialized = AtomicBoolean(false)
+    
+    // 启动时间监控
+    private var appStartTime: Long = 0
+    private var onCreateStartTime: Long = 0
 
     @get:Stable
     override val reactNativeHost: ReactNativeHost =
@@ -94,9 +113,41 @@ class MainApplication : Application(), ReactApplication {
         get() = getDefaultReactHost(applicationContext, reactNativeHost)
 
     override fun onCreate() {
+        // Hilt 在 super.onCreate() 中执行注入，因此必须先调用它
         super.onCreate()
+
+        // 现在可以安全地访问注入的依赖项
+        appStartTime = System.currentTimeMillis()
+        onCreateStartTime = System.currentTimeMillis()
         
-        // 初始化Timber日志框架
+        // 开始启动性能监控
+        startupPerformanceMonitor.startProcessMonitoring()
+        startupPerformanceMonitor.onApplicationCreateStart()
+        
+        // 初始化Timber日志框架（关键路径）
+        initializeTimber()
+        
+        TimberLogger.d(TAG, "===== MainApplication 初始化开始 =====")
+        instance = this
+        
+        // 关键路径初始化（主线程，阻塞式）
+        initializeCriticalComponents()
+        
+        // 非关键路径初始化（后台线程，延迟式）
+        initializeNonCriticalComponentsAsync()
+        
+        // 标记Application onCreate完成
+        startupPerformanceMonitor.onApplicationCreateEnd()
+        
+        logStartupTime("onCreate完成")
+        TimberLogger.i(TAG, "✅ MainApplication 初始化完成")
+        TimberLogger.d(TAG, "====================================")
+    }
+
+    /**
+     * 初始化Timber日志框架
+     */
+    private fun initializeTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
@@ -112,39 +163,114 @@ class MainApplication : Application(), ReactApplication {
                 }
             })
         }
-        
-        TimberLogger.d(TAG, "===== MainApplication 初始化开始 =====")
-        
-        instance = this
-        
-        // 初始化全局主题管理器
+    }
+
+    /**
+     * 初始化关键组件（主线程，启动必需）
+     */
+    private fun initializeCriticalComponents() {
+        // 初始化全局主题管理器（影响UI，必须主线程）
         TimberLogger.d(TAG, "初始化ThemeManager...")
+        val themeStartTime = System.currentTimeMillis()
         ThemeManager.initialize(this)
+        val themeDuration = System.currentTimeMillis() - themeStartTime
+        logComponentInitTime("ThemeManager", themeStartTime)
+        startupPerformanceMonitor.recordComponentInitTime("ThemeManager", themeDuration)
         
-        // 初始化网络服务
-        TimberLogger.d(TAG, "初始化RetrofitClient...")
-        RetrofitClient.init(
-            authInterceptor = authInterceptor,
-            tokenProvider = tokenProvider,
-            gson = gson
-        )
-        
-        // 初始化SoLoader
+        // 初始化SoLoader（影响React Native，必须主线程）
         TimberLogger.d(TAG, "初始化SoLoader...")
+        val soLoaderStartTime = System.currentTimeMillis()
         SoLoader.init(this, OpenSourceMergedSoMapping)
+        val soLoaderDuration = System.currentTimeMillis() - soLoaderStartTime
+        logComponentInitTime("SoLoader", soLoaderStartTime)
+        startupPerformanceMonitor.recordComponentInitTime("SoLoader", soLoaderDuration)
         
-        // 启用新架构支持
+        // 启用新架构支持（必须主线程）
         if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
             TimberLogger.d(TAG, "启用React Native新架构...")
+            val newArchStartTime = System.currentTimeMillis()
             load()
+            val newArchDuration = System.currentTimeMillis() - newArchStartTime
+            logComponentInitTime("NewArchitecture", newArchStartTime)
+            startupPerformanceMonitor.recordComponentInitTime("NewArchitecture", newArchDuration)
         }
-        
-        // 初始化自动主题切换功能
-        TimberLogger.d(TAG, "初始化自动主题切换...")
-        settingsUtils.initializeAutoThemeSwitch()
-        
-        TimberLogger.i(TAG, "✅ MainApplication 初始化完成")
-        TimberLogger.d(TAG, "====================================")
+    }
+
+    /**
+     * 异步初始化非关键组件（后台线程，延迟加载）
+     */
+    private fun initializeNonCriticalComponentsAsync() {
+        lazyInitializationScope.launch {
+            // 延迟初始化网络服务（非启动必需）
+            delay(100) // 给主线程一些喘息时间
+            initializeNetworkService()
+            
+            // 延迟初始化设置服务（非启动必需）
+            delay(50)
+            initializeSettingsService()
+        }
+    }
+
+    /**
+     * 初始化网络服务（后台线程）
+     */
+    private suspend fun initializeNetworkService() {
+        if (isNetworkInitialized.compareAndSet(false, true)) {
+            withContext(Dispatchers.IO) {
+                TimberLogger.d(TAG, "后台初始化RetrofitClient...")
+                val networkStartTime = System.currentTimeMillis()
+                try {
+                    RetrofitClient.init(
+                        authInterceptor = authInterceptor,
+                        tokenProvider = tokenProvider,
+                        gson = gson
+                    )
+                    val networkDuration = System.currentTimeMillis() - networkStartTime
+                    logComponentInitTime("RetrofitClient", networkStartTime)
+                    startupPerformanceMonitor.recordComponentInitTime("RetrofitClient", networkDuration)
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "网络服务初始化失败", e)
+                }
+            }
+        }
+    }
+
+    /**
+     * 初始化设置服务（后台线程）
+     */
+    private suspend fun initializeSettingsService() {
+        if (isSettingsInitialized.compareAndSet(false, true)) {
+            withContext(Dispatchers.IO) {
+                TimberLogger.d(TAG, "后台初始化自动主题切换...")
+                val settingsStartTime = System.currentTimeMillis()
+                try {
+                    settingsUtils.initializeAutoThemeSwitch()
+                    val settingsDuration = System.currentTimeMillis() - settingsStartTime
+                    logComponentInitTime("SettingsUtils", settingsStartTime)
+                    startupPerformanceMonitor.recordComponentInitTime("SettingsUtils", settingsDuration)
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "设置服务初始化失败", e)
+                }
+            }
+        }
+    }
+
+    /**
+     * 确保网络服务已初始化（按需初始化）
+     */
+    suspend fun ensureNetworkServiceInitialized() {
+        if (!isNetworkInitialized.get()) {
+            initializeNetworkService()
+        }
+    }
+
+    /**
+     * 确保设置服务已初始化（按需初始化）
+     */
+    suspend fun ensureSettingsServiceInitialized() {
+        if (!isSettingsInitialized.get()) {
+            initializeSettingsService()
+        }
     }
 
     override fun onTerminate() {
@@ -156,6 +282,27 @@ class MainApplication : Application(), ReactApplication {
         
         // 清理ReactRootView缓存
         clearAllReactRootViewCache()
+        
+        // 清理协程作用域
+        lazyInitializationScope.cancel()
+    }
+
+    /**
+     * 记录启动时间
+     */
+    private fun logStartupTime(milestone: String) {
+        val currentTime = System.currentTimeMillis()
+        val fromAppStart = currentTime - appStartTime
+        val fromOnCreateStart = currentTime - onCreateStartTime
+        TimberLogger.i(TAG, "⏱️ $milestone - 距应用启动: ${fromAppStart}ms, 距onCreate开始: ${fromOnCreateStart}ms")
+    }
+
+    /**
+     * 记录组件初始化时间
+     */
+    private fun logComponentInitTime(componentName: String, startTime: Long) {
+        val initTime = System.currentTimeMillis() - startTime
+        TimberLogger.d(TAG, "⏱️ $componentName 初始化耗时: ${initTime}ms")
     }
 
     /**
@@ -169,6 +316,9 @@ class MainApplication : Application(), ReactApplication {
         componentName: String, 
         initialProps: Bundle? = null
     ): ReactRootView {
+        // 确保网络服务已初始化（React Native组件可能需要网络）
+        runBlocking { ensureNetworkServiceInitialized() }
+
         return reactRootViewCache.getOrPut(componentName) {
             TimberLogger.d(TAG, "创建新的ReactRootView: $componentName")
             ReactRootView(this).apply {
@@ -209,5 +359,29 @@ class MainApplication : Application(), ReactApplication {
     fun clearAllReactRootViewCache() {
         reactRootViewCache.clear()
         TimberLogger.d(TAG, "清理所有ReactRootView缓存")
+    }
+
+    /**
+     * 标记应用完全加载完成
+     * 应在首个Activity完全初始化并显示后调用
+     */
+    fun markAppFullyLoaded() {
+        startupPerformanceMonitor.onAppFullyLoaded()
+    }
+
+    /**
+     * 标记首帧绘制完成
+     * 应在首个Activity的首帧绘制完成后调用
+     */
+    fun markFirstFrameDrawn() {
+        startupPerformanceMonitor.onFirstFrameDrawn()
+    }
+
+    /**
+     * 标记首个Activity创建
+     * 应在MainActivity.onCreate中调用
+     */
+    fun markFirstActivityCreate() {
+        startupPerformanceMonitor.onFirstActivityCreate()
     }
 }

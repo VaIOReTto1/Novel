@@ -322,9 +322,9 @@ yarn detox test
 
 ### 🎯 阶段 3 - 性能专项 (2周)
 - 🚀 **Compose优化** - 重组次数减少30%，内存使用降低15%
-- ⚡ **启动性能** - Baseline Profiles，冷启动时间减少25%
+- ✅ **启动性能** - Baseline Profiles，冷启动时间减少25%
 - 💾 **缓存优化** - 图片缓存命中率提升至85%+
-- 📊 **监控体系** - Firebase Performance + 自定义指标
+- ✅ **监控体系** - 本地启动监控集成 + Firebase Performance
 
 ### 🎯 阶段 4 - 模块化演进 (2-3周)
 - 🏗️ **动态功能模块** - Reader、Search等模块独立化

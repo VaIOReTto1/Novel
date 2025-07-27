@@ -531,6 +531,35 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       console.error('[SettingsStore] 加载跟随系统主题设置失败:', error);
     }
   },
+
+  // 退出登录
+  logout: async () => {
+    try {
+      console.log('[SettingsStore] 开始退出登录');
+
+      // 调用Android端清空token - 使用Promise方式
+      if (SettingsBridge?.logout) {
+        await new Promise<string>((resolve, reject) => {
+          SettingsBridge.logout()
+            .then((result: string) => {
+              console.log('[SettingsStore] Android端退出登录成功:', result);
+              resolve(result);
+            })
+            .catch((error: any) => {
+              console.error('[SettingsStore] Android端退出登录失败:', error);
+              reject(error);
+            });
+        });
+      } else {
+        console.warn('[SettingsStore] SettingsBridge.logout 不可用');
+      }
+
+      console.log('[SettingsStore] 退出登录完成');
+    } catch (error) {
+      console.error('[SettingsStore] 退出登录失败:', error);
+      throw error;
+    }
+  },
 }));
 
 // 初始化时计算缓存大小和加载设置

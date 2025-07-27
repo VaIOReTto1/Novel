@@ -1,9 +1,10 @@
-import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
 import { SettingRow } from './components';
 import { useSettingsStore } from './store/settingsStore';
+import { useUserStore } from '../../ProfilePage/store/userStore';
 import { createSettingsPageStyles } from './styles/SettingsPageStyles';
-import { SettingsSection } from './types';
+import { SettingsSection } from './types/index';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { useThemeStore } from '../../../utils/theme/themeStore';
 import { NativeModules } from 'react-native';
@@ -18,6 +19,9 @@ const { NavigationBridge } = NativeModules;
 const SettingsPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createSettingsPageStyles(colors);
+  
+  // 弹窗状态
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // 添加主题store
   const { initializeFromNative } = useThemeStore();
@@ -48,7 +52,10 @@ const SettingsPage: React.FC = () => {
     navigateToPrivacyPolicy,
     navigateToFontSettings,
     getCurrentDisplayTheme,
+    logout
   } = useSettingsStore();
+
+  const { isLoggedIn, logout: userLogout } = useUserStore();
 
   // 初始化主题状态和设置
   React.useEffect(() => {
@@ -84,9 +91,41 @@ const SettingsPage: React.FC = () => {
   };
 
   /**
+   * 处理退出登录 - 显示确认弹窗
+   */
+  const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+  /**
+   * 确认退出登录
+   */
+  const confirmLogout = async () => {
+    try {
+      console.log('[SettingsPage] 开始退出登录流程');
+      setShowLogoutModal(false);
+      // 先调用Android端清空token
+      await logout();
+      // 再清空RN端用户状态
+      userLogout();
+      console.log('[SettingsPage] 退出登录成功');
+    } catch (error) {
+      console.error('[SettingsPage] 退出登录失败:', error);
+    }
+  };
+
+  /**
+   * 取消退出登录
+   */
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
+  };
+
+  /**
    * 创建设置项配置
    */
-  const createSettingsSections = (): SettingsSection[] => [
+  const createSettingsSections = (): SettingsSection[] => {
+    const sections: SettingsSection[] = [
     {
       id: 'cache',
       title: '存储管理',
@@ -237,6 +276,25 @@ const SettingsPage: React.FC = () => {
     },
   ];
 
+    // 如果用户已登录，添加退出登录选项
+  if (isLoggedIn) {
+    sections.push({
+      id: 'account',
+      title: '账户管理',
+      items: [
+        {
+          id: 'logout',
+          title: '退出登录',
+          type: 'arrow',
+          onPress: handleLogout,
+        },
+      ],
+    });
+  }
+
+  return sections;
+};
+
   /**
    * 渲染顶部导航栏
    */
@@ -292,6 +350,39 @@ const SettingsPage: React.FC = () => {
       >
         {settingsSections.map(renderSection)}
       </ScrollView>
+
+      {/* 退出登录确认弹窗 */}
+      {showLogoutModal && (
+        <Modal
+          transparent={true}
+          visible={showLogoutModal}
+          animationType="fade"
+          onRequestClose={cancelLogout}
+        >
+          <View style={styles.logoutModalOverlay}>
+            <View style={styles.logoutModalContainer}>
+              <Text style={styles.logoutModalTitle}>确认退出登录</Text>
+              <Text style={styles.logoutModalDescription}>
+                退出登录后，您需要重新登录才能使用相关功能
+              </Text>
+              <View style={styles.logoutModalButtonContainer}>
+                <TouchableOpacity
+                  style={[styles.logoutModalButton, styles.logoutModalCancelButton]}
+                  onPress={cancelLogout}
+                >
+                  <Text style={styles.logoutModalCancelButtonText}>取消</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.logoutModalButton, styles.logoutModalConfirmButton]}
+                  onPress={confirmLogout}
+                >
+                  <Text style={styles.logoutModalConfirmButtonText}>确认退出</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
     </SafeAreaView>
   );
 };

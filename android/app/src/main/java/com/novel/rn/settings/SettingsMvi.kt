@@ -32,6 +32,10 @@ sealed class SettingsIntent : MviIntent {
     object NavigateToTimedSwitch : SettingsIntent()
     object NavigateToHelpSupport : SettingsIntent()
     object NavigateToPrivacyPolicy : SettingsIntent()
+    
+    // 用户账户相关
+    object Logout : SettingsIntent()
+    object ConfirmLogout : SettingsIntent()
 }
 
 // ==================== State ====================
@@ -71,4 +75,9 @@ sealed class SettingsEffect : MviEffect {
     // 缓存操作结果
     data class CacheCalculated(val size: String) : SettingsEffect()
     data class CacheCleared(val message: String) : SettingsEffect()
-} 
+    
+    // 用户账户操作结果
+
+    data class LogoutSuccess(val message: String) : SettingsEffect()
+    data class LogoutError(val error: String) : SettingsEffect()
+}

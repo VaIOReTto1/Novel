@@ -10,6 +10,9 @@ import com.novel.ui.theme.ThemeManager
 import com.novel.rn.settings.SettingsUtils
 import com.novel.rn.settings.usecase.*
 import com.novel.utils.TimberLogger
+import com.novel.utils.Store.NovelKeyChain.NovelKeyChain
+import com.novel.utils.Store.NovelKeyChain.NovelKeyChainType
+import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +36,9 @@ class SettingsViewModel @Inject constructor(
     private val updateSettingsUseCase: UpdateSettingsUseCase,
     private val clearCacheUseCase: ClearCacheUseCase,
     private val exportUserDataUseCase: ExportUserDataUseCase,
-    private val importUserDataUseCase: ImportUserDataUseCase
+    private val importUserDataUseCase: ImportUserDataUseCase,
+    private val novelKeyChain: NovelKeyChain,
+    private val novelUserDefaults: NovelUserDefaults
 ) : BaseMviViewModel<SettingsIntent, SettingsState, SettingsEffect>() {
     
     companion object {
@@ -111,6 +116,8 @@ class SettingsViewModel @Inject constructor(
             is SettingsIntent.NavigateToTimedSwitch -> handleNavigateToTimedSwitch()
             is SettingsIntent.NavigateToHelpSupport -> handleNavigateToHelpSupport()
             is SettingsIntent.NavigateToPrivacyPolicy -> handleNavigateToPrivacyPolicy()
+            is SettingsIntent.Logout -> handleConfirmLogout()
+            SettingsIntent.ConfirmLogout -> handleConfirmLogout()
             else -> {
                 // 导航相关的Intent已经由Reducer处理，不需要额外操作
             }
@@ -394,6 +401,67 @@ class SettingsViewModel @Inject constructor(
         val reduceResult = settingsReducer.reduce(getCurrentState(), SettingsIntent.NavigateToPrivacyPolicy)
         updateState(reduceResult.newState)
         reduceResult.effect?.let { sendEffect(it) }
+    }
+    
+    private fun handleConfirmLogout() {
+        viewModelScope.launch {
+            try {
+                TimberLogger.d(TAG, "开始执行退出登录流程")
+                
+                // 清除用户数据
+                TimberLogger.d(TAG, "开始清除用户数据")
+                clearUserDataDirectly()
+                TimberLogger.d(TAG, "用户数据清除完成")
+                
+                val asyncResult = SettingsAsyncResult.LogoutSuccess("退出登录成功")
+                val reduceResult = settingsReducer.handleAsyncResult(getCurrentState(), asyncResult)
+                updateState(reduceResult.newState)
+                
+                TimberLogger.d(TAG, "准备发送LogoutSuccess效果")
+                reduceResult.effect?.let { 
+                    TimberLogger.d(TAG, "发送效果: $it")
+                    sendEffect(it) 
+                } ?: run {
+                    TimberLogger.w(TAG, "没有效果需要发送")
+                }
+                
+                TimberLogger.d(TAG, "退出登录流程完成")
+                
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "退出登录失败", e)
+                val asyncResult = SettingsAsyncResult.LogoutError("退出登录失败: ${e.message}")
+                val reduceResult = settingsReducer.handleAsyncResult(getCurrentState(), asyncResult)
+                updateState(reduceResult.newState)
+                
+                TimberLogger.d(TAG, "准备发送LogoutError效果")
+                reduceResult.effect?.let { 
+                    TimberLogger.d(TAG, "发送错误效果: $it")
+                    sendEffect(it) 
+                } ?: run {
+                    TimberLogger.w(TAG, "没有错误效果需要发送")
+                }
+            }
+        }
+    }
+    
+    /**
+     * 直接清除用户数据的辅助方法
+     * 用于在ViewModel不可用时的备用清理
+     */
+    private fun clearUserDataDirectly() {
+        try {
+            // 清除加密存储的token
+            novelKeyChain.delete(NovelKeyChainType.TOKEN)
+            novelKeyChain.delete(NovelKeyChainType.REFRESH_TOKEN)
+            
+            // 清除用户偏好设置
+            novelUserDefaults.clearAll()
+            
+            TimberLogger.d(TAG, "用户数据清理完成")
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "清理用户数据时发生错误", e)
+            throw e
+        }
     }
     
     private fun handleAsyncError(message: String) {

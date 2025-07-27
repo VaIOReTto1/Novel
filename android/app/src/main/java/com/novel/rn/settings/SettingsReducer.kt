@@ -2,6 +2,7 @@ package com.novel.rn.settings
 
 import com.novel.core.mvi.MviReducerWithEffect
 import com.novel.core.mvi.ReduceResult
+import com.novel.rn.settings.SettingsEffect.*
 import com.novel.utils.TimberLogger
 
 /**
@@ -52,7 +53,7 @@ class SettingsReducer : MviReducerWithEffect<SettingsIntent, SettingsState, Sett
                         currentThemeMode = intent.mode,
                         isLoading = false
                     ),
-                    effect = SettingsEffect.ShowToast("主题已切换到: ${intent.mode}")
+                    effect = ShowToast("主题已切换到: ${intent.mode}")
                 )
             }
             
@@ -62,7 +63,7 @@ class SettingsReducer : MviReducerWithEffect<SettingsIntent, SettingsState, Sett
                         version = currentState.version + 1,
                         isFollowSystemTheme = intent.follow
                     ),
-                    effect = SettingsEffect.ShowToast("跟随系统主题已设置为: ${intent.follow}")
+                    effect = ShowToast("跟随系统主题已设置为: ${intent.follow}")
                 )
             }
             
@@ -72,7 +73,7 @@ class SettingsReducer : MviReducerWithEffect<SettingsIntent, SettingsState, Sett
                         version = currentState.version + 1,
                         isAutoNightModeEnabled = intent.enabled
                     ),
-                    effect = SettingsEffect.ShowToast("自动切换夜间模式已设置为: ${intent.enabled}")
+                    effect = ShowToast("自动切换夜间模式已设置为: ${intent.enabled}")
                 )
             }
             
@@ -83,7 +84,7 @@ class SettingsReducer : MviReducerWithEffect<SettingsIntent, SettingsState, Sett
                         nightModeStartTime = intent.startTime,
                         nightModeEndTime = intent.endTime
                     ),
-                    effect = SettingsEffect.ShowToast("夜间模式时间已设置为: ${intent.startTime} - ${intent.endTime}")
+                    effect = ShowToast("夜间模式时间已设置为: ${intent.startTime} - ${intent.endTime}")
                 )
             }
             
@@ -133,6 +134,24 @@ class SettingsReducer : MviReducerWithEffect<SettingsIntent, SettingsState, Sett
                 ReduceResult(
                     newState = currentState,
                     effect = SettingsEffect.NavigateToPrivacyPolicy
+                )
+            }
+            
+            is SettingsIntent.Logout -> {
+                ReduceResult(
+                    newState = currentState.copy(
+                        version = currentState.version + 1,
+                        isLoading = true
+                    )
+                )
+            }
+
+            SettingsIntent.ConfirmLogout -> {
+                ReduceResult(
+                    newState = currentState.copy(
+                        version = currentState.version + 1,
+                        isLoading = true
+                    )
                 )
             }
         }
@@ -206,6 +225,27 @@ class SettingsReducer : MviReducerWithEffect<SettingsIntent, SettingsState, Sett
                     effect = SettingsEffect.ShowError(result.message)
                 )
             }
+            
+            is SettingsAsyncResult.LogoutSuccess -> {
+                ReduceResult(
+                    newState = currentState.copy(
+                        version = currentState.version + 1,
+                        isLoading = false
+                    ),
+                    effect = SettingsEffect.LogoutSuccess(result.message)
+                )
+            }
+            
+            is SettingsAsyncResult.LogoutError -> {
+                ReduceResult(
+                    newState = currentState.copy(
+                        version = currentState.version + 1,
+                        isLoading = false,
+                        error = result.message
+                    ),
+                    effect = SettingsEffect.LogoutError(result.message)
+                )
+            }
         }
     }
 }
@@ -226,5 +266,7 @@ sealed class SettingsAsyncResult {
     data class CacheSizeCalculated(val size: String) : SettingsAsyncResult()
     data class CacheCleared(val message: String) : SettingsAsyncResult()
     data class ThemeChanged(val actualTheme: String) : SettingsAsyncResult()
+    data class LogoutSuccess(val message: String) : SettingsAsyncResult()
+    data class LogoutError(val message: String) : SettingsAsyncResult()
     data class Error(val message: String) : SettingsAsyncResult()
-} 
+}

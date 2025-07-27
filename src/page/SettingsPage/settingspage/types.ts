@@ -48,4 +48,6 @@ export interface SettingsStore {
   navigateToCustomerService: () => void;
   navigateToPrivacyPolicy: () => void;
   navigateToFontSettings: () => void;
+
+  logout: () => void;
 }

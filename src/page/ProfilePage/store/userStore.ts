@@ -27,6 +27,7 @@ interface UserActions {
     photo: string;
     sex?: string;
   }) => void;
+  logout: () => void;
 }
 
 type UserStore = UserState & UserActions;
@@ -62,6 +63,17 @@ export const useUserStore = create<UserStore>()(
       state.photo = userData.photo;
       state.sex = userData.sex || null;
       state.isLoggedIn = true;
+    }),
+
+    logout: () => set((state) => {
+      state.uid = null;
+      state.token = null;
+      state.nickname = null;
+      state.photo = null;
+      state.sex = null;
+      state.isLoggedIn = false;
+      state.balance = 0.00;
+      state.coins = 0;
     }),
   }))
 );

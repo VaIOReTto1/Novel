@@ -19,12 +19,14 @@ import androidx.core.os.bundleOf
 import com.facebook.react.ReactInstanceManager
 import com.novel.MainApplication
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.facebook.react.bridge.ReactApplicationContext
 import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
 import com.novel.rn.settings.SettingsViewModel
 import androidx.compose.runtime.LaunchedEffect
+import com.novel.ui.theme.NovelColors
 import kotlinx.coroutines.launch
 
 /**
@@ -177,7 +179,7 @@ fun ReactNativePage(
             TimberLogger.d(TAG, "AndroidView factory返回缓存的ReactRootView for $componentName")
             rootView
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(NovelColors.NovelBackground)
     )
 
     // 在RN未就绪时显示加载指示器

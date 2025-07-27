@@ -85,6 +85,8 @@ export interface SettingsActions {
   navigateToCustomerService: () => void;
   navigateToPrivacyPolicy: () => void;
   navigateToFontSettings: () => void;
+
+  logout: () => void;
 }
 
 export type SettingsStore = SettingsState & SettingsActions;

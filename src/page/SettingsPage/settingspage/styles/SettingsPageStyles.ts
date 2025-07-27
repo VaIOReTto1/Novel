@@ -487,5 +487,76 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
     settingsContainer: {
       backgroundColor: colors.novelSecondaryBackground,
     },
+
+    // ===== 退出登录弹窗样式 =====
+    logoutModalOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000,
+    },
+    logoutModalContainer: {
+      backgroundColor: colors.novelBackground,
+      borderRadius: wp(16),
+      marginHorizontal: wp(32),
+      paddingTop: wp(24),
+      paddingBottom: wp(20),
+      paddingHorizontal: wp(24),
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.25,
+      shadowRadius: 8,
+      elevation: 10,
+      position: 'relative',
+    },
+    logoutModalTitle: {
+      marginTop: wp(8),
+      fontSize: fp(18),
+      fontWeight: 'bold',
+      color: colors.novelText,
+      textAlign: 'center',
+      marginBottom: wp(16),
+    },
+    logoutModalDescription: {
+      fontSize: fp(14),
+      color: colors.novelText,
+      textAlign: 'center',
+      lineHeight: fp(20),
+      marginBottom: wp(25),
+    },
+    logoutModalButtonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      gap: wp(12),
+    },
+    logoutModalButton: {
+      flex: 1,
+      paddingVertical: wp(12),
+      borderRadius: wp(24),
+      alignItems: 'center',
+    },
+    logoutModalCancelButton: {
+      backgroundColor: colors.novelChipBackground,
+      borderWidth: 1,
+      borderColor: colors.novelDivider,
+    },
+    logoutModalConfirmButton: {
+      backgroundColor: colors.novelMain,
+    },
+    logoutModalCancelButtonText: {
+      color: colors.novelText,
+      fontSize: fp(16),
+      fontWeight: '500',
+    },
+    logoutModalConfirmButtonText: {
+      color: colors.novelBackground,
+      fontSize: fp(16),
+      fontWeight: 'bold',
+    },
   });
 };

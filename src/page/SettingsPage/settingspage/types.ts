@@ -4,6 +4,7 @@ export type ColorScheme = 'light' | 'dark' | 'auto';
 // 状态管理接口
 export interface SettingsStore {
   // 状态字段
+  isInitialized: boolean;
   cacheSize: string;
   pushNotificationEnabled: boolean;
   benefitNotificationEnabled: boolean;

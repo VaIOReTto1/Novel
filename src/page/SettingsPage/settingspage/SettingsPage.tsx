@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-ignore
 import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
 import { SettingRow } from './components';
 import { useSettingsStore } from './store/settingsStore';
@@ -6,7 +7,6 @@ import { useUserStore } from '../../ProfilePage/store/userStore';
 import { createSettingsPageStyles } from './styles/SettingsPageStyles';
 import { SettingsSection } from './types/index';
 import { useNovelColors } from '../../../utils/theme/colors';
-import { useThemeStore } from '../../../utils/theme/themeStore';
 import { NativeModules } from 'react-native';
 
 const { NavigationBridge } = NativeModules;
@@ -22,9 +22,6 @@ const SettingsPage: React.FC = () => {
   
   // 弹窗状态
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-  // 添加主题store
-  const { initializeFromNative } = useThemeStore();
 
   const {
     // 状态
@@ -57,19 +54,18 @@ const SettingsPage: React.FC = () => {
 
   const { isLoggedIn, logout: userLogout } = useUserStore();
 
-  // 初始化主题状态和设置
+  // 初始化设置状态
   React.useEffect(() => {
+    console.log('[SettingsPage] 📱 SettingsPage组件开始挂载');
+    
     const initializeSettings = async () => {
       try {
         console.log('[SettingsPage] 🎯 开始初始化设置状态');
-        await initializeFromNative();
-        // 加载所有相关设置
-        const { loadFollowSystemTheme, loadAutoSwitchNightMode, loadNightModeTime } = useSettingsStore.getState();
-        await Promise.all([
-            loadFollowSystemTheme(),
-            loadAutoSwitchNightMode(),
-            loadNightModeTime(),
-        ]);
+        
+        // 加载夜间模式时间设置（其他设置已在应用启动时预加载）
+        const { loadNightModeTime } = useSettingsStore.getState();
+        await loadNightModeTime();
+        
         console.log('[SettingsPage] ✅ 设置状态初始化完成');
       } catch (error) {
         console.error('[SettingsPage] ❌ 设置状态初始化失败:', error);
@@ -77,7 +73,11 @@ const SettingsPage: React.FC = () => {
     };
 
     initializeSettings();
-  }, [initializeFromNative]);
+    
+    return () => {
+      console.log('[SettingsPage] 📱 SettingsPage组件即将卸载');
+    };
+  }, []);
 
   /**
    * 处理返回按钮点击
@@ -180,14 +180,20 @@ const SettingsPage: React.FC = () => {
           title: '主题模式',
           type: 'toggle',
           value: getCurrentDisplayTheme(),
-          onPress: toggleColorScheme,
+          onPress: () => {
+            console.log('[SettingsPage] 🌙 用户点击主题模式切换按钮');
+            toggleColorScheme();
+          },
         },
         {
           id: 'followSystemTheme',
           title: '跟随系统主题',
           type: 'switch',
           value: followSystemTheme,
-          onValueChange: (value) => setFollowSystemTheme(value as boolean),
+          onValueChange: (value) => {
+            console.log('[SettingsPage] 🔄 用户切换跟随系统主题:', value);
+            setFollowSystemTheme(value as boolean);
+          },
         },
         {
           id: 'nightModeSwitch',
@@ -195,6 +201,7 @@ const SettingsPage: React.FC = () => {
           type: 'arrow',
           value: autoSwitchNightMode ? '已开启' : '已关闭',
           onPress: () => {
+            console.log('[SettingsPage] ⏰ 用户点击定时切换日夜间模式，导航到TimedSwitchPage');
             if (NavigationBridge?.navigateToTimedSwitch) {
               NavigationBridge.navigateToTimedSwitch();
             } else {

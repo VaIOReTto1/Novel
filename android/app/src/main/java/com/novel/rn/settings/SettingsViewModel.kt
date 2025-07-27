@@ -132,17 +132,24 @@ class SettingsViewModel @Inject constructor(
             TimberLogger.d(TAG, "准备发送主题变更事件到RN: $theme")
 
             reactContext?.let { context ->
+                // 获取当前完整的主题状态，确保数据一致性
+                val currentState = getCurrentState()
+                val isFollowSystem = currentState.isFollowSystemTheme
+                val currentThemeMode = currentState.currentThemeMode
+                
                 val params = Arguments.createMap().apply {
                     putString("colorScheme", theme)
+                    putString("currentThemeMode", currentThemeMode)
+                    putBoolean("followSystem", isFollowSystem)
                 }
 
-                TimberLogger.d(TAG, "创建事件参数: colorScheme = $theme")
+                TimberLogger.d(TAG, "创建事件参数: colorScheme = $theme, currentThemeMode = $currentThemeMode, followSystem = $isFollowSystem")
 
                 context
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
                     .emit("ThemeChanged", params)
 
-                TimberLogger.d(TAG, "✅ 主题变更事件已发送到RN: $theme")
+                TimberLogger.d(TAG, "✅ 主题变更事件已发送到RN: $theme (mode: $currentThemeMode, follow: $isFollowSystem)")
             } ?: run {
                 TimberLogger.w(TAG, "ReactContext为空，无法发送主题变更事件")
             }
@@ -184,10 +191,14 @@ class SettingsViewModel @Inject constructor(
             try {
                 val updateResult = updateSettingsUseCase(UpdateSettingsUseCase.UpdateParams.ToggleTheme)
                 
-                // 更新状态
+                // 获取最新的跟随系统主题状态
+                val isFollowSystem = themeManager?.followSystemTheme?.value ?: false
+                
+                // 更新状态，确保所有字段都同步
                 val newState = getCurrentState().copy(
                     currentThemeMode = updateResult.newThemeMode ?: getCurrentState().currentThemeMode,
                     actualTheme = updateResult.newActualTheme ?: getCurrentState().actualTheme,
+                    isFollowSystemTheme = isFollowSystem,
                     isLoading = false
                 )
                 updateState(newState)
@@ -198,7 +209,7 @@ class SettingsViewModel @Inject constructor(
                 // 通知RN主题变化
                 updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
-                TimberLogger.d(TAG, "主题切换成功: ${updateResult.message}")
+                TimberLogger.d(TAG, "主题切换成功: ${updateResult.message}, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
                 
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "切换主题失败", e)
@@ -212,10 +223,14 @@ class SettingsViewModel @Inject constructor(
             try {
                 val updateResult = updateSettingsUseCase(UpdateSettingsUseCase.UpdateParams.ThemeMode(mode))
                 
-                // 更新状态
+                // 获取最新的跟随系统主题状态
+                val isFollowSystem = themeManager?.followSystemTheme?.value ?: false
+                
+                // 更新状态，确保所有字段都同步
                 val newState = getCurrentState().copy(
                     currentThemeMode = updateResult.newThemeMode ?: mode,
                     actualTheme = updateResult.newActualTheme ?: getCurrentState().actualTheme,
+                    isFollowSystemTheme = isFollowSystem,
                     isLoading = false
                 )
                 updateState(newState)
@@ -226,7 +241,7 @@ class SettingsViewModel @Inject constructor(
                 // 通知RN主题变化
                 updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
-                TimberLogger.d(TAG, "设置主题模式成功: $mode")
+                TimberLogger.d(TAG, "设置主题模式成功: $mode, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
                 
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "设置主题模式失败", e)

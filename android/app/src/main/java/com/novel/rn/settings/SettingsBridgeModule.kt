@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * 设置桥接模块
- * 
+ *
  * 专门处理设置相关的RN调用，通过SettingsViewModel管理状态：
  * - 主题切换和管理
  * - 缓存计算和清理
@@ -53,30 +53,62 @@ class SettingsBridgeModule(
     @ReactMethod
     fun toggleNightMode(callback: Callback) {
         TimberLogger.d(TAG, "切换夜间模式")
-        
+
         settingsViewModel?.let { viewModel ->
             // 监听Effect来获取结果
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
+                TimberLogger.d(
+                    TAG,
+                    "toggleNightMode处理Effect: $effect, callbackInvoked: ${callbackInvoked.get()}"
+                )
                 when (effect) {
                     is SettingsEffect.ShowToast -> {
+                        TimberLogger.d(TAG, "收到ShowToast Effect: ${effect.message}")
                         if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
+                            // 延迟一小段时间确保状态已更新，然后获取最新状态
+                            CoroutineScope(Dispatchers.Main).launch {
+                                kotlinx.coroutines.delay(300) // 50ms延迟
+
+                                val currentState = viewModel.getStateForBridge()
+                                val result = Arguments.createMap().apply {
+                                    putString("message", effect.message)
+                                    putString("currentThemeMode", currentState.currentThemeMode)
+                                    putString("actualTheme", currentState.actualTheme)
+                                    putBoolean("followSystem", currentState.isFollowSystemTheme)
+                                }
+                                TimberLogger.d(TAG, "准备调用RN回调，数据: $result")
+                                cb.invoke(null, result)
+                                TimberLogger.d(TAG, "✅ RN回调已调用")
+                            }
+                        } else {
+                            TimberLogger.w(TAG, "回调已经被调用过，跳过")
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
+                        TimberLogger.d(TAG, "收到ShowError Effect: ${effect.error}")
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
+                            TimberLogger.d(TAG, "✅ 错误回调已调用")
+                        } else {
+                            TimberLogger.w(TAG, "错误回调已经被调用过，跳过")
                         }
                         true // 停止监听
                     }
-                    else -> false // 继续监听
+
+                    else -> {
+                        TimberLogger.v(TAG, "收到其他Effect，继续监听: $effect")
+                        false // 继续监听
+                    }
                 }
             }
-            
+
             // 发送Intent
+            TimberLogger.d(TAG, "发送ToggleNightMode Intent")
             viewModel.sendIntent(SettingsIntent.ToggleNightMode)
         } ?: run {
+            TimberLogger.e(TAG, "ViewModel未初始化")
             callback.invoke("ViewModel未初始化", null)
         }
     }
@@ -87,26 +119,36 @@ class SettingsBridgeModule(
     @ReactMethod
     fun setNightMode(mode: String, callback: Callback) {
         TimberLogger.d(TAG, "设置夜间模式: $mode")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
                     is SettingsEffect.ShowToast -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
+                            // 获取当前状态并返回完整信息
+                            val currentState = viewModel.getStateForBridge()
+                            val result = Arguments.createMap().apply {
+                                putString("message", effect.message)
+                                putString("currentThemeMode", currentState.currentThemeMode)
+                                putString("actualTheme", currentState.actualTheme)
+                                putBoolean("followSystem", currentState.isFollowSystemTheme)
+                            }
+                            cb.invoke(null, result)
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.SetNightMode(mode))
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -119,7 +161,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun getCurrentNightMode(callback: Callback) {
         TimberLogger.d(TAG, "获取当前夜间模式")
-        
+
         settingsViewModel?.let { viewModel ->
             val currentState = viewModel.getStateForBridge()
             callback.invoke(null, currentState.currentThemeMode)
@@ -134,7 +176,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun getCurrentActualTheme(callback: Callback) {
         TimberLogger.d(TAG, "获取当前实际主题")
-        
+
         settingsViewModel?.let { viewModel ->
             val currentState = viewModel.getStateForBridge()
             callback.invoke(null, currentState.actualTheme)
@@ -149,26 +191,35 @@ class SettingsBridgeModule(
     @ReactMethod
     fun setFollowSystemTheme(follow: Boolean, callback: Callback) {
         TimberLogger.d(TAG, "设置跟随系统主题: $follow")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
                     is SettingsEffect.ShowToast -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
+                            val currentState = viewModel.getStateForBridge()
+                            val result = Arguments.createMap().apply {
+                                putString("message", effect.message)
+                                putString("currentThemeMode", currentState.currentThemeMode)
+                                putString("actualTheme", currentState.actualTheme)
+                                putBoolean("followSystem", follow) // 直接使用传入的参数值
+                            }
+                            cb.invoke(null, result)
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.SetFollowSystemTheme(follow))
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -181,7 +232,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun isFollowSystemTheme(callback: Callback) {
         TimberLogger.d(TAG, "获取跟随系统主题状态")
-        
+
         settingsViewModel?.let { viewModel ->
             val currentState = viewModel.getStateForBridge()
             callback.invoke(null, currentState.isFollowSystemTheme)
@@ -196,7 +247,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun setAutoNightMode(enabled: Boolean, callback: Callback) {
         TimberLogger.d(TAG, "设置自动切换夜间模式: $enabled")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
@@ -206,16 +257,18 @@ class SettingsBridgeModule(
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.SetAutoNightMode(enabled))
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -228,7 +281,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun isAutoNightModeEnabled(callback: Callback) {
         TimberLogger.d(TAG, "获取自动切换夜间模式状态")
-        
+
         settingsViewModel?.let { viewModel ->
             val currentState = viewModel.getStateForBridge()
             callback.invoke(null, currentState.isAutoNightModeEnabled)
@@ -243,7 +296,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun clearAllCache(callback: Callback) {
         TimberLogger.d(TAG, "清除所有缓存")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
@@ -253,16 +306,18 @@ class SettingsBridgeModule(
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.ClearAllCache)
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -275,7 +330,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun calculateCacheSize(callback: Callback) {
         TimberLogger.d(TAG, "计算缓存大小")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
@@ -285,16 +340,18 @@ class SettingsBridgeModule(
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.CalculateCacheSize)
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -307,7 +364,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun setNightModeTime(startTime: String, endTime: String, callback: Callback) {
         TimberLogger.d(TAG, "设置夜间模式时间段: $startTime - $endTime")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
@@ -317,16 +374,18 @@ class SettingsBridgeModule(
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.SetNightModeTime(startTime, endTime))
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -339,7 +398,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun getNightModeStartTime(callback: Callback) {
         TimberLogger.d(TAG, "获取夜间模式开始时间")
-        
+
         settingsViewModel?.let { viewModel ->
             val currentState = viewModel.getStateForBridge()
             callback.invoke(null, currentState.nightModeStartTime)
@@ -354,7 +413,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun getNightModeEndTime(callback: Callback) {
         TimberLogger.d(TAG, "获取夜间模式结束时间")
-        
+
         settingsViewModel?.let { viewModel ->
             val currentState = viewModel.getStateForBridge()
             callback.invoke(null, currentState.nightModeEndTime)
@@ -369,7 +428,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun checkCurrentTimeTheme(callback: Callback) {
         TimberLogger.d(TAG, "检查当前时间的主题状态")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
                 when (effect) {
@@ -379,16 +438,18 @@ class SettingsBridgeModule(
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (callbackInvoked.compareAndSet(false, true)) {
                             cb.invoke(effect.error, null)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.CheckCurrentTimeTheme)
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
@@ -401,7 +462,7 @@ class SettingsBridgeModule(
     @ReactMethod
     fun changeTheme(theme: String, promise: Promise) {
         TimberLogger.d(TAG, "统一主题切换: $theme")
-        
+
         settingsViewModel?.let { viewModel ->
             observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
                 when (effect) {
@@ -411,16 +472,18 @@ class SettingsBridgeModule(
                         }
                         true // 停止监听
                     }
+
                     is SettingsEffect.ShowError -> {
                         if (promiseResolved.compareAndSet(false, true)) {
                             p.reject("THEME_CHANGE_ERROR", effect.error)
                         }
                         true // 停止监听
                     }
+
                     else -> false // 继续监听
                 }
             }
-            
+
             viewModel.sendIntent(SettingsIntent.SetNightMode(theme))
         } ?: run {
             promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
@@ -434,7 +497,7 @@ class SettingsBridgeModule(
     fun logout(promise: Promise) {
         try {
             TimberLogger.d(TAG, "开始执行退出登录")
-            
+
             // 直接发送确认退出登录意图到ViewModel
             settingsViewModel?.let { viewModel ->
                 observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
@@ -445,12 +508,14 @@ class SettingsBridgeModule(
                             }
                             true
                         }
+
                         is SettingsEffect.LogoutError -> {
                             if (promiseResolved.compareAndSet(false, true)) {
                                 p.reject("LOGOUT_ERROR", effect.error)
                             }
                             true
                         }
+
                         else -> false
                     }
                 }
@@ -459,13 +524,12 @@ class SettingsBridgeModule(
             } ?: run {
                 promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
             }
-            
+
         } catch (e: Exception) {
             TimberLogger.e(TAG, "退出登录失败", e)
             promise.reject("LOGOUT_ERROR", "退出登录失败: ${e.message}", e)
         }
     }
-    
 
 
     /**
@@ -477,10 +541,10 @@ class SettingsBridgeModule(
         effectHandler: (SettingsEffect, AtomicBoolean, Callback) -> Boolean
     ) {
         TimberLogger.d(TAG, "设置Effect观察器")
-        
+
         // 使用原子布尔值确保callback只被调用一次
         val callbackInvoked = AtomicBoolean(false)
-        
+
         // 在主线程上启动协程来监听Effect
         CoroutineScope(Dispatchers.Main).launch {
             try {
@@ -518,10 +582,10 @@ class SettingsBridgeModule(
         effectHandler: (SettingsEffect, AtomicBoolean, Promise) -> Boolean
     ) {
         TimberLogger.d(TAG, "设置Effect观察器(Promise)")
-        
+
         // 使用原子布尔值确保promise只被调用一次
         val promiseResolved = AtomicBoolean(false)
-        
+
         // 在主线程上启动协程来监听Effect
         CoroutineScope(Dispatchers.Main).launch {
             try {

@@ -45,7 +45,8 @@ class UpdateSettingsUseCase @Inject constructor(
             when (parameters) {
                 is UpdateParams.ThemeMode -> {
                     settingsUtils.setNightMode(parameters.mode)
-                    themeManager.setThemeMode(parameters.mode)
+                    // 不发送RN事件，由SettingsViewModel统一发送
+                    themeManager.setThemeMode(parameters.mode, notifyRN = false)
                     
                     val actualTheme = themeManager.getCurrentActualThemeMode()
                     val result = UpdateResult(
@@ -61,16 +62,28 @@ class UpdateSettingsUseCase @Inject constructor(
                 is UpdateParams.FollowSystemTheme -> {
                     settingsUtils.setFollowSystemTheme(parameters.follow)
                     
-                    val newMode = if (parameters.follow) "auto" else themeManager.getCurrentThemeMode()
+                    // 同步更新ThemeManager的状态
+                    val newMode = if (parameters.follow) {
+                        "auto"
+                    } else {
+                        // 如果关闭跟随系统，需要设置为当前实际主题
+                        val currentActual = themeManager.getCurrentActualThemeMode()
+                        currentActual
+                    }
+                    
+                    // 重要：同步ThemeManager的状态，不发送RN事件，由SettingsViewModel统一发送
+                    themeManager.setThemeMode(newMode, notifyRN = false)
+                    
                     val actualTheme = themeManager.getCurrentActualThemeMode()
                     
+                    // 始终返回完整的状态信息，确保RN端状态同步
                     val result = UpdateResult(
                         message = "跟随系统主题已${if (parameters.follow) "开启" else "关闭"}",
                         newThemeMode = newMode,
                         newActualTheme = actualTheme
                     )
                     
-                    TimberLogger.d(TAG, "跟随系统主题更新成功: ${parameters.follow}")
+                    TimberLogger.d(TAG, "跟随系统主题更新成功: ${parameters.follow}, newMode: $newMode, actualTheme: $actualTheme")
                     return result
                 }
                 
@@ -98,6 +111,8 @@ class UpdateSettingsUseCase @Inject constructor(
                 
                 is UpdateParams.ToggleTheme -> {
                     val resultMessage = settingsUtils.toggleNightMode()
+                    
+                    // 确保ThemeManager状态已同步，获取最新的状态
                     val newThemeMode = themeManager.getCurrentThemeMode()
                     val newActualTheme = themeManager.getCurrentActualThemeMode()
                     
@@ -107,7 +122,7 @@ class UpdateSettingsUseCase @Inject constructor(
                         newActualTheme = newActualTheme
                     )
                     
-                    TimberLogger.d(TAG, "主题切换成功: $newThemeMode -> $newActualTheme")
+                    TimberLogger.d(TAG, "主题切换成功: $newThemeMode -> $newActualTheme (followSystem: ${themeManager.followSystemTheme.value})")
                     return result
                 }
             }
@@ -125,4 +140,4 @@ class UpdateSettingsUseCase @Inject constructor(
             else -> "未知"
         }
     }
-} 
+}

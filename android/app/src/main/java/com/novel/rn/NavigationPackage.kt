@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 import com.novel.rn.bridge.NavigationBridgeModule
 import com.novel.rn.settings.SettingsBridgeModule
+import com.novel.rn.bridge.UserBridgeModule
 
 /**
  * React Native导航模块包 - MVI架构版
@@ -40,7 +41,10 @@ class NavigationPackage : ReactPackage {
             SettingsBridgeModule(reactContext),
             
             // 导航相关桥接模块（基于BridgeViewModel）
-            NavigationBridgeModule(reactContext)
+            NavigationBridgeModule(reactContext),
+            
+            // 用户数据桥接模块
+            UserBridgeModule(reactContext)
         )
         
         TimberLogger.d(TAG, "MVI桥接模块创建完成，包含${modules.size}个模块：")

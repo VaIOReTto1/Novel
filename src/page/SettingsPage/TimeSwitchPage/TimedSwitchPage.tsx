@@ -30,33 +30,42 @@ const TimedSwitchPage: React.FC = () => {
 
   // 监听主题变化
   useEffect(() => {
+    console.log('[TimedSwitchPage] 📱 TimedSwitchPage组件开始挂载');
+    
     const subscription = DeviceEventEmitter.addListener('ThemeChanged', (data: { colorScheme: string }) => {
-      console.log('Theme changed to:', data.colorScheme);
+      console.log('[TimedSwitchPage] 🎨 收到主题变化事件:', data.colorScheme);
     });
 
-    return () => subscription.remove();
+    return () => {
+      console.log('[TimedSwitchPage] 📱 TimedSwitchPage组件即将卸载');
+      subscription.remove();
+    };
   }, []);
 
   // 定时切换开关切换处理
   const handleTimeBasedThemeToggle = (value: string | boolean) => {
     const enabled = typeof value === 'boolean' ? value : value === 'true';
+    console.log('[TimedSwitchPage] ⏰ 用户切换定时主题开关:', enabled);
     setAutoSwitchNightMode(enabled);
   };
 
   // 处理日间模式时间选择（实际是夜间模式结束时间）
   const handleDayModeTimePress = () => {
+    console.log('[TimedSwitchPage] ☀️ 用户点击设置日间模式时间');
     setEditingTimeType('day');
     setShowTimePickerModal(true);
   };
 
   // 处理夜间模式时间选择（夜间模式开始时间）
   const handleNightModeTimePress = () => {
+    console.log('[TimedSwitchPage] 🌙 用户点击设置夜间模式时间');
     setEditingTimeType('night');
     setShowTimePickerModal(true);
   };
 
   // 时间选择确认处理
   const handleTimeConfirm = (selectedTime: string) => {
+    console.log(`[TimedSwitchPage] ⏰ 用户确认设置${editingTimeType === 'day' ? '日间' : '夜间'}模式时间:`, selectedTime);
     if (editingTimeType === 'day') {
       // 日间模式时间实际是夜间模式的结束时间
       setNightModeTime(nightModeStartTime, selectedTime);
@@ -78,6 +87,7 @@ const TimedSwitchPage: React.FC = () => {
 
   // 返回按钮处理
   const handleBackPress = () => {
+    console.log('[TimedSwitchPage] ⬅️ 用户点击返回按钮');
     if (NavigationBridge?.navigateBack) {
       NavigationBridge.navigateBack('TimedSwitchPageComponent');
     }

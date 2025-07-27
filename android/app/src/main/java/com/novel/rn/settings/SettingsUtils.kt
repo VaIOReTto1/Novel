@@ -136,21 +136,46 @@ class SettingsUtils @Inject constructor(
 
     /**
      * 切换夜间模式
-     * 支持三种模式循环切换：浅色 → 深色 → 跟随系统
+     * 如果当前是跟随系统主题模式，首先关闭跟随系统主题，然后切换到对应的固定主题
+     * 否则支持两种模式循环切换：浅色 ↔ 深色
      * @return 切换结果提示
      */
     fun toggleNightMode(): String {
         return try {
             val currentMode = getCurrentNightMode()
-            val newMode = when (currentMode) {
-                "light" -> "dark"
-                "dark" -> "auto"
-                else -> "light"
+            val isFollowingSystem = isFollowSystemTheme()
+            
+            TimberLogger.d(TAG, "🎯 toggleNightMode开始 - 当前主题模式: $currentMode, 跟随系统: $isFollowingSystem")
+            
+            val newMode = if (isFollowingSystem) {
+                // 如果当前是跟随系统主题，根据当前实际主题切换到对应的固定主题
+                val actualTheme = themeManager.getCurrentActualThemeMode()
+                TimberLogger.d(TAG, "🔄 跟随系统主题模式，当前实际主题: $actualTheme")
+                when (actualTheme) {
+                    "light" -> "dark"  // 当前是浅色，切换到深色
+                    "dark" -> "light"  // 当前是深色，切换到浅色
+                    else -> "light"    // 默认切换到浅色
+                }
+            } else {
+                // 如果不是跟随系统主题，在浅色和深色之间切换
+                TimberLogger.d(TAG, "🔄 固定主题模式，当前模式: $currentMode")
+                when (currentMode) {
+                    "light" -> "dark"
+                    "dark" -> "light"
+                    else -> "light"  // 默认切换到浅色
+                }
             }
 
+            TimberLogger.d(TAG, "🔧 准备设置主题模式为: $newMode")
             setNightMode(newMode)
-            val result = "已切换至${getNightModeDisplayName(newMode)}模式"
-            TimberLogger.d(TAG, "主题切换: $currentMode -> $newMode")
+            TimberLogger.d(TAG, "✅ setNightMode调用完成")
+            
+            val result = if (isFollowingSystem) {
+                "已关闭跟随系统主题，切换至${getNightModeDisplayName(newMode)}模式"
+            } else {
+                "已切换至${getNightModeDisplayName(newMode)}模式"
+            }
+            TimberLogger.d(TAG, "🎉 主题切换完成: $result")
             result
         } catch (e: Exception) {
             val errorMsg = "切换夜间模式失败: ${e.message}"
@@ -165,11 +190,14 @@ class SettingsUtils @Inject constructor(
      * @param mode 主题模式（light/dark/auto）
      */
     fun setNightMode(mode: String) {
-        TimberLogger.d(TAG, "设置主题模式: $mode")
+        TimberLogger.d(TAG, "🔧 开始设置主题模式: $mode")
         novelUserDefaults.setString(PREF_NIGHT_MODE, mode)
+        TimberLogger.d(TAG, "📝 已保存主题模式到配置: $mode")
 
         // 使用全局主题管理器统一管理
+        TimberLogger.d(TAG, "🎨 调用themeManager.setThemeMode: $mode")
         themeManager.setThemeMode(mode)
+        TimberLogger.d(TAG, "✅ themeManager.setThemeMode调用完成")
 
         when (mode) {
             "light" -> {

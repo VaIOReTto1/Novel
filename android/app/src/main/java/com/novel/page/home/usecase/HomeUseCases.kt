@@ -158,22 +158,13 @@ class SendReactNativeDataUseCase @Inject constructor(
                     2 -> "女"
                     else -> "未知"
                 }
-                ReactNativeBridge.sendUserDataToRN(
-                    uid = uid.toString(),
-                    token = token,
-                    nickname = currentUser.nickName,
-                    photo = currentUser.userPhoto,
-                    sex = sex
-                )
                 TimberLogger.d("SendReactNativeDataUseCase", "发送真实用户数据完成: ${currentUser.nickName}")
             } else {
                 // 如果没有用户数据，发送测试数据作为后备
-                ReactNativeBridge.sendTestUserDataToRN()
                 TimberLogger.w("SendReactNativeDataUseCase", "用户数据不完整，使用测试数据")
             }
             
             delay(500)
-            ReactNativeBridge.sendTestRecommendBooksToRN()
             TimberLogger.d("SendReactNativeDataUseCase", "发送RN数据完成")
         } catch (e: Exception) {
             TimberLogger.e("SendReactNativeDataUseCase", "发送RN数据失败", e)

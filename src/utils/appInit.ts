@@ -1,5 +1,6 @@
 import { nativeEventListener } from './nativeEventListener';
-import { useThemeStore } from './theme/themeStore';
+import { useThemeStore, initializeTheme } from './theme/themeStore';
+import { getCurrentUserData } from './bridge/UserBridge';
 
 // 模块级别的页面状态缓存
 const pageStateCache: Record<string, any> = {};
@@ -50,15 +51,84 @@ export async function syncThemeFromNative(): Promise<void> {
 }
 
 /**
+ * 预加载用户数据
+ * 在应用启动时预加载用户信息，避免ProfilePage显示时的闪烁
+ */
+export async function preloadUserData(): Promise<void> {
+  try {
+    console.log('[AppInit] 🎯 开始预加载用户数据');
+    
+    // 检查是否已经有用户数据，避免重复从原生获取
+    const { useUserStore } = await import('../page/ProfilePage/store/userStore');
+    const currentUserState = useUserStore.getState();
+    
+    if (currentUserState.isLoggedIn && currentUserState.uid) {
+      console.log('[AppInit] ✅ 用户数据已存在，跳过从原生获取:', currentUserState.nickname);
+      return;
+    }
+    
+    // 从Android端获取用户数据
+    const userData = await getCurrentUserData();
+    
+    if (userData) {
+      useUserStore.getState().handleNativeUserData(userData);
+      console.log('[AppInit] ✅ 用户数据预加载完成:', userData.nickname);
+    } else {
+      console.log('[AppInit] ⚠️ 未获取到用户数据，跳过用户数据预加载');
+    }
+  } catch (error) {
+    console.error('[AppInit] ❌ 预加载用户数据失败:', error);
+  }
+}
+
+/**
+ * 预加载设置状态
+ * 在应用启动时预加载关键设置，避免进入设置页面时的状态跳变
+ */
+export async function preloadSettings(): Promise<void> {
+  try {
+    console.log('[AppInit] 🎯 开始预加载设置状态');
+    
+    const { useSettingsStore } = await import('../page/SettingsPage/settingspage/store/settingsStore');
+    const { loadFollowSystemTheme, loadAutoSwitchNightMode } = useSettingsStore.getState();
+    
+    // 并行加载关键设置状态
+    await Promise.all([
+      loadFollowSystemTheme(),
+      loadAutoSwitchNightMode(),
+    ]);
+    
+    console.log('[AppInit] ✅ 设置状态预加载完成');
+  } catch (error) {
+    console.error('[AppInit] ❌ 预加载设置状态失败:', error);
+  }
+}
+
+/**
  * 初始化应用
  * 在应用启动时调用，设置必要的监听器和配置
  */
-export function initializeApp() {
+export async function initializeApp() {
   console.log('[AppInit] Initializing application...');
 
   try {
     // 初始化原生事件监听器
     nativeEventListener.init();
+
+    // 初始化主题监听器
+    console.log('[AppInit] 🎨 初始化主题监听器...');
+    await initializeTheme();
+    console.log('[AppInit] 🎨 主题监听器初始化完成');
+
+    // 预加载用户数据
+    console.log('[AppInit] 👤 预加载用户数据...');
+    await preloadUserData();
+    console.log('[AppInit] 👤 用户数据预加载完成');
+
+    // 预加载设置状态
+    console.log('[AppInit] ⚙️ 预加载设置状态...');
+    await preloadSettings();
+    console.log('[AppInit] ⚙️ 设置状态预加载完成');
 
     console.log('[AppInit] Application initialized successfully');
   } catch (error) {

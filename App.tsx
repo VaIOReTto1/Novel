@@ -4,37 +4,37 @@ import ProfilePage from './src/page/ProfilePage/ProfilePage';
 import { initializeApp, cleanupApp } from './src/utils/appInit';
 import { useUserStore } from './src/page/ProfilePage/store/userStore';
 import { useHomeStore } from './src/page/ProfilePage/store/BookStore';
-import { initializeTheme } from './src/utils/theme/themeStore';
+import { useThemeStore } from './src/utils/theme/themeStore';
 import { useNovelColors } from './src/utils/theme/colors';
 
-export default function App(): React.JSX.Element {
-  const colors = useNovelColors();
+interface AppProps {
+  initialThemeMode?: string;
+  initialActualTheme?: string;
+  initialIsDarkMode?: boolean;
+}
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.novelBackground,
-    },
-  });
+export default function App(props: AppProps = {}): React.JSX.Element {
+  const { initializeFromProps } = useThemeStore();
+
+  // 🎯 在组件渲染之前立即初始化主题（同步，避免闪烁）
+  React.useMemo(() => {
+    if (props.initialThemeMode || props.initialActualTheme !== undefined || props.initialIsDarkMode !== undefined) {
+      initializeFromProps(props);
+    }
+  }, [props.initialThemeMode, props.initialActualTheme, props.initialIsDarkMode, initializeFromProps]);
 
   useEffect(() => {
-    let themeCleanup: (() => void) | undefined;
-
-    const initializeAsync = async () => {
+    // 初始化应用（异步）
+    const initApp = async () => {
       try {
-    // 初始化应用
-    initializeApp();
-
-        // 异步初始化主题并恢复缓存
-        themeCleanup = await initializeTheme();
-        console.log('[App] 🎨 主题初始化完成');
+        await initializeApp();
+        console.log('[App] 🎨 应用初始化完成');
       } catch (error) {
-        console.error('[App] 主题初始化失败:', error);
+        console.error('[App] ❌ 应用初始化失败:', error);
       }
     };
-
-    // 启动异步初始化
-    initializeAsync();
+    
+    initApp();
 
     // 监听store变化并打印日志
     const userUnsubscribe = useUserStore.subscribe((state) => {
@@ -58,12 +58,19 @@ export default function App(): React.JSX.Element {
       cleanupApp();
       userUnsubscribe();
       homeUnsubscribe();
-      if (themeCleanup) {
-        themeCleanup();
-        console.log('[App] 🎨 主题清理完成');
-      }
+      console.log('[App] 🎨 应用清理完成');
     };
   }, []);
+
+  // 动态获取颜色，确保主题初始化后使用
+  const colors = useNovelColors();
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.novelBackground,
+    },
+  });
 
   return (
     <SafeAreaView style={styles.container}>

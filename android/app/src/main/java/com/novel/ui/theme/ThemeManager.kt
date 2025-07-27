@@ -138,7 +138,9 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
             }
             "auto" -> {
                 _followSystemTheme.value = true
-                // 当跟随系统时，不要手动设置 _isDarkMode，让系统决定
+                // 当跟随系统时，使用改进的系统主题检测
+                val isSystemDark = detectSystemDarkMode()
+                _isDarkMode.value = isSystemDark
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         }
@@ -151,8 +153,21 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     /**
      * 设置主题模式
      */
-    fun setThemeMode(mode: String) {
+    fun setThemeMode(mode: String, notifyRN: Boolean = true) {
+        println("[ThemeManager] 🎯 开始设置主题模式: $mode, notifyRN: $notifyRN")
         applyThemeMode(mode, saveToCache = true)
+        
+        // 获取当前实际主题
+        val actualTheme = getCurrentActualThemeMode()
+        println("[ThemeManager] 🔄 主题应用完成，当前实际主题: $actualTheme")
+        
+        // 只有在需要时才发送到RN端
+        if (notifyRN) {
+            notifyThemeChangedToRN(actualTheme)
+            println("[ThemeManager] ✅ 主题变更事件已发送到RN: $actualTheme")
+        }
+        
+        println("[ThemeManager] ✅ 主题设置完成: $mode -> $actualTheme")
     }
     
     /**
@@ -180,12 +195,64 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
      */
     fun getCurrentActualThemeMode(): String {
         return if (_followSystemTheme.value) {
-            // 跟随系统时，检查系统当前是否为深色模式
-            val isSystemDark = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            // 跟随系统时，使用多种方式检测系统主题，确保准确性
+            val isSystemDark = detectSystemDarkMode()
             if (isSystemDark) "dark" else "light"
         } else {
             // 手动设置时，返回当前设置
             if (_isDarkMode.value) "dark" else "light"
+        }
+    }
+    
+    /**
+     * 检测系统是否为深色模式
+     * 使用多种方式确保检测准确性
+     */
+    private fun detectSystemDarkMode(): Boolean {
+        return try {
+            // 方法1：使用Configuration检测
+            val configurationDark = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            
+            // 方法2：使用AppCompatDelegate检测当前夜间模式
+            val delegateMode = AppCompatDelegate.getDefaultNightMode()
+            val delegateDark = when (delegateMode) {
+                AppCompatDelegate.MODE_NIGHT_YES -> true
+                AppCompatDelegate.MODE_NIGHT_NO -> false
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
+                    // 如果是跟随系统，再次检查系统配置
+                    configurationDark
+                }
+                else -> configurationDark
+            }
+            
+            // 方法3：检查当前Activity的主题（如果可用）
+            val activityDark = try {
+                if (context is android.app.Activity) {
+                    val activity = context as android.app.Activity
+                    val nightModeFlags = activity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                    nightModeFlags == Configuration.UI_MODE_NIGHT_YES
+                } else {
+                    configurationDark
+                }
+            } catch (e: Exception) {
+                configurationDark
+            }
+            
+            // 优先使用delegate的结果，因为它更准确
+            val result = if (delegateMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+                // 跟随系统时，使用configuration的结果
+                configurationDark
+            } else {
+                // 手动设置时，使用delegate的结果
+                delegateDark
+            }
+            
+            println("[ThemeManager] 系统主题检测 - Configuration: $configurationDark, Delegate: $delegateDark, Activity: $activityDark, Final: $result")
+            result
+        } catch (e: Exception) {
+            println("[ThemeManager] 系统主题检测失败，使用默认值: ${e.message}")
+            // 发生异常时，使用当前_isDarkMode的值作为fallback
+            _isDarkMode.value
         }
     }
     

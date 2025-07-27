@@ -114,8 +114,17 @@ fun ReactNativePage(
     val rootView = remember(componentName, initialProps) {
         TimberLogger.d(TAG, "获取缓存的ReactRootView for $componentName")
 
-        // 将Map转换为Bundle
+        // 🎯 预获取主题状态，避免RN端闪烁
+        val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
+        val currentThemeMode = themeManager.getCurrentThemeMode()
+        val currentActualTheme = themeManager.getCurrentActualThemeMode()
+        val isDarkMode = currentActualTheme == "dark"
+        
+        TimberLogger.d(TAG, "预传递主题状态 - mode: $currentThemeMode, actual: $currentActualTheme, isDark: $isDarkMode")
+
+        // 将Map转换为Bundle，并添加主题信息
         val bundle = bundleOf().apply {
+            // 添加原有的props
             initialProps.forEach { (key, value) ->
                 when (value) {
                     is String -> putString(key, value)
@@ -127,17 +136,14 @@ fun ReactNativePage(
                     else -> putString(key, value.toString())
                 }
             }
+            
+            // 🎯 添加主题状态到props，确保RN组件初始渲染就有正确主题
+            putString("initialThemeMode", currentThemeMode)
+            putString("initialActualTheme", currentActualTheme)
+            putBoolean("initialIsDarkMode", isDarkMode)
         }
 
         mainApplication.getOrCreateReactRootView(componentName, bundle)
-    }
-
-    // 当RN上下文就绪时，发送用户数据到RN
-    LaunchedEffect(isContextReady, componentName, bridgeViewModel) {
-        if (isContextReady && bridgeViewModel != null) {
-            TimberLogger.d(TAG, "RN上下文已就绪，开始发送用户数据 for $componentName")
-            bridgeViewModel.sendUserDataToRN()
-        }
     }
 
     // 管理RN上下文监听器的生命周期
@@ -151,7 +157,7 @@ fun ReactNativePage(
                 isContextReady = true
                 settingsViewModel?.initReactContext(reactCtx as ReactApplicationContext)
                 // RN上下文就绪时，主动同步主题信息
-                syncThemeToRN(componentName, settingsViewModel)
+//                syncThemeToRN(componentName, settingsViewModel)
             }.also { listener ->
                 reactInstanceManager.addReactInstanceEventListener(listener)
             }
@@ -160,7 +166,7 @@ fun ReactNativePage(
             val rc = reactInstanceManager.currentReactContext
             if (rc != null) {
                 settingsViewModel?.initReactContext(rc as ReactApplicationContext)
-                syncThemeToRN(componentName, settingsViewModel)
+//                syncThemeToRN(componentName, settingsViewModel)
             }
             null
         }

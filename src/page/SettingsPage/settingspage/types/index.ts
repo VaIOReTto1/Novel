@@ -18,6 +18,9 @@ export interface SettingsSection {
 export type ColorScheme = 'light' | 'dark' | 'auto';
 
 export interface SettingsState {
+  // 初始化状态
+  isInitialized: boolean;
+
   // 缓存设置
   cacheSize: string;
 

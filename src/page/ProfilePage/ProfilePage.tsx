@@ -35,7 +35,7 @@ const ProfilePage: React.FC = () => {
   } = useHomeStore();
 
   // 添加主题store
-  const { initializeFromNative } = useThemeStore();
+  const { initializeFromNative, isInitialized } = useThemeStore();
 
   const colors = useNovelColors();
   const styles = createHomePageStyles(colors);
@@ -65,14 +65,18 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     const initializePageData = async () => {
       try {
-        // 🎯 首先从原生端获取最新的主题状态
-        console.log('[ProfilePage] 开始初始化主题和数据');
-        await initializeFromNative();
-        console.log('[ProfilePage] 主题初始化完成');
+        // 🎯 只有在主题未初始化时才从原生端获取（避免重复初始化）
+        if (!isInitialized) {
+          console.log('[ProfilePage] 🎨 主题未初始化，从原生端获取');
+          await initializeFromNative();
+          console.log('[ProfilePage] 🎨 主题同步完成');
+        } else {
+          console.log('[ProfilePage] 🎨 主题已初始化，跳过原生端获取');
+        }
 
         // 然后加载数据
         await loadHomeRecommendBooks();
-        console.log('[ProfilePage] 数据加载完成');
+        console.log('[ProfilePage] 📊 数据加载完成');
       } catch (error) {
         console.error('[ProfilePage] 初始化失败:', error);
         // 即使主题初始化失败，也要尝试加载数据
@@ -81,7 +85,7 @@ const ProfilePage: React.FC = () => {
     };
 
     initializePageData();
-  }, [loadHomeRecommendBooks, initializeFromNative]);
+  }, [loadHomeRecommendBooks, initializeFromNative, isInitialized]);
 
   // 登录函数
   const toLogin = useCallback(() => {

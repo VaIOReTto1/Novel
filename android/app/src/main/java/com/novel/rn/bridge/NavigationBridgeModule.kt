@@ -10,6 +10,15 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
 import com.novel.MainApplication
 import com.novel.utils.NavViewModel
+import com.novel.rn.settings.SettingsViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.TimeoutCancellationException
+import java.util.concurrent.atomic.AtomicBoolean
+import com.novel.rn.settings.SettingsEffect
+import com.novel.rn.settings.SettingsIntent
 
 /**
  * 导航桥接模块
@@ -39,6 +48,19 @@ class NavigationBridgeModule(
             }
         } catch (e: Exception) {
             TimberLogger.e(TAG, "无法获取BridgeViewModel", e)
+            null
+        }
+
+    private val settingsViewModel: SettingsViewModel?
+        get() = try {
+            val activity = currentActivity as? ComposeMainActivity
+            activity?.let {
+                val vm = ViewModelProvider(it as ViewModelStoreOwner)[SettingsViewModel::class.java]
+                vm.initReactContext(reactContext)
+                vm
+            }
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "无法获取SettingsViewModel", e)
             null
         }
 
@@ -301,4 +323,107 @@ class NavigationBridgeModule(
             callback.invoke(null, bundle)
         }
     }
-} 
+
+    /**
+     * 获取当前实际主题
+     */
+    @ReactMethod
+    fun getCurrentActualTheme(callback: Callback) {
+        TimberLogger.d(TAG, "获取当前实际主题")
+        
+        settingsViewModel?.let { viewModel ->
+            val currentState = viewModel.getStateForBridge()
+            callback.invoke(null, currentState.actualTheme)
+        } ?: run {
+            callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    /**
+     * 获取当前夜间模式
+     */
+    @ReactMethod
+    fun getCurrentNightMode(callback: Callback) {
+        TimberLogger.d(TAG, "获取当前夜间模式")
+        
+        settingsViewModel?.let { viewModel ->
+            val currentState = viewModel.getStateForBridge()
+            callback.invoke(null, currentState.currentThemeMode)
+        } ?: run {
+            callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    /**
+     * 统一主题切换接口
+     */
+    @ReactMethod
+    fun changeTheme(theme: String, promise: Promise) {
+        TimberLogger.d(TAG, "统一主题切换: $theme")
+        
+        settingsViewModel?.let { viewModel ->
+            observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
+                when (effect) {
+                    is SettingsEffect.ShowToast -> {
+                        if (promiseResolved.compareAndSet(false, true)) {
+                            p.resolve(effect.message)
+                        }
+                        true // 停止监听
+                    }
+                    is SettingsEffect.ShowError -> {
+                        if (promiseResolved.compareAndSet(false, true)) {
+                            p.reject("THEME_CHANGE_ERROR", effect.error)
+                        }
+                        true // 停止监听
+                    }
+                    else -> false // 继续监听
+                }
+            }
+            
+            viewModel.sendIntent(SettingsIntent.SetNightMode(theme))
+        } ?: run {
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
+        }
+    }
+
+    /**
+     * 观察Effect并执行Promise的辅助方法
+     */
+    private fun observeEffectForPromise(
+        viewModel: SettingsViewModel,
+        promise: Promise,
+        effectHandler: (SettingsEffect, AtomicBoolean, Promise) -> Boolean
+    ) {
+        TimberLogger.d(TAG, "设置Effect观察器(Promise)")
+        
+        // 使用原子布尔值确保promise只被调用一次
+        val promiseResolved = AtomicBoolean(false)
+        
+        // 在主线程上启动协程来监听Effect
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                // 设置超时时间，避免无限等待
+                withTimeout(10000) {
+                    viewModel.effect.collect { effect ->
+                        TimberLogger.d(TAG, "收到Effect: $effect")
+                        val shouldStop = effectHandler(effect, promiseResolved, promise)
+                        if (shouldStop) {
+                            // 只有当effectHandler返回true时才停止监听
+                            return@collect
+                        }
+                    }
+                }
+            } catch (e: TimeoutCancellationException) {
+                TimberLogger.w(TAG, "Effect监听超时")
+                if (promiseResolved.compareAndSet(false, true)) {
+                    promise.reject("TIMEOUT_ERROR", "操作超时")
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "Effect监听异常", e)
+                if (promiseResolved.compareAndSet(false, true)) {
+                    promise.reject("EFFECT_ERROR", "操作失败: ${e.message}", e)
+                }
+            }
+        }
+    }
+}

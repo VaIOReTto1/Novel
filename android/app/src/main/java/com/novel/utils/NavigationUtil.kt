@@ -5,6 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,6 +20,9 @@ import com.novel.rn.ReactNativePage
 import com.novel.page.component.FlipBookAnimationController
 import com.novel.page.search.FullRankingPage
 import com.novel.rn.MviModuleType
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 /**
  * 导航设置 - 简化版本，翻书动画在HomePage内部处理
@@ -200,40 +204,80 @@ fun NavigationSetup() {
     }
 }
 
+/**
+ * NavViewModel：
+ * 1. 管理全局导航控制器 NavHostController
+ * 2. 统一处理导航跳转逻辑，增加防抖功能，避免短时间内重复触发多次导航
+ */
 @Stable
 object NavViewModel : ViewModel() {
-    val navController = MutableLiveData<NavHostController>()
+    // LiveData 持有当前 NavHostController 实例，Compose 层通过观察此值调用实际导航
+    val navController = MutableLiveData<NavHostController?>()
 
-    // 当前书籍信息（用于返回动画）
+    // 防抖超时时间，单位毫秒
+    private const val DEBOUNCE_TIMEOUT_MS = 300L
+
+    // 特殊后退命令标识
+    private const val BACK_COMMAND = "__BACK__"
+
+    // 使用 SharedFlow 缓冲导航命令
+    private val _navCommands = MutableSharedFlow<String>(extraBufferCapacity = 16)
+
+    init {
+        // 在 ViewModel 的协程域中收集并处理导航命令
+        viewModelScope.launch {
+            _navCommands
+                .debounce(DEBOUNCE_TIMEOUT_MS)    // 对命令流进行防抖
+                .collect { command ->
+                    navController.value?.let { controller ->
+                        if (command == BACK_COMMAND) {
+                            // 处理后退命令
+                            controller.popBackStack()
+                            TimberLogger.d("NavViewModel", "防抖后：popBackStack() 调用")
+                        } else {
+                            // 处理普通导航路由
+                            controller.navigate(command)
+                            TimberLogger.d("NavViewModel", "防抖后：navigate($command) 调用")
+                        }
+                    }
+                }
+        }
+    }
+
+    /**
+     * 向 SharedFlow 发射导航命令，用于防抖处理
+     * @param route 要导航的路由字符串
+     */
+    private fun navigateDebounced(route: String) {
+        _navCommands.tryEmit(route)
+    }
+
+    // 当前书籍信息（ID, 是否来自排行榜），用于页面间动画或状态传递
     private var currentBookInfo: Pair<String, Boolean>? = null
 
-    /** 供 BookDetailPage 与 ReaderPage 共享的临时动画控制器 */
+    // 书籍翻页动画控制器
     private var flipBookController: FlipBookAnimationController? = null
 
+    /**
+     * 设置全局 FlipBook 动画控制器实例
+     */
     fun setFlipBookController(controller: FlipBookAnimationController?) {
         flipBookController = controller
     }
 
-    /** 获取当前 FlipBookAnimationController（可能为 null） */
+    /**
+     * 获取当前的 FlipBook 动画控制器（可能为 null）
+     */
     fun currentFlipBookController(): FlipBookAnimationController? = flipBookController
 
     /**
-     * 导航到搜索页面
-     * @param query 搜索关键词（可选）
+     * 导航到搜索页面，可选携带查询参数
+     * @param query 搜索关键词，默认为空
      */
     fun navigateToSearch(query: String = "") {
-        TimberLogger.d("NavViewModel", "===== 导航到搜索页面 =====")
-        TimberLogger.d("NavViewModel", "query: $query")
-
-        val route = if (query.isNotBlank()) {
-            "search?query=$query"
-        } else {
-            "search"
-        }
-
-        navController.value?.navigate(route)
-        TimberLogger.d("NavViewModel", "✅ 导航到搜索页面命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
+        TimberLogger.d("NavViewModel", "开始导航：搜索页面，query=$query")
+        val route = if (query.isNotBlank()) "search?query=$query" else "search"
+        navigateDebounced(route)
     }
 
     /**
@@ -241,68 +285,131 @@ object NavViewModel : ViewModel() {
      * @param query 搜索关键词
      */
     fun navigateToSearchResult(query: String) {
-        TimberLogger.d("NavViewModel", "===== 导航到搜索结果页面 =====")
-        TimberLogger.d("NavViewModel", "query: $query")
-
+        TimberLogger.d("NavViewModel", "开始导航：搜索结果页面，query=$query")
         val route = "search_result?query=$query"
-        navController.value?.navigate(route)
-
-        TimberLogger.d("NavViewModel", "✅ 导航到搜索结果页面命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
+        navigateDebounced(route)
     }
 
     /**
-     * 导航到完整榜单页面
-     * @param rankingType 榜单类型
-     * @param rankingItems 榜单数据
+     * 导航到完整排行榜页面
+     * @param rankingType 榜单类型标识
+     * @param rankingItems 榜单数据列表
      */
     fun navigateToFullRanking(
         rankingType: String,
         rankingItems: List<com.novel.page.search.component.SearchRankingItem>
     ) {
-        TimberLogger.d("NavViewModel", "===== 导航到完整榜单页面 =====")
-        TimberLogger.d("NavViewModel", "rankingType: $rankingType")
-        TimberLogger.d("NavViewModel", "rankingItems count: ${rankingItems.size}")
-
+        TimberLogger.d("NavViewModel", "开始导航：完整排行榜，type=$rankingType, count=${rankingItems.size}")
         val encodedData = encodeRankingData(rankingItems)
         val route = "full_ranking/$rankingType/$encodedData"
-        navController.value?.navigate(route)
-
-        TimberLogger.d("NavViewModel", "✅ 导航到完整榜单页面命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
+        navigateDebounced(route)
     }
 
     /**
-     * 编码榜单数据为URL安全的字符串
+     * 导航到书籍详情页面
+     * @param bookId 书籍 ID
+     * @param fromRank 标识是否来自排行榜
      */
-    private fun encodeRankingData(items: List<com.novel.page.search.component.SearchRankingItem>): String {
+    fun navigateToBookDetail(bookId: String, fromRank: Boolean = false) {
+        TimberLogger.d("NavViewModel", "开始导航：书籍详情，bookId=$bookId, fromRank=$fromRank")
+        currentBookInfo = bookId to fromRank
+        val route = "book_detail/$bookId?fromRank=$fromRank"
+        navigateDebounced(route)
+    }
+
+    /**
+     * 导航到阅读器页面
+     * @param bookId 书籍 ID
+     * @param chapterId 可选章节 ID
+     */
+    fun navigateToReader(bookId: String, chapterId: String? = null) {
+        TimberLogger.d("NavViewModel", "开始导航：阅读页面，bookId=$bookId, chapterId=$chapterId")
+        val route = if (chapterId != null) "reader/$bookId?chapterId=$chapterId" else "reader/$bookId"
+        navigateDebounced(route)
+    }
+
+    /**
+     * 导航到历史记录页面
+     */
+    fun navigateToHistory() {
+        TimberLogger.d("NavViewModel", "开始导航：历史记录页面")
+        navigateDebounced("history")
+    }
+
+    /**
+     * 导航到消息页面
+     */
+    fun navigateToMessage() {
+        TimberLogger.d("NavViewModel", "开始导航：消息页面")
+        navigateDebounced("message")
+    }
+
+    /**
+     * 导航到成为作家页面
+     */
+    fun navigateToBecomeWriter() {
+        TimberLogger.d("NavViewModel", "开始导航：成为作家页面")
+        navigateDebounced("becomewriter")
+    }
+
+    /**
+     * 导航到推荐书籍页面
+     */
+    fun navigateToRecommendBook() {
+        TimberLogger.d("NavViewModel", "开始导航：推荐书籍页面")
+        navigateDebounced("recommendbook")
+    }
+
+    /**
+     * 导航到看过的人页面
+     */
+    fun navigateToViewedUsers() {
+        TimberLogger.d("NavViewModel", "开始导航：看过的人页面")
+        navigateDebounced("viewedusers")
+    }
+
+    /**
+     * 执行后退操作
+     */
+    fun navigateBack() {
+        TimberLogger.d("NavViewModel", "执行后退导航")
+        navigateDebounced(BACK_COMMAND)
+    }
+
+    /**
+     * 将排行榜数据编码为 Base64 + URL 安全的字符串
+     */
+    private fun encodeRankingData(
+        items: List<com.novel.page.search.component.SearchRankingItem>
+    ): String {
         return try {
-            val json = android.util.Base64.encodeToString(
-                items.joinToString("|") { "${it.id},${it.title},${it.author},${it.rank}" }
-                    .toByteArray(),
+            val csv = items.joinToString("|") { "${it.id},${it.title},${it.author},${it.rank}" }
+            val base64 = android.util.Base64.encodeToString(
+                csv.toByteArray(),
                 android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
             )
-            java.net.URLEncoder.encode(json, "UTF-8")
+            java.net.URLEncoder.encode(base64, "UTF-8")
         } catch (e: Exception) {
-            TimberLogger.e("NavViewModel", "编码榜单数据失败", e)
+            TimberLogger.e("NavViewModel", "编码排行榜数据失败", e)
             ""
         }
     }
 
     /**
-     * 解码榜单数据
+     * 解码排行榜数据字符串，恢复为对象列表
      */
-    fun decodeRankingData(encodedData: String): List<com.novel.page.search.component.SearchRankingItem> {
+    fun decodeRankingData(
+        encodedData: String
+    ): List<com.novel.page.search.component.SearchRankingItem> {
         return try {
-            val decodedJson = java.net.URLDecoder.decode(encodedData, "UTF-8")
-            val decodedBytes = android.util.Base64.decode(
-                decodedJson,
+            val decodedUrl = java.net.URLDecoder.decode(encodedData, "UTF-8")
+            val bytes = android.util.Base64.decode(
+                decodedUrl,
                 android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
             )
-            val dataString = String(decodedBytes)
-
-            dataString.split("|").mapNotNull { itemString ->
-                val parts = itemString.split(",")
+            val csv = String(bytes)
+            csv.split("|").mapNotNull { entry ->
+                val parts = entry.split(',')
                 if (parts.size >= 4) {
                     com.novel.page.search.component.SearchRankingItem(
                         id = parts[0].toLongOrNull() ?: 0L,
@@ -313,101 +420,8 @@ object NavViewModel : ViewModel() {
                 } else null
             }
         } catch (e: Exception) {
-            TimberLogger.e("NavViewModel", "解码榜单数据失败", e)
+            TimberLogger.e("NavViewModel", "解码排行榜数据失败", e)
             emptyList()
         }
-    }
-
-    /**
-     * 导航到书籍详情页
-     * @param bookId 书籍ID
-     * @param fromRank 是否来自榜单（用于识别但不影响动画，动画在HomePage处理）
-     */
-    fun navigateToBookDetail(bookId: String, fromRank: Boolean = false) {
-        TimberLogger.d("NavViewModel", "===== 导航到书籍详情页 =====")
-        TimberLogger.d("NavViewModel", "bookId: $bookId")
-        TimberLogger.d("NavViewModel", "fromRank: $fromRank")
-
-        // 记录当前书籍信息
-        currentBookInfo = bookId to fromRank
-        TimberLogger.d("NavViewModel", "保存书籍信息: $currentBookInfo")
-
-        navController.value?.navigate("book_detail/$bookId?fromRank=$fromRank")
-        TimberLogger.d("NavViewModel", "✅ 导航命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-    /**
-     * 导航到阅读器页面
-     * @param bookId 书籍ID
-     * @param chapterId 章节ID（可选）
-     */
-    fun navigateToReader(bookId: String, chapterId: String? = null) {
-        TimberLogger.d("NavViewModel", "===== 导航到阅读器页面 =====")
-        TimberLogger.d("NavViewModel", "bookId: $bookId")
-        TimberLogger.d("NavViewModel", "chapterId: $chapterId")
-
-        val route = if (chapterId != null) {
-            "reader/$bookId?chapterId=$chapterId"
-        } else {
-            "reader/$bookId"
-        }
-
-        navController.value?.navigate(route)
-        TimberLogger.d("NavViewModel", "✅ 导航到阅读器命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-    /**
-     * 导航到历史页面
-     */
-    fun navigateToHistory() {
-        TimberLogger.d("NavViewModel", "===== 导航到历史页面 =====")
-        
-        navController.value?.navigate("history")
-        TimberLogger.d("NavViewModel", "✅ 导航到历史页面命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-    /**
-     * 导航到消息页面
-     */
-    fun navigateToMessage() {
-        TimberLogger.d("NavViewModel", "===== 导航到消息页面 =====")
-        
-        navController.value?.navigate("message")
-        TimberLogger.d("NavViewModel", "✅ 导航到消息页面命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-    fun navigateToBecomeWriter() {
-        TimberLogger.d("NavViewModel", "===== 导航到成为作家页面 =====")
-        
-        navController.value?.navigate("becomewriter")
-        TimberLogger.d("NavViewModel", "✅ 导航到成为作家页面命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-        fun navigateToRecommendBook() {
-        TimberLogger.d("NavViewModel", "===== 导航到推荐书籍页面 =====")
-
-        navController.value?.navigate("recommendbook")
-        TimberLogger.d("NavViewModel", "✅ 导航命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-    fun navigateToViewedUsers() {
-        TimberLogger.d("NavViewModel", "===== 导航到看过的人页面 =====")
-
-        navController.value?.navigate("viewedusers")
-        TimberLogger.d("NavViewModel", "✅ 导航命令已发送")
-        TimberLogger.d("NavViewModel", "==============================")
-    }
-
-    /**
-     * 返回
-     */
-    fun navigateBack() {
-        navController.value?.popBackStack()
     }
 }

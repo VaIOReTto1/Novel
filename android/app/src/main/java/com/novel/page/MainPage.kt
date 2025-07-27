@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.novel.R
 import com.novel.page.component.NovelText
 import com.novel.page.home.HomePage
-import com.novel.page.login.LoginPage
+import com.novel.page.welfare.WelfarePage
 import com.novel.ui.theme.NovelColors
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.debounceClickable
@@ -101,15 +101,24 @@ fun MainPage() {
                         // 传递全局动画控制器给首页
                         globalFlipBookController = globalFlipBookController
                     )
+                    2 -> WelfarePage(
+                        onNavigateBack = {
+                            // 福利页面的返回操作，可以根据需要实现
+                            // 例如：返回到首页
+                            scope.launch { 
+                                pagerState.scrollToPage(0)
+                            }
+                        }
+                    )
                     4 -> ReactNativePage(
                         mviModuleType = MviModuleType.BRIDGE,
                     )    // 我的页面（React Native实现）
                     else -> Box(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().background(NovelColors.NovelBackground),
                         contentAlignment = Alignment.Center
                     ) { 
                         // 待实现页面的占位符
-                        NovelText("Page Not Found") 
+                        NovelText("Page Not Found", color = NovelColors.NovelText)
                     }
                 }
             }

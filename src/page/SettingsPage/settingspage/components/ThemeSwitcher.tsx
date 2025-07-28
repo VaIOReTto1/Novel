@@ -9,18 +9,19 @@ import Svg, {
   Line,
   RadialGradient,
   Stop,
+  Path
 } from 'react-native-svg';
 import Animated, {
   useSharedValue,
   useAnimatedProps,
   withTiming,
-  interpolate,
 } from 'react-native-reanimated';
 
 // 包装 SVG 元素
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedG = Animated.createAnimatedComponent(G);
 const AnimatedLine = Animated.createAnimatedComponent(Line);
+const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 export type ThemeSwitcherProps = {
   /** true = 月亮；false = 太阳 */
@@ -94,15 +95,35 @@ const ThemeSwitcher = memo(function ThemeSwitcher({
     opacity: progress.value,
   }));
 
-  // 月亮阶段出现的两颗小星
-  const star1Props = useAnimatedProps(() => {
-    const p = progress.value > 0.8 ? (progress.value - 0.8) / 0.2 : 0;
-    return { r: size * 0.05 * p, opacity: p };
-  });
-  const star2Props = useAnimatedProps(() => {
-    const p = progress.value > 0.8 ? (progress.value - 0.8) / 0.2 : 0;
-    return { r: size * 0.1 * p, opacity: p };
-  });
+    // 星形路径生成：复刻 Compose drawStar 的四段贝塞尔
+    const starPath = (x: number, y: number, r: number) => {
+      'worklet';
+      const lv = r * 0.1;
+      return [
+        `M${x - r},${y}`,
+        `Q${x - lv},${y - lv} ${x},${y - r}`,
+        `Q${x + lv},${y - lv} ${x + r},${y}`,
+        `Q${x + lv},${y + lv} ${x},${y + r}`,
+        `Q${x - lv},${y + lv} ${x - r},${y}`,
+        'Z',
+      ].join(' ');
+    };
+
+    // 动画属性：两颗星在 progress>0.8 时淡入
+    const star1Props = useAnimatedProps(() => {
+      const p = progress.value > 0.8 ? (progress.value - 0.8) / 0.2 : 0;
+      return {
+        d: starPath(size * 0.4, size * 0.4, size * 0.08 * p),
+        opacity: p,
+      };
+    });
+    const star2Props = useAnimatedProps(() => {
+      const p = progress.value > 0.8 ? (progress.value - 0.8) / 0.2 : 0;
+      return {
+        d: starPath(size * 0.2, size * 0.2, size * 0.13 * p),
+        opacity: p,
+      };
+    });
 
   // 光芒几何（8 条直线）
   const rays = Array.from({ length: 8 }).map((_, i) => {
@@ -189,15 +210,12 @@ const ThemeSwitcher = memo(function ThemeSwitcher({
         </AnimatedG>
 
         {/* 星星（只在接近月亮时显示） */}
-        <AnimatedCircle
-          cx={size * 0.4}
-          cy={size * 0.4}
+        {/* 星星（五角星形 Path） */}
+        <AnimatedPath
           fill="#FFFFFF"
           animatedProps={star1Props}
         />
-        <AnimatedCircle
-          cx={size * 0.2}
-          cy={size * 0.2}
+        <AnimatedPath
           fill="#FFFFFF"
           animatedProps={star2Props}
         />

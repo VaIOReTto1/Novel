@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { NativeModules } from 'react-native';
 import { SettingsStore, ColorScheme } from '../types';
 import { useThemeStore, ThemeMode } from '../../../../utils/theme/themeStore';
-import { useColorScheme } from 'react-native';
 
 const { SettingsBridge, NavigationBridge } = NativeModules;
 

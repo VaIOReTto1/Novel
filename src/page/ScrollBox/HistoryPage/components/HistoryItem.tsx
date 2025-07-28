@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { HistoryItemProps } from '../types';
-import { cleanHtml } from '../../../../utils/htmlTextUtil';
 
 interface HistoryItemComponentProps extends HistoryItemProps {
   styles: any;
@@ -13,25 +12,6 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
   viewType,
   styles,
 }) => {
-  const formatLastReadTime = (timeString: string): string => {
-    const date = new Date(timeString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-
-    if (diffInHours < 1) {
-      return '刚刚阅读';
-    } else if (diffInHours < 24) {
-      return `${diffInHours}小时前`;
-    } else {
-      const diffInDays = Math.floor(diffInHours / 24);
-      if (diffInDays < 30) {
-        return `${diffInDays}天前`;
-      } else {
-        return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
-      }
-    }
-  };
-
   const formatProgress = (progress: number): string => {
     return `已读 ${progress}%`;
   };

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Image, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Animated } from 'react-native';
 import { UserInfo, AnnouncementData } from '../types';
 
 interface UserSectionProps {

@@ -21,7 +21,7 @@ export default function App(props: AppProps = {}): React.JSX.Element {
     if (props.initialThemeMode || props.initialActualTheme !== undefined || props.initialIsDarkMode !== undefined) {
       initializeFromProps(props);
     }
-  }, [props.initialThemeMode, props.initialActualTheme, props.initialIsDarkMode, initializeFromProps]);
+  }, [props, initializeFromProps]);
 
   useEffect(() => {
     // 初始化应用（异步）

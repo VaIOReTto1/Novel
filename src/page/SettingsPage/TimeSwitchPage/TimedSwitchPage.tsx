@@ -5,7 +5,7 @@ import { TimePickerModal } from './components/TimePickerModal';
 import { useSettingsStore } from '../settingspage/store/settingsStore';
 import { createTimedSwitchPageStyles } from './styles/TimedSwitchPageStyles';
 import { useNovelColors } from '../../../utils/theme/colors';
-import { SettingItem } from '../settingspage/types';
+import { SettingItem } from '../settingspage/types/index';
 
 const { NavigationBridge } = NativeModules;
 

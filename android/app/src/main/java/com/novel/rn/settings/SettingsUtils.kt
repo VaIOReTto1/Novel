@@ -2,9 +2,12 @@ package com.novel.rn.settings
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.runtime.Stable
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import com.novel.utils.TimberLogger
@@ -13,16 +16,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 设置工具类
+ * 设置工具类 - 优化版
  *
  * 功能模块：
  * - 缓存管理（计算、清理、格式化显示）
  * - 主题切换（浅色/深色/跟随系统）
- * - 定时切换夜间模式（根据设定时间自动切换）
+ * - 定时切换夜间模式（使用WorkManager实现省电定时切换）
  * - 配置持久化（SharedPreferences封装）
  * - 全局主题同步管理
  *
@@ -31,7 +35,7 @@ import javax.inject.Singleton
  * - 协程异步IO操作
  * - 多级缓存目录处理
  * - 主题状态统一管理
- * - 定时器自动管理主题切换
+ * - WorkManager后台定时任务，系统休眠时亦能触发，且省电
  */
 @Stable
 @Singleton
@@ -50,24 +54,13 @@ class SettingsUtils @Inject constructor(
         private const val PREF_NIGHT_START_TIME = "night_start_time"
         private const val PREF_NIGHT_END_TIME = "night_end_time"
 
-        // 动态检查时间间隔
-        private const val CHECK_INTERVAL_MINUTE = 60 * 1000L      // 1分钟
-        private const val CHECK_INTERVAL_QUARTER = 15 * 60 * 1000L  // 15分钟
-        private const val CHECK_INTERVAL_HOUR = 60 * 60 * 1000L   // 1小时
-
-        // 时间临近阈值（分钟）
-        private const val THRESHOLD_URGENT = 5    // 5分钟内用1分钟间隔
-        private const val THRESHOLD_NEAR = 30     // 30分钟内用15分钟间隔
-        private const val THRESHOLD_FAR = 120     // 2小时内用1小时间隔
+        // 🎯 优化：WorkManager任务标识
+        private const val NIGHT_MODE_WORK_TAG = "night_mode_timer_work"
+        private const val WORK_CHECK_INTERVAL_MINUTES = 15L // 15分钟检查一次，平衡精度和省电
     }
 
     // 获取全局主题管理器
-    private val themeManager by lazy { ThemeManager.Companion.getInstance(context) }
-
-    // 定时器相关
-    private val handler = Handler(Looper.getMainLooper())
-    private var timeCheckRunnable: Runnable? = null
-    private var isTimeCheckingStarted = false
+    private val themeManager by lazy { ThemeManager.getInstance(context) }
 
     /**
      * 清除所有缓存
@@ -136,9 +129,7 @@ class SettingsUtils @Inject constructor(
 
     /**
      * 切换夜间模式
-     * 如果当前是跟随系统主题模式，首先关闭跟随系统主题，然后切换到对应的固定主题
-     * 否则支持两种模式循环切换：浅色 ↔ 深色
-     * @return 切换结果提示
+     * 优化：简化逻辑，去除双向往返
      */
     fun toggleNightMode(): String {
         return try {
@@ -186,17 +177,16 @@ class SettingsUtils @Inject constructor(
 
     /**
      * 设置夜间模式
-     * 同步更新配置和全局主题管理器
-     * @param mode 主题模式（light/dark/auto）
+     * 优化：只通知原生，不再期待回读
      */
     fun setNightMode(mode: String) {
         TimberLogger.d(TAG, "🔧 开始设置主题模式: $mode")
         novelUserDefaults.setString(PREF_NIGHT_MODE, mode)
         TimberLogger.d(TAG, "📝 已保存主题模式到配置: $mode")
 
-        // 使用全局主题管理器统一管理
+        // 🎯 优化：只通知ThemeManager，不期待返回值
         TimberLogger.d(TAG, "🎨 调用themeManager.setThemeMode: $mode")
-        themeManager.setThemeMode(mode)
+        themeManager.setThemeMode(mode, notifyRN = false) // RN端会立即更新本地状态
         TimberLogger.d(TAG, "✅ themeManager.setThemeMode调用完成")
 
         when (mode) {
@@ -237,16 +227,17 @@ class SettingsUtils @Inject constructor(
     }
 
     /**
-     * 设置自动切换夜间模式
+     * 设置自动切换夜间模式 - 优化版
+     * 使用WorkManager替换Handler轮询
      */
     fun setAutoNightMode(enabled: Boolean) {
-        TimberLogger.d(TAG, "设置自动切换夜间模式: $enabled")
+        TimberLogger.d(TAG, "🎯 设置自动切换夜间模式: $enabled")
         novelUserDefaults.setString(PREF_AUTO_NIGHT_MODE, enabled.toString())
 
         if (enabled) {
-            startTimeBasedThemeCheck()
+            startTimeBasedThemeCheckWithWorkManager()
         } else {
-            stopTimeBasedThemeCheck()
+            stopTimeBasedThemeCheckWithWorkManager()
         }
     }
 
@@ -259,8 +250,6 @@ class SettingsUtils @Inject constructor(
 
     /**
      * 设置夜间模式时间段
-     * @param startTime 开始时间 格式：HH:mm (如 "22:00")
-     * @param endTime 结束时间 格式：HH:mm (如 "06:00")
      */
     fun setNightModeTime(startTime: String, endTime: String) {
         TimberLogger.d(TAG, "设置夜间模式时间: $startTime - $endTime")
@@ -269,7 +258,7 @@ class SettingsUtils @Inject constructor(
 
         // 如果定时切换已启用，重新启动检查
         if (isAutoNightModeEnabled()) {
-            startTimeBasedThemeCheck()
+            startTimeBasedThemeCheckWithWorkManager()
         }
     }
 
@@ -288,10 +277,10 @@ class SettingsUtils @Inject constructor(
     }
 
     /**
-     * 启动基于时间的主题检查
+     * 🎯 优化：使用WorkManager启动基于时间的主题检查
      */
-    fun startTimeBasedThemeCheck() {
-        TimberLogger.d(TAG, "启动基于时间的主题检查")
+    fun startTimeBasedThemeCheckWithWorkManager() {
+        TimberLogger.d(TAG, "🎯 启动基于WorkManager的主题检查")
 
         // 如果已经在跟随系统主题，不启动定时切换
         if (isFollowSystemTheme()) {
@@ -299,52 +288,62 @@ class SettingsUtils @Inject constructor(
             return
         }
 
-        stopTimeBasedThemeCheck() // 先停止之前的检查
-
-        // 立即执行一次检查
         try {
-            checkAndSwitchThemeBasedOnTime()
+            val workManager = WorkManager.getInstance(context)
+            
+            // 创建周期性工作请求
+            val nightModeWorkRequest = PeriodicWorkRequestBuilder<NightModeWorker>(
+                WORK_CHECK_INTERVAL_MINUTES, TimeUnit.MINUTES
+            )
+                .addTag(NIGHT_MODE_WORK_TAG)
+                .build()
+
+            // 启动或更新工作，使用UPDATE策略确保只有一个实例
+            workManager.enqueueUniquePeriodicWork(
+                NIGHT_MODE_WORK_TAG,
+                ExistingPeriodicWorkPolicy.UPDATE,
+                nightModeWorkRequest
+            )
+
+            TimberLogger.d(TAG, "✅ WorkManager定时主题检查已启动，间隔: ${WORK_CHECK_INTERVAL_MINUTES}分钟")
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "立即检查主题失败", e)
+            TimberLogger.e(TAG, "启动WorkManager定时主题检查失败", e)
         }
-
-        timeCheckRunnable = object : Runnable {
-            override fun run() {
-                try {
-                    checkAndSwitchThemeBasedOnTime()
-                } catch (e: Exception) {
-                    TimberLogger.e(TAG, "检查时间切换主题失败", e)
-                }
-
-                // 继续下一次检查，使用智能间隔
-                val nextInterval = calculateNextCheckInterval()
-                handler.postDelayed(this, nextInterval)
-                TimberLogger.v(TAG, "已安排下次检查，间隔: ${nextInterval}ms")
-            }
-        }
-
-        // 安排第一次定时检查（在立即检查之后）
-        val firstInterval = calculateNextCheckInterval()
-        timeCheckRunnable?.let { handler.postDelayed(it, firstInterval) }
-        isTimeCheckingStarted = true
-
-        TimberLogger.d(TAG, "定时主题检查已启动，首次间隔: ${firstInterval}ms")
     }
 
     /**
-     * 停止基于时间的主题检查
+     * 🎯 优化：停止基于WorkManager的主题检查
+     */
+    fun stopTimeBasedThemeCheckWithWorkManager() {
+        TimberLogger.d(TAG, "🎯 停止基于WorkManager的主题检查")
+        try {
+            val workManager = WorkManager.getInstance(context)
+            workManager.cancelUniqueWork(NIGHT_MODE_WORK_TAG)
+            TimberLogger.d(TAG, "✅ WorkManager定时主题检查已停止")
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "停止WorkManager定时主题检查失败", e)
+        }
+    }
+
+    /**
+     * 🎯 兼容性：保留旧方法名，内部调用新的WorkManager方法
+     */
+    fun startTimeBasedThemeCheck() {
+        startTimeBasedThemeCheckWithWorkManager()
+    }
+
+    /**
+     * 🎯 兼容性：保留旧方法名，内部调用新的WorkManager方法
      */
     fun stopTimeBasedThemeCheck() {
-        TimberLogger.d(TAG, "停止基于时间的主题检查")
-        timeCheckRunnable?.let { handler.removeCallbacks(it) }
-        timeCheckRunnable = null
-        isTimeCheckingStarted = false
+        stopTimeBasedThemeCheckWithWorkManager()
     }
 
     /**
      * 检查当前时间并根据设定切换主题
+     * 现在由NightModeWorker调用
      */
-    private fun checkAndSwitchThemeBasedOnTime() {
+    internal fun checkAndSwitchThemeBasedOnTime() {
         if (!isAutoNightModeEnabled() || isFollowSystemTheme()) {
             TimberLogger.v(TAG, "自动切换未启用或正在跟随系统主题，跳过时间检查")
             return
@@ -377,77 +376,14 @@ class SettingsUtils @Inject constructor(
                 "当前模式=${currentMode}, 期望模式=${expectedMode}")
 
         if (currentMode != expectedMode) {
-            TimberLogger.d(TAG, "时间切换主题: $currentMode -> $expectedMode")
+            TimberLogger.d(TAG, "🎯 时间切换主题: $currentMode -> $expectedMode")
             setNightMode(expectedMode)
-
-            // 立即通知RN端主题已切换
-            val actualTheme = themeManager.getCurrentActualThemeMode()
-            themeManager.notifyThemeChangedToRN(actualTheme)
-            TimberLogger.d(TAG, "✅ 主题切换完成并已通知RN端: $actualTheme")
-        }
-    }
-
-    /**
-     * 计算到下次切换时间的最短距离（分钟）
-     */
-    private fun calculateMinutesToNextSwitch(): Int {
-        val currentTime = Calendar.getInstance()
-        val currentTimeInMinutes = currentTime.get(Calendar.HOUR_OF_DAY) * 60 + currentTime.get(
-            Calendar.MINUTE)
-
-        val startTime = getNightModeStartTime()
-        val endTime = getNightModeEndTime()
-
-        val startTimeInMinutes = parseTimeToMinutes(startTime)
-        val endTimeInMinutes = parseTimeToMinutes(endTime)
-
-        // 计算到开始时间和结束时间的距离
-        val minutesToStart = if (startTimeInMinutes > currentTimeInMinutes) {
-            startTimeInMinutes - currentTimeInMinutes
-        } else {
-            (24 * 60) - currentTimeInMinutes + startTimeInMinutes // 跨天计算
-        }
-
-        val minutesToEnd = if (endTimeInMinutes > currentTimeInMinutes) {
-            endTimeInMinutes - currentTimeInMinutes
-        } else {
-            (24 * 60) - currentTimeInMinutes + endTimeInMinutes // 跨天计算
-        }
-
-        // 返回最短距离
-        return Math.min(minutesToStart, minutesToEnd)
-    }
-
-    /**
-     * 根据距离下次切换的时间，智能计算检查间隔
-     */
-    private fun calculateNextCheckInterval(): Long {
-        val minutesToNext = calculateMinutesToNextSwitch()
-
-        return when {
-            minutesToNext <= THRESHOLD_URGENT -> {
-                TimberLogger.v(TAG, "距离切换时间${minutesToNext}分钟，使用1分钟检查间隔")
-                CHECK_INTERVAL_MINUTE
-            }
-            minutesToNext <= THRESHOLD_NEAR -> {
-                TimberLogger.v(TAG, "距离切换时间${minutesToNext}分钟，使用15分钟检查间隔")
-                CHECK_INTERVAL_QUARTER
-            }
-            minutesToNext <= THRESHOLD_FAR -> {
-                TimberLogger.v(TAG, "距离切换时间${minutesToNext}分钟，使用1小时检查间隔")
-                CHECK_INTERVAL_HOUR
-            }
-            else -> {
-                TimberLogger.v(TAG, "距离切换时间${minutesToNext}分钟，使用1小时检查间隔")
-                CHECK_INTERVAL_HOUR
-            }
+            TimberLogger.d(TAG, "✅ 定时主题切换完成: $expectedMode")
         }
     }
 
     /**
      * 将时间字符串转换为分钟数
-     * @param timeStr 时间字符串，格式："HH:mm"
-     * @return 从00:00开始的分钟数
      */
     private fun parseTimeToMinutes(timeStr: String): Int {
         return try {
@@ -472,7 +408,7 @@ class SettingsUtils @Inject constructor(
     fun initializeAutoThemeSwitch() {
         TimberLogger.d(TAG, "初始化自动主题切换")
         if (isAutoNightModeEnabled() && !isFollowSystemTheme()) {
-            startTimeBasedThemeCheck()
+            startTimeBasedThemeCheckWithWorkManager()
         }
     }
 
@@ -481,7 +417,7 @@ class SettingsUtils @Inject constructor(
      */
     fun cleanup() {
         TimberLogger.d(TAG, "清理定时器资源")
-        stopTimeBasedThemeCheck()
+        stopTimeBasedThemeCheckWithWorkManager()
     }
 
     private fun getNightModeDisplayName(mode: String): String {
@@ -529,5 +465,40 @@ class SettingsUtils @Inject constructor(
             }
         }
         return dir.delete()
+    }
+}
+
+/**
+ * 🎯 新增：夜间模式WorkManager Worker
+ * 替换Handler轮询，实现省电的后台定时切换
+ */
+class NightModeWorker(
+    context: Context,
+    params: WorkerParameters
+) : Worker(context, params) {
+
+    companion object {
+        private const val TAG = "NightModeWorker"
+    }
+
+    override fun doWork(): Result {
+        return try {
+            TimberLogger.d(TAG, "🎯 NightModeWorker执行定时主题检查")
+            
+            // 获取SettingsUtils实例并执行检查
+            // 注意：由于Worker运行在后台，需要确保依赖注入可用
+            // 这里使用简化的方式直接访问
+            val prefs = applicationContext.getSharedPreferences("theme_preferences", Context.MODE_PRIVATE)
+            val novelUserDefaults = com.novel.utils.Store.UserDefaults.SharedPrefsUserDefaults(prefs)
+            val settingsUtils = SettingsUtils(applicationContext, novelUserDefaults)
+            
+            settingsUtils.checkAndSwitchThemeBasedOnTime()
+            
+            TimberLogger.d(TAG, "✅ NightModeWorker执行完成")
+            Result.success()
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "❌ NightModeWorker执行失败", e)
+            Result.failure()
+        }
     }
 }

@@ -54,25 +54,21 @@ const SettingsPage: React.FC = () => {
 
   const { isLoggedIn, logout: userLogout } = useUserStore();
 
-  // 初始化设置状态
+  // 🎯 优化：简化初始化流程
   React.useEffect(() => {
     console.log('[SettingsPage] 📱 SettingsPage组件开始挂载');
     
-    const initializeSettings = async () => {
-      try {
-        console.log('[SettingsPage] 🎯 开始初始化设置状态');
-        
-        // 加载夜间模式时间设置（其他设置已在应用启动时预加载）
-        const { loadNightModeTime } = useSettingsStore.getState();
-        await loadNightModeTime();
-        
-        console.log('[SettingsPage] ✅ 设置状态初始化完成');
-      } catch (error) {
+    // 检查是否已经初始化，避免重复加载
+    const { isInitialized } = useSettingsStore.getState();
+    if (!isInitialized) {
+      console.log('[SettingsPage] 🎯 设置未初始化，触发初始化');
+      const { initializeSettings } = useSettingsStore.getState();
+      initializeSettings().catch(error => {
         console.error('[SettingsPage] ❌ 设置状态初始化失败:', error);
-      }
-    };
-
-    initializeSettings();
+      });
+    } else {
+      console.log('[SettingsPage] ✅ 设置已初始化，跳过');
+    }
     
     return () => {
       console.log('[SettingsPage] 📱 SettingsPage组件即将卸载');

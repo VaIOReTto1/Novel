@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { NativeModules } from 'react-native';
 import { SettingsStore, ColorScheme } from '../types';
 import { useThemeStore, ThemeMode } from '../../../../utils/theme/themeStore';
+import { useColorScheme } from 'react-native';
 
 const { SettingsBridge, NavigationBridge } = NativeModules;
 
@@ -9,13 +10,9 @@ const { SettingsBridge, NavigationBridge } = NativeModules;
 const clearAppCache = async (): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (SettingsBridge?.clearAllCache) {
-      SettingsBridge.clearAllCache((error: string | null, result: string) => {
-        if (error) {
-          reject(new Error(error));
-        } else {
-          resolve(result);
-        }
-      });
+      SettingsBridge.clearAllCache()
+        .then((result: string) => resolve(result))
+        .catch((error: any) => reject(new Error(error)));
     } else {
       // 模拟数据（当在纯RN环境中运行时）
       setTimeout(() => {
@@ -29,13 +26,9 @@ const clearAppCache = async (): Promise<string> => {
 const calculateCacheSize = async (): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (SettingsBridge?.calculateCacheSize) {
-      SettingsBridge.calculateCacheSize((error: string | null, result: string) => {
-        if (error) {
-          reject(new Error(error));
-        } else {
-          resolve(result);
-        }
-      });
+      SettingsBridge.calculateCacheSize()
+        .then((result: string) => resolve(result))
+        .catch((error: any) => reject(new Error(error)));
     } else {
       // 模拟数据（当在纯RN环境中运行时）
       setTimeout(() => {
@@ -47,147 +40,70 @@ const calculateCacheSize = async (): Promise<string> => {
   });
 };
 
-// Android原生切换夜间模式 - 修复版本（重新添加）
-const toggleNightModeNative = async (): Promise<{ message: string; currentThemeMode: string; actualTheme: string; followSystem: boolean }> => {
-  return new Promise((resolve, reject) => {
-    console.log('[SettingsStore] 调用SettingsBridge.toggleNightMode，bridge可用:', !!SettingsBridge?.toggleNightMode);
+// 🎯 优化：简化主题切换，单向数据流
+const changeThemeUnified = async (theme: string): Promise<void> => {
+  try {
+    console.log('[SettingsStore] 🎯 统一主题切换:', theme);
     
-    if (SettingsBridge?.toggleNightMode) {
-      SettingsBridge.toggleNightMode((error: string | null, result: any) => {
-        console.log('[SettingsStore] 🎯 toggleNightMode回调触发 - error:', error, 'result:', result, 'result类型:', typeof result);
-        
-        if (error) {
-          console.error('[SettingsStore] ❌ toggleNightMode失败:', error);
-          reject(new Error(error));
-        } else {
-          // 检查Android端返回的数据结构
-          if (typeof result === 'object' && result !== null) {
-            // Android端返回Map格式的完整状态信息
-            const response = {
-              message: result.message || '主题切换成功',
-              currentThemeMode: result.currentThemeMode || 'light',
-              actualTheme: result.actualTheme || 'light',
-              followSystem: result.followSystem === true // 明确布尔值转换
-            };
-            console.log('[SettingsStore] ✅ 解析Android端返回数据:', response);
-            resolve(response);
-          } else {
-            // 兼容旧版本返回格式（字符串）
-            console.log('[SettingsStore] 收到旧格式返回数据，使用fallback');
-            resolve({ 
-              message: result || '主题切换成功', 
-              currentThemeMode: 'light', 
-              actualTheme: 'light', 
-              followSystem: false 
-            });
-          }
-        }
-      });
-    } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      const currentTheme = useThemeStore.getState().isDarkMode ? 'light' : 'dark';
-      resolve({ 
-        message: `已切换至${currentTheme === 'dark' ? '深色' : '浅色'}模式`, 
-        currentThemeMode: currentTheme,
-        actualTheme: currentTheme,
-        followSystem: false
-      });
+    // 🎯 立即更新本地themeStore状态
+    const { setTheme } = useThemeStore.getState();
+    await setTheme(theme as ThemeMode);
+    
+    // 🎯 通知原生，不等待回传（单向数据流）
+    if (SettingsBridge?.changeTheme) {
+      SettingsBridge.changeTheme(theme)
+        .then((result: string) => {
+          console.log('[SettingsStore] ✅ 原生主题设置完成:', result);
+        })
+        .catch((error: any) => {
+          console.warn('[SettingsStore] ⚠️ 原生主题设置失败:', error);
+        });
     }
-  });
+    
+    console.log('[SettingsStore] ✅ 主题切换完成:', theme);
+  } catch (error) {
+    console.error('[SettingsStore] ❌ 主题切换失败:', error);
+    throw error;
+  }
 };
 
-// Android原生设置夜间模式 - 修复版本
-const setNightModeNative = (mode: string): Promise<{ message: string; currentThemeMode: string; actualTheme: string; followSystem: boolean }> => {
-  return new Promise((resolve, reject) => {
-    if (SettingsBridge?.setNightMode) {
-      SettingsBridge.setNightMode(mode, (error: string | null, result: any) => {
-        if (error) {
-          reject(new Error(error));
-        } else {
-          // Android端现在返回完整的状态信息
-          if (typeof result === 'object' && result.message) {
-            resolve({
-              message: result.message,
-              currentThemeMode: result.currentThemeMode,
-              actualTheme: result.actualTheme,
-              followSystem: result.followSystem
-            });
-          } else {
-            // 兼容旧版本返回格式
-            SettingsBridge.getCurrentActualTheme((err: string | null, actualTheme: string) => {
-              if (err) {
-                resolve({ message: result, currentThemeMode: mode, actualTheme: mode === 'dark' ? 'dark' : 'light', followSystem: mode === 'auto' });
-              } else {
-                resolve({ message: result, currentThemeMode: mode, actualTheme, followSystem: mode === 'auto' });
-              }
-            });
-          }
-        }
-      });
-    } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      resolve({ 
-        message: `夜间模式已设置为: ${mode}`, 
-        currentThemeMode: mode,
-        actualTheme: mode === 'dark' ? 'dark' : 'light',
-        followSystem: mode === 'auto'
-      });
+// 🎯 优化：简化设置同步，单向通知
+const syncSettingToNative = async (operation: string, ...args: any[]): Promise<void> => {
+  try {
+    console.log('[SettingsStore] 🎯 同步设置到原生:', operation, args);
+    
+    let promise: Promise<any> | undefined;
+    
+    switch (operation) {
+      case 'setFollowSystemTheme':
+        promise = SettingsBridge?.setFollowSystemTheme?.(args[0]);
+        break;
+      case 'setAutoNightMode':
+        promise = SettingsBridge?.setAutoNightMode?.(args[0]);
+        break;
+      case 'setNightModeTime':
+        promise = SettingsBridge?.setNightModeTime?.(args[0], args[1]);
+        break;
+      case 'checkCurrentTimeTheme':
+        promise = SettingsBridge?.checkCurrentTimeTheme?.();
+        break;
+      default:
+        console.warn('[SettingsStore] ⚠️ 未知的设置操作:', operation);
+        return;
     }
-  });
-};
-
-// Android原生获取当前夜间模式
-const getCurrentNightModeNative = (): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    if (SettingsBridge?.getCurrentNightMode) {
-      SettingsBridge.getCurrentNightMode((error: string | null, result: string) => {
-        if (error) {
-          reject(new Error(error));
-        } else {
-          resolve(result);
-        }
-      });
-    } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      resolve('auto');
+    
+    if (promise) {
+      promise
+        .then((result: string) => {
+          console.log('[SettingsStore] ✅ 设置同步完成:', operation, result);
+        })
+        .catch((error: any) => {
+          console.warn('[SettingsStore] ⚠️ 设置同步失败:', operation, error);
+        });
     }
-  });
-};
-
-// Android原生获取当前实际主题
-const getCurrentActualThemeNative = (): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    if (SettingsBridge?.getCurrentActualTheme) {
-      SettingsBridge.getCurrentActualTheme((error: string | null, result: string) => {
-        if (error) {
-          reject(new Error(error));
-        } else {
-          resolve(result);
-        }
-      });
-    } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      resolve(useThemeStore.getState().isDarkMode ? 'dark' : 'light');
-    }
-  });
-};
-
-// Android原生获取是否跟随系统主题
-const isFollowSystemThemeNative = (): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    if (SettingsBridge?.isFollowSystemTheme) {
-      SettingsBridge.isFollowSystemTheme((error: string | null, result: boolean) => {
-        if (error) {
-          reject(new Error(error));
-        } else {
-          resolve(result);
-        }
-      });
-    } else {
-      console.warn('[SettingsStore] isFollowSystemTheme not available, falling back to true.');
-      resolve(true); // 默认启用
-    }
-  });
+  } catch (error) {
+    console.error('[SettingsStore] ❌ 设置同步异常:', operation, error);
+  }
 };
 
 export const useSettingsStore = create<SettingsStore>((set, get) => ({
@@ -243,70 +159,48 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     console.log('[SettingsStore] 福利通知设置:', enabled);
   },
 
-  // 获取当前实际的主题模式（用于显示icon）
+  // 🎯 优化：获取当前实际的主题模式（从themeStore获取）
   getCurrentDisplayTheme: () => {
     const themeStore = useThemeStore.getState();
-
-    // 始终返回实际的主题状态（从themeStore中获取）
-    // 这样可以正确反映Android端传来的实际主题状态
     return themeStore.isDarkMode ? 'dark' : 'light';
   },
 
-  // 主题设置
+  // 🎯 NEW: 新增一个方法，用于从组件层同步系统主题
+  syncThemeWithSystem: (systemTheme: 'light' | 'dark') => {
+    console.log('[SettingsStore] 🎯 同步系统主题:', systemTheme);
+    const { setTheme } = useThemeStore.getState();
+    set({
+      followSystemTheme: true,
+      colorScheme: 'auto',
+    });
+    setTheme('auto'); // 设置为'auto'以记录用户意图
+    // 立即应用正确的明暗模式
+    useThemeStore.getState().setDarkMode(systemTheme === 'dark'); 
+  },
+
+  // 🎯 优化：主题设置（单向数据流）
   setFollowSystemTheme: async (follow: boolean) => {
     try {
-      console.log('[SettingsStore] 🎯 开始设置跟随系统主题:', follow);
+      console.log('[SettingsStore] 🎯 设置跟随系统主题:', follow);
       
-      // 立即更新本地状态，确保UI响应及时
-      set({ 
-        followSystemTheme: follow,
-        colorScheme: follow ? 'auto' : get().colorScheme,
-      });
-
-      if (SettingsBridge?.setFollowSystemTheme) {
-        SettingsBridge.setFollowSystemTheme(follow, (error: string | null, result: any) => {
-          if (error) {
-            console.error('[SettingsStore] 设置跟随系统主题失败:', error);
-            // 如果出错，回滚状态
-            set({ followSystemTheme: !follow });
-            return;
-          }
-
-          console.log('[SettingsStore] ✅ Android端设置跟随系统主题成功:', result);
-
-          // 如果Android端返回了完整的状态信息，使用它更新状态
-          if (result && typeof result === 'object' && 'followSystem' in result) {
-            set({
-              followSystemTheme: result.followSystem,
-              colorScheme: result.currentThemeMode as ColorScheme,
-            });
-
-            // 同步更新themeStore
-            useThemeStore.getState().setTheme(result.currentThemeMode as ThemeMode);
-            
-            console.log('[SettingsStore] ✅ 跟随系统主题设置完成 (新):', {
-              设置模式: result.currentThemeMode,
-              实际主题: result.actualTheme,
-              跟随系统: result.followSystem
-            });
-          } else {
-            // 如果Android端只返回了消息字符串，使用本地状态
-            const targetTheme = follow ? 'auto' : get().colorScheme;
-            useThemeStore.getState().setTheme(targetTheme);
-            
-            console.log('[SettingsStore] ✅ 跟随系统主题设置完成 (简单):', {
-              跟随系统: follow,
-              设置模式: targetTheme
-            });
-          }
-        });
+      if (follow) {
+        // 当开启“跟随系统”时，不再直接调用setTheme('auto')
+        // 而是依赖组件层调用 syncThemeWithSystem
+        console.log('[SettingsStore] 开启跟随系统，等待组件层同步');
+        set({ followSystemTheme: true, colorScheme: 'auto' });
+        // 异步通知原生
+        await syncSettingToNative('setFollowSystemTheme', true);
       } else {
-        // Fallback for non-native environment
-        const targetTheme = follow ? 'auto' : get().colorScheme;
-        useThemeStore.getState().setTheme(targetTheme);
-        console.log('[SettingsStore] ✅ 跟随系统主题设置完成 (fallback):', follow);
+        // 关闭时，设置为当前实际的主题
+        const targetTheme = get().getCurrentDisplayTheme();
+        set({ 
+          followSystemTheme: false,
+          colorScheme: targetTheme as ColorScheme,
+        });
+        useThemeStore.getState().setTheme(targetTheme as ThemeMode);
+        await syncSettingToNative('setFollowSystemTheme', false);
       }
-
+      
       console.log('[SettingsStore] ✅ 跟随系统主题设置完成:', follow);
     } catch (error) {
       console.error('[SettingsStore] ❌ 设置跟随系统主题失败:', error);
@@ -317,26 +211,18 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
 
   setColorScheme: async (scheme: ColorScheme) => {
     try {
-      console.log('[SettingsStore] 🎯 开始设置主题模式:', scheme);
+      console.log('[SettingsStore] 🎯 设置主题模式:', scheme);
       
-      const result = await setNightModeNative(scheme);
-      console.log('[SettingsStore] ✅ Android端设置完成:', result);
-
-      // 直接使用Android端返回的完整状态信息
+      // 🎯 立即更新本地状态
       set({
-        colorScheme: result.currentThemeMode as ColorScheme,
-        followSystemTheme: result.followSystem,
+        colorScheme: scheme,
+        followSystemTheme: scheme === 'auto',
       });
       
-      // 同步更新themeStore的currentTheme设置
-      const { setTheme } = useThemeStore.getState();
-      await setTheme(result.currentThemeMode as any);
+      // 🎯 立即同步到themeStore
+      await changeThemeUnified(scheme);
       
-      console.log('[SettingsStore] ✅ 主题设置完成:', {
-        设置模式: result.currentThemeMode,
-        实际主题: result.actualTheme,
-        跟随系统: result.followSystem
-      });
+      console.log('[SettingsStore] ✅ 主题设置完成:', scheme);
       
     } catch (error) {
       console.error('[SettingsStore] ❌ 设置主题模式失败:', error);
@@ -345,92 +231,76 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
 
   toggleColorScheme: async () => {
     try {
-      console.log('[SettingsStore] 🎯 开始切换主题');
+      console.log('[SettingsStore] 🎯 切换主题');
       const currentState = get();
       console.log('[SettingsStore] 当前状态:', {
         colorScheme: currentState.colorScheme,
         followSystemTheme: currentState.followSystemTheme
       });
 
-      // 使用toggleNightModeNative，它会正确处理跟随系统主题的情况
-      // Android端的toggleNightMode方法会：
-      // 1. 如果当前是跟随系统主题，自动关闭并切换到相反的固定主题
-      // 2. 如果当前是固定主题，直接切换到相反主题
-      console.log('[SettingsStore] 🔄 调用toggleNightModeNative...');
-      const result = await toggleNightModeNative();
-      console.log('[SettingsStore] ✅ Android端切换完成:', result);
+      // 🎯 确定切换逻辑
+      let newScheme: ColorScheme;
+      
+      if (currentState.followSystemTheme) {
+        // 如果当前跟随系统，根据当前实际主题切换到相反的固定主题
+        const currentDisplay = currentState.getCurrentDisplayTheme();
+        newScheme = currentDisplay === 'dark' ? 'light' : 'dark';
+      } else {
+        // 如果是固定主题，在浅色和深色之间切换
+        newScheme = currentState.colorScheme === 'dark' ? 'light' : 'dark';
+      }
 
-      // 使用从原生端返回的权威状态更新本地store
-      console.log('[SettingsStore] 📝 更新本地状态...');
+      console.log('[SettingsStore] 🔄 切换到主题:', newScheme);
+
+      // 🎯 立即更新本地状态
       set({
-        colorScheme: result.currentThemeMode as ColorScheme,
-        followSystemTheme: result.followSystem,
+        colorScheme: newScheme,
+        followSystemTheme: false, // 切换后关闭跟随系统
       });
 
-      // 同步到全局的themeStore，确保UI一致性
-      console.log('[SettingsStore] 🔗 同步到themeStore...');
-      useThemeStore.getState().setTheme(result.currentThemeMode as any);
+      // 🎯 立即同步到themeStore
+      await changeThemeUnified(newScheme);
 
-      console.log('[SettingsStore] ✅ 主题切换完成:', {
-        新模式: result.currentThemeMode,
-        实际主题: result.actualTheme,
-        跟随系统: result.followSystem,
-        消息: result.message
-      });
+      console.log('[SettingsStore] ✅ 主题切换完成:', newScheme);
     } catch (error) {
       console.error('[SettingsStore] ❌ 切换夜间模式失败:', error);
     }
   },
 
-  setAutoSwitchNightMode: (enabled: boolean) => {
-    console.log('[SettingsStore] 🎯 开始设置自动切换夜间模式:', enabled);
+  setAutoSwitchNightMode: async (enabled: boolean) => {
+    console.log('[SettingsStore] 🎯 设置自动切换夜间模式:', enabled);
+    
+    // 🎯 立即更新本地状态
     set({ autoSwitchNightMode: enabled });
 
-    // 同步到Android端
-    if (SettingsBridge?.setAutoNightMode) {
-      SettingsBridge.setAutoNightMode(enabled, (error: string | null, result: string) => {
-        if (error) {
-          console.error('[SettingsStore] ❌ 设置自动切换夜间模式失败:', error);
-        } else {
-          console.log('[SettingsStore] ✅ 自动切换夜间模式设置成功:', result);
-        }
-      });
-    } else {
-      console.warn('[SettingsStore] ⚠️ SettingsBridge.setAutoNightMode 不可用');
-    }
+    // 🎯 异步同步到原生
+    await syncSettingToNative('setAutoNightMode', enabled);
+    
+    console.log('[SettingsStore] ✅ 自动切换夜间模式设置完成:', enabled);
   },
 
-  setNightModeTime: (start: string, end: string) => {
-    console.log('[SettingsStore] 🎯 开始设置夜间模式时间:', { start, end });
+  setNightModeTime: async (start: string, end: string) => {
+    console.log('[SettingsStore] 🎯 设置夜间模式时间:', { start, end });
+    
+    // 🎯 立即更新本地状态
     set({
       nightModeStartTime: start,
       nightModeEndTime: end,
     });
 
-    // 同步到Android端
-    if (SettingsBridge?.setNightModeTime) {
-      SettingsBridge.setNightModeTime(start, end, (error: string | null, result: string) => {
-        if (error) {
-          console.error('[SettingsStore] ❌ 设置夜间模式时间失败:', error);
-        } else {
-          console.log('[SettingsStore] ✅ 夜间模式时间设置成功:', result);
-        }
-      });
-    } else {
-      console.warn('[SettingsStore] ⚠️ SettingsBridge.setNightModeTime 不可用');
-    }
+    // 🎯 异步同步到原生
+    await syncSettingToNative('setNightModeTime', start, end);
+    
+    console.log('[SettingsStore] ✅ 夜间模式时间设置完成:', { start, end });
   },
 
-  // 初始化设置状态 - 新增方法
+  // 🎯 优化：简化初始化设置状态
   initializeSettings: async () => {
     try {
       console.log('[SettingsStore] 🎯 开始初始化设置状态');
       
-      // 并行获取所有设置
-      const [currentMode, actualTheme, followSystem, autoEnabled, startTime, endTime] = await Promise.all([
-        getCurrentNightModeNative().catch(() => 'auto'),
-        getCurrentActualThemeNative().catch(() => 'light'),
-        isFollowSystemThemeNative().catch(() => true),
+      // 🎯 只在必要时从原生获取设置，减少跨桥调用
+      const [autoEnabled, startTime, endTime] = await Promise.all([
         new Promise<boolean>((resolve) => {
           if (SettingsBridge?.isAutoNightModeEnabled) {
             SettingsBridge.isAutoNightModeEnabled((err: string | null, result: boolean) => {
@@ -460,24 +330,21 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
         })
       ]);
 
+      // 🎯 从themeStore获取主题状态，避免重复从原生获取
+      const themeState = useThemeStore.getState();
+      
       // 更新状态
       set({
-        colorScheme: currentMode as ColorScheme,
-        followSystemTheme: followSystem,
+        colorScheme: themeState.currentTheme as ColorScheme,
+        followSystemTheme: themeState.currentTheme === 'auto',
         autoSwitchNightMode: autoEnabled,
         nightModeStartTime: startTime,
         nightModeEndTime: endTime,
-        isInitialized: true, // 标记为已初始化
+        isInitialized: true,
       });
 
-      // 同步更新themeStore的currentTheme设置
-      const { setTheme } = useThemeStore.getState();
-      await setTheme(currentMode as any);
-
       console.log('[SettingsStore] ✅ 设置初始化完成:', {
-        currentMode,
-        actualTheme,
-        followSystem,
+        colorScheme: themeState.currentTheme,
         autoEnabled,
         nightModeTime: `${startTime}-${endTime}`
       });
@@ -487,65 +354,32 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     }
   },
 
-  // 获取夜间模式时间设置
+  // 🎯 简化：减少不必要的原生调用
   loadNightModeTime: async () => {
     const { isInitialized } = get();
     if (isInitialized) {
-      console.log('[SettingsStore] 夜间模式时间设置已初始化，跳过从原生获取');
+      console.log('[SettingsStore] 夜间模式时间设置已初始化，跳过获取');
       return;
     }
-
-    try {
-      if (SettingsBridge?.getNightModeStartTime && SettingsBridge?.getNightModeEndTime) {
-        const startTime = await new Promise<string>((resolve, reject) => {
-          SettingsBridge.getNightModeStartTime((error: string | null, result: string) => {
-            if (error) {reject(new Error(error));}
-            else {resolve(result);}
-          });
-        });
-
-        const endTime = await new Promise<string>((resolve, reject) => {
-          SettingsBridge.getNightModeEndTime((error: string | null, result: string) => {
-            if (error) {reject(new Error(error));}
-            else {resolve(result);}
-          });
-        });
-
-        set({
-          nightModeStartTime: startTime,
-          nightModeEndTime: endTime,
-        });
-
-        console.log('[SettingsStore] 夜间模式时间已加载:', startTime, '-', endTime);
-      }
-    } catch (error) {
-      console.error('[SettingsStore] 加载夜间模式时间失败:', error);
-    }
+    // 此方法已集成到initializeSettings中
   },
 
-  // 加载自动切换夜间模式设置
   loadAutoSwitchNightMode: async () => {
     const { isInitialized } = get();
     if (isInitialized) {
-      console.log('[SettingsStore] 自动切换夜间模式设置已初始化，跳过从原生获取');
+      console.log('[SettingsStore] 自动切换夜间模式设置已初始化，跳过获取');
       return;
     }
+    // 此方法已集成到initializeSettings中
+  },
 
-    try {
-      if (SettingsBridge?.isAutoNightModeEnabled) {
-        const enabled = await new Promise<boolean>((resolve, reject) => {
-          SettingsBridge.isAutoNightModeEnabled((error: string | null, result: boolean) => {
-            if (error) {reject(new Error(error));}
-            else {resolve(result);}
-          });
-        });
-
-        set({ autoSwitchNightMode: enabled });
-        console.log('[SettingsStore] 自动切换夜间模式设置已加载:', enabled);
-      }
-    } catch (error) {
-      console.error('[SettingsStore] 加载自动切换夜间模式设置失败:', error);
+  loadFollowSystemTheme: async () => {
+    const { isInitialized } = get();
+    if (isInitialized) {
+      console.log('[SettingsStore] 跟随系统主题设置已初始化，跳过获取');
+      return;
     }
+    // 此方法已集成到initializeSettings中
   },
 
   // 字体设置
@@ -611,22 +445,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     // TODO: 实现导航逻辑
   },
 
-  loadFollowSystemTheme: async () => {
-    const { isInitialized } = get();
-    if (isInitialized) {
-      console.log('[SettingsStore] 跟随系统主题设置已初始化，跳过从原生获取');
-      return;
-    }
-
-    try {
-      const enabled = await isFollowSystemThemeNative();
-      set({ followSystemTheme: enabled });
-      console.log('[SettingsStore] 跟随系统主题设置已加载:', enabled);
-    } catch (error) {
-      console.error('[SettingsStore] 加载跟随系统主题设置失败:', error);
-    }
-  },
-
   // 退出登录
   logout: async () => {
     try {
@@ -634,17 +452,8 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
 
       // 调用Android端清空token - 使用Promise方式
       if (SettingsBridge?.logout) {
-        await new Promise<string>((resolve, reject) => {
-          SettingsBridge.logout()
-            .then((result: string) => {
-              console.log('[SettingsStore] Android端退出登录成功:', result);
-              resolve(result);
-            })
-            .catch((error: any) => {
-              console.error('[SettingsStore] Android端退出登录失败:', error);
-              reject(error);
-            });
-        });
+        await SettingsBridge.logout();
+        console.log('[SettingsStore] ✅ Android端退出登录成功');
       } else {
         console.warn('[SettingsStore] SettingsBridge.logout 不可用');
       }
@@ -657,9 +466,10 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   },
 }));
 
-// 初始化时计算缓存大小和加载设置
+// 🎯 优化：减少初始化调用频率
 setTimeout(() => {
   const store = useSettingsStore.getState();
+  // 只计算缓存大小和初始化设置
   store.calculateCacheSize();
-  store.initializeSettings(); // 加载所有设置状态
+  store.initializeSettings();
 }, 1000);

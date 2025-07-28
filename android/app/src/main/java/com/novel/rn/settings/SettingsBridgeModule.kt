@@ -13,12 +13,17 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.TimeoutCancellationException
 import java.util.concurrent.atomic.AtomicBoolean
 
-
 /**
- * 设置桥接模块
+ * 设置桥接模块 - 优化版
  *
+ * 核心改进：
+ * - 单向数据流：RN告诉原生去切，不再回读
+ * - 简化接口：移除getCurrentActualTheme等读取方法
+ * - 超时处理：所有Promise接口统一10s超时
+ * - 错误处理：防止Promise卡死
+ * 
  * 专门处理设置相关的RN调用，通过SettingsViewModel管理状态：
- * - 主题切换和管理
+ * - 主题切换和管理（单向）
  * - 缓存计算和清理
  * - 时间设置管理
  * - 自动主题切换
@@ -30,6 +35,7 @@ class SettingsBridgeModule(
 
     companion object {
         private const val TAG = "SettingsBridgeModule"
+        private const val TIMEOUT_SECONDS = 10L // 🎯 统一超时时间：10秒
     }
 
     override fun getName(): String = "SettingsBridge"
@@ -48,268 +54,142 @@ class SettingsBridgeModule(
         }
 
     /**
-     * 切换夜间模式
+     * 🎯 优化：统一主题切换接口（Promise版本，单向数据流）
+     * RN调用后立即resolve，不再等待回传数据
      */
     @ReactMethod
-    fun toggleNightMode(callback: Callback) {
-        TimberLogger.d(TAG, "切换夜间模式")
+    fun changeTheme(theme: String, promise: Promise) {
+        TimberLogger.d(TAG, "🎯 统一主题切换: $theme")
 
         settingsViewModel?.let { viewModel ->
-            // 监听Effect来获取结果
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
-                TimberLogger.d(
-                    TAG,
-                    "toggleNightMode处理Effect: $effect, callbackInvoked: ${callbackInvoked.get()}"
-                )
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        TimberLogger.d(TAG, "收到ShowToast Effect: ${effect.message}")
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            // 延迟一小段时间确保状态已更新，然后获取最新状态
-                            CoroutineScope(Dispatchers.Main).launch {
-                                kotlinx.coroutines.delay(300) // 50ms延迟
-
-                                val currentState = viewModel.getStateForBridge()
-                                val result = Arguments.createMap().apply {
-                                    putString("message", effect.message)
-                                    putString("currentThemeMode", currentState.currentThemeMode)
-                                    putString("actualTheme", currentState.actualTheme)
-                                    putBoolean("followSystem", currentState.isFollowSystemTheme)
-                                }
-                                TimberLogger.d(TAG, "准备调用RN回调，数据: $result")
-                                cb.invoke(null, result)
-                                TimberLogger.d(TAG, "✅ RN回调已调用")
-                            }
-                        } else {
-                            TimberLogger.w(TAG, "回调已经被调用过，跳过")
-                        }
-                        true // 停止监听
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withTimeout(TIMEOUT_SECONDS * 1000) {
+                        // 🎯 优化：只发送Intent，不等待Effect
+                        viewModel.sendIntent(SettingsIntent.SetNightMode(theme))
+                        
+                        // 立即resolve，不等待原生回传
+                        promise.resolve("主题切换已发起: $theme")
+                        TimberLogger.d(TAG, "✅ 主题切换指令已发送: $theme")
                     }
-
-                    is SettingsEffect.ShowError -> {
-                        TimberLogger.d(TAG, "收到ShowError Effect: ${effect.error}")
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
-                            TimberLogger.d(TAG, "✅ 错误回调已调用")
-                        } else {
-                            TimberLogger.w(TAG, "错误回调已经被调用过，跳过")
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> {
-                        TimberLogger.v(TAG, "收到其他Effect，继续监听: $effect")
-                        false // 继续监听
-                    }
+                } catch (e: TimeoutCancellationException) {
+                    TimberLogger.w(TAG, "主题切换超时: $theme")
+                    promise.reject("TIMEOUT_ERROR", "主题切换操作超时")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "主题切换失败: $theme", e)
+                    promise.reject("THEME_CHANGE_ERROR", "主题切换失败: ${e.message}")
                 }
             }
-
-            // 发送Intent
-            TimberLogger.d(TAG, "发送ToggleNightMode Intent")
-            viewModel.sendIntent(SettingsIntent.ToggleNightMode)
         } ?: run {
-            TimberLogger.e(TAG, "ViewModel未初始化")
-            callback.invoke("ViewModel未初始化", null)
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 设置夜间模式
+     * 🎯 优化：切换夜间模式（Promise版本，单向数据流）
      */
     @ReactMethod
-    fun setNightMode(mode: String, callback: Callback) {
-        TimberLogger.d(TAG, "设置夜间模式: $mode")
+    fun toggleNightMode(promise: Promise) {
+        TimberLogger.d(TAG, "🎯 切换夜间模式")
 
         settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            // 获取当前状态并返回完整信息
-                            val currentState = viewModel.getStateForBridge()
-                            val result = Arguments.createMap().apply {
-                                putString("message", effect.message)
-                                putString("currentThemeMode", currentState.currentThemeMode)
-                                putString("actualTheme", currentState.actualTheme)
-                                putBoolean("followSystem", currentState.isFollowSystemTheme)
-                            }
-                            cb.invoke(null, result)
-                        }
-                        true // 停止监听
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withTimeout(TIMEOUT_SECONDS * 1000) {
+                        // 🎯 优化：只发送Intent，不等待Effect
+                        viewModel.sendIntent(SettingsIntent.ToggleNightMode)
+                        
+                        // 立即resolve，不等待原生回传
+                        promise.resolve("夜间模式切换已发起")
+                        TimberLogger.d(TAG, "✅ 夜间模式切换指令已发送")
                     }
-
-                    is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> false // 继续监听
+                } catch (e: TimeoutCancellationException) {
+                    TimberLogger.w(TAG, "夜间模式切换超时")
+                    promise.reject("TIMEOUT_ERROR", "夜间模式切换操作超时")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "夜间模式切换失败", e)
+                    promise.reject("TOGGLE_ERROR", "夜间模式切换失败: ${e.message}")
                 }
             }
-
-            viewModel.sendIntent(SettingsIntent.SetNightMode(mode))
         } ?: run {
-            callback.invoke("ViewModel未初始化", null)
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 获取当前夜间模式
+     * 设置是否跟随系统主题（Promise版本）
      */
     @ReactMethod
-    fun getCurrentNightMode(callback: Callback) {
-        TimberLogger.d(TAG, "获取当前夜间模式")
-
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.currentThemeMode)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 获取当前实际主题
-     */
-    @ReactMethod
-    fun getCurrentActualTheme(callback: Callback) {
-        TimberLogger.d(TAG, "获取当前实际主题")
-
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.actualTheme)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 设置是否跟随系统主题
-     */
-    @ReactMethod
-    fun setFollowSystemTheme(follow: Boolean, callback: Callback) {
+    fun setFollowSystemTheme(follow: Boolean, promise: Promise) {
         TimberLogger.d(TAG, "设置跟随系统主题: $follow")
 
         settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            val currentState = viewModel.getStateForBridge()
-                            val result = Arguments.createMap().apply {
-                                putString("message", effect.message)
-                                putString("currentThemeMode", currentState.currentThemeMode)
-                                putString("actualTheme", currentState.actualTheme)
-                                putBoolean("followSystem", follow) // 直接使用传入的参数值
-                            }
-                            cb.invoke(null, result)
-                        }
-                        true // 停止监听
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withTimeout(TIMEOUT_SECONDS * 1000) {
+                        viewModel.sendIntent(SettingsIntent.SetFollowSystemTheme(follow))
+                        promise.resolve("跟随系统主题设置已发起: $follow")
+                        TimberLogger.d(TAG, "✅ 跟随系统主题设置已发送: $follow")
                     }
-
-                    is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> false // 继续监听
+                } catch (e: TimeoutCancellationException) {
+                    promise.reject("TIMEOUT_ERROR", "设置跟随系统主题操作超时")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "设置跟随系统主题失败", e)
+                    promise.reject("SETTING_ERROR", "设置跟随系统主题失败: ${e.message}")
                 }
             }
-
-            viewModel.sendIntent(SettingsIntent.SetFollowSystemTheme(follow))
         } ?: run {
-            callback.invoke("ViewModel未初始化", null)
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 获取是否跟随系统主题
+     * 设置自动切换夜间模式（Promise版本）
      */
     @ReactMethod
-    fun isFollowSystemTheme(callback: Callback) {
-        TimberLogger.d(TAG, "获取跟随系统主题状态")
-
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.isFollowSystemTheme)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 设置自动切换夜间模式
-     */
-    @ReactMethod
-    fun setAutoNightMode(enabled: Boolean, callback: Callback) {
+    fun setAutoNightMode(enabled: Boolean, promise: Promise) {
         TimberLogger.d(TAG, "设置自动切换夜间模式: $enabled")
 
         settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
-                        }
-                        true // 停止监听
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withTimeout(TIMEOUT_SECONDS * 1000) {
+                        viewModel.sendIntent(SettingsIntent.SetAutoNightMode(enabled))
+                        promise.resolve("自动切换夜间模式设置已发起: $enabled")
+                        TimberLogger.d(TAG, "✅ 自动切换夜间模式设置已发送: $enabled")
                     }
-
-                    is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> false // 继续监听
+                } catch (e: TimeoutCancellationException) {
+                    promise.reject("TIMEOUT_ERROR", "设置自动切换夜间模式操作超时")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "设置自动切换夜间模式失败", e)
+                    promise.reject("SETTING_ERROR", "设置自动切换夜间模式失败: ${e.message}")
                 }
             }
-
-            viewModel.sendIntent(SettingsIntent.SetAutoNightMode(enabled))
         } ?: run {
-            callback.invoke("ViewModel未初始化", null)
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 获取是否启用自动切换夜间模式
+     * 清除所有缓存（保留，因为需要返回清理结果）
      */
     @ReactMethod
-    fun isAutoNightModeEnabled(callback: Callback) {
-        TimberLogger.d(TAG, "获取自动切换夜间模式状态")
-
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.isAutoNightModeEnabled)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 清除所有缓存
-     */
-    @ReactMethod
-    fun clearAllCache(callback: Callback) {
+    fun clearAllCache(promise: Promise) {
         TimberLogger.d(TAG, "清除所有缓存")
 
         settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
+            observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
                 when (effect) {
                     is SettingsEffect.CacheCleared -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
+                        if (promiseResolved.compareAndSet(false, true)) {
+                            p.resolve(effect.message)
                         }
                         true // 停止监听
                     }
 
                     is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
+                        if (promiseResolved.compareAndSet(false, true)) {
+                            p.reject("CACHE_ERROR", effect.error)
                         }
                         true // 停止监听
                     }
@@ -320,30 +200,30 @@ class SettingsBridgeModule(
 
             viewModel.sendIntent(SettingsIntent.ClearAllCache)
         } ?: run {
-            callback.invoke("ViewModel未初始化", null)
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 计算缓存大小
+     * 计算缓存大小（保留，因为需要返回计算结果）
      */
     @ReactMethod
-    fun calculateCacheSize(callback: Callback) {
+    fun calculateCacheSize(promise: Promise) {
         TimberLogger.d(TAG, "计算缓存大小")
 
         settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
+            observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
                 when (effect) {
                     is SettingsEffect.CacheCalculated -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.size)
+                        if (promiseResolved.compareAndSet(false, true)) {
+                            p.resolve(effect.size)
                         }
                         true // 停止监听
                     }
 
                     is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
+                        if (promiseResolved.compareAndSet(false, true)) {
+                            p.reject("CACHE_ERROR", effect.error)
                         }
                         true // 停止监听
                     }
@@ -354,151 +234,72 @@ class SettingsBridgeModule(
 
             viewModel.sendIntent(SettingsIntent.CalculateCacheSize)
         } ?: run {
-            callback.invoke("ViewModel未初始化", null)
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 设置夜间模式时间段
+     * 设置夜间模式时间段（Promise版本）
      */
     @ReactMethod
-    fun setNightModeTime(startTime: String, endTime: String, callback: Callback) {
+    fun setNightModeTime(startTime: String, endTime: String, promise: Promise) {
         TimberLogger.d(TAG, "设置夜间模式时间段: $startTime - $endTime")
 
         settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
-                        }
-                        true // 停止监听
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withTimeout(TIMEOUT_SECONDS * 1000) {
+                        viewModel.sendIntent(SettingsIntent.SetNightModeTime(startTime, endTime))
+                        promise.resolve("夜间模式时间设置已发起: $startTime - $endTime")
+                        TimberLogger.d(TAG, "✅ 夜间模式时间设置已发送: $startTime - $endTime")
                     }
-
-                    is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> false // 继续监听
+                } catch (e: TimeoutCancellationException) {
+                    promise.reject("TIMEOUT_ERROR", "设置夜间模式时间操作超时")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "设置夜间模式时间失败", e)
+                    promise.reject("SETTING_ERROR", "设置夜间模式时间失败: ${e.message}")
                 }
             }
-
-            viewModel.sendIntent(SettingsIntent.SetNightModeTime(startTime, endTime))
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 获取夜间模式开始时间
-     */
-    @ReactMethod
-    fun getNightModeStartTime(callback: Callback) {
-        TimberLogger.d(TAG, "获取夜间模式开始时间")
-
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.nightModeStartTime)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 获取夜间模式结束时间
-     */
-    @ReactMethod
-    fun getNightModeEndTime(callback: Callback) {
-        TimberLogger.d(TAG, "获取夜间模式结束时间")
-
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.nightModeEndTime)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 检查当前时间的主题状态
-     */
-    @ReactMethod
-    fun checkCurrentTimeTheme(callback: Callback) {
-        TimberLogger.d(TAG, "检查当前时间的主题状态")
-
-        settingsViewModel?.let { viewModel ->
-            observeEffectForCallback(viewModel, callback) { effect, callbackInvoked, cb ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(null, effect.message)
-                        }
-                        true // 停止监听
-                    }
-
-                    is SettingsEffect.ShowError -> {
-                        if (callbackInvoked.compareAndSet(false, true)) {
-                            cb.invoke(effect.error, null)
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> false // 继续监听
-                }
-            }
-
-            viewModel.sendIntent(SettingsIntent.CheckCurrentTimeTheme)
-        } ?: run {
-            callback.invoke("ViewModel未初始化", null)
-        }
-    }
-
-    /**
-     * 统一主题切换接口（Promise版本）
-     */
-    @ReactMethod
-    fun changeTheme(theme: String, promise: Promise) {
-        TimberLogger.d(TAG, "统一主题切换: $theme")
-
-        settingsViewModel?.let { viewModel ->
-            observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
-                        if (promiseResolved.compareAndSet(false, true)) {
-                            p.resolve(effect.message)
-                        }
-                        true // 停止监听
-                    }
-
-                    is SettingsEffect.ShowError -> {
-                        if (promiseResolved.compareAndSet(false, true)) {
-                            p.reject("THEME_CHANGE_ERROR", effect.error)
-                        }
-                        true // 停止监听
-                    }
-
-                    else -> false // 继续监听
-                }
-            }
-
-            viewModel.sendIntent(SettingsIntent.SetNightMode(theme))
         } ?: run {
             promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
         }
     }
 
     /**
-     * 用户退出登录
+     * 检查当前时间的主题状态（Promise版本）
+     */
+    @ReactMethod
+    fun checkCurrentTimeTheme(promise: Promise) {
+        TimberLogger.d(TAG, "检查当前时间的主题状态")
+
+        settingsViewModel?.let { viewModel ->
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withTimeout(TIMEOUT_SECONDS * 1000) {
+                        viewModel.sendIntent(SettingsIntent.CheckCurrentTimeTheme)
+                        promise.resolve("时间主题检查已发起")
+                        TimberLogger.d(TAG, "✅ 时间主题检查已发送")
+                    }
+                } catch (e: TimeoutCancellationException) {
+                    promise.reject("TIMEOUT_ERROR", "检查时间主题操作超时")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "检查时间主题失败", e)
+                    promise.reject("CHECK_ERROR", "检查时间主题失败: ${e.message}")
+                }
+            }
+        } ?: run {
+            promise.reject("VIEWMODEL_ERROR", "ViewModel未初始化")
+        }
+    }
+
+    /**
+     * 用户退出登录（保留，因为需要清理用户数据）
      */
     @ReactMethod
     fun logout(promise: Promise) {
         try {
             TimberLogger.d(TAG, "开始执行退出登录")
 
-            // 直接发送确认退出登录意图到ViewModel
             settingsViewModel?.let { viewModel ->
                 observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
                     when (effect) {
@@ -531,50 +332,72 @@ class SettingsBridgeModule(
         }
     }
 
-
     /**
-     * 观察Effect并执行回调的辅助方法
+     * 🎯 保留部分读取接口，用于初始化（但减少使用频率）
      */
-    private fun observeEffectForCallback(
-        viewModel: SettingsViewModel,
-        callback: Callback,
-        effectHandler: (SettingsEffect, AtomicBoolean, Callback) -> Boolean
-    ) {
-        TimberLogger.d(TAG, "设置Effect观察器")
+    
+    /**
+     * 获取夜间模式开始时间（仅用于初始化）
+     */
+    @ReactMethod
+    fun getNightModeStartTime(callback: Callback) {
+        TimberLogger.d(TAG, "获取夜间模式开始时间")
 
-        // 使用原子布尔值确保callback只被调用一次
-        val callbackInvoked = AtomicBoolean(false)
-
-        // 在主线程上启动协程来监听Effect
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                // 设置超时时间，避免无限等待
-                withTimeout(10000) {
-                    viewModel.effect.collect { effect ->
-                        TimberLogger.d(TAG, "收到Effect: $effect")
-                        val shouldStop = effectHandler(effect, callbackInvoked, callback)
-                        if (shouldStop) {
-                            // 只有当effectHandler返回true时才停止监听
-                            return@collect
-                        }
-                    }
-                }
-            } catch (e: TimeoutCancellationException) {
-                TimberLogger.w(TAG, "Effect监听超时")
-                if (callbackInvoked.compareAndSet(false, true)) {
-                    callback.invoke("操作超时", null)
-                }
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "Effect监听异常", e)
-                if (callbackInvoked.compareAndSet(false, true)) {
-                    callback.invoke("操作失败: ${e.message}", null)
-                }
-            }
+        settingsViewModel?.let { viewModel ->
+            val currentState = viewModel.getStateForBridge()
+            callback.invoke(null, currentState.nightModeStartTime)
+        } ?: run {
+            callback.invoke("ViewModel未初始化", null)
         }
     }
 
     /**
-     * 观察Effect并执行Promise的辅助方法
+     * 获取夜间模式结束时间（仅用于初始化）
+     */
+    @ReactMethod
+    fun getNightModeEndTime(callback: Callback) {
+        TimberLogger.d(TAG, "获取夜间模式结束时间")
+
+        settingsViewModel?.let { viewModel ->
+            val currentState = viewModel.getStateForBridge()
+            callback.invoke(null, currentState.nightModeEndTime)
+        } ?: run {
+            callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    /**
+     * 获取是否启用自动切换夜间模式（仅用于初始化）
+     */
+    @ReactMethod
+    fun isAutoNightModeEnabled(callback: Callback) {
+        TimberLogger.d(TAG, "获取自动切换夜间模式状态")
+
+        settingsViewModel?.let { viewModel ->
+            val currentState = viewModel.getStateForBridge()
+            callback.invoke(null, currentState.isAutoNightModeEnabled)
+        } ?: run {
+            callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    /**
+     * 获取是否跟随系统主题（仅用于初始化）
+     */
+    @ReactMethod
+    fun isFollowSystemTheme(callback: Callback) {
+        TimberLogger.d(TAG, "获取跟随系统主题状态")
+
+        settingsViewModel?.let { viewModel ->
+            val currentState = viewModel.getStateForBridge()
+            callback.invoke(null, currentState.isFollowSystemTheme)
+        } ?: run {
+            callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    /**
+     * 观察Effect并执行Promise的辅助方法 - 优化版
      */
     private fun observeEffectForPromise(
         viewModel: SettingsViewModel,
@@ -583,19 +406,15 @@ class SettingsBridgeModule(
     ) {
         TimberLogger.d(TAG, "设置Effect观察器(Promise)")
 
-        // 使用原子布尔值确保promise只被调用一次
         val promiseResolved = AtomicBoolean(false)
 
-        // 在主线程上启动协程来监听Effect
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                // 设置超时时间，避免无限等待
-                withTimeout(10000) {
+                withTimeout(TIMEOUT_SECONDS * 1000) {
                     viewModel.effect.collect { effect ->
                         TimberLogger.d(TAG, "收到Effect: $effect")
                         val shouldStop = effectHandler(effect, promiseResolved, promise)
                         if (shouldStop) {
-                            // 只有当effectHandler返回true时才停止监听
                             return@collect
                         }
                     }

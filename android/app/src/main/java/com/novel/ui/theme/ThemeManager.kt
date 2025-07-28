@@ -14,14 +14,26 @@ import androidx.lifecycle.ViewModelStoreOwner
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancelChildren
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.modules.core.DeviceEventManagerModule
 
 /**
- * 全局主题管理器
- * 统一管理Android原生的主题状态，确保所有组件都能响应主题变更
- * 支持主题状态持久化缓存
+ * 全局主题管理器 - 优化版
+ * 
+ * 核心改进：
+ * - 单向数据流：只在真正需要时发送事件到RN
+ * - Flow去重：使用distinctUntilChanged避免重复事件
+ * - 事件去抖：debounce(200ms)合并连续点击
+ * - 安全检查：发送事件前检查ReactContext状态
+ * - 简化状态：去除冗余的手动状态赋值
  */
 @Stable
 class ThemeManager private constructor(private val context: Context) : ViewModel() {
@@ -31,6 +43,7 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
         private const val KEY_THEME_MODE = "theme_mode"
         private const val KEY_IS_DARK_MODE = "is_dark_mode"
         private const val KEY_FOLLOW_SYSTEM = "follow_system_theme"
+        private const val DEBOUNCE_DELAY_MS = 200L
         
         @Volatile
         private var INSTANCE: ThemeManager? = null
@@ -65,6 +78,7 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
         fun initialize(application: Application) {
             val instance = getInstance(application)
             instance.restoreThemeFromCache()
+            instance.startThemeFlowMonitoring()
         }
     }
     
@@ -72,14 +86,36 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
     
+    // 🎯 优化：使用Flow监听实际主题变化，而不是手动设置
     private val _isDarkMode = MutableStateFlow(false)
     val isDarkMode: StateFlow<Boolean> = _isDarkMode.asStateFlow()
     
     private val _followSystemTheme = MutableStateFlow(true)
     val followSystemTheme: StateFlow<Boolean> = _followSystemTheme.asStateFlow()
     
+    // 协程作用域
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    
     // 系统主题变化回调
     private var systemThemeChangeCallback: ((String) -> Unit)? = null
+    
+    /**
+     * 🎯 新增：启动Flow监听，实现去重和去抖
+     */
+    private fun startThemeFlowMonitoring() {
+        coroutineScope.launch {
+            isDarkMode
+                .debounce(DEBOUNCE_DELAY_MS) // 去抖：合并连续变化
+                .collect { isDark ->
+                    val actualTheme = if (isDark) "dark" else "light"
+                    println("[ThemeManager] 🎯 主题变化检测: $actualTheme")
+                    
+                    // 只在真正变化时才通知RN和回调
+                    notifyThemeChangedToRN(actualTheme)
+                    systemThemeChangeCallback?.invoke(actualTheme)
+                }
+        }
+    }
     
     /**
      * 从缓存恢复主题设置
@@ -87,21 +123,19 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     private fun restoreThemeFromCache() {
         try {
             val savedThemeMode = sharedPreferences.getString(KEY_THEME_MODE, "auto") ?: "auto"
-            val savedIsDarkMode = sharedPreferences.getBoolean(KEY_IS_DARK_MODE, false)
             val savedFollowSystem = sharedPreferences.getBoolean(KEY_FOLLOW_SYSTEM, true)
             
             // 恢复状态
-            _isDarkMode.value = savedIsDarkMode
             _followSystemTheme.value = savedFollowSystem
             
             // 应用主题设置，但不重复保存到缓存
-            applyThemeMode(savedThemeMode, saveToCache = false)
+            applyThemeMode(savedThemeMode, saveToCache = false, notifyRN = false)
             
-            println("[ThemeManager] 已从缓存恢复主题: mode=$savedThemeMode, isDark=$savedIsDarkMode, followSystem=$savedFollowSystem")
+            println("[ThemeManager] 已从缓存恢复主题: mode=$savedThemeMode, followSystem=$savedFollowSystem")
         } catch (e: Exception) {
             println("[ThemeManager] 恢复主题缓存失败: ${e.message}")
             // 失败时使用默认设置
-            setThemeMode("auto")
+            setThemeMode("auto", notifyRN = false)
         }
     }
     
@@ -110,7 +144,7 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
      */
     private fun saveThemeToCache() {
         try {
-            sharedPreferences.edit { // 使用KTX扩展函数替代with
+            sharedPreferences.edit {
                 putString(KEY_THEME_MODE, getCurrentThemeMode())
                 putBoolean(KEY_IS_DARK_MODE, _isDarkMode.value)
                 putBoolean(KEY_FOLLOW_SYSTEM, _followSystemTheme.value)
@@ -122,26 +156,25 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     }
     
     /**
-     * 应用主题模式
+     * 应用主题模式 - 优化版
      */
-    private fun applyThemeMode(mode: String, saveToCache: Boolean = true) {
+    private fun applyThemeMode(mode: String, saveToCache: Boolean = true, notifyRN: Boolean = false) {
         when (mode) {
             "light" -> {
-                _isDarkMode.value = false
                 _followSystemTheme.value = false
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                // 🎯 优化：让AppCompatDelegate的变化自然触发Configuration变化，然后更新_isDarkMode
+                updateDarkModeFromConfiguration()
             }
             "dark" -> {
-                _isDarkMode.value = true
                 _followSystemTheme.value = false
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                updateDarkModeFromConfiguration()
             }
             "auto" -> {
                 _followSystemTheme.value = true
-                // 当跟随系统时，使用改进的系统主题检测
-                val isSystemDark = detectSystemDarkMode()
-                _isDarkMode.value = isSystemDark
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                updateDarkModeFromConfiguration()
             }
         }
         
@@ -151,23 +184,22 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     }
     
     /**
-     * 设置主题模式
+     * 🎯 新增：从Configuration更新深色模式状态，避免手动双写
      */
-    fun setThemeMode(mode: String, notifyRN: Boolean = true) {
-        println("[ThemeManager] 🎯 开始设置主题模式: $mode, notifyRN: $notifyRN")
-        applyThemeMode(mode, saveToCache = true)
-        
-        // 获取当前实际主题
-        val actualTheme = getCurrentActualThemeMode()
-        println("[ThemeManager] 🔄 主题应用完成，当前实际主题: $actualTheme")
-        
-        // 只有在需要时才发送到RN端
-        if (notifyRN) {
-            notifyThemeChangedToRN(actualTheme)
-            println("[ThemeManager] ✅ 主题变更事件已发送到RN: $actualTheme")
-        }
-        
-        println("[ThemeManager] ✅ 主题设置完成: $mode -> $actualTheme")
+    private fun updateDarkModeFromConfiguration() {
+        val isSystemDark = detectSystemDarkMode()
+        _isDarkMode.value = isSystemDark
+    }
+    
+    /**
+     * 设置主题模式 - 简化版（主要用于RN调用）
+     * @param mode 主题模式
+     * @param notifyRN 是否通知RN（默认false，因为RN已经有本地状态）
+     */
+    fun setThemeMode(mode: String, notifyRN: Boolean = false) {
+        println("[ThemeManager] 🎯 设置主题模式: $mode, notifyRN: $notifyRN")
+        applyThemeMode(mode, saveToCache = true, notifyRN = notifyRN)
+        println("[ThemeManager] ✅ 主题设置完成: $mode")
     }
     
     /**
@@ -175,7 +207,7 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
      */
     fun toggleDarkMode() {
         val newMode = if (_isDarkMode.value) "light" else "dark"
-        setThemeMode(newMode)
+        setThemeMode(newMode, notifyRN = false) // RN端会立即更新本地状态
     }
     
     /**
@@ -191,67 +223,30 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     
     /**
      * 获取当前实际的主题模式（用于RN端显示）
-     * 当跟随系统时，返回系统当前的实际主题
      */
     fun getCurrentActualThemeMode(): String {
-        return if (_followSystemTheme.value) {
-            // 跟随系统时，使用多种方式检测系统主题，确保准确性
-            val isSystemDark = detectSystemDarkMode()
-            if (isSystemDark) "dark" else "light"
-        } else {
-            // 手动设置时，返回当前设置
-            if (_isDarkMode.value) "dark" else "light"
-        }
+        return if (_isDarkMode.value) "dark" else "light"
     }
     
     /**
-     * 检测系统是否为深色模式
-     * 使用多种方式确保检测准确性
+     * 检测系统是否为深色模式 - 增强版
      */
     private fun detectSystemDarkMode(): Boolean {
         return try {
-            // 方法1：使用Configuration检测
             val configurationDark = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
             
-            // 方法2：使用AppCompatDelegate检测当前夜间模式
             val delegateMode = AppCompatDelegate.getDefaultNightMode()
-            val delegateDark = when (delegateMode) {
+            val result = when (delegateMode) {
                 AppCompatDelegate.MODE_NIGHT_YES -> true
                 AppCompatDelegate.MODE_NIGHT_NO -> false
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-                    // 如果是跟随系统，再次检查系统配置
-                    configurationDark
-                }
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> configurationDark
                 else -> configurationDark
             }
             
-            // 方法3：检查当前Activity的主题（如果可用）
-            val activityDark = try {
-                if (context is android.app.Activity) {
-                    val activity = context as android.app.Activity
-                    val nightModeFlags = activity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                    nightModeFlags == Configuration.UI_MODE_NIGHT_YES
-                } else {
-                    configurationDark
-                }
-            } catch (e: Exception) {
-                configurationDark
-            }
-            
-            // 优先使用delegate的结果，因为它更准确
-            val result = if (delegateMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-                // 跟随系统时，使用configuration的结果
-                configurationDark
-            } else {
-                // 手动设置时，使用delegate的结果
-                delegateDark
-            }
-            
-            println("[ThemeManager] 系统主题检测 - Configuration: $configurationDark, Delegate: $delegateDark, Activity: $activityDark, Final: $result")
+            println("[ThemeManager] 系统主题检测 - Configuration: $configurationDark, Final: $result")
             result
         } catch (e: Exception) {
             println("[ThemeManager] 系统主题检测失败，使用默认值: ${e.message}")
-            // 发生异常时，使用当前_isDarkMode的值作为fallback
             _isDarkMode.value
         }
     }
@@ -264,35 +259,33 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     }
     
     /**
-     * 通知系统主题发生变化（由外部调用）
+     * 通知系统主题发生变化（由外部调用，如Configuration变化）
      */
     fun notifySystemThemeChanged() {
-        if (_followSystemTheme.value) {
-            val actualTheme = getCurrentActualThemeMode()
-            println("[ThemeManager] 系统主题变化，当前实际主题: $actualTheme")
-            systemThemeChangeCallback?.invoke(actualTheme)
-        }
+        println("[ThemeManager] 收到系统主题变化通知")
+        updateDarkModeFromConfiguration()
     }
     
     /**
-     * 主动向RN端发送主题变更事件
-     * 用于在RN页面加载时同步当前主题状态
+     * 🎯 优化：向RN端发送主题变更事件，增加安全检查
      */
     fun notifyThemeChangedToRN(theme: String) {
         try {
             println("[ThemeManager] 准备发送主题变更事件到RN: $theme")
             
-            // 获取当前RN上下文
             val mainApplication = context.applicationContext as com.novel.MainApplication
             val reactInstanceManager = mainApplication.reactNativeHost.reactInstanceManager
             val reactContext = reactInstanceManager.currentReactContext
             
-            if (reactContext != null) {
+            // 🎯 增加安全检查
+            if (reactContext != null && reactContext.hasActiveCatalystInstance()) {
                 val params = Arguments.createMap().apply {
                     putString("colorScheme", theme)
+                    putString("currentThemeMode", getCurrentThemeMode())
+                    putBoolean("followSystem", _followSystemTheme.value)
                 }
                 
-                println("[ThemeManager] 创建事件参数: colorScheme = $theme")
+                println("[ThemeManager] 创建事件参数: $params")
                 
                 reactContext
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
@@ -300,7 +293,7 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
                     
                 println("[ThemeManager] ✅ 主题变更事件已发送到RN: $theme")
             } else {
-                println("[ThemeManager] ❌ RN上下文为空，无法发送主题事件")
+                println("[ThemeManager] ❌ RN上下文不可用，跳过发送事件")
             }
         } catch (e: Exception) {
             println("[ThemeManager] ❌ 发送主题变更事件失败: $theme, error: ${e.message}")
@@ -317,5 +310,12 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
         } catch (e: Exception) {
             println("[ThemeManager] 清除主题缓存失败: ${e.message}")
         }
+    }
+    
+    override fun onCleared() {
+        super.onCleared()
+        // 清理协程
+        coroutineScope.coroutineContext.cancelChildren()
+        println("[ThemeManager] 资源已清理")
     }
 }

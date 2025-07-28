@@ -65,7 +65,7 @@ class SettingsViewModel @Inject constructor(
             // 设置系统主题变化回调
             themeManager?.setSystemThemeChangeCallback { actualTheme ->
                 TimberLogger.d(TAG, "系统主题变化回调: $actualTheme")
-                sendThemeChangeEvent(actualTheme)
+                // sendThemeChangeEvent(actualTheme)
             }
             TimberLogger.d(TAG, "ThemeManager初始化完成")
         } ?: run {
@@ -128,6 +128,8 @@ class SettingsViewModel @Inject constructor(
      * 发送主题变更事件到RN
      */
     private fun sendThemeChangeEvent(theme: String) {
+        // 🎯 优化：此方法已弃用，由ThemeManager统一发送事件
+        return
         try {
             TimberLogger.d(TAG, "准备发送主题变更事件到RN: $theme")
 
@@ -207,7 +209,7 @@ class SettingsViewModel @Inject constructor(
                 sendEffect(SettingsEffect.ShowToast(updateResult.message))
                 
                 // 通知RN主题变化
-                updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
+                // updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
                 TimberLogger.d(TAG, "主题切换成功: ${updateResult.message}, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
                 
@@ -239,7 +241,7 @@ class SettingsViewModel @Inject constructor(
                 sendEffect(SettingsEffect.ShowToast(updateResult.message))
                 
                 // 通知RN主题变化
-                updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
+                // updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
                 TimberLogger.d(TAG, "设置主题模式成功: $mode, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
                 
@@ -267,7 +269,7 @@ class SettingsViewModel @Inject constructor(
                 sendEffect(SettingsEffect.ShowToast(updateResult.message))
                 
                 // 通知RN主题变化
-                updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
+                // updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
                 TimberLogger.d(TAG, "设置跟随系统主题成功: $follow")
                 

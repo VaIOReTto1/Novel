@@ -5,6 +5,7 @@ import { SettingItem } from '../types/index';
 import { createSettingsPageStyles } from '../styles/SettingsPageStyles';
 import { commonSizes } from '../../../../utils/theme/dimensions';
 import { useNovelColors } from '../../../../utils/theme/colors';
+import MoonSunSwitch from './ThemeSwitcher';
 
 interface SettingRowProps {
   item: SettingItem;
@@ -55,15 +56,10 @@ export const SettingRow: React.FC<SettingRowProps> = ({ item, onPress }) => {
 
       case 'toggle':
         return (
-          <TouchableOpacity
-            onPress={handlePress}
-            style={styles.themeToggleButton}
-            disabled={item.disabled}
-          >
-            <Text style={styles.themeToggleText}>
-              {item.value === 'dark' ? '🌙' : '☀️'}
-            </Text>
-          </TouchableOpacity>
+          <MoonSunSwitch
+            isDark={item.value === 'dark'}
+            onToggle={handlePress}
+          />
         );
 
       case 'action':

@@ -215,7 +215,7 @@ object NavViewModel : ViewModel() {
     val navController = MutableLiveData<NavHostController?>()
 
     // 防抖超时时间，单位毫秒
-    private const val DEBOUNCE_TIMEOUT_MS = 300L
+    private const val DEBOUNCE_TIMEOUT_MS = 1000L
 
     // 特殊后退命令标识
     private const val BACK_COMMAND = "__BACK__"

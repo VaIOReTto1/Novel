@@ -4,4 +4,4 @@ export { TabsArea } from './TabsArea';
 export { EmptyState } from './EmptyState';
 export { LoadMoreIndicator } from './LoadMoreIndicator';
 export { RefreshIndicator } from './RefreshIndicator';
-export { MainMessagesSection } from './MainMessagesSection'; 
+export { MainMessagesSection } from './MainMessagesSection';

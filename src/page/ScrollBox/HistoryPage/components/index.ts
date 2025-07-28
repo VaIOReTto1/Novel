@@ -3,4 +3,4 @@ export { TabsArea } from './TabsArea';
 export { HistoryItem } from './HistoryItem';
 export { LoadMoreIndicator } from './LoadMoreIndicator';
 export { RefreshIndicator } from './RefreshIndicator';
-export { ContentArea } from './ContentArea'; 
+export { ContentArea } from './ContentArea';

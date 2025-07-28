@@ -17,7 +17,7 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
     const date = new Date(timeString);
     const now = new Date();
     const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
+
     if (diffInHours < 1) {
       return '刚刚阅读';
     } else if (diffInHours < 24) {
@@ -61,7 +61,7 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
           <Text style={styles.listTitle} numberOfLines={2}>
             {item.title}
           </Text>
-          
+
           <Text style={styles.listAuthor} numberOfLines={1}>
             {item.author}
           </Text>
@@ -95,15 +95,15 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
         <Text style={styles.gridTitle} numberOfLines={2}>
           {item.title}
         </Text>
-        
+
         <Text style={styles.gridAuthor} numberOfLines={1}>
           {item.author}
         </Text>
-        
+
         <Text style={styles.gridProgress}>
           {formatProgress(item.readProgress)}
         </Text>
       </View>
     </TouchableOpacity>
   );
-}); 
+});

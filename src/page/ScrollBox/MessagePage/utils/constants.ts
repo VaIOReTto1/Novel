@@ -29,4 +29,4 @@ export const MESSAGE_TYPE_ICONS: Record<string, string> = {
   comment: '💬',
   reply: '↩️',
   like: '❤️',
-}; 
+};

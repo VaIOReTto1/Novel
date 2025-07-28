@@ -100,14 +100,14 @@ const UserItem: React.FC<{
       <TouchableOpacity
         style={[
           styles.followButton,
-          user.isFollowed && styles.followedButton
+          user.isFollowed && styles.followedButton,
         ]}
         onPress={handleFollowPress}
         activeOpacity={0.7}
       >
         <Text style={[
           styles.followButtonText,
-          user.isFollowed && styles.followedButtonText
+          user.isFollowed && styles.followedButtonText,
         ]}>
           {user.isFollowed ? '已关注' : '＋ 关注'}
         </Text>

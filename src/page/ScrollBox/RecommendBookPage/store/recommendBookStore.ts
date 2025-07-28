@@ -1,27 +1,27 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { 
-  UserInfo, 
-  DataStats, 
-  ServiceItem, 
-  TaskItem
+import {
+  UserInfo,
+  DataStats,
+  ServiceItem,
+  TaskItem,
 } from '../types';
 
 export interface RecommendBookState {
   loading: boolean;
   error: string | null;
-  
+
   // User Info
   userInfo: UserInfo | null;
-  
+
   // Data Stats
   selectedDataTab: 'recommend' | 'book';
   dataStats: DataStats;
-  
+
   // Creative Services
   services: ServiceItem[];
-  
-  // Creative Tasks  
+
+  // Creative Tasks
   selectedTaskTab: 'recommend' | 'book';
   tasks: Record<'recommend' | 'book', TaskItem[]>;
 }
@@ -42,18 +42,18 @@ type RecommendBookStore = RecommendBookState & RecommendBookActions;
 const initialState: RecommendBookState = {
   loading: false,
   error: null,
-  
+
   userInfo: null,
-  
+
   selectedDataTab: 'recommend',
   dataStats: { fans: 0, likes: 0, replies: 0, withdrawable: 0 },
-  
+
   services: [],
-  
+
   selectedTaskTab: 'recommend',
   tasks: {
     recommend: [],
-    book: []
+    book: [],
   },
 };
 
@@ -61,7 +61,7 @@ const initialState: RecommendBookState = {
 const generateMockUserInfo = (): UserInfo => ({
   id: 1,
   name: '安国的尹锋',
-  avatar: 'https://placehold.co/80x80'
+  avatar: 'https://placehold.co/80x80',
 });
 
 const generateMockServices = (): ServiceItem[] => [
@@ -69,19 +69,19 @@ const generateMockServices = (): ServiceItem[] => [
     id: '1',
     icon: '📊',
     title: '收益分析',
-    description: '查看详细收益数据和趋势'
+    description: '查看详细收益数据和趋势',
   },
   {
     id: '2',
     icon: '📈',
     title: '推广统计',
-    description: '查看推书效果统计'
+    description: '查看推书效果统计',
   },
   {
     id: '3',
     icon: '🎯',
     title: '任务中心',
-    description: '发现更多推书任务'
+    description: '发现更多推书任务',
   },
 ];
 
@@ -94,7 +94,7 @@ const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
       coverUrl: 'https://placehold.co/120x80',
       maxEarnings: 69033.62,
       type: 'recommend',
-      tags: ['现金奖励', '推书任务']
+      tags: ['现金奖励', '推书任务'],
     },
     {
       id: '2',
@@ -103,7 +103,7 @@ const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
       coverUrl: 'https://placehold.co/120x80',
       maxEarnings: 45000.00,
       type: 'recommend',
-      tags: ['佣金收益', '热门图书']
+      tags: ['佣金收益', '热门图书'],
     },
     {
       id: '3',
@@ -112,8 +112,8 @@ const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
       coverUrl: 'https://placehold.co/120x80',
       maxEarnings: 28500.00,
       type: 'recommend',
-      tags: ['新书推广', '专属奖励']
-    }
+      tags: ['新书推广', '专属奖励'],
+    },
   ],
   book: [
     {
@@ -123,7 +123,7 @@ const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
       coverUrl: 'https://placehold.co/120x80',
       maxEarnings: 35000.00,
       type: 'book',
-      tags: ['书单制作', '读者增长']
+      tags: ['书单制作', '读者增长'],
     },
     {
       id: '5',
@@ -132,9 +132,9 @@ const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
       coverUrl: 'https://placehold.co/120x80',
       maxEarnings: 22000.00,
       type: 'book',
-      tags: ['经典解读', '阅读心得']
-    }
-  ]
+      tags: ['经典解读', '阅读心得'],
+    },
+  ],
 });
 
 export const useRecommendBookStore = create<RecommendBookStore>()(
@@ -207,4 +207,4 @@ export const useRecommendBookStore = create<RecommendBookStore>()(
       alert('任务详情功能开发中...');
     },
   }))
-); 
+);

@@ -15,19 +15,19 @@ export const UserSection: React.FC<UserSectionProps> = React.memo(({
 }) => {
   const translateY = useRef(new Animated.Value(0)).current;
   const currentIndex = useRef(0);
-  
+
   // 创建三条相同的公告消息
   const announcements = [
     announcement,
     announcement,
-    announcement
+    announcement,
   ];
-  
+
   useEffect(() => {
     const startCarousel = () => {
       const animateToNext = () => {
         currentIndex.current = (currentIndex.current + 1) % announcements.length;
-        
+
         Animated.timing(translateY, {
           toValue: -currentIndex.current * 20, // 使用wp(20)的高度
           duration: 500,
@@ -42,19 +42,19 @@ export const UserSection: React.FC<UserSectionProps> = React.memo(({
           }
         });
       };
-      
+
       // 每3秒切换一次
       const interval = setInterval(animateToNext, 3000);
       return interval;
     };
-    
+
     const interval = startCarousel();
-    
+
     return () => {
       clearInterval(interval);
     };
   }, [translateY, announcements.length]);
-  
+
   return (
     <>
       {/* 用户信息 */}
@@ -73,12 +73,12 @@ export const UserSection: React.FC<UserSectionProps> = React.memo(({
       <View style={styles.announcementSection}>
         <Text style={styles.announcementTag}>{announcement.tag}</Text>
         <View style={styles.announcementCarouselContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
               styles.announcementCarousel,
               {
-                transform: [{ translateY }]
-              }
+                transform: [{ translateY }],
+              },
             ]}
           >
             {announcements.map((item, index) => (

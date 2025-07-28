@@ -251,4 +251,4 @@ export const createMessagePageStyles = (colors: NovelColors) => StyleSheet.creat
     color: colors.novelMain,
     fontWeight: '500',
   },
-}); 
+});

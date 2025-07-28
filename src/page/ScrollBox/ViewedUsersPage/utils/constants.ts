@@ -15,4 +15,4 @@ export const DEFAULT_AVATAR = 'https://placehold.co/96';
 export const EMPTY_ICONS = {
   BOX: '��',
   LEAF: '🍁',
-}; 
+};

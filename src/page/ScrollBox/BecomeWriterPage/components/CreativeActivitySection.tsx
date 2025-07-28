@@ -42,7 +42,7 @@ export const CreativeActivitySection: React.FC<CreativeActivitySectionProps> = R
         >
           <Text style={[
             styles.subtabText,
-            selectedTab === 'novel' && styles.activeSubtabText
+            selectedTab === 'novel' && styles.activeSubtabText,
           ]}>
             小说
           </Text>
@@ -55,7 +55,7 @@ export const CreativeActivitySection: React.FC<CreativeActivitySectionProps> = R
         >
           <Text style={[
             styles.subtabText,
-            selectedTab === 'short' && styles.activeSubtabText
+            selectedTab === 'short' && styles.activeSubtabText,
           ]}>
             短故事
           </Text>

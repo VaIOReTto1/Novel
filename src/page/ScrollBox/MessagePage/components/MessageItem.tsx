@@ -55,4 +55,4 @@ export const MessageItem: React.FC<MessageItemComponentProps> = React.memo(({
       </View>
     </TouchableOpacity>
   );
-}); 
+});

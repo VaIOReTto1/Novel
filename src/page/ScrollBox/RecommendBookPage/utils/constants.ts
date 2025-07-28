@@ -16,4 +16,4 @@ export const TASK_TABS: TabData[] = [
 export const DEFAULT_AVATAR = 'https://placehold.co/80x80';
 
 // 默认任务封面图
-export const DEFAULT_TASK_COVER = 'https://placehold.co/120x80'; 
+export const DEFAULT_TASK_COVER = 'https://placehold.co/120x80';

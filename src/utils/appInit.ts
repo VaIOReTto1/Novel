@@ -57,19 +57,19 @@ export async function syncThemeFromNative(): Promise<void> {
 export async function preloadUserData(): Promise<void> {
   try {
     console.log('[AppInit] 🎯 开始预加载用户数据');
-    
+
     // 检查是否已经有用户数据，避免重复从原生获取
     const { useUserStore } = await import('../page/ProfilePage/store/userStore');
     const currentUserState = useUserStore.getState();
-    
+
     if (currentUserState.isLoggedIn && currentUserState.uid) {
       console.log('[AppInit] ✅ 用户数据已存在，跳过从原生获取:', currentUserState.nickname);
       return;
     }
-    
+
     // 从Android端获取用户数据
     const userData = await getCurrentUserData();
-    
+
     if (userData) {
       useUserStore.getState().handleNativeUserData(userData);
       console.log('[AppInit] ✅ 用户数据预加载完成:', userData.nickname);
@@ -88,16 +88,16 @@ export async function preloadUserData(): Promise<void> {
 export async function preloadSettings(): Promise<void> {
   try {
     console.log('[AppInit] 🎯 开始预加载设置状态');
-    
+
     const { useSettingsStore } = await import('../page/SettingsPage/settingspage/store/settingsStore');
     const { loadFollowSystemTheme, loadAutoSwitchNightMode } = useSettingsStore.getState();
-    
+
     // 并行加载关键设置状态
     await Promise.all([
       loadFollowSystemTheme(),
       loadAutoSwitchNightMode(),
     ]);
-    
+
     console.log('[AppInit] ✅ 设置状态预加载完成');
   } catch (error) {
     console.error('[AppInit] ❌ 预加载设置状态失败:', error);

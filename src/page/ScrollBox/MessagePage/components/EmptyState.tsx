@@ -19,4 +19,4 @@ export const EmptyState: React.FC<EmptyStateComponentProps> = ({
       <Text style={styles.emptyText}>{message}</Text>
     </View>
   );
-}; 
+};

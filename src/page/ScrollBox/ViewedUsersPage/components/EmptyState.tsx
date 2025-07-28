@@ -23,7 +23,7 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(({
         <Text style={styles.emptyTitle}>{data.subtitle}</Text>
       )}
       {data.buttonText && onButtonPress && (
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.emptyButton}
           onPress={onButtonPress}
           activeOpacity={0.7}
@@ -33,4 +33,4 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(({
       )}
     </View>
   );
-}); 
+});

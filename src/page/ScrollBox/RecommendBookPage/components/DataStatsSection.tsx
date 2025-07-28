@@ -45,4 +45,4 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
       </View>
     </View>
   );
-}); 
+});

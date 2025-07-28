@@ -10,7 +10,7 @@ interface ViewedUsersPageComponentProps {
 const ViewedUsersPageComponent: React.FC<ViewedUsersPageComponentProps> = ({ source }) => {
   useEffect(() => {
     console.log('[ViewedUsersPageComponent] 组件初始化，来源:', source);
-    
+
     // 初始化RN页面
     initializeRNPage('ViewedUsersPage').catch((error) => {
       console.error('[ViewedUsersPageComponent] 页面初始化失败:', error);
@@ -27,4 +27,4 @@ const ViewedUsersPageComponent: React.FC<ViewedUsersPageComponentProps> = ({ sou
 // 注册React Native组件
 AppRegistry.registerComponent('ViewedUsersPageComponent', () => ViewedUsersPageComponent);
 
-export default ViewedUsersPageComponent; 
+export default ViewedUsersPageComponent;

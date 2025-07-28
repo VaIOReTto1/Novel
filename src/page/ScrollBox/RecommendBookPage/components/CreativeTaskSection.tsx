@@ -123,4 +123,4 @@ export const CreativeTaskSection: React.FC<CreativeTaskSectionProps> = React.mem
             </View>
         </View>
     );
-}); 
+});

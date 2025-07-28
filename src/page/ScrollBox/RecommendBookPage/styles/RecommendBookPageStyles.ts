@@ -321,4 +321,4 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
     color: colors.novelTextGray,
     marginTop: wp(8),
   },
-}); 
+});

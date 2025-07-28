@@ -30,4 +30,4 @@ export const LoadMoreIndicator: React.FC<LoadMoreIndicatorComponentProps> = Reac
   }
 
   return null;
-}); 
+});

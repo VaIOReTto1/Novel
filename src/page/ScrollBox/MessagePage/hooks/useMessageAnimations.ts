@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { PULL_THRESHOLD } from '../utils/constants';
 
 export const useMessageAnimations = (
-  isRefreshing: boolean, 
-  isPullingDown: boolean, 
+  isRefreshing: boolean,
+  isPullingDown: boolean,
   pullDistance: number
 ) => {
   const spinValue = useSharedValue(0);
@@ -38,4 +38,4 @@ export const useMessageAnimations = (
   return {
     spinStyle,
   };
-}; 
+};

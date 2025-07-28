@@ -19,7 +19,7 @@ const appJsonPath = path.join(__dirname, '..', 'app.json');
 function readVersionProps() {
     const content = fs.readFileSync(versionPropsPath, 'utf8');
     const props = {};
-    
+
     content.split('\n').forEach(line => {
         const trimmed = line.trim();
         if (trimmed && !trimmed.startsWith('#')) {
@@ -29,7 +29,7 @@ function readVersionProps() {
             }
         }
     });
-    
+
     return props;
 }
 
@@ -51,7 +51,7 @@ VERSION_PATCH=${props.VERSION_PATCH}
 # 构建类型标识 (可选)
 VERSION_SUFFIX=${props.VERSION_SUFFIX || ''}
 `;
-    
+
     fs.writeFileSync(versionPropsPath, content, 'utf8');
 }
 
@@ -80,12 +80,12 @@ function syncToAppJson(versionName) {
  */
 function incrementVersion(type = 'patch') {
     const props = readVersionProps();
-    
-    let major = parseInt(props.VERSION_MAJOR) || 1;
-    let minor = parseInt(props.VERSION_MINOR) || 0;
-    let patch = parseInt(props.VERSION_PATCH) || 0;
-    let code = parseInt(props.VERSION_CODE) || 1;
-    
+
+    let major = parseInt(props.VERSION_MAJOR, 10) || 1;
+    let minor = parseInt(props.VERSION_MINOR, 10) || 0;
+    let patch = parseInt(props.VERSION_PATCH, 10) || 0;
+    let code = parseInt(props.VERSION_CODE, 10) || 1;
+
     switch (type) {
         case 'major':
             major += 1;
@@ -101,30 +101,30 @@ function incrementVersion(type = 'patch') {
             patch += 1;
             break;
     }
-    
+
     code += 1;
-    
+
     const newProps = {
         VERSION_CODE: code.toString(),
         VERSION_MAJOR: major.toString(),
         VERSION_MINOR: minor.toString(),
         VERSION_PATCH: patch.toString(),
-        VERSION_SUFFIX: props.VERSION_SUFFIX || ''
+        VERSION_SUFFIX: props.VERSION_SUFFIX || '',
     };
-    
+
     const versionName = `${major}.${minor}.${patch}`;
-    
+
     // 写入版本文件
     writeVersionProps(newProps);
-    
+
     // 同步到其他文件
     syncToPackageJson(versionName);
     syncToAppJson(versionName);
-    
-    console.log(`\n🎉 版本递增完成!`);
+
+    console.log('\n🎉 版本递增完成!');
     console.log(`📱 版本号: ${versionName}`);
     console.log(`🔢 版本代码: ${code}`);
-    
+
     return { versionName, versionCode: code };
 }
 
@@ -134,8 +134,8 @@ function incrementVersion(type = 'patch') {
 function showCurrentVersion() {
     const props = readVersionProps();
     const versionName = `${props.VERSION_MAJOR}.${props.VERSION_MINOR}.${props.VERSION_PATCH}`;
-    
-    console.log(`\n📱 当前版本信息:`);
+
+    console.log('\n📱 当前版本信息:');
     console.log(`版本号: ${versionName}`);
     console.log(`版本代码: ${props.VERSION_CODE}`);
     console.log(`构建后缀: ${props.VERSION_SUFFIX || '无'}`);
@@ -162,17 +162,17 @@ switch (command) {
         syncToAppJson(versionName);
         break;
     default:
-        console.log(`\n📋 版本管理脚本使用说明:`);
-        console.log(`node scripts/version-sync.js <command>`);
-        console.log(`\n可用命令:`);
-        console.log(`  patch   - 递增补丁版本号 (1.0.0 -> 1.0.1)`);
-        console.log(`  minor   - 递增次版本号 (1.0.1 -> 1.1.0)`);
-        console.log(`  major   - 递增主版本号 (1.1.0 -> 2.0.0)`);
-        console.log(`  show    - 显示当前版本信息`);
-        console.log(`  sync    - 同步版本号到所有配置文件`);
-        console.log(`\n示例:`);
-        console.log(`  npm run version:patch`);
-        console.log(`  npm run version:minor`);
-        console.log(`  npm run version:show`);
+        console.log('\n📋 版本管理脚本使用说明:');
+        console.log('node scripts/version-sync.js <command>');
+        console.log('\n可用命令:');
+        console.log('  patch   - 递增补丁版本号 (1.0.0 -> 1.0.1)');
+        console.log('  minor   - 递增次版本号 (1.0.1 -> 1.1.0)');
+        console.log('  major   - 递增主版本号 (1.1.0 -> 2.0.0)');
+        console.log('  show    - 显示当前版本信息');
+        console.log('  sync    - 同步版本号到所有配置文件');
+        console.log('\n示例:');
+        console.log('  npm run version:patch');
+        console.log('  npm run version:minor');
+        console.log('  npm run version:show');
         break;
 }

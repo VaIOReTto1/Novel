@@ -10,7 +10,7 @@ interface HistoryPageComponentProps {
 const HistoryPageComponent: React.FC<HistoryPageComponentProps> = ({ source }) => {
   useEffect(() => {
     console.log('[HistoryPageComponent] 组件初始化，来源:', source);
-    
+
     // 初始化RN页面
     initializeRNPage('HistoryPage').catch((error) => {
       console.error('[HistoryPageComponent] 页面初始化失败:', error);
@@ -27,4 +27,4 @@ const HistoryPageComponent: React.FC<HistoryPageComponentProps> = ({ source }) =
 // 注册React Native组件
 AppRegistry.registerComponent('HistoryPageComponent', () => HistoryPageComponent);
 
-export default HistoryPageComponent; 
+export default HistoryPageComponent;

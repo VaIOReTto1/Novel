@@ -86,7 +86,7 @@ const MessagePage: React.FC = () => {
     markAllAsRead();
   }, [markAllAsRead]);
 
-  // Tab切换 - 滚动到tab位置并切换  
+  // Tab切换 - 滚动到tab位置并切换
   const handleTabPress = useCallback((tabId: string) => {
     const tabType = MESSAGE_TABS.find(tab => tab.id === tabId)?.type || 'comment';
     if (tabType === 'comment' || tabType === 'reply' || tabType === 'like') {
@@ -156,7 +156,7 @@ const MessagePage: React.FC = () => {
   const renderSecondaryMessages = () => {
     // 根据secondaryTab状态过滤消息
     const secondaryMessages = messages.filter(msg => msg.type === secondaryTab);
-  
+
     if (secondaryMessages.length === 0 && !loading) {
       return (
         <EmptyState
@@ -178,7 +178,7 @@ const MessagePage: React.FC = () => {
             styles={styles}
           />
         ))}
-        
+
         <LoadMoreIndicator
           loading={loading}
           hasMore={hasMore}

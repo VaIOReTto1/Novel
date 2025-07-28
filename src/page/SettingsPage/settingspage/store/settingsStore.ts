@@ -44,11 +44,11 @@ const calculateCacheSize = async (): Promise<string> => {
 const changeThemeUnified = async (theme: string): Promise<void> => {
   try {
     console.log('[SettingsStore] 🎯 统一主题切换:', theme);
-    
+
     // 🎯 立即更新本地themeStore状态
     const { setTheme } = useThemeStore.getState();
     await setTheme(theme as ThemeMode);
-    
+
     // 🎯 通知原生，不等待回传（单向数据流）
     if (SettingsBridge?.changeTheme) {
       SettingsBridge.changeTheme(theme)
@@ -59,7 +59,7 @@ const changeThemeUnified = async (theme: string): Promise<void> => {
           console.warn('[SettingsStore] ⚠️ 原生主题设置失败:', error);
         });
     }
-    
+
     console.log('[SettingsStore] ✅ 主题切换完成:', theme);
   } catch (error) {
     console.error('[SettingsStore] ❌ 主题切换失败:', error);
@@ -71,9 +71,9 @@ const changeThemeUnified = async (theme: string): Promise<void> => {
 const syncSettingToNative = async (operation: string, ...args: any[]): Promise<void> => {
   try {
     console.log('[SettingsStore] 🎯 同步设置到原生:', operation, args);
-    
+
     let promise: Promise<any> | undefined;
-    
+
     switch (operation) {
       case 'setFollowSystemTheme':
         promise = SettingsBridge?.setFollowSystemTheme?.(args[0]);
@@ -91,7 +91,7 @@ const syncSettingToNative = async (operation: string, ...args: any[]): Promise<v
         console.warn('[SettingsStore] ⚠️ 未知的设置操作:', operation);
         return;
     }
-    
+
     if (promise) {
       promise
         .then((result: string) => {
@@ -175,14 +175,14 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     });
     setTheme('auto'); // 设置为'auto'以记录用户意图
     // 立即应用正确的明暗模式
-    useThemeStore.getState().setDarkMode(systemTheme === 'dark'); 
+    useThemeStore.getState().setDarkMode(systemTheme === 'dark');
   },
 
   // 🎯 优化：主题设置（单向数据流）
   setFollowSystemTheme: async (follow: boolean) => {
     try {
       console.log('[SettingsStore] 🎯 设置跟随系统主题:', follow);
-      
+
       if (follow) {
         // 当开启“跟随系统”时，不再直接调用setTheme('auto')
         // 而是依赖组件层调用 syncThemeWithSystem
@@ -193,14 +193,14 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       } else {
         // 关闭时，设置为当前实际的主题
         const targetTheme = get().getCurrentDisplayTheme();
-        set({ 
+        set({
           followSystemTheme: false,
           colorScheme: targetTheme as ColorScheme,
         });
         useThemeStore.getState().setTheme(targetTheme as ThemeMode);
         await syncSettingToNative('setFollowSystemTheme', false);
       }
-      
+
       console.log('[SettingsStore] ✅ 跟随系统主题设置完成:', follow);
     } catch (error) {
       console.error('[SettingsStore] ❌ 设置跟随系统主题失败:', error);
@@ -212,18 +212,18 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   setColorScheme: async (scheme: ColorScheme) => {
     try {
       console.log('[SettingsStore] 🎯 设置主题模式:', scheme);
-      
+
       // 🎯 立即更新本地状态
       set({
         colorScheme: scheme,
         followSystemTheme: scheme === 'auto',
       });
-      
+
       // 🎯 立即同步到themeStore
       await changeThemeUnified(scheme);
-      
+
       console.log('[SettingsStore] ✅ 主题设置完成:', scheme);
-      
+
     } catch (error) {
       console.error('[SettingsStore] ❌ 设置主题模式失败:', error);
     }
@@ -235,12 +235,12 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       const currentState = get();
       console.log('[SettingsStore] 当前状态:', {
         colorScheme: currentState.colorScheme,
-        followSystemTheme: currentState.followSystemTheme
+        followSystemTheme: currentState.followSystemTheme,
       });
 
       // 🎯 确定切换逻辑
       let newScheme: ColorScheme;
-      
+
       if (currentState.followSystemTheme) {
         // 如果当前跟随系统，根据当前实际主题切换到相反的固定主题
         const currentDisplay = currentState.getCurrentDisplayTheme();
@@ -269,19 +269,19 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
 
   setAutoSwitchNightMode: async (enabled: boolean) => {
     console.log('[SettingsStore] 🎯 设置自动切换夜间模式:', enabled);
-    
+
     // 🎯 立即更新本地状态
     set({ autoSwitchNightMode: enabled });
 
     // 🎯 异步同步到原生
     await syncSettingToNative('setAutoNightMode', enabled);
-    
+
     console.log('[SettingsStore] ✅ 自动切换夜间模式设置完成:', enabled);
   },
 
   setNightModeTime: async (start: string, end: string) => {
     console.log('[SettingsStore] 🎯 设置夜间模式时间:', { start, end });
-    
+
     // 🎯 立即更新本地状态
     set({
       nightModeStartTime: start,
@@ -290,7 +290,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
 
     // 🎯 异步同步到原生
     await syncSettingToNative('setNightModeTime', start, end);
-    
+
     console.log('[SettingsStore] ✅ 夜间模式时间设置完成:', { start, end });
   },
 
@@ -298,7 +298,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   initializeSettings: async () => {
     try {
       console.log('[SettingsStore] 🎯 开始初始化设置状态');
-      
+
       // 🎯 只在必要时从原生获取设置，减少跨桥调用
       const [autoEnabled, startTime, endTime] = await Promise.all([
         new Promise<boolean>((resolve) => {
@@ -327,12 +327,12 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
           } else {
             resolve('06:00');
           }
-        })
+        }),
       ]);
 
       // 🎯 从themeStore获取主题状态，避免重复从原生获取
       const themeState = useThemeStore.getState();
-      
+
       // 更新状态
       set({
         colorScheme: themeState.currentTheme as ColorScheme,
@@ -346,9 +346,9 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       console.log('[SettingsStore] ✅ 设置初始化完成:', {
         colorScheme: themeState.currentTheme,
         autoEnabled,
-        nightModeTime: `${startTime}-${endTime}`
+        nightModeTime: `${startTime}-${endTime}`,
       });
-      
+
     } catch (error) {
       console.error('[SettingsStore] ❌ 初始化设置状态失败:', error);
     }

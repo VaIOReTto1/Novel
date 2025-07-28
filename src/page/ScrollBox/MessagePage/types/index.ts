@@ -42,4 +42,4 @@ export interface RefreshIndicatorState {
   isRefreshing: boolean;
   pullDistance: number;
   threshold: number;
-} 
+}

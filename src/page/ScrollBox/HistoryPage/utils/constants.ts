@@ -31,4 +31,4 @@ export const TYPE_ICONS: Record<string, string> = {
   video: '📺',
   drama: '🎭',
   all: '📚',
-}; 
+};

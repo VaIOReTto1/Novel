@@ -68,7 +68,7 @@ const initialState: MessageState = {
 const generateMockMessages = (page: number, pageSize: number, type?: string): MessageItem[] => {
   const messages: MessageItem[] = [];
   const startIndex = (page - 1) * pageSize;
-  
+
   for (let i = 0; i < pageSize; i++) {
     const index = startIndex + i + 1;
     let messageType: MessageItem['type'];
@@ -91,7 +91,7 @@ const generateMockMessages = (page: number, pageSize: number, type?: string): Me
       // 根据指定类型生成数据
       messageType = type as MessageItem['type'];
       title = getTypeTitle(messageType);
-      
+
       // 为不同类型生成丰富的内容
       if (messageType === 'comment') {
         const commentContents = [
@@ -99,7 +99,7 @@ const generateMockMessages = (page: number, pageSize: number, type?: string): Me
           '用户@书虫阿宅 评论了你的动态："推荐几本好看的小说吧"',
           '用户@夜读人 在《修仙传奇》中@了你',
           '用户@文学青年 回复："作者的文笔真的很棒"',
-          '用户@快乐读者 评论："什么时候更新下一章？"'
+          '用户@快乐读者 评论："什么时候更新下一章？"',
         ];
         content = commentContents[index % commentContents.length] + ` #${index}`;
       } else if (messageType === 'reply') {
@@ -113,7 +113,7 @@ const generateMockMessages = (page: number, pageSize: number, type?: string): Me
           '你的话题回帖"情节分析"被设为精华回复',
           '热门话题"年度最佳小说"有新的讨论',
           '你关注的话题"玄幻世界观构建"有更新',
-          '话题"读书心得交流"中收到新的点赞'
+          '话题"读书心得交流"中收到新的点赞',
         ];
         content = replyContents[index % replyContents.length] + ` #${index}`;
       } else if (messageType === 'like') {
@@ -122,17 +122,17 @@ const generateMockMessages = (page: number, pageSize: number, type?: string): Me
           '你收藏的小说《星辰大海》有新章节更新',
           '你的评论"这个反转太意外了"被点赞',
           '你点赞的书单"必读经典"被推荐到首页',
-          '你的动态"今日阅读感悟"收到了5个赞'
+          '你的动态"今日阅读感悟"收到了5个赞',
         ];
         content = likeContents[index % likeContents.length] + ` #${index}`;
       } else {
         // 默认内容
         content = `${getTypeTitle(messageType)}消息内容 ${index}`;
       }
-      
+
       icon = getTypeIcon(messageType);
     }
-    
+
     messages.push({
       id: index,
       type: messageType,
@@ -144,7 +144,7 @@ const generateMockMessages = (page: number, pageSize: number, type?: string): Me
       icon,
     });
   }
-  
+
   return messages;
 };
 
@@ -224,7 +224,7 @@ export const useMessageStore = create<MessageStore>()(
         message.hasNotification = false;
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       }
-      
+
       const cachedMessage = state.cachedMessages.find(msg => msg.id === messageId);
       if (cachedMessage && !cachedMessage.isRead) {
         cachedMessage.isRead = true;
@@ -259,11 +259,11 @@ export const useMessageStore = create<MessageStore>()(
 
         const currentPage = isRefresh ? 1 : state.currentPage;
         const typeToLoad = targetType || state.selectedTab;
-        
+
         // 直接生成对应类型的数据，不需要过滤
         const mockMessages = generateMockMessages(
-          currentPage, 
-          state.pageSize, 
+          currentPage,
+          state.pageSize,
           typeToLoad
         );
 
@@ -276,7 +276,7 @@ export const useMessageStore = create<MessageStore>()(
             draft.messages = [...draft.messages, ...mockMessages];
             draft.cachedMessages = [...draft.cachedMessages, ...mockMessages];
           }
-          
+
           draft.loading = false;
           draft.isRefreshing = false;
           draft.hasMore = mockMessages.length === draft.pageSize;
@@ -297,7 +297,7 @@ export const useMessageStore = create<MessageStore>()(
 
     loadMoreMessages: async (targetType?: string) => {
       const state = get();
-      if (!state.hasMore || state.loading) return;
+      if (!state.hasMore || state.loading) {return;}
 
       set((draft) => {
         draft.loading = true;
@@ -309,10 +309,10 @@ export const useMessageStore = create<MessageStore>()(
 
         const nextPage = state.currentPage + 1;
         const typeToLoad = targetType || state.selectedTab;
-        
+
         const mockMessages = generateMockMessages(
-          nextPage, 
-          state.pageSize, 
+          nextPage,
+          state.pageSize,
           typeToLoad
         );
 
@@ -373,7 +373,7 @@ export const useMessageStore = create<MessageStore>()(
         if (deletedMessage && !deletedMessage.isRead) {
           draft.unreadCount = Math.max(0, draft.unreadCount - 1);
         }
-        
+
         draft.messages = draft.messages.filter(msg => msg.id !== messageId);
         draft.cachedMessages = draft.cachedMessages.filter(msg => msg.id !== messageId);
       });
@@ -382,4 +382,4 @@ export const useMessageStore = create<MessageStore>()(
       console.log(`删除消息项: ${messageId}`);
     },
   }))
-); 
+);

@@ -46,9 +46,9 @@ export const TabsArea: React.FC<TabsAreaProps> = ({
           ))}
         </ScrollView>
       </View>
-      
+
       {/* 添加水平分割线 */}
       <View style={styles.tabsDivider} />
     </>
   );
-}; 
+};

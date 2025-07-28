@@ -31,7 +31,7 @@ const TimedSwitchPage: React.FC = () => {
   // 监听主题变化
   useEffect(() => {
     console.log('[TimedSwitchPage] 📱 TimedSwitchPage组件开始挂载');
-    
+
     const subscription = DeviceEventEmitter.addListener('ThemeChanged', (data: { colorScheme: string }) => {
       console.log('[TimedSwitchPage] 🎨 收到主题变化事件:', data.colorScheme);
     });

@@ -19,7 +19,7 @@ const { NavigationBridge } = NativeModules;
 const SettingsPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createSettingsPageStyles(colors);
-  
+
   // 弹窗状态
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -49,7 +49,7 @@ const SettingsPage: React.FC = () => {
     navigateToPrivacyPolicy,
     navigateToFontSettings,
     getCurrentDisplayTheme,
-    logout
+    logout,
   } = useSettingsStore();
 
   const { isLoggedIn, logout: userLogout } = useUserStore();
@@ -57,7 +57,7 @@ const SettingsPage: React.FC = () => {
   // 🎯 优化：简化初始化流程
   React.useEffect(() => {
     console.log('[SettingsPage] 📱 SettingsPage组件开始挂载');
-    
+
     // 检查是否已经初始化，避免重复加载
     const { isInitialized } = useSettingsStore.getState();
     if (!isInitialized) {
@@ -69,7 +69,7 @@ const SettingsPage: React.FC = () => {
     } else {
       console.log('[SettingsPage] ✅ 设置已初始化，跳过');
     }
-    
+
     return () => {
       console.log('[SettingsPage] 📱 SettingsPage组件即将卸载');
     };

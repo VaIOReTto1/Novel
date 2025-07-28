@@ -42,4 +42,4 @@ export const TabsSection: React.FC<TabsSectionProps> = React.memo(({
       ))}
     </View>
   );
-}); 
+});

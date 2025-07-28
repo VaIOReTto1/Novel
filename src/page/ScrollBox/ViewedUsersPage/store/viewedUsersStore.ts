@@ -1,27 +1,27 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { 
-  UserInfo, 
-  RecommendUser, 
-  EmptyStateData
+import {
+  UserInfo,
+  RecommendUser,
+  EmptyStateData,
 } from '../types';
 
 export interface ViewedUsersState {
   loading: boolean;
   error: string | null;
-  
+
   // User Info
   userInfo: UserInfo | null;
-  
+
   // Current Tab
   selectedTab: 'viewed' | 'recommend' | 'following' | 'fans';
-  
+
   // Data for each tab
   viewedUsers: RecommendUser[];
   recommendUsers: RecommendUser[];
   followingUsers: RecommendUser[];
   fansUsers: RecommendUser[];
-  
+
   // Empty states
   emptyStates: Record<'viewed' | 'recommend' | 'following' | 'fans', EmptyStateData>;
 }
@@ -41,21 +41,21 @@ type ViewedUsersStore = ViewedUsersState & ViewedUsersActions;
 const initialState: ViewedUsersState = {
   loading: false,
   error: null,
-  
+
   userInfo: null,
-  
+
   selectedTab: 'viewed',
-  
+
   viewedUsers: [],
   recommendUsers: [],
   followingUsers: [],
   fansUsers: [],
-  
+
   emptyStates: {
     viewed: {
       icon: '📦',
       title: '暂无看过的人',
-      buttonText: '查看更多推荐的人'
+      buttonText: '查看更多推荐的人',
     },
     recommend: {
       icon: '📦',
@@ -68,15 +68,15 @@ const initialState: ViewedUsersState = {
     fans: {
       icon: '🍁',
       title: '暂无粉丝，多和书友互动吧',
-    }
-  }
+    },
+  },
 };
 
 // Mock data generators
 const generateMockUserInfo = (): UserInfo => ({
   id: 1,
   name: '安国的尹锋',
-  avatar: 'https://placehold.co/96'
+  avatar: 'https://placehold.co/96',
 });
 
 const generateMockRecommendUsers = (): RecommendUser[] => [
@@ -87,7 +87,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: true,
     tags: [{ text: '官方', type: 'official' }, { text: '热门', type: 'hot' }],
     description: 'TA累计拯救1.2万人书荒',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '2',
@@ -96,7 +96,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: true,
     tags: [{ text: '作家', type: 'author' }, { text: '殿堂作家', type: 'hall' }, { text: 'VIP', type: 'vip' }],
     description: 'TA被2.6万人点赞过',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '3',
@@ -105,7 +105,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '金番作家', type: 'gold' }, { text: '新人', type: 'new' }],
     description: '代表作《诡舍》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '4',
@@ -114,7 +114,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '殿堂作家', type: 'hall' }],
     description: '代表作《我在精神病院学斩神》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '5',
@@ -123,7 +123,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '殿堂作家', type: 'hall' }, { text: '热门', type: 'hot' }],
     description: '代表作《十日终焉》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '6',
@@ -132,7 +132,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: true,
     tags: [{ text: '官方', type: 'official' }, { text: 'VIP', type: 'vip' }],
     description: 'TA累计拯救612.5万人书荒',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '7',
@@ -141,7 +141,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '金番作家', type: 'gold' }],
     description: '代表作《诸神愚戏》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '8',
@@ -150,7 +150,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '作家Lv.5', type: 'level' }, { text: '新人', type: 'new' }, { text: '热门', type: 'hot' }],
     description: '代表作《让你契约鬼，你契约钟馗？》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '9',
@@ -159,7 +159,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '金番作家', type: 'gold' }, { text: 'VIP', type: 'vip' }],
     description: '代表作《从前有座镇妖关》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '10',
@@ -168,7 +168,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: true,
     tags: [{ text: '作家', type: 'author' }, { text: '殿堂作家', type: 'hall' }],
     description: '代表作《完美世界》《遮天》',
-    isFollowed: true
+    isFollowed: true,
   },
   {
     id: '11',
@@ -177,7 +177,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: true,
     tags: [{ text: '作家', type: 'author' }, { text: 'VIP', type: 'vip' }, { text: '热门', type: 'hot' }],
     description: '代表作《盘龙》《星辰变》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '12',
@@ -186,7 +186,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: true,
     tags: [{ text: '作家', type: 'author' }, { text: '殿堂作家', type: 'hall' }],
     description: '代表作《斗罗大陆》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '13',
@@ -195,7 +195,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '金番作家', type: 'gold' }, { text: '新人', type: 'new' }],
     description: '代表作《雪中悍刀行》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '14',
@@ -204,7 +204,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '作家Lv.8', type: 'level' }, { text: 'VIP', type: 'vip' }],
     description: '代表作《庆余年》《将夜》',
-    isFollowed: true
+    isFollowed: true,
   },
   {
     id: '15',
@@ -213,7 +213,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '金番作家', type: 'gold' }],
     description: '代表作《修真聊天群》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '16',
@@ -222,7 +222,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '作家Lv.6', type: 'level' }, { text: '热门', type: 'hot' }, { text: '新人', type: 'new' }],
     description: '代表作《大王饶命》',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: '17',
@@ -231,7 +231,7 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '殿堂作家', type: 'hall' }, { text: 'VIP', type: 'vip' }],
     description: '代表作《诡秘之主》',
-    isFollowed: true
+    isFollowed: true,
   },
   {
     id: '18',
@@ -240,8 +240,8 @@ const generateMockRecommendUsers = (): RecommendUser[] => [
     hasVBadge: false,
     tags: [{ text: '金番作家', type: 'gold' }, { text: '热门', type: 'hot' }],
     description: '代表作《万族之劫》',
-    isFollowed: false
-  }
+    isFollowed: false,
+  },
 ];
 
 export const useViewedUsersStore = create<ViewedUsersStore>()(

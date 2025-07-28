@@ -67,13 +67,13 @@ const initialState: HistoryState = {
 const generateMockHistoryItems = (page: number, pageSize: number, type?: string): HistoryItem[] => {
   const items: HistoryItem[] = [];
   const startIndex = (page - 1) * pageSize;
-  
+
   for (let i = 0; i < pageSize; i++) {
     const index = startIndex + i + 1;
-    const itemType = type === 'all' ? 
-      (['book', 'audio', 'video', 'drama'] as const)[index % 4] : 
+    const itemType = type === 'all' ?
+      (['book', 'audio', 'video', 'drama'] as const)[index % 4] :
       (type as 'book' | 'audio' | 'video' | 'drama');
-    
+
     items.push({
       id: index,
       title: `${getTypeTitle(itemType)} ${index}`,
@@ -88,7 +88,7 @@ const generateMockHistoryItems = (page: number, pageSize: number, type?: string)
       rating: Math.random() * 5,
     });
   }
-  
+
   return items;
 };
 
@@ -168,14 +168,14 @@ export const useHistoryStore = create<HistoryStore>()(
 
         const currentPage = isRefresh ? 1 : state.currentPage;
         const mockItems = generateMockHistoryItems(
-          currentPage, 
-          state.pageSize, 
+          currentPage,
+          state.pageSize,
           state.selectedTab
         );
 
         // 过滤数据
-        const filteredItems = state.selectedTab === 'all' ? 
-          mockItems : 
+        const filteredItems = state.selectedTab === 'all' ?
+          mockItems :
           mockItems.filter(item => item.type === state.selectedTab);
 
         set((draft) => {
@@ -187,7 +187,7 @@ export const useHistoryStore = create<HistoryStore>()(
             draft.historyItems = [...draft.historyItems, ...filteredItems];
             draft.cachedHistoryItems = [...draft.cachedHistoryItems, ...filteredItems];
           }
-          
+
           draft.loading = false;
           draft.isRefreshing = false;
           draft.hasMore = filteredItems.length === draft.pageSize;
@@ -207,7 +207,7 @@ export const useHistoryStore = create<HistoryStore>()(
 
     loadMoreHistory: async () => {
       const state = get();
-      if (!state.hasMore || state.loading) return;
+      if (!state.hasMore || state.loading) {return;}
 
       set((draft) => {
         draft.loading = true;
@@ -219,13 +219,13 @@ export const useHistoryStore = create<HistoryStore>()(
 
         const nextPage = state.currentPage + 1;
         const mockItems = generateMockHistoryItems(
-          nextPage, 
-          state.pageSize, 
+          nextPage,
+          state.pageSize,
           state.selectedTab
         );
 
-        const filteredItems = state.selectedTab === 'all' ? 
-          mockItems : 
+        const filteredItems = state.selectedTab === 'all' ?
+          mockItems :
           mockItems.filter(item => item.type === state.selectedTab);
 
         set((draft) => {

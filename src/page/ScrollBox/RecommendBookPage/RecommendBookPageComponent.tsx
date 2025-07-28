@@ -10,7 +10,7 @@ interface RecommendBookPageComponentProps {
 const RecommendBookPageComponent: React.FC<RecommendBookPageComponentProps> = ({ source }) => {
   useEffect(() => {
     console.log('[RecommendBookPageComponent] 组件初始化，来源:', source);
-    
+
     // 初始化RN页面
     initializeRNPage('RecommendBookPage').catch((error) => {
       console.error('[RecommendBookPageComponent] 页面初始化失败:', error);
@@ -27,4 +27,4 @@ const RecommendBookPageComponent: React.FC<RecommendBookPageComponentProps> = ({
 // 注册React Native组件
 AppRegistry.registerComponent('RecommendBookPageComponent', () => RecommendBookPageComponent);
 
-export default RecommendBookPageComponent; 
+export default RecommendBookPageComponent;

@@ -49,4 +49,4 @@ export const RefreshIndicator: React.FC<RefreshIndicatorProps> = ({
       </View>
     </View>
   );
-}; 
+};

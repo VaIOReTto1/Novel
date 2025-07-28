@@ -129,10 +129,10 @@ const ViewedUsersPage: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <TopBar 
-          styles={styles} 
-          userName={userInfo?.name || ''} 
-          onBackPress={handleBackPress} 
+        <TopBar
+          styles={styles}
+          userName={userInfo?.name || ''}
+          onBackPress={handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载中...</Text>
@@ -145,10 +145,10 @@ const ViewedUsersPage: React.FC = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <TopBar 
-          styles={styles} 
-          userName={userInfo?.name || ''} 
-          onBackPress={handleBackPress} 
+        <TopBar
+          styles={styles}
+          userName={userInfo?.name || ''}
+          onBackPress={handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载失败: {error}</Text>
@@ -160,10 +160,10 @@ const ViewedUsersPage: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* 顶部导航 */}
-      <TopBar 
-        styles={styles} 
-        userName={userInfo?.name || '安国的尹锋'} 
-        onBackPress={handleBackPress} 
+      <TopBar
+        styles={styles}
+        userName={userInfo?.name || '安国的尹锋'}
+        onBackPress={handleBackPress}
       />
 
       {/* Tab导航 */}
@@ -179,4 +179,4 @@ const ViewedUsersPage: React.FC = () => {
   );
 };
 
-export default ViewedUsersPage; 
+export default ViewedUsersPage;

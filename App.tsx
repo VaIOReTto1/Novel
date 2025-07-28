@@ -33,7 +33,7 @@ export default function App(props: AppProps = {}): React.JSX.Element {
         console.error('[App] ❌ 应用初始化失败:', error);
       }
     };
-    
+
     initApp();
 
     // 监听store变化并打印日志
@@ -64,7 +64,7 @@ export default function App(props: AppProps = {}): React.JSX.Element {
 
   // 动态获取颜色，确保主题初始化后使用
   const colors = useNovelColors();
-  
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,

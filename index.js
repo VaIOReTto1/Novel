@@ -9,4 +9,4 @@ import appConfig from './app.json';
 const appName = appConfig.name;
 
 // 注册根组件
-AppRegistry.registerComponent(appName, () => App); 
+AppRegistry.registerComponent(appName, () => App);

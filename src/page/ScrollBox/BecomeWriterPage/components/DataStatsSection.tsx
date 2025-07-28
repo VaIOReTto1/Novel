@@ -41,12 +41,12 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
         >
           <Text style={[
             styles.tabText,
-            selectedTab === 'novel' && styles.activeTabText
+            selectedTab === 'novel' && styles.activeTabText,
           ]}>
             小说
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.tab, selectedTab === 'short' && styles.activeTab]}
           onPress={() => handleTabPress('short')}
@@ -54,7 +54,7 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
         >
           <Text style={[
             styles.tabText,
-            selectedTab === 'short' && styles.activeTabText
+            selectedTab === 'short' && styles.activeTabText,
           ]}>
             短故事
           </Text>

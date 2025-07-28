@@ -57,7 +57,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = React.memo(({
                             // 20% 透明度；如果 novelMain 是 "#FF995D"，可这样写：
                             useNovelColors().novelMain + '99',
                             useNovelColors().novelMain,
-                            useNovelColors().novelMain
+                            useNovelColors().novelMain,
                         ]}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
@@ -76,7 +76,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = React.memo(({
                         <TouchableOpacity
                             style={[
                                 styles.modalCheckbox,
-                                isAgreementChecked && styles.modalCheckboxChecked
+                                isAgreementChecked && styles.modalCheckboxChecked,
                             ]}
                             onPress={() => onAgreementChange(!isAgreementChecked)}
                             activeOpacity={0.7}

@@ -21,4 +21,4 @@ export const BottomButton: React.FC<BottomButtonProps> = React.memo(({
       </TouchableOpacity>
     </View>
   );
-}); 
+});

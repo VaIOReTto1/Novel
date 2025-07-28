@@ -108,7 +108,7 @@ export const AuthorExclusiveSection: React.FC<AuthorExclusiveSectionProps> = Rea
         >
           <Text style={[
             styles.subtabText,
-            selectedTab === 'benefits' && styles.activeSubtabText
+            selectedTab === 'benefits' && styles.activeSubtabText,
           ]}>
             超多福利
           </Text>
@@ -121,7 +121,7 @@ export const AuthorExclusiveSection: React.FC<AuthorExclusiveSectionProps> = Rea
         >
           <Text style={[
             styles.subtabText,
-            selectedTab === 'road' && styles.activeSubtabText
+            selectedTab === 'road' && styles.activeSubtabText,
           ]}>
             成神之路
           </Text>
@@ -134,7 +134,7 @@ export const AuthorExclusiveSection: React.FC<AuthorExclusiveSectionProps> = Rea
         >
           <Text style={[
             styles.subtabText,
-            selectedTab === 'platform' && styles.activeSubtabText
+            selectedTab === 'platform' && styles.activeSubtabText,
           ]}>
             平台实力
           </Text>
@@ -145,4 +145,4 @@ export const AuthorExclusiveSection: React.FC<AuthorExclusiveSectionProps> = Rea
       {renderContent()}
     </View>
   );
-}); 
+});

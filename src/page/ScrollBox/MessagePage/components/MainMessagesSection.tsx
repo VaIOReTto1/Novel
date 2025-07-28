@@ -13,7 +13,7 @@ const mainMessages: MessageItem[] = [
     time: '7-20',
     isRead: false,
     hasNotification: true,
-    icon: '🔔'
+    icon: '🔔',
   },
   {
     id: 2,
@@ -23,8 +23,8 @@ const mainMessages: MessageItem[] = [
     time: '',
     isRead: true,
     hasNotification: false,
-    icon: '👤'
-  }
+    icon: '👤',
+  },
 ];
 
 interface MainMessagesSectionProps {
@@ -48,4 +48,4 @@ export const MainMessagesSection: React.FC<MainMessagesSectionProps> = React.mem
       ))}
     </View>
   );
-}); 
+});

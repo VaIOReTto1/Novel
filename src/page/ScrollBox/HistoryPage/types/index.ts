@@ -45,4 +45,4 @@ export interface RefreshIndicatorState {
 export interface TopBarProps {
   onBackPress: () => void;
   onSearchPress: () => void;
-} 
+}

@@ -10,7 +10,7 @@ interface MessagePageComponentProps {
 const MessagePageComponent: React.FC<MessagePageComponentProps> = ({ source }) => {
   useEffect(() => {
     console.log('[MessagePageComponent] 组件初始化，来源:', source);
-    
+
     // 初始化RN页面
     initializeRNPage('MessagePage').catch((error) => {
       console.error('[MessagePageComponent] 页面初始化失败:', error);
@@ -27,4 +27,4 @@ const MessagePageComponent: React.FC<MessagePageComponentProps> = ({ source }) =
 // 注册React Native组件
 AppRegistry.registerComponent('MessagePageComponent', () => MessagePageComponent);
 
-export default MessagePageComponent; 
+export default MessagePageComponent;

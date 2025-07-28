@@ -6,7 +6,7 @@ export interface UserInfo {
 
 export interface DataStats {
   fans: number;           // 近7天涨粉
-  likes: number;          // 近7天获赞  
+  likes: number;          // 近7天获赞
   replies: number;        // 近7天回复
   withdrawable: number;   // 可提现收益（元）
 }
@@ -36,4 +36,4 @@ export interface TabData {
 
 export interface TopBarProps {
   onBackPress: () => void;
-} 
+}

@@ -32,7 +32,7 @@ export const ContentArea: React.FC<ContentAreaProps> = React.memo(({
     const left: HistoryItemType[] = [];
     const middle: HistoryItemType[] = [];
     const right: HistoryItemType[] = [];
-    
+
     items.forEach((item, index) => {
       const columnIndex = index % 3;
       if (columnIndex === 0) {
@@ -43,7 +43,7 @@ export const ContentArea: React.FC<ContentAreaProps> = React.memo(({
         right.push(item);
       }
     });
-    
+
     return {
       leftColumnItems: left,
       middleColumnItems: middle,
@@ -73,7 +73,7 @@ export const ContentArea: React.FC<ContentAreaProps> = React.memo(({
             styles={styles}
           />
         ))}
-        
+
         <LoadMoreIndicator
           loading={loading}
           hasMore={hasMore}

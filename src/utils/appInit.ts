@@ -180,4 +180,5 @@ import '../page/ScrollBox/MessagePage/MessagePageComponent';
 import '../page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent';
 import '../page/ScrollBox/RecommendBookPage/RecommendBookPageComponent';
 import '../page/ScrollBox/ViewedUsersPage/ViewedUsersPageComponent';
+import '../page/ScrollBox/MyReservationPage/MyReservationPageComponent';
 import '../page/SettingsPage';

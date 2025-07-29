@@ -210,6 +210,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到我的预约页面
+     */
+    @ReactMethod
+    fun navigateToMyReservation() {
+        TimberLogger.d(TAG, "导航到我的预约页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToMyReservation()
+        }
+    }
+
+    /**
      * 导航到看过的人页面
      */
     @ReactMethod

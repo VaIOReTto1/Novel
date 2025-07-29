@@ -67,7 +67,17 @@ export const ICONS_DATA: IconData[] = [
 
   // 第二页的15个图标
   { id: 'game', name: '我的', icon: 'game', onPress: () => console.log('游戏') },
-  { id: 'my_preorder', name: '我的预约', icon: 'member', onPress: () => console.log('我的预约') },
+  { id: 'my_preorder', name: '我的预约', icon: 'member', onPress: () => {
+    console.log('导航到我的预约');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToMyReservation) {
+      NavigationBridge.navigateToMyReservation();
+    } else {
+      console.log('NavigationBridge.navigateToMyReservation not available');
+    }
+  }},
   { id: 'my_download', name: '我的下载', icon: 'download', onPress: () => console.log('我的下载') },
   { id: 'game_center', name: '游戏中心', icon: 'game', onPress: () => console.log('游戏中心') },
   { id: 'push_center', name: '推书中心', icon: 'recommend_book', onPress: () => console.log('推书中心') },

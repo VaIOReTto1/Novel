@@ -201,6 +201,15 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+
+        composable("myreservation") {
+            ReactNativePage(
+                componentName = "MyReservationPageComponent",
+                initialProps = mapOf("source" to "android_myreservation"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -366,6 +375,11 @@ object NavViewModel : ViewModel() {
     fun navigateToViewedUsers() {
         TimberLogger.d("NavViewModel", "开始导航：看过的人页面")
         navigateDebounced("viewedusers")
+    }
+
+    fun navigateToMyReservation() {
+        TimberLogger.d("NavViewModel", "开始导航：我的预约页面")
+        navigateDebounced("myreservation")
     }
 
     /**

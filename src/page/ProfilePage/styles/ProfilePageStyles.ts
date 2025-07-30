@@ -102,7 +102,7 @@ export const createHomePageStyles = (colors: NovelColors) => StyleSheet.create({
   lastPageContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
     gap: wp(10),
   },
 

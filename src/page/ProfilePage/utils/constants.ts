@@ -98,7 +98,17 @@ export const ICONS_DATA: IconData[] = [
   { id: 'liked_video', name: '赞过的视频', icon: 'vedio_have_favorited', onPress: () => console.log('赞过的视频') },
   { id: 'help_guide', name: '帮助指南', icon: 'guide', onPress: () => console.log('帮助指南') },
   { id: 'my_public_welfare', name: '我的公益', icon: 'public_welfare', onPress: () => console.log('我的公益') },
-  { id: 'member_center', name: '会员中心', icon: 'member', onPress: () => console.log('会员中心') },
+  { id: 'member_center', name: '会员中心', icon: 'member', onPress: () => {
+    console.log('导航到会员中心');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToMemberCenter) {
+      NavigationBridge.navigateToMemberCenter();
+    } else {
+      console.log('NavigationBridge.navigateToMemberCenter not available');
+    }
+  }},
   { id: 'my_wallet2', name: '我的钱包', icon: 'wallet', onPress: () => console.log('我的钱包') },
   { id: 'feedback_help', name: '反馈与帮助', icon: 'feedback', onPress: () => console.log('反馈与帮助') },
 
@@ -116,6 +126,6 @@ export const getPageIcons = (pageIndex: number): IconData[] => {
   } else if (pageIndex === 1) {
     return ICONS_DATA.slice(4, 16);
   } else {
-    return ICONS_DATA.slice(19, 23);
+    return ICONS_DATA.slice(16, 20);
   }
 };

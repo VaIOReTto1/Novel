@@ -210,6 +210,15 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+
+        composable("membercenter") {
+            ReactNativePage(
+                componentName = "MemberCenterPageComponent",
+                initialProps = mapOf("source" to "android_membercenter"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -380,6 +389,11 @@ object NavViewModel : ViewModel() {
     fun navigateToMyReservation() {
         TimberLogger.d("NavViewModel", "开始导航：我的预约页面")
         navigateDebounced("myreservation")
+    }
+
+    fun navigateToMemberCenter() {
+        TimberLogger.d("NavViewModel", "开始导航：会员中心页面")
+        navigateDebounced("membercenter")
     }
 
     /**

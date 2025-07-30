@@ -222,6 +222,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到会员中心页面
+     */
+    @ReactMethod
+    fun navigateToMemberCenter() {
+        TimberLogger.d(TAG, "导航到会员中心页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToMemberCenter()
+        }
+    }
+
+    /**
      * 导航到看过的人页面
      */
     @ReactMethod

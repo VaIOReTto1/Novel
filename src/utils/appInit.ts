@@ -181,4 +181,5 @@ import '../page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent';
 import '../page/ScrollBox/RecommendBookPage/RecommendBookPageComponent';
 import '../page/ScrollBox/ViewedUsersPage/ViewedUsersPageComponent';
 import '../page/ScrollBox/MyReservationPage/MyReservationPageComponent';
+import '../page/ScrollBox/MemberCenterPage/MemberCenterPageComponent';
 import '../page/SettingsPage';

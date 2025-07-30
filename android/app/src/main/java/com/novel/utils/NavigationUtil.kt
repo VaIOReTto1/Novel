@@ -219,6 +219,33 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+
+        composable("feedbackhelp") {
+            ReactNativePage(
+                componentName = "FeedbackHelpMainPageComponent",
+                initialProps = mapOf("source" to "android_feedbackhelp"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+        
+        composable("questionlist") {
+            ReactNativePage(
+                componentName = "QuestionListPageComponent",
+                initialProps = mapOf("source" to "android_questionlist"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+        
+        composable("questiondetail") {
+            ReactNativePage(
+                componentName = "QuestionDetailPageComponent",
+                initialProps = mapOf("source" to "android_questiondetail"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -394,6 +421,30 @@ object NavViewModel : ViewModel() {
     fun navigateToMemberCenter() {
         TimberLogger.d("NavViewModel", "开始导航：会员中心页面")
         navigateDebounced("membercenter")
+    }
+
+    /**
+     * 导航到反馈与帮助页面
+     */
+    fun navigateToFeedbackHelp() {
+        TimberLogger.d("NavViewModel", "开始导航：反馈与帮助页面")
+        navigateDebounced("feedbackhelp")
+    }
+
+    /**
+     * 导航到问题列表页面
+     */
+    fun navigateToQuestionList() {
+        TimberLogger.d("NavViewModel", "开始导航：问题列表页面")
+        navigateDebounced("questionlist")
+    }
+
+    /**
+     * 导航到问题详情页面
+     */
+    fun navigateToQuestionDetail() {
+        TimberLogger.d("NavViewModel", "开始导航：问题详情页面")
+        navigateDebounced("questiondetail")
     }
 
     /**

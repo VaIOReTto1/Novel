@@ -246,6 +246,42 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到反馈与帮助页面
+     */
+    @ReactMethod
+    fun navigateToFeedbackHelp() {
+        TimberLogger.d(TAG, "导航到反馈与帮助页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToFeedbackHelp()
+        }
+    }
+
+    /**
+     * 导航到问题列表页面
+     */
+    @ReactMethod
+    fun navigateToQuestionList() {
+        TimberLogger.d(TAG, "导航到问题列表页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToQuestionList()
+        }
+    }
+
+    /**
+     * 导航到问题详情页面
+     */
+    @ReactMethod
+    fun navigateToQuestionDetail() {
+        TimberLogger.d(TAG, "导航到问题详情页面")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToQuestionDetail()
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

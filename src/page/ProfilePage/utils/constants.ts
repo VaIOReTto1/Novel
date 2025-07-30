@@ -110,7 +110,17 @@ export const ICONS_DATA: IconData[] = [
     }
   }},
   { id: 'my_wallet2', name: '我的钱包', icon: 'wallet', onPress: () => console.log('我的钱包') },
-  { id: 'feedback_help', name: '反馈与帮助', icon: 'feedback', onPress: () => console.log('反馈与帮助') },
+  { id: 'feedback_help', name: '反馈与帮助', icon: 'feedback', onPress: () => {
+    console.log('导航到反馈与帮助');
+    // 调用原生导航方法
+    const { NativeModules } = require('react-native');
+    const { NavigationBridge } = NativeModules;
+    if (NavigationBridge?.navigateToFeedbackHelp) {
+      NavigationBridge.navigateToFeedbackHelp();
+    } else {
+      console.log('NavigationBridge.navigateToFeedbackHelp not available');
+    }
+  }},
 
   // 第三页的剩余图标
   { id: 'my_wallet21', name: '我的钱包', icon: 'wallet', onPress: () => console.log('我的钱包') },

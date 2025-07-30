@@ -182,4 +182,7 @@ import '../page/ScrollBox/RecommendBookPage/RecommendBookPageComponent';
 import '../page/ScrollBox/ViewedUsersPage/ViewedUsersPageComponent';
 import '../page/ScrollBox/MyReservationPage/MyReservationPageComponent';
 import '../page/ScrollBox/MemberCenterPage/MemberCenterPageComponent';
+import '../page/ScrollBox/FeedbackHelpPage/FeedbackHelpMainPageComponent';
+import '../page/ScrollBox/FeedbackHelpPage/QuestionListPageComponent';
+import '../page/ScrollBox/FeedbackHelpPage/QuestionDetailPageComponent';
 import '../page/SettingsPage';

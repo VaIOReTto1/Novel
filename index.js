@@ -5,6 +5,8 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
 import appConfig from './app.json';
+import './src/page/BookshelfPage/BookshelfPageComponent';
+
 
 const appName = appConfig.name;
 

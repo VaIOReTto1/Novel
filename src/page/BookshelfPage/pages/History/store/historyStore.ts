@@ -1,0 +1,409 @@
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
+import { HistoryItem, TabData } from '../types';
+
+// 历史记录状态接口
+export interface HistoryState {
+  // 历史记录数据
+  historyItems: HistoryItem[];
+  loading: boolean;
+  isLoading: boolean;
+  error: string | null;
+  currentPage: number;
+  pageSize: number;
+  hasMore: boolean;
+
+  isRefreshing: boolean;
+  isLoadingMore: boolean;
+
+  // Tab和视图相关
+  currentTab: 'all' | 'reading' | 'listening' | 'drama';
+  viewType: 'grid' | 'list';
+  sortType: 'lastRead' | 'addTime' | 'title' | 'progress';
+  searchQuery: string;
+
+  // 编辑相关
+  isEditing: boolean;
+  selectedItems: string[];
+
+  // 缓存的完整历史数据
+  cachedHistoryItems: HistoryItem[];
+}
+
+// 历史记录操作接口
+interface HistoryActions {
+  // 基础状态更新
+  setLoading: (loading: boolean) => void;
+  setIsLoading: (isLoading: boolean) => void;
+  setError: (error: string | null) => void;
+  setRefreshing: (refreshing: boolean) => void;
+  setLoadingMore: (loadingMore: boolean) => void;
+  setCurrentTab: (tab: 'all' | 'reading' | 'listening' | 'drama') => void;
+  setViewType: (viewType: 'grid' | 'list') => void;
+  setSortType: (sortType: 'lastRead' | 'addTime' | 'title' | 'progress') => void;
+  setSearchQuery: (query: string) => void;
+
+  // 编辑相关
+  setEditing: (editing: boolean) => void;
+  toggleItemSelection: (itemId: string) => void;
+  selectAllItems: () => void;
+  clearSelection: () => void;
+  removeSelectedItems: () => void;
+
+  // 数据更新
+  setHistoryItems: (items: HistoryItem[]) => void;
+  appendHistoryItems: (items: HistoryItem[]) => void;
+
+  // 异步操作
+  loadHistoryItems: (isRefresh?: boolean) => Promise<void>;
+  refreshHistory: () => Promise<void>;
+  loadMoreHistory: () => Promise<void>;
+  searchHistory: (query: string) => Promise<void>;
+  deleteHistoryItem: (itemId: string) => Promise<void>;
+  toggleShelfStatus: (item: HistoryItem) => Promise<void>;
+}
+
+type HistoryStore = HistoryState & HistoryActions;
+
+const initialState: HistoryState = {
+  historyItems: [],
+  loading: false,
+  isLoading: false,
+  error: null,
+  currentPage: 1,
+  pageSize: 20,
+  hasMore: true,
+
+  isRefreshing: false,
+  isLoadingMore: false,
+
+  currentTab: 'all',
+  viewType: 'grid',
+  sortType: 'lastRead',
+  searchQuery: '',
+
+  isEditing: false,
+  selectedItems: [],
+
+  cachedHistoryItems: [],
+};
+
+// 模拟API数据生成
+const generateMockHistoryItems = (page: number, pageSize: number, type?: string): HistoryItem[] => {
+  const items: HistoryItem[] = [];
+  const startIndex = (page - 1) * pageSize;
+
+  for (let i = 0; i < pageSize; i++) {
+    const index = startIndex + i + 1;
+    const itemType = type === 'all' ?
+      (['reading', 'listening', 'drama'] as const)[index % 3] :
+      (type as 'reading' | 'listening' | 'drama');
+
+    const progress = Math.floor(Math.random() * 100);
+    items.push({
+      id: `item_${index}`,
+      title: `${getTypeTitle(itemType)} ${index}`,
+      author: `作者${index}`,
+      description: `这是${getTypeTitle(itemType)}的描述内容，讲述了一个精彩的故事...`,
+      cover: `https://placehold.co/220x300?text=${index}`,
+      coverUrl: `https://placehold.co/220x300?text=${index}`,
+      lastReadTime: Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
+      lastChapter: `第${Math.floor(Math.random() * 100) + 1}章`,
+      readProgress: progress,
+      progress: progress,
+      type: itemType,
+      categoryId: Math.floor(Math.random() * 10) + 1,
+      readCount: Math.floor(Math.random() * 10000),
+      rating: Math.random() * 5,
+      tags: ['标签1', '标签2'],
+      isFinished: Math.random() > 0.7,
+      updateStatus: Math.random() > 0.5 ? '连载中' : '已完结',
+      isInShelf: Math.random() > 0.6,
+    });
+  }
+
+  return items;
+};
+
+const getTypeTitle = (type: string): string => {
+  switch (type) {
+    case 'reading': return '小说';
+    case 'listening': return '听书';
+    case 'drama': return '短剧';
+    default: return '内容';
+  }
+};
+
+// 模拟API延迟
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const useHistoryStore = create<HistoryStore>()(
+  immer((set, get) => ({
+    ...initialState,
+
+    // 基础状态更新
+    setLoading: (loading: any) => set((state: { loading: any; }) => {
+      state.loading = loading;
+    }),
+
+    setError: (error: any) => set((state: { error: any; }) => {
+      state.error = error;
+    }),
+
+    setIsLoading: (isLoading: any) => set((state: { isLoading: any; }) => {
+      state.isLoading = isLoading;
+    }),
+
+    setRefreshing: (refreshing: any) => set((state: { isRefreshing: any; }) => {
+      state.isRefreshing = refreshing;
+    }),
+
+    setLoadingMore: (loadingMore: any) => set((state: { isLoadingMore: any; }) => {
+      state.isLoadingMore = loadingMore;
+    }),
+
+    setCurrentTab: (tab: any) => set((state: { currentTab: any; currentPage: number; hasMore: boolean; }) => {
+      state.currentTab = tab;
+      state.currentPage = 1;
+      state.hasMore = true;
+    }),
+
+    setViewType: (viewType: any) => {
+      set((state: { viewType: any; }) => {
+        state.viewType = viewType;
+      });
+      console.log('[HistoryStore] View type changed to:', viewType);
+    },
+
+    setSortType: (sortType: string) => set((state: { sortType: any; historyItems: HistoryItem[]; }) => {
+      state.sortType = sortType;
+      // 重新排序当前数据
+      state.historyItems = sortHistoryItems(state.historyItems, sortType);
+    }),
+
+    setSearchQuery: (query: any) => set((state: { searchQuery: any; }) => {
+      state.searchQuery = query;
+    }),
+
+    // 编辑相关
+    setEditing: (editing: boolean) => set((state) => {
+      state.isEditing = editing;
+      if (!editing) {
+        state.selectedItems = [];
+      }
+    }),
+
+    toggleItemSelection: (itemId: any) => set((state: { selectedItems: any[]; }) => {
+      const index = state.selectedItems.indexOf(itemId);
+      if (index > -1) {
+        state.selectedItems.splice(index, 1);
+      } else {
+        state.selectedItems.push(itemId);
+      }
+    }),
+
+    selectAllItems: () => set((state: { selectedItems: any; historyItems: any[]; }) => {
+      state.selectedItems = state.historyItems.map((item: { id: any; }) => item.id);
+    }),
+
+    clearSelection: () => set((state) => {
+      state.selectedItems = [];
+    }),
+
+    removeSelectedItems: () => set((state: { selectedItems: Iterable<unknown> | null | undefined; historyItems: any[]; }) => {
+      const selectedIds = new Set(state.selectedItems);
+      state.historyItems = state.historyItems.filter((item: { id: unknown; }) => !selectedIds.has(item.id));
+      state.selectedItems = [];
+    }),
+
+    // 数据更新
+    setHistoryItems: (items: any) => set((state: { historyItems: any; }) => {
+      state.historyItems = items;
+    }),
+
+    appendHistoryItems: (items: any) => set((state: { historyItems: any[]; }) => {
+      state.historyItems.push(...items);
+    }),
+
+    // 异步操作
+    loadHistoryItems: async (isRefresh = false) => {
+      const { currentTab, currentPage, pageSize, sortType } = get();
+
+      try {
+        if (isRefresh) {
+          set((state) => {
+            state.isRefreshing = true;
+            state.currentPage = 1;
+            state.hasMore = true;
+            state.error = null;
+          });
+        } else {
+          set((state) => {
+            state.loading = true;
+            state.error = null;
+          });
+        }
+
+        await delay(800); // 模拟网络延迟
+
+        const page = isRefresh ? 1 : currentPage;
+        const mockItems = generateMockHistoryItems(page, pageSize, currentTab);
+        const sortedItems = sortHistoryItems(mockItems, sortType);
+
+        set((state: { historyItems: HistoryItem[]; isRefreshing: boolean; loading: boolean; hasMore: boolean; }) => {
+          if (isRefresh) {
+            state.historyItems = sortedItems;
+            state.isRefreshing = false;
+          } else {
+            state.historyItems = sortedItems;
+            state.loading = false;
+          }
+          state.hasMore = sortedItems.length === pageSize;
+        });
+
+        console.log('[HistoryStore] Loaded history items:', sortedItems.length);
+      } catch (error) {
+        set((state) => {
+          state.error = '加载失败，请重试';
+          state.loading = false;
+          state.isRefreshing = false;
+        });
+        console.error('[HistoryStore] Load error:', error);
+      }
+    },
+
+    loadMoreHistory: async () => {
+      const { hasMore, isLoadingMore, currentPage, pageSize, currentTab, sortType, historyItems } = get();
+
+      if (!hasMore || isLoadingMore) return;
+
+      try {
+        set((state: { isLoadingMore: boolean; }) => {
+          state.isLoadingMore = true;
+        });
+
+        await delay(500);
+
+        const nextPage = currentPage + 1;
+        const mockItems = generateMockHistoryItems(nextPage, pageSize, currentTab);
+        const sortedItems = sortHistoryItems(mockItems, sortType);
+
+        set((state: { historyItems: HistoryItem[]; currentPage: any; hasMore: boolean; isLoadingMore: boolean; }) => {
+          state.historyItems.push(...sortedItems);
+          state.currentPage = nextPage;
+          state.hasMore = sortedItems.length === pageSize;
+          state.isLoadingMore = false;
+        });
+
+        console.log('[HistoryStore] Loaded more items:', sortedItems.length);
+      } catch (error) {
+        set((state) => {
+          state.isLoadingMore = false;
+          state.error = '加载更多失败';
+        });
+      }
+    },
+
+    refreshHistory: async () => {
+      await get().loadHistoryItems(true);
+    },
+
+    searchHistory: async (query: string) => {
+      set((state: { searchQuery: any; loading: boolean; }) => {
+        state.searchQuery = query;
+        state.loading = true;
+      });
+
+      try {
+        await delay(300);
+
+        const { cachedHistoryItems } = get();
+        const filteredItems = cachedHistoryItems.filter((item: HistoryItem) =>
+          item.title.toLowerCase().includes(query.toLowerCase()) ||
+          item.author.toLowerCase().includes(query.toLowerCase()) ||
+          item.tags?.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()))
+        );
+
+        set((state) => {
+          state.historyItems = filteredItems;
+          state.loading = false;
+        });
+      } catch (error) {
+        set((state) => {
+          state.loading = false;
+          state.error = '搜索失败';
+        });
+      }
+    },
+
+    deleteHistoryItem: async (itemId: any) => {
+      try {
+        await delay(200);
+
+        set((state: { historyItems: any[]; cachedHistoryItems: any[]; }) => {
+          state.historyItems = state.historyItems.filter((item: { id: any; }) => item.id !== itemId);
+          state.cachedHistoryItems = state.cachedHistoryItems.filter((item: { id: any; }) => item.id !== itemId);
+        });
+
+        console.log('[HistoryStore] Deleted item:', itemId);
+      } catch (error) {
+        set((state) => {
+          state.error = '删除失败';
+        });
+      }
+    },
+
+    // 切换书架状态
+    toggleShelfStatus: async (item: HistoryItem) => {
+      try {
+        // 模拟API调用延迟
+        await delay(500);
+        
+        set((state) => {
+          const itemIndex = state.historyItems.findIndex(historyItem => historyItem.id === item.id);
+          if (itemIndex !== -1) {
+            state.historyItems[itemIndex].isInShelf = !state.historyItems[itemIndex].isInShelf;
+          }
+          
+          // 同时更新缓存数据
+          const cachedIndex = state.cachedHistoryItems.findIndex(historyItem => historyItem.id === item.id);
+          if (cachedIndex !== -1) {
+            state.cachedHistoryItems[cachedIndex].isInShelf = !state.cachedHistoryItems[cachedIndex].isInShelf;
+          }
+        });
+      } catch (error) {
+        console.error('切换书架状态失败:', error);
+        set((state) => {
+          state.error = '操作失败';
+        });
+      }
+    },
+  })));
+
+// 排序函数
+const sortHistoryItems = (items: HistoryItem[], sortType: string): HistoryItem[] => {
+  return [...items].sort((a, b) => {
+    switch (sortType) {
+      case 'lastRead':
+        return new Date(b.lastReadTime).getTime() - new Date(a.lastReadTime).getTime();
+      case 'addTime':
+        return new Date(b.lastReadTime).getTime() - new Date(a.lastReadTime).getTime();
+      case 'title':
+        return a.title.localeCompare(b.title);
+      case 'progress':
+        return b.readProgress - a.readProgress;
+      default:
+        return 0;
+    }
+  });
+};
+
+// 获取Tab数据
+export const getTabsData = (): TabData[] => [
+  { id: 'all', name: '全部', type: 'all', count: 0 },
+  { id: 'reading', name: '阅读', type: 'reading', count: 0 },
+  { id: 'listening', name: '听书', type: 'listening', count: 0 },
+  { id: 'drama', name: '短剧', type: 'drama', count: 0 },
+];
+
+console.log('[HistoryStore] Store initialized');

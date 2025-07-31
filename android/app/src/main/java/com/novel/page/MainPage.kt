@@ -110,6 +110,11 @@ fun MainPage() {
                             }
                         }
                     )
+                    3 -> ReactNativePage(
+                        componentName = "BookshelfPageComponent",
+                        initialProps = mapOf("source" to "android_bookshelf"),
+                        mviModuleType = MviModuleType.BRIDGE
+                    ) //书架页面
                     4 -> ReactNativePage(
                         mviModuleType = MviModuleType.BRIDGE,
                     )    // 我的页面（React Native实现）

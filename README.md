@@ -68,6 +68,7 @@
 |------|----------|----------|
 | **👤 我的页面** | 下拉刷新，瀑布流布局，滚动动画，主题系统 | `ProfilePage` + `Zustand` + TypeScript |
 | **🕒 浏览历史** | 瀑布流/列表视图切换，下拉刷新，数据懒加载 | `HistoryPage` + `Zustand` + `Reanimated` |
+| **📚 书架页面** | 四Tab切换（书架/历史/追剧/圈子），网格/列表视图，编辑模式 | `BookshelfPage` + `Zustand` + `Tab Navigation` |
 | **💎 会员中心** | 3D卡片翻转，VIP权益展示，价格套餐，任务系统，防循环优化 | `MemberCenterPage` + `Zustand` + `3D Animation` |
 | **💬 我的消息** | Sticky Tab，主/次消息分离，空状态，下拉刷新 | `MessagePage` + `Zustand` + `stickyHeaderIndices` |
 | **👥 看过的人** | 四Tab切换，多标签用户卡片，渐变标签，关注交互，空状态处理 | `ViewedUsersPage` + `Zustand` + `immer` + `LinearGradient` |

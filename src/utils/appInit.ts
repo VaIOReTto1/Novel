@@ -144,6 +144,10 @@ export async function initializeRNPage(pageName: string): Promise<void> {
   console.log(`[AppInit] 初始化RN页面: ${pageName}`);
 
   try {
+    if (!(globalThis as any).__APP_INITED__) {
+      (globalThis as any).__APP_INITED__ = true;
+      await initializeApp();
+    }
     // 主动同步主题状态
     await syncThemeFromNative();
     console.log(`[AppInit] ✅ RN页面 ${pageName} 初始化完成`);
@@ -185,4 +189,5 @@ import '../page/ScrollBox/MemberCenterPage/MemberCenterPageComponent';
 import '../page/ScrollBox/FeedbackHelpPage/FeedbackHelpMainPageComponent';
 import '../page/ScrollBox/FeedbackHelpPage/QuestionListPageComponent';
 import '../page/ScrollBox/FeedbackHelpPage/QuestionDetailPageComponent';
+import '../page/BookshelfPage/BookshelfPageComponent';
 import '../page/SettingsPage';

@@ -121,6 +121,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
   // 头部内容区域
   headerContent: {
     flex: 1,
+    marginLeft: wp(12),
   },
 
   titleRow: {
@@ -132,6 +133,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
   sourceText: {
     fontSize: fp(12),
     color: colors.novelTextGray,
+    marginLeft: wp(8),
   },
 
   // 头部操作按钮区域
@@ -141,7 +143,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
   },
 
   subscribeButton: {
-    backgroundColor: colors.novelDivider + 'a0',
+    backgroundColor: colors.novelMain,
     paddingHorizontal: wp(12),
     paddingVertical: hp(6),
     borderRadius: wp(12),
@@ -150,7 +152,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   subscribeButtonText: {
     fontSize: fp(12),
-    color: colors.novelMain,
+    color: colors.novelBackground,
     fontWeight: '500',
   },
 

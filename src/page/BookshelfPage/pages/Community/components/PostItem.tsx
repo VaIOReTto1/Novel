@@ -74,7 +74,7 @@ export const PostItem: React.FC<PostItemProps> = ({
             </TouchableOpacity>
             {post.novelName && (
               <Text style={styles.sourceText}>
-                来自 {post.novelName} &gt;
+                来自 {post.novelName}
               </Text>
             )}
           </View>
@@ -84,14 +84,14 @@ export const PostItem: React.FC<PostItemProps> = ({
               style={styles.subscribeButton}
               onPress={() => onSubscribe?.(post.author.id)}
             >
-              <Text style={styles.subscribeButtonText}>+ 订阅</Text>
+              <Text style={styles.subscribeButtonText}>订阅</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
               style={styles.moreButton}
               onPress={() => onMore?.(post.id)}
             >
-              <Text style={styles.moreIcon}>⋮</Text>
+              <Text style={styles.moreIcon}>⋯</Text>
             </TouchableOpacity>
           </View>
         </View>

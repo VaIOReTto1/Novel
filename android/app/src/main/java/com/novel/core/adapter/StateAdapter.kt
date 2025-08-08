@@ -1,5 +1,6 @@
 package com.novel.core.adapter
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -91,41 +92,33 @@ abstract class StateAdapter<S : MviState>(
 
     /** 
      * 创建稳定的 State<T> 对象
-     * 使用 collectAsStateWithLifecycle + derivedStateOf 确保响应 StateFlow 变化
+     * 使用 collectAsStateWithLifecycle 确保响应 StateFlow 变化
      */
+    @SuppressLint("StateFlowValueCalledInComposition")
     @Composable
     fun <T> createStableState(
         selector: (S) -> T
     ): State<T> {
-        // 先收集 StateFlow 的变化，确保 UI 能响应状态更新
-        val currentState by stateFlow.collectAsStateWithLifecycle()
-        
-        // 基于收集到的状态，使用 derivedStateOf 进行转换，保持性能优化
-        return remember(currentState, selector) {
-            derivedStateOf { 
-                selector(currentState) 
-            }
-        }
+        return stateFlow.map(selector).collectAsStateWithLifecycle(
+            initialValue = selector(stateFlow.value)
+        )
     }
     
     /** 
      * 创建稳定的 State<T> 对象，带缓存键
      * 当 key 变化时重新计算
      */
+    @SuppressLint("StateFlowValueCalledInComposition")
     @Composable
     fun <T> createStableState(
         key: Any?,
         selector: (S) -> T
     ): State<T> {
-        // 先收集 StateFlow 的变化，确保 UI 能响应状态更新
-        val currentState by stateFlow.collectAsStateWithLifecycle()
-        
-        // 基于收集到的状态和 key，使用 derivedStateOf 进行转换
-        return remember(currentState, key, selector) {
-            derivedStateOf { 
-                selector(currentState) 
-            }
-        }
+        return remember(key) {
+            stateFlow.map(selector)
+        }.collectAsStateWithLifecycle(
+            initialValue = selector(stateFlow.value)
+        )
     }
     
     /** 

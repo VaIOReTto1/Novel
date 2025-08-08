@@ -134,6 +134,9 @@ android {
             buildConfigField "boolean", "ENABLE_LOGGING", "true"
         }
         release {
+//            ndk{
+//                abiFilters "armeabi-v7a"
+//            }
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug

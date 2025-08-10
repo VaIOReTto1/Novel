@@ -17,6 +17,8 @@ interface NavigationBridgeInterface {
   navigateToFeedbackHelp(): void;
   navigateToQuestionList(): void;
   navigateToQuestionDetail(): void;
+  navigateToWriteReview(bookId?: string, rating?: number): void;
+  navigateToReviewDetail(commentData: string): void;
   clearComponentCache(componentName: string, callback: (result: any) => void): void;
   clearAllComponentCache(callback: (result: any) => void): void;
   registerComponent(componentName: string): void;
@@ -108,6 +110,16 @@ export const NavigationBridge: NavigationBridgeInterface = {
   navigateToQuestionDetail: () => {
     console.log('[NavigationBridge] Navigating to question detail');
     NativeNavigationBridge?.navigateToQuestionDetail();
+  },
+
+  navigateToWriteReview: (bookId?: string, rating?: number) => {
+    console.log('[NavigationBridge] Navigating to write review with bookId:', bookId, 'rating:', rating);
+    NativeNavigationBridge?.navigateToWriteReview(bookId, rating);
+  },
+
+  navigateToReviewDetail: (commentData: string) => {
+    console.log('[NavigationBridge] Navigating to review detail with data:', commentData);
+    NativeNavigationBridge?.navigateToReviewDetail(commentData);
   },
 
   clearComponentCache: (componentName: string, callback: (result: any) => void) => {

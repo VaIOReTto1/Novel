@@ -246,6 +246,55 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
+        composable("comment/{bookData}") { backStackEntry ->
+            val encodedBookData = backStackEntry.arguments?.getString("bookData") ?: ""
+            val bookData = NavViewModel.decodeBookData(encodedBookData)
+            ReactNativePage(
+                componentName = "CommentPageComponent",
+                initialProps = mapOf(
+                    "bookData" to bookData,
+                    "source" to "android_comment"
+                ),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+        composable("writereview/{bookId}?rating={rating}") { backStackEntry ->
+            val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
+            val rating = backStackEntry.arguments?.getString("rating")?.toIntOrNull()
+            val initialProps = mutableMapOf(
+                "bookId" to bookId,
+                "source" to "android_writereview"
+            )
+            rating?.let { initialProps["initialRating"] = it.toString() }
+            ReactNativePage(
+                componentName = "WriteReviewPageComponent",
+                initialProps = initialProps,
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+        composable("writereview") {
+            ReactNativePage(
+                componentName = "WriteReviewPageComponent",
+                initialProps = mapOf("source" to "android_writereview"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+        composable("reviewdetail/{commentData}") { backStackEntry ->
+            val encodedCommentData = backStackEntry.arguments?.getString("commentData") ?: ""
+            val commentData = NavViewModel.decodeCommentData(encodedCommentData)
+            ReactNativePage(
+                componentName = "ReviewDetailPageComponent",
+                initialProps = mapOf(
+                    "commentData" to commentData,
+                    "source" to "android_reviewdetail"
+                ),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
     }
 }
 
@@ -448,6 +497,53 @@ object NavViewModel : ViewModel() {
     }
 
     /**
+     * 导航到评论页面
+     */
+    fun navigateToCommentPage(bookId: String) {
+        TimberLogger.d("NavViewModel", "开始导航：评论页面，bookId=$bookId")
+        val bookData = "{\"bookId\":\"$bookId\"}"
+        val encodedData = encodeCommentData(bookData)
+        navigateDebounced("comment/$encodedData")
+    }
+
+    /**
+     * 导航到评论页面（带书籍信息）
+     */
+    fun navigateToCommentPageWithBookInfo(
+        bookId: String,
+        bookName: String,
+        authorName: String,
+        picUrl: String
+    ) {
+        TimberLogger.d("NavViewModel", "开始导航：评论页面，bookId=$bookId")
+        val bookData = """{"bookId":"$bookId","bookName":"$bookName","authorName":"$authorName","picUrl":"$picUrl"}"""
+        val encodedData = encodeCommentData(bookData)
+        navigateDebounced("comment/$encodedData")
+    }
+
+    /**
+     * 导航到发表评论页面
+     */
+    fun navigateToWriteReview(bookId: String? = null, rating: Int? = null) {
+        TimberLogger.d("NavViewModel", "开始导航：发表评论页面，bookId=$bookId, rating=$rating")
+        val route = when {
+            bookId != null && rating != null -> "writereview/$bookId?rating=$rating"
+            bookId != null -> "writereview/$bookId"
+            else -> "writereview"
+        }
+        navigateDebounced(route)
+    }
+
+    /**
+     * 导航到评论详情页面
+     */
+    fun navigateToReviewDetail(commentData: String) {
+        TimberLogger.d("NavViewModel", "开始导航：评论详情页面，commentData=$commentData")
+        val encodedData = encodeCommentData(commentData)
+        navigateDebounced("reviewdetail/$encodedData")
+    }
+
+    /**
      * 执行后退操作
      */
     fun navigateBack() {
@@ -470,6 +566,22 @@ object NavViewModel : ViewModel() {
             java.net.URLEncoder.encode(base64, "UTF-8")
         } catch (e: Exception) {
             TimberLogger.e("NavViewModel", "编码排行榜数据失败", e)
+            ""
+        }
+    }
+
+    /**
+     * 将评论数据编码为 Base64 + URL 安全的字符串
+     */
+    private fun encodeCommentData(commentData: String): String {
+        return try {
+            val base64 = android.util.Base64.encodeToString(
+                commentData.toByteArray(Charsets.UTF_8),
+                android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
+            )
+            java.net.URLEncoder.encode(base64, "UTF-8")
+        } catch (e: Exception) {
+            TimberLogger.e("NavViewModel", "编码评论数据失败", e)
             ""
         }
     }
@@ -501,6 +613,40 @@ object NavViewModel : ViewModel() {
         } catch (e: Exception) {
             TimberLogger.e("NavViewModel", "解码排行榜数据失败", e)
             emptyList()
+        }
+    }
+
+    /**
+     * 解码评论数据字符串，恢复为原始JSON字符串
+     */
+    fun decodeCommentData(encodedData: String): String {
+        return try {
+            val decodedUrl = java.net.URLDecoder.decode(encodedData, "UTF-8")
+            val bytes = android.util.Base64.decode(
+                decodedUrl,
+                android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
+            )
+            String(bytes, Charsets.UTF_8)
+        } catch (e: Exception) {
+            TimberLogger.e("NavViewModel", "解码评论数据失败", e)
+            ""
+        }
+    }
+
+    /**
+     * 解码书籍数据字符串，恢复为原始JSON字符串
+     */
+    fun decodeBookData(encodedData: String): String {
+        return try {
+            val decodedUrl = java.net.URLDecoder.decode(encodedData, "UTF-8")
+            val bytes = android.util.Base64.decode(
+                decodedUrl,
+                android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
+            )
+            String(bytes, Charsets.UTF_8)
+        } catch (e: Exception) {
+            TimberLogger.e("NavViewModel", "解码书籍数据失败", e)
+            ""
         }
     }
 }

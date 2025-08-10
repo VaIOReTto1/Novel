@@ -77,6 +77,7 @@
 | **📚 推书中心** | 数据统计展示，创作服务，任务管理，Tab切换 | `RecommendBookPage` + `Zustand` + `immer` |
 | **📅 我的预约** | TopBar内嵌Tab切换，网格布局，预约状态管理 | `MyReservationPage` + `Zustand` + `immer` |
 | **🎧 反馈与帮助** | 客服中心，咨询场景，常见问题，问题详情，解决状态管理，AI自动问答 | `FeedbackHelpPage` + `Zustand` + `immer` + `LinearGradient` |
+| **💬 评论页面** | 评论列表展示，点赞交互，评分系统，分类筛选，下拉刷新，文本渲染优化 | `CommentPage` + `Zustand` + `Text组件规范` |
 | **🔗 跨端通信** | Native ↔ RN 双向事件，状态同步，ReactRootView 复用 | `NavigationPackage` + `RCTDeviceEventEmitter` |
 
 ## 🛠️ 技术栈

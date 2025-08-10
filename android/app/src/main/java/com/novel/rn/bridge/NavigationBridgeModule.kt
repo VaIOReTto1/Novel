@@ -282,6 +282,30 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到发表评论页面
+     */
+    @ReactMethod
+    fun navigateToWriteReview(bookId: String?, rating: Double?) {
+        TimberLogger.d(TAG, "导航到发表评论页面，bookId=$bookId, rating=$rating")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToWriteReview(bookId, rating?.toInt())
+        }
+    }
+
+    /**
+     * 导航到评论详情页面
+     */
+    @ReactMethod
+    fun navigateToReviewDetail(commentData: String) {
+        TimberLogger.d(TAG, "导航到评论详情页面，评论数据: $commentData")
+        
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToReviewDetail(commentData)
+        }
+    }
+
+    /**
      * 清理指定组件缓存
      */
     @ReactMethod

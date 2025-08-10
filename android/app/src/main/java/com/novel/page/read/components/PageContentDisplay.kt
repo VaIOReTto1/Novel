@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +26,7 @@ import com.novel.page.book.components.BookDescriptionSection
 import com.novel.page.book.components.BookReviewsSection
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.read.viewmodel.ReaderSettings
+import com.novel.utils.NavViewModel
 import com.novel.utils.debounceClickable
 import kotlinx.collections.immutable.toImmutableList
 
@@ -44,6 +46,20 @@ fun PageContentDisplay(
     showNavigationInfo: Boolean = true, // 新增：是否显示导航信息
     onClick: () -> Unit = {}
 ) {
+
+    val onMoreReviewsClick = remember(bookInfo) {
+        {
+            bookInfo?.let { info ->
+                NavViewModel.navigateToCommentPageWithBookInfo(
+                    bookId = info.bookId,
+                    bookName = info.bookName,
+                    authorName = info.authorName,
+                    picUrl = info.picUrl
+                )
+            }
+            Unit
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +84,10 @@ fun PageContentDisplay(
                     .fillMaxSize()
                     .debounceClickable(onClick = onClick)
             ) {
-                BookDetailPageContent(bookInfo)
+                BookDetailPageContent(
+                    bookInfo = bookInfo,
+                    onMoreReviewsClick = onMoreReviewsClick
+                )
             }
         } else {
             // 正常页面内容
@@ -102,11 +121,13 @@ fun PageContentDisplay(
  */
 @Composable
 private fun BookDetailPageContent(
-    bookInfo: PageData.BookInfo?
+    bookInfo: PageData.BookInfo?,
+    onMoreReviewsClick: () -> Unit = {}
 ) {
     if (bookInfo != null) {
         BookDetailContent(
-            bookInfo = bookInfo
+            bookInfo = bookInfo,
+            onMoreReviewsClick = onMoreReviewsClick
         )
     }
 }
@@ -121,7 +142,7 @@ private fun NormalPageContent(
     isFirstPage: Boolean,
     readerSettings: ReaderSettings
 ) {
-    
+
     Column {
         // 只在第一页显示章节标题
         if (isFirstPage) {
@@ -152,7 +173,8 @@ private fun NormalPageContent(
  */
 @Composable
 private fun BookDetailContent(
-    bookInfo: PageData.BookInfo
+    bookInfo: PageData.BookInfo,
+    onMoreReviewsClick: () -> Unit = {}
 ) {
     // 转换为BookDetailUiState.BookInfo格式
     val uiStateBookInfo = BookDetailUiState.BookInfo(
@@ -211,6 +233,9 @@ private fun BookDetailContent(
             description = uiStateBookInfo.bookDesc
         )
 
-        BookReviewsSection(reviews = reviews.toImmutableList())
+        BookReviewsSection(
+            reviews = reviews.toImmutableList(),
+            onMoreReviewsClick = onMoreReviewsClick
+        )
     }
 }

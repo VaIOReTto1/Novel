@@ -250,6 +250,10 @@ fun BookDetailPage(
                     )
                 } }
                 
+                val onMoreReviewsClick = remember(bookId) { {
+                    NavViewModel.navigateToCommentPage(bookId)
+                } }
+                
                 // 使用优化的BookDetailContent，直接传递细粒度状态
                 BookDetailContent(
                     bookInfo = bookInfo,
@@ -263,7 +267,8 @@ fun BookDetailPage(
                     onAddToBookshelf = onAddToBookshelf,
                     onRemoveFromBookshelf = onRemoveFromBookshelf,
                     onShareBook = onShareBook,
-                    onToggleDescription = onToggleDescription
+                    onToggleDescription = onToggleDescription,
+                    onMoreReviewsClick = onMoreReviewsClick
                 )
             }
         }
@@ -309,7 +314,8 @@ fun BookDetailContent(
     onAddToBookshelf: ((String) -> Unit)? = null,
     onRemoveFromBookshelf: ((String) -> Unit)? = null,
     onShareBook: ((String, String) -> Unit)? = null,
-    onToggleDescription: (() -> Unit)? = null
+    onToggleDescription: (() -> Unit)? = null,
+    onMoreReviewsClick: (() -> Unit)? = null
 ) {
     // 转换为旧的UI状态格式以保持兼容性
     val uiState = remember(bookInfo, lastChapter, reviews, isDescriptionExpanded) {
@@ -388,6 +394,9 @@ fun BookDetailContent(
         )
 
         // 用户评价区域
-        BookReviewsSection(reviews = uiState.reviews)
+        BookReviewsSection(
+            reviews = uiState.reviews,
+            onMoreReviewsClick = onMoreReviewsClick ?: {}
+        )
     }
 }

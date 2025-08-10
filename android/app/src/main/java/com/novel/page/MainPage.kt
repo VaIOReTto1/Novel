@@ -50,6 +50,9 @@ import androidx.compose.ui.platform.LocalContext
 import com.novel.page.component.AppLaunchDialog
 import com.novel.page.component.LaunchDialogType
 import com.novel.utils.DialogLaunchManager
+import com.novel.page.component.ShortSentenceToast
+import com.novel.page.component.ShortDramaToastData
+import androidx.compose.foundation.layout.navigationBarsPadding
 
 /**
  * 应用主页面组件
@@ -103,6 +106,16 @@ fun MainPage() {
     }
     
     Box(modifier = Modifier.fillMaxSize()) {
+        // 短剧 Toast 显示状态（示例：应用启动展示一次，可与 Dialog 共存）
+        var showShortDramaToast by remember { mutableStateOf(true) }
+        val shortDramaData = remember {
+            ShortDramaToastData(
+                imageUrl = null,
+                dramaName = "十八岁太奶奶驾到,tongtont",
+                watchedEpisodes = 1,
+                remainingEpisodes = 99
+            )
+        }
         // 主要内容区域
         Column(Modifier.fillMaxSize()) {
             // 页面切换容器
@@ -181,6 +194,25 @@ fun MainPage() {
         GlobalFlipBookOverlay(
             controller = globalFlipBookController
         )
+
+        // 短剧 Toast（位于底部导航栏上方）
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 64.wdp) // 高于 BottomAppBar
+                .align(Alignment.BottomCenter)
+        ) {
+            ShortSentenceToast(
+                data = shortDramaData,
+                visible = showShortDramaToast,
+                onContinue = {
+                    // 跳转到首页第四页（索引3）
+                    scope.launch { pagerState.scrollToPage(3) }
+                    showShortDramaToast = false
+                },
+                onClose = { showShortDramaToast = false }
+            )
+        }
 
         // 新增：按概率显示的启动弹窗
         val currentDialogType = launchDialogType

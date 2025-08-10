@@ -73,7 +73,6 @@ export const ReviewContent: React.FC<ReviewContentProps> = ({ commentData }) => 
             <Image
               source={{ uri: commentData.commentUserPhoto }}
               style={styles.avatarImage}
-              defaultSource={require('../../../../assets/images/default_avatar.png')}
             />
           ) : (
             <Icon name="person" size={24} color={colors.novelTextGray} />
@@ -102,7 +101,6 @@ export const ReviewContent: React.FC<ReviewContentProps> = ({ commentData }) => 
           <Image
             source={{ uri: commentData.bookInfo.picUrl }}
             style={styles.bookCover}
-            defaultSource={require('../../../../assets/images/default_avatar.png')}
           />
           <View style={styles.bookDetails}>
             <Text style={styles.bookName}>{commentData.bookInfo.bookName}</Text>

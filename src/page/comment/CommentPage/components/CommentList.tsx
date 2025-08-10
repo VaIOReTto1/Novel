@@ -97,7 +97,6 @@ const CommentItem = memo(({ item, bookInfo }: { item: Comment; bookInfo?: { book
             <Image
               source={{ uri: item.commentUserPhoto }}
               style={styles.commentAvatarImage}
-              defaultSource={require('../../../../assets/images/default_avatar.png')}
             />
           ) : (
             <View style={[styles.commentAvatarImage, { backgroundColor: colors.novelBookBackground }]}>

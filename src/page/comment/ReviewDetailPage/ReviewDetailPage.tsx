@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Animated, Text, RefreshControl, TextInput, TouchableOpacity, Dimensions, Image, Easing } from 'react-native';
+import { View, ScrollView, Animated, Text, RefreshControl, TextInput, TouchableOpacity, Dimensions, Image, Easing, BackHandler } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
 import { TopBar } from './components/TopBar';
@@ -67,6 +67,17 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
       reset();
     };
   }, [commentData, reset]);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[ReviewDetailPage] Android硬件返回按钮被按下');
+      NavigationBridge.navigateBack('ReviewDetailPageComponent');
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   const handleBack = () => {
     console.log('[ReviewDetailPage] 用户点击返回按钮');

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
-import { View, ScrollView, NativeModules, Text } from 'react-native';
+import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
 import { useMemberCenterStore } from './store/memberCenterStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createMemberCenterPageStyles, getVIPThemeColors } from './styles/MemberCenterPageStyles';
@@ -72,6 +72,19 @@ const MemberCenterPage: React.FC = () => {
     } else {
       console.log('NavigationBridge.navigateBack not available');
     }
+  }, []);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[MemberCenterPage] Android硬件返回按钮被按下');
+      if (NavigationBridge?.navigateBack) {
+        NavigationBridge.navigateBack('MemberCenterPageComponent');
+      }
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // 卡片切换

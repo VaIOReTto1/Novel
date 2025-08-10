@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { View, ScrollView, NativeModules } from 'react-native';
+import { View, ScrollView, NativeModules, BackHandler } from 'react-native';
 import { useMessageStore } from './store/messageStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { wp } from '../../../utils/theme/dimensions';
@@ -78,6 +78,19 @@ const MessagePage: React.FC = () => {
     } else {
       console.log('NavigationBridge.navigateBack not available');
     }
+  }, []);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[MessagePage] Android硬件返回按钮被按下');
+      if (NavigationBridge?.navigateBack) {
+        NavigationBridge.navigateBack('MessagePageComponent');
+      }
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // 标记全部已读

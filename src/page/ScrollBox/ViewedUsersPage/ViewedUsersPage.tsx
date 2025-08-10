@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, NativeModules, Text } from 'react-native';
+import { View, NativeModules, Text, BackHandler } from 'react-native';
 import { useViewedUsersStore } from './store/viewedUsersStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createViewedUsersPageStyles } from './styles/ViewedUsersPageStyles';
@@ -57,6 +57,19 @@ const ViewedUsersPage: React.FC = () => {
     } else {
       console.log('NavigationBridge.navigateBack not available');
     }
+  }, []);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[ViewedUsersPage] Android硬件返回按钮被按下');
+      if (NavigationBridge?.navigateBack) {
+        NavigationBridge.navigateBack('ViewedUsersPageComponent');
+      }
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // Tab切换

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, BackHandler } from 'react-native';
 import { useNovelColors } from '../../../utils/theme';
 import { createFeedbackHelpPageStyles } from './styles/FeedbackHelpPageStyles';
 import { useFeedbackHelpStore } from './store/feedbackHelpStore';
@@ -33,6 +33,17 @@ export const QuestionListPage: React.FC = React.memo(() => {
   // 处理返回操作
   const handleBack = useCallback(() => {
     NavigationBridge.navigateBack('QuestionListPageComponent');
+  }, []);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[QuestionListPage] Android硬件返回按钮被按下');
+      NavigationBridge.navigateBack('QuestionListPageComponent');
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // 处理搜索

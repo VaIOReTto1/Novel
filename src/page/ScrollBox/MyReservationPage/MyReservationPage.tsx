@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, Text } from 'react-native';
+import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
 import { useMyReservationStore } from './store/myReservationStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createMyReservationPageStyles } from './styles/MyReservationPageStyles';
@@ -57,6 +57,19 @@ const MyReservationPage: React.FC = () => {
     } else {
       console.log('NavigationBridge.navigateBack not available');
     }
+  }, []);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[MyReservationPage] Android硬件返回按钮被按下');
+      if (NavigationBridge?.navigateBack) {
+        NavigationBridge.navigateBack('MyReservationPageComponent');
+      }
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // 主Tab切换

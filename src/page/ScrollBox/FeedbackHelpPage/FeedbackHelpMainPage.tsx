@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, ScrollView} from 'react-native';
+import { View, ScrollView, BackHandler } from 'react-native';
 import { useNovelColors } from '../../../utils/theme';
 import { createFeedbackHelpPageStyles } from './styles/FeedbackHelpPageStyles';
 import { useFeedbackHelpStore } from './store/feedbackHelpStore';
@@ -63,6 +63,17 @@ export const FeedbackHelpMainPage: React.FC = React.memo(() => {
   useEffect(() => {
     resetToMain();
   }, [resetToMain]);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[FeedbackHelpMainPage] Android硬件返回按钮被按下');
+      NavigationBridge.navigateBack('FeedbackHelpMainPageComponent');
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <View style={styles.container}>

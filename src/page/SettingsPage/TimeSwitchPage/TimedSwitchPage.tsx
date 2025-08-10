@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, DeviceEventEmitter, NativeModules, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, DeviceEventEmitter, NativeModules, TouchableOpacity, BackHandler } from 'react-native';
 import { SettingRow } from '../settingspage/components/SettingRow';
 import { TimePickerModal } from './components/TimePickerModal';
 import { useSettingsStore } from '../settingspage/store/settingsStore';
@@ -40,6 +40,16 @@ const TimedSwitchPage: React.FC = () => {
       console.log('[TimedSwitchPage] 📱 TimedSwitchPage组件即将卸载');
       subscription.remove();
     };
+  }, []);
+
+  // 处理Android硬件返回按钮
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      handleBackPress();
+      return true;
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // 定时切换开关切换处理

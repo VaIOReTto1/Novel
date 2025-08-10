@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, Text } from 'react-native';
+import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
 import { useBecomeWriterStore } from './store/becomeWriterStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createBecomeWriterPageStyles } from './styles/BecomeWriterPageStyles';
@@ -51,6 +51,19 @@ const BecomeWriterPage: React.FC = () => {
 
   const colors = useNovelColors();
   const styles = createBecomeWriterPageStyles(colors);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[BecomeWriterPage] Android硬件返回按钮被按下');
+      if (NavigationBridge?.navigateBack) {
+        NavigationBridge.navigateBack('BecomeWriterPageComponent');
+      }
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   // 初始化数据
   useEffect(() => {

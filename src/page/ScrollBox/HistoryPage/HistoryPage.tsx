@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules } from 'react-native';
+import { View, ScrollView, NativeModules, BackHandler } from 'react-native';
 import { useHistoryStore } from './store/historyStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { useRefreshLogic } from './hooks/useRefreshLogic';
@@ -73,6 +73,19 @@ const HistoryPage: React.FC = () => {
     } else {
       console.log('NavigationBridge.navigateBack not available');
     }
+  }, []);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[HistoryPage] Android硬件返回按钮被按下');
+      if (NavigationBridge?.navigateBack) {
+        NavigationBridge.navigateBack('HistoryPageComponent');
+      }
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   // 搜索按钮点击

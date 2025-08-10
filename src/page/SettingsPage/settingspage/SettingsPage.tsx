@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Modal, BackHandler } from 'react-native';
 import { SettingRow } from './components';
 import { useSettingsStore } from './store/settingsStore';
 import { useUserStore } from '../../ProfilePage/store/userStore';
@@ -73,6 +73,16 @@ const SettingsPage: React.FC = () => {
     return () => {
       console.log('[SettingsPage] 📱 SettingsPage组件即将卸载');
     };
+  }, []);
+
+  // 处理Android硬件返回按钮
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      handleBackPress();
+      return true;
+    });
+
+    return () => backHandler.remove();
   }, []);
 
   /**

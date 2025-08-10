@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  BackHandler,
 } from 'react-native';
 
 import { useNovelColors } from '../../../utils/theme/colors';
@@ -37,6 +38,17 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
     submitReview,
     clearErrors,
   } = useWriteReview(initialRating);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[WriteReviewPage] Android硬件返回按钮被按下');
+      NavigationBridge.navigateBack('WriteReviewPageComponent');
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   // 页面初始化
   useEffect(() => {

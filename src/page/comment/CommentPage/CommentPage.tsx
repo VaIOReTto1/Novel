@@ -4,6 +4,7 @@ import {
   ScrollView,
   RefreshControl,
   Animated,
+  BackHandler,
 } from 'react-native';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
@@ -81,6 +82,17 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
       reset();
     };
   }, [bookId, loadComments, reset]);
+
+  // Android硬件返回按钮处理
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('[CommentPage] Android硬件返回按钮被按下');
+      NavigationBridge.navigateBack('CommentPageComponent');
+      return true; // 阻止默认行为
+    });
+
+    return () => backHandler.remove();
+  }, []);
   
   // 返回按钮处理
   const handleBackPress = useCallback(() => {

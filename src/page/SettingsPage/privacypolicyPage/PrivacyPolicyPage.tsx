@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, SafeAreaView, ScrollView, BackHandler } from 'react-native';
 import { createPrivacyPolicyPageStyles } from './styles/PrivacyPolicyPageStyles';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { NativeModules } from 'react-native';
@@ -19,6 +19,15 @@ const PrivacyPolicyPage: React.FC = () => {
       NavigationBridge.navigateBack('PrivacyPolicyPageComponent');
     }
   };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      handleBackPress();
+      return true;
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>

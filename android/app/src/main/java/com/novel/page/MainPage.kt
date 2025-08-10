@@ -40,6 +40,16 @@ import com.novel.page.component.rememberFlipBookAnimationController
 import com.novel.page.component.GlobalFlipBookOverlay
 import com.novel.rn.MviModuleType
 import com.novel.rn.ReactNativePage
+// 新增导入：弹窗及状态
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import com.novel.page.component.AppLaunchDialog
+import com.novel.page.component.LaunchDialogType
+import com.novel.utils.DialogLaunchManager
 
 /**
  * 应用主页面组件
@@ -84,6 +94,13 @@ fun MainPage() {
     // 在MainPage级别创建全局的翻书动画控制器
     // 确保所有子页面都能使用同一个动画实例
     val globalFlipBookController = rememberFlipBookAnimationController()
+
+    // 新增：启动弹窗状态与初始化逻辑
+    val context = LocalContext.current
+    var launchDialogType by remember { mutableStateOf<LaunchDialogType?>(null) }
+    LaunchedEffect(Unit) {
+        launchDialogType = DialogLaunchManager.getInstance(context).getDialogTypeToShow()
+    }
     
     Box(modifier = Modifier.fillMaxSize()) {
         // 主要内容区域
@@ -164,6 +181,22 @@ fun MainPage() {
         GlobalFlipBookOverlay(
             controller = globalFlipBookController
         )
+
+        // 新增：按概率显示的启动弹窗
+        val currentDialogType = launchDialogType
+        if (currentDialogType != null) {
+            AppLaunchDialog(
+                type = currentDialogType,
+                onDismiss = { launchDialogType = null },
+                onPrimaryAction = {
+                    // 如果是签到赠金，点击主按钮跳转到“福利”页
+                    if (currentDialogType == LaunchDialogType.SIGNIN_BONUS) {
+                        scope.launch { pagerState.scrollToPage(2) }
+                    }
+                    // 版本升级提示：可在此接入实际升级逻辑（暂留）
+                }
+            )
+        }
     }
 }
 

@@ -42,6 +42,8 @@ import com.novel.page.welfare.viewmodel.WelfareViewModel
 import com.novel.ui.theme.NovelTheme
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.TimberLogger
+import com.novel.utils.DialogLaunchManager
+import com.novel.page.component.WelfareRedPacketDialog
 
 /**
  * 福利页面
@@ -108,6 +110,17 @@ fun WelfarePage(
         
         // 开始性能监控
         performanceMonitor.startPageLoad("welfare_page")
+    }
+
+    // Welfare 专属红包弹窗控制
+    val contextForDialog = LocalContext.current
+    var showWelfareDialog by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(isPageVisible) {
+        if (isPageVisible) {
+            showWelfareDialog = DialogLaunchManager
+                .getInstance(contextForDialog)
+                .shouldShowWelfareDialog(0.7f)
+        }
     }
     
     // 监控页面加载状态变化
@@ -225,6 +238,13 @@ fun WelfarePage(
             modifier = Modifier
                 .fillMaxSize()
         ) {
+        // 福利红包弹窗（不影响 MainPage 的启动弹窗）
+        if (showWelfareDialog) {
+            WelfareRedPacketDialog(
+                onDismiss = { showWelfareDialog = false },
+                onOpen = { showWelfareDialog = false }
+            )
+        }
         // Snackbar Host
         SnackbarHost(
             hostState = snackbarHostState,

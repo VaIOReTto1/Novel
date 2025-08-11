@@ -59,7 +59,7 @@
 | **📚 小说阅读器** | 全书内容管理，智能缓存，六种翻页效果，设置面板，进度管理 | `ReaderViewModel` + `PageSplitter` + `BookCacheManager` |
 | **🔍 搜索模块** | 搜索历史，热门榜单，高级筛选，智能建议，完整榜单页 | `SearchViewModel` + `SearchRepository` + `FullRankingPage` |
 | **🔐 登录注册** | 手机验证码，运营商识别，表单验证，协议确认 | `LoginViewModel` + `AuthService` + `ValidationUtils` |
-| **🎁 福利页面** | H5活动页面展示，WebView容器，性能监控，主题适配 | `WelfareViewModel` + `WebViewComponent` + `WelfarePerformanceMonitor` |
+| **🎁 福利页面** | H5活动页面展示，WebView容器，性能监控，主题适配，专属红包弹窗 | `WelfareViewModel` + `WebViewComponent` + `WelfarePerformanceMonitor` + `WelfareRedPacketDialog` |
 | **🎯 启动弹窗** | 随机概率弹窗展示，版本升级提醒，签到赠金提示，票根样式设计，短剧观看Toast提醒 | `DialogLaunchManager` + `AppLaunchDialog` + `LaunchDialogType` + `ShortSentenceToast` |
 | **🧭 导航系统** | NavHost路由，参数传递，手势导航，返回事件流 | `NavigationUtil` + `NavViewModel` + `SharedFlow` |
 

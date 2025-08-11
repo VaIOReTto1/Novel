@@ -19,7 +19,7 @@ class InitializeWelfarePageUseCase @Inject constructor() : BaseUseCase<Unit, Ini
     companion object {
         private const val TAG = "InitializeWelfarePageUseCase"
         private const val DEFAULT_TITLE = "福利页面 - GitHub"
-        private const val DEFAULT_URL = "https://juejin.cn/"
+        private const val DEFAULT_URL = "http://47.110.147.60:1794/"
     }
     
     /**

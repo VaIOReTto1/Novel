@@ -41,6 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.AdaptiveScreen
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.unit.dp
 
 /**
  * 启动弹窗类型
@@ -372,6 +374,105 @@ private fun Preview() {
                 onDismiss = {},
                 onGo = {},
             )
+        }
+    }
+}
+
+/**
+ * Welfare 专用：红包弹窗（仅在福利页展示）
+ */
+@Composable
+fun WelfareRedPacketDialog(
+    onDismiss: () -> Unit,
+    onOpen: () -> Unit
+){
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = true)
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            // 红包主体卡片
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.wdp),
+                shape = RoundedCornerShape(20.wdp),
+                color = Color.Transparent
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(
+                            brush = Brush.verticalGradient(
+                                listOf(Color(0xFFFF6C6C), Color(0xFFFF8A5C))
+                            ),
+                            shape = RoundedCornerShape(20.wdp)
+                        )
+                        .padding(vertical = 24.wdp, horizontal = 20.wdp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        NovelText(
+                            text = "番茄小说 送你现金红包",
+                            color = Color.White.copy(alpha = 0.9f),
+                            fontSize = 12.ssp
+                        )
+                        Spacer(modifier = Modifier.height(36.wdp))
+                        NovelText(
+                            text = "恭喜发财",
+                            color = Color.White,
+                            fontSize = 28.ssp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.height(26.wdp))
+                        NovelText(
+                            text = "大吉大利",
+                            color = Color.White,
+                            fontSize = 28.ssp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(22.wdp))
+
+                        // 开 按钮（圆形）
+                        Box(
+                            modifier = Modifier
+                                .size(96.wdp)
+                                .clip(CircleShape)
+                                .background(Color.White.copy(alpha = 0.95f))
+                                .border(
+                                    BorderStroke(3.wdp, Color(0xFFFF7A61)),
+                                    CircleShape
+                                )
+                                .debounceClickable(onClick = onOpen),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            NovelText(
+                                text = "开",
+                                color = Color(0xFFFF6C6C),
+                                fontSize = 30.ssp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(36.wdp))
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.wdp))
+            // 底部关闭按钮
+            Box(
+                modifier = Modifier
+                    .size(40.wdp)
+                    .clip(CircleShape)
+                    .background(Color(0x30000000))
+                    .border(0.2.wdp, NovelColors.NovelSecondaryBackground, CircleShape)
+                    .debounceClickable(onClick = onDismiss),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Rounded.Close, contentDescription = "close", tint = Color.White)
+            }
         }
     }
 }

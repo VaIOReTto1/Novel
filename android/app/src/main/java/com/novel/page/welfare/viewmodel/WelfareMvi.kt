@@ -75,7 +75,7 @@ data class WelfareState(
     override val error: String? = null,
     
     // WebView相关状态
-    val currentUrl: String = "https://juejin.cn/",
+    val currentUrl: String = "http://47.110.147.60:1794/",
     val title: String = "福利页面",
     val loadingProgress: Int = 0,
     val canGoBack: Boolean = false,

@@ -14,6 +14,7 @@ interface InputBarProps {
 export const InputBar: React.FC<InputBarProps> = ({ value, onChange, placeholder = '有什么问题尽管问我', sending, onSend }) => {
   const colors = useNovelColors();
   const styles = createAIStyles(colors);
+  const disabled = !value?.trim() || sending;
   return (
     <View style={styles.inputBar}>
       <TextInput
@@ -24,7 +25,7 @@ export const InputBar: React.FC<InputBarProps> = ({ value, onChange, placeholder
         placeholderTextColor={colors.novelTextGray}
         multiline
       />
-      <TouchableOpacity style={styles.sendBtn} onPress={sending ? undefined : onSend} activeOpacity={sending ? 1 : 0.7}>
+      <TouchableOpacity style={[styles.sendBtn, disabled && { opacity: 0.5 }]} disabled={disabled} onPress={disabled ? undefined : onSend} activeOpacity={disabled ? 1 : 0.7}>
         <Text style={styles.sendText}>↑</Text>
       </TouchableOpacity>
     </View>

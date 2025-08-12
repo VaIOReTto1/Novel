@@ -28,6 +28,7 @@
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-markdown-display": "^7.0.2",
     "react-native-reanimated": "^3.17.4",
     "react-native-super-grid": "^6.0.1",
     "react-native-svg": "^15.8.0",

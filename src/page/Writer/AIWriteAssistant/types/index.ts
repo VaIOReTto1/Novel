@@ -5,6 +5,12 @@ export interface ChatMessage {
   role: ChatRole;
   text: string;
   timestamp: number;
+  thinking?: string;
+  model?: string;
+  usage?: unknown;
+  latencyMs?: number;
+  memoryMB?: number;
+  done?: boolean;
 }
 
 export type SuggestionType = 'deepThink' | 'idea';

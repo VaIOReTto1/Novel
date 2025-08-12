@@ -79,7 +79,7 @@
 | **📚 推书中心** | 数据统计展示，创作服务，任务管理，Tab切换 | `RecommendBookPage` + `Zustand` + `immer` |
 | **📅 我的预约** | TopBar内嵌Tab切换，网格布局，预约状态管理 | `MyReservationPage` + `Zustand` + `immer` |
 | **✍️ 写作页面** | 标题/正文编辑，撤销/重做，AI助手，发布功能，AI 选择工具条 | `WritePage` + `Zustand` + `immer` |
-| **🤖 AI写作助手** | 智能对话，示例问题，快捷指令，聊天界面 | `AIWriteAssistant` + `Zustand` + `immer` |
+| **🤖 AI写作助手** | 智能对话，示例问题，快捷指令，聊天界面，SSE即时流式展示（RN XHR fallback） | `AIWriteAssistant` + `Zustand` + `immer` |
 | **🗂️ 作品管理** | 章节管理、空状态、创建章节跳转写作页 | `BookManagePage` + `NavigationBridge` |
 | **🎧 反馈与帮助** | 客服中心，咨询场景，常见问题，问题详情，解决状态管理，AI自动问答 | `FeedbackHelpPage` + `Zustand` + `immer` + `LinearGradient` |
 | **💬 评论页面** | 评论列表展示，点赞交互，评分系统，分类筛选，下拉刷新，文本渲染优化 | `CommentPage` + `Zustand` + `Text组件规范` |

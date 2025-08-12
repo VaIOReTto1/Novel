@@ -12,4 +12,6 @@ declare module 'react-native' {
 
   // Web端NativeModules空实现
   export const NativeModules: Record<string, any>;
+
+  export const TextInput: any;
 }

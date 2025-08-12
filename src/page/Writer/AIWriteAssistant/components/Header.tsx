@@ -19,7 +19,6 @@ export const Header: React.FC<HeaderProps> = ({ onBack, onMenu, quotaText }) => 
       </TouchableOpacity>
       <View style={styles.headTitleRow}>
         <Text style={styles.headTitle}>写作助手</Text>
-        <Text style={styles.quota}>{quotaText}</Text>
       </View>
       <TouchableOpacity onPress={onMenu}>
         <Text style={styles.headBack}>⋯</Text>

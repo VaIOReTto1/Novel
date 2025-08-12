@@ -309,7 +309,8 @@ fun WelfarePage(
                         onProgressChanged = onProgressChanged,
                         onNavigationStateChanged = onNavigationStateChanged,
                         onTitleChanged = onTitleChanged,
-                        onUrlChanged = onUrlChanged
+                        onUrlChanged = onUrlChanged,
+                        forceContentWidthDp = 375
                     )
                     
                     // 深色模式适配和可访问性配置

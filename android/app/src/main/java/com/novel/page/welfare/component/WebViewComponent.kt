@@ -50,7 +50,8 @@ fun WebViewComponent(
     onProgressChanged: (Int) -> Unit = {},
     onNavigationStateChanged: (canGoBack: Boolean, canGoForward: Boolean) -> Unit = { _, _ -> },
     onTitleChanged: (String) -> Unit = {},
-    onUrlChanged: (String) -> Unit = {}
+    onUrlChanged: (String) -> Unit = {},
+    forceContentWidthDp: Int? = null
 ) {
     val context = LocalContext.current
     val performanceMonitor = remember { WelfarePerformanceMonitor.getInstance() }
@@ -124,6 +125,38 @@ fun WebViewComponent(
                     // 更新导航状态
                     view?.let {
                         onNavigationStateChanged(it.canGoBack(), it.canGoForward())
+                    }
+
+                    // 如需强制按指定宽度渲染（例如375dp），注入 viewport 与样式
+                    if (forceContentWidthDp != null && view != null) {
+                        val js = ("""
+                            (function() {
+                              try {
+                                var desired = %d;
+                                var meta = document.querySelector('meta[name="viewport"]');
+                                var currentWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) || desired;
+                                var scale = currentWidth / desired;
+                                if (!meta) {
+                                  meta = document.createElement('meta');
+                                  meta.name = 'viewport';
+                                  document.head && document.head.appendChild(meta);
+                                }
+                                if (meta) {
+                                  meta.setAttribute('content', 'width=' + desired + ', initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+                                }
+                                if (document && document.documentElement) {
+                                  document.documentElement.style.overflowX = 'hidden';
+                                }
+                                if (document && document.body) {
+                                  document.body.style.margin = '0 auto';
+                                  document.body.style.width = desired + 'px';
+                                }
+                              } catch (e) {
+                                // swallow
+                              }
+                            })();
+                        """.trimIndent()).format(forceContentWidthDp)
+                        view.evaluateJavascript(js, null)
                     }
                 }
                 

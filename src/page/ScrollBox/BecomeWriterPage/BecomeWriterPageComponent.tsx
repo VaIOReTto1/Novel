@@ -1,15 +1,23 @@
 import React, { useEffect } from 'react';
 import { AppRegistry } from 'react-native';
 import BecomeWriterPage from './BecomeWriterPage';
+import { useBecomeWriterStore } from './store/becomeWriterStore';
 import { initializeRNPage } from '../../../utils/appInit';
 
 interface BecomeWriterPageComponentProps {
   source?: string;
+  isAuthor?: boolean;
 }
 
-const BecomeWriterPageComponent: React.FC<BecomeWriterPageComponentProps> = ({ source }) => {
+const BecomeWriterPageComponent: React.FC<BecomeWriterPageComponentProps> = ({ source, isAuthor }) => {
+  const { setIsAuthor } = useBecomeWriterStore();
+
   useEffect(() => {
     console.log('[BecomeWriterPageComponent] 组件初始化，来源:', source);
+    if (isAuthor !== undefined) {
+      console.log('[BecomeWriterPageComponent] 作家状态:', isAuthor);
+      setIsAuthor(!!isAuthor);
+    }
 
     // 初始化RN页面
     initializeRNPage('BecomeWriterPage').catch((error) => {
@@ -19,7 +27,7 @@ const BecomeWriterPageComponent: React.FC<BecomeWriterPageComponentProps> = ({ s
     return () => {
       console.log('[BecomeWriterPageComponent] 组件卸载');
     };
-  }, [source]);
+  }, [source, isAuthor, setIsAuthor]);
 
   return <BecomeWriterPage />;
 };

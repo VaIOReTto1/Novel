@@ -36,10 +36,10 @@ export const ICONS_DATA: IconData[] = [
     // 调用原生导航方法
     const { NativeModules } = require('react-native');
     const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToBecomeWriter) {
-      NavigationBridge.navigateToBecomeWriter();
+    if (NavigationBridge?.navigateToBecomeWriterWithStatus) {
+      NavigationBridge.navigateToBecomeWriterWithStatus();
     } else {
-      console.log('NavigationBridge.navigateToBecomeWriter not available');
+      console.log('NavigationBridge.navigateToBecomeWriterWithStatus not available');
     }
   }},
   { id: 'history', name: '浏览历史', icon: 'history', onPress: () => {

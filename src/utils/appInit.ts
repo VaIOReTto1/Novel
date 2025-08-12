@@ -191,3 +191,6 @@ import '../page/ScrollBox/FeedbackHelpPage/QuestionListPageComponent';
 import '../page/ScrollBox/FeedbackHelpPage/QuestionDetailPageComponent';
 import '../page/BookshelfPage/BookshelfPageComponent';
 import '../page/SettingsPage';
+import '../page/Writer/WritePage/WritePageComponent';
+import '../page/Writer/AIWriteAssistant/AIWriteAssistantComponent';
+import '../page/Writer/BookManage/BookManagePageComponent';

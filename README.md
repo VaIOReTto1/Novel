@@ -61,6 +61,7 @@
 | **🔐 登录注册** | 手机验证码，运营商识别，表单验证，协议确认 | `LoginViewModel` + `AuthService` + `ValidationUtils` |
 | **🎁 福利页面** | H5活动页面展示，WebView容器，性能监控，主题适配，专属红包弹窗 | `WelfareViewModel` + `WebViewComponent` + `WelfarePerformanceMonitor` + `WelfareRedPacketDialog` |
 | **🎯 启动弹窗** | 随机概率弹窗展示，版本升级提醒，签到赠金提示，票根样式设计，短剧观看Toast提醒 | `DialogLaunchManager` + `AppLaunchDialog` + `LaunchDialogType` + `ShortSentenceToast` |
+| **✍️ 作者服务** | 作家注册，状态查询（进入成为作家页前判断），书籍管理，章节CRUD，数据统计 | `AuthorService` + `AuthorRegisterRequest` + `BookAddRequest` + `ChapterAddRequest` |
 | **🧭 导航系统** | NavHost路由，参数传递，手势导航，返回事件流 | `NavigationUtil` + `NavViewModel` + `SharedFlow` |
 
 ### ✅ React Native 实现
@@ -74,9 +75,12 @@
 | **💬 我的消息** | Sticky Tab，主/次消息分离，空状态，下拉刷新 | `MessagePage` + `Zustand` + `stickyHeaderIndices` |
 | **👥 看过的人** | 四Tab切换，多标签用户卡片，渐变标签，关注交互，空状态处理 | `ViewedUsersPage` + `Zustand` + `immer` + `LinearGradient` |
 | **⚙️ 设置页面** | 混合架构，缓存管理，主题切换，应用设置 | `SettingsPage` + Android Compose 导航 |
-| **✍️ 成为作家** | 多Tab切换，数据展开/收起，模态弹窗，状态管理 | `BecomeWriterPage` + `Zustand` + `immer` |
+| **✍️ 成为作家** | 多Tab切换，数据展开/收起，模态弹窗，状态管理，作家状态查询 | `BecomeWriterPage` + `Zustand` + `immer` |
 | **📚 推书中心** | 数据统计展示，创作服务，任务管理，Tab切换 | `RecommendBookPage` + `Zustand` + `immer` |
 | **📅 我的预约** | TopBar内嵌Tab切换，网格布局，预约状态管理 | `MyReservationPage` + `Zustand` + `immer` |
+| **✍️ 写作页面** | 标题/正文编辑，撤销/重做，AI助手，发布功能 | `WritePage` + `Zustand` + `immer` |
+| **🤖 AI写作助手** | 智能对话，示例问题，快捷指令，聊天界面 | `AIWriteAssistant` + `Zustand` + `immer` |
+| **🗂️ 作品管理** | 章节管理、空状态、创建章节跳转写作页 | `BookManagePage` + `NavigationBridge` |
 | **🎧 反馈与帮助** | 客服中心，咨询场景，常见问题，问题详情，解决状态管理，AI自动问答 | `FeedbackHelpPage` + `Zustand` + `immer` + `LinearGradient` |
 | **💬 评论页面** | 评论列表展示，点赞交互，评分系统，分类筛选，下拉刷新，文本渲染优化 | `CommentPage` + `Zustand` + `Text组件规范` |
 | **🔗 跨端通信** | Native ↔ RN 双向事件，状态同步，ReactRootView 复用 | `NavigationPackage` + `RCTDeviceEventEmitter` |

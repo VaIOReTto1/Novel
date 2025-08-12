@@ -47,6 +47,8 @@ const BecomeWriterPage: React.FC = () => {
     setAgreementChecked,
     handleImmediateRegister,
     handleMorePress,
+    works,
+    isAuthor,
   } = useBecomeWriterStore();
 
   const colors = useNovelColors();
@@ -178,6 +180,13 @@ const BecomeWriterPage: React.FC = () => {
           isExpanded={isDataStatsExpanded}
           onTabChange={handleDataTabChange}
           onToggleExpanded={toggleDataStatsExpanded}
+        works={works}
+        onPressWork={() => {
+          if (NavigationBridge?.navigateToBookManage) {
+            NavigationBridge.navigateToBookManage();
+          }
+        }}
+        onCreateChapter={() => NavigationBridge?.navigateToWritePage?.()}
         />
 
         {/* 作家专属 */}
@@ -214,21 +223,25 @@ const BecomeWriterPage: React.FC = () => {
       </ScrollView>
 
       {/* 底部固定按钮 */}
-      <BottomButton
-        styles={styles}
-        onPress={handleBecomeTomatoWriterPress}
-      />
+      {isAuthor && (
+        <BottomButton
+          styles={styles}
+          onPress={handleImmediateRegister}
+        />
+      )}
 
       {/* 欢迎弹窗 */}
-      <WelcomeModal
-        styles={styles}
-        visible={showWelcomeModal}
-        isAgreementChecked={isAgreementChecked}
-        onClose={hideWelcomeModal}
-        onRegister={handleImmediateRegister}
-        onAgreementChange={setAgreementChecked}
-        onAgreementPress={handleAgreementPress}
-      />
+      {isAuthor && (
+        <WelcomeModal
+          styles={styles}
+          visible={showWelcomeModal}
+          isAgreementChecked={isAgreementChecked}
+          onClose={hideWelcomeModal}
+          onRegister={handleImmediateRegister}
+          onAgreementChange={setAgreementChecked}
+          onAgreementPress={handleAgreementPress}
+        />
+      )}
     </View>
   );
 };

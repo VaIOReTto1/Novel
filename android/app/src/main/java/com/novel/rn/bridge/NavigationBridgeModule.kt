@@ -198,6 +198,52 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 跳转成为作家页前，查询作家状态，并将结果传入页面
+     */
+    @ReactMethod
+    fun navigateToBecomeWriterWithStatus() {
+        TimberLogger.d(TAG, "查询作家状态后导航到成为作家页面")
+        CoroutineScope(Dispatchers.IO).launch {
+            var isAuthor = false
+            try {
+                val service = com.novel.utils.network.api.author.AuthorService()
+                val resp = service.getAuthorStatusBlocking()
+                val dataVal = resp.data
+                isAuthor = (dataVal == "0")
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "获取作家状态失败，默认非作家", e)
+            }
+            Handler(Looper.getMainLooper()).post {
+                val route = if (isAuthor) "becomewriter?isAuthor=true" else "becomewriter?isAuthor=false"
+                TimberLogger.d(TAG, "导航到becomewriter页面，$route")
+                NavViewModel.navController.value?.navigate(route)
+            }
+        }
+    }
+
+    /**
+     * 导航到写作页面
+     */
+    @ReactMethod
+    fun navigateToWritePage() {
+        TimberLogger.d(TAG, "导航到写作页面")
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToWritePage()
+        }
+    }
+
+    /**
+     * 导航到AI写作助手页面
+     */
+    @ReactMethod
+    fun navigateToAIPage() {
+        TimberLogger.d(TAG, "导航到AI写作助手页面")
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToAIPage()
+        }
+    }
+
+    /**
      * 导航到推书中心页面
      */
     @ReactMethod
@@ -278,6 +324,17 @@ class NavigationBridgeModule(
         
         Handler(Looper.getMainLooper()).post {
             NavViewModel.navigateToQuestionDetail()
+        }
+    }
+
+    /**
+     * 导航到作品管理（章节管理）页面
+     */
+    @ReactMethod
+    fun navigateToBookManage() {
+        TimberLogger.d(TAG, "导航到作品管理页面")
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToBookManage()
         }
     }
 
@@ -435,6 +492,42 @@ class NavigationBridgeModule(
             callback.invoke(null, currentState.currentThemeMode)
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    /**
+     * RN 触发原生注册作者
+     * penName 昵称；telPhone/chatAccount 使用昵称；email 为 `${nickname}@163.com`
+     * sex: 0/1，默认 1
+     */
+    @ReactMethod
+    fun registerAuthor(penName: String, sex: Int, promise: Promise) {
+        TimberLogger.d(TAG, "触发作者注册 penName=$penName sex=$sex")
+        // 执行网络请求
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val authorService = com.novel.utils.network.api.author.AuthorService()
+                val req = com.novel.utils.network.api.author.AuthorService.AuthorRegisterRequest(
+                    penName = penName,
+                    telPhone = penName,
+                    chatAccount = penName,
+                    email = "$penName@163.com",
+                    workDirection = sex
+                )
+                val resp = authorService.registerAuthorBlocking(req)
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.resolve(Arguments.createMap().apply {
+                        putString("code", resp.code)
+                        putString("message", resp.message)
+                        putBoolean("ok", resp.ok ?: false)
+                    })
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "作者注册失败", e)
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.reject("REGISTER_ERROR", e)
+                }
+            }
         }
     }
 

@@ -9,6 +9,9 @@ interface DataStatsSectionProps {
   isExpanded: boolean;
   onTabChange: (tab: 'novel' | 'short') => void;
   onToggleExpanded: () => void;
+  works?: { id: string; title: string; words: number }[];
+  onPressWork?: (id: string) => void;
+  onCreateChapter?: () => void;
 }
 
 export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
@@ -18,6 +21,9 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
   isExpanded,
   onTabChange,
   onToggleExpanded,
+  works,
+  onPressWork,
+  onCreateChapter,
 }) => {
   const handleTabPress = useCallback((tab: 'novel' | 'short') => {
     onTabChange(tab);
@@ -61,14 +67,31 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
         </TouchableOpacity>
       </View>
 
-      {/* 暂未创建作品状态 */}
-      <View style={styles.emptyStateContainer}>
-        <View style={styles.emptyStateIcon} />
-        <View style={styles.emptyStateTextGroup}>
-          <Text style={styles.emptyStateTitle}>暂未创建作品</Text>
-          <Text style={styles.emptyStateSubtitle}>期待你在番茄小说写出好故事</Text>
+      {/* 作品卡片或空状态 */}
+      {works && works.length > 0 ? (
+        <View>
+          {works.map((w) => (
+            <TouchableOpacity key={w.id} style={styles.activityItem} onPress={() => onPressWork?.(w.id)}>
+              <View style={styles.activityCover} />
+              <View style={styles.activityInfo}>
+                <Text style={styles.activityTitle} numberOfLines={1}>{w.title}</Text>
+                <Text style={styles.activityTime}>已写 {w.words} 字</Text>
+              </View>
+              <TouchableOpacity style={styles.activityButton} onPress={onCreateChapter} activeOpacity={0.7}>
+                <Text style={styles.activityButtonText}>创建章节</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          ))}
         </View>
-      </View>
+      ) : (
+        <View style={styles.emptyStateContainer}>
+          <View style={styles.emptyStateIcon} />
+          <View style={styles.emptyStateTextGroup}>
+            <Text style={styles.emptyStateTitle}>暂未创建作品</Text>
+            <Text style={styles.emptyStateSubtitle}>期待你在番茄小说写出好故事</Text>
+          </View>
+        </View>
+      )}
 
       {/* 展开时显示数据统计 */}
       {isExpanded && (

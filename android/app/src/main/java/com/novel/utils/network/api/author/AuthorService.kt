@@ -38,17 +38,17 @@ class AuthorService @Inject constructor() {
     data class AuthorStatusResponse(
         @SerializedName("code") val code: String?,
         @SerializedName("message") val message: String?,
-        @SerializedName("data") val data: Int?,
+        @SerializedName("data") val data: String?,
         @SerializedName("ok") val ok: Boolean?
     )
 
-    data class AuthorRegisterRequest(
-        @SerializedName("penName") val penName: String,
-        @SerializedName("telPhone") val telPhone: String,
-        @SerializedName("chatAccount") val chatAccount: String,
-        @SerializedName("email") val email: String,
-        @SerializedName("workDirection") val workDirection: Int // 0-男频 1-女频
-    )
+     data class AuthorRegisterRequest(
+         @SerializedName("penName") val penName: String,
+         @SerializedName("telPhone") val telPhone: String,
+         @SerializedName("chatAccount") val chatAccount: String,
+         @SerializedName("email") val email: String,
+         @SerializedName("workDirection") val workDirection: Int // 0-男频 1-女频
+     )
 
     data class BookAddRequest(
         @SerializedName("workDirection") val workDirection: Int,

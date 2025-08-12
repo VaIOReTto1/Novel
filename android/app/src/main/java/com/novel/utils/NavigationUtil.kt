@@ -175,15 +175,46 @@ fun NavigationSetup() {
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
-        composable("becomewriter") {
+        composable("becomewriter?isAuthor={isAuthor}") { backStackEntry ->
+            val isAuthor = backStackEntry.arguments?.getString("isAuthor")?.toBooleanStrictOrNull() ?: false
             ReactNativePage(
                 componentName = "BecomeWriterPageComponent",
-                initialProps = mapOf("source" to "android_becomewriter"),
+                initialProps = mapOf(
+                    "source" to "android_becomewriter",
+                    "isAuthor" to isAuthor
+                ),
                 destroyOnBack = true,
                 mviModuleType = MviModuleType.BRIDGE
             )
         }
         
+        composable("writepage") {
+            ReactNativePage(
+                componentName = "WritePageComponent",
+                initialProps = mapOf("source" to "android_writepage"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+
+        composable("aipage") {
+            ReactNativePage(
+                componentName = "AIWriteAssistantComponent",
+                initialProps = mapOf("source" to "android_aipage"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+
+        composable("bookmanage") {
+            ReactNativePage(
+                componentName = "BookManagePageComponent",
+                initialProps = mapOf("source" to "android_bookmanage"),
+                destroyOnBack = true,
+                mviModuleType = MviModuleType.BRIDGE
+            )
+        }
+
         composable("recommendbook") {
             ReactNativePage(
                 componentName = "RecommendBookPageComponent",
@@ -470,6 +501,30 @@ object NavViewModel : ViewModel() {
     fun navigateToMemberCenter() {
         TimberLogger.d("NavViewModel", "开始导航：会员中心页面")
         navigateDebounced("membercenter")
+    }
+
+    /**
+     * 导航到写作页面
+     */
+    fun navigateToWritePage() {
+        TimberLogger.d("NavViewModel", "开始导航：写作页面")
+        navigateDebounced("writepage")
+    }
+
+    /**
+     * 导航到AI写作助手页面
+     */
+    fun navigateToAIPage() {
+        TimberLogger.d("NavViewModel", "开始导航：AI助手页面")
+        navigateDebounced("aipage")
+    }
+
+    /**
+     * 导航到作品管理（章节管理）页面
+     */
+    fun navigateToBookManage() {
+        TimberLogger.d("NavViewModel", "开始导航：作品管理页面")
+        navigateDebounced("bookmanage")
     }
 
     /**

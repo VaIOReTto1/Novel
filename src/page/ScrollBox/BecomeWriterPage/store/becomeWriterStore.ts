@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { NavigationBridge } from '../../../../utils/bridge/NavigationBridge';
+import { useUserStore } from '../../../ProfilePage/store/userStore';
 import {
   UserInfo,
   DataStats,
@@ -15,6 +17,7 @@ import {
 export interface BecomeWriterState {
   loading: boolean;
   error: string | null;
+  isAuthor: boolean; // 是否已有作家身份
 
   // User & Announcement
   userInfo: UserInfo | null;
@@ -44,11 +47,15 @@ export interface BecomeWriterState {
   // 弹窗状态
   showWelcomeModal: boolean;
   isAgreementChecked: boolean;
+  // 注册结果与作品
+  lastRegisterOk?: boolean;
+  works: { id: string; title: string; words: number }[];
 }
 
 interface BecomeWriterActions {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+  setIsAuthor: (isAuthor: boolean) => void;
   setSelectedDataTab: (tab: 'novel' | 'short') => void;
   setSelectedAuthorTab: (tab: 'benefits' | 'road' | 'platform') => void;
   setSelectedActivityTab: (tab: 'novel' | 'short') => void;
@@ -68,6 +75,7 @@ type BecomeWriterStore = BecomeWriterState & BecomeWriterActions;
 const initialState: BecomeWriterState = {
   loading: false,
   error: null,
+  isAuthor: false,
 
   userInfo: null,
   announcement: {
@@ -100,6 +108,8 @@ const initialState: BecomeWriterState = {
   // 弹窗初始状态
   showWelcomeModal: false,
   isAgreementChecked: false,
+  lastRegisterOk: undefined,
+  works: [],
 };
 
 // Mock data generators
@@ -284,6 +294,10 @@ export const useBecomeWriterStore = create<BecomeWriterStore>()(
       state.error = error;
     }),
 
+    setIsAuthor: (flag) => set((state) => {
+      state.isAuthor = flag;
+    }),
+
     setSelectedDataTab: (tab) => set((state) => {
       state.selectedDataTab = tab;
     }),
@@ -325,8 +339,10 @@ export const useBecomeWriterStore = create<BecomeWriterStore>()(
           };
           state.loading = false;
 
-          // 数据加载完成后显示欢迎弹窗
-          state.showWelcomeModal = true;
+          // 数据加载完成后显示欢迎弹窗（非作家才弹）
+          if (!state.isAuthor) {
+            state.showWelcomeModal = true;
+          }
         });
 
         console.log('[BecomeWriterStore] 初始数据加载完成');
@@ -342,8 +358,7 @@ export const useBecomeWriterStore = create<BecomeWriterStore>()(
 
     handleBecomeTomatoWriter: () => {
       console.log('[BecomeWriterStore] 成为番茄作家按钮点击');
-      // 这里可以实现实际的注册/申请逻辑
-      alert('成为番茄作家功能开发中...');
+      NavigationBridge.navigateToWritePage();
     },
 
     // 弹窗相关 actions
@@ -362,24 +377,44 @@ export const useBecomeWriterStore = create<BecomeWriterStore>()(
 
     handleImmediateRegister: () => {
       console.log('[BecomeWriterStore] 立即入驻按钮点击');
+      const { nickname, sex } = useUserStore.getState();
       set((state) => {
         if (!state.isAgreementChecked) {
-          alert('请先阅读并同意《个人信息保护声明》');
+          // 统一提示由页面层处理，避免 lint 警告
           return;
         }
-
-        // 关闭弹窗
-        state.showWelcomeModal = false;
-        state.isAgreementChecked = false;
       });
 
-      // 这里可以实现实际的立即入驻逻辑
-      alert('立即入驻功能开发中...');
+      const penName = nickname || '新作家';
+      const sexValue = sex && (sex === '0' || sex === '1') ? Number(sex) : 1;
+
+      // 调原生注册接口
+      NavigationBridge.registerAuthor(penName, sexValue)
+        .then((res: any) => {
+          console.log('[BecomeWriterStore] 注册成功:', res);
+          set((state) => {
+            state.lastRegisterOk = true;
+            state.showWelcomeModal = false; // 跳到写作页，但不再弹窗
+            state.isAgreementChecked = false;
+            // 创建一个初始作品，用于“作品数据”展示
+            if (!state.works) { state.works = []; }
+            const workId = Date.now().toString();
+            state.works!.unshift({ id: workId, title: `${penName}的新书`, words: 0 });
+          });
+
+          // 跳到写作页
+          NavigationBridge.navigateToWritePage();
+        })
+        .catch((e) => {
+          console.warn('[BecomeWriterStore] 注册失败:', e);
+          set((state) => {
+            state.lastRegisterOk = false;
+          });
+        });
     },
 
     handleMorePress: (type: string) => {
       console.log(`[BecomeWriterStore] 更多按钮点击: ${type}`);
-      alert(`${type}更多功能开发中...`);
     },
   }))
 );

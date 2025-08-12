@@ -4,12 +4,15 @@ interface NavigationBridgeInterface {
   goToLogin(): void;
   navigateToSettings(): void;
   navigateBack(componentName?: string): void;
+  navigateToWritePage(): void;
+  navigateToAIPage(): void;
   navigateToTimedSwitch(): void;
   navigateToHelpSupport(): void;
   navigateToPrivacyPolicy(): void;
   navigateToHistory(): void;
   navigateToMessage(): void;
   navigateToBecomeWriter(): void;
+  navigateToBecomeWriterWithStatus(): void;
   navigateToRecommendBook(): void;
   navigateToMyReservation(): void;
   navigateToMemberCenter(): void;
@@ -17,6 +20,7 @@ interface NavigationBridgeInterface {
   navigateToFeedbackHelp(): void;
   navigateToQuestionList(): void;
   navigateToQuestionDetail(): void;
+  navigateToBookManage(): void;
   navigateToWriteReview(bookId?: string, rating?: number): void;
   navigateToReviewDetail(commentData: string): void;
   clearComponentCache(componentName: string, callback: (result: any) => void): void;
@@ -27,6 +31,7 @@ interface NavigationBridgeInterface {
   getCurrentActualTheme(callback: (result: any) => void): void;
   getCurrentNightMode(callback: (result: any) => void): void;
   changeTheme(theme: string): Promise<any>;
+  registerAuthor(penName: string, sex: number): Promise<any>;
 }
 
 const { NavigationBridge: NativeNavigationBridge } = NativeModules;
@@ -45,6 +50,16 @@ export const NavigationBridge: NavigationBridgeInterface = {
   navigateBack: (componentName?: string) => {
     console.log('[NavigationBridge] Navigating back from:', componentName);
     NativeNavigationBridge?.navigateBack(componentName);
+  },
+
+  navigateToWritePage: () => {
+    console.log('[NavigationBridge] Navigating to write page');
+    NativeNavigationBridge?.navigateToWritePage();
+  },
+
+  navigateToAIPage: () => {
+    console.log('[NavigationBridge] Navigating to AI page');
+    NativeNavigationBridge?.navigateToAIPage();
   },
 
   navigateToTimedSwitch: () => {
@@ -75,6 +90,11 @@ export const NavigationBridge: NavigationBridgeInterface = {
   navigateToBecomeWriter: () => {
     console.log('[NavigationBridge] Navigating to become writer');
     NativeNavigationBridge?.navigateToBecomeWriter();
+  },
+
+  navigateToBecomeWriterWithStatus: () => {
+    console.log('[NavigationBridge] Navigating to become writer with status');
+    NativeNavigationBridge?.navigateToBecomeWriterWithStatus?.();
   },
 
   navigateToRecommendBook: () => {
@@ -160,6 +180,17 @@ export const NavigationBridge: NavigationBridgeInterface = {
   changeTheme: (theme: string): Promise<any> => {
     console.log('[NavigationBridge] Changing theme to:', theme);
     return NativeNavigationBridge?.changeTheme(theme) || Promise.resolve();
+  },
+
+  registerAuthor: (penName: string, sex: number): Promise<any> => {
+    console.log('[NavigationBridge] Register author:', penName, sex);
+    if (!NativeNavigationBridge?.registerAuthor) return Promise.reject('registerAuthor not available');
+    return NativeNavigationBridge.registerAuthor(penName, sex);
+  },
+
+  navigateToBookManage: () => {
+    console.log('[NavigationBridge] Navigating to book manage');
+    NativeNavigationBridge?.navigateToBookManage?.();
   },
 };
 

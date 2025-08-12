@@ -540,7 +540,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
   },
   toggleButtonText: {
     fontSize: fp(11),
-    fontweight: '200',
+    fontWeight: '200',
     color: colors.novelTextGray,
   },
    // ===== 弹窗样式 =====

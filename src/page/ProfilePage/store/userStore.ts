@@ -6,7 +6,7 @@ export interface UserState {
   token: string | null;
   nickname: string | null;
   photo: string | null;
-  sex: string | null;
+  sex: string | null; // 0/1 字符串
   isLoggedIn: boolean;
   balance: number;
   coins: number;

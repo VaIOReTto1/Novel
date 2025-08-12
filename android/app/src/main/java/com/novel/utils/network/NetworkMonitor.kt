@@ -333,17 +333,18 @@ class NetworkMonitor @Inject constructor(
 
         return when (state.type) {
             NetworkType.WIFI, NetworkType.ETHERNET -> {
+                // AI 接口较慢，整体放宽默认网络超时建议
                 TimeoutConfig(
-                    connectTimeout = 5_000,
-                    readTimeout = 10_000,
-                    callTimeout = 15_000
+                    connectTimeout = 10_000,
+                    readTimeout = 60_000,
+                    callTimeout = 90_000
                 )
             }
             NetworkType.CELLULAR -> {
                 when {
-                    quality >= 60 -> TimeoutConfig(6_000, 15_000, 25_000)  // 4G+
-                    quality >= 30 -> TimeoutConfig(8_000, 20_000, 30_000)  // 4G
-                    else -> TimeoutConfig(10_000, 30_000, 45_000)          // 3G/2G
+                    quality >= 60 -> TimeoutConfig(12_000, 75_000, 110_000)  // 4G+
+                    quality >= 30 -> TimeoutConfig(15_000, 90_000, 130_000)  // 4G
+                    else -> TimeoutConfig(18_000, 120_000, 160_000)          // 3G/2G
                 }
             }
             NetworkType.NONE -> TimeoutConfig(0, 0, 0) // 无网络

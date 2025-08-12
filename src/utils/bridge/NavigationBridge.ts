@@ -32,6 +32,10 @@ interface NavigationBridgeInterface {
   getCurrentNightMode(callback: (result: any) => void): void;
   changeTheme(theme: string): Promise<any>;
   registerAuthor(penName: string, sex: number): Promise<any>;
+  aiPolish(text: string): Promise<string>;
+  aiExpand(text: string, ratio: number): Promise<string>;
+  aiCondense(text: string, ratio: number): Promise<string>;
+  aiContinue(text: string, length: number): Promise<string>;
 }
 
 const { NavigationBridge: NativeNavigationBridge } = NativeModules;
@@ -191,6 +195,19 @@ export const NavigationBridge: NavigationBridgeInterface = {
   navigateToBookManage: () => {
     console.log('[NavigationBridge] Navigating to book manage');
     NativeNavigationBridge?.navigateToBookManage?.();
+  },
+
+  aiPolish: (text: string): Promise<string> => {
+    return (NativeNavigationBridge?.aiPolish?.(text)) || Promise.reject('aiPolish not available');
+  },
+  aiExpand: (text: string, ratio: number): Promise<string> => {
+    return (NativeNavigationBridge?.aiExpand?.(text, Math.round(ratio))) || Promise.reject('aiExpand not available');
+  },
+  aiCondense: (text: string, ratio: number): Promise<string> => {
+    return (NativeNavigationBridge?.aiCondense?.(text, Math.round(ratio))) || Promise.reject('aiCondense not available');
+  },
+  aiContinue: (text: string, length: number): Promise<string> => {
+    return (NativeNavigationBridge?.aiContinue?.(text, Math.round(length))) || Promise.reject('aiContinue not available');
   },
 };
 

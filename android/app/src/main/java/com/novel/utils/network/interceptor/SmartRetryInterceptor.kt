@@ -48,20 +48,20 @@ class SmartRetryInterceptor @Inject constructor(
         // 默认重试配置
         private val WIFI_RETRY_CONFIG = RetryConfig(
             maxRetries = 3,
-            baseDelayMs = 500L,
-            maxDelayMs = 5000L
+            baseDelayMs = 800L,
+            maxDelayMs = 8000L
         )
         
         private val CELLULAR_RETRY_CONFIG = RetryConfig(
-            maxRetries = 4,
-            baseDelayMs = 1000L,
-            maxDelayMs = 10000L
+            maxRetries = 5,
+            baseDelayMs = 1200L,
+            maxDelayMs = 15000L
         )
         
         private val POOR_NETWORK_RETRY_CONFIG = RetryConfig(
-            maxRetries = 5,
-            baseDelayMs = 2000L,
-            maxDelayMs = 20000L,
+            maxRetries = 6,
+            baseDelayMs = 2500L,
+            maxDelayMs = 30000L,
             backoffMultiplier = 2.0
         )
         

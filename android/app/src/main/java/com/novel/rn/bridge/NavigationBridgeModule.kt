@@ -11,6 +11,7 @@ import com.novel.ComposeMainActivity
 import com.novel.MainApplication
 import com.novel.utils.NavViewModel
 import com.novel.rn.settings.SettingsViewModel
+import com.novel.utils.network.api.author.ai.AiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -492,6 +493,87 @@ class NavigationBridgeModule(
             callback.invoke(null, currentState.currentThemeMode)
         } ?: run {
             callback.invoke("ViewModel未初始化", null)
+        }
+    }
+
+    // =================== AI Service Bridge ===================
+    @ReactMethod
+    fun aiPolish(text: String, promise: Promise) {
+        TimberLogger.d(TAG, "AI 润色，请求文本长度=${text.length}")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resp = AiService().polishTextBlocking(text)
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (resp.ok == true) {
+                        promise.resolve(resp.data ?: "")
+                    } else {
+                        promise.reject("AI_POLISH_ERROR", resp.message ?: "AI 返回失败")
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "AI 润色失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_POLISH_ERROR", e) }
+            }
+        }
+    }
+
+    @ReactMethod
+    fun aiExpand(text: String, ratio: Int, promise: Promise) {
+        TimberLogger.d(TAG, "AI 扩写，请求文本长度=${text.length}，ratio=$ratio")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resp = AiService().expandTextBlocking(text, ratio)
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (resp.ok == true) {
+                        promise.resolve(resp.data ?: "")
+                    } else {
+                        promise.reject("AI_EXPAND_ERROR", resp.message ?: "AI 返回失败")
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "AI 扩写失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_EXPAND_ERROR", e) }
+            }
+        }
+    }
+
+    @ReactMethod
+    fun aiCondense(text: String, ratio: Int, promise: Promise) {
+        TimberLogger.d(TAG, "AI 缩写，请求文本长度=${text.length}，ratio=$ratio")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resp = AiService().condenseTextBlocking(text, ratio)
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (resp.ok == true) {
+                        promise.resolve(resp.data ?: "")
+                    } else {
+                        promise.reject("AI_CONDENSE_ERROR", resp.message ?: "AI 返回失败")
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "AI 缩写失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_CONDENSE_ERROR", e) }
+            }
+        }
+    }
+
+    @ReactMethod
+    fun aiContinue(text: String, length: Int, promise: Promise) {
+        TimberLogger.d(TAG, "AI 续写，请求文本长度=${text.length}，length=$length")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resp = AiService().continueTextBlocking(text, length)
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (resp.ok == true) {
+                        promise.resolve(resp.data ?: "")
+                    } else {
+                        promise.reject("AI_CONTINUE_ERROR", resp.message ?: "AI 返回失败")
+                    }
+                }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "AI 续写失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_CONTINUE_ERROR", e) }
+            }
         }
     }
 

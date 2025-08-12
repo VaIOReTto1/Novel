@@ -3,6 +3,7 @@ package com.novel.utils.network
 import androidx.compose.runtime.Stable
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.interceptor.AuthInterceptor
+import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -15,6 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 /**
  * Retrofit 服务接口定义
@@ -48,6 +50,19 @@ interface ApiServiceInterface {
     fun post(
         @Url endpoint: String,
         @Body body: RequestBody,
+        @HeaderMap headers: Map<String, String> = mapOf()
+    ): Call<ResponseBody>
+
+    /**
+     * POST请求接口（Query 参数形式）
+     * @param endpoint 接口路径
+     * @param params 查询参数
+     * @param headers 请求头部信息
+     */
+    @POST
+    fun postWithQuery(
+        @Url endpoint: String,
+        @QueryMap params: Map<String, String> = mapOf(),
         @HeaderMap headers: Map<String, String> = mapOf()
     ): Call<ResponseBody>
 
@@ -150,6 +165,21 @@ object RetrofitClient {
                 .addInterceptor(authInterceptor) // 自动加Token
                 .addInterceptor(logging)
 
+            // 根据服务类型设置更宽松的超时，AI 接口响应较慢
+            if (baseUrl.contains("/api/author/ai/")) {
+                builder
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(120, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .callTimeout(150, TimeUnit.SECONDS)
+            } else {
+                builder
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(45, TimeUnit.SECONDS)
+                    .writeTimeout(45, TimeUnit.SECONDS)
+                    .callTimeout(60, TimeUnit.SECONDS)
+            }
+
             // 生成Retrofit实例
             Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -234,6 +264,41 @@ object ApiService {
     ) {
         TimberLogger.d(TAG, "POST请求: $endpoint")
         getService(baseUrl).post(endpoint, createJsonBody(params), headers)
+            .enqueue(createCallback(callback))
+    }
+
+    /**
+     * POST请求方法（支持混合类型参数，保持JSON中数值类型）
+     * @param baseUrl 基础URL
+     * @param endpoint 接口端点
+     * @param params 请求参数（值为任意类型，将按原样序列化为JSON）
+     * @param headers 请求头
+     * @param callback 结果回调
+     */
+    fun postJson(
+        baseUrl: String,
+        endpoint: String,
+        params: Map<String, Any?> = mapOf(),
+        headers: Map<String, String> = mapOf(),
+        callback: (String?, Throwable?) -> Unit
+    ) {
+        TimberLogger.d(TAG, "POST请求(postJson): $endpoint")
+        getService(baseUrl).post(endpoint, createJsonBodyAny(params), headers)
+            .enqueue(createCallback(callback))
+    }
+
+    /**
+     * POST请求方法（Query 参数形式，符合部分后端接口文档要求）
+     */
+    fun postQuery(
+        baseUrl: String,
+        endpoint: String,
+        params: Map<String, String> = mapOf(),
+        headers: Map<String, String> = mapOf(),
+        callback: (String?, Throwable?) -> Unit
+    ) {
+        TimberLogger.d(TAG, "POST请求(postQuery): $endpoint")
+        getService(baseUrl).postWithQuery(endpoint, params, headers)
             .enqueue(createCallback(callback))
     }
 
@@ -348,5 +413,11 @@ object ApiService {
         val json = params.entries.joinToString(",") { "\"${it.key}\":\"${it.value}\"" }
         val jsonBody = "{ $json }"
         return createJsonRequestBody(jsonBody)  // 创建 JSON 请求体
+    }
+
+    // 使用Gson将混合类型的参数序列化为JSON，保留原始数值类型
+    private fun createJsonBodyAny(params: Map<String, Any?>): RequestBody {
+        val json = Gson().toJson(params)
+        return createJsonRequestBody(json)
     }
 }

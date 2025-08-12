@@ -11,35 +11,62 @@ import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * 作家后台-AI模块（客户端）
+ *
+ * 与服务端 `AuthorAiController` 契约保持一致：
+ * - /expand : ratio 为百分比，例如 150 表示将文本扩展到约 150%（允许±10%）
+ * - /condense : ratio 作为“分母”，例如 2 表示约 1/2（内部折算为百分比，允许±10%）
+ * - /continue : length 为续写目标字数（近似，允许±20%）
+ * - /polish : 无额外参数，仅做表达优化，不改变事实与叙述视角
+ *
+ * 返回体：后端为 `RestResp<String>`，本地映射为 [AiResponse]，其中 `data` 字段即为 AI 处理后的纯文本结果。
+ */
 @Singleton
 class AiService @Inject constructor() {
     
     // region 数据结构
+    /**
+     * 服务端通用响应体映射。
+     * - `data`：AI 处理后的纯文本结果（服务端已做哨兵标记解析与清洗）。
+     */
     @Stable
     data class AiResponse(
         @SerializedName("code") val code: String?,
         @SerializedName("message") val message: String?,
-        @SerializedName("data") val data: String?, // AI处理后的文本
+        @SerializedName("data") val data: String?,
         @SerializedName("ok") val ok: Boolean?
     )
 
+    /**
+     * 润色请求：不改变原意与事实，仅做表达与可读性优化。
+     */
     @Stable
     data class PolishRequest(
         val text: String
     )
 
+    /**
+     * 扩写请求：`ratio` 为百分比，例如 150 表示约 150%（允许±10%）。
+     */
     @Stable
     data class ExpandRequest(
         val text: String,
-        val ratio: Double
+        val ratio: Int
     )
 
+    /**
+     * 续写请求：`length` 为续写目标字数（近似，允许±20%）。
+     */
     @Stable
     data class ContinueRequest(
         val text: String,
         val length: Int
     )
 
+    /**
+     * 缩写请求：`ratio` 作为“分母”，例如 2 表示约 1/2（内部折算为百分比，允许±10%）。
+     */
     @Stable
     data class CondenseRequest(
         val text: String,
@@ -50,7 +77,8 @@ class AiService @Inject constructor() {
     // region 网络请求方法
     
     /**
-     * AI润色接口
+     * AI 润色接口。
+     * - 不改变原意与事实，仅做表达优化。
      * @param text 需要润色的文本
      */
     private fun polishText(
@@ -59,9 +87,12 @@ class AiService @Inject constructor() {
     ) {
         TimberLogger.d("AiService", "开始 polishText()，文本长度：${text.length}")
         
-        val params = mapOf("text" to text)
+        val params = mapOf(
+            "text" to text
+        )
         
-        ApiService.post(
+        // 根据后端文档，AI 接口为 POST + query 参数
+        ApiService.postQuery(
             baseUrl = BASE_URL_AI,
             endpoint = "polish",
             params = params,
@@ -75,23 +106,25 @@ class AiService @Inject constructor() {
     }
 
     /**
-     * AI扩写接口
+     * AI 扩写接口。
+     * - `ratio` 为百分比，例如 150 表示将文本扩展到约 150%（允许±10%）。
      * @param text 需要扩写的文本
-     * @param ratio 扩写比例
+     * @param ratio 扩写比例（百分比）
      */
     private fun expandText(
         text: String,
-        ratio: Double,
+        ratio: Int,
         callback: (AiResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AiService", "开始 expandText()，文本长度：${text.length}，扩写比例：$ratio")
         
         val params = mapOf(
             "text" to text,
+            // 文档为 number(double)；服务端实际读取 query，保持字符串传参更兼容
             "ratio" to ratio.toString()
         )
         
-        ApiService.post(
+        ApiService.postQuery(
             baseUrl = BASE_URL_AI,
             endpoint = "expand",
             params = params,
@@ -105,9 +138,10 @@ class AiService @Inject constructor() {
     }
 
     /**
-     * AI续写接口
+     * AI 续写接口。
+     * - `length` 为续写目标字数（近似，允许±20%）。
      * @param text 需要续写的文本
-     * @param length 续写长度
+     * @param length 续写长度（目标字数）
      */
     private fun continueText(
         text: String,
@@ -121,7 +155,7 @@ class AiService @Inject constructor() {
             "length" to length.toString()
         )
         
-        ApiService.post(
+        ApiService.postQuery(
             baseUrl = BASE_URL_AI,
             endpoint = "continue",
             params = params,
@@ -135,9 +169,10 @@ class AiService @Inject constructor() {
     }
 
     /**
-     * AI缩写接口
+     * AI 缩写接口。
+     * - `ratio` 作为“分母”，例如 2 表示约 1/2（内部折算为百分比，允许±10%）。
      * @param text 需要缩写的文本
-     * @param ratio 缩写比例
+     * @param ratio 缩写比例（分母）
      */
     private fun condenseText(
         text: String,
@@ -151,7 +186,7 @@ class AiService @Inject constructor() {
             "ratio" to ratio.toString()
         )
         
-        ApiService.post(
+        ApiService.postQuery(
             baseUrl = BASE_URL_AI,
             endpoint = "condense",
             params = params,
@@ -228,7 +263,7 @@ class AiService @Inject constructor() {
         return polishTextBlocking(request.text)
     }
 
-    suspend fun expandTextBlocking(text: String, ratio: Double): AiResponse {
+    suspend fun expandTextBlocking(text: String, ratio: Int): AiResponse {
         return suspendCancellableCoroutine { cont ->
             expandText(text, ratio) { response, error ->
                 if (error != null) {

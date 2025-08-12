@@ -44,6 +44,12 @@ class RequestCoalescingInterceptor @Inject constructor(
             return chain.proceed(request)
         }
         
+        // AI 接口不进行请求合并，避免串行化影响响应时延
+        if (request.url.encodedPath.contains("/api/author/ai/")) {
+            TimberLogger.d(TAG, "AI 接口跳过请求合并: ${request.url}")
+            return chain.proceed(request)
+        }
+
         // 使用协程阻塞等待合并结果
         return runBlocking {
             try {

@@ -42,6 +42,44 @@ export const createWritePageStyles = (colors: NovelColors) => StyleSheet.create(
   // 卷选择
   volumeBar: { position: 'absolute', left: wp(16), right: wp(16), bottom: wp(20) },
   volumeText: { color: colors.novelTextGray },
+
+  // 选择工具条
+  selectionToolbarBackdrop: {
+    position: 'absolute', left: 0, right: 0, top: 0, bottom: 0,
+  },
+  selectionToolbarContainer: {
+    position: 'absolute',
+    left: wp(16), right: wp(16),
+    top: wp(72),
+    backgroundColor: colors.novelBackground,
+    borderRadius: sp(8),
+    padding: wp(8),
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    elevation: 8,
+    shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 6,
+  },
+  toolbarBtnText: { fontSize: fp(12), color: colors.novelText },
+  toolbarBtnTextSecondary: { fontSize: fp(12), color: colors.novelTextGray },
+
+  // 遮罩与弹窗
+  overlayMask: {
+    position: 'absolute', left: 0, right: 0, top: 0, bottom: 0,
+    backgroundColor: '#0006', alignItems: 'center', justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modalContainer: {
+    backgroundColor: colors.novelBackground,
+    padding: wp(16), borderRadius: sp(10), width: '80%',
+  },
+  modalHint: { color: colors.novelText, marginBottom: wp(8) },
+  modalInput: {
+    borderWidth: 1, borderColor: colors.outline, color: colors.novelText,
+    padding: wp(8), borderRadius: sp(6), marginBottom: wp(12),
+  },
+  modalActions: { flexDirection: 'row', justifyContent: 'flex-end' },
+  modalCancel: { color: colors.novelTextGray, marginRight: wp(16) },
+  modalOk: { color: colors.novelMain },
 });
 
 

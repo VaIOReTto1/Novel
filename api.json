@@ -1,2964 +1,3015 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-      "title": "novel 项目接口文档",
-      "license": {
-        "name": "Apache 2.0",
-        "url": "https://www.apache.org/licenses/LICENSE-2.0"
-      },
-      "version": "v3.2.0"
+  "openapi": "3.0.1",
+  "info": {
+    "title": "novel 项目接口文档",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
     },
-    "servers": [
-      {
-        "url": "http://47.110.147.60:8080",
-        "description": "Generated server url"
+    "version": "v3.2.0"
+  },
+  "servers": [
+    {
+      "url": "http://47.110.147.60:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "AuthorController",
+      "description": "作家后台-作者模块"
+    },
+    {
+      "name": "NewsController",
+      "description": "前台门户-新闻模块"
+    },
+    {
+      "name": "SearchController",
+      "description": "前台门户-搜索模块"
+    },
+    {
+      "name": "UserController",
+      "description": "前台门户-会员模块"
+    },
+    {
+      "name": "AiController",
+      "description": "作家后台-AI模块"
+    },
+    {
+      "name": "BookController",
+      "description": "前台门户-小说模块"
+    },
+    {
+      "name": "HomeController",
+      "description": "前台门户-首页模块"
+    },
+    {
+      "name": "ResourceController",
+      "description": "前台门户-资源模块"
+    }
+  ],
+  "paths": {
+    "/api/front/user": {
+      "get": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "用户信息查询接口",
+        "operationId": "getUserInfo",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespUserInfoRespDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "用户信息修改接口",
+        "operationId": "updateUserInfo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInfoUptReqDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
-    ],
-    "tags": [
-      {
-        "name": "AuthorController",
-        "description": "作家后台-作者模块"
+    },
+    "/api/front/user/comment/{id}": {
+      "put": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "修改评论接口",
+        "operationId": "updateComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "评论ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
-      {
-        "name": "NewsController",
-        "description": "前台门户-新闻模块"
-      },
-      {
-        "name": "SearchController",
-        "description": "前台门户-搜索模块"
-      },
-      {
-        "name": "UserController",
-        "description": "前台门户-会员模块"
-      },
-      {
-        "name": "AiController",
-        "description": "作家后台-AI模块"
-      },
-      {
-        "name": "BookController",
-        "description": "前台门户-小说模块"
-      },
-      {
-        "name": "HomeController",
-        "description": "前台门户-首页模块"
-      },
-      {
-        "name": "ResourceController",
-        "description": "前台门户-资源模块"
+      "delete": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "删除评论接口",
+        "operationId": "deleteComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "评论ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
-    ],
-    "paths": {
-      "/api/front/user": {
-        "get": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "用户信息查询接口",
-          "operationId": "getUserInfo",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespUserInfoRespDto"
-                  }
+    },
+    "/api/author/book/chapter/{chapterId}": {
+      "get": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说章节查询接口",
+        "operationId": "getBookChapter",
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "path",
+            "description": "章节ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespChapterContentRespDto"
                 }
               }
             }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
+          }
         },
-        "put": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "用户信息修改接口",
-          "operationId": "updateUserInfo",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserInfoUptReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
-      "/api/front/user/comment/{id}": {
-        "put": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "修改评论接口",
-          "operationId": "updateComment",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "评论ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            },
-            {
-              "name": "content",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
+      "put": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说章节更新接口",
+        "operationId": "updateBookChapter",
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "path",
+            "description": "章节ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterUpdateReqDto"
               }
             }
           },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
+          "required": true
         },
-        "delete": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "删除评论接口",
-          "operationId": "deleteComment",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "评论ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
                 }
               }
             }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/book/chapter/{chapterId}": {
-        "get": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说章节查询接口",
-          "operationId": "getBookChapter",
-          "parameters": [
-            {
-              "name": "chapterId",
-              "in": "path",
-              "description": "章节ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespChapterContentRespDto"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
+          }
         },
-        "put": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说章节更新接口",
-          "operationId": "updateBookChapter",
-          "parameters": [
-            {
-              "name": "chapterId",
-              "in": "path",
-              "description": "章节ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说章节删除接口",
+        "operationId": "deleteBookChapter",
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "path",
+            "description": "章节ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
-          ],
-          "requestBody": {
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChapterUpdateReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
+                  "$ref": "#/components/schemas/RestRespVoid"
                 }
               }
             }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
+          }
         },
-        "delete": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说章节删除接口",
-          "operationId": "deleteBookChapter",
-          "parameters": [
-            {
-              "name": "chapterId",
-              "in": "path",
-              "description": "章节ID",
-              "required": true,
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/register": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "用户注册接口",
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
+                "$ref": "#/components/schemas/UserRegisterReqDto"
               }
             }
           },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/register": {
-        "post": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "用户注册接口",
-          "operationId": "register",
-          "requestBody": {
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserRegisterReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespUserRegisterRespDto"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/login": {
-        "post": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "用户登录接口",
-          "operationId": "login",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserLoginReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespUserLoginRespDto"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/feedback": {
-        "post": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "用户反馈提交接口",
-          "operationId": "submitFeedback",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/comment": {
-        "post": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "发表评论接口",
-          "operationId": "comment",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserCommentReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/resource/image": {
-        "post": {
-          "tags": [
-            "ResourceController"
-          ],
-          "summary": "图片上传接口",
-          "operationId": "uploadImage",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "required": [
-                    "file"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "file": {
-                      "type": "string",
-                      "description": "上传文件",
-                      "format": "binary"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespString"
-                  }
+                  "$ref": "#/components/schemas/RestRespUserRegisterRespDto"
                 }
               }
             }
           }
-        }
-      },
-      "/api/front/book/visit": {
-        "post": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "增加小说点击量接口",
-          "operationId": "addVisitCount",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "query",
-              "description": "小说ID",
-              "required": true,
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/login": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "用户登录接口",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "integer",
-                "format": "int64"
+                "$ref": "#/components/schemas/UserLoginReqDto"
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespUserLoginRespDto"
                 }
               }
             }
           }
-        }
-      },
-      "/api/author/register": {
-        "post": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "作家注册接口",
-          "operationId": "register_1",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthorRegisterReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/book": {
-        "post": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说发布接口",
-          "operationId": "publishBook",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BookAddReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/book/chapter/{bookId}": {
-        "post": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说章节发布接口",
-          "operationId": "publishBookChapter",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "path",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ChapterAddReqDto"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/ai/polish": {
-        "post": {
-          "tags": [
-            "AiController"
-          ],
-          "summary": "AI润色接口",
-          "operationId": "polishText",
-          "parameters": [
-            {
-              "name": "text",
-              "in": "query",
-              "required": true,
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/feedback": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "用户反馈提交接口",
+        "operationId": "submitFeedback",
+        "requestBody": {
+          "content": {
+            "application/json": {
               "schema": {
                 "type": "string"
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespString"
-                  }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
                 }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/comment": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "发表评论接口",
+        "operationId": "comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCommentReqDto"
               }
             }
           },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/ai/expand": {
-        "post": {
-          "tags": [
-            "AiController"
-          ],
-          "summary": "AI扩写接口",
-          "operationId": "expandText",
-          "parameters": [
-            {
-              "name": "text",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "ratio",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "type": "number",
-                "format": "double"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespString"
-                  }
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
                 }
               }
             }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/ai/continue": {
-        "post": {
-          "tags": [
-            "AiController"
-          ],
-          "summary": "AI续写接口",
-          "operationId": "continueText",
-          "parameters": [
-            {
-              "name": "text",
-              "in": "query",
-              "required": true,
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/resource/image": {
+      "post": {
+        "tags": [
+          "ResourceController"
+        ],
+        "summary": "图片上传接口",
+        "operationId": "uploadImage",
+        "requestBody": {
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "length",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespString"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/ai/condense": {
-        "post": {
-          "tags": [
-            "AiController"
-          ],
-          "summary": "AI缩写接口",
-          "operationId": "condenseText",
-          "parameters": [
-            {
-              "name": "text",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "ratio",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespString"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/comments": {
-        "get": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "查询会员评论列表接口",
-          "operationId": "listComments",
-          "parameters": [
-            {
-              "name": "pageReqDto",
-              "in": "query",
-              "required": true,
-              "schema": {
-                "$ref": "#/components/schemas/PageReqDto"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespPageRespDtoUserCommentRespDto"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/bookshelf_status": {
-        "get": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "查询书架状态接口",
-          "operationId": "getBookshelfStatus",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "query",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespInteger"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/search/books": {
-        "get": {
-          "tags": [
-            "SearchController"
-          ],
-          "summary": "小说搜索接口",
-          "operationId": "searchBooks",
-          "parameters": [
-            {
-              "name": "keyword",
-              "in": "query",
-              "description": "搜索关键字",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "workDirection",
-              "in": "query",
-              "description": "作品方向",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "categoryId",
-              "in": "query",
-              "description": "分类ID",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "isVip",
-              "in": "query",
-              "description": "是否收费，1：收费，0：免费",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "bookStatus",
-              "in": "query",
-              "description": "小说更新状态，0：连载中，1：已完结",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "wordCountMin",
-              "in": "query",
-              "description": "字数最小值",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "wordCountMax",
-              "in": "query",
-              "description": "字数最大值",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "updateTimeMin",
-              "in": "query",
-              "description": "最小更新时间",
-              "required": false,
-              "schema": {
-                "type": "string",
-                "format": "date-time"
-              }
-            },
-            {
-              "name": "sort",
-              "in": "query",
-              "description": "排序字段",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "pageNum",
-              "in": "query",
-              "description": "请求页码，默认第 1 页",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "pageSize",
-              "in": "query",
-              "description": "每页大小，默认每页 10 条",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespPageRespDtoBookInfoRespDto"
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "上传文件",
+                    "format": "binary"
                   }
                 }
               }
             }
           }
-        }
-      },
-      "/api/front/resource/img_verify_code": {
-        "get": {
-          "tags": [
-            "ResourceController"
-          ],
-          "summary": "获取图片验证码接口",
-          "operationId": "getImgVerifyCode",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespImgVerifyCodeRespDto"
-                  }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespString"
                 }
               }
             }
           }
-        }
-      },
-      "/api/front/news/{id}": {
-        "get": {
-          "tags": [
-            "NewsController"
-          ],
-          "summary": "新闻信息查询接口",
-          "operationId": "getNews",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "新闻ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespNewsInfoRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/news/latest_list": {
-        "get": {
-          "tags": [
-            "NewsController"
-          ],
-          "summary": "最新新闻列表查询接口",
-          "operationId": "listLatestNews",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListNewsInfoRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/home/friend_Link/list": {
-        "get": {
-          "tags": [
-            "HomeController"
-          ],
-          "summary": "首页友情链接列表查询接口",
-          "operationId": "listHomeFriendLinks",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListHomeFriendLinkRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/home/books": {
-        "get": {
-          "tags": [
-            "HomeController"
-          ],
-          "summary": "首页小说推荐查询接口",
-          "operationId": "listHomeBooks",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListHomeBookRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/{id}": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说信息查询接口",
-          "operationId": "getBookById",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "小说 ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespBookInfoRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/visit_rank": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说点击榜查询接口",
-          "operationId": "listVisitRankBooks",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListBookRankRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/update_rank": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说更新榜查询接口",
-          "operationId": "listUpdateRankBooks",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListBookRankRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/rec_list": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说推荐列表查询接口",
-          "operationId": "listRecBooks",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "query",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListBookInfoRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/pre_chapter_id/{chapterId}": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "获取上一章节ID接口",
-          "operationId": "getPreChapterId",
-          "parameters": [
-            {
-              "name": "chapterId",
-              "in": "path",
-              "description": "章节ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespLong"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/next_chapter_id/{chapterId}": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "获取下一章节ID接口",
-          "operationId": "getNextChapterId",
-          "parameters": [
-            {
-              "name": "chapterId",
-              "in": "path",
-              "description": "章节ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespLong"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/newest_rank": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说新书榜查询接口",
-          "operationId": "listNewestRankBooks",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListBookRankRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/last_chapter/about": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说最新章节相关信息查询接口",
-          "operationId": "getLastChapterAbout",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "query",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespBookChapterAboutRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/content/{chapterId}": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说内容相关信息查询接口",
-          "operationId": "getBookContentAbout",
-          "parameters": [
-            {
-              "name": "chapterId",
-              "in": "path",
-              "description": "章节ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespBookContentAboutRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/comment/newest_list": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说最新评论查询接口",
-          "operationId": "listNewestComments",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "query",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespBookCommentRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/chapter/list": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说章节列表查询接口",
-          "operationId": "listChapters",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "query",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListBookChapterRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/front/book/category/list": {
-        "get": {
-          "tags": [
-            "BookController"
-          ],
-          "summary": "小说分类列表查询接口",
-          "operationId": "listCategory",
-          "parameters": [
-            {
-              "name": "workDirection",
-              "in": "query",
-              "description": "作品方向",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespListBookCategoryRespDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/author/status": {
-        "get": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "作家状态查询接口",
-          "operationId": "getStatus",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespInteger"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/books": {
-        "get": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说发布列表查询接口",
-          "operationId": "listBooks",
-          "parameters": [
-            {
-              "name": "pageNum",
-              "in": "query",
-              "description": "请求页码，默认第 1 页",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "pageSize",
-              "in": "query",
-              "description": "每页大小，默认每页 10 条",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespPageRespDtoBookInfoRespDto"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/author/book/chapters/{bookId}": {
-        "get": {
-          "tags": [
-            "AuthorController"
-          ],
-          "summary": "小说章节发布列表查询接口",
-          "operationId": "listBookChapters",
-          "parameters": [
-            {
-              "name": "bookId",
-              "in": "path",
-              "description": "小说ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            },
-            {
-              "name": "pageNum",
-              "in": "query",
-              "description": "请求页码，默认第 1 页",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            {
-              "name": "pageSize",
-              "in": "query",
-              "description": "每页大小，默认每页 10 条",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespPageRespDtoBookChapterRespDto"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
-        }
-      },
-      "/api/front/user/feedback/{id}": {
-        "delete": {
-          "tags": [
-            "UserController"
-          ],
-          "summary": "用户反馈删除接口",
-          "operationId": "deleteFeedback",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "反馈ID",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "*/*": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RestRespVoid"
-                  }
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "Authorization": []
-            }
-          ]
         }
       }
     },
-    "components": {
-      "schemas": {
-        "UserInfoUptReqDto": {
-          "type": "object",
-          "properties": {
-            "userId": {
+    "/api/front/book/visit": {
+      "post": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "增加小说点击量接口",
+        "operationId": "addVisitCount",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
               "type": "integer",
               "format": "int64"
-            },
-            "nickName": {
-              "type": "string",
-              "description": "昵称"
-            },
-            "userPhoto": {
-              "pattern": "^/[^ ]{10,}\\.(png|PNG|jpg|JPG|jpeg|JPEG|gif|GIF|bpm|BPM)$",
-              "type": "string",
-              "description": "头像地址"
-            },
-            "userSex": {
-              "maximum": 1,
-              "minimum": 0,
-              "type": "integer",
-              "description": "性别",
-              "format": "int32"
             }
           }
-        },
-        "RestRespVoid": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "object",
-              "description": "响应数据"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "ChapterUpdateReqDto": {
-          "required": [
-            "chapterContent",
-            "chapterName",
-            "isVip"
-          ],
-          "type": "object",
-          "properties": {
-            "chapterName": {
-              "type": "string",
-              "description": "章节名"
-            },
-            "chapterContent": {
-              "type": "string",
-              "description": "章节内容"
-            },
-            "isVip": {
-              "type": "integer",
-              "description": "是否收费;1-收费 0-免费",
-              "format": "int32"
-            }
-          }
-        },
-        "UserRegisterReqDto": {
-          "required": [
-            "password",
-            "sessionId",
-            "username",
-            "velCode"
-          ],
-          "type": "object",
-          "properties": {
-            "username": {
-              "pattern": "^1[3|4|5|6|7|8|9][0-9]{9}$",
-              "type": "string",
-              "description": "手机号"
-            },
-            "password": {
-              "type": "string",
-              "description": "密码"
-            },
-            "velCode": {
-              "pattern": "^\\d{4}$",
-              "type": "string",
-              "description": "验证码"
-            },
-            "sessionId": {
-              "type": "string",
-              "description": "sessionId"
-            }
-          }
-        },
-        "RestRespUserRegisterRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/UserRegisterRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "UserRegisterRespDto": {
-          "type": "object",
-          "properties": {
-            "uid": {
-              "type": "integer",
-              "description": "用户ID",
-              "format": "int64"
-            },
-            "token": {
-              "type": "string",
-              "description": "用户token"
-            }
-          },
-          "description": "响应数据"
-        },
-        "UserLoginReqDto": {
-          "required": [
-            "password",
-            "username"
-          ],
-          "type": "object",
-          "properties": {
-            "username": {
-              "pattern": "^1[3|4|5|6|7|8|9][0-9]{9}$",
-              "type": "string",
-              "description": "手机号",
-              "example": "18888888888"
-            },
-            "password": {
-              "type": "string",
-              "description": "密码",
-              "example": "123456"
-            }
-          }
-        },
-        "RestRespUserLoginRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/UserLoginRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "UserLoginRespDto": {
-          "type": "object",
-          "properties": {
-            "uid": {
-              "type": "integer",
-              "description": "用户ID",
-              "format": "int64"
-            },
-            "nickName": {
-              "type": "string",
-              "description": "用户昵称"
-            },
-            "token": {
-              "type": "string",
-              "description": "用户token"
-            }
-          },
-          "description": "响应数据"
-        },
-        "UserCommentReqDto": {
-          "required": [
-            "bookId",
-            "commentContent"
-          ],
-          "type": "object",
-          "properties": {
-            "userId": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "bookId": {
-              "type": "integer",
-              "description": "小说ID",
-              "format": "int64"
-            },
-            "commentContent": {
-              "type": "string",
-              "description": "评论内容"
-            }
-          }
-        },
-        "RestRespString": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "string",
-              "description": "响应数据"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "AuthorRegisterReqDto": {
-          "required": [
-            "chatAccount",
-            "email",
-            "penName",
-            "telPhone",
-            "workDirection"
-          ],
-          "type": "object",
-          "properties": {
-            "penName": {
-              "type": "string",
-              "description": "笔名"
-            },
-            "telPhone": {
-              "pattern": "^1[3|4|5|6|7|8|9][0-9]{9}$",
-              "type": "string",
-              "description": "手机号码"
-            },
-            "chatAccount": {
-              "type": "string",
-              "description": "QQ或微信账号"
-            },
-            "email": {
-              "type": "string",
-              "description": "电子邮箱"
-            },
-            "workDirection": {
-              "maximum": 1,
-              "minimum": 0,
-              "type": "integer",
-              "description": "作品方向;0-男频 1-女频",
-              "format": "int32"
-            }
-          }
-        },
-        "BookAddReqDto": {
-          "required": [
-            "bookDesc",
-            "bookName",
-            "categoryId",
-            "categoryName",
-            "isVip",
-            "picUrl",
-            "workDirection"
-          ],
-          "type": "object",
-          "properties": {
-            "workDirection": {
-              "type": "integer",
-              "description": "作品方向;0-男频 1-女频",
-              "format": "int32"
-            },
-            "categoryId": {
-              "type": "integer",
-              "description": "类别ID",
-              "format": "int64"
-            },
-            "categoryName": {
-              "type": "string",
-              "description": "类别名"
-            },
-            "picUrl": {
-              "type": "string",
-              "description": "小说封面地址"
-            },
-            "bookName": {
-              "type": "string",
-              "description": "小说名"
-            },
-            "bookDesc": {
-              "type": "string",
-              "description": "书籍描述"
-            },
-            "isVip": {
-              "type": "integer",
-              "description": "是否收费;1-收费 0-免费",
-              "format": "int32"
-            }
-          }
-        },
-        "ChapterAddReqDto": {
-          "required": [
-            "bookId",
-            "chapterContent",
-            "chapterName",
-            "isVip"
-          ],
-          "type": "object",
-          "properties": {
-            "bookId": {
-              "type": "integer",
-              "description": "小说ID",
-              "format": "int64"
-            },
-            "chapterName": {
-              "type": "string",
-              "description": "章节名"
-            },
-            "chapterContent": {
-              "type": "string",
-              "description": "章节内容"
-            },
-            "isVip": {
-              "type": "integer",
-              "description": "是否收费;1-收费 0-免费",
-              "format": "int32"
-            }
-          }
-        },
-        "RestRespUserInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/UserInfoRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "UserInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "nickName": {
-              "type": "string",
-              "description": "昵称"
-            },
-            "userPhoto": {
-              "type": "string",
-              "description": "用户头像"
-            },
-            "userSex": {
-              "type": "integer",
-              "description": "用户性别",
-              "format": "int32"
-            }
-          },
-          "description": "响应数据"
-        },
-        "PageReqDto": {
-          "type": "object",
-          "properties": {
-            "pageNum": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "pageSize": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "fetchAll": {
-              "type": "boolean"
-            }
-          }
-        },
-        "PageRespDtoUserCommentRespDto": {
-          "type": "object",
-          "properties": {
-            "pageNum": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "pageSize": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "total": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "list": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/UserCommentRespDto"
-              }
-            },
-            "pages": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespPageRespDtoUserCommentRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/PageRespDtoUserCommentRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "UserCommentRespDto": {
-          "type": "object",
-          "properties": {
-            "commentContent": {
-              "type": "string",
-              "description": "评论内容"
-            },
-            "commentBookPic": {
-              "type": "string",
-              "description": "评论小说封面"
-            },
-            "commentBook": {
-              "type": "string",
-              "description": "评论小说"
-            },
-            "commentTime": {
-              "type": "string",
-              "description": "评论时间",
-              "format": "date-time"
-            }
-          }
-        },
-        "RestRespInteger": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "integer",
-              "description": "响应数据",
-              "format": "int32"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "BookInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "小说ID",
-              "format": "int64"
-            },
-            "categoryId": {
-              "type": "integer",
-              "description": "类别ID",
-              "format": "int64"
-            },
-            "categoryName": {
-              "type": "string",
-              "description": "类别名"
-            },
-            "picUrl": {
-              "type": "string",
-              "description": "小说封面地址"
-            },
-            "bookName": {
-              "type": "string",
-              "description": "小说名"
-            },
-            "authorId": {
-              "type": "integer",
-              "description": "作家id",
-              "format": "int64"
-            },
-            "authorName": {
-              "type": "string",
-              "description": "作家名"
-            },
-            "bookDesc": {
-              "type": "string",
-              "description": "书籍描述"
-            },
-            "bookStatus": {
-              "type": "integer",
-              "description": "书籍状态;0-连载中 1-已完结",
-              "format": "int32"
-            },
-            "visitCount": {
-              "type": "integer",
-              "description": "点击量",
-              "format": "int64"
-            },
-            "wordCount": {
-              "type": "integer",
-              "description": "总字数",
-              "format": "int32"
-            },
-            "commentCount": {
-              "type": "integer",
-              "description": "评论数",
-              "format": "int32"
-            },
-            "firstChapterId": {
-              "type": "integer",
-              "description": "首章节ID",
-              "format": "int64"
-            },
-            "lastChapterId": {
-              "type": "integer",
-              "description": "最新章节ID",
-              "format": "int64"
-            },
-            "lastChapterName": {
-              "type": "string",
-              "description": "最新章节名"
-            },
-            "updateTime": {
-              "type": "string",
-              "description": "最新章节更新时间",
-              "format": "date-time"
-            }
-          }
-        },
-        "PageRespDtoBookInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "pageNum": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "pageSize": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "total": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "list": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/BookInfoRespDto"
-              }
-            },
-            "pages": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespPageRespDtoBookInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/PageRespDtoBookInfoRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "ImgVerifyCodeRespDto": {
-          "type": "object",
-          "properties": {
-            "sessionId": {
-              "type": "string",
-              "description": "sessionId"
-            },
-            "img": {
-              "type": "string",
-              "description": "Base64 编码的验证码图片"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespImgVerifyCodeRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/ImgVerifyCodeRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "NewsInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "新闻ID",
-              "format": "int64"
-            },
-            "categoryId": {
-              "type": "integer",
-              "description": "类别ID",
-              "format": "int64"
-            },
-            "categoryName": {
-              "type": "string",
-              "description": "类别名"
-            },
-            "sourceName": {
-              "type": "string",
-              "description": "新闻来源"
-            },
-            "title": {
-              "type": "string",
-              "description": "新闻标题"
-            },
-            "updateTime": {
-              "type": "string",
-              "description": "更新时间",
-              "format": "date-time"
-            },
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
-              "type": "string",
-              "description": "新闻内容"
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/author/register": {
+      "post": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "作家注册接口",
+        "operationId": "register_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorRegisterReqDto"
+              }
             }
           },
-          "description": "响应数据"
+          "required": true
         },
-        "RestRespNewsInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/book": {
+      "post": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说发布接口",
+        "operationId": "publishBook",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookAddReqDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/book/chapter/{bookId}": {
+      "post": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说章节发布接口",
+        "operationId": "publishBookChapter",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterAddReqDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/ai/polish": {
+      "post": {
+        "tags": [
+          "AiController"
+        ],
+        "summary": "AI润色接口",
+        "operationId": "polishText",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespString"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/ai/expand": {
+      "post": {
+        "tags": [
+          "AiController"
+        ],
+        "summary": "AI扩写接口",
+        "operationId": "expandText",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ratio",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespString"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/ai/continue": {
+      "post": {
+        "tags": [
+          "AiController"
+        ],
+        "summary": "AI续写接口",
+        "operationId": "continueText",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespString"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/ai/condense": {
+      "post": {
+        "tags": [
+          "AiController"
+        ],
+        "summary": "AI缩写接口",
+        "operationId": "condenseText",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ratio",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespString"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/comments": {
+      "get": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "查询会员评论列表接口",
+        "operationId": "listComments",
+        "parameters": [
+          {
+            "name": "pageReqDto",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PageReqDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespPageRespDtoUserCommentRespDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/bookshelf_status": {
+      "get": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "查询书架状态接口",
+        "operationId": "getBookshelfStatus",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespInteger"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/search/books": {
+      "get": {
+        "tags": [
+          "SearchController"
+        ],
+        "summary": "小说搜索接口",
+        "operationId": "searchBooks",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "搜索关键字",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workDirection",
+            "in": "query",
+            "description": "作品方向",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "分类ID",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "isVip",
+            "in": "query",
+            "description": "是否收费，1：收费，0：免费",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "bookStatus",
+            "in": "query",
+            "description": "小说更新状态，0：连载中，1：已完结",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "wordCountMin",
+            "in": "query",
+            "description": "字数最小值",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "wordCountMax",
+            "in": "query",
+            "description": "字数最大值",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "updateTimeMin",
+            "in": "query",
+            "description": "最小更新时间",
+            "required": false,
+            "schema": {
               "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "description": "请求页码，默认第 1 页",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页大小，默认每页 10 条",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "排序方式",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespPageRespDtoBookInfoRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/resource/img_verify_code": {
+      "get": {
+        "tags": [
+          "ResourceController"
+        ],
+        "summary": "获取图片验证码接口",
+        "operationId": "getImgVerifyCode",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespImgVerifyCodeRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/news/{id}": {
+      "get": {
+        "tags": [
+          "NewsController"
+        ],
+        "summary": "新闻信息查询接口",
+        "operationId": "getNews",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "新闻ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespNewsInfoRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/news/latest_list": {
+      "get": {
+        "tags": [
+          "NewsController"
+        ],
+        "summary": "最新新闻列表查询接口",
+        "operationId": "listLatestNews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListNewsInfoRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/home/friend_Link/list": {
+      "get": {
+        "tags": [
+          "HomeController"
+        ],
+        "summary": "首页友情链接列表查询接口",
+        "operationId": "listHomeFriendLinks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListHomeFriendLinkRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/home/books": {
+      "get": {
+        "tags": [
+          "HomeController"
+        ],
+        "summary": "首页小说推荐查询接口",
+        "operationId": "listHomeBooks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListHomeBookRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/{id}": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说信息查询接口",
+        "operationId": "getBookById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "小说 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespBookInfoRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/visit_rank": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说点击榜查询接口",
+        "operationId": "listVisitRankBooks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListBookRankRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/update_rank": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说更新榜查询接口",
+        "operationId": "listUpdateRankBooks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListBookRankRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/rec_list": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说推荐列表查询接口",
+        "operationId": "listRecBooks",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListBookInfoRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/pre_chapter_id/{chapterId}": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "获取上一章节ID接口",
+        "operationId": "getPreChapterId",
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "path",
+            "description": "章节ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/next_chapter_id/{chapterId}": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "获取下一章节ID接口",
+        "operationId": "getNextChapterId",
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "path",
+            "description": "章节ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/newest_rank": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说新书榜查询接口",
+        "operationId": "listNewestRankBooks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListBookRankRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/last_chapter/about": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说最新章节相关信息查询接口",
+        "operationId": "getLastChapterAbout",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespBookChapterAboutRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/content/{chapterId}": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说内容相关信息查询接口",
+        "operationId": "getBookContentAbout",
+        "parameters": [
+          {
+            "name": "chapterId",
+            "in": "path",
+            "description": "章节ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespBookContentAboutRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/comment/newest_list": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说最新评论查询接口",
+        "operationId": "listNewestComments",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespBookCommentRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/chapter/list": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说章节列表查询接口",
+        "operationId": "listChapters",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListBookChapterRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/front/book/category/list": {
+      "get": {
+        "tags": [
+          "BookController"
+        ],
+        "summary": "小说分类列表查询接口",
+        "operationId": "listCategory",
+        "parameters": [
+          {
+            "name": "workDirection",
+            "in": "query",
+            "description": "作品方向",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespListBookCategoryRespDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/author/status": {
+      "get": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "作家状态查询接口",
+        "operationId": "getStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespInteger"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/books": {
+      "get": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说发布列表查询接口",
+        "operationId": "listBooks",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "in": "query",
+            "description": "请求页码，默认第 1 页",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页大小，默认每页 10 条",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "排序方式",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespPageRespDtoBookInfoRespDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/author/book/chapters/{bookId}": {
+      "get": {
+        "tags": [
+          "AuthorController"
+        ],
+        "summary": "小说章节发布列表查询接口",
+        "operationId": "listBookChapters",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "小说ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "description": "请求页码，默认第 1 页",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页大小，默认每页 10 条",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "排序方式",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespPageRespDtoBookChapterRespDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/front/user/feedback/{id}": {
+      "delete": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "用户反馈删除接口",
+        "operationId": "deleteFeedback",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "反馈ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestRespVoid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserInfoUptReqDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nickName": {
+            "type": "string",
+            "description": "昵称"
+          },
+          "userPhoto": {
+            "pattern": "^/[^ ]{10,}\\.(png|PNG|jpg|JPG|jpeg|JPEG|gif|GIF|bpm|BPM)$",
+            "type": "string",
+            "description": "头像地址"
+          },
+          "userSex": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer",
+            "description": "性别",
+            "format": "int32"
+          }
+        }
+      },
+      "RestRespVoid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "object",
+            "description": "响应数据"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChapterUpdateReqDto": {
+        "required": [
+          "chapterContent",
+          "chapterName",
+          "isVip"
+        ],
+        "type": "object",
+        "properties": {
+          "chapterName": {
+            "type": "string",
+            "description": "章节名"
+          },
+          "chapterContent": {
+            "type": "string",
+            "description": "章节内容"
+          },
+          "isVip": {
+            "type": "integer",
+            "description": "是否收费;1-收费 0-免费",
+            "format": "int32"
+          }
+        }
+      },
+      "UserRegisterReqDto": {
+        "required": [
+          "password",
+          "sessionId",
+          "username",
+          "velCode"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "pattern": "^1[3|4|5|6|7|8|9][0-9]{9}$",
+            "type": "string",
+            "description": "手机号"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码"
+          },
+          "velCode": {
+            "pattern": "^\\d{4}$",
+            "type": "string",
+            "description": "验证码"
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "sessionId"
+          }
+        }
+      },
+      "RestRespUserRegisterRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserRegisterRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserRegisterRespDto": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "token": {
+            "type": "string",
+            "description": "用户token"
+          }
+        },
+        "description": "响应数据"
+      },
+      "UserLoginReqDto": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "pattern": "^1[3|4|5|6|7|8|9][0-9]{9}$",
+            "type": "string",
+            "description": "手机号",
+            "example": "18888888888"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码",
+            "example": "123456"
+          }
+        }
+      },
+      "RestRespUserLoginRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserLoginRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserLoginRespDto": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "nickName": {
+            "type": "string",
+            "description": "用户昵称"
+          },
+          "token": {
+            "type": "string",
+            "description": "用户token"
+          }
+        },
+        "description": "响应数据"
+      },
+      "UserCommentReqDto": {
+        "required": [
+          "bookId",
+          "commentContent"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "小说ID",
+            "format": "int64"
+          },
+          "commentContent": {
+            "type": "string",
+            "description": "评论内容"
+          }
+        }
+      },
+      "RestRespString": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "string",
+            "description": "响应数据"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AuthorRegisterReqDto": {
+        "required": [
+          "chatAccount",
+          "email",
+          "penName",
+          "telPhone",
+          "workDirection"
+        ],
+        "type": "object",
+        "properties": {
+          "penName": {
+            "type": "string",
+            "description": "笔名"
+          },
+          "telPhone": {
+            "pattern": "^1[3|4|5|6|7|8|9][0-9]{9}$",
+            "type": "string",
+            "description": "手机号码"
+          },
+          "chatAccount": {
+            "type": "string",
+            "description": "QQ或微信账号"
+          },
+          "email": {
+            "type": "string",
+            "description": "电子邮箱"
+          },
+          "workDirection": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer",
+            "description": "作品方向;0-男频 1-女频",
+            "format": "int32"
+          }
+        }
+      },
+      "BookAddReqDto": {
+        "required": [
+          "bookDesc",
+          "bookName",
+          "categoryId",
+          "categoryName",
+          "isVip",
+          "picUrl",
+          "workDirection"
+        ],
+        "type": "object",
+        "properties": {
+          "workDirection": {
+            "type": "integer",
+            "description": "作品方向;0-男频 1-女频",
+            "format": "int32"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "类别ID",
+            "format": "int64"
+          },
+          "categoryName": {
+            "type": "string",
+            "description": "类别名"
+          },
+          "picUrl": {
+            "type": "string",
+            "description": "小说封面地址"
+          },
+          "bookName": {
+            "type": "string",
+            "description": "小说名"
+          },
+          "bookDesc": {
+            "type": "string",
+            "description": "书籍描述"
+          },
+          "isVip": {
+            "type": "integer",
+            "description": "是否收费;1-收费 0-免费",
+            "format": "int32"
+          }
+        }
+      },
+      "ChapterAddReqDto": {
+        "required": [
+          "bookId",
+          "chapterContent",
+          "chapterName",
+          "isVip"
+        ],
+        "type": "object",
+        "properties": {
+          "bookId": {
+            "type": "integer",
+            "description": "小说ID",
+            "format": "int64"
+          },
+          "chapterName": {
+            "type": "string",
+            "description": "章节名"
+          },
+          "chapterContent": {
+            "type": "string",
+            "description": "章节内容"
+          },
+          "isVip": {
+            "type": "integer",
+            "description": "是否收费;1-收费 0-免费",
+            "format": "int32"
+          }
+        }
+      },
+      "RestRespUserInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserInfoRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "nickName": {
+            "type": "string",
+            "description": "昵称"
+          },
+          "userPhoto": {
+            "type": "string",
+            "description": "用户头像"
+          },
+          "userSex": {
+            "type": "integer",
+            "description": "用户性别",
+            "format": "int32"
+          }
+        },
+        "description": "响应数据"
+      },
+      "PageReqDto": {
+        "type": "object",
+        "properties": {
+          "pageNum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fetchAll": {
+            "type": "boolean"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "order": {
+            "type": "string"
+          }
+        }
+      },
+      "PageRespDtoUserCommentRespDto": {
+        "type": "object",
+        "properties": {
+          "pageNum": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserCommentRespDto"
+            }
+          },
+          "pages": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespPageRespDtoUserCommentRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageRespDtoUserCommentRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserCommentRespDto": {
+        "type": "object",
+        "properties": {
+          "commentContent": {
+            "type": "string",
+            "description": "评论内容"
+          },
+          "commentBookPic": {
+            "type": "string",
+            "description": "评论小说封面"
+          },
+          "commentBook": {
+            "type": "string",
+            "description": "评论小说"
+          },
+          "commentTime": {
+            "type": "string",
+            "description": "评论时间",
+            "format": "date-time"
+          }
+        }
+      },
+      "RestRespInteger": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "integer",
+            "description": "响应数据",
+            "format": "int32"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "小说ID",
+            "format": "int64"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "类别ID",
+            "format": "int64"
+          },
+          "categoryName": {
+            "type": "string",
+            "description": "类别名"
+          },
+          "picUrl": {
+            "type": "string",
+            "description": "小说封面地址"
+          },
+          "bookName": {
+            "type": "string",
+            "description": "小说名"
+          },
+          "authorId": {
+            "type": "integer",
+            "description": "作家id",
+            "format": "int64"
+          },
+          "authorName": {
+            "type": "string",
+            "description": "作家名"
+          },
+          "bookDesc": {
+            "type": "string",
+            "description": "书籍描述"
+          },
+          "bookStatus": {
+            "type": "integer",
+            "description": "书籍状态;0-连载中 1-已完结",
+            "format": "int32"
+          },
+          "visitCount": {
+            "type": "integer",
+            "description": "点击量",
+            "format": "int64"
+          },
+          "wordCount": {
+            "type": "integer",
+            "description": "总字数",
+            "format": "int32"
+          },
+          "commentCount": {
+            "type": "integer",
+            "description": "评论数",
+            "format": "int32"
+          },
+          "firstChapterId": {
+            "type": "integer",
+            "description": "首章节ID",
+            "format": "int64"
+          },
+          "lastChapterId": {
+            "type": "integer",
+            "description": "最新章节ID",
+            "format": "int64"
+          },
+          "lastChapterName": {
+            "type": "string",
+            "description": "最新章节名"
+          },
+          "updateTime": {
+            "type": "string",
+            "description": "最新章节更新时间",
+            "format": "date-time"
+          }
+        }
+      },
+      "PageRespDtoBookInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "pageNum": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookInfoRespDto"
+            }
+          },
+          "pages": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespPageRespDtoBookInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageRespDtoBookInfoRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ImgVerifyCodeRespDto": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "description": "sessionId"
+          },
+          "img": {
+            "type": "string",
+            "description": "Base64 编码的验证码图片"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespImgVerifyCodeRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ImgVerifyCodeRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NewsInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "新闻ID",
+            "format": "int64"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "类别ID",
+            "format": "int64"
+          },
+          "categoryName": {
+            "type": "string",
+            "description": "类别名"
+          },
+          "sourceName": {
+            "type": "string",
+            "description": "新闻来源"
+          },
+          "title": {
+            "type": "string",
+            "description": "新闻标题"
+          },
+          "updateTime": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          },
+          "content": {
+            "type": "string",
+            "description": "新闻内容"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespNewsInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/NewsInfoRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestRespListNewsInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
               "$ref": "#/components/schemas/NewsInfoRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "RestRespListNewsInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/NewsInfoRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "HomeFriendLinkRespDto": {
-          "type": "object",
-          "properties": {
-            "linkName": {
-              "type": "string",
-              "description": "链接名"
-            },
-            "linkUrl": {
-              "type": "string",
-              "description": "链接url"
             }
           },
-          "description": "响应数据"
-        },
-        "RestRespListHomeFriendLinkRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/HomeFriendLinkRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "HomeBookRespDto": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "integer",
-              "description": "类型;0-轮播图 1-顶部栏 2-本周强推 3-热门推荐 4-精品推荐",
-              "format": "int32"
-            },
-            "bookId": {
-              "type": "integer",
-              "description": "小说ID",
-              "format": "int64"
-            },
-            "picUrl": {
-              "type": "string",
-              "description": "小说封面地址"
-            },
-            "bookName": {
-              "type": "string",
-              "description": "小说名"
-            },
-            "authorName": {
-              "type": "string",
-              "description": "作家名"
-            },
-            "bookDesc": {
-              "type": "string",
-              "description": "书籍描述"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespListHomeBookRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/HomeBookRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "RestRespBookInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/BookInfoRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "BookRankRespDto": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "小说ID",
-              "format": "int64"
-            },
-            "categoryId": {
-              "type": "integer",
-              "description": "类别ID",
-              "format": "int64"
-            },
-            "categoryName": {
-              "type": "string",
-              "description": "类别名"
-            },
-            "picUrl": {
-              "type": "string",
-              "description": "小说封面地址"
-            },
-            "bookName": {
-              "type": "string",
-              "description": "小说名"
-            },
-            "authorName": {
-              "type": "string",
-              "description": "作家名"
-            },
-            "bookDesc": {
-              "type": "string",
-              "description": "书籍描述"
-            },
-            "wordCount": {
-              "type": "integer",
-              "description": "总字数",
-              "format": "int32"
-            },
-            "lastChapterName": {
-              "type": "string",
-              "description": "最新章节名"
-            },
-            "lastChapterUpdateTime": {
-              "type": "string",
-              "description": "最新章节更新时间",
-              "format": "date-time"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespListBookRankRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/BookRankRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "RestRespListBookInfoRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/BookInfoRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "RestRespLong": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "integer",
-              "description": "响应数据",
-              "format": "int64"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "BookChapterAboutRespDto": {
-          "type": "object",
-          "properties": {
-            "chapterInfo": {
-              "$ref": "#/components/schemas/BookChapterRespDto"
-            },
-            "chapterTotal": {
-              "type": "integer",
-              "description": "章节总数",
-              "format": "int64"
-            },
-            "contentSummary": {
-              "type": "string",
-              "description": " 内容概要（30字）"
-            }
-          },
-          "description": "响应数据"
-        },
-        "BookChapterRespDto": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "章节ID",
-              "format": "int64"
-            },
-            "bookId": {
-              "type": "integer",
-              "description": "小说ID",
-              "format": "int64"
-            },
-            "chapterNum": {
-              "type": "integer",
-              "description": "章节号",
-              "format": "int32"
-            },
-            "chapterName": {
-              "type": "string",
-              "description": "章节名"
-            },
-            "chapterWordCount": {
-              "type": "integer",
-              "description": "章节字数",
-              "format": "int32"
-            },
-            "chapterUpdateTime": {
-              "type": "string",
-              "description": "章节更新时间",
-              "format": "date-time"
-            },
-            "isVip": {
-              "type": "integer",
-              "description": "是否收费;1-收费 0-免费",
-              "format": "int32"
-            }
-          }
-        },
-        "RestRespBookChapterAboutRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/BookChapterAboutRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "BookContentAboutRespDto": {
-          "type": "object",
-          "properties": {
-            "bookInfo": {
-              "$ref": "#/components/schemas/BookInfoRespDto"
-            },
-            "chapterInfo": {
-              "$ref": "#/components/schemas/BookChapterRespDto"
-            },
-            "bookContent": {
-              "type": "string",
-              "description": "章节内容"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespBookContentAboutRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/BookContentAboutRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "BookCommentRespDto": {
-          "type": "object",
-          "properties": {
-            "commentTotal": {
-              "type": "integer",
-              "description": "评论总数",
-              "format": "int64"
-            },
-            "comments": {
-              "type": "array",
-              "description": "评论列表",
-              "items": {
-                "$ref": "#/components/schemas/CommentInfo"
-              }
-            }
-          },
-          "description": "响应数据"
-        },
-        "CommentInfo": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "评论ID",
-              "format": "int64"
-            },
-            "commentContent": {
-              "type": "string",
-              "description": "评论内容"
-            },
-            "commentUser": {
-              "type": "string",
-              "description": "评论用户"
-            },
-            "commentUserId": {
-              "type": "integer",
-              "description": "评论用户ID",
-              "format": "int64"
-            },
-            "commentUserPhoto": {
-              "type": "string",
-              "description": "评论用户头像"
-            },
-            "commentTime": {
-              "type": "string",
-              "description": "评论时间",
-              "format": "date-time"
-            }
-          },
-          "description": "评论列表"
-        },
-        "RestRespBookCommentRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/BookCommentRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "RestRespListBookChapterRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/BookChapterRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "BookCategoryRespDto": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "类别ID",
-              "format": "int64"
-            },
-            "name": {
-              "type": "string",
-              "description": "类别名"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespListBookCategoryRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "type": "array",
-              "description": "响应数据",
-              "items": {
-                "$ref": "#/components/schemas/BookCategoryRespDto"
-              }
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "PageRespDtoBookChapterRespDto": {
-          "type": "object",
-          "properties": {
-            "pageNum": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "pageSize": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "total": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "list": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/BookChapterRespDto"
-              }
-            },
-            "pages": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespPageRespDtoBookChapterRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/PageRespDtoBookChapterRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
-          }
-        },
-        "ChapterContentRespDto": {
-          "type": "object",
-          "properties": {
-            "chapterName": {
-              "type": "string",
-              "description": "章节名"
-            },
-            "chapterContent": {
-              "type": "string",
-              "description": "章节内容"
-            },
-            "isVip": {
-              "type": "integer",
-              "description": "是否收费;1-收费 0-免费",
-              "format": "int32"
-            }
-          },
-          "description": "响应数据"
-        },
-        "RestRespChapterContentRespDto": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "错误码，00000-没有错误"
-            },
-            "message": {
-              "type": "string",
-              "description": "响应消息"
-            },
-            "data": {
-              "$ref": "#/components/schemas/ChapterContentRespDto"
-            },
-            "ok": {
-              "type": "boolean"
-            }
+          "ok": {
+            "type": "boolean"
           }
         }
       },
-      "securitySchemes": {
-        "Authorization": {
-          "type": "apiKey",
-          "description": "登录 token",
-          "name": "Authorization",
-          "in": "header"
+      "HomeFriendLinkRespDto": {
+        "type": "object",
+        "properties": {
+          "linkName": {
+            "type": "string",
+            "description": "链接名"
+          },
+          "linkUrl": {
+            "type": "string",
+            "description": "链接url"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespListHomeFriendLinkRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
+              "$ref": "#/components/schemas/HomeFriendLinkRespDto"
+            }
+          },
+          "ok": {
+            "type": "boolean"
+          }
         }
+      },
+      "HomeBookRespDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "类型;0-轮播图 1-顶部栏 2-本周强推 3-热门推荐 4-精品推荐",
+            "format": "int32"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "小说ID",
+            "format": "int64"
+          },
+          "picUrl": {
+            "type": "string",
+            "description": "小说封面地址"
+          },
+          "bookName": {
+            "type": "string",
+            "description": "小说名"
+          },
+          "authorName": {
+            "type": "string",
+            "description": "作家名"
+          },
+          "bookDesc": {
+            "type": "string",
+            "description": "书籍描述"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespListHomeBookRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
+              "$ref": "#/components/schemas/HomeBookRespDto"
+            }
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestRespBookInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BookInfoRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookRankRespDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "小说ID",
+            "format": "int64"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "类别ID",
+            "format": "int64"
+          },
+          "categoryName": {
+            "type": "string",
+            "description": "类别名"
+          },
+          "picUrl": {
+            "type": "string",
+            "description": "小说封面地址"
+          },
+          "bookName": {
+            "type": "string",
+            "description": "小说名"
+          },
+          "authorName": {
+            "type": "string",
+            "description": "作家名"
+          },
+          "bookDesc": {
+            "type": "string",
+            "description": "书籍描述"
+          },
+          "wordCount": {
+            "type": "integer",
+            "description": "总字数",
+            "format": "int32"
+          },
+          "lastChapterName": {
+            "type": "string",
+            "description": "最新章节名"
+          },
+          "lastChapterUpdateTime": {
+            "type": "string",
+            "description": "最新章节更新时间",
+            "format": "date-time"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespListBookRankRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
+              "$ref": "#/components/schemas/BookRankRespDto"
+            }
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestRespListBookInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
+              "$ref": "#/components/schemas/BookInfoRespDto"
+            }
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestRespLong": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "integer",
+            "description": "响应数据",
+            "format": "int64"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookChapterAboutRespDto": {
+        "type": "object",
+        "properties": {
+          "chapterInfo": {
+            "$ref": "#/components/schemas/BookChapterRespDto"
+          },
+          "chapterTotal": {
+            "type": "integer",
+            "description": "章节总数",
+            "format": "int64"
+          },
+          "contentSummary": {
+            "type": "string",
+            "description": " 内容概要（30字）"
+          }
+        },
+        "description": "响应数据"
+      },
+      "BookChapterRespDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "章节ID",
+            "format": "int64"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "小说ID",
+            "format": "int64"
+          },
+          "chapterNum": {
+            "type": "integer",
+            "description": "章节号",
+            "format": "int32"
+          },
+          "chapterName": {
+            "type": "string",
+            "description": "章节名"
+          },
+          "chapterWordCount": {
+            "type": "integer",
+            "description": "章节字数",
+            "format": "int32"
+          },
+          "chapterUpdateTime": {
+            "type": "string",
+            "description": "章节更新时间",
+            "format": "date-time"
+          },
+          "isVip": {
+            "type": "integer",
+            "description": "是否收费;1-收费 0-免费",
+            "format": "int32"
+          }
+        }
+      },
+      "RestRespBookChapterAboutRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BookChapterAboutRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookContentAboutRespDto": {
+        "type": "object",
+        "properties": {
+          "bookInfo": {
+            "$ref": "#/components/schemas/BookInfoRespDto"
+          },
+          "chapterInfo": {
+            "$ref": "#/components/schemas/BookChapterRespDto"
+          },
+          "bookContent": {
+            "type": "string",
+            "description": "章节内容"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespBookContentAboutRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BookContentAboutRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookCommentRespDto": {
+        "type": "object",
+        "properties": {
+          "commentTotal": {
+            "type": "integer",
+            "description": "评论总数",
+            "format": "int64"
+          },
+          "comments": {
+            "type": "array",
+            "description": "评论列表",
+            "items": {
+              "$ref": "#/components/schemas/CommentInfo"
+            }
+          }
+        },
+        "description": "响应数据"
+      },
+      "CommentInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "评论ID",
+            "format": "int64"
+          },
+          "commentContent": {
+            "type": "string",
+            "description": "评论内容"
+          },
+          "commentUser": {
+            "type": "string",
+            "description": "评论用户"
+          },
+          "commentUserId": {
+            "type": "integer",
+            "description": "评论用户ID",
+            "format": "int64"
+          },
+          "commentUserPhoto": {
+            "type": "string",
+            "description": "评论用户头像"
+          },
+          "commentTime": {
+            "type": "string",
+            "description": "评论时间",
+            "format": "date-time"
+          }
+        },
+        "description": "评论列表"
+      },
+      "RestRespBookCommentRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BookCommentRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestRespListBookChapterRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
+              "$ref": "#/components/schemas/BookChapterRespDto"
+            }
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookCategoryRespDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "类别ID",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "类别名"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespListBookCategoryRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "type": "array",
+            "description": "响应数据",
+            "items": {
+              "$ref": "#/components/schemas/BookCategoryRespDto"
+            }
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageRespDtoBookChapterRespDto": {
+        "type": "object",
+        "properties": {
+          "pageNum": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookChapterRespDto"
+            }
+          },
+          "pages": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespPageRespDtoBookChapterRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageRespDtoBookChapterRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChapterContentRespDto": {
+        "type": "object",
+        "properties": {
+          "chapterName": {
+            "type": "string",
+            "description": "章节名"
+          },
+          "chapterContent": {
+            "type": "string",
+            "description": "章节内容"
+          },
+          "isVip": {
+            "type": "integer",
+            "description": "是否收费;1-收费 0-免费",
+            "format": "int32"
+          }
+        },
+        "description": "响应数据"
+      },
+      "RestRespChapterContentRespDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "错误码，00000-没有错误"
+          },
+          "message": {
+            "type": "string",
+            "description": "响应消息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ChapterContentRespDto"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "description": "登录 token",
+        "name": "Authorization",
+        "in": "header"
       }
     }
   }
+}

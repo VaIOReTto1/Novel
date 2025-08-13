@@ -590,6 +590,121 @@ class NavigationBridgeModule(
         }
     }
 
+    // =================== Category & Search Bridge ===================
+    /**
+     * 获取书籍分类（按工作方向：男生=0，女生=1）
+     */
+    @ReactMethod
+    fun getBookCategories(workDirection: Int, promise: Promise) {
+        TimberLogger.d(TAG, "RN调用获取书籍分类 workDirection=$workDirection")
+        com.novel.utils.network.ApiService.get(
+            baseUrl = com.novel.utils.network.ApiService.BASE_URL_FRONT,
+            endpoint = "book/category/list",
+            params = mapOf("workDirection" to workDirection.toString()),
+            headers = mapOf("Accept" to "*/*")
+        ) { response, error ->
+            if (error != null) {
+                TimberLogger.e(TAG, "获取书籍分类失败", error)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", error) }
+                return@get
+            }
+            if (response == null) {
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", "Empty response") }
+                return@get
+            }
+            try {
+                val json = org.json.JSONObject(response)
+                val ok = json.optBoolean("ok", false)
+                val data = json.optJSONArray("data")
+                val arr = Arguments.createArray()
+                if (data != null) {
+                    for (i in 0 until data.length()) {
+                        val item = data.optJSONObject(i) ?: continue
+                        val m = Arguments.createMap().apply {
+                            putDouble("id", item.optLong("id").toDouble())
+                            putString("name", item.optString("name", null))
+                        }
+                        arr.pushMap(m)
+                    }
+                }
+                val map = Arguments.createMap().apply {
+                    putBoolean("ok", ok)
+                    putArray("list", arr)
+                }
+                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "解析分类列表失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", e) }
+            }
+        }
+    }
+
+    /**
+     * 分类/方向搜索书籍
+     * @param workDirection 0/1
+     * @param categoryId 分类ID，<=0 表示不指定
+     */
+    @ReactMethod
+    fun searchBooks(workDirection: Int, categoryId: Int, pageNum: Int, pageSize: Int, promise: Promise) {
+        TimberLogger.d(TAG, "RN调用搜索书籍 workDirection=$workDirection categoryId=$categoryId pageNum=$pageNum pageSize=$pageSize")
+        // 组装查询参数
+        val params = mutableMapOf(
+            "pageNum" to pageNum.toString(),
+            "pageSize" to pageSize.toString(),
+            "workDirection" to workDirection.toString()
+        )
+        if (categoryId > 0) params["categoryId"] = categoryId.toString()
+
+        com.novel.utils.network.ApiService.get(
+            baseUrl = com.novel.utils.network.ApiService.BASE_URL_FRONT,
+            endpoint = "search/books",
+            params = params,
+            headers = mapOf("Accept" to "*/*")
+        ) { response, error ->
+            if (error != null) {
+                TimberLogger.e(TAG, "搜索书籍失败", error)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", error) }
+                return@get
+            }
+            if (response == null) {
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", "Empty response") }
+                return@get
+            }
+            try {
+                val json = org.json.JSONObject(response)
+                val ok = json.optBoolean("ok", false)
+                val dataObj = json.optJSONObject("data")
+                val listJson = dataObj?.optJSONArray("list")
+                val listArr = Arguments.createArray()
+                if (listJson != null) {
+                    for (i in 0 until listJson.length()) {
+                        val item = listJson.optJSONObject(i) ?: continue
+                        val b = Arguments.createMap().apply {
+                            putDouble("id", item.optLong("id").toDouble())
+                            putString("bookName", item.optString("bookName", null))
+                            putString("authorName", item.optString("authorName", null))
+                            putString("picUrl", item.optString("picUrl", null))
+                            putString("bookDesc", item.optString("bookDesc", null))
+                        }
+                        listArr.pushMap(b)
+                    }
+                }
+                val map = Arguments.createMap().apply {
+                    putBoolean("ok", ok)
+                    putArray("list", listArr)
+                    dataObj?.optLong("pageNum")?.let { putDouble("pageNum", it.toDouble()) }
+                    dataObj?.optLong("pageSize")?.let { putDouble("pageSize", it.toDouble()) }
+                    dataObj?.optLong("total")?.let { putDouble("total", it.toDouble()) }
+                    dataObj?.optLong("pages")?.let { putDouble("pages", it.toDouble()) }
+                }
+                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "解析搜索结果失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", e) }
+            }
+        }
+    }
+
     /**
      * 导航到作品管理（章节管理）页面
      */

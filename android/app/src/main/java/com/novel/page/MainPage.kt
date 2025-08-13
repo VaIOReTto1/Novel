@@ -128,9 +128,20 @@ fun MainPage() {
             ) { pageIndex ->
                 when (pageIndex) {
                     0 -> HomePage(
+                        // 首页 TopBar 的“分类”点击 → 跳转到底部第二个Tab
+                        onNavigateToCategory = { _ ->
+                            scope.launch {
+                                pagerState.scrollToPage(1)
+                            }
+                        },
                         // 传递全局动画控制器给首页
                         globalFlipBookController = globalFlipBookController
                     )
+                    1 -> ReactNativePage(
+                        componentName = "CategoryPageComponent",
+                        initialProps = mapOf("source" to "android_category"),
+                        mviModuleType = MviModuleType.BRIDGE
+                    ) // 分类页面（RN实现）
                     2 -> WelfarePage(
                         onNavigateBack = {
                             // 福利页面的返回操作，可以根据需要实现

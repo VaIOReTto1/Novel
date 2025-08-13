@@ -36,6 +36,7 @@ interface NavigationBridgeInterface {
   aiExpand(text: string, ratio: number): Promise<string>;
   aiCondense(text: string, ratio: number): Promise<string>;
   aiContinue(text: string, length: number): Promise<string>;
+  getHomeBooksHighPriority(): Promise<any>;
 }
 
 const { NavigationBridge: NativeNavigationBridge } = NativeModules;
@@ -188,7 +189,9 @@ export const NavigationBridge: NavigationBridgeInterface = {
 
   registerAuthor: (penName: string, sex: number): Promise<any> => {
     console.log('[NavigationBridge] Register author:', penName, sex);
-    if (!NativeNavigationBridge?.registerAuthor) return Promise.reject('registerAuthor not available');
+    if (!NativeNavigationBridge?.registerAuthor) {
+      return Promise.reject('registerAuthor not available');
+    }
     return NativeNavigationBridge.registerAuthor(penName, sex);
   },
 
@@ -208,6 +211,10 @@ export const NavigationBridge: NavigationBridgeInterface = {
   },
   aiContinue: (text: string, length: number): Promise<string> => {
     return (NativeNavigationBridge?.aiContinue?.(text, Math.round(length))) || Promise.reject('aiContinue not available');
+  },
+
+  getHomeBooksHighPriority: (): Promise<any> => {
+    return (NativeNavigationBridge?.getHomeBooksHighPriority?.()) || Promise.reject('getHomeBooksHighPriority not available');
   },
 };
 

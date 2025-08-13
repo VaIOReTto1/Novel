@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 
 export interface Book {
   id: number;
@@ -178,32 +179,45 @@ export const useHomeStore = create<HomeStore>()(
       try {
         // 如果是刷新或者缓存为空，重新获取数据
         if (isRefresh || state.cachedHomeBooks.length === 0) {
-          console.log('正在获取首页推荐数据...');
+          console.log('正在获取首页推荐数据(优先走原生)');
 
-          const response = await fetch(`${BASE_URL_FRONT}home/books`, {
-            method: 'GET',
-            headers: {
-              'Accept': '*/*',
-              'Content-Type': 'application/json',
-            },
-          });
-
-          console.log('API响应状态:', response.status, response.statusText);
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          let data: HomeBooksResponse | null = null;
+          try {
+            data = await NavigationBridge.getHomeBooksHighPriority();
+            console.log('原生返回首页推荐数据');
+          } catch (nativeErr) {
+            console.log('原生接口不可用，回退到HTTP接口:', nativeErr);
           }
 
-          const data: HomeBooksResponse = await response.json();
-          console.log('API响应数据:', data);
+          if (!data) {
+            const response = await fetch(`${BASE_URL_FRONT}home/books`, {
+              method: 'GET',
+              headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json',
+              },
+            });
 
-          if (data.ok && data.data) {
-            console.log(`获取到${data.data.length}本推荐书籍`);
+            console.log('API响应状态:', response.status, response.statusText);
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            data = await response.json();
+          }
+
+          const finalData = data as HomeBooksResponse;
+          console.log('首页推荐数据响应:', finalData);
+
+          if (finalData && finalData.ok && finalData.data) {
+            console.log(`获取到${finalData.data.length}本推荐书籍`);
             set((draft) => {
-              draft.cachedHomeBooks = data.data;
+              draft.cachedHomeBooks = finalData.data;
             });
           } else {
-            throw new Error(data.message || '获取推荐书籍失败');
+            const msg = finalData?.message || '获取推荐书籍失败';
+            throw new Error(msg);
           }
         }
 

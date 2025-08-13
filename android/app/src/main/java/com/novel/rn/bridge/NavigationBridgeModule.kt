@@ -12,6 +12,8 @@ import com.novel.MainApplication
 import com.novel.utils.NavViewModel
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.network.api.author.ai.AiService
+import com.novel.utils.network.ApiService
+import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +22,7 @@ import kotlinx.coroutines.TimeoutCancellationException
 import java.util.concurrent.atomic.AtomicBoolean
 import com.novel.rn.settings.SettingsEffect
 import com.novel.rn.settings.SettingsIntent
+import org.json.JSONObject
 
 /**
  * 导航桥接模块
@@ -325,6 +328,67 @@ class NavigationBridgeModule(
         
         Handler(Looper.getMainLooper()).post {
             NavViewModel.navigateToQuestionDetail()
+        }
+    }
+
+    /**
+     * 获取首页推荐书籍（高优先级）
+     */
+    @ReactMethod
+    fun getHomeBooksHighPriority(promise: Promise) {
+        TimberLogger.d(TAG, "获取首页推荐书籍（高优先级，Bridge直连API以避免ImmutableList解析问题）")
+        // 不改动原生 HomeService 的实现，这里直接发起请求并将结果转换为 RN 可识别的结构
+        ApiService.get(
+            baseUrl = BASE_URL_FRONT,
+            endpoint = "home/books",
+            headers = mapOf("Accept" to "*/*")
+        ) { response, error ->
+            if (error != null) {
+                TimberLogger.e(TAG, "获取首页推荐书籍失败", error)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("HOME_BOOKS_ERROR", error) }
+                return@get
+            }
+
+            if (response == null) {
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("HOME_BOOKS_ERROR", "Empty response") }
+                return@get
+            }
+
+            try {
+                val json = JSONObject(response)
+                val code = if (!json.isNull("code")) json.optString("code") else null
+                val message = if (!json.isNull("message")) json.optString("message") else null
+                val ok = json.optBoolean("ok", false)
+
+                val dataArray = Arguments.createArray()
+                val dataJsonArr = json.optJSONArray("data")
+                if (dataJsonArr != null) {
+                    for (i in 0 until dataJsonArr.length()) {
+                        val item = dataJsonArr.optJSONObject(i) ?: continue
+                        val b = Arguments.createMap().apply {
+                            putInt("type", item.optInt("type"))
+                            putDouble("bookId", item.optLong("bookId").toDouble())
+                            putString("picUrl", item.optString("picUrl", null))
+                            putString("bookName", item.optString("bookName", null))
+                            putString("authorName", item.optString("authorName", null))
+                            putString("bookDesc", item.optString("bookDesc", null))
+                        }
+                        dataArray.pushMap(b)
+                    }
+                }
+
+                val map = Arguments.createMap().apply {
+                    if (code != null) putString("code", code)
+                    if (message != null) putString("message", message)
+                    putArray("data", dataArray)
+                    putBoolean("ok", ok)
+                }
+
+                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "解析首页推荐书籍失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("HOME_BOOKS_ERROR", e) }
+            }
         }
     }
 

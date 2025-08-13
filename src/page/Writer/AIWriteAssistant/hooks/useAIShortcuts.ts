@@ -12,9 +12,8 @@ export function useAIShortcuts() {
   }, [setInput]);
 
   const fillIdea = useCallback(() => {
-    setInput(
-      '给我5个开书灵感：题材偏都市+悬疑，主角具“反常识优势”，每个点子含一句钩子。',
-    );
+    // 改为由 IdeaSelector 进行输入填充
+    setInput('');
   }, [setInput]);
 
   const quickSend = useCallback(() => {

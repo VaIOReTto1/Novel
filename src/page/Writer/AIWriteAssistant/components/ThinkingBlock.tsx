@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createAIStyles } from '../styles/aiStyles';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface Props {
   thinking?: string;
@@ -22,7 +23,7 @@ export const ThinkingBlock: React.FC<Props> = ({ thinking, done }) => {
       <View style={styles.thinkingHeaderRow}>
         <Text style={styles.thinkingTitle}>{done ? '思考结束' : '思考中…'}</Text>
         <TouchableOpacity onPress={() => setCollapsed(v => !v)} activeOpacity={0.7}>
-          <Text style={styles.thinkingCaret}>{collapsed ? '展开' : '收起'}</Text>
+          {collapsed ? <Icon name="keyboard-arrow-down" size={18} color={colors.novelTextGray} /> : <Icon name="keyboard-arrow-up" size={18} color={colors.novelTextGray} />}
         </TouchableOpacity>
       </View>
       {!collapsed && quoteText.length > 0 && (

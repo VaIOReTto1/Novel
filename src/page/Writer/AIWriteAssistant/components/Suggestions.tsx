@@ -15,11 +15,11 @@ export const Suggestions: React.FC<SuggestionsProps> = ({ onDeepThink, onIdea })
   const deepThink = useAIStore((s) => s.deepThinkEnabled);
   return (
     <View style={styles.suggestions}>
-      <TouchableOpacity style={[styles.suggestBtn, deepThink && { backgroundColor: colors.novelMain + '22' }]} onPress={onDeepThink}>
-        <Text style={[styles.suggestText, deepThink && { color: colors.novelMain }]}>{deepThink ? '深度思考（开）' : '深度思考（关）'}</Text>
+      <TouchableOpacity style={[styles.suggestBtn]} onPress={onDeepThink}>
+        <Text style={[styles.suggestText, deepThink && { color: colors.novelMain }]}>🧠深度思考</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.suggestBtn} onPress={onIdea}>
-        <Text style={styles.suggestText}>开书灵感</Text>
+        <Text style={styles.suggestText}>💡 开书灵感</Text>
       </TouchableOpacity>
     </View>
   );

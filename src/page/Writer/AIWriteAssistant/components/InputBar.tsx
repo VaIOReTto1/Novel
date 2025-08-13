@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, TextInput } from 'react-native';
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createAIStyles } from '../styles/aiStyles';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface InputBarProps {
   value: string;
@@ -9,9 +10,10 @@ interface InputBarProps {
   placeholder?: string;
   sending?: boolean;
   onSend: () => void;
+  onFocusInput?: () => void;
 }
 
-export const InputBar: React.FC<InputBarProps> = ({ value, onChange, placeholder = '有什么问题尽管问我', sending, onSend }) => {
+export const InputBar: React.FC<InputBarProps> = ({ value, onChange, placeholder = '有什么问题尽管问我', sending, onSend, onFocusInput }) => {
   const colors = useNovelColors();
   const styles = createAIStyles(colors);
   const disabled = !value?.trim() || sending;
@@ -23,10 +25,12 @@ export const InputBar: React.FC<InputBarProps> = ({ value, onChange, placeholder
         onChangeText={onChange}
         placeholder={placeholder}
         placeholderTextColor={colors.novelTextGray}
+        onFocus={onFocusInput}
+        onTouchStart={() => onFocusInput?.()}
         multiline
       />
-      <TouchableOpacity style={[styles.sendBtn, disabled && { opacity: 0.5 }]} disabled={disabled} onPress={disabled ? undefined : onSend} activeOpacity={disabled ? 1 : 0.7}>
-        <Text style={styles.sendText}>↑</Text>
+      <TouchableOpacity style={[styles.sendBtn, disabled ? styles.sendBtnDisabled : null]} disabled={disabled} onPress={disabled ? undefined : onSend} activeOpacity={disabled ? 1 : 0.7}>
+        <Icon name="keyboard-arrow-up" size={20} color={colors.novelBackground} />
       </TouchableOpacity>
     </View>
   );

@@ -10,10 +10,9 @@ import { ActionBar } from './ActionBar';
 import { useAIStore } from '../store/aiStore';
 import type { ChatMessage } from '../types';
 
-export const ChatRow: React.FC<{ item: ChatMessage }> = ({ item }) => {
+const ChatRowComponent: React.FC<{ item: ChatMessage }> = ({ item }) => {
     const colors = useNovelColors();
     const styles = createAIStyles(colors);
-  const messages = useAIStore((s) => s.messages);
   const setInput = useAIStore((s) => s.setInput);
   const send = useAIStore((s) => s.send);
   const thinkingNow = item.thinking ?? '';
@@ -23,14 +22,14 @@ export const ChatRow: React.FC<{ item: ChatMessage }> = ({ item }) => {
 
     if (item.role !== 'assistant') {
         return (
-            <View style={[styles.bubble, styles.bubbleUser]}>
+            <View style={[styles.bubble, styles.bubbleUser, styles.bubbleUserCorner]}>
                 <Text style={styles.textUser}>{item.text}</Text>
             </View>
         );
     }
 
     return (
-        <View style={[styles.bubble, styles.bubbleAssistant]}>
+        <View style={[styles.bubble, styles.bubbleAssistant, styles.bubbleAssistantCorner]}>
             {isLoading ? (
                 <View style={styles.loadingRow}>
                     {RN.ActivityIndicator ? (
@@ -55,7 +54,8 @@ export const ChatRow: React.FC<{ item: ChatMessage }> = ({ item }) => {
                     }}
                     onRetry={() => {
                         try {
-                            const lastUser = [...messages].reverse().find((m: any) => m.role === 'user');
+                            const store = useAIStore.getState();
+                            const lastUser = [...store.messages].reverse().find((m: any) => m.role === 'user');
                             console.log('[AI] retry for', item.id, 'using lastUser', lastUser?.id);
                             if (lastUser?.text) {
                                 setInput(lastUser.text);
@@ -68,5 +68,14 @@ export const ChatRow: React.FC<{ item: ChatMessage }> = ({ item }) => {
         </View>
     );
 };
+
+export const ChatRow = React.memo(
+  ChatRowComponent,
+  (prev, next) =>
+    prev.item.id === next.item.id &&
+    prev.item.text === next.item.text &&
+    (prev.item.thinking ?? '') === (next.item.thinking ?? '') &&
+    !!prev.item.done === !!next.item.done
+);
 
 

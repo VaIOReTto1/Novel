@@ -2,7 +2,7 @@ import React from 'react';
 import { useNovelColors } from '../../../../utils/theme/colors';
 import Markdown from 'react-native-markdown-display';
 
-export const MarkdownText: React.FC<{ text: string }> = ({ text }) => {
+const MarkdownTextComponent: React.FC<{ text: string }> = ({ text }) => {
   const colors = useNovelColors();
   const fontSize = 15; // 兜底字号稍大
   return (
@@ -52,5 +52,7 @@ export const MarkdownText: React.FC<{ text: string }> = ({ text }) => {
     </Markdown>
   );
 };
+
+export const MarkdownText = React.memo(MarkdownTextComponent, (prev, next) => prev.text === next.text);
 
 

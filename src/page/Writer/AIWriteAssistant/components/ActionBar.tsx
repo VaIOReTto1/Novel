@@ -18,16 +18,16 @@ export const ActionBar: React.FC<Props> = ({ onLike, onDislike, onCopy, onRetry 
     <View style={styles.actionBarWrap}>
       <Text style={styles.aiDisclaimer}>内容由 AI 生成，仅供参考</Text>
       <View style={styles.actionBar}>
-        <TouchableOpacity onPress={onLike} style={styles.actionBtn}>
+        <TouchableOpacity onPress={onLike} style={styles.introRefresh}>
           <Icon name="heart" size={16} color={colors.novelTextGray} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={onDislike} style={styles.actionBtn}>
+        <TouchableOpacity onPress={onDislike} style={styles.introRefresh}>
           <Icon name="thumbs-down" size={16} color={colors.novelTextGray} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={onCopy} style={styles.actionBtn}>
+        <TouchableOpacity onPress={onCopy} style={styles.introRefresh}>
           <Icon name="copy" size={16} color={colors.novelTextGray} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={onRetry} style={styles.actionBtn}>
+        <TouchableOpacity onPress={onRetry} style={styles.introRefresh}>
           <Icon name="rotate-cw" size={16} color={colors.novelTextGray} />
         </TouchableOpacity>
       </View>

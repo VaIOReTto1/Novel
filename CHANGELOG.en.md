@@ -4,6 +4,78 @@
 
 All notable changes to this project will be documented in this file.
 
+### v0.14.0 - AI Writing & Author System Enhancements (August 2025)
+
+- 🧠 **AI Writing Assistant**:
+    - Streaming generation and advanced reasoning: simulated SSE live streaming; optional reasoning trace with citations; a "Deep Thinking" toggle.
+    - Markdown rendering for replies with improved readability for code blocks, lists, and quotes.
+    - Book-opening inspiration: choose a genre to generate tailored inspiration cards.
+    - Message persistence: preserve user input and history; dynamic loading and scroll performance optimizations for long lists.
+    - UI/UX: added a sticky top bar and a loading screen; refined styles and icons.
+
+- ✍️ **Writing Page & Editing**:
+    - Custom text selection menu: one-tap polish, expand, shorten, and continue writing via AI.
+    - Input experience: improved focus and keyboard control; integrated AI toolbar and error dialogs on the writing page.
+
+- 🔗 **Services & Bridge**:
+    - Service layer: four AI endpoints (polish/expand/shorten/continue) added to `AiService`, with special handling for streaming-like responses.
+    - Bridge & native: AI APIs exposed via `NavigationBridge` and implemented in the native module for React Native.
+
+- 👤 **Author Ecosystem & Navigation**:
+    - Author state: added `isAuthor` to user state with initialization and caching; navigate directly to author pages based on status.
+    - Entries & pages: added entrances for Writing, AI Assistant, and Works Management; improved work statistics and chapter management.
+
+- 🚀 **Other Improvements**:
+    - Added a native high-priority API for fetching home recommended books with a native-first strategy and HTTP fallback.
+
+### v0.13.0 - Core Features & User Experience (August 2025)
+
+- 🎬 **Short Drama Feature**: Added toast prompts supporting continue/close, styled with cover, title, and watch progress.
+- 🚀 **Startup Dialog System**: Version upgrade reminder and check-in bonus prompts; `DialogLaunchManager` manages show logic.
+- 📚 **Bookshelf**: Grid/List/Waterfall layouts; edit mode and batch operations; pull-to-refresh and load-more.
+- 📱 **Android Hardware Back**: Custom handling across multiple pages via the `hardwareBackPress` event.
+
+- 🎨 **Theme Switcher**: New animated `ThemeSwitcher` and improved star visuals.
+- 🔧 **Settings Module Refactor**: Reworked `SettingsBridgeModule` with unidirectional data flow and Promise-based APIs.
+- 🌙 **Theme Initialization**: Initialize theme and preload user data in `App` to avoid flicker.
+- 💻 **Login Page Polish**: Improved interactions and error handling with bounce animations and clearer feedback.
+- 📄 **Page Additions**: Implemented Feedback & Help, Member Center, My Reservations, and more.
+
+### v0.12.0 - Social & Content Ecosystem (August 2025)
+
+- 💬 **Comments**: Full comments feature including list, detail, and post; refactored book detail comment entry; supports multi-level replies.
+- 🏘️ **Community Page**: New components with optimized layout and styles; supports user interactions and content sharing.
+- 👥 **Viewed Users**: Surface fellow readers to enhance social experience.
+- 📧 **Messages**: Message list and management; supports system notifications and interaction messages.
+- 📢 **Announcements Carousel**: System announcements and message ticker.
+
+- 📚 **Recommendation Center**: Discovery with data statistics, creation services, and creation tasks.
+- ✍️ **Become an Author**: Application and management pages with writer-only features.
+- 🎁 **Welfare Page**: User benefits page with WebView for H5 content.
+- 📖 **Browsing History**: History management with search and filtering.
+- 🚪 **Logout**: Logout confirmation dialog and improved state handling.
+
+### v0.11.0 - Performance Optimization & Architecture Upgrade (August 2025)
+
+- ⚡ **Advanced Image Loading**: Multiple strategies, layered caching, Bitmap reuse pool, and memory pressure management.
+- 🎯 **Compose Performance Optimizations**: `@Stable` annotations and `derivedStateOf` adopted broadly; finer-grained subscriptions for higher skippable ratios.
+- 🔄 **MVI State Access Refactor**: Finer-grained state subscriptions to avoid unnecessary recompositions.
+- 🌐 **Network Module Refactor**: Delta sync and intelligent cache refresh thresholds to boost efficiency.
+- 🗄️ **Database Optimization**: FTS4 migration and performance improvements for faster queries.
+- 🚀 **Cold Start Acceleration**: Introduced Baseline Profiles to reduce startup time.
+
+- 🔧 **RN Bridge Refactor**: Split bridges by domain and added use cases for better maintainability.
+- 🧭 **Navigation Logic**: Debounced navigation and route management to avoid duplicate navigations.
+- ⚠️ **Error Handling**: Introduced `StableThrowable` and enhanced logging.
+- 📊 **Data Structure Optimization**: Adopted `ImmutableList` for better immutability and performance.
+- 📖 **Reader Refactoring**: Improved code structure and performance for the reader.
+
+- 🔢 **Version Automation**: Automated versioning to streamline release.
+- 📦 **APK Build Optimization**: Build configuration adjustments to reduce package size.
+- 🔄 **CI/CD Improvements**: Updated GitHub Actions and tag management to improve developer efficiency.
+- 📝 **Documentation**: Added English README and network optimization docs.
+- 🔧 **Release Config**: Tuned `ndk` settings in the release configuration.
+
 ### v0.10.0 - A Leap in Performance & Stability (July 2025)
 - ✨ **Advanced Image Loading**: Implemented advanced image loading features, including multiple loading strategies, memory and disk caching, a Bitmap recycling pool, and memory pressure management.
 - ⚡️ **Ultimate Compose Performance Optimization**:

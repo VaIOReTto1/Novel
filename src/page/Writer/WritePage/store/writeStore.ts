@@ -4,6 +4,24 @@ import NavigationBridge from '../../../../utils/bridge/NavigationBridge';
 
 import {HistoryEntry} from '../types';
 
+// 统一成功提示（Android 用 Toast，iOS 回退到 Alert）
+const notifySuccess = () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const RN: any = require('react-native');
+    const Platform = RN.Platform;
+    const ToastAndroid = RN.ToastAndroid;
+    const Alert = RN.Alert;
+    if (Platform?.OS === 'android' && ToastAndroid?.show) {
+      ToastAndroid.show('获取成功', ToastAndroid.SHORT);
+    } else if (Alert?.alert) {
+      Alert.alert('获取成功');
+    }
+  } catch (_e) {
+    // ignore
+  }
+};
+
 interface WriteState {
   title: string;
   content: string;
@@ -11,7 +29,7 @@ interface WriteState {
   future: HistoryEntry[];
   isToolbarVisible: boolean;
   selectedText: string;
-  selectionRange: { start: number; end: number } | null;
+  selectionRange: {start: number; end: number} | null;
   holdSelection: boolean;
   overlayLoading: boolean;
   modal: {
@@ -20,8 +38,15 @@ interface WriteState {
     hint?: string;
   };
   clipboardText: string;
-  errorModal?: { visible: boolean; message: string };
-  lastOp?: { action: 'polish'|'expand'|'condense'|'continue'; param?: number; snapshot: { selectedText: string } };
+  errorModal?: {visible: boolean; message: string};
+  lastOp?: {
+    action: 'polish' | 'expand' | 'condense' | 'continue';
+    param?: number;
+    snapshot: {selectedText: string};
+  };
+  // 与页面协作：请求让正文获得焦点但不弹键盘
+  focusRequestNonce: number;
+  suppressKeyboard: boolean;
 }
 
 interface WriteActions {
@@ -55,6 +80,8 @@ interface WriteActions {
   showError: (message: string) => void;
   hideError: () => void;
   retryLastOperation: () => Promise<void>;
+  // focus request
+  requestFocusWithoutKeyboard: () => void;
 }
 
 type WriteStore = WriteState & WriteActions;
@@ -72,6 +99,8 @@ export const useWriteStore = create<WriteStore>()(
     overlayLoading: false,
     modal: {visible: false},
     clipboardText: '',
+    focusRequestNonce: 0,
+    suppressKeyboard: false,
 
     setTitle: v =>
       set(s => {
@@ -96,7 +125,7 @@ export const useWriteStore = create<WriteStore>()(
       }),
 
     publish: () => {
-      const { title, content } = get();
+      const {title, content} = get();
       if (!title.trim() && !content.trim()) {
         console.warn('[WriteStore] 请输入标题或正文');
         return;
@@ -107,7 +136,9 @@ export const useWriteStore = create<WriteStore>()(
     undo: () =>
       set(s => {
         const last = s.history.pop();
-        if (!last) return;
+        if (!last) {
+          return;
+        }
         s.future.push({
           title: s.title,
           content: s.content,
@@ -120,7 +151,9 @@ export const useWriteStore = create<WriteStore>()(
     redo: () =>
       set(s => {
         const next = s.future.pop();
-        if (!next) return;
+        if (!next) {
+          return;
+        }
         s.history.push({
           title: s.title,
           content: s.content,
@@ -134,7 +167,7 @@ export const useWriteStore = create<WriteStore>()(
       set(s => {
         if (end > start) {
           s.selectedText = txt;
-          s.selectionRange = { start, end };
+          s.selectionRange = {start, end};
           s.isToolbarVisible = true;
           s.holdSelection = true;
         } else {
@@ -156,21 +189,31 @@ export const useWriteStore = create<WriteStore>()(
         s.isToolbarVisible = false;
         s.selectedText = '';
         s.selectionRange = null;
+        s.suppressKeyboard = false;
+      }),
+
+    requestFocusWithoutKeyboard: () =>
+      set(s => {
+        s.suppressKeyboard = true;
+        s.focusRequestNonce = (s.focusRequestNonce || 0) + 1;
       }),
 
     selectAll: () =>
       set(s => {
         s.selectedText = s.content;
-        s.selectionRange = { start: 0, end: s.content.length };
+        s.selectionRange = {start: 0, end: s.content.length};
         s.isToolbarVisible = true;
         s.holdSelection = true;
       }),
     copySelected: () =>
       set(s => {
-        if (!s.selectedText) { return; }
+        if (!s.selectedText) {
+          return;
+        }
         try {
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          const Clipboard = require('@react-native-clipboard/clipboard').default;
+          const Clipboard =
+            require('@react-native-clipboard/clipboard').default;
           Clipboard.setString(s.selectedText);
         } catch (_e) {
           s.clipboardText = s.selectedText;
@@ -178,12 +221,20 @@ export const useWriteStore = create<WriteStore>()(
       }),
     cutSelected: () =>
       set(s => {
-        if (!s.selectedText) { return; }
-        const start = s.selectionRange?.start ?? s.content.indexOf(s.selectedText);
-        const end = s.selectionRange?.end ?? (start >= 0 ? start + s.selectedText.length : -1);
-        if (start < 0 || end < 0) { return; }
+        if (!s.selectedText) {
+          return;
+        }
+        const start =
+          s.selectionRange?.start ?? s.content.indexOf(s.selectedText);
+        const end =
+          s.selectionRange?.end ??
+          (start >= 0 ? start + s.selectedText.length : -1);
+        if (start < 0 || end < 0) {
+          return;
+        }
         try {
-          const Clipboard = require('@react-native-clipboard/clipboard').default;
+          const Clipboard =
+            require('@react-native-clipboard/clipboard').default;
           Clipboard.setString(s.selectedText);
         } catch (_e) {
           s.clipboardText = s.selectedText;
@@ -205,7 +256,11 @@ export const useWriteStore = create<WriteStore>()(
         set(s => {
           const start = s.selectionRange?.start;
           const end = s.selectionRange?.end;
-          s.history.push({ title: s.title, content: s.content, timestamp: Date.now() });
+          s.history.push({
+            title: s.title,
+            content: s.content,
+            timestamp: Date.now(),
+          });
           if (start != null && end != null && end > start) {
             s.content = s.content.slice(0, start) + text + s.content.slice(end);
             s.isToolbarVisible = false;
@@ -221,83 +276,120 @@ export const useWriteStore = create<WriteStore>()(
       }
       try {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const Clipboard: any = require('@react-native-clipboard/clipboard').default;
+        const Clipboard: any =
+          require('@react-native-clipboard/clipboard').default;
         const maybe = Clipboard?.getString?.();
         if (maybe && typeof maybe.then === 'function') {
           // 异步路径
-          (maybe as Promise<string>).then((str: string) => {
-            const insert = str || get().clipboardText;
-            if (!insert) { return; }
-            set(s => {
-              const start = s.selectionRange?.start;
-              const end = s.selectionRange?.end;
-              s.history.push({ title: s.title, content: s.content, timestamp: Date.now() });
-              if (start != null && end != null && end > start) {
-                s.content = s.content.slice(0, start) + insert + s.content.slice(end);
-                s.isToolbarVisible = false;
-                s.holdSelection = false;
-                s.selectedText = '';
-                s.selectionRange = null;
-              } else {
-                const idx = s.content.length;
-                s.content = s.content.slice(0, idx) + insert + s.content.slice(idx);
+          (maybe as Promise<string>)
+            .then((str: string) => {
+              const insert = str || get().clipboardText;
+              if (!insert) {
+                return;
               }
-            });
-          }).catch(() => {
-            const fallback = get().clipboardText;
-            if (!fallback) { return; }
-            set(s => {
-              const start = s.selectionRange?.start;
-              const end = s.selectionRange?.end;
-              s.history.push({ title: s.title, content: s.content, timestamp: Date.now() });
-              if (start != null && end != null && end > start) {
-                s.content = s.content.slice(0, start) + fallback + s.content.slice(end);
-                s.isToolbarVisible = false;
-                s.holdSelection = false;
-                s.selectedText = '';
-                s.selectionRange = null;
-              } else {
-                const idx = s.content.length;
-                s.content = s.content.slice(0, idx) + fallback + s.content.slice(idx);
+              set(s => {
+                const start = s.selectionRange?.start;
+                const end = s.selectionRange?.end;
+                s.history.push({
+                  title: s.title,
+                  content: s.content,
+                  timestamp: Date.now(),
+                });
+                if (start != null && end != null && end > start) {
+                  s.content =
+                    s.content.slice(0, start) + insert + s.content.slice(end);
+                  s.isToolbarVisible = false;
+                  s.holdSelection = false;
+                  s.selectedText = '';
+                  s.selectionRange = null;
+                } else {
+                  const idx = s.content.length;
+                  s.content =
+                    s.content.slice(0, idx) + insert + s.content.slice(idx);
+                }
+              });
+            })
+            .catch(() => {
+              const fallback = get().clipboardText;
+              if (!fallback) {
+                return;
               }
+              set(s => {
+                const start = s.selectionRange?.start;
+                const end = s.selectionRange?.end;
+                s.history.push({
+                  title: s.title,
+                  content: s.content,
+                  timestamp: Date.now(),
+                });
+                if (start != null && end != null && end > start) {
+                  s.content =
+                    s.content.slice(0, start) + fallback + s.content.slice(end);
+                  s.isToolbarVisible = false;
+                  s.holdSelection = false;
+                  s.selectedText = '';
+                  s.selectionRange = null;
+                } else {
+                  const idx = s.content.length;
+                  s.content =
+                    s.content.slice(0, idx) + fallback + s.content.slice(idx);
+                }
+              });
             });
-          });
         } else {
           // 同步路径（某些环境可能返回同步字符串）
-          const insert = (typeof maybe === 'string' ? maybe : get().clipboardText) as string;
-          if (!insert) { return; }
+          const insert = (
+            typeof maybe === 'string' ? maybe : get().clipboardText
+          ) as string;
+          if (!insert) {
+            return;
+          }
           set(s => {
             const start = s.selectionRange?.start;
             const end = s.selectionRange?.end;
-            s.history.push({ title: s.title, content: s.content, timestamp: Date.now() });
+            s.history.push({
+              title: s.title,
+              content: s.content,
+              timestamp: Date.now(),
+            });
             if (start != null && end != null && end > start) {
-              s.content = s.content.slice(0, start) + insert + s.content.slice(end);
+              s.content =
+                s.content.slice(0, start) + insert + s.content.slice(end);
               s.isToolbarVisible = false;
               s.holdSelection = false;
               s.selectedText = '';
               s.selectionRange = null;
             } else {
               const idx = s.content.length;
-              s.content = s.content.slice(0, idx) + insert + s.content.slice(idx);
+              s.content =
+                s.content.slice(0, idx) + insert + s.content.slice(idx);
             }
           });
         }
       } catch (_e) {
         const fallback = get().clipboardText;
-        if (!fallback) { return; }
+        if (!fallback) {
+          return;
+        }
         set(s => {
           const start = s.selectionRange?.start;
           const end = s.selectionRange?.end;
-          s.history.push({ title: s.title, content: s.content, timestamp: Date.now() });
+          s.history.push({
+            title: s.title,
+            content: s.content,
+            timestamp: Date.now(),
+          });
           if (start != null && end != null && end > start) {
-            s.content = s.content.slice(0, start) + fallback + s.content.slice(end);
+            s.content =
+              s.content.slice(0, start) + fallback + s.content.slice(end);
             s.isToolbarVisible = false;
             s.holdSelection = false;
             s.selectedText = '';
             s.selectionRange = null;
           } else {
             const idx = s.content.length;
-            s.content = s.content.slice(0, idx) + fallback + s.content.slice(idx);
+            s.content =
+              s.content.slice(0, idx) + fallback + s.content.slice(idx);
           }
         });
       }
@@ -319,15 +411,23 @@ export const useWriteStore = create<WriteStore>()(
         s.modal = {visible: false};
       }),
 
-    showError: (message) => set(s => { s.errorModal = { visible: true, message }; }),
-    hideError: () => set(s => { s.errorModal = { visible: false, message: '' }; }),
+    showError: message =>
+      set(s => {
+        s.errorModal = {visible: true, message};
+      }),
+    hideError: () =>
+      set(s => {
+        s.errorModal = {visible: false, message: ''};
+      }),
 
     polishSelected: async () => {
       const {selectedText} = get();
-      if (!selectedText) return;
+      if (!selectedText) {
+        return;
+      }
       set(s => {
         s.overlayLoading = true;
-        s.lastOp = { action: 'polish', snapshot: { selectedText } };
+        s.lastOp = {action: 'polish', snapshot: {selectedText}};
       });
       try {
         const data = await NavigationBridge.aiPolish(selectedText);
@@ -339,7 +439,10 @@ export const useWriteStore = create<WriteStore>()(
           } else {
             const idx = s.content.indexOf(s.selectedText);
             if (idx >= 0) {
-              s.content = s.content.slice(0, idx) + data + s.content.slice(idx + s.selectedText.length);
+              s.content =
+                s.content.slice(0, idx) +
+                data +
+                s.content.slice(idx + s.selectedText.length);
             }
           }
           s.overlayLoading = false;
@@ -348,11 +451,12 @@ export const useWriteStore = create<WriteStore>()(
           s.holdSelection = false;
           s.selectionRange = null;
         });
+        notifySuccess();
       } catch (e) {
         set(s => {
           s.overlayLoading = false;
           const msg = e instanceof Error ? e.message : 'AI 调用失败';
-          s.errorModal = { visible: true, message: msg };
+          s.errorModal = {visible: true, message: msg};
         });
         throw e;
       }
@@ -360,10 +464,16 @@ export const useWriteStore = create<WriteStore>()(
 
     expandSelected: async ratio => {
       const {selectedText} = get();
-      if (!selectedText) return;
+      if (!selectedText) {
+        return;
+      }
       set(s => {
         s.overlayLoading = true;
-        s.lastOp = { action: 'expand', param: Math.round(ratio), snapshot: { selectedText } };
+        s.lastOp = {
+          action: 'expand',
+          param: Math.round(ratio),
+          snapshot: {selectedText},
+        };
       });
       try {
         const intRatio = Math.round(ratio);
@@ -376,7 +486,10 @@ export const useWriteStore = create<WriteStore>()(
           } else {
             const idx = s.content.indexOf(s.selectedText);
             if (idx >= 0) {
-              s.content = s.content.slice(0, idx) + data + s.content.slice(idx + s.selectedText.length);
+              s.content =
+                s.content.slice(0, idx) +
+                data +
+                s.content.slice(idx + s.selectedText.length);
             }
           }
           s.overlayLoading = false;
@@ -385,10 +498,14 @@ export const useWriteStore = create<WriteStore>()(
           s.holdSelection = false;
           s.selectionRange = null;
         });
-       } catch (e) {
+        notifySuccess();
+      } catch (e) {
         set(s => {
           s.overlayLoading = false;
-           s.errorModal = { visible: true, message: e instanceof Error ? e.message : 'AI 调用失败' };
+          s.errorModal = {
+            visible: true,
+            message: e instanceof Error ? e.message : 'AI 调用失败',
+          };
         });
         throw e;
       }
@@ -396,10 +513,16 @@ export const useWriteStore = create<WriteStore>()(
 
     condenseSelected: async ratio => {
       const {selectedText} = get();
-      if (!selectedText) return;
+      if (!selectedText) {
+        return;
+      }
       set(s => {
         s.overlayLoading = true;
-        s.lastOp = { action: 'condense', param: Math.round(ratio), snapshot: { selectedText } };
+        s.lastOp = {
+          action: 'condense',
+          param: Math.round(ratio),
+          snapshot: {selectedText},
+        };
       });
       try {
         const intRatio = Math.round(ratio);
@@ -412,7 +535,10 @@ export const useWriteStore = create<WriteStore>()(
           } else {
             const idx = s.content.indexOf(s.selectedText);
             if (idx >= 0) {
-              s.content = s.content.slice(0, idx) + data + s.content.slice(idx + s.selectedText.length);
+              s.content =
+                s.content.slice(0, idx) +
+                data +
+                s.content.slice(idx + s.selectedText.length);
             }
           }
           s.overlayLoading = false;
@@ -421,10 +547,14 @@ export const useWriteStore = create<WriteStore>()(
           s.holdSelection = false;
           s.selectionRange = null;
         });
-       } catch (e) {
+        notifySuccess();
+      } catch (e) {
         set(s => {
           s.overlayLoading = false;
-           s.errorModal = { visible: true, message: e instanceof Error ? e.message : 'AI 调用失败' };
+          s.errorModal = {
+            visible: true,
+            message: e instanceof Error ? e.message : 'AI 调用失败',
+          };
         });
         throw e;
       }
@@ -432,10 +562,16 @@ export const useWriteStore = create<WriteStore>()(
 
     continueSelected: async length => {
       const {selectedText} = get();
-      if (!selectedText) return;
+      if (!selectedText) {
+        return;
+      }
       set(s => {
         s.overlayLoading = true;
-        s.lastOp = { action: 'continue', param: Math.round(length), snapshot: { selectedText } };
+        s.lastOp = {
+          action: 'continue',
+          param: Math.round(length),
+          snapshot: {selectedText},
+        };
       });
       try {
         const intLen = Math.round(length);
@@ -448,7 +584,10 @@ export const useWriteStore = create<WriteStore>()(
           } else {
             const idx = s.content.indexOf(s.selectedText);
             if (idx >= 0) {
-              s.content = s.content.slice(0, idx + s.selectedText.length) + data + s.content.slice(idx + s.selectedText.length);
+              s.content =
+                s.content.slice(0, idx + s.selectedText.length) +
+                data +
+                s.content.slice(idx + s.selectedText.length);
             }
           }
           s.overlayLoading = false;
@@ -457,24 +596,40 @@ export const useWriteStore = create<WriteStore>()(
           s.holdSelection = false;
           s.selectionRange = null;
         });
-       } catch (e) {
+        notifySuccess();
+      } catch (e) {
         set(s => {
           s.overlayLoading = false;
-           s.errorModal = { visible: true, message: e instanceof Error ? e.message : 'AI 调用失败' };
+          s.errorModal = {
+            visible: true,
+            message: e instanceof Error ? e.message : 'AI 调用失败',
+          };
         });
         throw e;
       }
     },
 
     retryLastOperation: async () => {
-      const { lastOp } = get();
-      if (!lastOp) return;
+      const {lastOp} = get();
+      if (!lastOp) {
+        return;
+      }
       const text = lastOp.snapshot.selectedText;
-      if (!text) return;
-      if (lastOp.action === 'polish') return get().polishSelected();
-      if (lastOp.action === 'expand') return get().expandSelected(lastOp.param || 150);
-      if (lastOp.action === 'condense') return get().condenseSelected(lastOp.param || 2);
-      if (lastOp.action === 'continue') return get().continueSelected(lastOp.param || 200);
+      if (!text) {
+        return;
+      }
+      if (lastOp.action === 'polish') {
+        return get().polishSelected();
+      }
+      if (lastOp.action === 'expand') {
+        return get().expandSelected(lastOp.param || 150);
+      }
+      if (lastOp.action === 'condense') {
+        return get().condenseSelected(lastOp.param || 2);
+      }
+      if (lastOp.action === 'continue') {
+        return get().continueSelected(lastOp.param || 200);
+      }
     },
   })),
 );

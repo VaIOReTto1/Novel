@@ -40,6 +40,9 @@ interface NavigationBridgeInterface {
   getAuthorStatus(): Promise<{ isAuthor: boolean; code?: string; message?: string; ok?: boolean }>;
   getAuthorBooks(pageNum?: number, pageSize?: number): Promise<{ list: Array<{ id: number; bookName: string; wordCount: number }> }>;
   navigateToBecomeWriterWithFlag(isAuthor: boolean): void;
+  // Android only: attach/detach custom selection menu to a specific TextInput view
+  attachSelectionMenu?(viewTag: number): void;
+  detachSelectionMenu?(viewTag: number): void;
 }
 
 const { NavigationBridge: NativeNavigationBridge } = NativeModules;
@@ -240,6 +243,21 @@ export const NavigationBridge: NavigationBridgeInterface = {
     } else {
       // 兼容旧接口：回退到原有的状态查询再跳转
       NativeNavigationBridge?.navigateToBecomeWriterWithStatus?.();
+    }
+  },
+
+  attachSelectionMenu: (viewTag: number) => {
+    try {
+      NativeNavigationBridge?.attachSelectionMenu?.(viewTag);
+    } catch (e) {
+      console.warn('[NavigationBridge] attachSelectionMenu failed', e);
+    }
+  },
+  detachSelectionMenu: (viewTag: number) => {
+    try {
+      NativeNavigationBridge?.detachSelectionMenu?.(viewTag);
+    } catch (e) {
+      console.warn('[NavigationBridge] detachSelectionMenu failed', e);
     }
   },
 };

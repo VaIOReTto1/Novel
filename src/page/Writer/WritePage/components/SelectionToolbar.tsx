@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const RN: any = require('react-native');
-const { Modal, TextInput } = RN;
+const { Modal, TextInput, Keyboard } = RN;
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { wp, sp } from '../../../../utils/theme/dimensions';
 import { createWritePageStyles } from '../styles/WritePageStyles';
@@ -15,12 +15,14 @@ interface SelectionToolbarProps {
   onReplaceSelected: (text: string) => void;
   onAppendToSelected: (text: string) => void;
   onRequestClose: () => void;
+  onPrepareSelectionHandles?: () => void;
 }
 
-export const SelectionToolbar: React.FC<SelectionToolbarProps> = ({ visible, anchorY, selectedText: _selectedText, onReplaceSelected: _onReplaceSelected, onAppendToSelected: _onAppendToSelected, onRequestClose }) => {
+export const SelectionToolbar: React.FC<SelectionToolbarProps> = ({ visible, anchorY, selectedText: _selectedText, onReplaceSelected: _onReplaceSelected, onAppendToSelected: _onAppendToSelected, onRequestClose, onPrepareSelectionHandles }) => {
   const colors = useNovelColors();
   const styles = createWritePageStyles(colors);
-  const { polishSelected, expandSelected, condenseSelected, continueSelected, setOverlay, selectAll, copySelected, cutSelected, pasteAtSelection } = useWriteStore();
+  const { polishSelected, expandSelected, condenseSelected, continueSelected, setOverlay } = useWriteStore();
+  const requestFocusWithoutKeyboard = useWriteStore(s => s.requestFocusWithoutKeyboard);
   const [promptVisible, setPromptVisible] = useState<null | { type: 'expand' | 'condense' | 'continue' }>(null);
   const [param, setParam] = useState('');
 
@@ -50,29 +52,17 @@ export const SelectionToolbar: React.FC<SelectionToolbarProps> = ({ visible, anc
 
       {/* 工具条 */}
       <View style={containerStyle}>
-        <TouchableOpacity onPress={() => run(() => polishSelected())}>
+        <TouchableOpacity onPress={() => { try { Keyboard?.dismiss?.(); } catch (_e) { } onPrepareSelectionHandles?.(); requestFocusWithoutKeyboard(); run(() => polishSelected()); }}>
           <Text style={styles.toolbarBtnText}>润色</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setPromptVisible({ type: 'expand' })}>
+        <TouchableOpacity onPress={() => { try { Keyboard?.dismiss?.(); } catch (_e) { } onPrepareSelectionHandles?.(); requestFocusWithoutKeyboard(); setPromptVisible({ type: 'expand' }); }}>
           <Text style={styles.toolbarBtnText}>扩写</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setPromptVisible({ type: 'condense' })}>
+        <TouchableOpacity onPress={() => { try { Keyboard?.dismiss?.(); } catch (_e) { } onPrepareSelectionHandles?.(); requestFocusWithoutKeyboard(); setPromptVisible({ type: 'condense' }); }}>
           <Text style={styles.toolbarBtnText}>缩写</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setPromptVisible({ type: 'continue' })}>
+        <TouchableOpacity onPress={() => { try { Keyboard?.dismiss?.(); } catch (_e) { } onPrepareSelectionHandles?.(); requestFocusWithoutKeyboard(); setPromptVisible({ type: 'continue' }); }}>
           <Text style={styles.toolbarBtnText}>续写</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { selectAll(); }}>
-          <Text style={styles.toolbarBtnText}>全选</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { copySelected(); }}>
-          <Text style={styles.toolbarBtnText}>复制</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { cutSelected(); }}>
-          <Text style={styles.toolbarBtnText}>剪切</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { pasteAtSelection(''); }}>
-          <Text style={styles.toolbarBtnText}>粘贴</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onRequestClose}>
           <Text style={styles.toolbarBtnTextSecondary}>关闭</Text>

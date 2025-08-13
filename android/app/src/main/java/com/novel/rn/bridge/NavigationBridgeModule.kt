@@ -23,6 +23,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 import com.novel.rn.settings.SettingsEffect
 import com.novel.rn.settings.SettingsIntent
 import org.json.JSONObject
+import com.facebook.react.modules.core.DeviceEventManagerModule
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
 
 /**
  * 导航桥接模块
@@ -67,6 +72,97 @@ class NavigationBridgeModule(
             TimberLogger.e(TAG, "无法获取SettingsViewModel", e)
             null
         }
+
+    // =================== Selection Menu (Android) ===================
+    private val MENU_ID_POLISH = 0xA11001
+    private val MENU_ID_EXPAND = 0xA11002
+    private val MENU_ID_CONDENSE = 0xA11003
+    private val MENU_ID_CONTINUE = 0xA11004
+
+    /**
+     * 为指定的 TextInput 视图安装自定义选择菜单（仅本页调用）
+     */
+    @ReactMethod
+    fun attachSelectionMenu(@Suppress("UNUSED_PARAMETER") viewTag: Int) {
+        try {
+            Handler(Looper.getMainLooper()).post {
+                val activity = currentActivity ?: return@post
+                var attempts = 0
+                fun tryAttach() {
+                    val v = activity.currentFocus
+                    if (v is EditText) {
+                        v.customSelectionActionModeCallback = object : ActionMode.Callback {
+                            override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+                                try {
+                                    menu.add(0, MENU_ID_POLISH, 0, "润色")
+                                    menu.add(0, MENU_ID_EXPAND, 1, "扩写")
+                                    menu.add(0, MENU_ID_CONDENSE, 2, "缩写")
+                                    menu.add(0, MENU_ID_CONTINUE, 3, "续写")
+                                } catch (_: Exception) { }
+                                return true
+                            }
+
+                            override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean = false
+
+                            override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+                                val action = when (item.itemId) {
+                                    MENU_ID_POLISH -> "polish"
+                                    MENU_ID_EXPAND -> "expand"
+                                    MENU_ID_CONDENSE -> "condense"
+                                    MENU_ID_CONTINUE -> "continue"
+                                    else -> null
+                                } ?: return false
+
+                                val start = try { v.selectionStart } catch (_: Exception) { -1 }
+                                val end = try { v.selectionEnd } catch (_: Exception) { -1 }
+                                val selected = try {
+                                    if (start >= 0 && end > start) v.text.substring(start, end) else ""
+                                } catch (_: Exception) { "" }
+
+                                val map = Arguments.createMap().apply {
+                                    putString("action", action)
+                                    if (selected.isNotEmpty()) putString("selectedText", selected)
+                                    putInt("start", start)
+                                    putInt("end", end)
+                                }
+                                try {
+                                    reactContext
+                                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                                        .emit("WritePageSelectionMenuAction", map)
+                                } catch (_: Exception) { }
+
+                                mode.finish()
+                                return true
+                            }
+
+                            override fun onDestroyActionMode(mode: ActionMode) { /* no-op */ }
+                        }
+                    } else if (attempts < 6) {
+                        attempts += 1
+                        Handler(Looper.getMainLooper()).postDelayed({ tryAttach() }, 100)
+                    }
+                }
+                tryAttach()
+            }
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "attachSelectionMenu 失败", e)
+        }
+    }
+
+    @ReactMethod
+    fun detachSelectionMenu(@Suppress("UNUSED_PARAMETER") viewTag: Int) {
+        try {
+            Handler(Looper.getMainLooper()).post {
+                val activity = currentActivity ?: return@post
+                val v = activity.currentFocus
+                if (v is EditText) {
+                    v.customSelectionActionModeCallback = null
+                }
+            }
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "detachSelectionMenu 失败", e)
+        }
+    }
 
     /**
      * 导航到登录页面

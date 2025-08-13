@@ -37,6 +37,9 @@ interface NavigationBridgeInterface {
   aiCondense(text: string, ratio: number): Promise<string>;
   aiContinue(text: string, length: number): Promise<string>;
   getHomeBooksHighPriority(): Promise<any>;
+  getAuthorStatus(): Promise<{ isAuthor: boolean; code?: string; message?: string; ok?: boolean }>;
+  getAuthorBooks(pageNum?: number, pageSize?: number): Promise<{ list: Array<{ id: number; bookName: string; wordCount: number }> }>;
+  navigateToBecomeWriterWithFlag(isAuthor: boolean): void;
 }
 
 const { NavigationBridge: NativeNavigationBridge } = NativeModules;
@@ -215,6 +218,29 @@ export const NavigationBridge: NavigationBridgeInterface = {
 
   getHomeBooksHighPriority: (): Promise<any> => {
     return (NativeNavigationBridge?.getHomeBooksHighPriority?.()) || Promise.reject('getHomeBooksHighPriority not available');
+  },
+
+  getAuthorStatus: (): Promise<{ isAuthor: boolean; code?: string; message?: string; ok?: boolean }> => {
+    if (!NativeNavigationBridge?.getAuthorStatus) {
+      return Promise.reject('getAuthorStatus not available');
+    }
+    return NativeNavigationBridge.getAuthorStatus();
+  },
+
+  getAuthorBooks: (pageNum: number = 1, pageSize: number = 50): Promise<{ list: Array<{ id: number; bookName: string; wordCount: number }> }> => {
+    if (!NativeNavigationBridge?.getAuthorBooks) {
+      return Promise.reject('getAuthorBooks not available');
+    }
+    return NativeNavigationBridge.getAuthorBooks(pageNum, pageSize);
+  },
+
+  navigateToBecomeWriterWithFlag: (isAuthor: boolean) => {
+    if (NativeNavigationBridge?.navigateToBecomeWriterWithFlag) {
+      NativeNavigationBridge.navigateToBecomeWriterWithFlag(isAuthor);
+    } else {
+      // 兼容旧接口：回退到原有的状态查询再跳转
+      NativeNavigationBridge?.navigateToBecomeWriterWithStatus?.();
+    }
   },
 };
 

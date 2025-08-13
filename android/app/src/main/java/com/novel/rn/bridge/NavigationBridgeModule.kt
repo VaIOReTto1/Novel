@@ -226,6 +226,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 直接依据前端传入的标志导航到成为作家页面（避免原生重复查询）
+     */
+    @ReactMethod
+    fun navigateToBecomeWriterWithFlag(isAuthor: Boolean) {
+        TimberLogger.d(TAG, "根据传入标志导航到成为作家页面 isAuthor=$isAuthor")
+        Handler(Looper.getMainLooper()).post {
+            val route = if (isAuthor) "becomewriter?isAuthor=true" else "becomewriter?isAuthor=false"
+            NavViewModel.navController.value?.navigate(route)
+        }
+    }
+
+    /**
      * 导航到写作页面
      */
     @ReactMethod
@@ -388,6 +400,96 @@ class NavigationBridgeModule(
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "解析首页推荐书籍失败", e)
                 CoroutineScope(Dispatchers.Main).launch { promise.reject("HOME_BOOKS_ERROR", e) }
+            }
+        }
+    }
+
+    /**
+     * 获取作家状态（布尔 isAuthor），由RN端自行缓存与决定跳转
+     */
+    @ReactMethod
+    fun getAuthorStatus(promise: Promise) {
+        TimberLogger.d(TAG, "RN调用获取作家状态")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resp = com.novel.utils.network.api.author.AuthorService().getAuthorStatusBlocking()
+                val dataVal = resp.data
+                val isAuthor = (dataVal == "0")
+                val map = Arguments.createMap().apply {
+                    resp.code?.let { putString("code", it) }
+                    resp.message?.let { putString("message", it) }
+                    putBoolean("ok", resp.ok ?: false)
+                    putBoolean("isAuthor", isAuthor)
+                }
+                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "获取作家状态失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_STATUS_ERROR", e) }
+            }
+        }
+    }
+
+    /**
+     * 获取作家发布作品列表
+     */
+    @ReactMethod
+    fun getAuthorBooks(pageNum: Int, pageSize: Int, promise: Promise) {
+        TimberLogger.d(TAG, "RN调用获取作家作品列表 pageNum=$pageNum pageSize=$pageSize")
+        val params = mapOf(
+            "pageNum" to pageNum.toString(),
+            "pageSize" to pageSize.toString()
+        )
+        ApiService.get(
+            baseUrl = ApiService.BASE_URL_AUTHOR,
+            endpoint = "books",
+            params = params,
+            headers = mapOf("Accept" to "*/*")
+        ) { response, error ->
+            if (error != null) {
+                TimberLogger.e(TAG, "获取作家作品列表失败", error)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", error) }
+                return@get
+            }
+            if (response == null) {
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", "Empty response") }
+                return@get
+            }
+            try {
+                val json = org.json.JSONObject(response)
+                val code = if (!json.isNull("code")) json.optString("code") else null
+                val message = if (!json.isNull("message")) json.optString("message") else null
+                val ok = json.optBoolean("ok", false)
+
+                val data = json.optJSONObject("data")
+                val listArray = Arguments.createArray()
+                val listJsonArr = data?.optJSONArray("list")
+                if (listJsonArr != null) {
+                    for (i in 0 until listJsonArr.length()) {
+                        val item = listJsonArr.optJSONObject(i) ?: continue
+                        val b = Arguments.createMap().apply {
+                            putDouble("id", item.optLong("id").toDouble())
+                            putString("bookName", item.optString("bookName", null))
+                            putString("authorName", item.optString("authorName", null))
+                            putString("picUrl", item.optString("picUrl", null))
+                            putDouble("wordCount", item.optInt("wordCount").toDouble())
+                            putString("bookDesc", item.optString("bookDesc", null))
+                            putDouble("categoryId", item.optLong("categoryId").toDouble())
+                            putString("categoryName", item.optString("categoryName", null))
+                        }
+                        listArray.pushMap(b)
+                    }
+                }
+
+                val map = Arguments.createMap().apply {
+                    if (code != null) putString("code", code)
+                    if (message != null) putString("message", message)
+                    putBoolean("ok", ok)
+                    putArray("list", listArray)
+                }
+                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "解析作家作品列表失败", e)
+                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", e) }
             }
         }
     }

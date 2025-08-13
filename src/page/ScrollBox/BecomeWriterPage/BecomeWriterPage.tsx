@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
+import { View, ScrollView, NativeModules, Text } from 'react-native';
 import { useBecomeWriterStore } from './store/becomeWriterStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createBecomeWriterPageStyles } from './styles/BecomeWriterPageStyles';
@@ -54,17 +54,27 @@ const BecomeWriterPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createBecomeWriterPageStyles(colors);
 
-  // Android硬件返回按钮处理
+  // Android硬件返回按钮处理（使用 require 以规避类型问题）
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    const RN = require('react-native');
+    const BH = RN && RN.BackHandler;
+    if (!(BH && BH.addEventListener)) {
+      return;
+    }
+    const sub = BH.addEventListener('hardwareBackPress', () => {
       console.log('[BecomeWriterPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('BecomeWriterPageComponent');
       }
-      return true; // 阻止默认行为
+      return true;
     });
-
-    return () => backHandler.remove();
+    return () => {
+      try {
+        if (sub && typeof sub.remove === 'function') {
+          sub.remove();
+        }
+      } catch (e) {}
+    };
   }, []);
 
   // 初始化数据
@@ -74,8 +84,8 @@ const BecomeWriterPage: React.FC = () => {
         console.log('[BecomeWriterPage] 开始初始化数据');
         await loadInitialData();
         console.log('[BecomeWriterPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[BecomeWriterPage] 初始化失败:', error);
+      } catch (e) {
+        console.error('[BecomeWriterPage] 初始化失败:', e);
       }
     };
 
@@ -109,12 +119,16 @@ const BecomeWriterPage: React.FC = () => {
     console.log('Activity tab changed to:', tab);
     setSelectedActivityTab(tab);
   }, [setSelectedActivityTab]);
-
   // 成为番茄作家按钮点击
   const handleBecomeTomatoWriterPress = useCallback(() => {
     console.log('Become tomato writer button pressed');
     handleBecomeTomatoWriter();
   }, [handleBecomeTomatoWriter]);
+  
+  // AI入口
+  const handleAIPress = useCallback(() => {
+    NavigationBridge?.navigateToAIPage?.();
+  }, []);
 
   // 更多按钮点击处理
   const handleActivityMorePress = useCallback(() => {
@@ -128,8 +142,37 @@ const BecomeWriterPage: React.FC = () => {
   // 协议链接点击
   const handleAgreementPress = useCallback(() => {
     console.log('Agreement link pressed');
-    alert('《个人信息保护声明》详情页面开发中...');
+    // 可接入统一Toast，这里先用console
   }, []);
+
+  // 作家作品列表：优先原生获取，无则使用 mock
+  useEffect(() => {
+    const fetchAuthorWorks = async () => {
+      if (!isAuthor) { return; }
+      try {
+        const res = await (require('../../../utils/bridge/NavigationBridge').default).getAuthorBooks(1, 50);
+        const list = Array.isArray(res?.list) ? res.list : [];
+        if (list.length > 0) {
+          const worksMapped = list.map((it: any) => ({
+            id: String(it.id ?? Date.now()),
+            title: String(it.bookName ?? '未命名作品'),
+            words: Number(it.wordCount ?? 0),
+          }));
+          useBecomeWriterStore.getState().setWorks?.(worksMapped);
+        } else {
+          // fallback mock
+          useBecomeWriterStore.getState().setWorks?.([
+            { id: 'm1', title: '我的新书', words: 0 },
+          ]);
+        }
+      } catch (e) {
+        useBecomeWriterStore.getState().setWorks?.([
+          { id: 'm1', title: '我的新书', words: 0 },
+        ]);
+      }
+    };
+    fetchAuthorWorks();
+  }, [isAuthor]);
 
   // 加载状态
   if (loading) {
@@ -157,7 +200,7 @@ const BecomeWriterPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar styles={styles} onBackPress={handleBackPress} />
+      <TopBar styles={styles} onBackPress={handleBackPress} showAI={isAuthor} onAIPress={handleAIPress} />
 
       <ScrollView
         style={styles.scrollView}
@@ -187,6 +230,7 @@ const BecomeWriterPage: React.FC = () => {
           }
         }}
         onCreateChapter={() => NavigationBridge?.navigateToWritePage?.()}
+          isAuthor={isAuthor}
         />
 
         {/* 作家专属 */}
@@ -223,7 +267,7 @@ const BecomeWriterPage: React.FC = () => {
       </ScrollView>
 
       {/* 底部固定按钮 */}
-      {isAuthor && (
+      {!isAuthor && (
         <BottomButton
           styles={styles}
           onPress={handleImmediateRegister}
@@ -231,7 +275,7 @@ const BecomeWriterPage: React.FC = () => {
       )}
 
       {/* 欢迎弹窗 */}
-      {isAuthor && (
+      {!isAuthor && (
         <WelcomeModal
           styles={styles}
           visible={showWelcomeModal}

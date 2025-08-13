@@ -12,6 +12,7 @@ interface DataStatsSectionProps {
   works?: { id: string; title: string; words: number }[];
   onPressWork?: (id: string) => void;
   onCreateChapter?: () => void;
+  isAuthor?: boolean;
 }
 
 export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
@@ -24,6 +25,7 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
   works,
   onPressWork,
   onCreateChapter,
+  isAuthor,
 }) => {
   const handleTabPress = useCallback((tab: 'novel' | 'short') => {
     onTabChange(tab);
@@ -68,7 +70,7 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
       </View>
 
       {/* 作品卡片或空状态 */}
-      {works && works.length > 0 ? (
+      {isAuthor && works && works.length > 0 ? (
         <View>
           {works.map((w) => (
             <TouchableOpacity key={w.id} style={styles.activityItem} onPress={() => onPressWork?.(w.id)}>
@@ -87,8 +89,8 @@ export const DataStatsSection: React.FC<DataStatsSectionProps> = React.memo(({
         <View style={styles.emptyStateContainer}>
           <View style={styles.emptyStateIcon} />
           <View style={styles.emptyStateTextGroup}>
-            <Text style={styles.emptyStateTitle}>暂未创建作品</Text>
-            <Text style={styles.emptyStateSubtitle}>期待你在番茄小说写出好故事</Text>
+            <Text style={styles.emptyStateTitle}>{isAuthor ? '暂未创建作品' : '成为番茄作家，开始创作'}</Text>
+            <Text style={styles.emptyStateSubtitle}>{isAuthor ? '期待你在番茄小说写出好故事' : '加入作家行列，享受更多创作福利'}</Text>
           </View>
         </View>
       )}

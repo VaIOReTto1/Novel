@@ -35,8 +35,8 @@ export const getCurrentUserData = async (): Promise<UserData | null> => {
               photo: result.photo,
               sex: result.sex,
               isLoggedIn: true, // 如果有数据说明已登录
-              balance: 0, // 需要单独获取
-              coins: 0, // 需要单独获取
+              balance: typeof result.balance === 'number' ? result.balance : 0,
+              coins: typeof result.coins === 'number' ? result.coins : 0,
             };
             resolve(userData);
           } else {

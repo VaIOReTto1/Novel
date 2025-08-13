@@ -31,6 +31,11 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     fontWeight: '300',
     lineHeight: fp(28),
   },
+  aiIcon: {
+    fontSize: fp(20),
+    color: colors.novelText,
+    fontWeight: '400',
+  },
   titleContainer: {
     flex: 1,
     justifyContent: 'center',

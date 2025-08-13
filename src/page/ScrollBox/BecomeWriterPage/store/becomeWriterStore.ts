@@ -68,6 +68,7 @@ interface BecomeWriterActions {
   setAgreementChecked: (checked: boolean) => void;
   handleImmediateRegister: () => void;
   handleMorePress: (type: string) => void;
+  setWorks: (works: { id: string; title: string; words: number }[]) => void;
 }
 
 type BecomeWriterStore = BecomeWriterState & BecomeWriterActions;
@@ -416,5 +417,9 @@ export const useBecomeWriterStore = create<BecomeWriterStore>()(
     handleMorePress: (type: string) => {
       console.log(`[BecomeWriterStore] 更多按钮点击: ${type}`);
     },
+
+    setWorks: (works) => set((state) => {
+      state.works = works;
+    }),
   }))
 );

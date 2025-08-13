@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface UserState {
   uid: string | null;
@@ -10,6 +11,7 @@ export interface UserState {
   isLoggedIn: boolean;
   balance: number;
   coins: number;
+  isAuthor: boolean;
 }
 
 interface UserActions {
@@ -28,6 +30,10 @@ interface UserActions {
     sex?: string;
   }) => void;
   logout: () => void;
+  initializeFromCache: () => Promise<void>;
+  setAuthorStatus: (isAuthor: boolean) => void;
+  setBalance: (balance: number) => void;
+  setCoins: (coins: number) => void;
 }
 
 type UserStore = UserState & UserActions;
@@ -41,6 +47,7 @@ const initialState: UserState = {
   isLoggedIn: false,
   balance: 0.00,
   coins: 0,
+  isAuthor: false,
 };
 
 export const useUserStore = create<UserStore>()(
@@ -54,6 +61,18 @@ export const useUserStore = create<UserStore>()(
       state.photo = userData.photo;
       state.sex = userData.sex || null;
       state.isLoggedIn = true;
+      // 异步缓存
+      void AsyncStorage.setItem('NOVEL_USER_CACHE', JSON.stringify({
+        uid: state.uid,
+        token: state.token,
+        nickname: state.nickname,
+        photo: state.photo,
+        sex: state.sex,
+        isLoggedIn: state.isLoggedIn,
+        balance: state.balance,
+        coins: state.coins,
+        isAuthor: state.isAuthor,
+      }));
     }),
 
     handleNativeUserData: (userData) => set((state) => {
@@ -63,6 +82,18 @@ export const useUserStore = create<UserStore>()(
       state.photo = userData.photo;
       state.sex = userData.sex || null;
       state.isLoggedIn = true;
+      // 异步缓存
+      void AsyncStorage.setItem('NOVEL_USER_CACHE', JSON.stringify({
+        uid: state.uid,
+        token: state.token,
+        nickname: state.nickname,
+        photo: state.photo,
+        sex: state.sex,
+        isLoggedIn: state.isLoggedIn,
+        balance: state.balance,
+        coins: state.coins,
+        isAuthor: state.isAuthor,
+      }));
     }),
 
     logout: () => set((state) => {
@@ -74,6 +105,46 @@ export const useUserStore = create<UserStore>()(
       state.isLoggedIn = false;
       state.balance = 0.00;
       state.coins = 0;
+      state.isAuthor = false;
+      void AsyncStorage.removeItem('NOVEL_USER_CACHE');
+    }),
+
+    initializeFromCache: async () => {
+      try {
+        const raw = await AsyncStorage.getItem('NOVEL_USER_CACHE');
+        if (raw) {
+          const cached = JSON.parse(raw);
+          set((state) => {
+            state.uid = cached.uid ?? state.uid;
+            state.token = cached.token ?? state.token;
+            state.nickname = cached.nickname ?? state.nickname;
+            state.photo = cached.photo ?? state.photo;
+            state.sex = cached.sex ?? state.sex;
+            state.isLoggedIn = cached.isLoggedIn ?? state.isLoggedIn;
+            state.balance = typeof cached.balance === 'number' ? cached.balance : state.balance;
+            state.coins = typeof cached.coins === 'number' ? cached.coins : state.coins;
+            state.isAuthor = !!cached.isAuthor;
+          });
+        }
+      } catch (e) {
+        // ignore cache errors
+      }
+    },
+
+    setAuthorStatus: (isAuthor) => set((state) => {
+      state.isAuthor = isAuthor;
+      // 更新缓存
+      void AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ isAuthor }));
+    }),
+
+    setBalance: (balance) => set((state) => {
+      state.balance = balance;
+      void AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ balance }));
+    }),
+
+    setCoins: (coins) => set((state) => {
+      state.coins = coins;
+      void AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ coins }));
     }),
   }))
 );

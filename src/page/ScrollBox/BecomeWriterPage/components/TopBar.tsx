@@ -4,11 +4,15 @@ import { TopBarProps } from '../types';
 
 interface TopBarComponentProps extends TopBarProps {
   styles: any;
+  showAI?: boolean;
+  onAIPress?: () => void;
 }
 
 export const TopBar: React.FC<TopBarComponentProps> = ({
   styles,
   onBackPress,
+  showAI,
+  onAIPress,
 }) => {
   return (
     <View style={styles.topBar}>
@@ -24,8 +28,18 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
         <Text style={styles.title}>成为作家</Text>
       </View>
 
-      {/* 右侧占位，保持居中 */}
-      <View style={styles.backButton} />
+      {/* 右侧：AI入口/占位 */}
+      {showAI ? (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={onAIPress}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.aiIcon}>🤖</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.backButton} />
+      )}
     </View>
   );
 };

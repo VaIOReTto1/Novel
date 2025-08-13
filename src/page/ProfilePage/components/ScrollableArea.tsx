@@ -15,6 +15,8 @@ interface ScrollableAreaProps {
   thirdPageIconsStyle: any;
   firstPageAdStyle: any;
   colors: any;
+  onBeWriterPress?: () => void;
+  isAuthor?: boolean;
 }
 
 /**
@@ -63,6 +65,8 @@ export const ScrollableArea: React.FC<ScrollableAreaProps> = ({
   thirdPageIconsStyle,
   firstPageAdStyle,
   colors,
+  onBeWriterPress,
+  isAuthor,
 }) => {
   const [, setCurrentPage] = useState(0);
   const totalPages = 3;
@@ -116,7 +120,18 @@ export const ScrollableArea: React.FC<ScrollableAreaProps> = ({
           {/* 第一页：4个图标 + 广告 */}
           <View style={[styles.page, { width: PAGE_WIDTH }]}>
             <Animated.View style={[styles.firstPageIcons, firstPageIconsStyle]}>
-              {getPageIcons(0).map((iconData) => renderIcon(iconData))}
+              {getPageIcons(0)
+                .map((iconData) => {
+                  if (iconData.id === 'be_writer') {
+                    return {
+                      ...iconData,
+                      name: isAuthor ? '写小说' : '成为作家',
+                      onPress: onBeWriterPress || iconData.onPress,
+                    } as IconData;
+                  }
+                  return iconData;
+                })
+                .map((iconData) => renderIcon(iconData))}
             </Animated.View>
             <Animated.View style={firstPageAdStyle}>
               {renderAdvertisement()}

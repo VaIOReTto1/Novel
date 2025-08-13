@@ -9,6 +9,8 @@ import { convertHomeBooksToBooks } from './utils/helpers';
 import { createHomePageStyles } from './styles/ProfilePageStyles';
 import { Book } from './types';
 import { useThemeStore } from '../../utils/theme/themeStore';
+import NavBridge from '../../utils/bridge/NavigationBridge';
+import { getCurrentUserData, getUserBalance, getUserCoins } from '../../utils/bridge/UserBridge';
 import {
   TopBar,
   LoginBar,
@@ -23,7 +25,7 @@ const { NavigationBridge } = NativeModules;
 const ProfilePage: React.FC = () => {
 
   // 使用Zustand stores
-  const { nickname, photo, isLoggedIn, balance, coins } = useUserStore();
+  const { nickname, photo, isLoggedIn, balance, coins, isAuthor, handleNativeUserData, setBalance, setCoins, initializeFromCache, setAuthorStatus } = useUserStore();
   const {
     homeRecommendBooks,
     homeRecommendLoading,
@@ -87,6 +89,35 @@ const ProfilePage: React.FC = () => {
     initializePageData();
   }, [loadHomeRecommendBooks, initializeFromNative, isInitialized]);
 
+  // 初始化用户缓存 + 从原生刷新登录/余额/作家状态
+  useEffect(() => {
+    const initUserAndAuthor = async () => {
+      try {
+        await initializeFromCache();
+
+        const [ud, bal, c] = await Promise.all([
+          getCurrentUserData().catch(() => null),
+          getUserBalance().catch(() => 0),
+          getUserCoins().catch(() => 0),
+        ]);
+
+        if (ud) { handleNativeUserData(ud); }
+        if (typeof bal === 'number') { setBalance(bal); }
+        if (typeof c === 'number') { setCoins(c); }
+
+        try {
+          const status = await NavBridge.getAuthorStatus();
+          if (status && typeof status.isAuthor === 'boolean') { setAuthorStatus(status.isAuthor); }
+        } catch (e) {
+          // ignore
+        }
+      } catch (e) {
+        // ignore
+      }
+    };
+    initUserAndAuthor();
+  }, [initializeFromCache, handleNativeUserData, setBalance, setCoins, setAuthorStatus]);
+
   // 登录函数
   const toLogin = useCallback(() => {
     if (NavigationBridge?.goToLogin) {
@@ -110,6 +141,11 @@ const ProfilePage: React.FC = () => {
       console.log('NavigationBridge.navigateToSettings not available');
     }
   }, []);
+
+  // 成为作家/写小说按钮点击（来自第一页图标）
+  const handleBeWriterPress = useCallback(() => {
+    NavBridge.navigateToBecomeWriterWithFlag(!!isAuthor);
+  }, [isAuthor]);
 
   return (
     <View style={styles.container}>
@@ -151,6 +187,8 @@ const ProfilePage: React.FC = () => {
           thirdPageIconsStyle={animations.thirdPageIconsStyle}
           firstPageAdStyle={animations.firstPageAdStyle}
           colors={colors}
+          onBeWriterPress={handleBeWriterPress}
+          isAuthor={!!isAuthor}
         />
 
         <BottomBox

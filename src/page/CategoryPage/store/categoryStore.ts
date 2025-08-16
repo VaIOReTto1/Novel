@@ -7,11 +7,11 @@ const { NavigationBridge } = NativeModules as any;
 export type SexTab = 'male' | 'female';
 
 export interface CategoryItem {
-    id: number;
+    id: string;
     name: string;
 }
 export interface BookItem {
-    id: number;
+    id: string;
     bookName: string;
     authorName?: string;
     picUrl?: string;
@@ -20,14 +20,14 @@ export interface BookItem {
 interface CategoryState {
     tab: SexTab;
     categories: CategoryItem[];
-    activeCategory: number | null;
+    activeCategory: string | null;
     books: BookItem[];
     pageNum: number;
     hasMore: boolean;
     loading: boolean;
     // actions
     setTab: (tab: SexTab) => void;
-    setActiveCategory: (id: number | null) => void;
+    setActiveCategory: (id: string | null) => void;
     loadCategories: () => Promise<void>;
     loadBooks: (reset?: boolean) => Promise<void>;
     resetAndLoad: () => Promise<void>;
@@ -79,7 +79,7 @@ export const useCategoryStore = create<CategoryState>()(
                 const nextPage = reset ? 1 : pageNum;
                 const res = await NavigationBridge.searchBooks(
                     workDirection,
-                    tab === 'male' ? activeCategory || 0 : 0,
+                    tab === 'male' ? (activeCategory ? Number(activeCategory) : 0) : 0,
                     nextPage,
                     20,
                 );

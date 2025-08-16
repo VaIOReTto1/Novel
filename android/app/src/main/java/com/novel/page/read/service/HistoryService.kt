@@ -34,9 +34,16 @@ data class HistoryItem(
  */
 interface HistoryService {
     /**
-     * 保存历史记录
+     * 保存阅读历史记录
      */
-    suspend fun saveHistory(bookId: String, chapterId: String)
+    suspend fun saveHistory(
+        bookId: String, 
+        chapterId: String, 
+        bookTitle: String? = null,
+        author: String? = null,
+        coverUrl: String? = null,
+        chapterTitle: String? = null
+    )
     
     /**
      * 获取所有历史记录
@@ -68,9 +75,16 @@ class HistoryServiceImpl @Inject constructor(
         private val json = Json { ignoreUnknownKeys = true }
     }
     
-    override suspend fun saveHistory(bookId: String, chapterId: String) = withContext(Dispatchers.IO) {
+    override suspend fun saveHistory(
+        bookId: String, 
+        chapterId: String, 
+        bookTitle: String?,
+        author: String?,
+        coverUrl: String?,
+        chapterTitle: String?
+    ) = withContext(Dispatchers.IO) {
         try {
-            TimberLogger.d(TAG, "保存历史记录: bookId=$bookId, chapterId=$chapterId")
+            TimberLogger.d(TAG, "保存历史记录: bookId=$bookId, chapterId=$chapterId, title=$bookTitle")
             
             val currentHistory = getAllHistoryInternal().toMutableList()
             
@@ -82,10 +96,10 @@ class HistoryServiceImpl @Inject constructor(
                 id = "${bookId}_${System.currentTimeMillis()}",
                 bookId = bookId,
                 chapterId = chapterId,
-                title = getMockBookTitle(bookId),
-                author = getMockAuthor(bookId),
-                coverUrl = getMockCoverUrl(bookId),
-                chapterTitle = getMockChapterTitle(chapterId),
+                title = bookTitle ?: getMockBookTitle(bookId),
+                author = author ?: getMockAuthor(bookId),
+                coverUrl = coverUrl ?: getMockCoverUrl(bookId),
+                chapterTitle = chapterTitle ?: getMockChapterTitle(chapterId),
                 readProgress = getMockProgress(),
                 lastReadTime = System.currentTimeMillis(),
                 totalChapters = getMockTotalChapters(),

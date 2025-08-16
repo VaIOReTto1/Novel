@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { HistoryItemProps } from '../types';
+import NavigationBridge from '../../../../utils/bridge/NavigationBridge';
 
 interface HistoryItemComponentProps extends HistoryItemProps {
   styles: any;
@@ -8,7 +9,8 @@ interface HistoryItemComponentProps extends HistoryItemProps {
 
 export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
   item,
-  onPress,
+  onPress: _onPress,
+  index: _index,
   viewType,
   styles,
 }) => {
@@ -16,11 +18,16 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
     return `已读 ${progress}%`;
   };
 
+  const handlePress = () => {
+    console.log('[ScrollBox/HistoryPage] Book pressed:', item.title);
+    NavigationBridge.navigateToReader(item.id.toString());
+  };
+
   if (viewType === 'list') {
     return (
       <TouchableOpacity
         style={styles.listItem}
-        onPress={onPress}
+        onPress={handlePress}
         activeOpacity={0.7}
       >
         <View style={styles.listCover}>
@@ -54,7 +61,7 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
   return (
     <TouchableOpacity
       style={styles.gridItem}
-      onPress={onPress}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
       <View style={styles.gridCover}>

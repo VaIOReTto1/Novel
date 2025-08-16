@@ -506,7 +506,14 @@ class ReaderViewModel @Inject constructor(
             TimberLogger.d(TAG, "异步保存历史记录: bookId=${intent.bookId}, chapterId=${intent.chapterId}")
             
             try {
-                historyService.saveHistory(intent.bookId, intent.chapterId ?: "")
+                historyService.saveHistory(
+                    bookId = intent.bookId,
+                    chapterId = intent.chapterId,
+                    bookTitle = intent.bookTitle,
+                    author = intent.author,
+                    coverUrl = intent.coverUrl,
+                    chapterTitle = intent.chapterTitle
+                )
                 TimberLogger.d(TAG, "历史记录保存成功")
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "保存历史记录失败", e)

@@ -4,6 +4,7 @@ interface NavigationBridgeInterface {
   goToLogin(): void;
   navigateToSettings(): void;
   navigateBack(componentName?: string): void;
+  navigateToReader(bookId: string, chapterId?: string): void;
   navigateToWritePage(): void;
   navigateToAIPage(): void;
   navigateToTimedSwitch(): void;
@@ -38,7 +39,7 @@ interface NavigationBridgeInterface {
   aiContinue(text: string, length: number): Promise<string>;
   getHomeBooksHighPriority(): Promise<any>;
   getAuthorStatus(): Promise<{ isAuthor: boolean; code?: string; message?: string; ok?: boolean }>;
-  getAuthorBooks(pageNum?: number, pageSize?: number): Promise<{ list: Array<{ id: number; bookName: string; wordCount: number }> }>;
+  getAuthorBooks(pageNum?: number, pageSize?: number): Promise<{ list: Array<{ id: string; bookName: string; wordCount: number }> }>;
   getReadingHistory(): Promise<{ historyItems: Array<{ id: string; title: string; author: string; description: string; coverUrl: string; lastReadTime: number; readProgress: number; type: string; categoryId: string; readCount: number; rating: number }>; success: boolean }>;
   navigateToBecomeWriterWithFlag(isAuthor: boolean): void;
   // Android only: attach/detach custom selection menu to a specific TextInput view
@@ -62,6 +63,11 @@ export const NavigationBridge: NavigationBridgeInterface = {
   navigateBack: (componentName?: string) => {
     console.log('[NavigationBridge] Navigating back from:', componentName);
     NativeNavigationBridge?.navigateBack(componentName);
+  },
+
+  navigateToReader: (bookId: string, chapterId?: string) => {
+    console.log('[NavigationBridge] Navigating to reader, bookId:', bookId, 'chapterId:', chapterId);
+    NativeNavigationBridge?.navigateToReader?.(bookId, chapterId);
   },
 
   navigateToWritePage: () => {
@@ -231,7 +237,7 @@ export const NavigationBridge: NavigationBridgeInterface = {
     return NativeNavigationBridge.getAuthorStatus();
   },
 
-  getAuthorBooks: (pageNum: number = 1, pageSize: number = 50): Promise<{ list: Array<{ id: number; bookName: string; wordCount: number }> }> => {
+  getAuthorBooks: (pageNum: number = 1, pageSize: number = 50): Promise<{ list: Array<{ id: string; bookName: string; wordCount: number }> }> => {
     if (!NativeNavigationBridge?.getAuthorBooks) {
       return Promise.reject('getAuthorBooks not available');
     }

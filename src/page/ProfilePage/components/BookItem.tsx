@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { BookItemProps } from '../types';
 import { calculateBookItemHeight, getDescriptionLines, getBookItemWidth } from '../utils/helpers';
 import { cleanHtml } from '../../../utils/htmlTextUtil';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 
 interface BookItemComponentProps extends BookItemProps {
   styles: any;
@@ -25,10 +26,15 @@ export const BookItem: React.FC<BookItemComponentProps> = React.memo(({
     return getBookItemWidth();
   }, []);
 
+  const handlePress = () => {
+    console.log('[ProfilePage] Book pressed:', book.title);
+    NavigationBridge.navigateToReader(book.id.toString());
+  };
+
   return (
     <TouchableOpacity
       style={[styles.waterfallBookItem, { width: itemWidth }]}
-      onPress={onPress}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
       {/* 书籍封面 */}

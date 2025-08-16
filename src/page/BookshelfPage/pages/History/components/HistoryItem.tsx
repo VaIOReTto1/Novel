@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { HistoryItemProps } from '../types';
+import NavigationBridge from '../../../../../utils/bridge/NavigationBridge';
 
 export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
   styles,
@@ -16,7 +17,9 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
     if (isEditing) {
       onSelect();
     } else {
-      onPress();
+      // 跳转到阅读器页面
+      console.log('[HistoryPage] Book pressed:', item.title);
+      NavigationBridge.navigateToReader(item.id);
     }
   };
 

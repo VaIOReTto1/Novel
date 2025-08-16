@@ -3,14 +3,14 @@ import { immer } from 'zustand/middleware/immer';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 
 export interface Book {
-  id: number;
+  id: string;
   title: string;
   author: string;
   description: string;
   coverUrl: string;
   width?: number;
   height?: number;
-  categoryId?: number;
+  categoryId?: string;
   readCount?: number;
   rating?: number;
 }
@@ -18,7 +18,7 @@ export interface Book {
 // 仿照Android HomeService的数据结构
 export interface HomeBook {
   type: number; // 0-轮播图 1-顶部栏 2-本周强推 3-热门推荐 4-精品推荐
-  bookId: number;
+  bookId: string;
   picUrl: string;
   bookName: string;
   authorName: string;

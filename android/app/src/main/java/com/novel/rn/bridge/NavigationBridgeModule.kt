@@ -381,6 +381,17 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到阅读器页面
+     */
+    @ReactMethod
+    fun navigateToReader(bookId: String, chapterId: String?) {
+        TimberLogger.d(TAG, "导航到阅读器页面，bookId=$bookId, chapterId=$chapterId")
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToReader(bookId)
+        }
+    }
+
+    /**
      * 导航到推书中心页面
      */
     @ReactMethod
@@ -500,7 +511,7 @@ class NavigationBridgeModule(
                         val item = dataJsonArr.optJSONObject(i) ?: continue
                         val b = Arguments.createMap().apply {
                             putInt("type", item.optInt("type"))
-                            putDouble("bookId", item.optLong("bookId").toDouble())
+                            putString("bookId", item.optLong("bookId").toString())
                             putString("picUrl", item.optString("picUrl", null))
                             putString("bookName", item.optString("bookName", null))
                             putString("authorName", item.optString("authorName", null))
@@ -636,13 +647,13 @@ class NavigationBridgeModule(
                     for (i in 0 until listJsonArr.length()) {
                         val item = listJsonArr.optJSONObject(i) ?: continue
                         val b = Arguments.createMap().apply {
-                            putDouble("id", item.optLong("id").toDouble())
+                            putString("id", item.optLong("id").toString())
                             putString("bookName", item.optString("bookName", null))
                             putString("authorName", item.optString("authorName", null))
                             putString("picUrl", item.optString("picUrl", null))
                             putDouble("wordCount", item.optInt("wordCount").toDouble())
                             putString("bookDesc", item.optString("bookDesc", null))
-                            putDouble("categoryId", item.optLong("categoryId").toDouble())
+                            putString("categoryId", item.optLong("categoryId").toString())
                             putString("categoryName", item.optString("categoryName", null))
                         }
                         listArray.pushMap(b)
@@ -694,7 +705,7 @@ class NavigationBridgeModule(
                     for (i in 0 until data.length()) {
                         val item = data.optJSONObject(i) ?: continue
                         val m = Arguments.createMap().apply {
-                            putDouble("id", item.optLong("id").toDouble())
+                            putString("id", item.optLong("id").toString())
                             putString("name", item.optString("name", null))
                         }
                         arr.pushMap(m)
@@ -753,7 +764,7 @@ class NavigationBridgeModule(
                     for (i in 0 until listJson.length()) {
                         val item = listJson.optJSONObject(i) ?: continue
                         val b = Arguments.createMap().apply {
-                            putDouble("id", item.optLong("id").toDouble())
+                            putString("id", item.optLong("id").toString())
                             putString("bookName", item.optString("bookName", null))
                             putString("authorName", item.optString("authorName", null))
                             putString("picUrl", item.optString("picUrl", null))

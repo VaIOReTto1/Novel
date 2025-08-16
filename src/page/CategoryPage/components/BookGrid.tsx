@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { useNovelColors } from '../../../utils/theme';
 import { createCategoryPageStyles } from '../styles/CategoryPageStyles';
 import { BookItem } from '../store/categoryStore';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 
 interface BookGridProps {
     data: BookItem[];
@@ -19,8 +20,18 @@ export const BookGrid: React.FC<BookGridProps> = ({ data, columns, onEndReached,
     const styles = createCategoryPageStyles(colors);
     const FlatList: any = (require('react-native') as any).FlatList;
     const ActivityIndicator: any = (require('react-native') as any).ActivityIndicator;
+
+    const handleBookPress = (item: BookItem) => {
+        console.log('[CategoryPage] Book pressed:', item.bookName);
+        NavigationBridge.navigateToReader(item.id.toString());
+    };
+
     const renderItem = ({ item }: { item: BookItem }) => (
-        <View style={[{ width: `${100 / columns}%` }, styles.gridItemWrapper]}>
+        <TouchableOpacity 
+            style={[{ width: `${100 / columns}%` }, styles.gridItemWrapper]}
+            onPress={() => handleBookPress(item)}
+            activeOpacity={0.7}
+        >
             <View style={styles.card}>
                 {item.picUrl ? (
                     <Image source={{ uri: item.picUrl }} style={styles.cover} resizeMode="contain" />
@@ -31,7 +42,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ data, columns, onEndReached,
                     <Text numberOfLines={2} style={styles.title}>{item.bookName}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
     if (isLoading && (!data || data.length === 0)) {
         return (

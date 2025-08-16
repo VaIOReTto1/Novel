@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { HistoryItem, TabData } from '../types';
+import { NavigationBridge } from '../../../../../utils/bridge/NavigationBridge';
 
 // 历史记录状态接口
 export interface HistoryState {
@@ -17,7 +18,7 @@ export interface HistoryState {
   isLoadingMore: boolean;
 
   // Tab和视图相关
-  currentTab: 'all' | 'reading' | 'listening' | 'drama';
+  currentTab: 'all' | 'book' | 'listening' | 'drama';
   viewType: 'grid' | 'list';
   sortType: 'lastRead' | 'addTime' | 'title' | 'progress';
   searchQuery: string;
@@ -38,7 +39,7 @@ interface HistoryActions {
   setError: (error: string | null) => void;
   setRefreshing: (refreshing: boolean) => void;
   setLoadingMore: (loadingMore: boolean) => void;
-  setCurrentTab: (tab: 'all' | 'reading' | 'listening' | 'drama') => void;
+  setCurrentTab: (tab: 'all' | 'book' | 'listening' | 'drama') => void;
   setViewType: (viewType: 'grid' | 'list') => void;
   setSortType: (sortType: 'lastRead' | 'addTime' | 'title' | 'progress') => void;
   setSearchQuery: (query: string) => void;
@@ -96,8 +97,8 @@ const generateMockHistoryItems = (page: number, pageSize: number, type?: string)
   for (let i = 0; i < pageSize; i++) {
     const index = startIndex + i + 1;
     const itemType = type === 'all' ?
-      (['reading', 'listening', 'drama'] as const)[index % 3] :
-      (type as 'reading' | 'listening' | 'drama');
+      (['book', 'listening', 'drama'] as const)[index % 3] :
+      (type as 'book' | 'listening' | 'drama');
 
     const progress = Math.floor(Math.random() * 100);
     items.push({
@@ -127,7 +128,7 @@ const generateMockHistoryItems = (page: number, pageSize: number, type?: string)
 
 const getTypeTitle = (type: string): string => {
   switch (type) {
-    case 'reading': return '小说';
+    case 'book': return '小说';
     case 'listening': return '听书';
     case 'drama': return '短剧';
     default: return '内容';
@@ -227,7 +228,7 @@ export const useHistoryStore = create<HistoryStore>()(
 
     // 异步操作
     loadHistoryItems: async (isRefresh = false) => {
-      const { currentTab, currentPage, pageSize, sortType } = get();
+      const { currentTab } = get();
 
       try {
         if (isRefresh) {
@@ -244,27 +245,49 @@ export const useHistoryStore = create<HistoryStore>()(
           });
         }
 
-        await delay(800); // 模拟网络延迟
+        // 使用真实的桥接方法获取历史数据
+        const historyData = await NavigationBridge.getReadingHistory();
+        
+        // 转换数据格式以匹配HistoryItem接口
+        const convertedItems: HistoryItem[] = historyData.historyItems.map((item: any) => ({
+          id: item.id?.toString() || Math.random().toString(),
+          title: item.title || '未知标题',
+          author: item.author || '未知作者',
+          description: item.description || '暂无描述',
+          cover: item.coverUrl || 'https://placehold.co/220x300?text=封面',
+          coverUrl: item.coverUrl || 'https://placehold.co/220x300?text=封面',
+          lastReadTime: item.lastReadTime || Date.now(),
+          lastChapter: item.chapterTitle || '第1章',
+          readProgress: Math.round(item.readProgress * 100), // 转换为百分比
+          progress: Math.round(item.readProgress * 100),
+          type: item.type || 'book',
+          categoryId: item.categoryId || 1,
+          readCount: item.readCount || 0,
+          rating: item.rating || 0,
+          tags: [],
+          isFinished: false,
+          updateStatus: '连载中',
+          isInShelf: false,
+        }));
 
-        const page = isRefresh ? 1 : currentPage;
-        const mockItems = generateMockHistoryItems(page, pageSize, currentTab);
-        const sortedItems = sortHistoryItems(mockItems, sortType);
+        // 根据选中的tab过滤数据
+        const filteredItems = currentTab === 'all' ? 
+          convertedItems : 
+          convertedItems.filter(item => item.type === currentTab);
 
-        set((state: { historyItems: HistoryItem[]; isRefreshing: boolean; loading: boolean; hasMore: boolean; }) => {
-          if (isRefresh) {
-            state.historyItems = sortedItems;
-            state.isRefreshing = false;
-          } else {
-            state.historyItems = sortedItems;
-            state.loading = false;
-          }
-          state.hasMore = sortedItems.length === pageSize;
+        set((state: { historyItems: HistoryItem[]; cachedHistoryItems: HistoryItem[]; isRefreshing: boolean; loading: boolean; hasMore: boolean; }) => {
+          state.historyItems = filteredItems;
+          state.cachedHistoryItems = convertedItems;
+          state.hasMore = false; // 目前一次性加载所有数据
+          state.loading = false;
+          state.isRefreshing = false;
         });
 
-        console.log('[HistoryStore] Loaded history items:', sortedItems.length);
+        console.log('[HistoryStore] Loaded history items:', filteredItems.length);
       } catch (error) {
+        console.error('加载历史记录失败:', error);
         set((state) => {
-          state.error = '加载失败，请重试';
+          state.error = error instanceof Error ? error.message : '加载历史记录失败';
           state.loading = false;
           state.isRefreshing = false;
         });
@@ -401,7 +424,7 @@ const sortHistoryItems = (items: HistoryItem[], sortType: string): HistoryItem[]
 // 获取Tab数据
 export const getTabsData = (): TabData[] => [
   { id: 'all', name: '全部', type: 'all', count: 0 },
-  { id: 'reading', name: '阅读', type: 'reading', count: 0 },
+  { id: 'book', name: '阅读', type: 'book', count: 0 },
   { id: 'listening', name: '听书', type: 'listening', count: 0 },
   { id: 'drama', name: '短剧', type: 'drama', count: 0 },
 ];

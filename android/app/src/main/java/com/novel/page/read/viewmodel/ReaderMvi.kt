@@ -54,6 +54,9 @@ sealed class ReaderIntent : MviIntent {
     
     // 预加载相关
     data class PreloadChapters(val currentChapterId: String) : ReaderIntent()
+    
+    // 历史记录相关
+    data class SaveToHistory(val bookId: String, val chapterId: String) : ReaderIntent()
 
     // UI交互相关
     data class UpdateScrollPosition(val pageIndex: Int) : ReaderIntent()

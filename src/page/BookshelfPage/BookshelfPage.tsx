@@ -62,11 +62,19 @@ export const MainPage: React.FC = React.memo(() => {
         onTabPress={handleTabPress}
       />
 
-      {/* 根据当前Tab显示对应页面 - 使用条件渲染替代isActive */}
-      {currentTab === 'history' && <HistoryPage />}
-      {currentTab === 'bookshelf' && <BookshelfPage />}
-      {currentTab === 'watchlist' && <WatchlistPage />}
-      {currentTab === 'community' && <CommunityPage />}
+      {/* 使用display样式来隐藏/显示页面，避免重新挂载 */}
+      <View style={[styles.pageContainer, { display: currentTab === 'history' ? 'flex' : 'none' }]}>
+        <HistoryPage />
+      </View>
+      <View style={[styles.pageContainer, { display: currentTab === 'bookshelf' ? 'flex' : 'none' }]}>
+        <BookshelfPage />
+      </View>
+      <View style={[styles.pageContainer, { display: currentTab === 'watchlist' ? 'flex' : 'none' }]}>
+        <WatchlistPage />
+      </View>
+      <View style={[styles.pageContainer, { display: currentTab === 'community' ? 'flex' : 'none' }]}>
+        <CommunityPage />
+      </View>
     </View>
   );
 });

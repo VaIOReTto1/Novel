@@ -41,6 +41,11 @@ export const createMainPageStyles = (colors: NovelColors) => {
       flex: 1,
     },
 
+    // 页面容器 - 用于避免组件重新挂载
+    pageContainer: {
+      flex: 1,
+    },
+
     // 加载状态
     loadingContainer: {
       flex: 1,

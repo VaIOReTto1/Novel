@@ -35,6 +35,7 @@ class ReaderReducer : MviReducerWithEffect<ReaderIntent, ReaderState, ReaderEffe
             is ReaderIntent.ShowSettingsPanel -> handleShowSettingsPanel(currentState, intent)
             is ReaderIntent.SaveProgress -> handleSaveProgress(currentState, intent)
             is ReaderIntent.PreloadChapters -> handlePreloadChapters(currentState, intent)
+            is ReaderIntent.SaveToHistory -> handleSaveToHistory(currentState, intent)
             is ReaderIntent.UpdateScrollPosition -> handleUpdateScrollPosition(currentState, intent)
             is ReaderIntent.UpdateSlideIndex -> handleUpdateSlideIndex(currentState, intent)
             is ReaderIntent.ShowProgressRestoredHint -> handleShowProgressRestoredHint(currentState, intent)
@@ -213,6 +214,17 @@ class ReaderReducer : MviReducerWithEffect<ReaderIntent, ReaderState, ReaderEffe
         return ReduceResult(newState)
     }
     
+    private fun handleSaveToHistory(currentState: ReaderState, intent: ReaderIntent.SaveToHistory): ReduceResult<ReaderState, ReaderEffect> {
+        TimberLogger.d(TAG, "保存到历史记录: bookId=${intent.bookId}, chapterId=${intent.chapterId}")
+        
+        // 历史记录保存不需要改变状态，只是触发副作用
+        val newState = currentState.copy(
+            version = currentState.version + 1
+        )
+        
+        return ReduceResult(newState)
+    }
+    
     private fun handleShowProgressRestoredHint(currentState: ReaderState, intent: ReaderIntent.ShowProgressRestoredHint): ReduceResult<ReaderState, ReaderEffect> {
         TimberLogger.d(TAG, "显示进度恢复提示: ${intent.show}")
         val newState = currentState.copy(
@@ -380,4 +392,4 @@ class ReaderReducer : MviReducerWithEffect<ReaderIntent, ReaderState, ReaderEffe
             readingProgress = newProgress
         )
     }
-} 
+}

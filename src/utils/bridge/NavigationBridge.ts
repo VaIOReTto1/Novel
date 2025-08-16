@@ -39,6 +39,7 @@ interface NavigationBridgeInterface {
   getHomeBooksHighPriority(): Promise<any>;
   getAuthorStatus(): Promise<{ isAuthor: boolean; code?: string; message?: string; ok?: boolean }>;
   getAuthorBooks(pageNum?: number, pageSize?: number): Promise<{ list: Array<{ id: number; bookName: string; wordCount: number }> }>;
+  getReadingHistory(): Promise<{ historyItems: Array<{ id: string; title: string; author: string; description: string; coverUrl: string; lastReadTime: number; readProgress: number; type: string; categoryId: string; readCount: number; rating: number }>; success: boolean }>;
   navigateToBecomeWriterWithFlag(isAuthor: boolean): void;
   // Android only: attach/detach custom selection menu to a specific TextInput view
   attachSelectionMenu?(viewTag: number): void;
@@ -235,6 +236,11 @@ export const NavigationBridge: NavigationBridgeInterface = {
       return Promise.reject('getAuthorBooks not available');
     }
     return NativeNavigationBridge.getAuthorBooks(pageNum, pageSize);
+  },
+
+  getReadingHistory: (): Promise<{ historyItems: Array<{ id: string; title: string; author: string; description: string; coverUrl: string; lastReadTime: number; readProgress: number; type: string; categoryId: string; readCount: number; rating: number }>; success: boolean }> => {
+    console.log('[NavigationBridge] Getting reading history');
+    return NativeNavigationBridge?.getReadingHistory() || Promise.resolve({ historyItems: [], success: false });
   },
 
   navigateToBecomeWriterWithFlag: (isAuthor: boolean) => {

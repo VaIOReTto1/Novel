@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { HistoryItem } from '../types';
+import { NavigationBridge } from '../../../../utils/bridge/NavigationBridge';
 
 export interface HistoryState {
   historyItems: HistoryItem[];
@@ -155,52 +156,62 @@ export const useHistoryStore = create<HistoryStore>()(
 
     // 异步操作
     loadHistoryItems: async (isRefresh = false) => {
-      const state = get();
-      set((draft) => {
-        draft.loading = true;
+      const { currentPage, pageSize, selectedTab } = get();
+      
+      if (isRefresh) {
+        set((state) => {
+          state.currentPage = 1;
+          state.hasMore = true;
+          state.error = null;
+        });
+      }
+
+      set((state) => {
         if (isRefresh) {
-          draft.error = null;
+          state.isRefreshing = true;
+        } else {
+          state.loading = true;
         }
       });
 
       try {
-        await new Promise(resolve => setTimeout(resolve, 800)); // 模拟网络延迟
+        // 使用真实的桥接方法获取历史数据
+        const historyData = await NavigationBridge.getReadingHistory();
+        
+        // 转换数据格式以匹配HistoryItem接口
+        const convertedItems: HistoryItem[] = historyData.historyItems.map((item: any, index: number) => ({
+          id: index + 1,
+          title: item.title || '未知标题',
+          author: item.author || '未知作者',
+          description: item.description || '暂无描述',
+          coverUrl: item.coverUrl || 'https://placehold.co/220x300?text=封面',
+          lastReadTime: new Date(item.lastReadTime).toISOString(),
+          readProgress: Math.round(item.readProgress * 100), // 转换为百分比
+          type: item.type || 'book',
+          categoryId: item.categoryId || 1,
+          readCount: item.readCount || 0,
+          rating: item.rating || 0,
+        }));
 
-        const currentPage = isRefresh ? 1 : state.currentPage;
-        const mockItems = generateMockHistoryItems(
-          currentPage,
-          state.pageSize,
-          state.selectedTab
-        );
+        // 根据选中的tab过滤数据
+        const filteredItems = selectedTab === 'all' ? 
+          convertedItems : 
+          convertedItems.filter(item => item.type === selectedTab);
 
-        // 过滤数据
-        const filteredItems = state.selectedTab === 'all' ?
-          mockItems :
-          mockItems.filter(item => item.type === state.selectedTab);
-
-        set((draft) => {
-          if (isRefresh) {
-            draft.historyItems = filteredItems;
-            draft.cachedHistoryItems = filteredItems;
-            draft.currentPage = 1;
-          } else {
-            draft.historyItems = [...draft.historyItems, ...filteredItems];
-            draft.cachedHistoryItems = [...draft.cachedHistoryItems, ...filteredItems];
-          }
-
-          draft.loading = false;
-          draft.isRefreshing = false;
-          draft.hasMore = filteredItems.length === draft.pageSize;
+        set((state) => {
+          state.historyItems = filteredItems;
+          state.cachedHistoryItems = convertedItems;
+          state.hasMore = false; // 目前一次性加载所有数据
+          state.loading = false;
+          state.isRefreshing = false;
+          state.error = null;
         });
-
-        console.log(`历史记录加载完成：当前显示${get().historyItems.length}条`);
-
       } catch (error) {
         console.error('加载历史记录失败:', error);
-        set((draft) => {
-          draft.loading = false;
-          draft.isRefreshing = false;
-          draft.error = error instanceof Error ? error.message : '加载历史记录失败';
+        set((state) => {
+          state.error = error instanceof Error ? error.message : '加载历史记录失败';
+          state.loading = false;
+          state.isRefreshing = false;
         });
       }
     },

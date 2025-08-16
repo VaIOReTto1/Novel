@@ -9,6 +9,7 @@ import com.novel.page.read.service.SettingsService
 import com.novel.page.read.usecase.*
 import com.novel.page.read.utils.ReaderLogTags
 import com.novel.utils.TimberLogger
+import com.novel.page.read.service.HistoryService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -36,6 +37,7 @@ class ReaderViewModel @Inject constructor(
     private val splitContentUseCase: SplitContentUseCase,
     private val paginationService: PaginationService,
     private val settingsService: SettingsService,
+    private val historyService: HistoryService,
     observePaginationProgressUseCase: ObservePaginationProgressUseCase,
 ) : BaseMviViewModel<ReaderIntent, ReaderState, ReaderEffect>() {
 
@@ -160,6 +162,7 @@ class ReaderViewModel @Inject constructor(
             is ReaderIntent.UpdateContainerSize -> handleUpdateContainerSizeAsync(intent)
             is ReaderIntent.SaveProgress -> handleSaveProgressAsync(intent)
             is ReaderIntent.PreloadChapters -> handlePreloadChaptersAsync(intent)
+            is ReaderIntent.SaveToHistory -> handleSaveToHistoryAsync(intent)
             is ReaderIntent.Retry -> handleRetryAsync()
             is ReaderIntent.UpdateScrollPosition -> handleUpdateScrollPositionAsync(intent)
             is ReaderIntent.UpdateSlideIndex -> handleUpdateSlideIndexAsync(intent)
@@ -494,6 +497,19 @@ class ReaderViewModel @Inject constructor(
                 // 预加载完成后，检查是否有新的相邻章节需要重建虚拟页面
                 delay(500)
                 checkAndRebuildVirtualPagesIfNeeded(currentChapterIndex)
+            }
+        }
+    }
+    
+    private fun handleSaveToHistoryAsync(intent: ReaderIntent.SaveToHistory) {
+        viewModelScope.launch {
+            TimberLogger.d(TAG, "异步保存历史记录: bookId=${intent.bookId}, chapterId=${intent.chapterId}")
+            
+            try {
+                historyService.saveHistory(intent.bookId, intent.chapterId ?: "")
+                TimberLogger.d(TAG, "历史记录保存成功")
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "保存历史记录失败", e)
             }
         }
     }
@@ -997,4 +1013,4 @@ class ReaderViewModel @Inject constructor(
         }
         preloadChaptersUseCase.cancelPreload()
     }
-} 
+}

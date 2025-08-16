@@ -14,6 +14,16 @@ import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.network.api.author.ai.AiService
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_FRONT
+import com.novel.page.read.service.HistoryService
+import com.novel.page.read.service.HistoryServiceImpl
+import com.novel.page.read.service.HistoryItem
+import com.novel.utils.Store.UserDefaults.NovelUserDefaults
+import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +52,12 @@ class NavigationBridgeModule(
     @Stable
     private val reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface NavigationBridgeEntryPoint {
+        fun novelUserDefaults(): NovelUserDefaults
+    }
 
     companion object {
         private const val TAG = "NavigationBridgeModule"
@@ -72,6 +88,15 @@ class NavigationBridgeModule(
             TimberLogger.e(TAG, "无法获取SettingsViewModel", e)
             null
         }
+
+    private val historyService: HistoryService by lazy {
+        val entryPoint = EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            NavigationBridgeEntryPoint::class.java
+        )
+        val userDefaults = entryPoint.novelUserDefaults()
+        HistoryServiceImpl(userDefaults)
+    }
 
     // =================== Selection Menu (Android) ===================
     private val MENU_ID_POLISH = 0xA11001
@@ -496,6 +521,54 @@ class NavigationBridgeModule(
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "解析首页推荐书籍失败", e)
                 CoroutineScope(Dispatchers.Main).launch { promise.reject("HOME_BOOKS_ERROR", e) }
+            }
+        }
+    }
+
+    /**
+     * 获取阅读历史记录
+     */
+    @ReactMethod
+    fun getReadingHistory(promise: Promise) {
+        TimberLogger.d(TAG, "获取阅读历史记录")
+        
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val historyItems = historyService.getAllHistory()
+                val historyArray = Arguments.createArray()
+                
+                historyItems.forEach { item ->
+                    val historyMap = Arguments.createMap()
+                    historyMap.putString("id", item.id)
+                    historyMap.putString("bookId", item.bookId)
+                    historyMap.putString("chapterId", item.chapterId)
+                    historyMap.putString("title", item.title)
+                    historyMap.putString("chapterTitle", item.chapterTitle)
+                    historyMap.putInt("totalChapters", item.totalChapters)
+                    historyMap.putInt("currentChapter", item.currentChapter)
+                    historyMap.putString("author", item.author)
+                    historyMap.putString("coverUrl", item.coverUrl)
+                    historyMap.putDouble("lastReadTime", item.lastReadTime.toDouble())
+                    historyMap.putDouble("readProgress", item.readProgress.toDouble())
+                    // Mock data for fields not available in HistoryItem
+                    historyMap.putString("description", "暂无描述")
+                    historyMap.putString("type", "book")
+                    historyMap.putString("categoryId", "1")
+                    historyMap.putInt("readCount", 1)
+                    historyMap.putDouble("rating", 4.5)
+                    historyArray.pushMap(historyMap)
+                }
+                
+                val result = Arguments.createMap()
+                result.putArray("historyItems", historyArray)
+                result.putBoolean("success", true)
+                
+                TimberLogger.d(TAG, "获取阅读历史记录成功，共${historyItems.size}条记录")
+                promise.resolve(result)
+                
+            } catch (e: Exception) {
+                TimberLogger.e(TAG, "获取阅读历史记录异常", e)
+                promise.reject("ERROR", e.message ?: "获取历史记录失败")
             }
         }
     }

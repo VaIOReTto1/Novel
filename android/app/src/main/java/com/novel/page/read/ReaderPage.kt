@@ -110,6 +110,9 @@ fun ReaderPage(
         TimberLogger.d("ReaderPage", "ReaderPage参数变化: bookId=$bookId, chapterId=$chapterId")
         if (bookId.isNotBlank()) {
             handleInitReader(bookId, chapterId)
+            // 保存历史记录
+            val safeChapterId = chapterId ?: "1" // 如果章节ID为空，使用默认值
+            viewModel.sendIntent(ReaderIntent.SaveToHistory(bookId, safeChapterId))
         } else {
             TimberLogger.w("ReaderPage", "书籍ID或章节ID为空，跳过加载")
         }

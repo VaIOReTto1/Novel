@@ -10,7 +10,7 @@ export interface HistoryItem {
   lastChapter: string;
   readProgress: number;
   progress: number;
-  type: 'reading' | 'listening' | 'drama';
+  type: 'book' | 'listening' | 'drama';
   categoryId: number;
   readCount: number;
   rating: number;
@@ -39,7 +39,7 @@ export interface BookItem {
 export interface TabData {
   id: string;
   name: string;
-  type: 'all' | 'reading' | 'listening' | 'drama';
+  type: 'all' | 'book' | 'listening' | 'drama';
   count: number;
 }
 

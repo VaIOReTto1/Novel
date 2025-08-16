@@ -87,7 +87,7 @@ const HistoryPage: React.FC = () => {
   // Tab切换
   const handleTabPress = useCallback((tabId: string) => {
     console.log('Tab changed to:', tabId);
-    setCurrentTab(tabId as 'all' | 'reading' | 'listening' | 'drama');
+    setCurrentTab(tabId as 'all' | 'book' | 'listening' | 'drama');
     clearSelection();
     // 重新加载数据
     loadHistoryItems();

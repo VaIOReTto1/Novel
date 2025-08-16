@@ -35,7 +35,7 @@ fun HomeFilterBar(
     modifier: Modifier = Modifier
 ) {
     // 1. 创建并记忆 LazyRow 的滚动状态
-    val listState = rememberLazyListState()  // 控制 LazyRow 滚动的位置和动画 :contentReference[oaicite:0]{index=0}
+    val listState = rememberLazyListState()  // 控制 LazyRow 滚动的位置和动画
     // 2. 创建 CoroutineScope，用于在点击时调用 animateScrollToItem
     val coroutineScope = rememberCoroutineScope()
 
@@ -59,7 +59,7 @@ fun HomeFilterBar(
                 // 5. 当索引 >= 2（即第三个及之后的项），让列表滚动到 index-1
                 if (index >= 3) {
                     coroutineScope.launch {
-                        // 6. animateScrollToItem 会将目标 item 滚到视口最左侧（或根据偏移量滚动） :contentReference[oaicite:1]{index=1}
+                        // 6. animateScrollToItem 会将目标 item 滚到视口最左侧（或根据偏移量滚动
                         listState.animateScrollToItem(index = index - 2)
                     }
                 }

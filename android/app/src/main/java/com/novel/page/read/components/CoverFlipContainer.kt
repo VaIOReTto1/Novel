@@ -36,6 +36,7 @@ fun CoverFlipContainer(
     onPageChange: (FlipDirection) -> Unit,
     onNavigateToReader: ((String, String?) -> Unit)? = null,
     onSwipeBack: (() -> Unit)? = null, // 新增：iOS侧滑返回回调
+    onLoadBookReviews: ((String) -> Unit)? = null,
     onClick: () -> Unit
 ) {
     val virtualPages = uiState.virtualPages
@@ -144,6 +145,7 @@ fun CoverFlipContainer(
                 virtualPage = targetVirtualPage,
                 uiState = uiState,
                 readerSettings = readerSettings,
+                onLoadBookReviews = onLoadBookReviews,
                 onClick = onClick
             )
         }
@@ -165,6 +167,7 @@ fun CoverFlipContainer(
                     virtualPage = currentVirtualPage,
                     uiState = uiState,
                     readerSettings = readerSettings,
+                    onLoadBookReviews = onLoadBookReviews,
                     onClick = onClick
                 )
             }
@@ -180,6 +183,7 @@ private fun PageRenderer(
     virtualPage: VirtualPage,
     uiState: ReaderState,
     readerSettings: ReaderSettings,
+    onLoadBookReviews: ((String) -> Unit)?,
     onClick: () -> Unit
 ) {
     val loadedChapters = uiState.loadedChapterData

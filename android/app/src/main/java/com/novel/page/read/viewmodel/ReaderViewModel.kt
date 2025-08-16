@@ -35,6 +35,7 @@ class ReaderViewModel @Inject constructor(
     private val preloadChaptersUseCase: PreloadChaptersUseCase,
     private val buildVirtualPagesUseCase: BuildVirtualPagesUseCase,
     private val splitContentUseCase: SplitContentUseCase,
+    private val loadBookReviewsUseCase: LoadBookReviewsUseCase,
     private val paginationService: PaginationService,
     private val settingsService: SettingsService,
     private val historyService: HistoryService,
@@ -166,6 +167,7 @@ class ReaderViewModel @Inject constructor(
             is ReaderIntent.Retry -> handleRetryAsync()
             is ReaderIntent.UpdateScrollPosition -> handleUpdateScrollPositionAsync(intent)
             is ReaderIntent.UpdateSlideIndex -> handleUpdateSlideIndexAsync(intent)
+            is ReaderIntent.LoadBookReviews -> handleLoadBookReviewsAsync(intent)
             else -> {
                 // 其他Intent不需要异步处理
             }
@@ -580,6 +582,22 @@ class ReaderViewModel @Inject constructor(
         // 检查预加载
         if (newVirtualPage is VirtualPage.ContentPage) {
             sendIntent(ReaderIntent.PreloadChapters(newVirtualPage.chapterId))
+        }
+    }
+
+    private fun handleLoadBookReviewsAsync(intent: ReaderIntent.LoadBookReviews) {
+        viewModelScope.launch {
+            TimberLogger.d(TAG, "异步加载书籍评论: bookId=${intent.bookId}")
+            
+            try {
+                val reviews = loadBookReviewsUseCase.execute(intent.bookId)
+                TimberLogger.d(TAG, "书籍评论加载成功: 评论数=${reviews.size}")
+                
+                sendIntent(ReaderIntent.BookReviewsLoadSuccess(reviews))
+            } catch (error: Exception) {
+                TimberLogger.e(TAG, "书籍评论加载失败", error)
+                sendIntent(ReaderIntent.BookReviewsLoadFailure(error.message ?: "加载评论失败"))
+            }
         }
     }
 

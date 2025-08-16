@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +30,8 @@ import com.novel.page.read.viewmodel.ReaderSettings
 import com.novel.utils.NavViewModel
 import com.novel.utils.debounceClickable
 import kotlinx.collections.immutable.toImmutableList
+import com.novel.page.read.viewmodel.BookReview
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * 通用页面内容显示组件（供PageCurl等新组件使用）
@@ -44,6 +47,9 @@ fun PageContentDisplay(
     readerSettings: ReaderSettings = ReaderSettings(),
     // 新增：导航到阅读器回调
     showNavigationInfo: Boolean = true, // 新增：是否显示导航信息
+    bookReviews: kotlinx.collections.immutable.ImmutableList<BookReview> = persistentListOf(), // 新增：书籍评论
+    isLoadingReviews: Boolean = false, // 新增：是否正在加载评论
+    onLoadBookReviews: ((String) -> Unit)? = null, // 新增：加载评论回调
     onClick: () -> Unit = {}
 ) {
 
@@ -86,6 +92,9 @@ fun PageContentDisplay(
             ) {
                 BookDetailPageContent(
                     bookInfo = bookInfo,
+                    bookReviews = bookReviews,
+                    isLoadingReviews = isLoadingReviews,
+                    onLoadBookReviews = onLoadBookReviews,
                     onMoreReviewsClick = onMoreReviewsClick
                 )
             }
@@ -122,11 +131,23 @@ fun PageContentDisplay(
 @Composable
 private fun BookDetailPageContent(
     bookInfo: PageData.BookInfo?,
+    bookReviews: kotlinx.collections.immutable.ImmutableList<BookReview>,
+    isLoadingReviews: Boolean,
+    onLoadBookReviews: ((String) -> Unit)?,
     onMoreReviewsClick: () -> Unit = {}
 ) {
     if (bookInfo != null) {
+        // 如果评论为空且没有正在加载，则触发加载评论
+        LaunchedEffect(bookInfo.bookId, bookReviews.isEmpty(), isLoadingReviews) {
+            if (bookReviews.isEmpty() && !isLoadingReviews && onLoadBookReviews != null) {
+                onLoadBookReviews(bookInfo.bookId)
+            }
+        }
+        
         BookDetailContent(
             bookInfo = bookInfo,
+            bookReviews = bookReviews,
+            isLoadingReviews = isLoadingReviews,
             onMoreReviewsClick = onMoreReviewsClick
         )
     }
@@ -174,6 +195,8 @@ private fun NormalPageContent(
 @Composable
 private fun BookDetailContent(
     bookInfo: PageData.BookInfo,
+    bookReviews: kotlinx.collections.immutable.ImmutableList<BookReview>,
+    isLoadingReviews: Boolean,
     onMoreReviewsClick: () -> Unit = {}
 ) {
     // 转换为BookDetailUiState.BookInfo格式
@@ -194,23 +217,16 @@ private fun BookDetailContent(
         chapterUpdateTime = "2024-01-01 12:00:00"
     )
 
-    // 生成模拟书评数据
-    val reviews = listOf(
+    // 转换评论数据格式
+    val reviews = bookReviews.map { review ->
         BookDetailUiState.BookReview(
-            id = "1",
-            content = "这个职业(老板)无敌了，全天下的天才为之打工。",
-            rating = 5,
-            readTime = "阅读54分钟后点评",
-            userName = "用户1"
-        ),
-        BookDetailUiState.BookReview(
-            id = "2",
-            content = "很不错的脑洞，题材也很新颖，就是主角有点感太低了，全是手下在发力，主角变考全程躺平...",
-            rating = 4,
-            readTime = "阅读2小时后点评",
-            userName = "用户2"
+            id = review.id,
+            content = review.content,
+            rating = review.rating,
+            readTime = review.readTime,
+            userName = review.userName
         )
-    )
+    }.toImmutableList()
 
     Column(
         modifier = Modifier

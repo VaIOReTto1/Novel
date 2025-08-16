@@ -88,7 +88,7 @@ private fun BookReviewItem(review: BookDetailUiState.BookReview) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.wdp),
+            .padding(vertical = 4.wdp),
         horizontalArrangement = Arrangement.spacedBy(7.wdp)
     ) {
         // 评论者头像（实心圆圈）
@@ -107,7 +107,7 @@ private fun BookReviewItem(review: BookDetailUiState.BookReview) {
             // 评论文本
             NovelText(
                 text = review.content,
-                fontSize = 14.ssp,
+                fontSize = 12.ssp,
                 color = NovelColors.NovelText.copy(alpha = 0.8f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis

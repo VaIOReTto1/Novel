@@ -160,4 +160,14 @@ object ReaderModule {
     ): ObservePaginationProgressUseCase {
         return ObservePaginationProgressUseCase(paginationService, dispatchers, logger)
     }
+
+    @Provides
+    @ViewModelScoped
+    fun provideLoadBookReviewsUseCase(
+        bookService: com.novel.utils.network.api.front.BookService,
+        dispatchers: com.novel.page.read.service.common.DispatcherProvider,
+        logger: com.novel.page.read.service.common.ServiceLogger
+    ): LoadBookReviewsUseCase {
+        return LoadBookReviewsUseCase(bookService, dispatchers, logger)
+    }
 }

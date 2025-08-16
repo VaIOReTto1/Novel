@@ -45,6 +45,7 @@ fun PageCurlFlipContainer(
     readerSettings: ReaderSettings,
     onPageChange: (FlipDirection) -> Unit,
     onSwipeBack: (() -> Unit)? = null,
+    onLoadBookReviews: ((String) -> Unit)? = null,
     onClick: () -> Unit
 ) {
     val virtualPages = uiState.virtualPages
@@ -96,6 +97,9 @@ fun PageCurlFlipContainer(
                 bookInfo = bookInfo,
                 readerSettings = readerSettings,
                 showNavigationInfo = false,
+                bookReviews = uiState.bookReviews,
+                isLoadingReviews = uiState.isLoadingReviews,
+                onLoadBookReviews = onLoadBookReviews,
                 onClick = onClick
             )
         }
@@ -184,6 +188,9 @@ fun PageCurlFlipContainer(
                                     bookInfo = bookInfo,
                                     readerSettings = readerSettings,
                                     showNavigationInfo = false, // 书籍详情页不显示导航信息
+                                    bookReviews = uiState.bookReviews,
+                                    isLoadingReviews = uiState.isLoadingReviews,
+                                    onLoadBookReviews = onLoadBookReviews,
                                     onClick = onClick
                                 )
                             }

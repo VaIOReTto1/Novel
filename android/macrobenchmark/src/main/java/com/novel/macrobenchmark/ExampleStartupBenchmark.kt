@@ -133,7 +133,7 @@ class ScrollPerformanceBenchmark {
         // 找到可滚动的LazyColumn
         device.findObject(By.scrollable(true))?.apply {
             // 避免误触系统返回/多任务手势
-            setGestureMargin(device.displayWidth / 10) // 10% 屏宽边距 :contentReference[oaicite:0]{index=0}
+            setGestureMargin(device.displayWidth / 10) // 10% 屏宽边距
 
             // 向下快速 fling 三次
             repeat(3) {

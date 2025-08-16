@@ -543,6 +543,22 @@ class BookService @Inject constructor(
             }
         }
     }
+
+    /**
+     * 获取最新评论的协程版本
+     */
+    suspend fun getNewestCommentsBlocking(bookId: Long): BookCommentResponse {
+        return suspendCancellableCoroutine { cont ->
+            getNewestComments(bookId) { response, error ->
+                if (error != null) {
+                    cont.resumeWith(Result.failure(error))
+                } else {
+                    response?.let { cont.resumeWith(Result.success(it)) }
+                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
+                }
+            }
+        }
+    }
     // endregion
 
     // region 增量同步支持的协程版本

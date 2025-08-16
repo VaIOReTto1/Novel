@@ -29,6 +29,7 @@ fun NoAnimationContainer(
     readerSettings: ReaderSettings,
     onPageChange: (FlipDirection) -> Unit,
     onSwipeBack: (() -> Unit)? = null,
+    onLoadBookReviews: ((String) -> Unit)? = null,
     onClick: () -> Unit
 ) {
     val virtualPages = uiState.virtualPages
@@ -61,6 +62,9 @@ fun NoAnimationContainer(
                 bookInfo = bookInfo,
                 readerSettings = readerSettings,
                 showNavigationInfo = false,
+                bookReviews = uiState.bookReviews,
+                isLoadingReviews = uiState.isLoadingReviews,
+                onLoadBookReviews = onLoadBookReviews,
                 onClick = onClick
             )
         }

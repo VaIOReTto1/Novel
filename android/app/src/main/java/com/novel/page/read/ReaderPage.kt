@@ -471,6 +471,7 @@ private fun IntegratedPageFlipContainer(
             readerSettings = state.readerSettings,
             onPageChange = onPageChange,
             onSwipeBack = onSwipeBack,
+            onLoadBookReviews = { bookId -> onIntent(ReaderIntent.LoadBookReviews(bookId)) },
             onClick = onClick
         )
 
@@ -480,6 +481,7 @@ private fun IntegratedPageFlipContainer(
             onPageChange = onPageChange,
             onNavigateToReader = { _, _ -> onNavigateToReader() },
             onSwipeBack = onSwipeBack,
+            onLoadBookReviews = { bookId -> onIntent(ReaderIntent.LoadBookReviews(bookId)) },
             onClick = onClick
         )
 
@@ -488,6 +490,7 @@ private fun IntegratedPageFlipContainer(
             readerSettings = state.readerSettings,
             onPageChange = onPageChange,
             onSwipeBack = onSwipeBack,
+            onLoadBookReviews = { bookId -> onIntent(ReaderIntent.LoadBookReviews(bookId)) },
             onClick = onClick,
             onSlideIndexChange = { newIndex ->
                 // 使用专用的更新方法避免循环更新
@@ -500,6 +503,7 @@ private fun IntegratedPageFlipContainer(
             readerSettings = state.readerSettings,
             onPageChange = onPageChange,
             onSwipeBack = onSwipeBack,
+            onLoadBookReviews = { bookId -> onIntent(ReaderIntent.LoadBookReviews(bookId)) },
             onClick = onClick
         )
 

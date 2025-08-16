@@ -68,7 +68,25 @@ sealed class ReaderIntent : MviIntent {
     // UI交互相关
     data class UpdateScrollPosition(val pageIndex: Int) : ReaderIntent()
     data class UpdateSlideIndex(val index: Int) : ReaderIntent()
+    /**
+     * 显示进度恢复提示
+     */
     data class ShowProgressRestoredHint(val show: Boolean) : ReaderIntent()
+    
+    /**
+     * 加载书籍评论
+     */
+    data class LoadBookReviews(val bookId: String) : ReaderIntent()
+    
+    /**
+     * 评论加载成功
+     */
+    data class BookReviewsLoadSuccess(val reviews: ImmutableList<BookReview>) : ReaderIntent()
+    
+    /**
+     * 评论加载失败
+     */
+    data class BookReviewsLoadFailure(val error: String) : ReaderIntent()
 }
 
 /**
@@ -117,7 +135,12 @@ data class ReaderState(
     val isMenuVisible: Boolean = false,
     val isChapterListVisible: Boolean = false,
     val isSettingsPanelVisible: Boolean = false,
-    val showProgressRestoredHint: Boolean = false
+    val showProgressRestoredHint: Boolean = false,
+    
+    // 评论相关状态
+    val bookReviews: ImmutableList<BookReview> = persistentListOf(),
+    val isLoadingReviews: Boolean = false,
+    val reviewsError: String? = null
 ) : MviState {
     
     override val isEmpty: Boolean 
@@ -349,6 +372,22 @@ data class ReaderSettings(
         }
     }
 }
+
+/**
+ * 书籍评论数据类
+ * 
+ * 用于在阅读器书籍详情页显示用户评论
+ */
+@Stable
+data class BookReview(
+    val id: String,
+    val content: String,
+    val rating: Int, // 1-5星评级
+    val readTime: String,
+    val userName: String,
+    val userPhoto: String? = null,
+    val commentTime: String? = null
+)
 
 /**
  * 翻页动画效果枚举类

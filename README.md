@@ -56,7 +56,7 @@
 |------|----------|----------|
 | **🏠 首页** | MVI + Repository 架构，下拉刷新，书籍推荐，分类筛选，榜单展示 | `HomeViewModel` + `Paging3` + `SwipeRefresh` |
 | **📖 书籍详情** | 模块化组件，3D翻书动画，iOS风格侧滑，左滑进入阅读器 | `BookDetailViewModel` + `FlipBookAnimation` |
-| **📚 小说阅读器** | 全书内容管理，智能缓存，六种翻页效果，设置面板，进度管理 | `ReaderViewModel` + `PageSplitter` + `BookCacheManager` |
+| **📚 小说阅读器** | 全书内容管理，智能缓存，六种翻页效果，设置面板，进度管理，API评论集成 | `ReaderViewModel` + `PageSplitter` + `BookCacheManager` + `LoadBookReviewsUseCase` |
 | **🔍 搜索模块** | 搜索历史，热门榜单，高级筛选，智能建议，完整榜单页 | `SearchViewModel` + `SearchRepository` + `FullRankingPage` |
 | **🔐 登录注册** | 手机验证码，运营商识别，表单验证，协议确认 | `LoginViewModel` + `AuthService` + `ValidationUtils` |
 | **🎁 福利页面** | H5活动页面展示，WebView容器，性能监控，主题适配，专属红包弹窗 | `WelfareViewModel` + `WebViewComponent` + `WelfarePerformanceMonitor` + `WelfareRedPacketDialog` |
@@ -329,6 +329,7 @@ yarn detox test
 ### 🎯 阶段 2 - MVI架构收敛 (3周)
 - ✅ **统一MVI框架** - `BaseMviViewModel<Intent, State, Effect>`（BookDetail, Home, Search, login, Setting, read 模块完成）
 - ✅ **UseCase层重构** - 业务逻辑封装，ViewModel瘦身（BookDetail, Home, Search, login, Setting, read 模块完成）
+- ✅ **评论功能重构** - 从UI层迁移到ViewModel层，实现API数据获取+Mock数据补充的责任分离
 - 🔄 **Repository标准化** - 统一 `Flow<Result<T>>` 返回类型
 - ✅ **跨端状态同步** - React Native MVI状态管理集成 (完成)
 
@@ -348,6 +349,131 @@ yarn detox test
 - **代码质量** - 单元测试覆盖率70%+，Sonar质量门禁通过
 - **开发效率** - 模块化开发，CI/CD部署时间↓50%
 - **可维护性** - 统一架构模式，代码复用率↑40%
+
+## 🔄 最新更新 - 评论功能重构 (2025-01-15)
+
+### 🎯 重构目标
+将小说评论功能从UI层迁移到ViewModel层，实现责任分离，提升代码可维护性和可测试性。
+
+### 🏗️ 技术实现
+
+#### 1. **MVI架构扩展**
+```kotlin
+// 新增评论相关状态
+data class ReaderState(
+    val bookReviews: ImmutableList<BookReview> = persistentListOf(),
+    val isLoadingReviews: Boolean = false,
+    val reviewsError: String? = null
+)
+
+// 新增评论相关Intent
+sealed class ReaderIntent {
+    data class LoadBookReviews(val bookId: String) : ReaderIntent()
+    data class BookReviewsLoadSuccess(val reviews: ImmutableList<BookReview>) : ReaderIntent()
+    data class BookReviewsLoadFailure(val error: String) : ReaderIntent()
+}
+```
+
+#### 2. **UseCase层业务逻辑封装**
+```kotlin
+class LoadBookReviewsUseCase @Inject constructor(
+    private val bookService: BookService,
+    dispatchers: DispatcherProvider,
+    logger: ServiceLogger
+) : BaseUseCase(dispatchers, logger) {
+    
+    suspend fun execute(bookId: String): ImmutableList<BookReview> {
+        return executeIoWithDefault("加载书籍评论", persistentListOf()) {
+            // 1. 从API获取真实评论数据
+            val apiReviews = loadReviewsFromApi(bookId)
+            
+            // 2. 数据补充策略
+            if (apiReviews.isNotEmpty()) {
+                enhanceReviewsWithMockData(apiReviews).toImmutableList()
+            } else {
+                // 3. 降级到Mock数据
+                generateMockReviews(bookId).toImmutableList()
+            }
+        }
+    }
+}
+```
+
+#### 3. **API集成与数据转换**
+```kotlin
+// BookService扩展协程版本
+suspend fun getNewestCommentsBlocking(bookId: Long): BookCommentResponse {
+    return suspendCancellableCoroutine { cont ->
+        getNewestComments(bookId) { response, error ->
+            if (error != null) {
+                cont.resumeWith(Result.failure(error))
+            } else {
+                response?.let { cont.resumeWith(Result.success(it)) }
+                    ?: cont.resumeWith(Result.failure(Exception("Response is null")))
+            }
+        }
+    }
+}
+```
+
+#### 4. **ViewModel层状态管理**
+```kotlin
+class ReaderViewModel @Inject constructor(
+    private val loadBookReviewsUseCase: LoadBookReviewsUseCase,
+    // ... other dependencies
+) : BaseMviViewModel<ReaderIntent, ReaderState, ReaderEffect>() {
+    
+    private fun handleLoadBookReviewsAsync(intent: ReaderIntent.LoadBookReviews) {
+        viewModelScope.launch {
+            try {
+                val reviews = loadBookReviewsUseCase.execute(intent.bookId)
+                sendIntent(ReaderIntent.BookReviewsLoadSuccess(reviews))
+            } catch (error: Exception) {
+                sendIntent(ReaderIntent.BookReviewsLoadFailure(error.message ?: "加载评论失败"))
+            }
+        }
+    }
+}
+```
+
+### 📈 重构收益
+
+#### **架构层面**
+- ✅ **责任分离** - UI层专注展示，业务逻辑移至UseCase层
+- ✅ **可测试性** - UseCase层独立测试，Mock数据策略可配置
+- ✅ **可维护性** - 评论逻辑集中管理，便于后续功能扩展
+
+#### **功能层面**
+- ✅ **API集成** - 真实评论数据获取，支持网络异常降级
+- ✅ **数据补充** - 智能Mock数据补充，保证UI展示完整性
+- ✅ **状态管理** - 加载状态、错误状态统一管理
+
+#### **性能层面**
+- ✅ **异步处理** - 评论加载不阻塞主线程
+- ✅ **内存优化** - 使用ImmutableList避免不必要的重组
+- ✅ **错误处理** - 完善的异常捕获和降级策略
+
+### 🔧 依赖注入配置
+```kotlin
+@Module
+@InstallIn(ViewModelComponent::class)
+object ReaderModule {
+    @Provides
+    @ViewModelScoped
+    fun provideLoadBookReviewsUseCase(
+        bookService: BookService,
+        dispatchers: DispatcherProvider,
+        logger: ServiceLogger
+    ): LoadBookReviewsUseCase {
+        return LoadBookReviewsUseCase(bookService, dispatchers, logger)
+    }
+}
+```
+
+### 🧪 测试策略
+- **单元测试** - UseCase层业务逻辑测试
+- **集成测试** - API调用和数据处理流程测试
+- **UI测试** - 评论展示和交互功能测试
 
 ## 🤝 贡献指南
 

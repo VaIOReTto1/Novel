@@ -32,6 +32,7 @@ fun SlideFlipContainer(
     readerSettings: ReaderSettings,
     onPageChange: (FlipDirection) -> Unit,
     onSwipeBack: (() -> Unit)? = null,
+    onLoadBookReviews: ((String) -> Unit)? = null,
     onClick: () -> Unit,
     onSlideIndexChange: ((Int) -> Unit)? = null // 新增：平移模式专用的索引更新回调){}
 ) {
@@ -143,6 +144,9 @@ fun SlideFlipContainer(
                 bookInfo = bookInfo,
                 readerSettings = readerSettings,
                 showNavigationInfo = false,
+                bookReviews = uiState.bookReviews,
+                isLoadingReviews = uiState.isLoadingReviews,
+                onLoadBookReviews = onLoadBookReviews,
                 onClick = onClick
             )
         }

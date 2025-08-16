@@ -39,6 +39,9 @@ class ReaderReducer : MviReducerWithEffect<ReaderIntent, ReaderState, ReaderEffe
             is ReaderIntent.UpdateScrollPosition -> handleUpdateScrollPosition(currentState, intent)
             is ReaderIntent.UpdateSlideIndex -> handleUpdateSlideIndex(currentState, intent)
             is ReaderIntent.ShowProgressRestoredHint -> handleShowProgressRestoredHint(currentState, intent)
+            is ReaderIntent.LoadBookReviews -> handleLoadBookReviews(currentState, intent)
+            is ReaderIntent.BookReviewsLoadSuccess -> handleBookReviewsLoadSuccess(currentState, intent)
+            is ReaderIntent.BookReviewsLoadFailure -> handleBookReviewsLoadFailure(currentState, intent)
         }
     }
     
@@ -227,10 +230,49 @@ class ReaderReducer : MviReducerWithEffect<ReaderIntent, ReaderState, ReaderEffe
     
     private fun handleShowProgressRestoredHint(currentState: ReaderState, intent: ReaderIntent.ShowProgressRestoredHint): ReduceResult<ReaderState, ReaderEffect> {
         TimberLogger.d(TAG, "显示进度恢复提示: ${intent.show}")
+        
         val newState = currentState.copy(
             version = currentState.version + 1,
             showProgressRestoredHint = intent.show
         )
+        
+        return ReduceResult(newState)
+    }
+    
+    private fun handleLoadBookReviews(currentState: ReaderState, intent: ReaderIntent.LoadBookReviews): ReduceResult<ReaderState, ReaderEffect> {
+        TimberLogger.d(TAG, "加载书籍评论: bookId=${intent.bookId}")
+        
+        val newState = currentState.copy(
+            version = currentState.version + 1,
+            isLoadingReviews = true,
+            reviewsError = null
+        )
+        
+        return ReduceResult(newState)
+    }
+    
+    private fun handleBookReviewsLoadSuccess(currentState: ReaderState, intent: ReaderIntent.BookReviewsLoadSuccess): ReduceResult<ReaderState, ReaderEffect> {
+        TimberLogger.d(TAG, "评论加载成功: ${intent.reviews.size}条评论")
+        
+        val newState = currentState.copy(
+            version = currentState.version + 1,
+            bookReviews = intent.reviews,
+            isLoadingReviews = false,
+            reviewsError = null
+        )
+        
+        return ReduceResult(newState)
+    }
+    
+    private fun handleBookReviewsLoadFailure(currentState: ReaderState, intent: ReaderIntent.BookReviewsLoadFailure): ReduceResult<ReaderState, ReaderEffect> {
+        TimberLogger.d(TAG, "评论加载失败: ${intent.error}")
+        
+        val newState = currentState.copy(
+            version = currentState.version + 1,
+            isLoadingReviews = false,
+            reviewsError = intent.error
+        )
+        
         return ReduceResult(newState)
     }
     
@@ -390,6 +432,35 @@ class ReaderReducer : MviReducerWithEffect<ReaderIntent, ReaderState, ReaderEffe
         return currentState.copy(
             version = currentState.version + 1,
             readingProgress = newProgress
+        )
+    }
+    
+    /**
+     * 处理评论加载成功
+     */
+    fun handleBookReviewsLoadSuccess(
+        currentState: ReaderState,
+        reviews: List<BookReview>
+    ): ReaderState {
+        return currentState.copy(
+            version = currentState.version + 1,
+            bookReviews = reviews.toImmutableList(),
+            isLoadingReviews = false,
+            reviewsError = null
+        )
+    }
+    
+    /**
+     * 处理评论加载失败
+     */
+    fun handleBookReviewsLoadFailure(
+        currentState: ReaderState,
+        error: String
+    ): ReaderState {
+        return currentState.copy(
+            version = currentState.version + 1,
+            isLoadingReviews = false,
+            reviewsError = error
         )
     }
 }

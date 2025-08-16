@@ -4,6 +4,36 @@
 
 All notable changes to this project will be documented in this file.
 
+### 🎉 v1.0.0 Official Release
+
+After months of continuous iteration and optimization, we are thrilled to announce that **Project v1.0.0 is officially released!**
+This milestone marks the transition from the exploration and building stage to a phase of stability and maturity.
+
+#### 🚀 Highlights
+
+* **AI Writing Assistant Fully Launched**
+  Supports streaming generation, deep reasoning, Markdown rendering, and multiple writing enhancement tools for an immersive creative experience.
+
+* **Complete Author Ecosystem**
+  From becoming an author to managing works and chapters, the full workflow is now supported to empower every creator.
+
+* **Enhanced Reading & Interaction**
+  Comments, community, messages, and recommendation center are fully integrated, making communication between readers and authors smoother.
+
+* **Performance & Architecture Upgrade**
+  Unified MVI architecture, Compose optimization, smart caching, and network sync make the app faster, more stable, and more efficient.
+
+* **UI & Interaction Refresh**
+  Brand new theme switching, 3D animations, skeleton screens, and polished details deliver a more modern and refined experience.
+
+#### 🏗️ Looking Ahead
+
+The release of 1.0.0 not only signifies completeness and stability but also represents our ongoing commitment to advancing **creative experience, social ecosystem, and intelligent capabilities**.
+In the future, we will introduce **personalized recommendations, cross-platform support, and open APIs** to further enrich the creative and reading ecosystem.
+
+We sincerely thank every user, developer, and contributor for your support!
+**This is just the beginning—let’s embrace an even more exciting future together.** ✨
+
 ### v0.14.0 - AI Writing & Author System Enhancements (August 2025)
 
 - 🧠 **AI Writing Assistant**:

@@ -32,7 +32,7 @@ import com.novel.page.login.dao.UserEntity
         HomeCategoryEntity::class  // 首页分类
     ],
     version = 4,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class NovelDatabase : RoomDatabase() {
     /** 用户数据访问对象 */

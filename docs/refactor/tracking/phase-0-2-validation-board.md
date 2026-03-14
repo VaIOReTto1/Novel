@@ -33,7 +33,7 @@
 | V1-02 | Phase 1 | release 路径无硬编码 `http://` | endpoint 配置收口完成 | `android/app/build.gradle`, `android/app/src/main/java/com/novel/utils/network/ApiService.kt`, `android/app/src/main/java/com/novel/page/component/NovelCachedImageView.kt` | 已将后端 API 与图片 host 从 Kotlin 代码收口到 `BuildConfig`，为后续替换安全地址与环境注入做准备 | in_progress | yellow | 待指定 | 待指定 | 2026-03-15 |
 | V1-03 | Phase 1 | release manifest 权限矩阵通过审查 | 权限最小化完成 | `android/app/src/main/AndroidManifest.xml` | 已启动权限最小化收口，第一步移除 `READ_PRIVILEGED_PHONE_STATE` | in_progress | yellow | 待指定 | 待指定 | 2026-03-15 |
 | V1-04 | Phase 1 | release 不全局开放 cleartext | 网络安全策略生效 | `android/app/src/main/AndroidManifest.xml`, `android/app/src/main/res/xml/network_security_config.xml`, `android/app/src/debug/AndroidManifest.xml`, `android/app/src/debug/res/xml/network_security_config.xml` | 已将主资源 cleartext 默认收紧为关闭，debug 资源单独保留放开策略 | in_progress | yellow | 待指定 | 待指定 | 2026-03-15 |
-| V1-05 | Phase 1 | schema 导出与 migration 策略完备 | 数据库发布路径可信 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
+| V1-05 | Phase 1 | schema 导出与 migration 策略完备 | 数据库发布路径可信 | `android/app/build.gradle`, `android/app/src/main/java/com/novel/utils/dao/NovelDatabase.kt`, `android/app/src/main/java/com/novel/di/DatabaseModule.kt`, `android/app/schemas/com.novel.utils.dao.NovelDatabase/4.json` | 已启动 Room 发布路径治理：开启 schema 导出，并将 destructive migration 限制为 debug 路径；当前版本 `4.json` schema 已生成 | in_progress | yellow | 待指定 | 待指定 | 2026-03-15 |
 | V1-06 | Phase 1 | 迁移演练矩阵完成至少一轮 | 升级风险可评估 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 | V1-07 | Phase 1 | WebView 安全策略代码与文档一致 | 域名、SSL、外链、mixed content 规则明确 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 | V1-08 | Phase 1 | signing、环境注入、依赖验证可追溯 | 发布与供应链基础完备 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |

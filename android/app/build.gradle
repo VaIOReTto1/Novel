@@ -166,6 +166,10 @@ android {
     }
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 // Detekt 配置
 detekt {
     toolVersion = "1.23.4"

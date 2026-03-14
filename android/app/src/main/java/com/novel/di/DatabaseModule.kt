@@ -1,6 +1,7 @@
 package com.novel.di
 
 import android.content.Context
+import com.novel.BuildConfig
 import com.novel.utils.TimberLogger
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -42,11 +43,9 @@ object DatabaseModule {
     fun provideDatabase(@ApplicationContext ctx: Context): NovelDatabase {
         TimberLogger.d(TAG, "创建 Room 数据库实例: $DATABASE_NAME")
 
-        return Room.databaseBuilder(ctx, NovelDatabase::class.java, DATABASE_NAME)
+        val builder = Room.databaseBuilder(ctx, NovelDatabase::class.java, DATABASE_NAME)
             // 启用 WAL 模式，提升并发写入性能
             .setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
-            // 开发阶段使用破坏性迁移（版本更新时清空重建）
-            .fallbackToDestructiveMigration()
             // 使用 IO 线程执行查询与事务
             .setQueryExecutor(Dispatchers.IO.asExecutor())
             .setTransactionExecutor(Dispatchers.IO.asExecutor())
@@ -74,7 +73,15 @@ object DatabaseModule {
                     db.query("PRAGMA temp_store=MEMORY", emptyArray<Any?>()).close()
                 }
             })
-            .build()
+
+        if (BuildConfig.DEBUG) {
+            TimberLogger.w(TAG, "Debug 构建启用 destructive migration 以降低本地调试成本")
+            builder.fallbackToDestructiveMigration(true)
+        } else {
+            TimberLogger.i(TAG, "Release 构建关闭 destructive migration，要求显式迁移策略")
+        }
+
+        return builder.build()
     }
 
     /**

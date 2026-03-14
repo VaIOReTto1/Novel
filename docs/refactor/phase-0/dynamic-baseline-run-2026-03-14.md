@@ -111,11 +111,47 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
 ```powershell
 adb shell am start -S -W -n com.novel/.ComposeMainActivity --es debug_route "reader/1334318497132552192?chapterId=1334318500051787776"
 ```
+- 已进一步使用第二章 `chapterId=1334318502731948032` 直达正文页，绕开虚拟书详情页。
 - 通过 `uiautomator dump` 已确认阅读器根节点可见：
   - `content-desc="阅读页面"`
+- 通过第二章直达路径，已确认正文页可见内容：
+  - 章节标题：`第一章 想要个孩子？`
+  - 页码：`8 / 578`
 - 结论：
   - 阅读器入口不再依赖首页/书详情点击路径
   - 后续正文翻页与 Smoke 可直接复用该 debug 路由
+
+### 阅读器正文翻页首轮采样
+
+#### 采样命令
+```powershell
+adb shell am start -S -W -n com.novel/.ComposeMainActivity --es debug_route "reader/1334318497132552192?chapterId=1334318502731948032"
+adb shell input swipe 900 1400 220 1400 300
+```
+
+#### 页码结果
+| 轮次 | 页码 |
+| --- | --- |
+| 初始页 | `8 / 578` |
+| 翻页 1 次后 | `9 / 578` |
+| 翻页 2 次后 | `10 / 578` |
+| 翻页 3 次后 | `11 / 578` |
+
+#### `gfxinfo` 粗结果
+- 以 reset 后统计块为参考：
+  - `Total frames rendered`: `31`
+  - `Janky frames`: `30 (96.77%)`
+  - `50th percentile`: `150 ms`
+  - `90th percentile`: `200 ms`
+  - `95th percentile`: `300 ms`
+  - `99th percentile`: `350 ms`
+
+#### 阅读器内存快照
+- `TOTAL PSS`: `316213 KB`
+- `TOTAL RSS`: `462076 KB`
+- `Java Heap`: `64772 KB`
+- `Native Heap`: `92792 KB`
+- `Graphics`: `50616 KB`
 
 ## 6. 本地构建时长
 
@@ -131,6 +167,6 @@ $duration = Measure-Command { Set-Location android; .\gradlew.bat app:assembleDe
 ## 7. 当前结论
 - 本轮已经拿到真实设备上的冷启动、内存和首页滚动粗基线，可作为 Phase 0 的第一轮动态证据。
 - 构建时长也已补齐首轮数据。
-- 阅读器入口已确认可进入，但“进入正文页后的翻页基线”仍需继续补采。
+- 阅读器正文页已可通过 debug 路由稳定进入，并完成首轮翻页、`gfxinfo` 与内存采样。
 - RN 首开元素级自动化识别仍需继续补采。
 - 在这些指标补齐之前，`V0-03` 仍应保持 `in_progress`，不能直接关闭。

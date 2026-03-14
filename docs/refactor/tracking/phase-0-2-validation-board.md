@@ -24,7 +24,7 @@
 | V0-03 | Phase 0 | 基线数据可复现 | 指标、设备、环境、轮次记录完整 | `docs/refactor/phase-0/device-matrix-and-measurement-protocol.md`, `docs/refactor/phase-0/baseline-snapshot.md` | 已建立设备矩阵、测量协议和第一轮静态基线快照，动态性能指标待真机补采 | in_progress | yellow | 待指定 | 待指定 | 2026-03-14 |
 | V0-04 | Phase 0 | 风险与禁区清单完整 | 风险分级明确，禁区可执行 | `docs/refactor/phase-0/risk-register-and-no-go-zones.md` | 已输出 blocker/high/medium/low 风险图谱与禁区清单，可直接用于 Phase 1 门禁 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-14 |
 | V0-05 | Phase 0 | 测试数据方案与 kill switch 定稿 | 可直接进入 Phase 2 与后续灰度/回滚设计 | `docs/refactor/phase-0/stable-test-data-plan.md`, `docs/refactor/phase-0/kill-switch-minimal-plan.md` | 已输出 fixture/fake data 分层建议与最小 kill switch 范围、形态和适用场景 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-14 |
-| V0-06 | Phase 0 | Phase 1 进入条件明确 | blocker、关闭标准和进入标准客观可判断 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
+| V0-06 | Phase 0 | Phase 1 进入条件明确 | blocker、关闭标准和进入标准客观可判断 | `docs/refactor/phase-0/phase-1-entry-criteria.md` | 已输出 Phase 1 放行门禁、允许遗留项范围与 blocker 条件 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-14 |
 
 ## Phase 1
 | ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |

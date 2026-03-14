@@ -1,22 +1,22 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 0`
-- 阶段状态：`ready_for_validation`
+- 当前阶段：`Phase 1`
+- 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：Phase 0 的 `V0-01 ~ V0-06` 已全部具备绿色验证证据，当前进入关闭评审准备阶段
-- 下一步：指定 Owner/Reviewer/Validator，完成 Phase 0 关闭验证，并决定是否将 `profile` 根宿主页白屏作为高风险遗留项带入下一阶段
+- 最近结论：Phase 0 已按关闭评审结论进入通过状态，`profile` 根宿主页白屏作为高风险遗留带入下一阶段
+- 下一步：开始执行 Phase 1 的发布、安全与合规治理，优先处理低风险高收益的安全收口项
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
 | --- | --- | --- | --- | --- |
-| Phase 0 | 基线与控制面板 | ready_for_validation | `docs/refactor/` 文档骨架已创建 | 全部 `V0-*` 至少为 `green` |
-| Phase 1 | 发布、安全与合规治理 | planned | `Phase 0 = validated` | 全部 `V1-*` 为 `green` |
+| Phase 0 | 基线与控制面板 | validated | `docs/refactor/` 文档骨架已创建 | 全部 `V0-*` 至少为 `green` |
+| Phase 1 | 发布、安全与合规治理 | in_progress | `Phase 0 = validated` | 全部 `V1-*` 为 `green` |
 | Phase 2 | 质量门禁与自动化护栏 | planned | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 
 ## 最近一次验证结论
-- `V0-01`、`V0-02`、`V0-04`、`V0-05`、`V0-06` 已具备验证证据并进入 `ready_for_validation`。
-- `V0-03` 已补齐冷启动、首页滚动、构建时长、阅读器正文翻页，以及 RN 代表页样本，已进入 `ready_for_validation`。
+- `V0-01 ~ V0-06` 已全部具备绿色验证证据。
+- Phase 0 关闭评审建议为“建议通过”，当前按项目推进指令进入 `validated`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

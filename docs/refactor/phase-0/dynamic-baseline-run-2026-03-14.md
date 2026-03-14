@@ -108,6 +108,19 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
   - 当前无线真机 + debug 组合下，RN 路由具备启动与上下文初始化日志，但视觉渲染不稳定
   - `RN 首开动态基线` 仍不能作为有效完成项关闭
 
+### RN 补充排查结论
+- 本机 `Metro` 状态：
+  - `http://127.0.0.1:8081/status -> packager-status:running`
+- 设备缓存 bundle：
+  - `/data/data/com.novel/files/BridgeReactNativeDevBundle.js`
+  - 大小约 `9.8 MB`
+  - 本地检索可见 `Novel`、`SettingsPageComponent`、`BookshelfPageComponent` 等注册信息
+- 运行时错误：
+  - 当前 `logcat` 未抓到明确 `ReactNativeJS` fatal / `Invariant Violation` / `TypeError` 级别错误
+- 综合判断：
+  - RN 白屏并非简单的“Metro 未启动”或“bundle 未注册组件”问题
+  - 更可能是当前无线真机 debug 运行时与宿主渲染链路的稳定性问题
+
 ### 阅读器链路附加证据
 - 通过 `adb logcat -d` 已确认以下日志：
   - `ReaderViewModel: 分页完成后写入页数缓存: 总页数=578`

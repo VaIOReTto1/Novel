@@ -8,6 +8,8 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelText
@@ -76,6 +78,7 @@ fun BookActionSection(
             onClick = startReadingClick,
             modifier = Modifier
                 .fillMaxWidth()
+                .semantics { contentDescription = "开始阅读按钮" }
                 .height(48.wdp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = NovelColors.NovelMain

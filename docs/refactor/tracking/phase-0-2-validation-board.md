@@ -22,7 +22,7 @@
 | V0-01 | Phase 0 | 核心路径矩阵完整 | 首页、书详情、阅读器、登录、搜索、福利、设置、分类、书架、我的、作者、AI 页面无遗漏 | `docs/refactor/phase-0/core-path-matrix.md` | 已输出 12 条核心路径，覆盖 Compose、RN Host、Root RN、Bridge 扩展页 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-14 |
 | V0-02 | Phase 0 | 资产清单具备代码定位 | route、Bridge、storage、schema、config 具备路径级引用 | `docs/refactor/phase-0/asset-inventory.md` | 已盘点 Native routes、RN 组件、Bridge 模块、存储、数据库与构建配置，并附代码定位 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-14 |
 | V0-03 | Phase 0 | 基线数据可复现 | 指标、设备、环境、轮次记录完整 | `docs/refactor/phase-0/device-matrix-and-measurement-protocol.md`, `docs/refactor/phase-0/baseline-snapshot.md` | 已建立设备矩阵、测量协议和第一轮静态基线快照，动态性能指标待真机补采 | in_progress | yellow | 待指定 | 待指定 | 2026-03-14 |
-| V0-04 | Phase 0 | 风险与禁区清单完整 | 风险分级明确，禁区可执行 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
+| V0-04 | Phase 0 | 风险与禁区清单完整 | 风险分级明确，禁区可执行 | `docs/refactor/phase-0/risk-register-and-no-go-zones.md` | 已输出 blocker/high/medium/low 风险图谱与禁区清单，可直接用于 Phase 1 门禁 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-14 |
 | V0-05 | Phase 0 | 测试数据方案与 kill switch 定稿 | 可直接进入 Phase 2 与后续灰度/回滚设计 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 | V0-06 | Phase 0 | Phase 1 进入条件明确 | blocker、关闭标准和进入标准客观可判断 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 

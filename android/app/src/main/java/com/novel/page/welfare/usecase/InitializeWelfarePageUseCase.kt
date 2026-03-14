@@ -1,6 +1,7 @@
 package com.novel.page.welfare.usecase
 
 import com.novel.core.domain.BaseUseCase
+import com.novel.page.welfare.utils.WelfareWebSecurityConfig
 import com.novel.utils.TimberLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,8 +19,8 @@ class InitializeWelfarePageUseCase @Inject constructor() : BaseUseCase<Unit, Ini
     
     companion object {
         private const val TAG = "InitializeWelfarePageUseCase"
-        private const val DEFAULT_TITLE = "福利页面 - GitHub"
-        private const val DEFAULT_URL = "http://lin.yyyai.xyz:80/"
+        private const val DEFAULT_TITLE = WelfareWebSecurityConfig.DEFAULT_TITLE
+        private const val DEFAULT_URL = WelfareWebSecurityConfig.DEFAULT_URL
     }
     
     /**

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import com.novel.core.mvi.MviIntent
 import com.novel.core.mvi.MviState
 import com.novel.core.mvi.MviEffect
+import com.novel.page.welfare.utils.WelfareWebSecurityConfig
 
 /**
  * Welfare模块MVI契约定义
@@ -57,6 +58,9 @@ sealed class WelfareIntent : MviIntent {
     
     /** 清除错误状态 */
     object ClearError : WelfareIntent()
+
+    /** 请求外部打开URL */
+    data class OpenExternalUrl(val url: String) : WelfareIntent()
     
     /** 导航返回 */
     object NavigateBack : WelfareIntent()
@@ -75,8 +79,8 @@ data class WelfareState(
     override val error: String? = null,
     
     // WebView相关状态
-    val currentUrl: String = "http://lin.yyyai.xyz:80/",
-    val title: String = "福利页面",
+    val currentUrl: String = WelfareWebSecurityConfig.DEFAULT_URL,
+    val title: String = WelfareWebSecurityConfig.DEFAULT_TITLE,
     val loadingProgress: Int = 0,
     val canGoBack: Boolean = false,
     val canGoForward: Boolean = false,

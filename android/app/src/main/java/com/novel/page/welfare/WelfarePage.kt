@@ -1,5 +1,7 @@
 package com.novel.page.welfare
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -166,11 +168,15 @@ fun WelfarePage(
                 }
 
                 is WelfareEffect.ShowSslErrorDialog -> {
-                    // TODO: 显示SSL错误对话框
+                    snackbarHostState.showSnackbar(
+                        message = "SSL错误：${effect.message}"
+                    )
                 }
 
                 is WelfareEffect.ShowHttpErrorPage -> {
-                    // TODO: 显示HTTP错误页面
+                    snackbarHostState.showSnackbar(
+                        message = "HTTP错误 ${effect.errorCode}: ${effect.description}"
+                    )
                 }
 
                 is WelfareEffect.ShowNetworkErrorSnackbar -> {
@@ -181,7 +187,15 @@ fun WelfarePage(
                 }
 
                 is WelfareEffect.OpenInBrowser -> {
-                    // TODO: 在外部浏览器中打开
+                    runCatching {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(effect.url)).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        context.startActivity(browserIntent)
+                    }.onFailure { error ->
+                        TimberLogger.e("WelfarePage", "外部打开链接失败: ${effect.url}", error)
+                        snackbarHostState.showSnackbar("无法打开外部链接")
+                    }
                 }
 
                 is WelfareEffect.TriggerHapticFeedback -> {
@@ -306,6 +320,9 @@ fun WelfarePage(
                         onSslError = { error -> viewModel.sendIntent(WelfareIntent.OnSslError(error)) },
                         onHttpError = { code, message -> viewModel.sendIntent(WelfareIntent.OnHttpError(code, message)) },
                         onNetworkError = { error -> viewModel.sendIntent(WelfareIntent.OnNetworkError(error)) },
+                        onExternalUrlRequested = { externalUrl ->
+                            viewModel.sendIntent(WelfareIntent.OpenExternalUrl(externalUrl))
+                        },
                         onProgressChanged = onProgressChanged,
                         onNavigationStateChanged = onNavigationStateChanged,
                         onTitleChanged = onTitleChanged,

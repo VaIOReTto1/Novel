@@ -1,6 +1,7 @@
 package com.novel.page.welfare.component
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.net.http.SslError
 import android.webkit.CookieManager
 import android.webkit.SslErrorHandler
@@ -20,9 +21,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
-import com.novel.utils.TimberLogger
 import com.novel.page.welfare.utils.WebViewPreloadManager
 import com.novel.page.welfare.utils.WelfarePerformanceMonitor
+import com.novel.page.welfare.utils.WelfareWebSecurityConfig
+import com.novel.utils.TimberLogger
 
 /**
  * WebView组件
@@ -47,6 +49,7 @@ fun WebViewComponent(
     onSslError: (String) -> Unit = {},
     onHttpError: (Int, String) -> Unit = { _, _ -> },
     onNetworkError: (String) -> Unit = {},
+    onExternalUrlRequested: (String) -> Unit = {},
     onProgressChanged: (Int) -> Unit = {},
     onNavigationStateChanged: (canGoBack: Boolean, canGoForward: Boolean) -> Unit = { _, _ -> },
     onTitleChanged: (String) -> Unit = {},
@@ -77,6 +80,8 @@ fun WebViewComponent(
                 builtInZoomControls = true
                 displayZoomControls = false
                 setSupportZoom(true)
+                javaScriptCanOpenWindowsAutomatically = false
+                setSupportMultipleWindows(false)
                 
                 // 安全配置
                 allowFileAccess = false
@@ -223,8 +228,24 @@ fun WebViewComponent(
                 }
                 
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                    // 允许在当前WebView中加载所有URL
-                    return false
+                    val requestUri = request?.url ?: return false
+                    if (request.isForMainFrame.not()) {
+                        return false
+                    }
+
+                    if (WelfareWebSecurityConfig.isAllowedMainFrameUri(requestUri)) {
+                        return false
+                    }
+
+                    if (WelfareWebSecurityConfig.shouldOpenExternally(requestUri)) {
+                        val externalUrl = requestUri.toString()
+                        TimberLogger.i("WebViewComponent", "外部打开非白名单链接: $externalUrl")
+                        onExternalUrlRequested(externalUrl)
+                        return true
+                    }
+
+                    TimberLogger.w("WebViewComponent", "拦截未通过白名单校验的URL: $requestUri")
+                    return true
                 }
             }
             

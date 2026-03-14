@@ -78,6 +78,7 @@ def apiBaseUrlUser = "${apiBaseHost}/api/front/user/"
 def apiBaseUrlResource = "${apiBaseHost}/api/front/resource/"
 def apiBaseUrlAuthor = "${apiBaseHost}/api/author/"
 def apiBaseUrlAi = "${apiBaseHost}/api/author/ai/"
+def welfareDefaultUrl = "http://lin.yyyai.xyz:80/"
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -112,6 +113,7 @@ android {
         buildConfigField "String", "API_BASE_URL_RESOURCE", "\"${apiBaseUrlResource}\""
         buildConfigField "String", "API_BASE_URL_AUTHOR", "\"${apiBaseUrlAuthor}\""
         buildConfigField "String", "API_BASE_URL_AI", "\"${apiBaseUrlAi}\""
+        buildConfigField "String", "WELFARE_DEFAULT_URL", "\"${welfareDefaultUrl}\""
     }
     signingConfigs {
         debug {

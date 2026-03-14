@@ -185,6 +185,15 @@ class WelfareReducer : MviReducerWithEffect<WelfareIntent, WelfareState, Welfare
                     )
                 )
             }
+
+            is WelfareIntent.OpenExternalUrl -> {
+                ReduceResult(
+                    newState = currentState.copy(
+                        version = currentState.version + 1
+                    ),
+                    effect = WelfareEffect.OpenInBrowser(intent.url)
+                )
+            }
             
             is WelfareIntent.NavigateBack -> {
                 ReduceResult(

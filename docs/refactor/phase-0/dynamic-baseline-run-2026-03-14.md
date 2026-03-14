@@ -121,6 +121,37 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
   - RN 白屏并非简单的“Metro 未启动”或“bundle 未注册组件”问题
   - 更可能是当前无线真机 debug 运行时与宿主渲染链路的稳定性问题
 
+### RN “我的”页面当前视觉基线
+- 当前设备状态下抓取到“我的”页面视觉截图：
+  - `docs/refactor/evidence/profile-page-current-2026-03-15.png`
+- 页面中可见内容包括：
+  - 顶部登录/注册占位
+  - `我的消息`、`成为作家`、`浏览历史`、`排行榜中心`
+  - 两个“继续阅读”卡片
+  - 底部 LogBox 提示 `Open debugger to view warnings.`
+
+### RN “我的”页面滚动粗基线
+
+#### 采样方式
+- 在当前已展示的“我的”页面执行 3 轮上下滑动
+- 使用 `dumpsys gfxinfo com.novel reset` 后采样
+
+#### 结果
+- 有效统计块：
+  - `Total frames rendered`: `312`
+  - `Janky frames`: `29 (9.29%)`
+  - `50th percentile`: `21 ms`
+  - `90th percentile`: `25 ms`
+  - `95th percentile`: `26 ms`
+  - `99th percentile`: `36 ms`
+
+#### 当前内存快照
+- “我的”页当前驻留时：
+  - `TOTAL PSS`: `389690 KB`
+  - `TOTAL RSS`: `538764 KB`
+  - `Native Heap`: `161728 KB`
+  - `Java Heap`: `81556 KB`
+
 ### 阅读器链路附加证据
 - 通过 `adb logcat -d` 已确认以下日志：
   - `ReaderViewModel: 分页完成后写入页数缓存: 总页数=578`
@@ -192,5 +223,5 @@ $duration = Measure-Command { Set-Location android; .\gradlew.bat app:assembleDe
 - 本轮已经拿到真实设备上的冷启动、内存和首页滚动粗基线，可作为 Phase 0 的第一轮动态证据。
 - 构建时长也已补齐首轮数据。
 - 阅读器正文页已可通过 debug 路由稳定进入，并完成首轮翻页、`gfxinfo` 与内存采样。
-- RN 首开元素级自动化识别仍需继续补采。
+- RN 当前页面视觉与滚动基线已补齐，但 `RN 首开动态基线` 仍未稳定闭环。
 - 在这些指标补齐之前，`V0-03` 仍应保持 `in_progress`，不能直接关闭。

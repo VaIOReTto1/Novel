@@ -53,6 +53,12 @@ class ComposeMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TimberLogger.d(TAG, "Activity创建开始")
+
+        val debugRoute = if (BuildConfig.DEBUG) {
+            intent?.getStringExtra("debug_route")
+        } else {
+            null
+        }
         
         // 在后台初始化React Native上下文，避免阻塞UI线程
         rim?.createReactContextInBackground()
@@ -72,7 +78,7 @@ class ComposeMainActivity : ComponentActivity() {
                         AdaptiveScreen{
                             Box(modifier = Modifier.fillMaxSize()) {
                                 // 应用导航系统初始化
-                                NavigationSetup()
+                                NavigationSetup(debugRoute = debugRoute)
                             }
                         }
                     }

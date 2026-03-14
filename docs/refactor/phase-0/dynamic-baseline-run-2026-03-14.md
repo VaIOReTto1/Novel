@@ -106,6 +106,17 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
   - 当前停在阅读器的虚拟书详情页，不是普通书详情路由页
   - 翻页进入正文页的自动化手势仍需继续补采
 
+### Debug 路由与语义标识附加证据
+- 已新增仅 `debug` 生效的路由注入能力，可通过以下命令直达阅读器：
+```powershell
+adb shell am start -S -W -n com.novel/.ComposeMainActivity --es debug_route "reader/1334318497132552192?chapterId=1334318500051787776"
+```
+- 通过 `uiautomator dump` 已确认阅读器根节点可见：
+  - `content-desc="阅读页面"`
+- 结论：
+  - 阅读器入口不再依赖首页/书详情点击路径
+  - 后续正文翻页与 Smoke 可直接复用该 debug 路由
+
 ## 6. 本地构建时长
 
 ### 采样命令

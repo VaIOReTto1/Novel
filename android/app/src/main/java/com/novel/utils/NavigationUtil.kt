@@ -2,7 +2,12 @@ package com.novel.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,11 +33,12 @@ import kotlinx.coroutines.launch
  * 导航设置 - 简化版本，翻书动画在HomePage内部处理
  */
 @Composable
-fun NavigationSetup() {
+fun NavigationSetup(debugRoute: String? = null) {
     TimberLogger.d("NavigationSetup", "NavigationSetup 重新组合")
 
     // 创建NavController
     val navController = rememberNavController()
+    var debugRouteHandled by remember(debugRoute) { mutableStateOf(false) }
 
     // 使用DisposableEffect确保在组件销毁时正确清理
     DisposableEffect(navController) {
@@ -45,6 +51,18 @@ fun NavigationSetup() {
             if (NavViewModel.navController.value == navController) {
                 NavViewModel.navController.value = null
             }
+        }
+    }
+
+    LaunchedEffect(navController, debugRoute, debugRouteHandled) {
+        if (!debugRoute.isNullOrBlank() && !debugRouteHandled) {
+            TimberLogger.d("NavigationSetup", "调试路由跳转: $debugRoute")
+            runCatching {
+                navController.navigate(debugRoute)
+            }.onFailure { error ->
+                TimberLogger.e("NavigationSetup", "调试路由跳转失败: $debugRoute", error)
+            }
+            debugRouteHandled = true
         }
     }
 

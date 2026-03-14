@@ -86,6 +86,13 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
 - 阅读器入口“开始阅读”按钮在本轮脚本导出中未稳定出现，尚未形成可靠自动化采样路径。
 - RN “我的”页在当前 debug 测试路径下导出的仍是宿主容器，未形成可稳定识别的页面元素，因此 RN 首开基线暂未闭环。
 
+### RN 调试链路附加证据
+- 通过 `adb logcat -d` 抓到多条：
+  - `ReactNativeJNI: Failed to connect to localhost/127.0.0.1:8081`
+- 即使补充执行了：
+  - `adb reverse tcp:8081 tcp:8081`
+- 当前无线真机上的 RN 页面仍未形成稳定可见内容，因此本轮不将 RN 首开数据记为有效基线。
+
 ## 6. 本地构建时长
 
 ### 采样命令

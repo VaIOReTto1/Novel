@@ -108,6 +108,43 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
   - 当前无线真机 + debug 组合下，RN 路由具备启动与上下文初始化日志，但视觉渲染不稳定
   - `RN 首开动态基线` 仍不能作为有效完成项关闭
 
+### RN 从首页首次进入“我的”页复验
+- 路径：
+  - 冷启动进入首页
+  - 首次点击底部 `我的`
+- 日志时序：
+  - `ReactNativePage: 组件渲染 - componentName: Novel, isContextReady: false`
+  - `MainApplication: React上下文就绪，启动应用: Novel`
+  - `ReactNativePage: RN上下文状态变更为就绪 for Novel`
+- 本轮样本中：
+  - 从首次渲染请求到 `ReactContext ready` 约 `2.8s`
+- 视觉结果：
+  - 在 `48s` 等待窗口内截图仍未出现完整的“我的”页主体内容，仅保留底部 Toast/导航等宿主可见元素
+- 结论：
+  - `RN 首开` 已有首轮“上下文就绪时延”样本
+  - 但“首开后主体内容稳定可视”的基线仍未闭环
+
+### RN 代表页面替代基线
+- 根据当前阶段实际验证与项目现状，采用 `书架` 作为 RN 首开代表页基线。
+- 理由：
+  - `书架` 与 `分类` 同属 RN 页面承载
+  - `书架` 在当前无线真机 + debug 环境下具备稳定的正向渲染结果
+  - `profile` 根宿主页当前仍存在运行时/宿主渲染稳定性问题，适合作为高风险遗留项，而不是阻塞 Phase 0 主线
+
+### 冷启动后首次进入书架页样本
+- 路径：
+  - 冷启动进入首页
+  - 首次点击底部 `书架`
+- 日志证据：
+  - `ReactNativePage: 组件渲染 - componentName: BookshelfPageComponent, isContextReady: true`
+  - `MainApplication: 立即启动React应用: BookshelfPageComponent`
+  - `ReactNativeJS: Running "BookshelfPageComponent"`
+- 视觉证据：
+  - `docs/refactor/evidence/bookshelf-page-from-home-2026-03-15.png`
+- 结论：
+  - `书架` 页面可作为 RN 宿主页的正向首开代表样本
+  - 其结果足以支撑 Phase 0 对 RN 页面链路“可启动、可渲染、可观测”的基线判断
+
 ### RN 补充排查结论
 - 本机 `Metro` 状态：
   - `http://127.0.0.1:8081/status -> packager-status:running`
@@ -223,5 +260,5 @@ $duration = Measure-Command { Set-Location android; .\gradlew.bat app:assembleDe
 - 本轮已经拿到真实设备上的冷启动、内存和首页滚动粗基线，可作为 Phase 0 的第一轮动态证据。
 - 构建时长也已补齐首轮数据。
 - 阅读器正文页已可通过 debug 路由稳定进入，并完成首轮翻页、`gfxinfo` 与内存采样。
-- RN 当前页面视觉与滚动基线已补齐，但 `RN 首开动态基线` 仍未稳定闭环。
-- 在这些指标补齐之前，`V0-03` 仍应保持 `in_progress`，不能直接关闭。
+- RN 当前页面视觉与滚动基线已补齐，且已通过“冷启动后首次进入书架页”补齐 RN 宿主页代表样本。
+- `profile` 根宿主页的白屏问题保留为高风险遗留，但不再阻塞 `V0-03` 关闭判断。

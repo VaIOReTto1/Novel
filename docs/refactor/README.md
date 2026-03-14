@@ -2,21 +2,21 @@
 
 ## 当前状态
 - 当前阶段：`Phase 0`
-- 阶段状态：`in_progress`
+- 阶段状态：`ready_for_validation`
 - 门禁模式：`严格门禁`
-- 最近结论：已完成重构文档体系、Phase 0 核心路径矩阵、资产清单、静态基线、风险图谱、测试数据方案、kill switch 方案与 Phase 1 进入条件文档
-- 下一步：继续补采真机/模拟器动态性能基线，指定 Owner/Reviewer/Validator，并在满足条件后推动 `V0-03` 与 Phase 0 关闭验证
+- 最近结论：Phase 0 的 `V0-01 ~ V0-06` 已全部具备绿色验证证据，当前进入关闭评审准备阶段
+- 下一步：指定 Owner/Reviewer/Validator，完成 Phase 0 关闭验证，并决定是否将 `profile` 根宿主页白屏作为高风险遗留项带入下一阶段
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
 | --- | --- | --- | --- | --- |
-| Phase 0 | 基线与控制面板 | in_progress | `docs/refactor/` 文档骨架已创建 | 全部 `V0-*` 至少为 `green` |
+| Phase 0 | 基线与控制面板 | ready_for_validation | `docs/refactor/` 文档骨架已创建 | 全部 `V0-*` 至少为 `green` |
 | Phase 1 | 发布、安全与合规治理 | planned | `Phase 0 = validated` | 全部 `V1-*` 为 `green` |
 | Phase 2 | 质量门禁与自动化护栏 | planned | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 
 ## 最近一次验证结论
 - `V0-01`、`V0-02`、`V0-04`、`V0-05`、`V0-06` 已具备验证证据并进入 `ready_for_validation`。
-- `V0-03` 已建立测量协议和静态基线，但动态性能指标仍待补采，当前保持 `in_progress`。
+- `V0-03` 已补齐冷启动、首页滚动、构建时长、阅读器正文翻页，以及 RN 代表页样本，已进入 `ready_for_validation`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

@@ -86,4 +86,4 @@
 - Owner：待指定
 - Reviewer：待指定
 - Validator：待指定
-- 当前状态：`in_progress`
+- 当前状态：`ready_for_validation`

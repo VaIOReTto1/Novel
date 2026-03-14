@@ -11,8 +11,6 @@
     <!-- 兼容性：READ_PHONE_STATE 可用于更低 API 级别 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
-    <uses-permission android:name="READ_PRIVILEGED_PHONE_STATE" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application

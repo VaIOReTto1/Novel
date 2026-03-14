@@ -72,6 +72,12 @@ react {
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
 def enableProguardInReleaseBuilds = false
+def apiBaseHost = "http://47.110.147.60:8080"
+def apiBaseUrlFront = "${apiBaseHost}/api/front/"
+def apiBaseUrlUser = "${apiBaseHost}/api/front/user/"
+def apiBaseUrlResource = "${apiBaseHost}/api/front/resource/"
+def apiBaseUrlAuthor = "${apiBaseHost}/api/author/"
+def apiBaseUrlAi = "${apiBaseHost}/api/author/ai/"
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -100,6 +106,12 @@ android {
         versionCode appVersionCode
         versionName appVersionName
         vectorDrawables.useSupportLibrary = true
+        buildConfigField "String", "API_BASE_HOST", "\"${apiBaseHost}\""
+        buildConfigField "String", "API_BASE_URL_FRONT", "\"${apiBaseUrlFront}\""
+        buildConfigField "String", "API_BASE_URL_USER", "\"${apiBaseUrlUser}\""
+        buildConfigField "String", "API_BASE_URL_RESOURCE", "\"${apiBaseUrlResource}\""
+        buildConfigField "String", "API_BASE_URL_AUTHOR", "\"${apiBaseUrlAuthor}\""
+        buildConfigField "String", "API_BASE_URL_AI", "\"${apiBaseUrlAi}\""
     }
     signingConfigs {
         debug {

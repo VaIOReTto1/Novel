@@ -30,7 +30,7 @@
 | ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | V1-01 | Phase 1 | release 构建成功并有产物报告 | 构建与产物可复现 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
-| V1-02 | Phase 1 | release 路径无硬编码 `http://` | endpoint 配置收口完成 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
+| V1-02 | Phase 1 | release 路径无硬编码 `http://` | endpoint 配置收口完成 | `android/app/build.gradle`, `android/app/src/main/java/com/novel/utils/network/ApiService.kt`, `android/app/src/main/java/com/novel/page/component/NovelCachedImageView.kt` | 已将后端 API 与图片 host 从 Kotlin 代码收口到 `BuildConfig`，为后续替换安全地址与环境注入做准备 | in_progress | yellow | 待指定 | 待指定 | 2026-03-15 |
 | V1-03 | Phase 1 | release manifest 权限矩阵通过审查 | 权限最小化完成 | `android/app/src/main/AndroidManifest.xml` | 已启动权限最小化收口，第一步移除 `READ_PRIVILEGED_PHONE_STATE` | in_progress | yellow | 待指定 | 待指定 | 2026-03-15 |
 | V1-04 | Phase 1 | release 不全局开放 cleartext | 网络安全策略生效 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 | V1-05 | Phase 1 | schema 导出与 migration 策略完备 | 数据库发布路径可信 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |

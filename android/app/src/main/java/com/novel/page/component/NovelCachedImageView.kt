@@ -5,6 +5,7 @@ import android.content.ComponentCallbacks2
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.novel.BuildConfig
 import com.novel.utils.TimberLogger
 import androidx.collection.LruCache
 import androidx.compose.foundation.layout.Box
@@ -220,7 +221,7 @@ class HttpImageLoaderService @Inject constructor(
 ) : ImageLoaderService {
     
     companion object {
-        private const val BASE_URL = "http://47.110.147.60:8080" // 基础URL
+        private const val BASE_URL = BuildConfig.API_BASE_HOST
         private const val TAG = "HttpImageLoaderService"
     }
     

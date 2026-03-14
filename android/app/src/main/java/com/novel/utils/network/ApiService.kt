@@ -1,6 +1,7 @@
 package com.novel.utils.network
 
 import androidx.compose.runtime.Stable
+import com.novel.BuildConfig
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.interceptor.AuthInterceptor
 import com.google.gson.Gson
@@ -216,11 +217,11 @@ object RetrofitClient {
 @Stable
 object ApiService {
     /** 各个服务的基础URL配置 */
-    const val BASE_URL_FRONT = "http://47.110.147.60:8080/api/front/"
-    const val BASE_URL_USER = "http://47.110.147.60:8080/api/front/user/"
-    const val BASE_URL_RESOURCE = "http://47.110.147.60:8080/api/front/resource/"
-    const val BASE_URL_AUTHOR = "http://47.110.147.60:8080/api/author/"
-    const val BASE_URL_AI = "http://47.110.147.60:8080/api/author/ai/"
+    const val BASE_URL_FRONT = BuildConfig.API_BASE_URL_FRONT
+    const val BASE_URL_USER = BuildConfig.API_BASE_URL_USER
+    const val BASE_URL_RESOURCE = BuildConfig.API_BASE_URL_RESOURCE
+    const val BASE_URL_AUTHOR = BuildConfig.API_BASE_URL_AUTHOR
+    const val BASE_URL_AI = BuildConfig.API_BASE_URL_AI
     
     private const val TAG = "ApiService"
 

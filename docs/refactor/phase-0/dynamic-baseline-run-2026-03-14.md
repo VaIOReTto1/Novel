@@ -81,9 +81,10 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
 - 首页可通过 `uiautomator dump` 稳定导出层级。
 - 首页第一本书可通过固定坐标点击进入书详情页。
 - 书详情页主要文本内容可稳定导出层级。
+- 从首页底部“继续观看”区域点击后，可通过日志确认进入 `ReaderPage`，当前落在阅读器虚拟第一页 `BookDetailPage`。
 
 ### 暂未闭环
-- 阅读器入口“开始阅读”按钮在本轮脚本导出中未稳定出现，尚未形成可靠自动化采样路径。
+- 阅读器虽然已确认可进入，但自动化尚未稳定把虚拟第一页推进到正文 `ContentPage`，翻页路径仍待补采。
 - RN “我的”页已经在真机上视觉渲染出实际内容，但 `uiautomator dump` 只能拿到宿主容器，尚未形成可稳定识别的元素级自动化采样路径，因此 RN 首开基线暂未闭环。
 
 ### RN 调试链路附加证据
@@ -95,6 +96,15 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
   - RN 页面可以视觉渲染。
   - 但无线真机 + 当前调试链路下，UIAutomator 无法稳定拿到 RN 页面内部元素，且 ReactNativeJNI 存在持续 websocket 连接失败日志。
   - 因此本轮不将 RN 首开时间记为有效自动化基线。
+
+### 阅读器链路附加证据
+- 通过 `adb logcat -d` 已确认以下日志：
+  - `ReaderViewModel: 分页完成后写入页数缓存: 总页数=578`
+  - `PageCurlFlipContainer: virtualPages: [BookDetailPage, ContentPage(...)] , virtualPageIndex: 0`
+- 结论：
+  - “继续观看”路径已经进入 `ReaderPage`
+  - 当前停在阅读器的虚拟书详情页，不是普通书详情路由页
+  - 翻页进入正文页的自动化手势仍需继续补采
 
 ## 6. 本地构建时长
 
@@ -110,5 +120,6 @@ $duration = Measure-Command { Set-Location android; .\gradlew.bat app:assembleDe
 ## 7. 当前结论
 - 本轮已经拿到真实设备上的冷启动、内存和首页滚动粗基线，可作为 Phase 0 的第一轮动态证据。
 - 构建时长也已补齐首轮数据。
-- 阅读器翻页与 RN 首开仍需继续补采。
+- 阅读器入口已确认可进入，但“进入正文页后的翻页基线”仍需继续补采。
+- RN 首开元素级自动化识别仍需继续补采。
 - 在这些指标补齐之前，`V0-03` 仍应保持 `in_progress`，不能直接关闭。

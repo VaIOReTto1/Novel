@@ -9,7 +9,9 @@
     <!-- Android 8.0 及以上推荐使用 READ_PHONE_NUMBERS -->
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
     <!-- 兼容性：READ_PHONE_STATE 可用于更低 API 级别 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:maxSdkVersion="32" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
 

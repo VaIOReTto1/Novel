@@ -78,7 +78,7 @@ def apiBaseUrlUser = "${apiBaseHost}/api/front/user/"
 def apiBaseUrlResource = "${apiBaseHost}/api/front/resource/"
 def apiBaseUrlAuthor = "${apiBaseHost}/api/author/"
 def apiBaseUrlAi = "${apiBaseHost}/api/author/ai/"
-def welfareDefaultUrl = "http://lin.yyyai.xyz:80/"
+def welfareDefaultUrl = "https://www.bing.com/"
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)

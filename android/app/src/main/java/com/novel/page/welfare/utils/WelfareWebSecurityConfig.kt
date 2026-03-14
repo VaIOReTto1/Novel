@@ -4,11 +4,14 @@ import android.net.Uri
 import com.novel.BuildConfig
 
 object WelfareWebSecurityConfig {
-    const val DEFAULT_TITLE = "福利页面"
+    const val DEFAULT_TITLE = "福利页面 - Bing"
     const val DEFAULT_URL = BuildConfig.WELFARE_DEFAULT_URL
 
     private val allowedMainFrameHosts: Set<String> = buildSet {
         Uri.parse(DEFAULT_URL).host?.lowercase()?.let(::add)
+        add("bing.com")
+        add("www.bing.com")
+        add("cn.bing.com")
     }
 
     fun isAllowedMainFrameUri(uri: Uri?): Boolean {

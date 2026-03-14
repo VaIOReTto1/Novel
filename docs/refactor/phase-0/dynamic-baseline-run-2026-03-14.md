@@ -97,6 +97,17 @@ adb -s 192.168.8.115:5555 shell dumpsys gfxinfo com.novel
   - 但无线真机 + 当前调试链路下，UIAutomator 无法稳定拿到 RN 页面内部元素，且 ReactNativeJNI 存在持续 websocket 连接失败日志。
   - 因此本轮不将 RN 首开时间记为有效自动化基线。
 
+### RN 直达路由复验
+- 已通过 `debug_route=profile` 直达 RN 根宿主页：
+  - `am start -W` 冷启动耗时约 `1576 ms`
+  - 日志可见 `React上下文就绪，启动应用: Novel`
+  - 但等待 `22s` 后截图仍为白屏
+- 已通过 `debug_route=settings` 直达 RN Host 页面：
+  - 等待 `18s` 后截图仍为白屏
+- 结论：
+  - 当前无线真机 + debug 组合下，RN 路由具备启动与上下文初始化日志，但视觉渲染不稳定
+  - `RN 首开动态基线` 仍不能作为有效完成项关闭
+
 ### 阅读器链路附加证据
 - 通过 `adb logcat -d` 已确认以下日志：
   - `ReaderViewModel: 分页完成后写入页数缓存: 总页数=578`

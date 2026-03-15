@@ -72,12 +72,15 @@ react {
  * Phase 1: release 构建开启代码压缩与资源收缩，逐步逼近生产配置。
  */
 def enableProguardInReleaseBuilds = true
-def apiBaseHost = "http://47.110.147.60:8080"
-def apiBaseUrlFront = "${apiBaseHost}/api/front/"
-def apiBaseUrlUser = "${apiBaseHost}/api/front/user/"
-def apiBaseUrlResource = "${apiBaseHost}/api/front/resource/"
-def apiBaseUrlAuthor = "${apiBaseHost}/api/author/"
-def apiBaseUrlAi = "${apiBaseHost}/api/author/ai/"
+def configuredApiBaseHost = (project.findProperty("NOVEL_API_BASE_HOST") ?: System.getenv("NOVEL_API_BASE_HOST"))?.toString()?.trim()
+def apiBaseHost = configuredApiBaseHost ?: "http://47.110.147.60:8080"
+def hasExternalApiBaseHost = configuredApiBaseHost != null && !configuredApiBaseHost.isEmpty()
+def normalizedApiBaseHost = apiBaseHost.endsWith("/") ? apiBaseHost[0..-2] : apiBaseHost
+def apiBaseUrlFront = "${normalizedApiBaseHost}/api/front/"
+def apiBaseUrlUser = "${normalizedApiBaseHost}/api/front/user/"
+def apiBaseUrlResource = "${normalizedApiBaseHost}/api/front/resource/"
+def apiBaseUrlAuthor = "${normalizedApiBaseHost}/api/author/"
+def apiBaseUrlAi = "${normalizedApiBaseHost}/api/author/ai/"
 def welfareDefaultUrl = "https://www.bing.com/"
 def releaseStoreFileProp = project.findProperty("NOVEL_RELEASE_STORE_FILE") ?: System.getenv("NOVEL_RELEASE_STORE_FILE")
 def releaseStorePasswordProp = project.findProperty("NOVEL_RELEASE_STORE_PASSWORD") ?: System.getenv("NOVEL_RELEASE_STORE_PASSWORD")
@@ -121,6 +124,7 @@ android {
         buildConfigField "String", "API_BASE_URL_AUTHOR", "\"${apiBaseUrlAuthor}\""
         buildConfigField "String", "API_BASE_URL_AI", "\"${apiBaseUrlAi}\""
         buildConfigField "String", "WELFARE_DEFAULT_URL", "\"${welfareDefaultUrl}\""
+        buildConfigField "boolean", "HAS_EXTERNAL_API_BASE_HOST", hasExternalApiBaseHost ? "true" : "false"
     }
     signingConfigs {
         debug {

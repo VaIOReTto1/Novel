@@ -286,6 +286,8 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.12"
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.truth:truth:1.4.4"
 
     // 单元测试依赖
     androidTestImplementation "junit:junit:4.13.2"

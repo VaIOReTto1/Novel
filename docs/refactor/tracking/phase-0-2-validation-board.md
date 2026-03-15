@@ -42,8 +42,8 @@
 ## Phase 2
 | ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| V2-01 | Phase 2 | `src/test` 已启用并纳入构建 | JVM test 基础设施完成 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
-| V2-02 | Phase 2 | 首批 JVM tests 稳定运行 | reducer/usecase/repository 可验证 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
+| V2-01 | Phase 2 | `src/test` 已启用并纳入构建 | JVM test 基础设施完成 | `android/app/build.gradle`, `android/app/src/test/java/` | 已新增 `testImplementation` 依赖并创建 `src/test/java` 首批测试文件 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-15 |
+| V2-02 | Phase 2 | 首批 JVM tests 稳定运行 | reducer/usecase/repository 可验证 | `android/app/src/test/java/com/novel/utils/security/SecurityConfigTest.kt`, `android/app/src/test/java/com/novel/utils/FormattingUtilsTest.kt`, `android/app/build/test-results/testDebugUnitTest/` | 已新增首批纯逻辑 JVM 测试，并通过 `app:testDebugUnitTest` 验证 | ready_for_validation | green | 待指定 | 待指定 | 2026-03-15 |
 | V2-03 | Phase 2 | fixtures/fake data 可复现 | 测试数据稳定且可共享 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 | V2-04 | Phase 2 | Bridge contract tests 覆盖关键协议 | Native/RN 协议回归可发现 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |
 | V2-05 | Phase 2 | smoke 覆盖关键页面 | 首页、登录、搜索、阅读器、设置具备自动验证 | 待补充 | 待补充 | planned | yellow | 待指定 | 待指定 | - |

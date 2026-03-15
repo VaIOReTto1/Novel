@@ -1,0 +1,28 @@
+[
+  {
+    "id": "hist_1",
+    "bookId": "1334318497132552192",
+    "chapterId": "1334318502731948032",
+    "title": "元尊",
+    "author": "烽火戏诸侯",
+    "coverUrl": "/localPic/sample-cover-1.jpg",
+    "chapterTitle": "第二章 先付款可好？",
+    "readProgress": 0.37,
+    "lastReadTime": 1773509199254,
+    "totalChapters": 1656,
+    "currentChapter": 8
+  },
+  {
+    "id": "hist_2",
+    "bookId": "1357668191920263169",
+    "chapterId": "1357668193623150592",
+    "title": "我反夺舍了诸天大佬",
+    "author": "银霜骑士",
+    "coverUrl": "/localPic/sample-cover-2.jpg",
+    "chapterTitle": "第1章 夺舍体质",
+    "readProgress": 0.83,
+    "lastReadTime": 1773501560436,
+    "totalChapters": 961,
+    "currentChapter": 415
+  }
+]

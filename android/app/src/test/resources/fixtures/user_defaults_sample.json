@@ -1,0 +1,10 @@
+{
+  "fontSize": 16,
+  "brightness": 0.5,
+  "backgroundColor": "#FFF5F5DC",
+  "textColor": "#FF2E2E2E",
+  "pageFlipEffect": "PAGECURL",
+  "isFollowSystemTheme": false,
+  "nightModeStartTime": "22:00",
+  "nightModeEndTime": "07:00"
+}

@@ -1,0 +1,22 @@
+{
+  "recommendations": [
+    {
+      "id": 1,
+      "title": "我反夺舍了诸天大佬",
+      "author": "银霜骑士",
+      "category": "武侠仙侠",
+      "coverUrl": "https://example.com/covers/book-1.jpg",
+      "wordCount": 270000,
+      "readCount": 5000
+    },
+    {
+      "id": 2,
+      "title": "我有家诸天最强当铺",
+      "author": "烽火戏诸侯",
+      "category": "玄幻奇幻",
+      "coverUrl": "https://example.com/covers/book-2.jpg",
+      "wordCount": 410000,
+      "readCount": 12000
+    }
+  ]
+}

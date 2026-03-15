@@ -9,6 +9,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.Assert.*
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.system.measureTimeMillis
 
 /**
@@ -246,7 +248,7 @@ class HomeModuleTest {
         // 创建大量首页推荐书籍数据
         val largeHomeBooks = (1..1000).map { index ->
             createMockHomeBook(index)
-        }
+        }.toPersistentList()
         
         val time = measureTimeMillis {
             val result = reducer.reduce(
@@ -319,11 +321,11 @@ class HomeModuleTest {
     }
 
     // 辅助方法
-    private fun createMockHomeBooks(): List<com.novel.utils.network.api.front.HomeService.HomeBook> {
+    private fun createMockHomeBooks(): ImmutableList<com.novel.utils.network.api.front.HomeService.HomeBook> {
         return listOf(
             createMockHomeBook(1),
             createMockHomeBook(2)
-        )
+        ).toPersistentList()
     }
 
     private fun createMockHomeBook(index: Int): com.novel.utils.network.api.front.HomeService.HomeBook {
@@ -337,11 +339,11 @@ class HomeModuleTest {
         )
     }
 
-    private fun createMockSearchBooks(): List<com.novel.utils.network.api.front.SearchService.BookInfo> {
+    private fun createMockSearchBooks(): ImmutableList<com.novel.utils.network.api.front.SearchService.BookInfo> {
         return listOf(
             createMockSearchBook(1),
             createMockSearchBook(2)
-        )
+        ).toPersistentList()
     }
 
     private fun createMockSearchBook(index: Int): com.novel.utils.network.api.front.SearchService.BookInfo {
@@ -365,7 +367,7 @@ class HomeModuleTest {
         )
     }
 
-    private fun createMockRankBooks(): List<com.novel.utils.network.api.front.BookService.BookRank> {
+    private fun createMockRankBooks(): ImmutableList<com.novel.utils.network.api.front.BookService.BookRank> {
         return listOf(
             com.novel.utils.network.api.front.BookService.BookRank(
                 id = 1L,
@@ -391,20 +393,20 @@ class HomeModuleTest {
                 lastChapterName = "第二章",
                 lastChapterUpdateTime = "2024-01-02"
             )
-        )
+        ).toPersistentList()
     }
 
-    private fun createMockCategoryFilters(): List<CategoryInfo> {
+    private fun createMockCategoryFilters(): ImmutableList<CategoryInfo> {
         return listOf(
             CategoryInfo("0", "推荐"),
             CategoryInfo("1", "玄幻奇幻"),
             CategoryInfo("2", "武侠仙侠")
-        )
+        ).toPersistentList()
     }
 
-    private fun createLargeCategoryFilters(count: Int): List<CategoryInfo> {
+    private fun createLargeCategoryFilters(count: Int): ImmutableList<CategoryInfo> {
         return (0 until count).map { index ->
             CategoryInfo(index.toString(), "分类$index")
-        }
+        }.toPersistentList()
     }
 } 

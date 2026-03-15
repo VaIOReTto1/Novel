@@ -73,15 +73,32 @@ react {
  */
 def enableProguardInReleaseBuilds = true
 def configuredApiBaseHost = (project.findProperty("NOVEL_API_BASE_HOST") ?: System.getenv("NOVEL_API_BASE_HOST"))?.toString()?.trim()
-def apiBaseHost = configuredApiBaseHost ?: "http://47.110.147.60:8080"
+def debugFallbackApiBaseHost = "http://47.110.147.60:8080"
 def hasExternalApiBaseHost = configuredApiBaseHost != null && !configuredApiBaseHost.isEmpty()
-def normalizedApiBaseHost = apiBaseHost.endsWith("/") ? apiBaseHost[0..-2] : apiBaseHost
-def apiBaseUrlFront = "${normalizedApiBaseHost}/api/front/"
-def apiBaseUrlUser = "${normalizedApiBaseHost}/api/front/user/"
-def apiBaseUrlResource = "${normalizedApiBaseHost}/api/front/resource/"
-def apiBaseUrlAuthor = "${normalizedApiBaseHost}/api/author/"
-def apiBaseUrlAi = "${normalizedApiBaseHost}/api/author/ai/"
 def welfareDefaultUrl = "https://www.bing.com/"
+
+def normalizeApiBaseHost = { host ->
+    def normalized = host?.trim()
+    if (!normalized) {
+        return ""
+    }
+    normalized.endsWith("/") ? normalized[0..-2] : normalized
+}
+
+def buildApiConfig = { host ->
+    def normalizedHost = normalizeApiBaseHost(host)
+    [
+            API_BASE_HOST        : normalizedHost,
+            API_BASE_URL_FRONT   : normalizedHost ? "${normalizedHost}/api/front/" : "",
+            API_BASE_URL_USER    : normalizedHost ? "${normalizedHost}/api/front/user/" : "",
+            API_BASE_URL_RESOURCE: normalizedHost ? "${normalizedHost}/api/front/resource/" : "",
+            API_BASE_URL_AUTHOR  : normalizedHost ? "${normalizedHost}/api/author/" : "",
+            API_BASE_URL_AI      : normalizedHost ? "${normalizedHost}/api/author/ai/" : ""
+    ]
+}
+
+def debugApiConfig = buildApiConfig(configuredApiBaseHost ?: debugFallbackApiBaseHost)
+def releaseApiConfig = buildApiConfig(configuredApiBaseHost)
 def releaseStoreFileProp = project.findProperty("NOVEL_RELEASE_STORE_FILE") ?: System.getenv("NOVEL_RELEASE_STORE_FILE")
 def releaseStorePasswordProp = project.findProperty("NOVEL_RELEASE_STORE_PASSWORD") ?: System.getenv("NOVEL_RELEASE_STORE_PASSWORD")
 def releaseKeyAliasProp = project.findProperty("NOVEL_RELEASE_KEY_ALIAS") ?: System.getenv("NOVEL_RELEASE_KEY_ALIAS")
@@ -117,12 +134,6 @@ android {
         versionCode appVersionCode
         versionName appVersionName
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", "API_BASE_HOST", "\"${apiBaseHost}\""
-        buildConfigField "String", "API_BASE_URL_FRONT", "\"${apiBaseUrlFront}\""
-        buildConfigField "String", "API_BASE_URL_USER", "\"${apiBaseUrlUser}\""
-        buildConfigField "String", "API_BASE_URL_RESOURCE", "\"${apiBaseUrlResource}\""
-        buildConfigField "String", "API_BASE_URL_AUTHOR", "\"${apiBaseUrlAuthor}\""
-        buildConfigField "String", "API_BASE_URL_AI", "\"${apiBaseUrlAi}\""
         buildConfigField "String", "WELFARE_DEFAULT_URL", "\"${welfareDefaultUrl}\""
         buildConfigField "boolean", "HAS_EXTERNAL_API_BASE_HOST", hasExternalApiBaseHost ? "true" : "false"
     }
@@ -168,6 +179,9 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            debugApiConfig.each { fieldName, fieldValue ->
+                buildConfigField "String", fieldName, "\"${fieldValue}\""
+            }
             buildConfigField "boolean", "ENABLE_LOGGING", "true"
         }
         release {
@@ -176,6 +190,9 @@ android {
 //            }
             // Phase 1: 若已提供正式签名参数则使用 release signing，否则暂时回退到 debug signing 以保持本地可构建。
             signingConfig signingConfigs.release
+            releaseApiConfig.each { fieldName, fieldValue ->
+                buildConfigField "String", fieldName, "\"${fieldValue}\""
+            }
             minifyEnabled enableProguardInReleaseBuilds
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

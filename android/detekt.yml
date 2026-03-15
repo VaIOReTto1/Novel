@@ -11,7 +11,7 @@ config:
   validation: true
   warningsAsErrors: false
   checkExhaustiveness: false
-  excludes: "**/build/**,**/generated/**,**/*.Generated.kt"
+  excludes: ".*/build/.*|.*/generated/.*|.*\\.Generated\\.kt"
 
 processors:
   active: true

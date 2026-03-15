@@ -99,7 +99,11 @@ abstract class StateAdapter<S : MviState>(
     fun <T> createStableState(
         selector: (S) -> T
     ): State<T> {
-        return stateFlow.map(selector).collectAsStateWithLifecycle(
+        val mappedFlow = remember(stateFlow, selector) {
+            stateFlow.map(selector)
+        }
+
+        return mappedFlow.collectAsStateWithLifecycle(
             initialValue = selector(stateFlow.value)
         )
     }

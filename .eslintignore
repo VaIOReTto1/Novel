@@ -1,0 +1,6 @@
+android/build/
+android/app/build/
+android/**/build/
+coverage/
+dist/
+web-build/

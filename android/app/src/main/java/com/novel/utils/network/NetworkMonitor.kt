@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.os.Build
 import androidx.compose.runtime.Stable
 import com.novel.core.asStable
 import com.novel.utils.TimberLogger
@@ -187,7 +188,7 @@ class NetworkMonitor @Inject constructor(
 
                 // 获取信号强度（仅对蜂窝网络）
                 val signalStrength = if (networkType == NetworkType.CELLULAR) {
-                    capabilities?.signalStrength ?: -1
+                    getCellularSignalStrength(capabilities)
                 } else -1
 
                 NetworkState(
@@ -228,6 +229,14 @@ class NetworkMonitor @Inject constructor(
      */
     fun isMetered(): Boolean {
         return _networkState.value.isMetered
+    }
+
+    private fun getCellularSignalStrength(capabilities: NetworkCapabilities?): Int {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return -1
+        }
+
+        return capabilities?.signalStrength ?: -1
     }
 
     /**

@@ -3,12 +3,12 @@ import ReactTestRenderer from 'react-test-renderer';
 import { BackHandler, NativeModules, Text } from 'react-native';
 
 jest.mock('../../src/page/SettingsPage/settingspage/components', () => {
-  const React = require('react');
-  const { Text } = require('react-native');
+  const MockReact = require('react');
+  const { Text: MockText } = require('react-native');
 
   return {
     SettingRow: ({ item }: { item: { title: string } }) =>
-      React.createElement(Text, null, item.title),
+      MockReact.createElement(MockText, null, item.title),
   };
 });
 

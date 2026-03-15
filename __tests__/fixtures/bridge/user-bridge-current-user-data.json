@@ -1,0 +1,21 @@
+{
+  "nativeResponse": {
+    "uid": "42",
+    "token": "token_abc123",
+    "nickname": "contract_user",
+    "photo": "https://example.com/avatar.png",
+    "sex": "unknown",
+    "balance": 18.5,
+    "coins": 9
+  },
+  "expectedJsResponse": {
+    "uid": "42",
+    "token": "token_abc123",
+    "nickname": "contract_user",
+    "photo": "https://example.com/avatar.png",
+    "sex": "unknown",
+    "isLoggedIn": true,
+    "balance": 18.5,
+    "coins": 9
+  }
+}

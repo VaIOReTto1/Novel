@@ -1,0 +1,11 @@
+{
+  "eventName": "WritePageSelectionMenuAction",
+  "requiredKeys": [
+    "action",
+    "start",
+    "end"
+  ],
+  "optionalKeys": [
+    "selectedText"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "eventName": "ThemeChanged",
+  "requiredKeys": [
+    "colorScheme",
+    "currentThemeMode",
+    "followSystem"
+  ]
+}

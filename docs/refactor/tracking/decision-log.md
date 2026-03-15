@@ -33,3 +33,4 @@
 | 2026-03-15 | 阶段切换 | 决策 | 按项目推进指令将 Phase 1 视为已通过并启动 Phase 2 | Phase 1 已形成完整关闭评审材料与全部绿色验证项 | 控制面板、阶段文档与执行重心切换到 `Phase 2 in_progress` | 待指定 | 待指定 | 待指定 | 开始执行 JVM 单测基础设施任务 |
 | 2026-03-15 | Phase 2 | 进展 | JVM 单测基础设施已落地并完成首轮执行 | `src/test`、测试依赖和首批纯逻辑测试已落地，且 `app:testDebugUnitTest` 已成功通过 | `V2-01` 与 `V2-02` 已具备待验证证据 | 待指定 | 待指定 | 待指定 | 下一步继续补 `V2-03` fixture/fake data 层 |
 | 2026-03-15 | Phase 2 | 进展 | fixture/fake data 基础层已落地 | 已将首批样本放入 `src/test/resources/fixtures/`，并提供 `FixtureCatalog` 与 `FakeReaderHistorySource` 作为测试数据入口 | `V2-03` 已具备待验证证据，可继续被 reducer/usecase/repository 测试复用 | 待指定 | 待指定 | 待指定 | 下一步推进 Bridge contract tests 或第二批 JVM 测试 |
+| 2026-03-15 | Phase 2 | 进展 | Bridge contract tests 已落地 | 为了在不改动业务逻辑和 UI 的前提下拦截 Native/RN 协议回归，先补齐 UserBridge/NavigationBridge Promise 合同以及 ThemeChanged/WritePageSelectionMenuAction 事件合同 | `V2-04` 进入 `ready_for_validation`，后续可继续推进 smoke 或 CI 门禁 | 待指定 | 待指定 | 待指定 | 下一步优先评估 `V2-05` smoke 套件或 `V2-06` CI 工作流 |

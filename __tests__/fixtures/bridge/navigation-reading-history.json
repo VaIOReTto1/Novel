@@ -1,0 +1,20 @@
+{
+  "nativeResponse": {
+    "historyItems": [
+      {
+        "id": "101",
+        "title": "Contract Novel",
+        "author": "Bridge Author",
+        "description": "Reader history contract fixture",
+        "coverUrl": "https://example.com/cover.png",
+        "lastReadTime": 1710000000,
+        "readProgress": 87,
+        "type": "novel",
+        "categoryId": "fantasy",
+        "readCount": 1200,
+        "rating": 5
+      }
+    ],
+    "success": true
+  }
+}

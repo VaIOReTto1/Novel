@@ -2,21 +2,22 @@
 
 ## 当前状态
 - 当前阶段：`Phase 2`
-- 阶段状态：`in_progress`
+- 阶段状态：`ready_for_validation`
 - 门禁模式：`严格门禁`
-- 最近结论：Phase 1 的 `V1-01 ~ V1-09` 已全部具备绿色验证证据，当前按推进指令切换到 Phase 2
-- 下一步：开始建立 Android JVM 单测基础设施与首批门禁能力
+- 最近结论：Phase 2 已建立 JVM tests、fixture/fake data、Bridge contract tests、核心 smoke、quality workflow、证据归档标准与 flake 规则。
+- 下一步：进行 Phase 2 关闭评审，并准备后续结构收口、模块拆分与历史债务治理阶段。
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
 | --- | --- | --- | --- | --- |
 | Phase 0 | 基线与控制面板 | validated | `docs/refactor/` 文档骨架已创建 | 全部 `V0-*` 至少为 `green` |
 | Phase 1 | 发布、安全与合规治理 | validated | `Phase 0 = validated` | 全部 `V1-*` 为 `green` |
-| Phase 2 | 质量门禁与自动化护栏 | in_progress | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
+| Phase 2 | 质量门禁与自动化护栏 | ready_for_validation | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 
-## 最近一次验证结论
+## 最近验证结论
 - `V0-01 ~ V0-06` 已全部具备绿色验证证据，Phase 0 已完成。
 - `V1-01 ~ V1-09` 已全部具备绿色验证证据，Phase 1 已完成。
+- `V2-*` 已形成完整证据链，当前处于 `ready_for_validation`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

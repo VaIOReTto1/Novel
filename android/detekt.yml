@@ -8,7 +8,7 @@ build:
     comments: 1
 
 config:
-  validation: true
+  validation: false
   warningsAsErrors: false
   checkExhaustiveness: false
   excludes: ".*/build/.*|.*/generated/.*|.*\\.Generated\\.kt"

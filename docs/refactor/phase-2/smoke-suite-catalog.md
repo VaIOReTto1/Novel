@@ -14,6 +14,18 @@
 | 阅读器 | Android Compose | `android/app/src/androidTest/java/com/novel/page/read/viewmodel/ReaderSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.read.viewmodel.ReaderSmokeTest` |
 | 设置 | RN Jest render | `__tests__/smoke/SettingsPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx` |
 
+## 当前稳定入口说明
+- `HomeSmokeTest`
+  - 使用 `HomePageSkeleton()` 作为稳定 smoke 入口，避免直接依赖 Hilt Activity 容器
+- `LoginSmokeTest`
+  - 使用 `LoginPageSkeleton()` 作为稳定 smoke 入口，优先验证登录页主结构可渲染
+- `ReaderSmokeTest`
+  - 使用 `NoAnimationContainer()` 作为无 Hilt 依赖的阅读器内容容器入口
+- `SearchSmokeTest`
+  - 使用 `SearchPageContent()` 作为搜索页核心 Compose 内容 smoke
+- `SettingsPage.smoke.test.tsx`
+  - 使用 RN render smoke，验证设置页主结构、初始化链路与核心 section 文案
+
 ## 推荐执行方式
 - RN smoke
 ```bash

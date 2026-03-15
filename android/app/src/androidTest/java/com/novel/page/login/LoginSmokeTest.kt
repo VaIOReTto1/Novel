@@ -3,6 +3,7 @@ package com.novel.page.login
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.novel.page.login.skeleton.LoginPageSkeleton
 import com.novel.ui.theme.NovelTheme
 import org.junit.Rule
 import org.junit.Test
@@ -18,7 +19,7 @@ class LoginSmokeTest {
     fun loginPage_rendersCoreLayout() {
         composeTestRule.setContent {
             NovelTheme {
-                LoginPage()
+                LoginPageSkeleton()
             }
         }
 

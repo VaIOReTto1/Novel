@@ -3,7 +3,7 @@
 
     <base-config cleartextTrafficPermitted="false" />
     <domain-config cleartextTrafficPermitted="true">
-        <domain>47.110.147.60</domain>
+        <domain includeSubdomains="false">47.110.147.60</domain>
         <domain includeSubdomains="true">lin.yyyai.xyz</domain>
     </domain-config>
 

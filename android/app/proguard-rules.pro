@@ -11,4 +11,9 @@
 -dontoptimize
 -dontpreverify
 -allowaccessmodification
--dontshrink
+
+# Phase 1: release 开启压缩后补齐 Tink 对 errorprone 注解的缺类告警抑制
+-dontwarn com.google.errorprone.annotations.CanIgnoreReturnValue
+-dontwarn com.google.errorprone.annotations.CheckReturnValue
+-dontwarn com.google.errorprone.annotations.Immutable
+-dontwarn com.google.errorprone.annotations.RestrictedApi

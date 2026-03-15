@@ -79,6 +79,13 @@ def apiBaseUrlResource = "${apiBaseHost}/api/front/resource/"
 def apiBaseUrlAuthor = "${apiBaseHost}/api/author/"
 def apiBaseUrlAi = "${apiBaseHost}/api/author/ai/"
 def welfareDefaultUrl = "https://www.bing.com/"
+def releaseStoreFileProp = project.findProperty("NOVEL_RELEASE_STORE_FILE") ?: System.getenv("NOVEL_RELEASE_STORE_FILE")
+def releaseStorePasswordProp = project.findProperty("NOVEL_RELEASE_STORE_PASSWORD") ?: System.getenv("NOVEL_RELEASE_STORE_PASSWORD")
+def releaseKeyAliasProp = project.findProperty("NOVEL_RELEASE_KEY_ALIAS") ?: System.getenv("NOVEL_RELEASE_KEY_ALIAS")
+def releaseKeyPasswordProp = project.findProperty("NOVEL_RELEASE_KEY_PASSWORD") ?: System.getenv("NOVEL_RELEASE_KEY_PASSWORD")
+def hasReleaseSigning = [releaseStoreFileProp, releaseStorePasswordProp, releaseKeyAliasProp, releaseKeyPasswordProp].every {
+    it != null && it.toString().trim()
+}
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -122,6 +129,16 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (hasReleaseSigning) {
+                storeFile file(releaseStoreFileProp)
+                storePassword releaseStorePasswordProp
+                keyAlias releaseKeyAliasProp
+                keyPassword releaseKeyPasswordProp
+            } else {
+                initWith signingConfigs.debug
+            }
+        }
     }
     kotlinOptions {
         jvmTarget = '17'
@@ -153,9 +170,8 @@ android {
 //            ndk{
 //                abiFilters "armeabi-v7a"
 //            }
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            // Phase 1: 若已提供正式签名参数则使用 release signing，否则暂时回退到 debug signing 以保持本地可构建。
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

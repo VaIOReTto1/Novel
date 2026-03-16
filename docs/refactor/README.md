@@ -21,6 +21,7 @@
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)
+- [第一阶段重构总结（Phase 0-2）](./stage-1-phase-0-2-summary.md)
 - [Phase 0 - 基线与控制面板](./phases/phase-0-foundation.md)
 - [Phase 1 - 发布、安全与合规治理](./phases/phase-1-release-security.md)
 - [Phase 2 - 质量门禁与自动化护栏](./phases/phase-2-quality-gates.md)

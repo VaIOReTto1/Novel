@@ -91,7 +91,7 @@
 - 若迁移演练存在已知残缺，不允许关闭 `Phase 1`。
 
 ## 负责人
-- Owner：待指定
-- Reviewer：待指定
-- Validator：待指定
+- Owner：当前重构实施者
+- Reviewer：模块代码评审者
+- Validator：阶段门禁批准者
 - 当前状态：`validated`

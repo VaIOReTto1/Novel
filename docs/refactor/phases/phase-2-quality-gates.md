@@ -92,7 +92,7 @@
 - 若 smoke 或 contract tests 仍不稳定，不允许关闭 `Phase 2`。
 
 ## 负责人
-- Owner：待指定
-- Reviewer：待指定
-- Validator：待指定
-- 当前状态：`in_progress`
+- Owner：当前重构实施者
+- Reviewer：模块代码评审者
+- Validator：阶段门禁批准者
+- 当前状态：`ready_for_validation`

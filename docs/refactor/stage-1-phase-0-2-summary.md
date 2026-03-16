@@ -16,6 +16,10 @@
 - 已完成核心路径矩阵、资产清单、设备矩阵、测量协议、动态/静态基线、风险图谱、禁区清单、稳定测试数据方案与 kill switch 最小方案。
 - 已把 `Phase 1` 和 `Phase 2` 的进入条件客观化，避免后续阶段推进依赖口头判断。
 - 已确认 RN/Native 混合架构下的关键风险边界，为后续不影响 UI 与功能的重构提供基准。
+- 已明确一个需要持续跟踪的高风险遗留：
+  - `profile` 对应的 RN 宿主页白屏 / 自动化识别不足问题未在第一阶段彻底消除
+  - 第一阶段采取了“用可稳定取证的 RN 页面作为代表样本继续推进”的策略，而不是在无护栏状态下直接深入改造 RN Host
+  - 因此，后续凡是涉及 RN Host、页面挂载链路、Bridge 初始化时序的结构调整，都应继续把该问题视为高风险参考项
 
 ## 4. Phase 1 产出总结
 - 已完成 Android release 路径的生产化收口：
@@ -44,6 +48,16 @@
 - 已固定证据归档标准与 flake 处理规则。
 - 已建立 PR 门禁与责任矩阵，项目不再只有 label workflow。
 
+## 5.1 Phase 2 关闭策略说明
+- Phase 2 的关闭不是建立在“所有历史质量债务都已清零”之上，而是建立在“最小阻断门禁已真实上线”之上。
+- 本阶段采用的是 `blocking + observe` 增量门禁策略：
+  - 已经本地验证通过且适合立即阻断的命令，先进入 blocking
+  - 仍被大规模历史债务影响的 `RN lint` 与 `detekt`，先进入 observe
+- 这个策略的意义是：
+  - 先让项目摆脱“没有真实门禁”的状态
+  - 避免在超大型项目里因为一次性全量清债而中断业务节奏
+  - 把历史问题从“隐性风险”变成“持续暴露、逐步升级”的治理对象
+
 ## 6. 第一阶段解决了什么
 - 解决了“没有基线”的问题。
 - 解决了“release 链路不够生产化”的问题。
@@ -56,6 +70,9 @@
 - `detekt` 已能真实扫描，但仍存在较大历史发现规模。
 - `android-smoke` 已具备本地真机执行证据，但在 CI emulator 上仍属于观察态。
 - 这些问题已从“未知风险”转化为“已量化、已记录、可逐步治理”的已知债务。
+- 另外还保留一个应持续跟踪的架构风险：
+  - RN Host / 宿主页挂载稳定性仍需在后续结构收口阶段继续验证
+  - 该类问题不再阻断第一阶段关闭，但不能在后续阶段被忽略
 
 ## 8. 达成度判断
 - 基线能力：已达预期
@@ -89,3 +106,10 @@
 - `docs/refactor/phases/phase-2-quality-gates.md`
 - `docs/refactor/tracking/phase-0-2-validation-board.md`
 - `docs/refactor/tracking/decision-log.md`
+- `docs/refactor/phase-2/ci-workflow-catalog.md`
+- `docs/refactor/phase-2/evidence-archive-standard.md`
+- `docs/refactor/phase-2/flake-management-policy.md`
+- `docs/refactor/phase-2/pr-gate-and-ownership-matrix.md`
+- `docs/refactor/phase-2/smoke-suite-catalog.md`
+- `docs/refactor/phase-2/smoke-run-android-core-2026-03-16.md`
+- `docs/refactor/phase-2/smoke-run-rn-settings-2026-03-16.md`

@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService` 已完成主路径迁移，`UserService` 的认证、查询与真实写操作核心路径也已接入 `NetworkFacade`
-- 下一步：继续推进基础设施收口主线，优先评估 `UserService` 其余遗留写接口是否应删除还是补正式调用面，然后进入 `AppError` 与 `StorageFacade`
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService` 与 `UserService` 核心主路径已完成网络收口，`AppError + DataResult<T>` 基础模型也已落地
+- 下一步：继续推进基础设施收口主线，把 `AppError` 接入首批高风险边界，再进入 `StorageFacade` 与 `DataStore` 试点
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |

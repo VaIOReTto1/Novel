@@ -18,7 +18,7 @@
 ## Phase 3
 | ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| V3-01 | Phase 3 | 高风险生产路径主网络通路唯一化成立 | 高风险路径统一经主网络栈进入 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-01 | Phase 3 | 高风险生产路径主网络通路唯一化成立 | 高风险路径统一经主网络栈进入 | `docs/refactor/phase-3/legacy-network-shell-migration-matrix.md` | 已完成旧网络壳真实调用矩阵，区分高风险生产路径、次级兼容路径与初始化依赖路径，并固定迁移顺序；主通路唯一化尚未完成 | `in_progress` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | 2026-03-16 |
 | V3-02 | Phase 3 | 第二阶段触达范围内协程模型统一 | `runBlocking / 匿名全局 scope` 清理并统一 `DispatcherProvider` | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
 | V3-03 | Phase 3 | `StorageFacade` 成立，SharedPreferences 仅保留兼容层 | 业务层不再新增 SharedPreferences 直连 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
 | V3-04 | Phase 3 | `AppError` 第一批统一落地 | Home / Search / Bridge / Settings 边界错误统一映射 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |

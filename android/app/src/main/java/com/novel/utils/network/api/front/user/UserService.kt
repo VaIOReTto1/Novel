@@ -7,17 +7,12 @@ import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
 import com.novel.utils.TimberLogger
-import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_USER
 import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -277,143 +272,6 @@ class UserService @Inject constructor(
 
     // endregion
 
-    // region 网络请求方法
-    
-    /**
-     * 用户信息修改接口
-     */
-    private fun updateUserInfo(
-        request: UserInfoUpdateRequest,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 updateUserInfo()，参数：$request")
-        
-        val json = gson.toJson(request)
-        val requestBody = json.toRequestBody("application/json".toMediaTypeOrNull())
-        
-        ApiService.put(
-            baseUrl = BASE_URL_USER,
-            endpoint = "",
-            body = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 发表评论接口
-     */
-    private fun postComment(
-        request: CommentRequest,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 postComment()，参数：$request")
-        
-        val requestBody = mapOf(
-            "bookId" to request.bookId.toString(),
-            "commentContent" to request.commentContent
-        )
-        
-        ApiService.post(
-            baseUrl = BASE_URL_USER,
-            endpoint = "comment",
-            params = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 修改评论接口
-     */
-    private fun updateComment(
-        commentId: Long,
-        content: String,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 updateComment()，参数：commentId=$commentId, content=$content")
-        
-        ApiService.put(
-            baseUrl = BASE_URL_USER,
-            endpoint = "comment/$commentId?content=$content",
-            body = "".toRequestBody("application/json".toMediaTypeOrNull()),
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 删除评论接口
-     */
-    private fun deleteComment(
-        commentId: Long,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 deleteComment()，参数：$commentId")
-        
-        ApiService.delete(
-            baseUrl = BASE_URL_USER,
-            endpoint = "comment/$commentId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 用户反馈提交接口
-     */
-    private fun submitFeedback(
-        feedback: String,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 submitFeedback()，参数：$feedback")
-        
-        ApiService.post(
-            baseUrl = BASE_URL_USER,
-            endpoint = "feedback",
-            params = mapOf("feedback" to feedback),
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 用户反馈删除接口
-     */
-    private fun deleteFeedback(
-        feedbackId: Long,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 deleteFeedback()，参数：$feedbackId")
-        
-        ApiService.delete(
-            baseUrl = BASE_URL_USER,
-            endpoint = "feedback/$feedbackId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    // endregion
-
     // region 协程版本
     suspend fun loginBlocking(request: LoginRequest): LoginResponse {
         return requestAndParse(
@@ -471,29 +329,38 @@ class UserService @Inject constructor(
     }
 
     suspend fun updateUserInfoBlocking(request: UserInfoUpdateRequest): BaseResponse {
-        return suspendCancellableCoroutine { cont ->
-            updateUserInfo(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_USER,
+                endpoint = "",
+                method = NetworkRequestMethod.PUT,
+                bodyParams = buildUserInfoUpdateParams(request),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = BaseResponse::class.java
+        )
     }
 
     suspend fun postCommentBlocking(request: CommentRequest): BaseResponse {
-        return suspendCancellableCoroutine { cont ->
-            postComment(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_USER,
+                endpoint = "comment",
+                method = NetworkRequestMethod.POST,
+                bodyParams = mapOf(
+                    "bookId" to request.bookId.toString(),
+                    "commentContent" to request.commentContent
+                ),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = BaseResponse::class.java
+        )
     }
 
     suspend fun getUserCommentsBlocking(pageRequest: PageRequest): UserCommentsResponse {
@@ -527,30 +394,6 @@ class UserService @Inject constructor(
     }
     // endregion
 
-    // region 响应处理
-    private fun <T> handleResponse(
-        response: String?,
-        error: Throwable?,
-        clazz: Class<T>,
-        callback: (T?, Throwable?) -> Unit
-    ) {
-        when {
-            error != null -> {
-                callback(null, error)
-            }
-            response != null -> {
-                try {
-                    callback(gson.fromJson(response, clazz), null)
-                } catch (e: Exception) {
-                    callback(null, e)
-                }
-            }
-            else -> {
-                callback(null, Exception("Response is null"))
-            }
-        }
-    }
-
     private suspend fun <T> requestAndParse(
         request: NetworkRequest,
         clazz: Class<T>
@@ -558,5 +401,13 @@ class UserService @Inject constructor(
         val response = networkFacade.execute(request)
         return gson.fromJson(response, clazz)
     }
+
+    private fun buildUserInfoUpdateParams(request: UserInfoUpdateRequest): Map<String, String> =
+        buildMap {
+            request.userId?.let { put("userId", it.toString()) }
+            request.nickName?.let { put("nickName", it) }
+            request.userPhoto?.let { put("userPhoto", it) }
+            request.userSex?.let { put("userSex", it.toString()) }
+        }
     // endregion
 }

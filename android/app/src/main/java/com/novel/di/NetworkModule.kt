@@ -149,7 +149,8 @@ object NetworkModule {
     ): NavigationBridgeNetworkGateway {
         return NavigationBridgeNetworkGateway(
             networkFacade = networkFacade,
-            frontBaseUrl = ApiService.BASE_URL_FRONT
+            frontBaseUrl = ApiService.BASE_URL_FRONT,
+            authorBaseUrl = ApiService.BASE_URL_AUTHOR
         )
     }
 

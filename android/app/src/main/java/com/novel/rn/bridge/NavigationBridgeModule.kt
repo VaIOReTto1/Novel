@@ -12,7 +12,6 @@ import com.novel.MainApplication
 import com.novel.utils.NavViewModel
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.network.api.author.ai.AiService
-import com.novel.utils.network.ApiService
 import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.page.read.service.HistoryService
 import com.novel.page.read.service.HistoryServiceImpl
@@ -32,7 +31,6 @@ import kotlinx.coroutines.TimeoutCancellationException
 import java.util.concurrent.atomic.AtomicBoolean
 import com.novel.rn.settings.SettingsEffect
 import com.novel.rn.settings.SettingsIntent
-import org.json.JSONObject
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import android.view.ActionMode
 import android.view.Menu
@@ -601,60 +599,37 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getAuthorBooks(pageNum: Int, pageSize: Int, promise: Promise) {
         TimberLogger.d(TAG, "RN调用获取作家作品列表 pageNum=$pageNum pageSize=$pageSize")
-        val params = mapOf(
-            "pageNum" to pageNum.toString(),
-            "pageSize" to pageSize.toString()
-        )
-        ApiService.get(
-            baseUrl = ApiService.BASE_URL_AUTHOR,
-            endpoint = "books",
-            params = params,
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            if (error != null) {
-                TimberLogger.e(TAG, "获取作家作品列表失败", error)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", error) }
-                return@get
-            }
-            if (response == null) {
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", "Empty response") }
-                return@get
-            }
+        CoroutineScope(Dispatchers.IO).launch {
             try {
-                val json = org.json.JSONObject(response)
-                val code = json.optNullableString("code")
-                val message = json.optNullableString("message")
-                val ok = json.optBoolean("ok", false)
-
-                val data = json.optJSONObject("data")
                 val listArray = Arguments.createArray()
-                val listJsonArr = data?.optJSONArray("list")
-                if (listJsonArr != null) {
-                    for (i in 0 until listJsonArr.length()) {
-                        val item = listJsonArr.optJSONObject(i) ?: continue
-                        val b = Arguments.createMap().apply {
-                            putString("id", item.optLong("id").toString())
-                            putString("bookName", item.optNullableString("bookName"))
-                            putString("authorName", item.optNullableString("authorName"))
-                            putString("picUrl", item.optNullableString("picUrl"))
-                            putDouble("wordCount", item.optInt("wordCount").toDouble())
-                            putString("bookDesc", item.optNullableString("bookDesc"))
-                            putString("categoryId", item.optLong("categoryId").toString())
-                            putString("categoryName", item.optNullableString("categoryName"))
-                        }
-                        listArray.pushMap(b)
+                val response = navigationBridgeNetworkGateway.getAuthorBooks(
+                    pageNum = pageNum,
+                    pageSize = pageSize
+                )
+
+                response.list.forEach { item ->
+                    val bookMap = Arguments.createMap().apply {
+                        putString("id", item.id)
+                        putString("bookName", item.bookName)
+                        putString("authorName", item.authorName)
+                        putString("picUrl", item.picUrl)
+                        putDouble("wordCount", item.wordCount)
+                        putString("bookDesc", item.bookDesc)
+                        putString("categoryId", item.categoryId)
+                        putString("categoryName", item.categoryName)
                     }
+                    listArray.pushMap(bookMap)
                 }
 
                 val map = Arguments.createMap().apply {
-                    if (code != null) putString("code", code)
-                    if (message != null) putString("message", message)
-                    putBoolean("ok", ok)
+                    response.code?.let { putString("code", it) }
+                    response.message?.let { putString("message", it) }
+                    putBoolean("ok", response.ok)
                     putArray("list", listArray)
                 }
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "解析作家作品列表失败", e)
+                TimberLogger.e(TAG, "获取作家作品列表失败", e)
                 CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", e) }
             }
         }
@@ -1095,6 +1070,3 @@ class NavigationBridgeModule(
         }
     }
 }
-
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-private fun JSONObject.optNullableString(key: String): String? = optString(key, null)

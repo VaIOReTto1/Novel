@@ -12,6 +12,7 @@ class NavigationBridgeNetworkGatewayTest {
 
     companion object {
         private const val FRONT_BASE_URL = "https://api-front.example/"
+        private const val AUTHOR_BASE_URL = "https://api-author.example/"
     }
 
     @Test
@@ -35,7 +36,7 @@ class NavigationBridgeNetworkGatewayTest {
                 }
             """.trimIndent()
         )
-        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL)
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL, AUTHOR_BASE_URL)
 
         val result = gateway.getHomeBooksHighPriority()
 
@@ -66,7 +67,7 @@ class NavigationBridgeNetworkGatewayTest {
                 }
             """.trimIndent()
         )
-        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL)
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL, AUTHOR_BASE_URL)
 
         val result = gateway.getHomeBooksHighPriority()
 
@@ -92,7 +93,7 @@ class NavigationBridgeNetworkGatewayTest {
                 }
             """.trimIndent()
         )
-        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL)
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL, AUTHOR_BASE_URL)
 
         val result = gateway.getBookCategories(workDirection = 1)
 
@@ -133,7 +134,7 @@ class NavigationBridgeNetworkGatewayTest {
                 }
             """.trimIndent()
         )
-        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL)
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL, AUTHOR_BASE_URL)
 
         val result = gateway.searchBooks(
             workDirection = 0,
@@ -161,6 +162,55 @@ class NavigationBridgeNetworkGatewayTest {
         assertEquals(1, result.list.size)
         assertEquals("88", result.list.first().id)
         assertEquals("Bridge Search Book", result.list.first().bookName)
+    }
+
+    @Test
+    fun getAuthorBooks_buildsExpectedRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "code":"0",
+                  "message":"ok",
+                  "ok":true,
+                  "data":{
+                    "list":[
+                      {
+                        "id":901,
+                        "bookName":"Author Bridge Book",
+                        "authorName":"Bridge Writer",
+                        "picUrl":"https://example.com/author.png",
+                        "wordCount":123456,
+                        "bookDesc":"Author bridge sample",
+                        "categoryId":5,
+                        "categoryName":"都市"
+                      }
+                    ]
+                  }
+                }
+            """.trimIndent()
+        )
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL, AUTHOR_BASE_URL)
+
+        val result = gateway.getAuthorBooks(pageNum = 1, pageSize = 10)
+
+        assertEquals(AUTHOR_BASE_URL, facade.lastRequest?.baseUrl)
+        assertEquals("books", facade.lastRequest?.endpoint)
+        assertEquals(
+            mapOf(
+                "pageNum" to "1",
+                "pageSize" to "10"
+            ),
+            facade.lastRequest?.queryParams
+        )
+        assertEquals("0", result.code)
+        assertEquals("ok", result.message)
+        assertEquals(true, result.ok)
+        assertEquals(1, result.list.size)
+        assertEquals("901", result.list.first().id)
+        assertEquals("Author Bridge Book", result.list.first().bookName)
+        assertEquals(123456.0, result.list.first().wordCount, 0.0)
+        assertEquals("5", result.list.first().categoryId)
+        assertEquals("都市", result.list.first().categoryName)
     }
 
     private class RecordingNetworkFacade(

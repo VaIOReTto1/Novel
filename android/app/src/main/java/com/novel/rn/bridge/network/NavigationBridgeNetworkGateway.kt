@@ -50,9 +50,28 @@ data class SearchBooksBridgeResponse(
     val list: List<SearchBooksBridgeItem>
 )
 
+data class AuthorBookBridgeItem(
+    val id: String,
+    val bookName: String?,
+    val authorName: String?,
+    val picUrl: String?,
+    val wordCount: Double,
+    val bookDesc: String?,
+    val categoryId: String,
+    val categoryName: String?
+)
+
+data class AuthorBooksBridgeResponse(
+    val code: String?,
+    val message: String?,
+    val ok: Boolean,
+    val list: List<AuthorBookBridgeItem>
+)
+
 class NavigationBridgeNetworkGateway(
     private val networkFacade: NetworkFacade,
-    private val frontBaseUrl: String
+    private val frontBaseUrl: String,
+    private val authorBaseUrl: String
 ) {
 
     suspend fun getHomeBooksHighPriority(): HomeBooksBridgeResponse {
@@ -157,13 +176,51 @@ class NavigationBridgeNetworkGateway(
         )
     }
 
+    suspend fun getAuthorBooks(pageNum: Int, pageSize: Int): AuthorBooksBridgeResponse {
+        val json = executeGet(
+            baseUrl = authorBaseUrl,
+            endpoint = "books",
+            queryParams = mapOf(
+                "pageNum" to pageNum.toString(),
+                "pageSize" to pageSize.toString()
+            )
+        )
+        val dataObject = json.optJsonObject("data")
+        val items = mutableListOf<AuthorBookBridgeItem>()
+        val listJsonArr = dataObject?.optJsonArray("list")
+
+        if (listJsonArr != null) {
+            for (index in 0 until listJsonArr.size()) {
+                val item = listJsonArr[index]?.takeIf { it.isJsonObject }?.asJsonObject ?: continue
+                items += AuthorBookBridgeItem(
+                    id = item.optLong("id").toString(),
+                    bookName = item.optNullableString("bookName"),
+                    authorName = item.optNullableString("authorName"),
+                    picUrl = item.optNullableString("picUrl"),
+                    wordCount = item.optInt("wordCount").toDouble(),
+                    bookDesc = item.optNullableString("bookDesc"),
+                    categoryId = item.optLong("categoryId").toString(),
+                    categoryName = item.optNullableString("categoryName")
+                )
+            }
+        }
+
+        return AuthorBooksBridgeResponse(
+            code = json.optNullableString("code"),
+            message = json.optNullableString("message"),
+            ok = json.optBoolean("ok"),
+            list = items
+        )
+    }
+
     private suspend fun executeGet(
+        baseUrl: String = frontBaseUrl,
         endpoint: String,
         queryParams: Map<String, String> = emptyMap()
     ): JsonObject {
         val response = networkFacade.execute(
             NetworkRequest(
-                baseUrl = frontBaseUrl,
+                baseUrl = baseUrl,
                 endpoint = endpoint,
                 method = NetworkRequestMethod.GET,
                 queryParams = queryParams,

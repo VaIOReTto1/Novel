@@ -322,8 +322,11 @@ object NetworkModule {
     
     @Provides
     @Singleton
-    fun provideHomeService(gson: Gson): HomeService {
-        return HomeService(gson)
+    fun provideHomeService(
+        gson: Gson,
+        networkFacade: NetworkFacade
+    ): HomeService {
+        return HomeService(gson, networkFacade)
     }
     
     @Provides

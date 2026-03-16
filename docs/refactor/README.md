@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`P3.4/P3.5` 已完成 `NavigationBridgeModule` 网络收口，`getHomeBooksHighPriority()`、`getBookCategories()`、`searchBooks()`、`getAuthorBooks()` 均已接入 `NetworkFacade`
-- 下一步：继续推进基础设施收口主线，按迁移矩阵进入 `HomeService / SearchService` 等服务层高风险路径，并补 `StorageFacade`、错误模型与回滚开关
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule` 网络收口已完成，且 `HomeService` 的首页推荐/友情链接路径也已接入 `NetworkFacade`
+- 下一步：继续推进基础设施收口主线，优先迁移 `SearchService` 与后续 `UserService` 等服务层高风险路径，并补 `StorageFacade`、错误模型与回滚开关
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -21,7 +21,7 @@
 - `V1-01 ~ V1-09` 已全部具备绿色验证证据，Phase 1 已完成。
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - 第二阶段规划文档已落盘，`V3-05` 静态债基线已建立。
-- `V3-01` 已完成 `NavigationBridgeModule` 4 条高风险网络路径迁移，当前继续保持 `in_progress/yellow`。
+- `V3-01` 已完成 `NavigationBridgeModule` 4 条高风险网络路径迁移，并完成 `HomeService` 首批服务层路径迁移，当前继续保持 `in_progress/yellow`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

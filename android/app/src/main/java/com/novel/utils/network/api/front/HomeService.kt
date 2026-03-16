@@ -1,12 +1,16 @@
 package com.novel.utils.network.api.front
 
 import androidx.compose.runtime.Stable
-import com.novel.utils.TimberLogger
-import com.novel.utils.network.ApiService
-import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.novel.core.network.NetworkFacade
+import com.novel.core.network.NetworkRequest
+import com.novel.core.network.NetworkRequestMethod
+import com.novel.utils.TimberLogger
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.Exception
 import javax.inject.Inject
@@ -16,7 +20,8 @@ import javax.inject.Singleton
 @Singleton
 class HomeService @Inject constructor(
     @Stable
-    private val gson: Gson
+    private val gson: Gson,
+    private val networkFacade: NetworkFacade
 ) {
     
     // region 数据结构
@@ -62,13 +67,15 @@ class HomeService @Inject constructor(
         callback: (HomeBooksResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("HomeService", "开始 getHomeBooks()")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "home/books",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, HomeBooksResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse("home/books", HomeBooksResponse::class.java)
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -79,13 +86,15 @@ class HomeService @Inject constructor(
         callback: (FriendLinksResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("HomeService", "开始 getFriendLinks()")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "home/friend_Link/list",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, FriendLinksResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse("home/friend_Link/list", FriendLinksResponse::class.java)
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -145,29 +154,11 @@ class HomeService @Inject constructor(
 
     // region 协程版本
     suspend fun getHomeBooksBlocking(): HomeBooksResponse {
-        return suspendCancellableCoroutine { cont ->
-            getHomeBooks { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse("home/books", HomeBooksResponse::class.java)
     }
 
     suspend fun getFriendLinksBlocking(): FriendLinksResponse {
-        return suspendCancellableCoroutine { cont ->
-            getFriendLinks { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse("home/friend_Link/list", FriendLinksResponse::class.java)
     }
 
     suspend fun getCarouselBooksBlocking(): List<HomeBook> {
@@ -184,29 +175,20 @@ class HomeService @Inject constructor(
     }
     // endregion
 
-    // region 响应处理
-    private fun <T> handleResponse(
-        response: String?,
-        error: Throwable?,
-        clazz: Class<T>,
-        callback: (T?, Throwable?) -> Unit
-    ) {
-        when {
-            error != null -> {
-                callback(null, error)
-            }
-            response != null -> {
-                try {
-                    callback(gson.fromJson(response, clazz), null)
-                } catch (e: Exception) {
-                    TimberLogger.e("HomeService", "JSON解析失败", e)
-                    callback(null, e)
-                }
-            }
-            else -> {
-                callback(null, Exception("Response is null"))
-            }
-        }
+    private suspend fun <T> requestAndParse(
+        endpoint: String,
+        clazz: Class<T>
+    ): T {
+        val response = networkFacade.execute(
+            NetworkRequest(
+                baseUrl = com.novel.utils.network.ApiService.BASE_URL_FRONT,
+                endpoint = endpoint,
+                method = NetworkRequestMethod.GET,
+                headers = mapOf("Accept" to "*/*")
+            )
+        )
+
+        return gson.fromJson(response, clazz)
     }
     // endregion
 }

@@ -316,8 +316,11 @@ object NetworkModule {
     
     @Provides
     @Singleton
-    fun provideSearchService(gson: Gson): SearchService {
-        return SearchService(gson)
+    fun provideSearchService(
+        gson: Gson,
+        networkFacade: NetworkFacade
+    ): SearchService {
+        return SearchService(gson, networkFacade)
     }
     
     @Provides

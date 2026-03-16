@@ -1,14 +1,16 @@
 package com.novel.utils.network.api.front
 
 import androidx.compose.runtime.Stable
-import com.novel.utils.TimberLogger
-import com.novel.utils.network.ApiService
-import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.novel.core.network.NetworkFacade
+import com.novel.core.network.NetworkRequest
+import com.novel.core.network.NetworkRequestMethod
+import com.novel.utils.TimberLogger
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.suspendCancellableCoroutine
-import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +18,8 @@ import javax.inject.Singleton
 @Stable
 class SearchService @Inject constructor(
     @Stable
-    private val gson: Gson
+    private val gson: Gson,
+    private val networkFacade: NetworkFacade
 ) {
     
     // region 数据结构
@@ -83,27 +86,15 @@ class SearchService @Inject constructor(
         callback: (BookSearchResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("SearchService", "开始 searchBooks()，参数：$request")
-        
-        val params = mutableMapOf<String, String>()
-        request.keyword?.let { params["keyword"] = it }
-        request.workDirection?.let { params["workDirection"] = it.toString() }
-        request.categoryId?.let { params["categoryId"] = it.toString() }
-        request.isVip?.let { params["isVip"] = it.toString() }
-        request.bookStatus?.let { params["bookStatus"] = it.toString() }
-        request.wordCountMin?.let { params["wordCountMin"] = it.toString() }
-        request.wordCountMax?.let { params["wordCountMax"] = it.toString() }
-        request.updateTimeMin?.let { params["updateTimeMin"] = it }
-        request.sort?.let { params["sort"] = it }
-        request.pageNum?.let { params["pageNum"] = it.toString() }
-        request.pageSize?.let { params["pageSize"] = it.toString() }
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "search/books",
-            params = params,
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookSearchResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(request, BookSearchResponse::class.java)
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -178,16 +169,7 @@ class SearchService @Inject constructor(
 
     // region 协程版本
     suspend fun searchBooksBlocking(request: SearchRequest): BookSearchResponse {
-        return suspendCancellableCoroutine { cont ->
-            searchBooks(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(request, BookSearchResponse::class.java)
     }
 
     suspend fun searchBooksByKeywordBlocking(
@@ -236,29 +218,36 @@ class SearchService @Inject constructor(
     }
     // endregion
 
-    // region 响应处理
-    private fun <T> handleResponse(
-        response: String?,
-        error: Throwable?,
-        clazz: Class<T>,
-        callback: (T?, Throwable?) -> Unit
-    ) {
-        when {
-            error != null -> {
-                callback(null, error)
-            }
-            response != null -> {
-                try {
-                    callback(gson.fromJson(response, clazz), null)
-                } catch (e: Exception) {
-                    TimberLogger.e("SearchService", "JSON解析失败", e)
-                    callback(null, e)
-                }
-            }
-            else -> {
-                callback(null, Exception("Response is null"))
-            }
-        }
+    private suspend fun <T> requestAndParse(
+        request: SearchRequest,
+        clazz: Class<T>
+    ): T {
+        val response = networkFacade.execute(
+            NetworkRequest(
+                baseUrl = com.novel.utils.network.ApiService.BASE_URL_FRONT,
+                endpoint = "search/books",
+                method = NetworkRequestMethod.GET,
+                queryParams = buildQueryParams(request),
+                headers = mapOf("Accept" to "*/*")
+            )
+        )
+
+        return gson.fromJson(response, clazz)
     }
+
+    private fun buildQueryParams(request: SearchRequest): Map<String, String> =
+        mutableMapOf<String, String>().apply {
+            request.keyword?.let { put("keyword", it) }
+            request.workDirection?.let { put("workDirection", it.toString()) }
+            request.categoryId?.let { put("categoryId", it.toString()) }
+            request.isVip?.let { put("isVip", it.toString()) }
+            request.bookStatus?.let { put("bookStatus", it.toString()) }
+            request.wordCountMin?.let { put("wordCountMin", it.toString()) }
+            request.wordCountMax?.let { put("wordCountMax", it.toString()) }
+            request.updateTimeMin?.let { put("updateTimeMin", it) }
+            request.sort?.let { put("sort", it) }
+            request.pageNum?.let { put("pageNum", it.toString()) }
+            request.pageSize?.let { put("pageSize", it.toString()) }
+        }
     // endregion
 }

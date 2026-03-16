@@ -1,0 +1,39 @@
+# Phase 3-4 验证看板
+
+## 使用规则
+- 每条记录必须填写 `Expected / Evidence / Actual / Status / Result Analysis / Owner / Validator / Validated On`
+- `Status` 允许值：
+  - `planned`
+  - `in_progress`
+  - `blocked`
+  - `ready_for_validation`
+  - `validated`
+  - `not_met`
+  - `deferred`
+- `Result Analysis` 允许值：
+  - `green`
+  - `yellow`
+  - `red`
+
+## Phase 3
+| ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| V3-01 | Phase 3 | 高风险生产路径主网络通路唯一化成立 | 高风险路径统一经主网络栈进入 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-02 | Phase 3 | 第二阶段触达范围内协程模型统一 | `runBlocking / 匿名全局 scope` 清理并统一 `DispatcherProvider` | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-03 | Phase 3 | `StorageFacade` 成立，SharedPreferences 仅保留兼容层 | 业务层不再新增 SharedPreferences 直连 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-04 | Phase 3 | `AppError` 第一批统一落地 | Home / Search / Bridge / Settings 边界错误统一映射 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-05 | Phase 3 | 第二阶段静态债基线建立完成 | `RN lint / detekt` 基线可追溯 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-06 | Phase 3 | rollback / kill switch 可执行 | 网络、Bridge、存储切换可回退 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-07 | Phase 3 | Phase 4 进入条件明确 | Phase 4 开始前无关键未知项 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+
+## Phase 4
+| ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| V4-01 | Phase 4 | 包边界骨架稳定 | 包内逻辑模块化边界可追溯 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-02 | Phase 4 | 指定超大类拆分完成 | `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 完成拆分 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-03 | Phase 4 | `BridgeFacade` 成立且旧协议兼容 | route / event / payload 语义保持兼容 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-04 | Phase 4 | 第二阶段触达范围内生产 mock 清理完成 | 正式路径不再保留业务 mock 分支 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-05 | Phase 4 | `profile-host / RN Host` 风险验证补齐 | 宿主页挂载、白屏风险、Bridge 初始化时序证据完整 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-06 | Phase 4 | 第二阶段静态债目标达标 | touched files 零新增 error，repo 级债务显著收敛 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-07 | Phase 4 | 第二阶段关闭总结完成 | closeout 文档与证据完整 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V4-08 | Phase 4 | Phase 5 进入条件明确 | 后续模块化进入条件客观明确 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |

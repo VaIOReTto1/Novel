@@ -622,8 +622,8 @@ class NavigationBridgeModule(
             }
             try {
                 val json = org.json.JSONObject(response)
-                val code = if (!json.isNull("code")) json.optString("code") else null
-                val message = if (!json.isNull("message")) json.optString("message") else null
+                val code = json.optNullableString("code")
+                val message = json.optNullableString("message")
                 val ok = json.optBoolean("ok", false)
 
                 val data = json.optJSONObject("data")
@@ -634,13 +634,13 @@ class NavigationBridgeModule(
                         val item = listJsonArr.optJSONObject(i) ?: continue
                         val b = Arguments.createMap().apply {
                             putString("id", item.optLong("id").toString())
-                            putString("bookName", item.optString("bookName", null))
-                            putString("authorName", item.optString("authorName", null))
-                            putString("picUrl", item.optString("picUrl", null))
+                            putString("bookName", item.optNullableString("bookName"))
+                            putString("authorName", item.optNullableString("authorName"))
+                            putString("picUrl", item.optNullableString("picUrl"))
                             putDouble("wordCount", item.optInt("wordCount").toDouble())
-                            putString("bookDesc", item.optString("bookDesc", null))
+                            putString("bookDesc", item.optNullableString("bookDesc"))
                             putString("categoryId", item.optLong("categoryId").toString())
-                            putString("categoryName", item.optString("categoryName", null))
+                            putString("categoryName", item.optNullableString("categoryName"))
                         }
                         listArray.pushMap(b)
                     }
@@ -667,43 +667,26 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getBookCategories(workDirection: Int, promise: Promise) {
         TimberLogger.d(TAG, "RN调用获取书籍分类 workDirection=$workDirection")
-        com.novel.utils.network.ApiService.get(
-            baseUrl = com.novel.utils.network.ApiService.BASE_URL_FRONT,
-            endpoint = "book/category/list",
-            params = mapOf("workDirection" to workDirection.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            if (error != null) {
-                TimberLogger.e(TAG, "获取书籍分类失败", error)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", error) }
-                return@get
-            }
-            if (response == null) {
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", "Empty response") }
-                return@get
-            }
+        CoroutineScope(Dispatchers.IO).launch {
             try {
-                val json = org.json.JSONObject(response)
-                val ok = json.optBoolean("ok", false)
-                val data = json.optJSONArray("data")
                 val arr = Arguments.createArray()
-                if (data != null) {
-                    for (i in 0 until data.length()) {
-                        val item = data.optJSONObject(i) ?: continue
-                        val m = Arguments.createMap().apply {
-                            putString("id", item.optLong("id").toString())
-                            putString("name", item.optString("name", null))
-                        }
-                        arr.pushMap(m)
+                val response = navigationBridgeNetworkGateway.getBookCategories(workDirection)
+
+                response.data.forEach { item ->
+                    val categoryMap = Arguments.createMap().apply {
+                        putString("id", item.id)
+                        putString("name", item.name)
                     }
+                    arr.pushMap(categoryMap)
                 }
+
                 val map = Arguments.createMap().apply {
-                    putBoolean("ok", ok)
+                    putBoolean("ok", response.ok)
                     putArray("list", arr)
                 }
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "解析分类列表失败", e)
+                TimberLogger.e(TAG, "获取书籍分类失败", e)
                 CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", e) }
             }
         }
@@ -717,59 +700,38 @@ class NavigationBridgeModule(
     @ReactMethod
     fun searchBooks(workDirection: Int, categoryId: Int, pageNum: Int, pageSize: Int, promise: Promise) {
         TimberLogger.d(TAG, "RN调用搜索书籍 workDirection=$workDirection categoryId=$categoryId pageNum=$pageNum pageSize=$pageSize")
-        // 组装查询参数
-        val params = mutableMapOf(
-            "pageNum" to pageNum.toString(),
-            "pageSize" to pageSize.toString(),
-            "workDirection" to workDirection.toString()
-        )
-        if (categoryId > 0) params["categoryId"] = categoryId.toString()
-
-        com.novel.utils.network.ApiService.get(
-            baseUrl = com.novel.utils.network.ApiService.BASE_URL_FRONT,
-            endpoint = "search/books",
-            params = params,
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            if (error != null) {
-                TimberLogger.e(TAG, "搜索书籍失败", error)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", error) }
-                return@get
-            }
-            if (response == null) {
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", "Empty response") }
-                return@get
-            }
+        CoroutineScope(Dispatchers.IO).launch {
             try {
-                val json = org.json.JSONObject(response)
-                val ok = json.optBoolean("ok", false)
-                val dataObj = json.optJSONObject("data")
-                val listJson = dataObj?.optJSONArray("list")
                 val listArr = Arguments.createArray()
-                if (listJson != null) {
-                    for (i in 0 until listJson.length()) {
-                        val item = listJson.optJSONObject(i) ?: continue
-                        val b = Arguments.createMap().apply {
-                            putString("id", item.optLong("id").toString())
-                            putString("bookName", item.optString("bookName", null))
-                            putString("authorName", item.optString("authorName", null))
-                            putString("picUrl", item.optString("picUrl", null))
-                            putString("bookDesc", item.optString("bookDesc", null))
-                        }
-                        listArr.pushMap(b)
+                val response = navigationBridgeNetworkGateway.searchBooks(
+                    workDirection = workDirection,
+                    categoryId = categoryId,
+                    pageNum = pageNum,
+                    pageSize = pageSize
+                )
+
+                response.list.forEach { item ->
+                    val bookMap = Arguments.createMap().apply {
+                        putString("id", item.id)
+                        putString("bookName", item.bookName)
+                        putString("authorName", item.authorName)
+                        putString("picUrl", item.picUrl)
+                        putString("bookDesc", item.bookDesc)
                     }
+                    listArr.pushMap(bookMap)
                 }
+
                 val map = Arguments.createMap().apply {
-                    putBoolean("ok", ok)
+                    putBoolean("ok", response.ok)
                     putArray("list", listArr)
-                    dataObj?.optLong("pageNum")?.let { putDouble("pageNum", it.toDouble()) }
-                    dataObj?.optLong("pageSize")?.let { putDouble("pageSize", it.toDouble()) }
-                    dataObj?.optLong("total")?.let { putDouble("total", it.toDouble()) }
-                    dataObj?.optLong("pages")?.let { putDouble("pages", it.toDouble()) }
+                    response.pageNum?.let { putDouble("pageNum", it.toDouble()) }
+                    response.pageSize?.let { putDouble("pageSize", it.toDouble()) }
+                    response.total?.let { putDouble("total", it.toDouble()) }
+                    response.pages?.let { putDouble("pages", it.toDouble()) }
                 }
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "解析搜索结果失败", e)
+                TimberLogger.e(TAG, "搜索书籍失败", e)
                 CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", e) }
             }
         }
@@ -1133,3 +1095,6 @@ class NavigationBridgeModule(
         }
     }
 }
+
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+private fun JSONObject.optNullableString(key: String): String? = optString(key, null)

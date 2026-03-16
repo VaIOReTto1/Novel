@@ -77,6 +77,92 @@ class NavigationBridgeNetworkGatewayTest {
         assertNull(result.data.first().picUrl)
     }
 
+    @Test
+    fun getBookCategories_buildsExpectedRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":[
+                    {
+                      "id":12,
+                      "name":"玄幻"
+                    }
+                  ]
+                }
+            """.trimIndent()
+        )
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL)
+
+        val result = gateway.getBookCategories(workDirection = 1)
+
+        assertEquals(FRONT_BASE_URL, facade.lastRequest?.baseUrl)
+        assertEquals("book/category/list", facade.lastRequest?.endpoint)
+        assertEquals(NetworkRequestMethod.GET, facade.lastRequest?.method)
+        assertEquals(
+            mapOf("workDirection" to "1"),
+            facade.lastRequest?.queryParams
+        )
+        assertEquals(true, result.ok)
+        assertEquals(1, result.data.size)
+        assertEquals("12", result.data.first().id)
+        assertEquals("玄幻", result.data.first().name)
+    }
+
+    @Test
+    fun searchBooks_buildsExpectedRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "pageNum":2,
+                    "pageSize":20,
+                    "total":99,
+                    "pages":5,
+                    "list":[
+                      {
+                        "id":88,
+                        "bookName":"Bridge Search Book",
+                        "authorName":"Search Author",
+                        "picUrl":"https://example.com/search.png",
+                        "bookDesc":"Search bridge sample"
+                      }
+                    ]
+                  }
+                }
+            """.trimIndent()
+        )
+        val gateway = NavigationBridgeNetworkGateway(facade, FRONT_BASE_URL)
+
+        val result = gateway.searchBooks(
+            workDirection = 0,
+            categoryId = 7,
+            pageNum = 2,
+            pageSize = 20
+        )
+
+        assertEquals(FRONT_BASE_URL, facade.lastRequest?.baseUrl)
+        assertEquals("search/books", facade.lastRequest?.endpoint)
+        assertEquals(
+            mapOf(
+                "pageNum" to "2",
+                "pageSize" to "20",
+                "workDirection" to "0",
+                "categoryId" to "7"
+            ),
+            facade.lastRequest?.queryParams
+        )
+        assertEquals(true, result.ok)
+        assertEquals(2L, result.pageNum)
+        assertEquals(20L, result.pageSize)
+        assertEquals(99L, result.total)
+        assertEquals(5L, result.pages)
+        assertEquals(1, result.list.size)
+        assertEquals("88", result.list.first().id)
+        assertEquals("Bridge Search Book", result.list.first().bookName)
+    }
+
     private class RecordingNetworkFacade(
         private val response: String
     ) : NetworkFacade {

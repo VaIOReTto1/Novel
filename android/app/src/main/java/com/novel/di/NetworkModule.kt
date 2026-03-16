@@ -4,7 +4,12 @@ import android.content.Context
 import androidx.compose.runtime.Stable
 import com.google.gson.Gson
 import com.novel.BuildConfig
+import com.novel.core.network.DefaultLegacyApiExecutor
+import com.novel.core.network.LegacyApiExecutor
+import com.novel.core.network.LegacyApiServiceAdapter
+import com.novel.core.network.NetworkFacade
 import com.google.gson.GsonBuilder
+import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ImmutableListTypeAdapterFactory
@@ -125,6 +130,29 @@ object NetworkModule {
     /**
      * 提供Gson实例
      */
+    @Provides
+    @Singleton
+    fun provideLegacyApiExecutor(): LegacyApiExecutor = DefaultLegacyApiExecutor
+
+    @Provides
+    @Singleton
+    fun provideNetworkFacade(
+        legacyApiExecutor: LegacyApiExecutor
+    ): NetworkFacade {
+        return LegacyApiServiceAdapter(legacyApiExecutor)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNavigationBridgeNetworkGateway(
+        networkFacade: NetworkFacade
+    ): NavigationBridgeNetworkGateway {
+        return NavigationBridgeNetworkGateway(
+            networkFacade = networkFacade,
+            frontBaseUrl = ApiService.BASE_URL_FRONT
+        )
+    }
+
     @Provides
     @Singleton
     fun provideGson(): Gson {

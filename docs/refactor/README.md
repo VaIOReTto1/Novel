@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立，当前进入 `Phase 3`
-- 下一步：推进基础设施收口主线，优先处理网络主通路、存储 facade、错误模型与回滚开关
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`P3.4/P3.5` 已落下首个真实迁移样本，`NavigationBridgeModule.getHomeBooksHighPriority()` 已接入 `NetworkFacade`
+- 下一步：继续推进基础设施收口主线，优先扩展 Home / Search / Bridge 其余高风险路径，并补 `StorageFacade`、错误模型与回滚开关
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -21,6 +21,7 @@
 - `V1-01 ~ V1-09` 已全部具备绿色验证证据，Phase 1 已完成。
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - 第二阶段规划文档已落盘，`V3-05` 静态债基线已建立。
+- `V3-01` 已完成第一个高风险 Bridge 调用迁移样本，当前继续保持 `in_progress/yellow`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

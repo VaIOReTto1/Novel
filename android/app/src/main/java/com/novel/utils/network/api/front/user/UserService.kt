@@ -373,31 +373,6 @@ class UserService @Inject constructor(
     }
 
     /**
-     * 查询会员评论列表接口
-     */
-    private fun getUserComments(
-        pageRequest: PageRequest,
-        callback: (UserCommentsResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 getUserComments()，参数：$pageRequest")
-        
-        val params = mapOf(
-            "pageNum" to pageRequest.pageNum.toString(),
-            "pageSize" to pageRequest.pageSize.toString(),
-            "fetchAll" to pageRequest.fetchAll.toString()
-        )
-        
-        ApiService.get(
-            baseUrl = BASE_URL_USER,
-            endpoint = "comments",
-            params = params,
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, UserCommentsResponse::class.java, callback)
-        }
-    }
-
-    /**
      * 用户反馈提交接口
      */
     private fun submitFeedback(
@@ -434,25 +409,6 @@ class UserService @Inject constructor(
             headers = mapOf("Accept" to "*/*")
         ) { response, error ->
             handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 查询书架状态接口
-     */
-    private fun getBookshelfStatus(
-        bookId: String,
-        callback: (BookshelfStatusResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("UserService", "开始 getBookshelfStatus()，参数：$bookId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_USER,
-            endpoint = "bookshelf_status",
-            params = mapOf("bookId" to bookId),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookshelfStatusResponse::class.java, callback)
         }
     }
 
@@ -541,29 +497,33 @@ class UserService @Inject constructor(
     }
 
     suspend fun getUserCommentsBlocking(pageRequest: PageRequest): UserCommentsResponse {
-        return suspendCancellableCoroutine { cont ->
-            getUserComments(pageRequest) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_USER,
+                endpoint = "comments",
+                method = NetworkRequestMethod.GET,
+                queryParams = mapOf(
+                    "pageNum" to pageRequest.pageNum.toString(),
+                    "pageSize" to pageRequest.pageSize.toString(),
+                    "fetchAll" to pageRequest.fetchAll.toString()
+                ),
+                headers = mapOf("Accept" to "*/*")
+            ),
+            clazz = UserCommentsResponse::class.java
+        )
     }
 
     suspend fun getBookshelfStatusBlocking(bookId: String): BookshelfStatusResponse {
-        return suspendCancellableCoroutine { cont ->
-            getBookshelfStatus(bookId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_USER,
+                endpoint = "bookshelf_status",
+                method = NetworkRequestMethod.GET,
+                queryParams = mapOf("bookId" to bookId),
+                headers = mapOf("Accept" to "*/*")
+            ),
+            clazz = BookshelfStatusResponse::class.java
+        )
     }
     // endregion
 

@@ -22,7 +22,7 @@
 | V3-02 | Phase 3 | 第二阶段触达范围内协程模型统一 | `runBlocking / 匿名全局 scope` 清理并统一 `DispatcherProvider` | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
 | V3-03 | Phase 3 | `StorageFacade` 成立，SharedPreferences 仅保留兼容层 | 业务层不再新增 SharedPreferences 直连 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
 | V3-04 | Phase 3 | `AppError` 第一批统一落地 | Home / Search / Bridge / Settings 边界错误统一映射 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
-| V3-05 | Phase 3 | 第二阶段静态债基线建立完成 | `RN lint / detekt` 基线可追溯 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
+| V3-05 | Phase 3 | 第二阶段静态债基线建立完成 | `RN lint / detekt` 基线可追溯 | `docs/refactor/tracking/stage-2-static-debt-baseline.md`, `npm run lint`, `android/gradlew app:detekt` | 已记录 `RN lint errors=89`、`RN lint warnings=1219`、`detekt weighted issues=2260`，并固化为第二阶段唯一基线 | `validated` | `green` | 当前重构实施者 | 阶段门禁批准者 | 2026-03-16 |
 | V3-06 | Phase 3 | rollback / kill switch 可执行 | 网络、Bridge、存储切换可回退 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
 | V3-07 | Phase 3 | Phase 4 进入条件明确 | Phase 4 开始前无关键未知项 | 待补充 | 待补充 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | - |
 

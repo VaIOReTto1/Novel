@@ -16,8 +16,8 @@
 ## 当前基线
 | Item | Command | Result |
 | --- | --- | --- |
-| RN lint errors | `npm run lint` | `90` |
-| RN lint warnings | `npm run lint` | `1216` |
+| RN lint errors | `npm run lint` | `89` |
+| RN lint warnings | `npm run lint` | `1219` |
 | detekt weighted issues | `android/gradlew app:detekt` | `2260` |
 
 ## 阶段内约束

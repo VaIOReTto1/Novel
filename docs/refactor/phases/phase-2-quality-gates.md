@@ -95,4 +95,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`ready_for_validation`
+- 当前状态：`validated`

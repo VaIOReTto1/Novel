@@ -340,8 +340,11 @@ object NetworkModule {
     
     @Provides
     @Singleton
-    fun provideUserService(gson: Gson): UserService {
-        return UserService(gson)
+    fun provideUserService(
+        gson: Gson,
+        networkFacade: NetworkFacade
+    ): UserService {
+        return UserService(gson, networkFacade)
     }
     
     @Provides

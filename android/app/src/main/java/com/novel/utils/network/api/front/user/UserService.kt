@@ -1,17 +1,20 @@
 package com.novel.utils.network.api.front.user
 
 import androidx.compose.runtime.Stable
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.novel.core.network.NetworkFacade
+import com.novel.core.network.NetworkRequest
+import com.novel.core.network.NetworkRequestMethod
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_USER
 import com.novel.utils.network.ApiService.BASE_URL_FRONT
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.lang.Exception
@@ -45,7 +48,8 @@ import javax.inject.Singleton
 @Singleton
 class UserService @Inject constructor(
     @Stable
-    private val gson: Gson
+    private val gson: Gson,
+    private val networkFacade: NetworkFacade
 ) {
     
     // region 数据结构
@@ -184,17 +188,26 @@ class UserService @Inject constructor(
         )
         TimberLogger.d("UserService", "开始 login()，参数：$request")
 
-        ApiService.post(
-            baseUrl = BASE_URL_USER,
-            endpoint = "login",
-            params = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            TimberLogger.d("UserService", "login 回调，response=$response, error=$error")
-            handleResponse(response, error, LoginResponse::class.java, callback)
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    request = NetworkRequest(
+                        baseUrl = BASE_URL_USER,
+                        endpoint = "login",
+                        method = NetworkRequestMethod.POST,
+                        bodyParams = requestBody,
+                        headers = mapOf(
+                            "Content-Type" to "application/json",
+                            "Accept" to "*/*"
+                        )
+                    ),
+                    clazz = LoginResponse::class.java
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -212,16 +225,26 @@ class UserService @Inject constructor(
             put("velCode", request.velCode)
         }
 
-        ApiService.post(
-            baseUrl = BASE_URL_USER,
-            endpoint = "register",
-            params = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, RegisterResponse::class.java, callback)
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    request = NetworkRequest(
+                        baseUrl = BASE_URL_USER,
+                        endpoint = "register",
+                        method = NetworkRequestMethod.POST,
+                        bodyParams = requestBody,
+                        headers = mapOf(
+                            "Content-Type" to "application/json",
+                            "Accept" to "*/*"
+                        )
+                    ),
+                    clazz = RegisterResponse::class.java
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -232,13 +255,23 @@ class UserService @Inject constructor(
         callback: (UserInfoResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("UserService", "开始请求用户信息")
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            params = mapOf(),
-            endpoint = "user",
-            headers = mapOf("Accept" to "application/json")
-        ) { response, error ->
-            handleResponse(response, error, UserInfoResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    request = NetworkRequest(
+                        baseUrl = BASE_URL_FRONT,
+                        endpoint = "user",
+                        method = NetworkRequestMethod.GET,
+                        headers = mapOf("Accept" to "application/json")
+                    ),
+                    clazz = UserInfoResponse::class.java
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -427,50 +460,58 @@ class UserService @Inject constructor(
 
     // region 协程版本
     suspend fun loginBlocking(request: LoginRequest): LoginResponse {
-        return suspendCancellableCoroutine { cont ->
-            login(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_USER,
+                endpoint = "login",
+                method = NetworkRequestMethod.POST,
+                bodyParams = mapOf(
+                    "username" to request.username,
+                    "password" to request.password
+                ),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = LoginResponse::class.java
+        )
     }
 
     suspend fun registerBlocking(request: RegisterRequest): RegisterResponse {
-        return suspendCancellableCoroutine { cont ->
-            register(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    if (response == null) {
-                        cont.resumeWith(Result.failure(Exception("Unknown error")))
-                    } else {
-                        cont.resumeWith(Result.success(response))
-                    }
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_USER,
+                endpoint = "register",
+                method = NetworkRequestMethod.POST,
+                bodyParams = mapOf(
+                    "username" to request.username,
+                    "password" to request.password,
+                    "sessionId" to request.sessionId,
+                    "velCode" to request.velCode
+                ),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = RegisterResponse::class.java
+        )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun getUserInfoBlocking(): UserInfoResponse? = withContext(Dispatchers.IO) {
-        suspendCancellableCoroutine { cont ->
-            TimberLogger.d("UserService", "开始请求用户信息")
-            getUserInfo { response, error ->
-                if (error != null) {
-                    TimberLogger.w("UserService", error.toString())
-                    cont.resume(null, onCancellation = null)
-                } else if (response != null) {
-                    cont.resume(response, onCancellation = null)
-                } else {
-                    TimberLogger.w("UserService", "收到空响应")
-                    cont.resume(null, onCancellation = null)
-                }
-            }
-        }
+    suspend fun getUserInfoBlocking(): UserInfoResponse? = runCatching {
+        requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_FRONT,
+                endpoint = "user",
+                method = NetworkRequestMethod.GET,
+                headers = mapOf("Accept" to "application/json")
+            ),
+            clazz = UserInfoResponse::class.java
+        )
+    }.getOrElse { error ->
+        TimberLogger.w("UserService", error.toString())
+        null
     }
 
     suspend fun updateUserInfoBlocking(request: UserInfoUpdateRequest): BaseResponse {
@@ -548,6 +589,14 @@ class UserService @Inject constructor(
                 callback(null, Exception("Response is null"))
             }
         }
+    }
+
+    private suspend fun <T> requestAndParse(
+        request: NetworkRequest,
+        clazz: Class<T>
+    ): T {
+        val response = networkFacade.execute(request)
+        return gson.fromJson(response, clazz)
     }
     // endregion
 }

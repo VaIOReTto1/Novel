@@ -4,12 +4,15 @@ import com.google.gson.GsonBuilder
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.result.AppError
+import com.novel.core.result.DataResult
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ImmutableListTypeAdapterFactory
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.IOException
 
 class SearchServiceTest {
 
@@ -123,6 +126,45 @@ class SearchServiceTest {
         )
     }
 
+    @Test
+    fun searchBooksResult_wrapsIoFailureAsNetworkError() = runBlocking {
+        val facade = FailingNetworkFacade(IOException("offline"))
+        val service = SearchService(gson, facade)
+
+        val result = service.searchBooksResult(
+            SearchService.SearchRequest(keyword = "测试")
+        )
+
+        assertTrue(result is DataResult.Failure)
+        assertTrue((result as DataResult.Failure).error is AppError.Network)
+    }
+
+    @Test
+    fun searchBooksResult_wrapsSuccessInDataResult() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "pageNum":1,
+                    "pageSize":10,
+                    "total":0,
+                    "pages":0,
+                    "list":[]
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = SearchService(gson, facade)
+
+        val result = service.searchBooksResult(
+            SearchService.SearchRequest(keyword = "测试")
+        )
+
+        assertTrue(result is DataResult.Success<*>)
+        assertTrue((result as DataResult.Success<SearchService.BookSearchResponse>).value.ok == true)
+    }
+
     private class RecordingNetworkFacade(
         private val response: String
     ) : NetworkFacade {
@@ -131,6 +173,14 @@ class SearchServiceTest {
         override suspend fun execute(request: NetworkRequest): String {
             lastRequest = request
             return response
+        }
+    }
+
+    private class FailingNetworkFacade(
+        private val throwable: Throwable
+    ) : NetworkFacade {
+        override suspend fun execute(request: NetworkRequest): String {
+            throw throwable
         }
     }
 }

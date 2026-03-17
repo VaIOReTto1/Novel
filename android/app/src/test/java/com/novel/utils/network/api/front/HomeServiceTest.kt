@@ -4,12 +4,15 @@ import com.google.gson.GsonBuilder
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.result.AppError
+import com.novel.core.result.DataResult
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ImmutableListTypeAdapterFactory
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.IOException
 
 class HomeServiceTest {
 
@@ -81,6 +84,45 @@ class HomeServiceTest {
         assertEquals("https://openai.com/", result.data?.first()?.linkUrl)
     }
 
+    @Test
+    fun getHomeBooksResult_wrapsIoFailureAsNetworkError() = runBlocking {
+        val facade = FailingNetworkFacade(IOException("offline"))
+        val service = HomeService(gson, facade)
+
+        val result = service.getHomeBooksResult()
+
+        assertTrue(result is DataResult.Failure)
+        assertTrue((result as DataResult.Failure).error is AppError.Network)
+    }
+
+    @Test
+    fun getFriendLinksResult_wrapsSuccessInDataResult() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "code":"0",
+                  "message":"ok",
+                  "ok":true,
+                  "data":[
+                    {
+                      "linkName":"OpenAI",
+                      "linkUrl":"https://openai.com/"
+                    }
+                  ]
+                }
+            """.trimIndent()
+        )
+        val service = HomeService(gson, facade)
+
+        val result = service.getFriendLinksResult()
+
+        assertTrue(result is DataResult.Success<*>)
+        assertEquals(
+            "OpenAI",
+            (result as DataResult.Success<HomeService.FriendLinksResponse>).value.data?.first()?.linkName
+        )
+    }
+
     private class RecordingNetworkFacade(
         private val response: String
     ) : NetworkFacade {
@@ -89,6 +131,14 @@ class HomeServiceTest {
         override suspend fun execute(request: NetworkRequest): String {
             lastRequest = request
             return response
+        }
+    }
+
+    private class FailingNetworkFacade(
+        private val throwable: Throwable
+    ) : NetworkFacade {
+        override suspend fun execute(request: NetworkRequest): String {
+            throw throwable
         }
     }
 }

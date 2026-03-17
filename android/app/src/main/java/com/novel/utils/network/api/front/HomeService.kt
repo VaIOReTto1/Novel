@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.result.AppError
+import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -161,6 +163,12 @@ class HomeService @Inject constructor(
         return requestAndParse("home/friend_Link/list", FriendLinksResponse::class.java)
     }
 
+    suspend fun getHomeBooksResult(): DataResult<HomeBooksResponse> =
+        runResulting { getHomeBooksBlocking() }
+
+    suspend fun getFriendLinksResult(): DataResult<FriendLinksResponse> =
+        runResulting { getFriendLinksBlocking() }
+
     suspend fun getCarouselBooksBlocking(): List<HomeBook> {
         return suspendCancellableCoroutine { cont ->
             getCarouselBooks { books, error ->
@@ -190,5 +198,13 @@ class HomeService @Inject constructor(
 
         return gson.fromJson(response, clazz)
     }
+
+    private suspend fun <T> runResulting(block: suspend () -> T): DataResult<T> =
+        try {
+            DataResult.Success(block())
+        } catch (throwable: Throwable) {
+            TimberLogger.e("HomeService", "DataResult request failed", throwable)
+            DataResult.Failure(AppError.fromThrowable(throwable))
+        }
     // endregion
 }

@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.result.AppError
+import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -172,6 +174,9 @@ class SearchService @Inject constructor(
         return requestAndParse(request, BookSearchResponse::class.java)
     }
 
+    suspend fun searchBooksResult(request: SearchRequest): DataResult<BookSearchResponse> =
+        runResulting { searchBooksBlocking(request) }
+
     suspend fun searchBooksByKeywordBlocking(
         keyword: String,
         pageNum: Int = 1,
@@ -248,6 +253,14 @@ class SearchService @Inject constructor(
             request.sort?.let { put("sort", it) }
             request.pageNum?.let { put("pageNum", it.toString()) }
             request.pageSize?.let { put("pageSize", it.toString()) }
+        }
+
+    private suspend fun <T> runResulting(block: suspend () -> T): DataResult<T> =
+        try {
+            DataResult.Success(block())
+        } catch (throwable: Throwable) {
+            TimberLogger.e("SearchService", "DataResult request failed", throwable)
+            DataResult.Failure(AppError.fromThrowable(throwable))
         }
     // endregion
 }

@@ -5,8 +5,6 @@ import com.novel.page.read.service.common.ServiceLogger
 import com.novel.page.read.service.common.ReaderServiceConfig
 import com.novel.page.read.viewmodel.PageFlipEffect
 import com.novel.page.read.viewmodel.ReaderSettings
-import com.novel.utils.Store.UserDefaults.NovelUserDefaults
-import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
 
 /**
  * 设置保存器
@@ -19,7 +17,7 @@ import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
  * - 异常安全处理
  */
 class SettingsSaver @javax.inject.Inject constructor(
-    private val userDefaults: NovelUserDefaults,
+    private val readerSettingsStorage: ReaderSettingsStorage,
     private val logger: ServiceLogger
 ) {
     
@@ -54,7 +52,7 @@ class SettingsSaver @javax.inject.Inject constructor(
      */
     fun savePageFlipEffect(pageFlipEffect: PageFlipEffect) {
         try {
-            userDefaults.set(pageFlipEffect.name, NovelUserDefaultsKey.PAGE_FLIP_EFFECT)
+            readerSettingsStorage.setPageFlipEffect(pageFlipEffect.name)
             logger.logDebug("翻页效果保存成功: ${pageFlipEffect.name}", TAG)
         } catch (e: Exception) {
             logger.logError("翻页效果保存失败", e, TAG)
@@ -67,11 +65,11 @@ class SettingsSaver @javax.inject.Inject constructor(
     fun saveFontSize(fontSize: Int) {
         try {
             if (fontSize in ReaderServiceConfig.MIN_FONT_SIZE..ReaderServiceConfig.MAX_FONT_SIZE) {
-                userDefaults.set(fontSize, NovelUserDefaultsKey.FONT_SIZE)
+                readerSettingsStorage.setFontSize(fontSize)
                 logger.logDebug("字体大小保存成功: ${fontSize}sp", TAG)
             } else {
                 logger.logWarning("字体大小超出范围: ${fontSize}sp, 保存默认值", TAG)
-                userDefaults.set(ReaderServiceConfig.DEFAULT_FONT_SIZE, NovelUserDefaultsKey.FONT_SIZE)
+                readerSettingsStorage.setFontSize(ReaderServiceConfig.DEFAULT_FONT_SIZE)
             }
         } catch (e: Exception) {
             logger.logError("字体大小保存失败", e, TAG)
@@ -87,7 +85,7 @@ class SettingsSaver @javax.inject.Inject constructor(
                 ReaderServiceConfig.MIN_BRIGHTNESS, 
                 ReaderServiceConfig.MAX_BRIGHTNESS
             )
-            userDefaults.set(clampedBrightness, NovelUserDefaultsKey.BRIGHTNESS)
+            readerSettingsStorage.setBrightness(clampedBrightness)
             logger.logDebug("亮度保存成功: ${(clampedBrightness * 100).toInt()}%", TAG)
         } catch (e: Exception) {
             logger.logError("亮度保存失败", e, TAG)
@@ -100,11 +98,11 @@ class SettingsSaver @javax.inject.Inject constructor(
     fun saveBackgroundColor(backgroundColor: androidx.compose.ui.graphics.Color) {
         try {
             val colorString = formatColor(backgroundColor)
-            userDefaults.set(colorString, NovelUserDefaultsKey.BACKGROUND_COLOR)
+            readerSettingsStorage.setBackgroundColor(colorString)
             logger.logDebug("背景颜色保存成功: ${colorToHex(backgroundColor)} -> $colorString", TAG)
         } catch (e: Exception) {
             logger.logError("背景颜色保存失败，使用默认值", e, TAG)
-            userDefaults.set(ReaderServiceConfig.DEFAULT_BACKGROUND_COLOR_STRING, NovelUserDefaultsKey.BACKGROUND_COLOR)
+            readerSettingsStorage.setBackgroundColor(ReaderServiceConfig.DEFAULT_BACKGROUND_COLOR_STRING)
         }
     }
 
@@ -114,11 +112,11 @@ class SettingsSaver @javax.inject.Inject constructor(
     fun saveTextColor(textColor: androidx.compose.ui.graphics.Color) {
         try {
             val colorString = formatColor(textColor)
-            userDefaults.set(colorString, NovelUserDefaultsKey.TEXT_COLOR)
+            readerSettingsStorage.setTextColor(colorString)
             logger.logDebug("文字颜色保存成功: ${colorToHex(textColor)} -> $colorString", TAG)
         } catch (e: Exception) {
             logger.logError("文字颜色保存失败，使用默认值", e, TAG)
-            userDefaults.set(ReaderServiceConfig.DEFAULT_TEXT_COLOR_STRING, NovelUserDefaultsKey.TEXT_COLOR)
+            readerSettingsStorage.setTextColor(ReaderServiceConfig.DEFAULT_TEXT_COLOR_STRING)
         }
     }
 

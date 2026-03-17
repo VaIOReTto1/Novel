@@ -10,6 +10,12 @@ interface StorageFacade {
     fun getString(key: String): String?
     fun remove(key: String)
 
+    fun putString(key: NovelUserDefaultsKey, value: String) {
+        throw UnsupportedOperationException("Enum string storage is not implemented")
+    }
+
+    fun getString(key: NovelUserDefaultsKey): String? = null
+
     fun putInt(key: NovelUserDefaultsKey, value: Int)
     fun getInt(key: NovelUserDefaultsKey): Int?
 
@@ -18,6 +24,12 @@ interface StorageFacade {
 
     fun putLong(key: NovelUserDefaultsKey, value: Long)
     fun getLong(key: NovelUserDefaultsKey): Long?
+
+    fun putFloat(key: NovelUserDefaultsKey, value: Float) {
+        throw UnsupportedOperationException("Float storage is not implemented")
+    }
+
+    fun getFloat(key: NovelUserDefaultsKey): Float? = null
 
     fun remove(key: NovelUserDefaultsKey)
     fun contains(key: NovelUserDefaultsKey): Boolean
@@ -38,6 +50,12 @@ class LegacyStorageFacade @Inject constructor(
         userDefaults.remove(key)
     }
 
+    override fun putString(key: NovelUserDefaultsKey, value: String) {
+        userDefaults.set(value, key)
+    }
+
+    override fun getString(key: NovelUserDefaultsKey): String? = userDefaults.get(key)
+
     override fun putInt(key: NovelUserDefaultsKey, value: Int) {
         userDefaults.set(value, key)
     }
@@ -55,6 +73,12 @@ class LegacyStorageFacade @Inject constructor(
     }
 
     override fun getLong(key: NovelUserDefaultsKey): Long? = userDefaults.get(key)
+
+    override fun putFloat(key: NovelUserDefaultsKey, value: Float) {
+        userDefaults.set(value, key)
+    }
+
+    override fun getFloat(key: NovelUserDefaultsKey): Float? = userDefaults.get(key)
 
     override fun remove(key: NovelUserDefaultsKey) {
         userDefaults.remove(key)

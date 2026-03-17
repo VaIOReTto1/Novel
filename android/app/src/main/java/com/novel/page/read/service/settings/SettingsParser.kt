@@ -7,8 +7,6 @@ import androidx.core.graphics.ColorUtils
 import com.novel.page.read.service.common.ServiceLogger
 import com.novel.page.read.service.common.ReaderServiceConfig
 import com.novel.page.read.viewmodel.PageFlipEffect
-import com.novel.utils.Store.UserDefaults.NovelUserDefaults
-import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
 
 /**
  * 设置解析器
@@ -21,7 +19,7 @@ import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
  * - 设置项验证和修复
  */
 class SettingsParser @javax.inject.Inject constructor(
-    private val userDefaults: NovelUserDefaults,
+    private val readerSettingsStorage: ReaderSettingsStorage,
     private val logger: ServiceLogger
 ) {
     
@@ -33,7 +31,7 @@ class SettingsParser @javax.inject.Inject constructor(
      * 解析翻页效果设置
      */
     fun parsePageFlipEffect(defaultValue: PageFlipEffect = ReaderServiceConfig.DEFAULT_PAGE_FLIP_EFFECT): PageFlipEffect {
-        return userDefaults.get<String>(NovelUserDefaultsKey.PAGE_FLIP_EFFECT)?.let { savedEffect ->
+        return readerSettingsStorage.getPageFlipEffect()?.let { savedEffect ->
             try {
                 val effect = PageFlipEffect.valueOf(savedEffect)
                 logger.logDebug("翻页效果设置解析成功: $savedEffect", TAG)
@@ -52,7 +50,7 @@ class SettingsParser @javax.inject.Inject constructor(
      * 解析字体大小设置
      */
     fun parseFontSize(defaultValue: Int = ReaderServiceConfig.DEFAULT_FONT_SIZE): Int {
-        return userDefaults.get<Int>(NovelUserDefaultsKey.FONT_SIZE)?.let { fontSize ->
+        return readerSettingsStorage.getFontSize()?.let { fontSize ->
             if (fontSize in ReaderServiceConfig.MIN_FONT_SIZE..ReaderServiceConfig.MAX_FONT_SIZE) {
                 logger.logDebug("字体大小设置解析成功: ${fontSize}sp", TAG)
                 fontSize
@@ -70,7 +68,7 @@ class SettingsParser @javax.inject.Inject constructor(
      * 解析亮度设置
      */
     fun parseBrightness(defaultValue: Float = ReaderServiceConfig.DEFAULT_BRIGHTNESS): Float {
-        return userDefaults.get<Float>(NovelUserDefaultsKey.BRIGHTNESS)?.let { brightness ->
+        return readerSettingsStorage.getBrightness()?.let { brightness ->
             if (brightness in ReaderServiceConfig.MIN_BRIGHTNESS..ReaderServiceConfig.MAX_BRIGHTNESS) {
                 logger.logDebug("亮度设置解析成功: ${(brightness * 100).toInt()}%", TAG)
                 brightness
@@ -88,7 +86,7 @@ class SettingsParser @javax.inject.Inject constructor(
      * 解析背景颜色设置
      */
     fun parseBackgroundColor(defaultValue: Color = ReaderServiceConfig.DEFAULT_BACKGROUND_COLOR): Color {
-        return userDefaults.get<String>(NovelUserDefaultsKey.BACKGROUND_COLOR)?.let { colorString ->
+        return readerSettingsStorage.getBackgroundColor()?.let { colorString ->
             logger.logDebug("尝试解析背景颜色: $colorString", TAG)
             parseColor(colorString, "背景颜色", defaultValue)
         } ?: run {
@@ -101,7 +99,7 @@ class SettingsParser @javax.inject.Inject constructor(
      * 解析文字颜色设置
      */
     fun parseTextColor(defaultValue: Color = ReaderServiceConfig.DEFAULT_TEXT_COLOR): Color {
-        return userDefaults.get<String>(NovelUserDefaultsKey.TEXT_COLOR)?.let { colorString ->
+        return readerSettingsStorage.getTextColor()?.let { colorString ->
             logger.logDebug("尝试解析文字颜色: $colorString", TAG)
             parseColor(colorString, "文字颜色", defaultValue)
         } ?: run {

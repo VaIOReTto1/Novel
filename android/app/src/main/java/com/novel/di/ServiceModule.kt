@@ -55,9 +55,9 @@ object ServiceModule {
     @Provides
     @Singleton
     fun provideSettingsParser(
-        userDefaults: com.novel.utils.Store.UserDefaults.NovelUserDefaults,
+        readerSettingsStorage: ReaderSettingsStorage,
         logger: ServiceLogger
-    ): SettingsParser = SettingsParser(userDefaults, logger)
+    ): SettingsParser = SettingsParser(readerSettingsStorage, logger)
 
     /**
      * 提供设置保存器
@@ -65,9 +65,9 @@ object ServiceModule {
     @Provides
     @Singleton
     fun provideSettingsSaver(
-        userDefaults: com.novel.utils.Store.UserDefaults.NovelUserDefaults,
+        readerSettingsStorage: ReaderSettingsStorage,
         logger: ServiceLogger
-    ): SettingsSaver = SettingsSaver(userDefaults, logger)
+    ): SettingsSaver = SettingsSaver(readerSettingsStorage, logger)
 
     /**
      * 提供启动性能监控器

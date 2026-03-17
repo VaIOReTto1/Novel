@@ -1,6 +1,7 @@
 package com.novel.core.result
 
 import com.google.gson.JsonParseException
+import kotlinx.coroutines.TimeoutCancellationException
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
@@ -32,6 +33,7 @@ sealed interface AppError {
     companion object {
         fun fromThrowable(throwable: Throwable): AppError = when (throwable) {
             is SocketTimeoutException,
+            is TimeoutCancellationException,
             is TimeoutException -> Timeout(throwable.message, throwable)
 
             is JsonParseException -> Serialization(throwable.message, throwable)

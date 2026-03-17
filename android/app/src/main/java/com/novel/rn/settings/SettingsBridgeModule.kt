@@ -6,6 +6,7 @@ import com.facebook.react.bridge.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
+import com.novel.rn.bridge.rejectMapped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -74,10 +75,19 @@ class SettingsBridgeModule(
                     }
                 } catch (e: TimeoutCancellationException) {
                     TimberLogger.w(TAG, "主题切换超时: $theme")
-                    promise.reject("TIMEOUT_ERROR", "主题切换操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "THEME_CHANGE_ERROR",
+                        defaultMessagePrefix = "主题切换失败",
+                        timeoutMessage = "主题切换操作超时"
+                    )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "主题切换失败: $theme", e)
-                    promise.reject("THEME_CHANGE_ERROR", "主题切换失败: ${e.message}")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "THEME_CHANGE_ERROR",
+                        defaultMessagePrefix = "主题切换失败"
+                    )
                 }
             }
         } ?: run {
@@ -105,10 +115,19 @@ class SettingsBridgeModule(
                     }
                 } catch (e: TimeoutCancellationException) {
                     TimberLogger.w(TAG, "夜间模式切换超时")
-                    promise.reject("TIMEOUT_ERROR", "夜间模式切换操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "TOGGLE_ERROR",
+                        defaultMessagePrefix = "夜间模式切换失败",
+                        timeoutMessage = "夜间模式切换操作超时"
+                    )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "夜间模式切换失败", e)
-                    promise.reject("TOGGLE_ERROR", "夜间模式切换失败: ${e.message}")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "TOGGLE_ERROR",
+                        defaultMessagePrefix = "夜间模式切换失败"
+                    )
                 }
             }
         } ?: run {
@@ -132,10 +151,19 @@ class SettingsBridgeModule(
                         TimberLogger.d(TAG, "✅ 跟随系统主题设置已发送: $follow")
                     }
                 } catch (e: TimeoutCancellationException) {
-                    promise.reject("TIMEOUT_ERROR", "设置跟随系统主题操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SETTING_ERROR",
+                        defaultMessagePrefix = "设置跟随系统主题失败",
+                        timeoutMessage = "设置跟随系统主题操作超时"
+                    )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "设置跟随系统主题失败", e)
-                    promise.reject("SETTING_ERROR", "设置跟随系统主题失败: ${e.message}")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SETTING_ERROR",
+                        defaultMessagePrefix = "设置跟随系统主题失败"
+                    )
                 }
             }
         } ?: run {
@@ -159,10 +187,19 @@ class SettingsBridgeModule(
                         TimberLogger.d(TAG, "✅ 自动切换夜间模式设置已发送: $enabled")
                     }
                 } catch (e: TimeoutCancellationException) {
-                    promise.reject("TIMEOUT_ERROR", "设置自动切换夜间模式操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SETTING_ERROR",
+                        defaultMessagePrefix = "设置自动切换夜间模式失败",
+                        timeoutMessage = "设置自动切换夜间模式操作超时"
+                    )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "设置自动切换夜间模式失败", e)
-                    promise.reject("SETTING_ERROR", "设置自动切换夜间模式失败: ${e.message}")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SETTING_ERROR",
+                        defaultMessagePrefix = "设置自动切换夜间模式失败"
+                    )
                 }
             }
         } ?: run {
@@ -254,10 +291,19 @@ class SettingsBridgeModule(
                         TimberLogger.d(TAG, "✅ 夜间模式时间设置已发送: $startTime - $endTime")
                     }
                 } catch (e: TimeoutCancellationException) {
-                    promise.reject("TIMEOUT_ERROR", "设置夜间模式时间操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SETTING_ERROR",
+                        defaultMessagePrefix = "设置夜间模式时间失败",
+                        timeoutMessage = "设置夜间模式时间操作超时"
+                    )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "设置夜间模式时间失败", e)
-                    promise.reject("SETTING_ERROR", "设置夜间模式时间失败: ${e.message}")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SETTING_ERROR",
+                        defaultMessagePrefix = "设置夜间模式时间失败"
+                    )
                 }
             }
         } ?: run {
@@ -281,10 +327,19 @@ class SettingsBridgeModule(
                         TimberLogger.d(TAG, "✅ 时间主题检查已发送")
                     }
                 } catch (e: TimeoutCancellationException) {
-                    promise.reject("TIMEOUT_ERROR", "检查时间主题操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "CHECK_ERROR",
+                        defaultMessagePrefix = "检查时间主题失败",
+                        timeoutMessage = "检查时间主题操作超时"
+                    )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "检查时间主题失败", e)
-                    promise.reject("CHECK_ERROR", "检查时间主题失败: ${e.message}")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "CHECK_ERROR",
+                        defaultMessagePrefix = "检查时间主题失败"
+                    )
                 }
             }
         } ?: run {
@@ -328,7 +383,11 @@ class SettingsBridgeModule(
 
         } catch (e: Exception) {
             TimberLogger.e(TAG, "退出登录失败", e)
-            promise.reject("LOGOUT_ERROR", "退出登录失败: ${e.message}", e)
+            promise.rejectMapped(
+                throwable = e,
+                defaultCode = "LOGOUT_ERROR",
+                defaultMessagePrefix = "退出登录失败"
+            )
         }
     }
 
@@ -422,12 +481,21 @@ class SettingsBridgeModule(
             } catch (e: TimeoutCancellationException) {
                 TimberLogger.w(TAG, "Effect监听超时")
                 if (promiseResolved.compareAndSet(false, true)) {
-                    promise.reject("TIMEOUT_ERROR", "操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "EFFECT_ERROR",
+                        defaultMessagePrefix = "操作失败",
+                        timeoutMessage = "操作超时"
+                    )
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "Effect监听异常", e)
                 if (promiseResolved.compareAndSet(false, true)) {
-                    promise.reject("EFFECT_ERROR", "操作失败: ${e.message}", e)
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "EFFECT_ERROR",
+                        defaultMessagePrefix = "操作失败"
+                    )
                 }
             }
         }

@@ -515,7 +515,13 @@ class NavigationBridgeModule(
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取首页推荐书籍失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("HOME_BOOKS_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "HOME_BOOKS_ERROR",
+                        defaultMessagePrefix = "获取首页推荐书籍失败"
+                    )
+                }
             }
         }
     }
@@ -588,7 +594,13 @@ class NavigationBridgeModule(
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取作家状态失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_STATUS_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "AUTHOR_STATUS_ERROR",
+                        defaultMessagePrefix = "获取作家状态失败"
+                    )
+                }
             }
         }
     }
@@ -630,7 +642,13 @@ class NavigationBridgeModule(
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取作家作品列表失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AUTHOR_BOOKS_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "AUTHOR_BOOKS_ERROR",
+                        defaultMessagePrefix = "获取作家作品列表失败"
+                    )
+                }
             }
         }
     }
@@ -662,7 +680,13 @@ class NavigationBridgeModule(
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取书籍分类失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("CATEGORY_LIST_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "CATEGORY_LIST_ERROR",
+                        defaultMessagePrefix = "获取书籍分类失败"
+                    )
+                }
             }
         }
     }
@@ -707,7 +731,13 @@ class NavigationBridgeModule(
                 CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "搜索书籍失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("SEARCH_BOOKS_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "SEARCH_BOOKS_ERROR",
+                        defaultMessagePrefix = "搜索书籍失败"
+                    )
+                }
             }
         }
     }
@@ -896,7 +926,13 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 润色失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_POLISH_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "AI_POLISH_ERROR",
+                        defaultMessagePrefix = "AI 润色失败"
+                    )
+                }
             }
         }
     }
@@ -916,7 +952,13 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 扩写失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_EXPAND_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "AI_EXPAND_ERROR",
+                        defaultMessagePrefix = "AI 扩写失败"
+                    )
+                }
             }
         }
     }
@@ -936,7 +978,13 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 缩写失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_CONDENSE_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "AI_CONDENSE_ERROR",
+                        defaultMessagePrefix = "AI 缩写失败"
+                    )
+                }
             }
         }
     }
@@ -956,7 +1004,13 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 续写失败", e)
-                CoroutineScope(Dispatchers.Main).launch { promise.reject("AI_CONTINUE_ERROR", e) }
+                CoroutineScope(Dispatchers.Main).launch {
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "AI_CONTINUE_ERROR",
+                        defaultMessagePrefix = "AI 续写失败"
+                    )
+                }
             }
         }
     }
@@ -991,7 +1045,11 @@ class NavigationBridgeModule(
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "作者注册失败", e)
                 CoroutineScope(Dispatchers.Main).launch {
-                    promise.reject("REGISTER_ERROR", e)
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "REGISTER_ERROR",
+                        defaultMessagePrefix = "作者注册失败"
+                    )
                 }
             }
         }
@@ -1059,12 +1117,21 @@ class NavigationBridgeModule(
             } catch (e: TimeoutCancellationException) {
                 TimberLogger.w(TAG, "Effect监听超时")
                 if (promiseResolved.compareAndSet(false, true)) {
-                    promise.reject("TIMEOUT_ERROR", "操作超时")
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "EFFECT_ERROR",
+                        defaultMessagePrefix = "操作失败",
+                        timeoutMessage = "操作超时"
+                    )
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "Effect监听异常", e)
                 if (promiseResolved.compareAndSet(false, true)) {
-                    promise.reject("EFFECT_ERROR", "操作失败: ${e.message}", e)
+                    promise.rejectMapped(
+                        throwable = e,
+                        defaultCode = "EFFECT_ERROR",
+                        defaultMessagePrefix = "操作失败"
+                    )
                 }
             }
         }

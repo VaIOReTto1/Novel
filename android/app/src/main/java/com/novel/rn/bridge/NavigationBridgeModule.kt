@@ -23,8 +23,6 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.TimeoutCancellationException
@@ -56,6 +54,7 @@ class NavigationBridgeModule(
     interface NavigationBridgeEntryPoint {
         fun novelUserDefaults(): NovelUserDefaults
         fun navigationBridgeNetworkGateway(): NavigationBridgeNetworkGateway
+        fun bridgeCoroutineScopes(): BridgeCoroutineScopes
     }
 
     companion object {
@@ -103,6 +102,14 @@ class NavigationBridgeModule(
             NavigationBridgeEntryPoint::class.java
         )
         entryPoint.navigationBridgeNetworkGateway()
+    }
+
+    private val bridgeCoroutineScopes: BridgeCoroutineScopes by lazy {
+        val entryPoint = EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            NavigationBridgeEntryPoint::class.java
+        )
+        entryPoint.bridgeCoroutineScopes()
     }
 
     // =================== Selection Menu (Android) ===================
@@ -335,7 +342,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToBecomeWriterWithStatus() {
         TimberLogger.d(TAG, "查询作家状态后导航到成为作家页面")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             var isAuthor = false
             try {
                 val service = com.novel.utils.network.api.author.AuthorService()
@@ -488,7 +495,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getHomeBooksHighPriority(promise: Promise) {
         TimberLogger.d(TAG, "获取首页推荐书籍（高优先级，Bridge 经 NetworkFacade 兼容主通路请求）")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val response = navigationBridgeNetworkGateway.getHomeBooksHighPriority()
                 val dataArray = Arguments.createArray()
@@ -512,10 +519,10 @@ class NavigationBridgeModule(
                     putBoolean("ok", response.ok)
                 }
 
-                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+                bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取首页推荐书籍失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "HOME_BOOKS_ERROR",
@@ -533,7 +540,7 @@ class NavigationBridgeModule(
     fun getReadingHistory(promise: Promise) {
         TimberLogger.d(TAG, "获取阅读历史记录")
         
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val historyItems = historyService.getAllHistory()
                 val historyArray = Arguments.createArray()
@@ -580,7 +587,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getAuthorStatus(promise: Promise) {
         TimberLogger.d(TAG, "RN调用获取作家状态")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val resp = com.novel.utils.network.api.author.AuthorService().getAuthorStatusBlocking()
                 val dataVal = resp.data
@@ -591,10 +598,10 @@ class NavigationBridgeModule(
                     putBoolean("ok", resp.ok ?: false)
                     putBoolean("isAuthor", isAuthor)
                 }
-                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+                bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取作家状态失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AUTHOR_STATUS_ERROR",
@@ -611,7 +618,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getAuthorBooks(pageNum: Int, pageSize: Int, promise: Promise) {
         TimberLogger.d(TAG, "RN调用获取作家作品列表 pageNum=$pageNum pageSize=$pageSize")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val listArray = Arguments.createArray()
                 val response = navigationBridgeNetworkGateway.getAuthorBooks(
@@ -639,10 +646,10 @@ class NavigationBridgeModule(
                     putBoolean("ok", response.ok)
                     putArray("list", listArray)
                 }
-                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+                bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取作家作品列表失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AUTHOR_BOOKS_ERROR",
@@ -660,7 +667,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getBookCategories(workDirection: Int, promise: Promise) {
         TimberLogger.d(TAG, "RN调用获取书籍分类 workDirection=$workDirection")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val arr = Arguments.createArray()
                 val response = navigationBridgeNetworkGateway.getBookCategories(workDirection)
@@ -677,10 +684,10 @@ class NavigationBridgeModule(
                     putBoolean("ok", response.ok)
                     putArray("list", arr)
                 }
-                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+                bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取书籍分类失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "CATEGORY_LIST_ERROR",
@@ -699,7 +706,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun searchBooks(workDirection: Int, categoryId: Int, pageNum: Int, pageSize: Int, promise: Promise) {
         TimberLogger.d(TAG, "RN调用搜索书籍 workDirection=$workDirection categoryId=$categoryId pageNum=$pageNum pageSize=$pageSize")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val listArr = Arguments.createArray()
                 val response = navigationBridgeNetworkGateway.searchBooks(
@@ -728,10 +735,10 @@ class NavigationBridgeModule(
                     response.total?.let { putDouble("total", it.toDouble()) }
                     response.pages?.let { putDouble("pages", it.toDouble()) }
                 }
-                CoroutineScope(Dispatchers.Main).launch { promise.resolve(map) }
+                bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "搜索书籍失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "SEARCH_BOOKS_ERROR",
@@ -914,10 +921,10 @@ class NavigationBridgeModule(
     @ReactMethod
     fun aiPolish(text: String, promise: Promise) {
         TimberLogger.d(TAG, "AI 润色，请求文本长度=${text.length}")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val resp = AiService().polishTextBlocking(text)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     if (resp.ok == true) {
                         promise.resolve(resp.data ?: "")
                     } else {
@@ -926,7 +933,7 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 润色失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_POLISH_ERROR",
@@ -940,10 +947,10 @@ class NavigationBridgeModule(
     @ReactMethod
     fun aiExpand(text: String, ratio: Int, promise: Promise) {
         TimberLogger.d(TAG, "AI 扩写，请求文本长度=${text.length}，ratio=$ratio")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val resp = AiService().expandTextBlocking(text, ratio)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     if (resp.ok == true) {
                         promise.resolve(resp.data ?: "")
                     } else {
@@ -952,7 +959,7 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 扩写失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_EXPAND_ERROR",
@@ -966,10 +973,10 @@ class NavigationBridgeModule(
     @ReactMethod
     fun aiCondense(text: String, ratio: Int, promise: Promise) {
         TimberLogger.d(TAG, "AI 缩写，请求文本长度=${text.length}，ratio=$ratio")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val resp = AiService().condenseTextBlocking(text, ratio)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     if (resp.ok == true) {
                         promise.resolve(resp.data ?: "")
                     } else {
@@ -978,7 +985,7 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 缩写失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_CONDENSE_ERROR",
@@ -992,10 +999,10 @@ class NavigationBridgeModule(
     @ReactMethod
     fun aiContinue(text: String, length: Int, promise: Promise) {
         TimberLogger.d(TAG, "AI 续写，请求文本长度=${text.length}，length=$length")
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val resp = AiService().continueTextBlocking(text, length)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     if (resp.ok == true) {
                         promise.resolve(resp.data ?: "")
                     } else {
@@ -1004,7 +1011,7 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "AI 续写失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_CONTINUE_ERROR",
@@ -1024,7 +1031,7 @@ class NavigationBridgeModule(
     fun registerAuthor(penName: String, sex: Int, promise: Promise) {
         TimberLogger.d(TAG, "触发作者注册 penName=$penName sex=$sex")
         // 执行网络请求
-        CoroutineScope(Dispatchers.IO).launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val authorService = com.novel.utils.network.api.author.AuthorService()
                 val req = com.novel.utils.network.api.author.AuthorService.AuthorRegisterRequest(
@@ -1035,7 +1042,7 @@ class NavigationBridgeModule(
                     workDirection = sex
                 )
                 val resp = authorService.registerAuthorBlocking(req)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.resolve(Arguments.createMap().apply {
                         putString("code", resp.code)
                         putString("message", resp.message)
@@ -1044,7 +1051,7 @@ class NavigationBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "作者注册失败", e)
-                CoroutineScope(Dispatchers.Main).launch {
+                bridgeCoroutineScopes.main.launch {
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "REGISTER_ERROR",
@@ -1101,7 +1108,7 @@ class NavigationBridgeModule(
         val promiseResolved = AtomicBoolean(false)
         
         // 在主线程上启动协程来监听Effect
-        CoroutineScope(Dispatchers.Main).launch {
+        bridgeCoroutineScopes.main.launch {
             try {
                 // 设置超时时间，避免无限等待
                 withTimeout(10000) {

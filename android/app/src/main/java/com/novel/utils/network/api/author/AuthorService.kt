@@ -2,6 +2,7 @@ package com.novel.utils.network.api.author
 
 import androidx.compose.runtime.Stable
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import com.novel.core.network.LegacyApiServiceAdapter
 import com.novel.core.network.NetworkFacade
@@ -10,6 +11,7 @@ import com.novel.core.network.NetworkRequestMethod
 import com.novel.core.result.AppError
 import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
+import com.novel.utils.network.ImmutableListTypeAdapterFactory
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_AUTHOR
 import kotlinx.collections.immutable.ImmutableList
@@ -38,6 +40,10 @@ class AuthorService @Inject constructor(
 ) {
 
     constructor() : this(LegacyApiServiceAdapter())
+
+    private val gson: Gson = GsonBuilder()
+        .registerTypeAdapterFactory(ImmutableListTypeAdapterFactory())
+        .create()
     
     // region 数据结构
     @Stable
@@ -439,42 +445,52 @@ class AuthorService @Inject constructor(
     }
 
     suspend fun getAuthorBooksBlocking(pageNum: Int = 1, pageSize: Int = 10): BookListResponse {
-        return suspendCancellableCoroutine { cont ->
-            getAuthorBooks(pageNum, pageSize) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_AUTHOR,
+                endpoint = "books",
+                method = NetworkRequestMethod.GET,
+                queryParams = mapOf(
+                    "pageNum" to pageNum.toString(),
+                    "pageSize" to pageSize.toString()
+                ),
+                headers = mapOf("Accept" to "*/*")
+            ),
+            clazz = BookListResponse::class.java
+        )
     }
 
     suspend fun publishChapterBlocking(bookId: Long, request: ChapterAddRequest): BaseResponse {
-        return suspendCancellableCoroutine { cont ->
-            publishChapter(bookId, request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_AUTHOR,
+                endpoint = "book/chapter/$bookId",
+                method = NetworkRequestMethod.POST,
+                bodyParams = mapOf(
+                    "bookId" to request.bookId.toString(),
+                    "chapterName" to request.chapterName,
+                    "chapterContent" to request.chapterContent,
+                    "isVip" to request.isVip.toString()
+                ),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = BaseResponse::class.java
+        )
     }
 
     suspend fun getChapterBlocking(chapterId: Long): ChapterContentResponse {
-        return suspendCancellableCoroutine { cont ->
-            getChapter(chapterId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_AUTHOR,
+                endpoint = "book/chapter/$chapterId",
+                method = NetworkRequestMethod.GET,
+                headers = mapOf("Accept" to "*/*")
+            ),
+            clazz = ChapterContentResponse::class.java
+        )
     }
     // endregion
 
@@ -483,7 +499,7 @@ class AuthorService @Inject constructor(
         clazz: Class<T>
     ): T {
         val response = networkFacade.execute(request)
-        return Gson().fromJson(response, clazz)
+        return gson.fromJson(response, clazz)
     }
 
     private suspend fun <T> runResulting(block: suspend () -> T): DataResult<T> =
@@ -504,7 +520,7 @@ class AuthorService @Inject constructor(
             error != null -> callback(null, error)
             response != null -> {
                 try {
-                    callback(Gson().fromJson(response, clazz), null)
+                    callback(gson.fromJson(response, clazz), null)
                 } catch (e: Exception) {
                     TimberLogger.e("AuthorService", "JSON解析失败", e)
                     callback(null, e)

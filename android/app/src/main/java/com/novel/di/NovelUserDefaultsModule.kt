@@ -2,6 +2,8 @@ package com.novel.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.novel.core.storage.LegacyStorageFacade
+import com.novel.core.storage.StorageFacade
 import com.novel.utils.TimberLogger
 import com.novel.utils.Store.NovelKeyChain.NovelKeyChain
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
@@ -9,6 +11,7 @@ import com.novel.utils.Store.UserDefaults.SharedPrefsUserDefaults
 import com.novel.utils.network.TokenProvider
 import com.novel.utils.StringProvider
 import com.novel.utils.AndroidStringProvider
+import com.novel.rn.settings.SettingsPreferenceStorage
 import com.novel.rn.settings.SettingsUtils
 import java.time.Clock
 import dagger.Module
@@ -84,6 +87,15 @@ object NovelUserDefaultsModule {
      * @param keyChain 安全密钥链服务
      * @return TokenProvider实例
      */
+    @Provides
+    @Singleton
+    fun provideStorageFacade(
+        legacyStorageFacade: LegacyStorageFacade
+    ): StorageFacade {
+        TimberLogger.d(TAG, "创建StorageFacade兼容层")
+        return legacyStorageFacade
+    }
+
     @Provides
     @Singleton
     fun provideTokenProvider(userDefaults: NovelUserDefaults): TokenProvider {
@@ -172,9 +184,9 @@ object NovelUserDefaultsModule {
     @Singleton
     fun provideSettingsUtils(
         @ApplicationContext context: Context,
-        novelUserDefaults: NovelUserDefaults
+        settingsPreferenceStorage: SettingsPreferenceStorage
     ): SettingsUtils {
         TimberLogger.d(TAG, "创建SettingsUtils工具")
-        return SettingsUtils(context, novelUserDefaults)
+        return SettingsUtils(context, settingsPreferenceStorage)
     }
 }

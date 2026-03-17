@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService` 与 `UserService` 核心主路径已完成网络收口，`AppError + DataResult<T>` 已接入 Home/Search 服务边界和 Settings Bridge 错误映射，`StorageFacade` 兼容层骨架也已建立
-- 下一步：继续推进基础设施收口主线，优先选择 `NavigationBridgeModule` 或 `UserBridgeModule` 继续接入 `AppError`，然后为 `StorageFacade` 选择首个低风险 key 做试点迁移
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService` 与 `UserService` 核心主路径已完成网络收口，`AppError + DataResult<T>` 已接入 Home/Search 服务边界和 Settings Bridge 错误映射，`StorageFacade` 也已通过 `SettingsPreferenceStorage` 落下首批低风险 key 试点
+- 下一步：继续推进基础设施收口主线，优先选择 `NavigationBridgeModule` 或 `UserBridgeModule` 继续接入 `AppError`，然后扩展 `StorageFacade` 到 Search 历史或 Reader 低风险配置 key
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |

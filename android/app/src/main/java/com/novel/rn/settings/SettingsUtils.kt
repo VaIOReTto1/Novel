@@ -9,7 +9,6 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.novel.ui.theme.ThemeManager
-import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import com.novel.utils.TimberLogger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -43,16 +42,11 @@ class SettingsUtils @Inject constructor(
     @Stable
     @ApplicationContext private val context: Context,
     @Stable
-    private val novelUserDefaults: NovelUserDefaults
+    private val settingsPreferenceStorage: SettingsPreferenceStorage
 ) {
 
     companion object {
         private const val TAG = "SettingsUtils"
-        private const val PREF_NIGHT_MODE = "night_mode"
-        private const val PREF_AUTO_NIGHT_MODE = "auto_night_mode"
-        private const val PREF_FOLLOW_SYSTEM = "follow_system_theme"
-        private const val PREF_NIGHT_START_TIME = "night_start_time"
-        private const val PREF_NIGHT_END_TIME = "night_end_time"
 
         // 🎯 优化：WorkManager任务标识
         private const val NIGHT_MODE_WORK_TAG = "night_mode_timer_work"
@@ -181,7 +175,7 @@ class SettingsUtils @Inject constructor(
      */
     fun setNightMode(mode: String) {
         TimberLogger.d(TAG, "🔧 开始设置主题模式: $mode")
-        novelUserDefaults.setString(PREF_NIGHT_MODE, mode)
+        settingsPreferenceStorage.setNightMode(mode)
         TimberLogger.d(TAG, "📝 已保存主题模式到配置: $mode")
 
         // 🎯 优化：只通知ThemeManager，不期待返回值
@@ -191,13 +185,13 @@ class SettingsUtils @Inject constructor(
 
         when (mode) {
             "light" -> {
-                novelUserDefaults.setString(PREF_FOLLOW_SYSTEM, "false")
+                settingsPreferenceStorage.setFollowSystemTheme(false)
             }
             "dark" -> {
-                novelUserDefaults.setString(PREF_FOLLOW_SYSTEM, "false")
+                settingsPreferenceStorage.setFollowSystemTheme(false)
             }
             "auto" -> {
-                novelUserDefaults.setString(PREF_FOLLOW_SYSTEM, "true")
+                settingsPreferenceStorage.setFollowSystemTheme(true)
             }
         }
     }
@@ -206,21 +200,21 @@ class SettingsUtils @Inject constructor(
      * 获取当前夜间模式
      */
     internal fun getCurrentNightMode(): String {
-        return novelUserDefaults.getString(PREF_NIGHT_MODE) ?: "auto"
+        return settingsPreferenceStorage.getNightMode()
     }
 
     /**
      * 是否跟随系统主题
      */
     fun isFollowSystemTheme(): Boolean {
-        return novelUserDefaults.getString(PREF_FOLLOW_SYSTEM)?.toBoolean() ?: true
+        return settingsPreferenceStorage.isFollowSystemTheme()
     }
 
     /**
      * 设置是否跟随系统主题
      */
     fun setFollowSystemTheme(follow: Boolean) {
-        novelUserDefaults.setString(PREF_FOLLOW_SYSTEM, follow.toString())
+        settingsPreferenceStorage.setFollowSystemTheme(follow)
         if (follow) {
             setNightMode("auto")
         }
@@ -232,7 +226,7 @@ class SettingsUtils @Inject constructor(
      */
     fun setAutoNightMode(enabled: Boolean) {
         TimberLogger.d(TAG, "🎯 设置自动切换夜间模式: $enabled")
-        novelUserDefaults.setString(PREF_AUTO_NIGHT_MODE, enabled.toString())
+        settingsPreferenceStorage.setAutoNightModeEnabled(enabled)
 
         if (enabled) {
             startTimeBasedThemeCheckWithWorkManager()
@@ -245,7 +239,7 @@ class SettingsUtils @Inject constructor(
      * 是否启用自动切换夜间模式
      */
     fun isAutoNightModeEnabled(): Boolean {
-        return novelUserDefaults.getString(PREF_AUTO_NIGHT_MODE)?.toBoolean() ?: false
+        return settingsPreferenceStorage.isAutoNightModeEnabled()
     }
 
     /**
@@ -253,8 +247,7 @@ class SettingsUtils @Inject constructor(
      */
     fun setNightModeTime(startTime: String, endTime: String) {
         TimberLogger.d(TAG, "设置夜间模式时间: $startTime - $endTime")
-        novelUserDefaults.setString(PREF_NIGHT_START_TIME, startTime)
-        novelUserDefaults.setString(PREF_NIGHT_END_TIME, endTime)
+        settingsPreferenceStorage.setNightModeTime(startTime, endTime)
 
         // 如果定时切换已启用，重新启动检查
         if (isAutoNightModeEnabled()) {
@@ -266,14 +259,14 @@ class SettingsUtils @Inject constructor(
      * 获取夜间模式开始时间
      */
     fun getNightModeStartTime(): String {
-        return novelUserDefaults.getString(PREF_NIGHT_START_TIME) ?: "22:00"
+        return settingsPreferenceStorage.getNightModeStartTime()
     }
 
     /**
      * 获取夜间模式结束时间
      */
     fun getNightModeEndTime(): String {
-        return novelUserDefaults.getString(PREF_NIGHT_END_TIME) ?: "06:00"
+        return settingsPreferenceStorage.getNightModeEndTime()
     }
 
     /**
@@ -490,7 +483,9 @@ class NightModeWorker(
             // 这里使用简化的方式直接访问
             val prefs = applicationContext.getSharedPreferences("theme_preferences", Context.MODE_PRIVATE)
             val novelUserDefaults = com.novel.utils.Store.UserDefaults.SharedPrefsUserDefaults(prefs)
-            val settingsUtils = SettingsUtils(applicationContext, novelUserDefaults)
+            val storageFacade = com.novel.core.storage.LegacyStorageFacade(novelUserDefaults)
+            val preferenceStorage = SettingsPreferenceStorage(storageFacade)
+            val settingsUtils = SettingsUtils(applicationContext, preferenceStorage)
             
             settingsUtils.checkAndSwitchThemeBasedOnTime()
             

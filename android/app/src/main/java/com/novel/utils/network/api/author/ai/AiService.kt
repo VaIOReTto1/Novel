@@ -1,11 +1,20 @@
 package com.novel.utils.network.api.author.ai
 
 import androidx.compose.runtime.Stable
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.novel.core.network.LegacyApiServiceAdapter
+import com.novel.core.network.NetworkFacade
+import com.novel.core.network.NetworkRequest
+import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.result.AppError
+import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_AI
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.Exception
 import javax.inject.Inject
@@ -23,7 +32,11 @@ import javax.inject.Singleton
  * 返回体：后端为 `RestResp<String>`，本地映射为 [AiResponse]，其中 `data` 字段即为 AI 处理后的纯文本结果。
  */
 @Singleton
-class AiService @Inject constructor() {
+class AiService @Inject constructor(
+    private val networkFacade: NetworkFacade
+) {
+
+    constructor() : this(LegacyApiServiceAdapter())
     
     // region 数据结构
     /**
@@ -86,22 +99,18 @@ class AiService @Inject constructor() {
         callback: (AiResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AiService", "开始 polishText()，文本长度：${text.length}")
-        
-        val params = mapOf(
-            "text" to text
-        )
-        
-        // 根据后端文档，AI 接口为 POST + query 参数
-        ApiService.postQuery(
-            baseUrl = BASE_URL_AI,
-            endpoint = "polish",
-            params = params,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, AiResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    endpoint = "polish",
+                    queryParams = mapOf("text" to text)
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -117,23 +126,21 @@ class AiService @Inject constructor() {
         callback: (AiResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AiService", "开始 expandText()，文本长度：${text.length}，扩写比例：$ratio")
-        
-        val params = mapOf(
-            "text" to text,
-            // 文档为 number(double)；服务端实际读取 query，保持字符串传参更兼容
-            "ratio" to ratio.toString()
-        )
-        
-        ApiService.postQuery(
-            baseUrl = BASE_URL_AI,
-            endpoint = "expand",
-            params = params,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, AiResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    endpoint = "expand",
+                    queryParams = mapOf(
+                        "text" to text,
+                        "ratio" to ratio.toString()
+                    )
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -149,22 +156,21 @@ class AiService @Inject constructor() {
         callback: (AiResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AiService", "开始 continueText()，文本长度：${text.length}，续写长度：$length")
-        
-        val params = mapOf(
-            "text" to text,
-            "length" to length.toString()
-        )
-        
-        ApiService.postQuery(
-            baseUrl = BASE_URL_AI,
-            endpoint = "continue",
-            params = params,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, AiResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    endpoint = "continue",
+                    queryParams = mapOf(
+                        "text" to text,
+                        "length" to length.toString()
+                    )
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -180,22 +186,21 @@ class AiService @Inject constructor() {
         callback: (AiResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AiService", "开始 condenseText()，文本长度：${text.length}，缩写比例：$ratio")
-        
-        val params = mapOf(
-            "text" to text,
-            "ratio" to ratio.toString()
-        )
-        
-        ApiService.postQuery(
-            baseUrl = BASE_URL_AI,
-            endpoint = "condense",
-            params = params,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, AiResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    endpoint = "condense",
+                    queryParams = mapOf(
+                        "text" to text,
+                        "ratio" to ratio.toString()
+                    )
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -263,6 +268,9 @@ class AiService @Inject constructor() {
         return polishTextBlocking(request.text)
     }
 
+    suspend fun polishTextResult(text: String): DataResult<AiResponse> =
+        runResulting { polishTextBlocking(text) }
+
     suspend fun expandTextBlocking(text: String, ratio: Int): AiResponse {
         return suspendCancellableCoroutine { cont ->
             expandText(text, ratio) { response, error ->
@@ -316,33 +324,32 @@ class AiService @Inject constructor() {
 
     // endregion
 
-    // region 响应处理
-    private fun <T> handleResponse(
-        response: String?,
-        error: Throwable?,
-        clazz: Class<T>,
-        callback: (T?, Throwable?) -> Unit
-    ) {
-        when {
-            error != null -> {
-                TimberLogger.e("AiService", "请求失败", error)
-                callback(null, error)
-            }
-            response != null -> {
-                try {
-                    val result = Gson().fromJson(response, clazz)
-                    TimberLogger.d("AiService", "请求成功，响应：$response")
-                    callback(result, null)
-                } catch (e: Exception) {
-                    TimberLogger.e("AiService", "解析响应失败", e)
-                    callback(null, e)
-                }
-            }
-            else -> {
-                TimberLogger.e("AiService", "响应为空")
-                callback(null, Exception("Response is null"))
-            }
-        }
+    private suspend fun requestAndParse(
+        endpoint: String,
+        queryParams: Map<String, String>
+    ): AiResponse {
+        val response = networkFacade.execute(
+            NetworkRequest(
+                baseUrl = BASE_URL_AI,
+                endpoint = endpoint,
+                method = NetworkRequestMethod.POST_QUERY,
+                queryParams = queryParams,
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            )
+        )
+
+        return Gson().fromJson(response, AiResponse::class.java)
     }
+
+    private suspend fun <T> runResulting(block: suspend () -> T): DataResult<T> =
+        try {
+            DataResult.Success(block())
+        } catch (throwable: Throwable) {
+            TimberLogger.e("AiService", "DataResult request failed", throwable)
+            DataResult.Failure(AppError.fromThrowable(throwable))
+        }
     // endregion
 }

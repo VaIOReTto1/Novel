@@ -3,7 +3,6 @@ package com.novel.page.search.repository
 import androidx.compose.runtime.Stable
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.api.front.SearchService
-import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import com.google.gson.Gson
 import com.novel.page.search.component.SearchRankingItem
 import com.novel.page.search.viewmodel.BookInfoRespDto
@@ -111,9 +110,9 @@ class SearchRepository @Inject constructor(
     /** 搜索服务，提供网络搜索功能 */
     @Stable
     private val searchService: SearchService,
-    /** 用户配置存储，管理本地设置 */
+    /** 搜索本地偏好存储 */
     @Stable
-    private val userDefaults: NovelUserDefaults,
+    private val searchPreferenceStorage: SearchPreferenceStorage,
     /** JSON序列化工具 */
     @Stable
     private val gson: Gson,
@@ -137,11 +136,6 @@ class SearchRepository @Inject constructor(
         /** 搜索结果缓存过期时间（5分钟） */
         private const val SEARCH_CACHE_DURATION_MS = 5 * 60 * 1000L
         
-        // 本地存储键名
-        /** 搜索历史存储键 */
-        private const val SEARCH_HISTORY_KEY = "search_history"
-        /** 历史展开状态存储键 */
-        private const val HISTORY_EXPANDED_KEY = "history_expanded"
     }
     
     /** 搜索结果缓存 */
@@ -258,7 +252,7 @@ class SearchRepository @Inject constructor(
     fun getSearchHistory(): List<String> {
         return try {
             // 使用Gson解析JSON字符串
-            val historyJson = userDefaults.getString(SEARCH_HISTORY_KEY)
+            val historyJson = searchPreferenceStorage.getSearchHistoryJson()
             if (historyJson != null) {
                 val type = object : com.google.gson.reflect.TypeToken<List<String>>() {}.type
                 gson.fromJson(historyJson, type) ?: emptyList()
@@ -290,7 +284,7 @@ class SearchRepository @Inject constructor(
             }
             
             val historyJson = gson.toJson(currentHistory)
-            userDefaults.setString(SEARCH_HISTORY_KEY, historyJson)
+            searchPreferenceStorage.setSearchHistoryJson(historyJson)
             TimberLogger.d(TAG, "搜索历史已保存: $keyword")
         } catch (e: Exception) {
             TimberLogger.e(TAG, "保存搜索历史失败", e)
@@ -302,7 +296,7 @@ class SearchRepository @Inject constructor(
      */
     fun clearSearchHistory() {
         try {
-            userDefaults.remove(SEARCH_HISTORY_KEY)
+            searchPreferenceStorage.clearSearchHistory()
             TimberLogger.d(TAG, "搜索历史已清空")
         } catch (e: Exception) {
             TimberLogger.e(TAG, "清空搜索历史失败", e)
@@ -314,7 +308,7 @@ class SearchRepository @Inject constructor(
      */
     fun getHistoryExpansionState(): Boolean {
         return try {
-            userDefaults.getString(HISTORY_EXPANDED_KEY)?.toBoolean() ?: false
+            searchPreferenceStorage.getHistoryExpanded()
         } catch (e: Exception) {
             TimberLogger.e(TAG, "获取历史展开状态失败", e)
             false
@@ -326,7 +320,7 @@ class SearchRepository @Inject constructor(
      */
     fun saveHistoryExpansionState(isExpanded: Boolean) {
         try {
-            userDefaults.setString(HISTORY_EXPANDED_KEY, isExpanded.toString())
+            searchPreferenceStorage.setHistoryExpanded(isExpanded)
             TimberLogger.d(TAG, "历史展开状态已保存: $isExpanded")
         } catch (e: Exception) {
             TimberLogger.e(TAG, "保存历史展开状态失败", e)

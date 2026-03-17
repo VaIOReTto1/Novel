@@ -1,12 +1,21 @@
 package com.novel.utils.network.api.author
 
 import androidx.compose.runtime.Stable
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.novel.core.network.LegacyApiServiceAdapter
+import com.novel.core.network.NetworkFacade
+import com.novel.core.network.NetworkRequest
+import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.result.AppError
+import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_AUTHOR
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -24,7 +33,11 @@ import javax.inject.Singleton
  * - 作者数据统计
  */
 @Singleton
-class AuthorService @Inject constructor() {
+class AuthorService @Inject constructor(
+    private val networkFacade: NetworkFacade
+) {
+
+    constructor() : this(LegacyApiServiceAdapter())
     
     // region 数据结构
     @Stable
@@ -152,25 +165,27 @@ class AuthorService @Inject constructor() {
         callback: (BaseResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AuthorService", "开始 registerAuthor()，参数：$request")
-        
-        val requestBody = mapOf(
-            "penName" to request.penName,
-            "telPhone" to request.telPhone,
-            "chatAccount" to request.chatAccount,
-            "email" to request.email,
-            "workDirection" to request.workDirection.toString()
-        )
-        
-        ApiService.post(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "register",
-            params = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    request = NetworkRequest(
+                        baseUrl = BASE_URL_AUTHOR,
+                        endpoint = "register",
+                        method = NetworkRequestMethod.POST,
+                        bodyParams = buildAuthorRegisterParams(request),
+                        headers = mapOf(
+                            "Content-Type" to "application/json",
+                            "Accept" to "*/*"
+                        )
+                    ),
+                    clazz = BaseResponse::class.java
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -181,13 +196,23 @@ class AuthorService @Inject constructor() {
         callback: (AuthorStatusResponse?, Throwable?) -> Unit
     ) {
         TimberLogger.d("AuthorService", "开始 getAuthorStatus()")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "status",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, AuthorStatusResponse::class.java, callback)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                requestAndParse(
+                    request = NetworkRequest(
+                        baseUrl = BASE_URL_AUTHOR,
+                        endpoint = "status",
+                        method = NetworkRequestMethod.GET,
+                        headers = mapOf("Accept" to "*/*")
+                    ),
+                    clazz = AuthorStatusResponse::class.java
+                )
+            }.onSuccess { response ->
+                callback(response, null)
+            }.onFailure { error ->
+                callback(null, error)
+            }
         }
     }
 
@@ -370,30 +395,35 @@ class AuthorService @Inject constructor() {
 
     // region 协程版本
     suspend fun registerAuthorBlocking(request: AuthorRegisterRequest): BaseResponse {
-        return suspendCancellableCoroutine { cont ->
-            registerAuthor(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_AUTHOR,
+                endpoint = "register",
+                method = NetworkRequestMethod.POST,
+                bodyParams = buildAuthorRegisterParams(request),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = BaseResponse::class.java
+        )
     }
 
     suspend fun getAuthorStatusBlocking(): AuthorStatusResponse {
-        return suspendCancellableCoroutine { cont ->
-            getAuthorStatus { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_AUTHOR,
+                endpoint = "status",
+                method = NetworkRequestMethod.GET,
+                headers = mapOf("Accept" to "*/*")
+            ),
+            clazz = AuthorStatusResponse::class.java
+        )
     }
+
+    suspend fun getAuthorStatusResult(): DataResult<AuthorStatusResponse> =
+        runResulting { getAuthorStatusBlocking() }
 
     suspend fun publishBookBlocking(request: BookAddRequest): BaseResponse {
         return suspendCancellableCoroutine { cont ->
@@ -448,7 +478,22 @@ class AuthorService @Inject constructor() {
     }
     // endregion
 
-    // region 响应处理
+    private suspend fun <T> requestAndParse(
+        request: NetworkRequest,
+        clazz: Class<T>
+    ): T {
+        val response = networkFacade.execute(request)
+        return Gson().fromJson(response, clazz)
+    }
+
+    private suspend fun <T> runResulting(block: suspend () -> T): DataResult<T> =
+        try {
+            DataResult.Success(block())
+        } catch (throwable: Throwable) {
+            TimberLogger.e("AuthorService", "DataResult request failed", throwable)
+            DataResult.Failure(AppError.fromThrowable(throwable))
+        }
+
     private fun <T> handleResponse(
         response: String?,
         error: Throwable?,
@@ -456,9 +501,7 @@ class AuthorService @Inject constructor() {
         callback: (T?, Throwable?) -> Unit
     ) {
         when {
-            error != null -> {
-                callback(null, error)
-            }
+            error != null -> callback(null, error)
             response != null -> {
                 try {
                     callback(Gson().fromJson(response, clazz), null)
@@ -467,10 +510,17 @@ class AuthorService @Inject constructor() {
                     callback(null, e)
                 }
             }
-            else -> {
-                callback(null, Exception("Response is null"))
-            }
+            else -> callback(null, Exception("Response is null"))
         }
     }
+
+    private fun buildAuthorRegisterParams(request: AuthorRegisterRequest): Map<String, String> =
+        mapOf(
+            "penName" to request.penName,
+            "telPhone" to request.telPhone,
+            "chatAccount" to request.chatAccount,
+            "email" to request.email,
+            "workDirection" to request.workDirection.toString()
+        )
     // endregion
 }

@@ -15,6 +15,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import com.novel.rn.bridge.rejectMapped
 
 /**
  * 用户数据桥接模块
@@ -99,7 +100,11 @@ class UserBridgeModule(
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "❌ 获取用户数据失败", e)
-                promise.reject("USER_DATA_ERROR", "获取用户数据失败: ${e.message}", e)
+                promise.rejectMapped(
+                    throwable = e,
+                    defaultCode = "USER_DATA_ERROR",
+                    defaultMessagePrefix = "获取用户数据失败"
+                )
             }
         }
     }
@@ -119,7 +124,11 @@ class UserBridgeModule(
                 promise.resolve(isLoggedIn)
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "检查登录状态失败", e)
-                promise.reject("LOGIN_STATUS_ERROR", "检查登录状态失败: ${e.message}", e)
+                promise.rejectMapped(
+                    throwable = e,
+                    defaultCode = "LOGIN_STATUS_ERROR",
+                    defaultMessagePrefix = "检查登录状态失败"
+                )
             }
         }
     }
@@ -142,7 +151,11 @@ class UserBridgeModule(
                 promise.resolve(balanceData)
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取余额信息失败", e)
-                promise.reject("BALANCE_ERROR", "获取余额信息失败: ${e.message}", e)
+                promise.rejectMapped(
+                    throwable = e,
+                    defaultCode = "BALANCE_ERROR",
+                    defaultMessagePrefix = "获取余额信息失败"
+                )
             }
         }
     }

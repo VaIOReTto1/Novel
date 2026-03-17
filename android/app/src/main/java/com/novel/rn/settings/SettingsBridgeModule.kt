@@ -6,9 +6,12 @@ import com.facebook.react.bridge.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
+import com.novel.rn.bridge.BridgeCoroutineScopes
 import com.novel.rn.bridge.rejectMapped
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.TimeoutCancellationException
@@ -34,12 +37,25 @@ class SettingsBridgeModule(
     private val reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface SettingsBridgeEntryPoint {
+        fun bridgeCoroutineScopes(): BridgeCoroutineScopes
+    }
+
     companion object {
         private const val TAG = "SettingsBridgeModule"
         private const val TIMEOUT_SECONDS = 10L // 🎯 统一超时时间：10秒
     }
 
     override fun getName(): String = "SettingsBridge"
+
+    private val bridgeCoroutineScopes: BridgeCoroutineScopes by lazy {
+        EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            SettingsBridgeEntryPoint::class.java
+        ).bridgeCoroutineScopes()
+    }
 
     private val settingsViewModel: SettingsViewModel?
         get() = try {
@@ -63,7 +79,7 @@ class SettingsBridgeModule(
         TimberLogger.d(TAG, "🎯 统一主题切换: $theme")
 
         settingsViewModel?.let { viewModel ->
-            CoroutineScope(Dispatchers.Main).launch {
+            bridgeCoroutineScopes.main.launch {
                 try {
                     withTimeout(TIMEOUT_SECONDS * 1000) {
                         // 🎯 优化：只发送Intent，不等待Effect
@@ -103,7 +119,7 @@ class SettingsBridgeModule(
         TimberLogger.d(TAG, "🎯 切换夜间模式")
 
         settingsViewModel?.let { viewModel ->
-            CoroutineScope(Dispatchers.Main).launch {
+            bridgeCoroutineScopes.main.launch {
                 try {
                     withTimeout(TIMEOUT_SECONDS * 1000) {
                         // 🎯 优化：只发送Intent，不等待Effect
@@ -143,7 +159,7 @@ class SettingsBridgeModule(
         TimberLogger.d(TAG, "设置跟随系统主题: $follow")
 
         settingsViewModel?.let { viewModel ->
-            CoroutineScope(Dispatchers.Main).launch {
+            bridgeCoroutineScopes.main.launch {
                 try {
                     withTimeout(TIMEOUT_SECONDS * 1000) {
                         viewModel.sendIntent(SettingsIntent.SetFollowSystemTheme(follow))
@@ -179,7 +195,7 @@ class SettingsBridgeModule(
         TimberLogger.d(TAG, "设置自动切换夜间模式: $enabled")
 
         settingsViewModel?.let { viewModel ->
-            CoroutineScope(Dispatchers.Main).launch {
+            bridgeCoroutineScopes.main.launch {
                 try {
                     withTimeout(TIMEOUT_SECONDS * 1000) {
                         viewModel.sendIntent(SettingsIntent.SetAutoNightMode(enabled))
@@ -283,7 +299,7 @@ class SettingsBridgeModule(
         TimberLogger.d(TAG, "设置夜间模式时间段: $startTime - $endTime")
 
         settingsViewModel?.let { viewModel ->
-            CoroutineScope(Dispatchers.Main).launch {
+            bridgeCoroutineScopes.main.launch {
                 try {
                     withTimeout(TIMEOUT_SECONDS * 1000) {
                         viewModel.sendIntent(SettingsIntent.SetNightModeTime(startTime, endTime))
@@ -319,7 +335,7 @@ class SettingsBridgeModule(
         TimberLogger.d(TAG, "检查当前时间的主题状态")
 
         settingsViewModel?.let { viewModel ->
-            CoroutineScope(Dispatchers.Main).launch {
+            bridgeCoroutineScopes.main.launch {
                 try {
                     withTimeout(TIMEOUT_SECONDS * 1000) {
                         viewModel.sendIntent(SettingsIntent.CheckCurrentTimeTheme)
@@ -467,7 +483,7 @@ class SettingsBridgeModule(
 
         val promiseResolved = AtomicBoolean(false)
 
-        CoroutineScope(Dispatchers.Main).launch {
+        bridgeCoroutineScopes.main.launch {
             try {
                 withTimeout(TIMEOUT_SECONDS * 1000) {
                     viewModel.effect.collect { effect ->

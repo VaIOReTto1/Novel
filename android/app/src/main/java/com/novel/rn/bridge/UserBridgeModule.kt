@@ -8,8 +8,6 @@ import com.novel.page.login.dao.UserRepository
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import com.novel.utils.Store.UserDefaults.NovelUserDefaultsKey
 import com.novel.utils.network.TokenProvider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -37,6 +35,7 @@ class UserBridgeModule(
         fun userRepository(): UserRepository
         fun novelUserDefaults(): NovelUserDefaults
         fun tokenProvider(): TokenProvider
+        fun bridgeCoroutineScopes(): BridgeCoroutineScopes
     }
 
     private val entryPoint: UserBridgeEntryPoint by lazy {
@@ -58,7 +57,9 @@ class UserBridgeModule(
         entryPoint.tokenProvider()
     }
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val bridgeCoroutineScopes: BridgeCoroutineScopes by lazy {
+        entryPoint.bridgeCoroutineScopes()
+    }
 
     override fun getName(): String = "UserBridge"
 
@@ -67,7 +68,7 @@ class UserBridgeModule(
      */
     @ReactMethod
     fun getCurrentUserData(promise: Promise) {
-        coroutineScope.launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 TimberLogger.d(TAG, "开始获取当前用户数据")
                 
@@ -114,7 +115,7 @@ class UserBridgeModule(
      */
     @ReactMethod
     fun isUserLoggedIn(promise: Promise) {
-        coroutineScope.launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 val uid = userDefaults.get<Int>(NovelUserDefaultsKey.USER_ID)
                 val token = tokenProvider.accessToken()
@@ -138,7 +139,7 @@ class UserBridgeModule(
      */
     @ReactMethod
     fun getUserBalance(promise: Promise) {
-        coroutineScope.launch {
+        bridgeCoroutineScopes.io.launch {
             try {
                 // 这里可以添加获取余额和金币的逻辑
                 // 目前返回模拟数据

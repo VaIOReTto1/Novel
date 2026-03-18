@@ -38,8 +38,9 @@
 - `docs/refactor/phase-4/large-class-responsibility-slices.md`
 - `docs/refactor/phase-4/bridge-facade-delegate-map.md`
 - `docs/refactor/phase-4/host-risk-validation-matrix.md`
+- `docs/refactor/phase-4/atomic-split-backlog.md`
 
 ## 下一步
 - 继续输出 Wave 1 的：
-  - 四个超大类的原子拆分清单
   - `Wave 2` 进入前的 facade / delegate 最小切分顺序
+  - `W2-A01` 的代码入口清点

@@ -1,5 +1,7 @@
 package com.novel.rn.bridge
 
+import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.WritableMap
 import com.novel.core.result.AppError
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -47,5 +49,73 @@ class BridgePromiseErrorMapperTest {
         assertEquals("CHECK_ERROR", result.code)
         assertEquals("检查失败: 未知错误", result.message)
         assertTrue(result.appError is AppError.Unexpected)
+    }
+
+    @Test
+    fun rejectMapped_usesLegacyFormatWhenDisabled() {
+        val promise = RecordingPromise()
+
+        promise.rejectMapped(
+            throwable = IOException("offline"),
+            defaultCode = "SETTING_ERROR",
+            defaultMessagePrefix = "设置失败",
+            enabled = false
+        )
+
+        assertEquals("SETTING_ERROR", promise.code)
+        assertEquals("设置失败: offline", promise.message)
+    }
+
+    private class RecordingPromise : Promise {
+        var code: String? = null
+        var message: String? = null
+
+        override fun resolve(value: Any?) = Unit
+
+        override fun reject(code: String, message: String?) {
+            this.code = code
+            this.message = message
+        }
+
+        override fun reject(code: String, throwable: Throwable?) {
+            this.code = code
+            this.message = throwable?.message
+        }
+
+        override fun reject(code: String, message: String?, throwable: Throwable?) {
+            this.code = code
+            this.message = message
+        }
+
+        override fun reject(throwable: Throwable) {
+            this.message = throwable?.message
+        }
+
+        override fun reject(throwable: Throwable, userInfo: WritableMap) {
+            this.message = throwable?.message
+        }
+
+        override fun reject(code: String, userInfo: WritableMap) {
+            this.code = code
+        }
+
+        override fun reject(code: String, throwable: Throwable?, userInfo: WritableMap) {
+            this.code = code
+            this.message = throwable?.message
+        }
+
+        override fun reject(code: String, message: String?, userInfo: WritableMap) {
+            this.code = code
+            this.message = message
+        }
+
+        override fun reject(code: String?, message: String?, throwable: Throwable?, userInfo: WritableMap?) {
+            this.code = code
+            this.message = message
+        }
+
+        override fun reject(message: String) {
+            this.message = message
+        }
     }
 }

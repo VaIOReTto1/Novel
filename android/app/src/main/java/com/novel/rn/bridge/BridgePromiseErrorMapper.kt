@@ -37,8 +37,14 @@ fun Promise.rejectMapped(
     throwable: Throwable,
     defaultCode: String,
     defaultMessagePrefix: String,
-    timeoutMessage: String = "操作超时"
+    timeoutMessage: String = "操作超时",
+    enabled: Boolean = true
 ) {
+    if (!enabled) {
+        reject(defaultCode, "$defaultMessagePrefix: ${throwable.message ?: "未知错误"}", throwable)
+        return
+    }
+
     val mapped = BridgePromiseErrorMapper.map(
         throwable = throwable,
         defaultCode = defaultCode,

@@ -1,6 +1,7 @@
 package com.novel.rn.settings
 
 import androidx.compose.runtime.Stable
+import com.novel.core.config.RefactorFeatureFlags
 import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.*
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +42,7 @@ class SettingsBridgeModule(
     @InstallIn(SingletonComponent::class)
     interface SettingsBridgeEntryPoint {
         fun bridgeCoroutineScopes(): BridgeCoroutineScopes
+        fun refactorFeatureFlags(): RefactorFeatureFlags
     }
 
     companion object {
@@ -55,6 +57,13 @@ class SettingsBridgeModule(
             reactContext.applicationContext,
             SettingsBridgeEntryPoint::class.java
         ).bridgeCoroutineScopes()
+    }
+
+    private val refactorFeatureFlags: RefactorFeatureFlags by lazy {
+        EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            SettingsBridgeEntryPoint::class.java
+        ).refactorFeatureFlags()
     }
 
     private val settingsViewModel: SettingsViewModel?
@@ -95,14 +104,16 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "THEME_CHANGE_ERROR",
                         defaultMessagePrefix = "主题切换失败",
-                        timeoutMessage = "主题切换操作超时"
+                        timeoutMessage = "主题切换操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "主题切换失败: $theme", e)
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "THEME_CHANGE_ERROR",
-                        defaultMessagePrefix = "主题切换失败"
+                        defaultMessagePrefix = "主题切换失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -135,14 +146,16 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "TOGGLE_ERROR",
                         defaultMessagePrefix = "夜间模式切换失败",
-                        timeoutMessage = "夜间模式切换操作超时"
+                        timeoutMessage = "夜间模式切换操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "夜间模式切换失败", e)
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "TOGGLE_ERROR",
-                        defaultMessagePrefix = "夜间模式切换失败"
+                        defaultMessagePrefix = "夜间模式切换失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -171,14 +184,16 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "SETTING_ERROR",
                         defaultMessagePrefix = "设置跟随系统主题失败",
-                        timeoutMessage = "设置跟随系统主题操作超时"
+                        timeoutMessage = "设置跟随系统主题操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "设置跟随系统主题失败", e)
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "SETTING_ERROR",
-                        defaultMessagePrefix = "设置跟随系统主题失败"
+                        defaultMessagePrefix = "设置跟随系统主题失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -207,14 +222,16 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "SETTING_ERROR",
                         defaultMessagePrefix = "设置自动切换夜间模式失败",
-                        timeoutMessage = "设置自动切换夜间模式操作超时"
+                        timeoutMessage = "设置自动切换夜间模式操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "设置自动切换夜间模式失败", e)
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "SETTING_ERROR",
-                        defaultMessagePrefix = "设置自动切换夜间模式失败"
+                        defaultMessagePrefix = "设置自动切换夜间模式失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -311,14 +328,16 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "SETTING_ERROR",
                         defaultMessagePrefix = "设置夜间模式时间失败",
-                        timeoutMessage = "设置夜间模式时间操作超时"
+                        timeoutMessage = "设置夜间模式时间操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "设置夜间模式时间失败", e)
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "SETTING_ERROR",
-                        defaultMessagePrefix = "设置夜间模式时间失败"
+                        defaultMessagePrefix = "设置夜间模式时间失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -347,14 +366,16 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "CHECK_ERROR",
                         defaultMessagePrefix = "检查时间主题失败",
-                        timeoutMessage = "检查时间主题操作超时"
+                        timeoutMessage = "检查时间主题操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "检查时间主题失败", e)
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "CHECK_ERROR",
-                        defaultMessagePrefix = "检查时间主题失败"
+                        defaultMessagePrefix = "检查时间主题失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -402,7 +423,8 @@ class SettingsBridgeModule(
             promise.rejectMapped(
                 throwable = e,
                 defaultCode = "LOGOUT_ERROR",
-                defaultMessagePrefix = "退出登录失败"
+                defaultMessagePrefix = "退出登录失败",
+                enabled = refactorFeatureFlags.enableBridgeErrorMapper()
             )
         }
     }
@@ -501,7 +523,8 @@ class SettingsBridgeModule(
                         throwable = e,
                         defaultCode = "EFFECT_ERROR",
                         defaultMessagePrefix = "操作失败",
-                        timeoutMessage = "操作超时"
+                        timeoutMessage = "操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             } catch (e: Exception) {
@@ -510,7 +533,8 @@ class SettingsBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "EFFECT_ERROR",
-                        defaultMessagePrefix = "操作失败"
+                        defaultMessagePrefix = "操作失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }

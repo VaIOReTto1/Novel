@@ -2,7 +2,11 @@ package com.novel.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.novel.core.config.NovelUserDefaultsBackedRefactorFeatureFlags
+import com.novel.core.config.RefactorFeatureFlagDefaults
+import com.novel.core.config.RefactorFeatureFlags
 import com.novel.core.storage.LegacyStorageFacade
+import com.novel.core.storage.SettingsDataStorePilot
 import com.novel.core.storage.StorageFacade
 import com.novel.utils.TimberLogger
 import com.novel.utils.Store.NovelKeyChain.NovelKeyChain
@@ -98,6 +102,25 @@ object NovelUserDefaultsModule {
 
     @Provides
     @Singleton
+    fun provideRefactorFeatureFlagDefaults(): RefactorFeatureFlagDefaults {
+        return RefactorFeatureFlagDefaults(
+            enableBridgeErrorMapper = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER,
+            enableBridgeSharedScopes = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES,
+            enableSettingsDataStorePilot = com.novel.BuildConfig.REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideRefactorFeatureFlags(
+        impl: NovelUserDefaultsBackedRefactorFeatureFlags
+    ): RefactorFeatureFlags {
+        TimberLogger.d(TAG, "创建RefactorFeatureFlags服务")
+        return impl
+    }
+
+    @Provides
+    @Singleton
     fun provideTokenProvider(userDefaults: NovelUserDefaults): TokenProvider {
         return object : TokenProvider {
             override fun getToken(): String? {
@@ -184,9 +207,11 @@ object NovelUserDefaultsModule {
     @Singleton
     fun provideSettingsUtils(
         @ApplicationContext context: Context,
-        settingsPreferenceStorage: SettingsPreferenceStorage
+        settingsPreferenceStorage: SettingsPreferenceStorage,
+        settingsDataStorePilot: SettingsDataStorePilot,
+        refactorFeatureFlags: RefactorFeatureFlags
     ): SettingsUtils {
         TimberLogger.d(TAG, "创建SettingsUtils工具")
-        return SettingsUtils(context, settingsPreferenceStorage)
+        return SettingsUtils(context, settingsPreferenceStorage, settingsDataStorePilot, refactorFeatureFlags)
     }
 }

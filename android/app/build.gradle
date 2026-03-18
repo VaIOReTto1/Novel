@@ -136,6 +136,9 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "WELFARE_DEFAULT_URL", "\"${welfareDefaultUrl}\""
         buildConfigField "boolean", "HAS_EXTERNAL_API_BASE_HOST", hasExternalApiBaseHost ? "true" : "false"
+        buildConfigField "boolean", "REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER", "true"
+        buildConfigField "boolean", "REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES", "true"
+        buildConfigField "boolean", "REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT", "false"
     }
     signingConfigs {
         debug {

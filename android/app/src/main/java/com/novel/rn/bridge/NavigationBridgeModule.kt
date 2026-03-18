@@ -3,6 +3,7 @@ package com.novel.rn.bridge
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.runtime.Stable
+import com.novel.core.config.RefactorFeatureFlags
 import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.*
 import androidx.lifecycle.ViewModelProvider
@@ -55,6 +56,7 @@ class NavigationBridgeModule(
         fun novelUserDefaults(): NovelUserDefaults
         fun navigationBridgeNetworkGateway(): NavigationBridgeNetworkGateway
         fun bridgeCoroutineScopes(): BridgeCoroutineScopes
+        fun refactorFeatureFlags(): RefactorFeatureFlags
     }
 
     companion object {
@@ -110,6 +112,14 @@ class NavigationBridgeModule(
             NavigationBridgeEntryPoint::class.java
         )
         entryPoint.bridgeCoroutineScopes()
+    }
+
+    private val refactorFeatureFlags: RefactorFeatureFlags by lazy {
+        val entryPoint = EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            NavigationBridgeEntryPoint::class.java
+        )
+        entryPoint.refactorFeatureFlags()
     }
 
     // =================== Selection Menu (Android) ===================
@@ -526,7 +536,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "HOME_BOOKS_ERROR",
-                        defaultMessagePrefix = "获取首页推荐书籍失败"
+                        defaultMessagePrefix = "获取首页推荐书籍失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -605,7 +616,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AUTHOR_STATUS_ERROR",
-                        defaultMessagePrefix = "获取作家状态失败"
+                        defaultMessagePrefix = "获取作家状态失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -653,7 +665,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AUTHOR_BOOKS_ERROR",
-                        defaultMessagePrefix = "获取作家作品列表失败"
+                        defaultMessagePrefix = "获取作家作品列表失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -691,7 +704,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "CATEGORY_LIST_ERROR",
-                        defaultMessagePrefix = "获取书籍分类失败"
+                        defaultMessagePrefix = "获取书籍分类失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -742,7 +756,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "SEARCH_BOOKS_ERROR",
-                        defaultMessagePrefix = "搜索书籍失败"
+                        defaultMessagePrefix = "搜索书籍失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -937,7 +952,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_POLISH_ERROR",
-                        defaultMessagePrefix = "AI 润色失败"
+                        defaultMessagePrefix = "AI 润色失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -963,7 +979,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_EXPAND_ERROR",
-                        defaultMessagePrefix = "AI 扩写失败"
+                        defaultMessagePrefix = "AI 扩写失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -989,7 +1006,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_CONDENSE_ERROR",
-                        defaultMessagePrefix = "AI 缩写失败"
+                        defaultMessagePrefix = "AI 缩写失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -1015,7 +1033,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "AI_CONTINUE_ERROR",
-                        defaultMessagePrefix = "AI 续写失败"
+                        defaultMessagePrefix = "AI 续写失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -1055,7 +1074,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "REGISTER_ERROR",
-                        defaultMessagePrefix = "作者注册失败"
+                        defaultMessagePrefix = "作者注册失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }
@@ -1128,7 +1148,8 @@ class NavigationBridgeModule(
                         throwable = e,
                         defaultCode = "EFFECT_ERROR",
                         defaultMessagePrefix = "操作失败",
-                        timeoutMessage = "操作超时"
+                        timeoutMessage = "操作超时",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             } catch (e: Exception) {
@@ -1137,7 +1158,8 @@ class NavigationBridgeModule(
                     promise.rejectMapped(
                         throwable = e,
                         defaultCode = "EFFECT_ERROR",
-                        defaultMessagePrefix = "操作失败"
+                        defaultMessagePrefix = "操作失败",
+                        enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                     )
                 }
             }

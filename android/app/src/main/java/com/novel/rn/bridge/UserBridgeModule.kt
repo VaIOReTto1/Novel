@@ -3,6 +3,7 @@ package com.novel.rn.bridge
 import androidx.compose.runtime.Stable
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
+import com.novel.core.config.RefactorFeatureFlags
 import com.novel.utils.TimberLogger
 import com.novel.page.login.dao.UserRepository
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
@@ -36,6 +37,7 @@ class UserBridgeModule(
         fun novelUserDefaults(): NovelUserDefaults
         fun tokenProvider(): TokenProvider
         fun bridgeCoroutineScopes(): BridgeCoroutineScopes
+        fun refactorFeatureFlags(): RefactorFeatureFlags
     }
 
     private val entryPoint: UserBridgeEntryPoint by lazy {
@@ -59,6 +61,10 @@ class UserBridgeModule(
 
     private val bridgeCoroutineScopes: BridgeCoroutineScopes by lazy {
         entryPoint.bridgeCoroutineScopes()
+    }
+
+    private val refactorFeatureFlags: RefactorFeatureFlags by lazy {
+        entryPoint.refactorFeatureFlags()
     }
 
     override fun getName(): String = "UserBridge"
@@ -104,7 +110,8 @@ class UserBridgeModule(
                 promise.rejectMapped(
                     throwable = e,
                     defaultCode = "USER_DATA_ERROR",
-                    defaultMessagePrefix = "获取用户数据失败"
+                    defaultMessagePrefix = "获取用户数据失败",
+                    enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                 )
             }
         }
@@ -128,7 +135,8 @@ class UserBridgeModule(
                 promise.rejectMapped(
                     throwable = e,
                     defaultCode = "LOGIN_STATUS_ERROR",
-                    defaultMessagePrefix = "检查登录状态失败"
+                    defaultMessagePrefix = "检查登录状态失败",
+                    enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                 )
             }
         }
@@ -155,7 +163,8 @@ class UserBridgeModule(
                 promise.rejectMapped(
                     throwable = e,
                     defaultCode = "BALANCE_ERROR",
-                    defaultMessagePrefix = "获取余额信息失败"
+                    defaultMessagePrefix = "获取余额信息失败",
+                    enabled = refactorFeatureFlags.enableBridgeErrorMapper()
                 )
             }
         }

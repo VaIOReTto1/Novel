@@ -8,10 +8,14 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.novel.core.config.RefactorFeatureFlags
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.TimberLogger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.Calendar
@@ -42,7 +46,11 @@ class SettingsUtils @Inject constructor(
     @Stable
     @ApplicationContext private val context: Context,
     @Stable
-    private val settingsPreferenceStorage: SettingsPreferenceStorage
+    private val settingsPreferenceStorage: SettingsPreferenceStorage,
+    @Stable
+    private val settingsDataStorePilot: com.novel.core.storage.SettingsDataStorePilot,
+    @Stable
+    private val refactorFeatureFlags: RefactorFeatureFlags
 ) {
 
     companion object {
@@ -55,6 +63,7 @@ class SettingsUtils @Inject constructor(
 
     // 获取全局主题管理器
     private val themeManager by lazy { ThemeManager.getInstance(context) }
+    private val settingsScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     /**
      * 清除所有缓存
@@ -215,6 +224,7 @@ class SettingsUtils @Inject constructor(
      */
     fun setFollowSystemTheme(follow: Boolean) {
         settingsPreferenceStorage.setFollowSystemTheme(follow)
+        syncSettingsDataStorePilotIfEnabled()
         if (follow) {
             setNightMode("auto")
         }
@@ -227,6 +237,7 @@ class SettingsUtils @Inject constructor(
     fun setAutoNightMode(enabled: Boolean) {
         TimberLogger.d(TAG, "🎯 设置自动切换夜间模式: $enabled")
         settingsPreferenceStorage.setAutoNightModeEnabled(enabled)
+        syncSettingsDataStorePilotIfEnabled()
 
         if (enabled) {
             startTimeBasedThemeCheckWithWorkManager()
@@ -422,6 +433,19 @@ class SettingsUtils @Inject constructor(
         }
     }
 
+    private fun syncSettingsDataStorePilotIfEnabled() {
+        if (!refactorFeatureFlags.enableSettingsDataStorePilot()) {
+            return
+        }
+
+        settingsScope.launch {
+            settingsDataStorePilot.migrateIfNeeded(
+                legacyFollowSystemTheme = settingsPreferenceStorage.isFollowSystemTheme().toString(),
+                legacyAutoNightMode = settingsPreferenceStorage.isAutoNightModeEnabled().toString()
+            )
+        }
+    }
+
     private fun clearInternalCache() {
         val cacheDir = context.cacheDir
         deleteDir(cacheDir)
@@ -485,7 +509,16 @@ class NightModeWorker(
             val novelUserDefaults = com.novel.utils.Store.UserDefaults.SharedPrefsUserDefaults(prefs)
             val storageFacade = com.novel.core.storage.LegacyStorageFacade(novelUserDefaults)
             val preferenceStorage = SettingsPreferenceStorage(storageFacade)
-            val settingsUtils = SettingsUtils(applicationContext, preferenceStorage)
+            val featureFlags = com.novel.core.config.NovelUserDefaultsBackedRefactorFeatureFlags(novelUserDefaults)
+            val dataStorePilot = com.novel.core.storage.SettingsDataStorePilot(
+                com.novel.core.storage.SettingsDataStorePilotModule.provideSettingsPilotDataStore(applicationContext)
+            )
+            val settingsUtils = SettingsUtils(
+                applicationContext,
+                preferenceStorage,
+                dataStorePilot,
+                featureFlags
+            )
             
             settingsUtils.checkAndSwitchThemeBasedOnTime()
             

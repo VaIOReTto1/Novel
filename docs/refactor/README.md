@@ -1,11 +1,11 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 3`
-- 阶段状态：`in_progress`
+- 当前阶段：`Phase 4`
+- 阶段状态：`planned`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 与 `BookService` 的高风险生产主路径现已全部切入 `NetworkFacade`，其中 `BookService` 的阻塞路径与增量条件请求路径、`AuthorService` 的发布书籍阻塞路径与旧回调壳均已完成收口，`V3-01` 已具备绿色验证证据。`MainApplication` 已通过 `OnDemandInitializer` 去除 React Root 创建时的 `runBlocking`，Bridge 层匿名协程作用域也已统一到共享 scopes，`V3-02` 已具备绿色验证证据。`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `RefactorFeatureFlags` 已开始承接 Bridge/DataStore 的运行时开关
-- 下一步：继续推进基础设施收口主线，优先关闭 `V3-06` 的回滚链路证据，并补齐 `V3-03`、`V3-04`、`V3-07` 的最终评审结论
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）中的 `Phase 3` 已正式关闭并标记为 `validated`。高风险生产网络路径已统一切入 `NetworkFacade`，Bridge 层匿名协程作用域与 `MainApplication` 的按需初始化入口已完成收口，`StorageFacade`/`AppError` 第一批目标均已达成，Bridge 与存储回退开关及网络结构性回退边界也已明确。
+- 下一步：按 `docs/refactor/phases/phase-4-boundary-and-class-split.md` 进入 `Phase 4`，优先建立包边界骨架、`BridgeFacade` 收口策略和超大类拆分顺序
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -13,7 +13,7 @@
 | Phase 0 | 基线与控制面板 | validated | `docs/refactor/` 文档骨架已创建 | 全部 `V0-*` 至少为 `green` |
 | Phase 1 | 发布、安全与合规治理 | validated | `Phase 0 = validated` | 全部 `V1-*` 为 `green` |
 | Phase 2 | 质量门禁与自动化护栏 | validated | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
-| Phase 3 | 基础设施收口 | in_progress | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
+| Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
 | Phase 4 | 边界收口与超大类拆分 | planned | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
 
 ## 最近验证结论
@@ -21,7 +21,7 @@
 - `V1-01 ~ V1-09` 已全部具备绿色验证证据，Phase 1 已完成。
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - 第二阶段规划文档已落盘，`V3-05` 静态债基线已建立。
-- `V3-01` 已具备绿色验证证据：高风险生产路径文件内旧 `ApiService` 直连已清零，且对应 JVM 单测与 `app:testDebugUnitTest` 均继续通过。
+- `V3-01 ~ V3-07` 已全部具备绿色验证证据，`Phase 3` 已正式完成。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

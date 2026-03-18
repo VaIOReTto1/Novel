@@ -23,6 +23,10 @@
   - 更新验证看板中的对应项
   - 如有偏差，登记 `decision-log.md`
   - 立即执行 Git commit
+  - 若处于 `Phase 4+`，同步更新：
+    - `phase-4-wave-tracker.md` 或对应阶段波次追踪文档
+    - `subagent-dispatch-log.md`
+    - `rollback-index.md`
 
 ## Leader-only 规则
 - 只有 `LeaderAgent` 可以直接修改：
@@ -51,6 +55,7 @@
 - 文档骨架单独提交
 - 阶段文档单独提交
 - 验证看板和决策日志单独提交
+- 波次追踪与派发/回滚工件单独提交
 - Phase 0 基线盘点按主题拆分：
   - 核心路径矩阵
   - 资产清单
@@ -92,3 +97,4 @@
 - 提交信息是否准确、中文且能反映主题。
 - 是否满足 `Leader-only` 写权限边界。
 - 是否已绑定 `Lock ID` 与 `Rollback ID`。
+- 若处于长期执行阶段，是否已同步更新波次摘要与派发日志。

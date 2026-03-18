@@ -60,6 +60,21 @@
 - `Need Escalation`
 - `Next Recommended Action`
 
+## 长期运行工件
+- `docs/refactor/phase-4/phase-4-wave-tracker.md`
+  - 记录当前波次、波次摘要、下一原子主题
+- `docs/refactor/tracking/subagent-dispatch-log.md`
+  - 记录每次 helper 派发、重派发、升级派发
+- `docs/refactor/tracking/rollback-index.md`
+  - 记录每个原子主题的 `Rollback ID` 与一键回滚命令
+
+### 工件写入规则
+- `LeaderAgent` 负责写入上述三类工件。
+- 每轮自主推进至少要完成一次：
+  - 波次状态更新
+  - 派发记录追加
+  - 回滚索引补记或确认
+
 ## 每个新 Phase 文档必须包含的协作编制字段
 - `Leader Mode`
 - `Base Helper Count`
@@ -169,7 +184,15 @@
   - `Precheck`
   - `Postcheck`
 - helper 必须在输出包中提供 `Rollback Command`。
-- Leader 负责把最终版本写入 `rollback-index.md`。
+- Leader 负责把最终版本写入 `docs/refactor/tracking/rollback-index.md`。
+
+## Phase 4 长期运行默认循环
+1. 读取 `docs/refactor/phase-4/phase-4-wave-tracker.md`
+2. 选择当前 wave 的单主题原子任务
+3. 确认 `Lock ID`
+4. 派发 helper 并追加 `subagent-dispatch-log`
+5. 汇总证据、补 `Rollback ID`
+6. 判断继续同 wave、切换 wave，还是升级
 
 ## 未来证据脱敏规则
 - 历史文档中的设备 IP、调试环境标识可保留为历史记录。

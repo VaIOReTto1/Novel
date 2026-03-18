@@ -36,8 +36,9 @@
 ## 已完成的 Wave 1 资料
 - `docs/refactor/phase-4/package-boundary-map.md`
 - `docs/refactor/phase-4/large-class-responsibility-slices.md`
+- `docs/refactor/phase-4/bridge-facade-delegate-map.md`
 
 ## 下一步
 - 继续输出 Wave 1 的：
-  - `BridgeFacade` / delegate 映射表
+  - 宿主页挂载与风险验证矩阵
   - 四个超大类的原子拆分清单

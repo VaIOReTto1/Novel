@@ -3,7 +3,7 @@
 ## 目标
 - 把“功能还在，但复杂度失控”的状态收回到可维护区间。
 - 在单 `app` 模块内完成逻辑模块化与超大类减重，为 `Phase 5` 正式模块化铺路。
-- 在你不在线的情况下，提供一份可长期自主推进的执行蓝图。
+- 在你不在线的情况下，也能持续按波次推进而不丢上下文。
 
 ## 范围
 - 包内逻辑模块化
@@ -55,13 +55,13 @@
 - `4`
 
 ### Scale-Up Triggers
-- `NavigationBridgeModule` 与 `HomeViewModel` 可独立拆分且互不抢锁
-- `RN Host / profile-host` 风险验证可以独立运行，不与业务拆分类主题共享写锁
-- `Host` 风险验证与静态债收敛可从业务拆分类主题中独立出来时，允许扩容为 `5 helpers`
+- `NavigationBridgeModule` 与 `HomeViewModel` 可独立拆分且互不抢锁。
+- `RN Host / profile-host` 风险验证可以独立运行，不与业务拆分类主题共享写锁。
+- Host 风险验证与静态债收敛可从业务拆分类主题中独立出来时，允许扩容为 `5 helpers`。
 
 ### Scale-Down Triggers
-- 当前只做文档、看板、关闭评审或证据归档
-- 当前只推进单一超大类拆分，不涉及 Host 风险验证
+- 当前只做文档、看板、关闭评审或证据归档。
+- 当前只推进单一超大类拆分，不涉及 Host 风险验证。
 
 ### Agent Roster
 - `BridgeFacadeSplitAgent`

@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 与 `BookService` 的高风险生产主路径现已全部切入 `NetworkFacade`，其中 `BookService` 的阻塞路径与增量条件请求路径、`AuthorService` 的发布书籍阻塞路径与旧回调壳均已完成收口，`V3-01` 已具备绿色验证证据。`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `BridgeCoroutineScopes` 已覆盖 Settings/User/Navigation 三个 Bridge 模块的匿名协程作用域，`RefactorFeatureFlags` 已开始承接 Bridge/DataStore 的运行时开关
-- 下一步：继续推进基础设施收口主线，优先关闭 `V3-02` 的 `runBlocking / 匿名作用域` 收口，以及 `V3-06` 的回滚链路证据，再补齐 `V3-07` 的 Phase 4 进入条件
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 与 `BookService` 的高风险生产主路径现已全部切入 `NetworkFacade`，其中 `BookService` 的阻塞路径与增量条件请求路径、`AuthorService` 的发布书籍阻塞路径与旧回调壳均已完成收口，`V3-01` 已具备绿色验证证据。`MainApplication` 已通过 `OnDemandInitializer` 去除 React Root 创建时的 `runBlocking`，Bridge 层匿名协程作用域也已统一到共享 scopes，`V3-02` 已具备绿色验证证据。`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `RefactorFeatureFlags` 已开始承接 Bridge/DataStore 的运行时开关
+- 下一步：继续推进基础设施收口主线，优先关闭 `V3-06` 的回滚链路证据，并补齐 `V3-03`、`V3-04`、`V3-07` 的最终评审结论
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |

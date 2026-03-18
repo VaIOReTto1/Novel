@@ -26,13 +26,12 @@ import com.facebook.react.ReactRootView
 import java.util.concurrent.ConcurrentHashMap
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.ReactInstanceManager
+import com.novel.core.concurrency.OnDemandInitializer
 import com.novel.rn.settings.SettingsUtils
 import timber.log.Timber
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
-import java.util.concurrent.atomic.AtomicBoolean
 import com.novel.utils.performance.StartupPerformanceMonitor
-import kotlinx.coroutines.runBlocking
 
 /**
  * 主应用类
@@ -86,8 +85,12 @@ class MainApplication : Application(), ReactApplication {
 
     // 冷启动优化：延迟初始化管理
     private val lazyInitializationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val isNetworkInitialized = AtomicBoolean(false)
-    private val isSettingsInitialized = AtomicBoolean(false)
+    private val networkServiceInitializer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        OnDemandInitializer { initializeNetworkServiceInternal() }
+    }
+    private val settingsServiceInitializer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        OnDemandInitializer { initializeSettingsServiceInternal() }
+    }
     
     // 启动时间监控
     private var appStartTime: Long = 0
@@ -203,74 +206,62 @@ class MainApplication : Application(), ReactApplication {
         lazyInitializationScope.launch {
             // 延迟初始化网络服务（非启动必需）
             delay(100) // 给主线程一些喘息时间
-            initializeNetworkService()
+            ensureNetworkServiceInitialized()
             
             // 延迟初始化设置服务（非启动必需）
             delay(50)
-            initializeSettingsService()
+            ensureSettingsServiceInitialized()
         }
     }
 
     /**
      * 初始化网络服务（后台线程）
      */
-    private suspend fun initializeNetworkService() {
-        if (isNetworkInitialized.compareAndSet(false, true)) {
-            withContext(Dispatchers.IO) {
-                TimberLogger.d(TAG, "后台初始化RetrofitClient...")
-                val networkStartTime = System.currentTimeMillis()
-                try {
-                    RetrofitClient.init(
-                        authInterceptor = authInterceptor,
-                        tokenProvider = tokenProvider,
-                        gson = gson
-                    )
-                    val networkDuration = System.currentTimeMillis() - networkStartTime
-                    logComponentInitTime("RetrofitClient", networkStartTime)
-                    startupPerformanceMonitor.recordComponentInitTime("RetrofitClient", networkDuration)
-                } catch (e: Exception) {
-                    TimberLogger.e(TAG, "网络服务初始化失败", e)
-                }
-            }
+    private fun initializeNetworkServiceInternal() {
+        TimberLogger.d(TAG, "后台初始化RetrofitClient...")
+        val networkStartTime = System.currentTimeMillis()
+        try {
+            RetrofitClient.init(
+                authInterceptor = authInterceptor,
+                tokenProvider = tokenProvider,
+                gson = gson
+            )
+            val networkDuration = System.currentTimeMillis() - networkStartTime
+            logComponentInitTime("RetrofitClient", networkStartTime)
+            startupPerformanceMonitor.recordComponentInitTime("RetrofitClient", networkDuration)
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "网络服务初始化失败", e)
         }
     }
 
     /**
      * 初始化设置服务（后台线程）
      */
-    private suspend fun initializeSettingsService() {
-        if (isSettingsInitialized.compareAndSet(false, true)) {
-            withContext(Dispatchers.IO) {
-                TimberLogger.d(TAG, "后台初始化自动主题切换...")
-                val settingsStartTime = System.currentTimeMillis()
-                try {
-                    settingsUtils.initializeAutoThemeSwitch()
-                    val settingsDuration = System.currentTimeMillis() - settingsStartTime
-                    logComponentInitTime("SettingsUtils", settingsStartTime)
-                    startupPerformanceMonitor.recordComponentInitTime("SettingsUtils", settingsDuration)
-                } catch (e: Exception) {
-                    TimberLogger.e(TAG, "设置服务初始化失败", e)
-                }
-            }
+    private fun initializeSettingsServiceInternal() {
+        TimberLogger.d(TAG, "后台初始化自动主题切换...")
+        val settingsStartTime = System.currentTimeMillis()
+        try {
+            settingsUtils.initializeAutoThemeSwitch()
+            val settingsDuration = System.currentTimeMillis() - settingsStartTime
+            logComponentInitTime("SettingsUtils", settingsStartTime)
+            startupPerformanceMonitor.recordComponentInitTime("SettingsUtils", settingsDuration)
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "设置服务初始化失败", e)
         }
     }
 
     /**
      * 确保网络服务已初始化（按需初始化）
      */
-    suspend fun ensureNetworkServiceInitialized() {
-        if (!isNetworkInitialized.get()) {
-            initializeNetworkService()
-        }
+    fun ensureNetworkServiceInitialized() {
+        networkServiceInitializer.initializeIfNeeded()
     }
 
     /**
      * 确保设置服务已初始化（按需初始化）
      */
-    suspend fun ensureSettingsServiceInitialized() {
-        if (!isSettingsInitialized.get()) {
-            initializeSettingsService()
-        }
+    fun ensureSettingsServiceInitialized() {
+        settingsServiceInitializer.initializeIfNeeded()
     }
 
     override fun onTerminate() {
@@ -317,7 +308,7 @@ class MainApplication : Application(), ReactApplication {
         initialProps: Bundle? = null
     ): ReactRootView {
         // 确保网络服务已初始化（React Native组件可能需要网络）
-        runBlocking { ensureNetworkServiceInitialized() }
+        ensureNetworkServiceInitialized()
 
         return reactRootViewCache.getOrPut(componentName) {
             TimberLogger.d(TAG, "创建新的ReactRootView: $componentName")

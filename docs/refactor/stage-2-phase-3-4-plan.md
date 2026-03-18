@@ -37,9 +37,29 @@
 - `docs/refactor/tracking/phase-3-4-validation-board.md`
 - `docs/refactor/tracking/stage-2-static-debt-baseline.md`
 - `docs/refactor/stage-2-closeout-summary.md`
+- `docs/refactor/collaboration/phase-aware-gpt5.4-subagent-policy.md`
+- `docs/refactor/collaboration/phase-aware-gpt5.4-subagent-policy-review.md`
+- `docs/refactor/templates/two-person-cross-review-template.md`
 - 继续复用：
   - `docs/refactor/tracking/decision-log.md`
   - `docs/refactor/README.md`
+
+## Stage 2 协作编制规则
+- Stage 2 默认采用 `1 Leader + helper roster` 的执行方式。
+- `Phase 3`
+  - 作为历史样本记录，基线 helper 数为 `4`
+  - 不回填旧阶段文档，只在协作策略文档中保留样本
+- `Phase 4`
+  - 基线 helper 数为 `4`
+  - 默认角色：
+    - `BridgeFacadeSplitAgent`
+    - `FeatureBoundarySplitAgent`
+    - `CacheReaderLightAgent`
+    - `HostRiskQualityAgent`
+- Stage 2 内任何新任务都必须先确认：
+  - helper 是否只持有单锁
+  - 是否需要扩容
+  - 是否存在 Leader-only 操作
 
 ## 关键边界
 ### Phase 3：基础设施收口

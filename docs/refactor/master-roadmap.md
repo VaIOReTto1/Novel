@@ -89,6 +89,35 @@
 ### Phase 8+
 - 建设可观测性、灰度、特性开关、团队治理和长期演进机制。
 
+## 5.1 Phase-aware Subagent 规划规则
+- 从本规则生效起，每个新 phase 文档都必须新增 `协作编制` 区块。
+- `协作编制` 至少必须包含：
+  - `Leader Mode`
+  - `Base Helper Count`
+  - `Scale-Up Triggers`
+  - `Scale-Down Triggers`
+  - `Agent Roster`
+  - `Lock Strategy`
+  - `Retry Window`
+  - `Escalation Window`
+  - `Leader-only Actions`
+- 所有 helper 与 leader 默认模型固定为 `GPT-5.4`。
+- 写的是 `基线人数 + 扩缩规则`，不是写死人数。
+- 每次进入新 phase 时，必须在 phase 文档中重新确认当期实际编制。
+
+### Phase Staffing 总表
+| Phase | Base Helper Count | 默认角色类型 | 典型扩容条件 |
+| --- | --- | --- | --- |
+| Phase 0 | `2` | 盘点/基线、设备/证据 | Android 与 RN 盘点、动态取证并行 |
+| Phase 1 | `3` | 发布构建、安全合规、迁移验证 | 签名、WebView、迁移演练、benchmark 并行 |
+| Phase 2 | `4` | JVM/fixture、Bridge contract、smoke/CI、静态债 | smoke 与 CI 门禁拆线并行 |
+| Phase 3 | `4` | Core infra、Bridge boundary、Storage/error、Validation | 作为历史样本记录，不回填旧阶段文档 |
+| Phase 4 | `4` | BridgeFacade、Feature split、Reader/cache light、Host/quality | `NavigationBridgeModule` 与 `HomeViewModel` 可独立拆分 |
+| Phase 5 | `5` | Module graph、core module、feature A、feature B、build integration | 模块搬迁与构建集成并行 |
+| Phase 6 | `3` | Startup、Reader/scroll、benchmark/observability | WebView 与 DB 性能专项独立成线 |
+| Phase 7 | `3` | Size shrink、dependency/build、artifact diff | npm 与 Gradle 依赖治理拆线 |
+| Phase 8+ | `3` | Observability、governance/ADR、rollout/flag | Crash/ANR 与治理建设并行 |
+
 ## 6. 全局补充优化点
 - 无障碍：语义标签、TalkBack、点击区域、对比度、字体缩放与阅读器极限字号。
 - 电量与热量：阅读器持续阅读、章节预取、WebView 活动页、后台协程与轮询。
@@ -118,6 +147,10 @@
   - 对应阶段文档
   - `phase-0-2-validation-board.md`
   - `decision-log.md`
+- 阶段关闭或进入新阶段前，必须确认：
+  - 当前 phase 的 `协作编制` 已写入阶段文档
+  - helper 锁策略无路径重叠
+  - `Leader-only Actions` 已明确
 
 ## 9. 原子提交策略
 - 每次提交只做一类变化：
@@ -136,3 +169,4 @@
 - 重构期间核心功能和 UI 行为保持稳定。
 - 每个阶段都有明确的进入条件、硬阈值、退出条件和证据沉淀。
 - 后续架构重构建立在自动化护栏和生产化工程基础之上，而不是直接进入代码重写。
+- 每个新 phase 都有明确的 helper 基线人数、扩缩条件、锁与升级窗口，不再临时口头决定协作方式。

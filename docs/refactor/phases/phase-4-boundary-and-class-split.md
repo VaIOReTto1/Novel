@@ -23,6 +23,53 @@
 - `NetworkFacade`、`StorageFacade`、`AppError`、rollback / kill switch 已成立
 - 静态债基线已存在
 
+## 协作编制
+### Leader Mode
+- `single leader / multi-helper`
+
+### Base Helper Count
+- `4`
+
+### Scale-Up Triggers
+- `NavigationBridgeModule` 与 `HomeViewModel` 可独立拆分且互不抢锁。
+- `RN Host / profile-host` 风险验证可以独立运行，不与业务拆分类主题共享写锁。
+
+### Scale-Down Triggers
+- 当前只做文档、看板、关闭评审或证据归档。
+- 当前只推进单一超大类拆分，不涉及 Host 风险验证。
+
+### Agent Roster
+- `BridgeFacadeSplitAgent`
+- `FeatureBoundarySplitAgent`
+- `CacheReaderLightAgent`
+- `HostRiskQualityAgent`
+
+### Lock Strategy
+- `LOCK-BRIDGE-FACADE`
+- `LOCK-HOME-SEARCH-SPLIT`
+- `LOCK-CACHE-READER-LIGHT`
+- `LOCK-HOST-QUALITY`
+
+### Retry Window
+- `0-15 min` helper 自检、自修一次
+- `15-30 min` Leader 收窄范围后二次派发
+
+### Escalation Window
+- `30-45 min` 进入 `hard escalation`
+- 立即升级条件：
+  - UI 语义变化
+  - route / Bridge event / payload 语义变化
+  - Reader 核心翻页或分页行为风险
+  - 无法给出 rollback command
+  - touched files 新增 lint / detekt 红项
+
+### Leader-only Actions
+- 更新阶段状态
+- 更新验证看板
+- 更新决策日志
+- 维护 README 与回滚索引
+- 执行 Git commit / revert
+
 ## 任务拆解
 | 编号 | 任务 | 预期输出 | 对应检验 |
 | --- | --- | --- | --- |

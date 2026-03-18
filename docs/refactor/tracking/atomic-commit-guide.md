@@ -24,6 +24,29 @@
   - 如有偏差，登记 `decision-log.md`
   - 立即执行 Git commit
 
+## Leader-only 规则
+- 只有 `LeaderAgent` 可以直接修改：
+  - `docs/refactor/README.md`
+  - `docs/refactor/tracking/decision-log.md`
+  - `docs/refactor/tracking/*validation-board.md`
+  - 阶段状态字段
+- helper 不允许直接提交 tracking 主文档变更。
+
+## Lock ID 规则
+- 每个原子主题在派发前必须绑定一个 `Lock ID`。
+- helper 一次只能持有 `1` 把写锁。
+- 需要跨锁的改动必须先拆成多个原子主题。
+
+## Rollback ID 规则
+- 每个原子主题都必须生成 `Rollback ID`。
+- 至少记录：
+  - `Rollback ID`
+  - `Commit SHA`
+  - `One-Click Command`
+  - `Precheck`
+  - `Postcheck`
+- 若无法给出 rollback command，则该主题不得进入提交阶段。
+
 ## 推荐提交粒度
 - 文档骨架单独提交
 - 阶段文档单独提交
@@ -67,3 +90,5 @@
 - 改动是否有对应验证项。
 - 改动是否已经同步更新文档和看板。
 - 提交信息是否准确、中文且能反映主题。
+- 是否满足 `Leader-only` 写权限边界。
+- 是否已绑定 `Lock ID` 与 `Rollback ID`。

@@ -5,12 +5,13 @@
 - 阶段状态：`planned`
 - 门禁模式：`严格门禁`
 - 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）中的 `Phase 3` 已正式关闭并标记为 `validated`。高风险生产网络路径已统一切入 `NetworkFacade`，Bridge 层匿名协程作用域与 `MainApplication` 的按需初始化入口已完成收口，`StorageFacade`/`AppError` 第一批目标均已达成，Bridge 与存储回退开关及网络结构性回退边界也已明确。
-- 下一步：按 `docs/refactor/phases/phase-4-boundary-and-class-split.md` 进入 `Phase 4`，优先建立包边界骨架、`BridgeFacade` 收口策略和超大类拆分顺序
+- 下一步：按 `Wave 1` 进入 `Phase 4`，优先产出包边界图、四个超大类职责切片图和 `BridgeFacade` 外围映射表
 - 当前 Phase 默认编制：`4 helpers + 1 Leader`
   - `BridgeFacadeSplitAgent`
   - `FeatureBoundarySplitAgent`
   - `CacheReaderLightAgent`
   - `HostRiskQualityAgent`
+- 当前激活波次：`Wave 1`
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -40,12 +41,15 @@
 - [Phase 2 - 质量门禁与自动化护栏](./phases/phase-2-quality-gates.md)
 - [Phase 3 - 基础设施收口](./phases/phase-3-infra-consolidation.md)
 - [Phase 4 - 边界收口与超大类拆分](./phases/phase-4-boundary-and-class-split.md)
+- [Phase 4 Wave Tracker](./phase-4/phase-4-wave-tracker.md)
 - [Phase-aware GPT-5.4 协作策略](./collaboration/phase-aware-gpt5.4-subagent-policy.md)
 - [Phase-aware GPT-5.4 协作策略评审报告](./collaboration/phase-aware-gpt5.4-subagent-policy-review.md)
 - [双人交叉评审模板](./templates/two-person-cross-review-template.md)
 - [Phase 0-2 验证看板](./tracking/phase-0-2-validation-board.md)
 - [Phase 3-4 验证看板](./tracking/phase-3-4-validation-board.md)
 - [第二阶段静态债基线](./tracking/stage-2-static-debt-baseline.md)
+- [Subagent Dispatch Log](./tracking/subagent-dispatch-log.md)
+- [Rollback Index](./tracking/rollback-index.md)
 - [偏差与决策日志](./tracking/decision-log.md)
 - [原子提交规范](./tracking/atomic-commit-guide.md)
 

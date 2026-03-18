@@ -37,11 +37,14 @@
 - `docs/refactor/tracking/phase-3-4-validation-board.md`
 - `docs/refactor/tracking/stage-2-static-debt-baseline.md`
 - `docs/refactor/stage-2-closeout-summary.md`
+- `docs/refactor/phase-4/phase-4-wave-tracker.md`
 - `docs/refactor/collaboration/phase-aware-gpt5.4-subagent-policy.md`
 - `docs/refactor/collaboration/phase-aware-gpt5.4-subagent-policy-review.md`
 - `docs/refactor/templates/two-person-cross-review-template.md`
 - 继续复用：
   - `docs/refactor/tracking/decision-log.md`
+  - `docs/refactor/tracking/subagent-dispatch-log.md`
+  - `docs/refactor/tracking/rollback-index.md`
   - `docs/refactor/README.md`
 
 ## Stage 2 协作编制规则
@@ -60,6 +63,28 @@
   - helper 是否只持有单锁
   - 是否需要扩容
   - 是否存在 Leader-only 操作
+
+## Phase 4 长期推进模式
+- `Phase 4` 采用双轨结构：
+  - `任务轨`
+    - 保留 `P4.1 ~ P4.11`
+  - `波次轨`
+    - `Wave 1` 边界骨架与拆分地图
+    - `Wave 2` Bridge 与宿主页边界收口
+    - `Wave 3` Home/Search/Cache 大类拆分
+    - `Wave 4` Reader 轻触减重、mock 清理与阶段收尾
+- `Phase 4` 默认长期自治推进：
+  - 未命中重大决策升级清单时，可持续推进下一个原子主题
+  - 每轮工作都必须同步：
+    - `docs/refactor/phase-4/phase-4-wave-tracker.md`
+    - `docs/refactor/tracking/subagent-dispatch-log.md`
+    - `docs/refactor/tracking/rollback-index.md`
+- `Phase 4` 的重大决策升级清单固定为：
+  - route / Bridge event / payload 语义变化
+  - Reader 分页、翻页、核心渲染行为变更
+  - Reader 从“轻触”升级成“结构性拆分”
+  - 范围升级到真正 Gradle 模块化
+  - 任何会改变 UI 语义或产品行为的方案
 
 ## 关键边界
 ### Phase 3：基础设施收口

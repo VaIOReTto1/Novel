@@ -310,8 +310,11 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun provideBookService(gson: Gson): BookService {
-        return BookService(gson)
+    fun provideBookService(
+        gson: Gson,
+        networkFacade: NetworkFacade
+    ): BookService {
+        return BookService(gson, networkFacade)
     }
     
     @Provides

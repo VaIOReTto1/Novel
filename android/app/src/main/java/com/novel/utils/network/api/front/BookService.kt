@@ -1,12 +1,15 @@
 package com.novel.utils.network.api.front
 
 import androidx.compose.runtime.Stable
-import com.novel.utils.TimberLogger
-import com.novel.utils.network.ApiService
-import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.novel.core.StableThrowable
+import com.novel.core.network.NetworkFacade
+import com.novel.core.network.NetworkRequest
+import com.novel.core.network.NetworkRequestMethod
+import com.novel.utils.TimberLogger
+import com.novel.utils.network.ApiService
+import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import com.novel.utils.network.cache.IncrementalNetworkResponse
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -32,7 +35,8 @@ import javax.inject.Singleton
 @Stable
 class BookService @Inject constructor(
     @Stable
-    private val gson: Gson
+    private val gson: Gson,
+    private val networkFacade: NetworkFacade
 ) {
     
     // region 数据结构
@@ -480,55 +484,32 @@ class BookService @Inject constructor(
     }
 
     suspend fun getVisitRankBooksBlocking(): BookRankResponse {
-        return suspendCancellableCoroutine { cont ->
-            getVisitRankBooks { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/visit_rank",
+            clazz = BookRankResponse::class.java
+        )
     }
 
     suspend fun getUpdateRankBooksBlocking(): BookRankResponse {
-        return suspendCancellableCoroutine { cont ->
-            getUpdateRankBooks { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/update_rank",
+            clazz = BookRankResponse::class.java
+        )
     }
 
     suspend fun getNewestRankBooksBlocking(): BookRankResponse {
-        return suspendCancellableCoroutine { cont ->
-            getNewestRankBooks { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/newest_rank",
+            clazz = BookRankResponse::class.java
+        )
     }
 
     suspend fun getBookCategoriesBlocking(workDirection: Int): BookCategoryResponse {
-        return suspendCancellableCoroutine { cont ->
-            getBookCategories(workDirection) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/category/list",
+            queryParams = mapOf("workDirection" to workDirection.toString()),
+            clazz = BookCategoryResponse::class.java
+        )
     }
 
     suspend fun getLastChapterAboutBlocking(bookId: Long): BookChapterAboutResponse {
@@ -770,6 +751,24 @@ class BookService @Inject constructor(
                 callback(null, Exception("Response is null"))
             }
         }
+    }
+
+    private suspend fun <T> requestAndParse(
+        endpoint: String,
+        queryParams: Map<String, String> = emptyMap(),
+        clazz: Class<T>
+    ): T {
+        val response = networkFacade.execute(
+            NetworkRequest(
+                baseUrl = BASE_URL_FRONT,
+                endpoint = endpoint,
+                method = NetworkRequestMethod.GET,
+                queryParams = queryParams,
+                headers = mapOf("Accept" to "*/*")
+            )
+        )
+
+        return gson.fromJson(response, clazz)
     }
     // endregion
 }

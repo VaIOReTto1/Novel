@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService` 与 `AuthorService` 的核心主路径已完成网络收口，`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `BridgeCoroutineScopes` 已覆盖 Settings/User/Navigation 三个 Bridge 模块的匿名协程作用域
-- 下一步：继续推进基础设施收口主线，评估 `V3-01/V3-04/V3-03/V3-02` 哪些已经接近首批关闭阈值，并选择继续扩大 `DataStore` 试点还是转向 `V3-06`
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 以及 `BookService` 的榜单/分类主路径已完成网络收口，`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `BridgeCoroutineScopes` 已覆盖 Settings/User/Navigation 三个 Bridge 模块的匿名协程作用域
+- 下一步：继续推进基础设施收口主线，优先补齐 `BookService` 和 `AuthorService` 的剩余深层接口，随后评估 `V3-01/V3-04/V3-03/V3-02` 哪些已接近首批关闭阈值
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |

@@ -11,16 +11,9 @@ import com.novel.core.network.NetworkRequestMethod
 import com.novel.core.result.AppError
 import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
-import com.novel.utils.network.ImmutableListTypeAdapterFactory
-import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_AUTHOR
+import com.novel.utils.network.ImmutableListTypeAdapterFactory
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -161,244 +154,6 @@ class AuthorService @Inject constructor(
     )
     // endregion
 
-    // region 网络请求方法
-    
-    /**
-     * 作家注册接口
-     */
-    private fun registerAuthor(
-        request: AuthorRegisterRequest,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 registerAuthor()，参数：$request")
-
-        CoroutineScope(Dispatchers.IO).launch {
-            runCatching {
-                requestAndParse(
-                    request = NetworkRequest(
-                        baseUrl = BASE_URL_AUTHOR,
-                        endpoint = "register",
-                        method = NetworkRequestMethod.POST,
-                        bodyParams = buildAuthorRegisterParams(request),
-                        headers = mapOf(
-                            "Content-Type" to "application/json",
-                            "Accept" to "*/*"
-                        )
-                    ),
-                    clazz = BaseResponse::class.java
-                )
-            }.onSuccess { response ->
-                callback(response, null)
-            }.onFailure { error ->
-                callback(null, error)
-            }
-        }
-    }
-
-    /**
-     * 作家状态查询接口
-     */
-    private fun getAuthorStatus(
-        callback: (AuthorStatusResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 getAuthorStatus()")
-
-        CoroutineScope(Dispatchers.IO).launch {
-            runCatching {
-                requestAndParse(
-                    request = NetworkRequest(
-                        baseUrl = BASE_URL_AUTHOR,
-                        endpoint = "status",
-                        method = NetworkRequestMethod.GET,
-                        headers = mapOf("Accept" to "*/*")
-                    ),
-                    clazz = AuthorStatusResponse::class.java
-                )
-            }.onSuccess { response ->
-                callback(response, null)
-            }.onFailure { error ->
-                callback(null, error)
-            }
-        }
-    }
-
-    /**
-     * 小说发布接口
-     */
-    private fun publishBook(
-        request: BookAddRequest,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 publishBook()，参数：$request")
-        
-        val requestBody = mapOf(
-            "workDirection" to request.workDirection.toString(),
-            "categoryId" to request.categoryId.toString(),
-            "categoryName" to request.categoryName,
-            "picUrl" to request.picUrl,
-            "bookName" to request.bookName,
-            "bookDesc" to request.bookDesc,
-            "isVip" to request.isVip.toString()
-        )
-        
-        ApiService.post(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "book",
-            params = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说发布列表查询接口
-     */
-    private fun getAuthorBooks(
-        pageNum: Int = 1,
-        pageSize: Int = 10,
-        callback: (BookListResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 getAuthorBooks()，参数：pageNum=$pageNum, pageSize=$pageSize")
-        
-        val params = mapOf(
-            "pageNum" to pageNum.toString(),
-            "pageSize" to pageSize.toString()
-        )
-        
-        ApiService.get(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "books",
-            params = params,
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookListResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说章节发布接口
-     */
-    private fun publishChapter(
-        bookId: Long,
-        request: ChapterAddRequest,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 publishChapter()，bookId=$bookId，参数：$request")
-        
-        val requestBody = mapOf(
-            "bookId" to request.bookId.toString(),
-            "chapterName" to request.chapterName,
-            "chapterContent" to request.chapterContent,
-            "isVip" to request.isVip.toString()
-        )
-        
-        ApiService.post(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "book/chapter/$bookId",
-            params = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说章节发布列表查询接口
-     */
-    private fun getBookChapters(
-        bookId: Long,
-        pageNum: Int = 1,
-        pageSize: Int = 10,
-        callback: (ChapterListResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 getBookChapters()，bookId=$bookId，pageNum=$pageNum, pageSize=$pageSize")
-        
-        val params = mapOf(
-            "pageNum" to pageNum.toString(),
-            "pageSize" to pageSize.toString()
-        )
-        
-        ApiService.get(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "book/chapters/$bookId",
-            params = params,
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, ChapterListResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说章节查询接口
-     */
-    private fun getChapter(
-        chapterId: Long,
-        callback: (ChapterContentResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 getChapter()，chapterId=$chapterId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "book/chapter/$chapterId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, ChapterContentResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说章节更新接口
-     */
-    private fun updateChapter(
-        chapterId: Long,
-        request: ChapterUpdateRequest,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 updateChapter()，chapterId=$chapterId，参数：$request")
-        
-        val json = Gson().toJson(request)
-        val requestBody = json.toRequestBody("application/json".toMediaTypeOrNull())
-        
-        ApiService.put(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "book/chapter/$chapterId",
-            body = requestBody,
-            headers = mapOf(
-                "Content-Type" to "application/json",
-                "Accept" to "*/*"
-            )
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说章节删除接口
-     */
-    private fun deleteChapter(
-        chapterId: Long,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("AuthorService", "开始 deleteChapter()，chapterId=$chapterId")
-        
-        ApiService.delete(
-            baseUrl = BASE_URL_AUTHOR,
-            endpoint = "book/chapter/$chapterId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    // endregion
-
     // region 协程版本
     suspend fun registerAuthorBlocking(request: AuthorRegisterRequest): BaseResponse {
         return requestAndParse(
@@ -432,16 +187,27 @@ class AuthorService @Inject constructor(
         runResulting { getAuthorStatusBlocking() }
 
     suspend fun publishBookBlocking(request: BookAddRequest): BaseResponse {
-        return suspendCancellableCoroutine { cont ->
-            publishBook(request) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            request = NetworkRequest(
+                baseUrl = BASE_URL_AUTHOR,
+                endpoint = "book",
+                method = NetworkRequestMethod.POST,
+                bodyParams = mapOf(
+                    "workDirection" to request.workDirection.toString(),
+                    "categoryId" to request.categoryId.toString(),
+                    "categoryName" to request.categoryName,
+                    "picUrl" to request.picUrl,
+                    "bookName" to request.bookName,
+                    "bookDesc" to request.bookDesc,
+                    "isVip" to request.isVip.toString()
+                ),
+                headers = mapOf(
+                    "Content-Type" to "application/json",
+                    "Accept" to "*/*"
+                )
+            ),
+            clazz = BaseResponse::class.java
+        )
     }
 
     suspend fun getAuthorBooksBlocking(pageNum: Int = 1, pageSize: Int = 10): BookListResponse {

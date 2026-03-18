@@ -51,7 +51,7 @@
   - 它直接连接用户可感知主路径
   - 它和后续 `BridgeFacade` 收口存在直接耦合
 - `BookService`、`UserService`、`AuthorService` 的调用面较大，属于第二批迁移对象，不适合在没有矩阵和兼容层时直接散点替换。
-- 当前 `BookService` 已完成榜单、分类、书详情、章节列表、正文内容、最新评论与末章摘要阻塞主路径收口，`AuthorService` 仍是 `V3-01` 的主要剩余收口点。
+- 当前 `AuthorService` 的阻塞生产主路径与旧回调壳已基本收口，`V3-01` 的主要剩余面集中在 `BookService` 的兼容与增量路径。
 
 ## 固定迁移顺序
 1. `NavigationBridgeModule`

@@ -136,6 +136,49 @@ class AuthorServiceTest {
     }
 
     @Test
+    fun publishBookBlocking_buildsExpectedPostRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "code":"0",
+                  "message":"ok",
+                  "ok":true,
+                  "data":null
+                }
+            """.trimIndent()
+        )
+        val service = AuthorService(facade)
+        val request = AuthorService.BookAddRequest(
+            workDirection = 1,
+            categoryId = 7L,
+            categoryName = "都市",
+            picUrl = "https://example.com/cover.png",
+            bookName = "New Author Book",
+            bookDesc = "desc",
+            isVip = 0
+        )
+
+        val result = service.publishBookBlocking(request)
+
+        assertEquals(ApiService.BASE_URL_AUTHOR, facade.lastRequest?.baseUrl)
+        assertEquals("book", facade.lastRequest?.endpoint)
+        assertEquals(NetworkRequestMethod.POST, facade.lastRequest?.method)
+        assertEquals(
+            mapOf(
+                "workDirection" to "1",
+                "categoryId" to "7",
+                "categoryName" to "都市",
+                "picUrl" to "https://example.com/cover.png",
+                "bookName" to "New Author Book",
+                "bookDesc" to "desc",
+                "isVip" to "0"
+            ),
+            facade.lastRequest?.bodyParams
+        )
+        assertTrue(result.ok == true)
+    }
+
+    @Test
     fun getChapterBlocking_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
         val facade = RecordingNetworkFacade(
             response = """

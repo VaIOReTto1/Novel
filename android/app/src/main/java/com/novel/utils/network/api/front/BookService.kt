@@ -8,11 +8,9 @@ import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
 import com.novel.utils.TimberLogger
-import com.novel.utils.network.ApiService
 import com.novel.utils.network.ApiService.BASE_URL_FRONT
 import com.novel.utils.network.cache.IncrementalNetworkResponse
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -202,247 +200,6 @@ class BookService @Inject constructor(
     )
     // endregion
 
-    // region 网络请求方法
-    
-    /**
-     * 小说信息查询接口
-     */
-    private fun getBookById(
-        bookId: Long,
-        callback: (BookInfoResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getBookById()，参数：$bookId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/$bookId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookInfoResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说点击榜查询接口
-     */
-    private fun getVisitRankBooks(
-        callback: (BookRankResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getVisitRankBooks()")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/visit_rank",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookRankResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说更新榜查询接口
-     */
-    private fun getUpdateRankBooks(
-        callback: (BookRankResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getUpdateRankBooks()")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/update_rank",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookRankResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说新书榜查询接口
-     */
-    private fun getNewestRankBooks(
-        callback: (BookRankResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getNewestRankBooks()")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/newest_rank",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookRankResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说推荐列表查询接口
-     */
-    private fun getRecommendBooks(
-        bookId: Long,
-        callback: (BookListResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getRecommendBooks()，参数：$bookId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/rec_list",
-            params = mapOf("bookId" to bookId.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookListResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说章节列表查询接口
-     */
-    private fun getBookChapters(
-        bookId: Long,
-        callback: (BookChapterResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getBookChapters()，参数：$bookId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/chapter/list",
-            params = mapOf("bookId" to bookId.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookChapterResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说内容相关信息查询接口
-     */
-    private fun getBookContent(
-        chapterId: Long,
-        callback: (BookContentResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getBookContent()，参数：$chapterId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/content/$chapterId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookContentResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说最新评论查询接口
-     */
-    private fun getNewestComments(
-        bookId: Long,
-        callback: (BookCommentResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getNewestComments()，参数：$bookId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/comment/newest_list",
-            params = mapOf("bookId" to bookId.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookCommentResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说分类列表查询接口
-     */
-    private fun getBookCategories(
-        workDirection: Int,
-        callback: (BookCategoryResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getBookCategories()，参数：$workDirection")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/category/list",
-            params = mapOf("workDirection" to workDirection.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookCategoryResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 获取上一章节ID接口
-     */
-    private fun getPreChapterId(
-        chapterId: Long,
-        callback: (ChapterIdResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getPreChapterId()，参数：$chapterId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/pre_chapter_id/$chapterId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, ChapterIdResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 获取下一章节ID接口
-     */
-    private fun getNextChapterId(
-        chapterId: Long,
-        callback: (ChapterIdResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getNextChapterId()，参数：$chapterId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/next_chapter_id/$chapterId",
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, ChapterIdResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 小说最新章节相关信息查询接口
-     */
-    private fun getLastChapterAbout(
-        bookId: Long,
-        callback: (BookChapterAboutResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 getLastChapterAbout()，参数：$bookId")
-        
-        ApiService.get(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/last_chapter/about",
-            params = mapOf("bookId" to bookId.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BookChapterAboutResponse::class.java, callback)
-        }
-    }
-
-    /**
-     * 增加小说点击量接口
-     */
-    private fun addVisitCount(
-        bookId: Long,
-        callback: (BaseResponse?, Throwable?) -> Unit
-    ) {
-        TimberLogger.d("BookService", "开始 addVisitCount()，参数：$bookId")
-        
-        ApiService.post(
-            baseUrl = BASE_URL_FRONT,
-            endpoint = "book/visit",
-            params = mapOf("bookId" to bookId.toString()),
-            headers = mapOf("Accept" to "*/*")
-        ) { response, error ->
-            handleResponse(response, error, BaseResponse::class.java, callback)
-        }
-    }
-
-    // endregion
-
     // region 协程版本
     suspend fun getBookByIdBlocking(bookId: Long): BookInfoResponse {
         return requestAndParse(
@@ -525,55 +282,20 @@ class BookService @Inject constructor(
         lastModified: String? = null,
         eTag: String? = null
     ): IncrementalNetworkResponse<BookContentResponse> {
-        return suspendCancellableCoroutine { cont ->
-            val headers = mutableMapOf<String, String>()
-            headers["Accept"] = "*/*"
-            
-            // 添加条件请求头
-            lastModified?.let { headers["If-Modified-Since"] = it }
-            eTag?.let { headers["If-None-Match"] = it }
-            
-            TimberLogger.d("BookService", "条件请求获取章节内容: chapterId=$chapterId, lastModified=$lastModified, eTag=$eTag")
-            
-            ApiService.get(
-                baseUrl = BASE_URL_FRONT,
-                endpoint = "book/content/$chapterId",
-                headers = headers
-            ) { response, error ->
-                when {
-                    error != null -> {
-                        if (error.message?.contains("304") == true || error.message?.contains("Not Modified") == true) {
-                            // 304 Not Modified
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.NotModified()))
-                        } else {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(error))))
-                        }
-                    }
-                    response != null -> {
-                        try {
-                            val bookContentResponse = gson.fromJson(response, BookContentResponse::class.java)
-                            // 模拟服务器返回的版本信息（实际项目中应从响应头获取）
-                            val serverVersion = System.currentTimeMillis().toString()
-                            val responseLastModified = System.currentTimeMillis().toString()
-                            val responseETag = "\"${response.hashCode()}\""
-                            
-                            cont.resumeWith(Result.success(
-                                IncrementalNetworkResponse.Modified(
-                                    data = bookContentResponse,
-                                    serverVersion = serverVersion,
-                                    lastModified = responseLastModified,
-                                    eTag = responseETag
-                                )
-                            ))
-                        } catch (e: Exception) {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(e))))
-                        }
-                    }
-                    else -> {
-                        cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(Exception("Response is null")))))
-                    }
-                }
-            }
+        val headers = buildConditionalHeaders(lastModified, eTag)
+        TimberLogger.d("BookService", "条件请求获取章节内容: chapterId=$chapterId, lastModified=$lastModified, eTag=$eTag")
+
+        return runIncrementalRequest(
+            endpoint = "book/content/$chapterId",
+            headers = headers,
+            clazz = BookContentResponse::class.java
+        ) { response, data ->
+            IncrementalNetworkResponse.Modified(
+                data = data,
+                serverVersion = System.currentTimeMillis().toString(),
+                lastModified = System.currentTimeMillis().toString(),
+                eTag = "\"${response.hashCode()}\""
+            )
         }
     }
 
@@ -585,55 +307,21 @@ class BookService @Inject constructor(
         lastModified: String? = null,
         eTag: String? = null
     ): IncrementalNetworkResponse<BookInfoResponse> {
-        return suspendCancellableCoroutine { cont ->
-            val headers = mutableMapOf<String, String>()
-            headers["Accept"] = "*/*"
-            
-            // 添加条件请求头
-            lastModified?.let { headers["If-Modified-Since"] = it }
-            eTag?.let { headers["If-None-Match"] = it }
-            
-            TimberLogger.d("BookService", "条件请求获取书籍信息: bookId=$bookId, lastModified=$lastModified, eTag=$eTag")
-            
-            ApiService.get(
-                baseUrl = BASE_URL_FRONT,
-                endpoint = "book/$bookId",
-                headers = headers
-            ) { response, error ->
-                when {
-                    error != null -> {
-                        if (error.message?.contains("304") == true || error.message?.contains("Not Modified") == true) {
-                            // 304 Not Modified
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.NotModified()))
-                        } else {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(error))))
-                        }
-                    }
-                    response != null -> {
-                        try {
-                            val bookInfoResponse = gson.fromJson(response, BookInfoResponse::class.java)
-                            // 模拟服务器返回的版本信息（实际项目中应从响应头获取）
-                            val serverVersion = bookInfoResponse.data?.updateTime ?: System.currentTimeMillis().toString()
-                            val responseLastModified = bookInfoResponse.data?.updateTime ?: System.currentTimeMillis().toString()
-                            val responseETag = "\"${response.hashCode()}\""
-                            
-                            cont.resumeWith(Result.success(
-                                IncrementalNetworkResponse.Modified(
-                                    data = bookInfoResponse,
-                                    serverVersion = serverVersion,
-                                    lastModified = responseLastModified,
-                                    eTag = responseETag
-                                )
-                            ))
-                        } catch (e: Exception) {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(e))))
-                        }
-                    }
-                    else -> {
-                        cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(Exception("Response is null")))))
-                    }
-                }
-            }
+        val headers = buildConditionalHeaders(lastModified, eTag)
+        TimberLogger.d("BookService", "条件请求获取书籍信息: bookId=$bookId, lastModified=$lastModified, eTag=$eTag")
+
+        return runIncrementalRequest(
+            endpoint = "book/$bookId",
+            headers = headers,
+            clazz = BookInfoResponse::class.java
+        ) { response, data ->
+            val version = data.data?.updateTime ?: System.currentTimeMillis().toString()
+            IncrementalNetworkResponse.Modified(
+                data = data,
+                serverVersion = version,
+                lastModified = version,
+                eTag = "\"${response.hashCode()}\""
+            )
         }
     }
 
@@ -645,103 +333,89 @@ class BookService @Inject constructor(
         lastModified: String? = null,
         eTag: String? = null
     ): IncrementalNetworkResponse<BookChapterResponse> {
-        return suspendCancellableCoroutine { cont ->
-            val headers = mutableMapOf<String, String>()
-            headers["Accept"] = "*/*"
-            
-            // 添加条件请求头
-            lastModified?.let { headers["If-Modified-Since"] = it }
-            eTag?.let { headers["If-None-Match"] = it }
-            
-            TimberLogger.d("BookService", "条件请求获取章节列表: bookId=$bookId, lastModified=$lastModified, eTag=$eTag")
-            
-            ApiService.get(
-                baseUrl = BASE_URL_FRONT,
-                endpoint = "book/chapter/list",
-                params = mapOf("bookId" to bookId.toString()),
-                headers = headers
-            ) { response, error ->
-                when {
-                    error != null -> {
-                        if (error.message?.contains("304") == true || error.message?.contains("Not Modified") == true) {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.NotModified()))
-                        } else {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(error))))
-                        }
-                    }
-                    response != null -> {
-                        try {
-                            val bookChapterResponse = gson.fromJson(response, BookChapterResponse::class.java)
-                            // 使用最新章节的更新时间作为版本信息，安全处理null值
-                            val latestUpdateTime = bookChapterResponse.data
-                                ?.filter { it.chapterUpdateTime != null }
-                                ?.maxByOrNull { it.chapterUpdateTime ?: "" }
-                                ?.chapterUpdateTime
-                            val serverVersion = latestUpdateTime ?: System.currentTimeMillis().toString()
-                            val responseLastModified = latestUpdateTime ?: System.currentTimeMillis().toString()
-                            val responseETag = "\"${response.hashCode()}\""
-                            
-                            cont.resumeWith(Result.success(
-                                IncrementalNetworkResponse.Modified(
-                                    data = bookChapterResponse,
-                                    serverVersion = serverVersion,
-                                    lastModified = responseLastModified,
-                                    eTag = responseETag
-                                )
-                            ))
-                        } catch (e: Exception) {
-                            cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(e))))
-                        }
-                    }
-                    else -> {
-                        cont.resumeWith(Result.success(IncrementalNetworkResponse.Error(StableThrowable(Exception("Response is null")))))
-                    }
-                }
-            }
+        val headers = buildConditionalHeaders(lastModified, eTag)
+        TimberLogger.d("BookService", "条件请求获取章节列表: bookId=$bookId, lastModified=$lastModified, eTag=$eTag")
+
+        return runIncrementalRequest(
+            endpoint = "book/chapter/list",
+            queryParams = mapOf("bookId" to bookId.toString()),
+            headers = headers,
+            clazz = BookChapterResponse::class.java
+        ) { response, data ->
+            val latestUpdateTime = data.data
+                ?.maxByOrNull { it.chapterUpdateTime }
+                ?.chapterUpdateTime
+                ?: System.currentTimeMillis().toString()
+            IncrementalNetworkResponse.Modified(
+                data = data,
+                serverVersion = latestUpdateTime,
+                lastModified = latestUpdateTime,
+                eTag = "\"${response.hashCode()}\""
+            )
         }
     }
     // endregion
 
     // region 响应处理
-    private fun <T> handleResponse(
-        response: String?,
-        error: Throwable?,
-        clazz: Class<T>,
-        callback: (T?, Throwable?) -> Unit
-    ) {
-        when {
-            error != null -> {
-                callback(null, error)
-            }
-            response != null -> {
-                try {
-                    callback(gson.fromJson(response, clazz), null)
-                } catch (e: Exception) {
-                    callback(null, e)
-                }
-            }
-            else -> {
-                callback(null, Exception("Response is null"))
-            }
-        }
-    }
-
     private suspend fun <T> requestAndParse(
         endpoint: String,
         queryParams: Map<String, String> = emptyMap(),
         clazz: Class<T>
     ): T {
-        val response = networkFacade.execute(
+        val response = executeGetRequest(
+            endpoint = endpoint,
+            queryParams = queryParams
+        )
+        return gson.fromJson(response, clazz)
+    }
+
+    private suspend fun executeGetRequest(
+        endpoint: String,
+        queryParams: Map<String, String> = emptyMap(),
+        headers: Map<String, String> = mapOf("Accept" to "*/*")
+    ): String {
+        return networkFacade.execute(
             NetworkRequest(
                 baseUrl = BASE_URL_FRONT,
                 endpoint = endpoint,
                 method = NetworkRequestMethod.GET,
                 queryParams = queryParams,
-                headers = mapOf("Accept" to "*/*")
+                headers = headers
             )
         )
+    }
 
-        return gson.fromJson(response, clazz)
+    private fun buildConditionalHeaders(
+        lastModified: String?,
+        eTag: String?
+    ): Map<String, String> = buildMap {
+        put("Accept", "*/*")
+        lastModified?.let { put("If-Modified-Since", it) }
+        eTag?.let { put("If-None-Match", it) }
+    }
+
+    private suspend fun <T> runIncrementalRequest(
+        endpoint: String,
+        queryParams: Map<String, String> = emptyMap(),
+        headers: Map<String, String>,
+        clazz: Class<T>,
+        onModified: (String, T) -> IncrementalNetworkResponse.Modified<T>
+    ): IncrementalNetworkResponse<T> {
+        return try {
+            val response = executeGetRequest(
+                endpoint = endpoint,
+                queryParams = queryParams,
+                headers = headers
+            )
+            val parsed = gson.fromJson(response, clazz)
+            onModified(response, parsed)
+        } catch (throwable: Throwable) {
+            if (throwable.message?.contains("304") == true || throwable.message?.contains("Not Modified") == true) {
+                IncrementalNetworkResponse.NotModified()
+            } else {
+                IncrementalNetworkResponse.Error(StableThrowable(throwable))
+            }
+        }
     }
     // endregion
 }

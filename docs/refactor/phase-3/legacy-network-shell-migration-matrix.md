@@ -51,7 +51,7 @@
   - 它直接连接用户可感知主路径
   - 它和后续 `BridgeFacade` 收口存在直接耦合
 - `BookService`、`UserService`、`AuthorService` 的调用面较大，属于第二批迁移对象，不适合在没有矩阵和兼容层时直接散点替换。
-- 当前 `AuthorService` 的阻塞生产主路径与旧回调壳已基本收口，`V3-01` 的主要剩余面集中在 `BookService` 的兼容与增量路径。
+- 当前高风险生产路径中的 `NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 与 `BookService` 文件内旧 `ApiService` 直连均已清零；旧网络壳的剩余重点已退到次级兼容路径与启动初始化路径。
 
 ## 固定迁移顺序
 1. `NavigationBridgeModule`

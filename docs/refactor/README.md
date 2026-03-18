@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 3`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 以及 `BookService` 的榜单/分类主路径已完成网络收口，其中 `BookService` 的书详情、章节列表、正文内容、最新评论和末章摘要阻塞主路径也已切入 `NetworkFacade`，`AuthorService` 的发布书籍阻塞路径与旧回调壳也已完成收口。`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `BridgeCoroutineScopes` 已覆盖 Settings/User/Navigation 三个 Bridge 模块的匿名协程作用域，`RefactorFeatureFlags` 已开始承接 Bridge/DataStore 的运行时开关
-- 下一步：继续推进基础设施收口主线，优先补齐 `BookService` 的兼容/增量路径，并把 `RefactorFeatureFlags` 真正接入 `V3-06` 的回滚链路证据，同时继续收敛 `V3-02` 中的 `runBlocking`
+- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）已完成文档落盘与静态债基线建立；`NavigationBridgeModule`、`HomeService`、`SearchService`、`UserService`、`AiService`、`AuthorService` 与 `BookService` 的高风险生产主路径现已全部切入 `NetworkFacade`，其中 `BookService` 的阻塞路径与增量条件请求路径、`AuthorService` 的发布书籍阻塞路径与旧回调壳均已完成收口，`V3-01` 已具备绿色验证证据。`AppError + DataResult<T>` 已接入 Home/Search 服务边界以及 Settings/User/Navigation Bridge 错误映射，`StorageFacade` 已覆盖 Settings 偏好、Search 历史和 Reader 设置三组低风险 key，`DataStore` 也已完成首个 Settings key 迁移样本；同时 `BridgeCoroutineScopes` 已覆盖 Settings/User/Navigation 三个 Bridge 模块的匿名协程作用域，`RefactorFeatureFlags` 已开始承接 Bridge/DataStore 的运行时开关
+- 下一步：继续推进基础设施收口主线，优先关闭 `V3-02` 的 `runBlocking / 匿名作用域` 收口，以及 `V3-06` 的回滚链路证据，再补齐 `V3-07` 的 Phase 4 进入条件
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -21,7 +21,7 @@
 - `V1-01 ~ V1-09` 已全部具备绿色验证证据，Phase 1 已完成。
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - 第二阶段规划文档已落盘，`V3-05` 静态债基线已建立。
-- `V3-01` 已完成 `NavigationBridgeModule` 4 条高风险网络路径迁移，并完成 `HomeService`、`SearchService`、`UserService`、`AuthorService` 与 `BookService` 阻塞主路径迁移，当前继续保持 `in_progress/yellow`。
+- `V3-01` 已具备绿色验证证据：高风险生产路径文件内旧 `ApiService` 直连已清零，且对应 JVM 单测与 `app:testDebugUnitTest` 均继续通过。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

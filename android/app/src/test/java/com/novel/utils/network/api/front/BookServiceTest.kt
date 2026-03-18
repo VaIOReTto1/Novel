@@ -6,6 +6,7 @@ import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
 import com.novel.utils.network.ApiService
 import com.novel.utils.network.ImmutableListTypeAdapterFactory
+import com.novel.utils.network.cache.IncrementalNetworkResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -289,6 +290,156 @@ class BookServiceTest {
         assertEquals("summary", result.data?.contentSummary)
     }
 
+    @Test
+    fun getBookByIdWithCondition_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "id":5,
+                    "categoryId":7,
+                    "categoryName":"都市",
+                    "picUrl":"https://example.com/cover.png",
+                    "bookName":"Detail Book",
+                    "authorId":9,
+                    "authorName":"Author",
+                    "bookDesc":"desc",
+                    "bookStatus":1,
+                    "visitCount":99,
+                    "wordCount":12345,
+                    "commentCount":5,
+                    "firstChapterId":11,
+                    "lastChapterId":12,
+                    "lastChapterName":"最新章",
+                    "updateTime":"2026-03-18 10:00:00"
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookByIdWithCondition(
+            bookId = 5L,
+            lastModified = "Mon, 18 Mar 2026 10:00:00 GMT",
+            eTag = "\"book-5\""
+        )
+
+        assertEquals("book/5", facade.lastRequest?.endpoint)
+        assertEquals("Mon, 18 Mar 2026 10:00:00 GMT", facade.lastRequest?.headers?.get("If-Modified-Since"))
+        assertEquals("\"book-5\"", facade.lastRequest?.headers?.get("If-None-Match"))
+        assertTrue(result is IncrementalNetworkResponse.Modified)
+        assertEquals(
+            "Detail Book",
+            (result as IncrementalNetworkResponse.Modified).data.data?.bookName
+        )
+    }
+
+    @Test
+    fun getBookChaptersWithCondition_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":[
+                    {
+                      "id":11,
+                      "bookId":5,
+                      "chapterNum":1,
+                      "chapterName":"第一章",
+                      "chapterWordCount":1000,
+                      "chapterUpdateTime":"2026-03-18 10:00:00",
+                      "isVip":0
+                    }
+                  ]
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookChaptersWithCondition(
+            bookId = 5L,
+            lastModified = "Mon, 18 Mar 2026 10:00:00 GMT",
+            eTag = "\"chapter-list-5\""
+        )
+
+        assertEquals("book/chapter/list", facade.lastRequest?.endpoint)
+        assertEquals(mapOf("bookId" to "5"), facade.lastRequest?.queryParams)
+        assertEquals("Mon, 18 Mar 2026 10:00:00 GMT", facade.lastRequest?.headers?.get("If-Modified-Since"))
+        assertEquals("\"chapter-list-5\"", facade.lastRequest?.headers?.get("If-None-Match"))
+        assertTrue(result is IncrementalNetworkResponse.Modified)
+        assertEquals(
+            "第一章",
+            (result as IncrementalNetworkResponse.Modified).data.data?.first()?.chapterName
+        )
+    }
+
+    @Test
+    fun getBookContentWithCondition_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "bookInfo":{
+                      "id":5,
+                      "categoryId":7,
+                      "categoryName":"都市",
+                      "picUrl":"https://example.com/cover.png",
+                      "bookName":"Detail Book",
+                      "authorId":9,
+                      "authorName":"Author",
+                      "bookDesc":"desc",
+                      "bookStatus":1,
+                      "visitCount":99,
+                      "wordCount":12345,
+                      "commentCount":5,
+                      "firstChapterId":11,
+                      "lastChapterId":12,
+                      "lastChapterName":"最新章",
+                      "updateTime":"2026-03-18 10:00:00"
+                    },
+                    "chapterInfo":{
+                      "id":11,
+                      "bookId":5,
+                      "chapterNum":1,
+                      "chapterName":"第一章",
+                      "chapterWordCount":1000,
+                      "chapterUpdateTime":"2026-03-18 10:00:00",
+                      "isVip":0
+                    },
+                    "bookContent":"content"
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookContentWithCondition(
+            chapterId = 11L,
+            lastModified = "Mon, 18 Mar 2026 10:00:00 GMT",
+            eTag = "\"content-11\""
+        )
+
+        assertEquals("book/content/11", facade.lastRequest?.endpoint)
+        assertEquals("Mon, 18 Mar 2026 10:00:00 GMT", facade.lastRequest?.headers?.get("If-Modified-Since"))
+        assertEquals("\"content-11\"", facade.lastRequest?.headers?.get("If-None-Match"))
+        assertTrue(result is IncrementalNetworkResponse.Modified)
+        assertEquals(
+            "content",
+            (result as IncrementalNetworkResponse.Modified).data.data?.bookContent
+        )
+    }
+
+    @Test
+    fun getBookContentWithCondition_returnsNotModifiedWhenFacadeReports304() = runBlocking {
+        val service = BookService(gson, ThrowingNetworkFacade(Exception("304 Not Modified")))
+
+        val result = service.getBookContentWithCondition(chapterId = 11L)
+
+        assertTrue(result is IncrementalNetworkResponse.NotModified)
+    }
+
     private class RecordingNetworkFacade(
         private val response: String
     ) : NetworkFacade {
@@ -297,6 +448,14 @@ class BookServiceTest {
         override suspend fun execute(request: NetworkRequest): String {
             lastRequest = request
             return response
+        }
+    }
+
+    private class ThrowingNetworkFacade(
+        private val throwable: Throwable
+    ) : NetworkFacade {
+        override suspend fun execute(request: NetworkRequest): String {
+            throw throwable
         }
     }
 }

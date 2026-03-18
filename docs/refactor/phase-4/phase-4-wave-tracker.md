@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 1`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 1 / 包边界图与迁移映射初稿`
+- 当前建议下一原子主题：`Wave 1 / BridgeFacade 与 delegate 映射表初稿`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -33,8 +33,11 @@
 - `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 尚未拆分
 - 静态债第二轮收敛尚未开始
 
+## 已完成的 Wave 1 资料
+- `docs/refactor/phase-4/package-boundary-map.md`
+- `docs/refactor/phase-4/large-class-responsibility-slices.md`
+
 ## 下一步
-- 先输出 Wave 1 的：
-  - 包边界图
-  - 迁移映射表
-  - 四个超大类的职责切片图
+- 继续输出 Wave 1 的：
+  - `BridgeFacade` / delegate 映射表
+  - 四个超大类的原子拆分清单

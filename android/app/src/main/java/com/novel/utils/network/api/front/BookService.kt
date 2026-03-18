@@ -445,42 +445,25 @@ class BookService @Inject constructor(
 
     // region 协程版本
     suspend fun getBookByIdBlocking(bookId: Long): BookInfoResponse {
-        return suspendCancellableCoroutine { cont ->
-            getBookById(bookId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/$bookId",
+            clazz = BookInfoResponse::class.java
+        )
     }
 
     suspend fun getBookContentBlocking(chapterId: Long): BookContentResponse {
-        return suspendCancellableCoroutine { cont ->
-            getBookContent(chapterId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/content/$chapterId",
+            clazz = BookContentResponse::class.java
+        )
     }
 
     suspend fun getBookChaptersBlocking(bookId: Long): BookChapterResponse {
-        return suspendCancellableCoroutine { cont ->
-            getBookChapters(bookId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/chapter/list",
+            queryParams = mapOf("bookId" to bookId.toString()),
+            clazz = BookChapterResponse::class.java
+        )
     }
 
     suspend fun getVisitRankBooksBlocking(): BookRankResponse {
@@ -513,32 +496,22 @@ class BookService @Inject constructor(
     }
 
     suspend fun getLastChapterAboutBlocking(bookId: Long): BookChapterAboutResponse {
-        return suspendCancellableCoroutine { cont ->
-            getLastChapterAbout(bookId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/last_chapter/about",
+            queryParams = mapOf("bookId" to bookId.toString()),
+            clazz = BookChapterAboutResponse::class.java
+        )
     }
 
     /**
      * 获取最新评论的协程版本
      */
     suspend fun getNewestCommentsBlocking(bookId: Long): BookCommentResponse {
-        return suspendCancellableCoroutine { cont ->
-            getNewestComments(bookId) { response, error ->
-                if (error != null) {
-                    cont.resumeWith(Result.failure(error))
-                } else {
-                    response?.let { cont.resumeWith(Result.success(it)) }
-                        ?: cont.resumeWith(Result.failure(Exception("Response is null")))
-                }
-            }
-        }
+        return requestAndParse(
+            endpoint = "book/comment/newest_list",
+            queryParams = mapOf("bookId" to bookId.toString()),
+            clazz = BookCommentResponse::class.java
+        )
     }
     // endregion
 

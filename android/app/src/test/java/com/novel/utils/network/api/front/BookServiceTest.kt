@@ -113,6 +113,182 @@ class BookServiceTest {
         assertTrue(result.ok == true)
     }
 
+    @Test
+    fun getBookByIdBlocking_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "code":"0",
+                  "message":"ok",
+                  "ok":true,
+                  "data":{
+                    "id":5,
+                    "categoryId":7,
+                    "categoryName":"都市",
+                    "picUrl":"https://example.com/cover.png",
+                    "bookName":"Detail Book",
+                    "authorId":9,
+                    "authorName":"Author",
+                    "bookDesc":"desc",
+                    "bookStatus":1,
+                    "visitCount":99,
+                    "wordCount":12345,
+                    "commentCount":5,
+                    "firstChapterId":11,
+                    "lastChapterId":12,
+                    "lastChapterName":"最新章",
+                    "updateTime":"2026-03-18 10:00:00"
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookByIdBlocking(5L)
+
+        assertEquals("book/5", facade.lastRequest?.endpoint)
+        assertEquals(NetworkRequestMethod.GET, facade.lastRequest?.method)
+        assertEquals("Detail Book", result.data?.bookName)
+    }
+
+    @Test
+    fun getBookChaptersBlocking_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":[
+                    {
+                      "id":11,
+                      "bookId":5,
+                      "chapterNum":1,
+                      "chapterName":"第一章",
+                      "chapterWordCount":1000,
+                      "chapterUpdateTime":"2026-03-18 10:00:00",
+                      "isVip":0
+                    }
+                  ]
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookChaptersBlocking(5L)
+
+        assertEquals("book/chapter/list", facade.lastRequest?.endpoint)
+        assertEquals(mapOf("bookId" to "5"), facade.lastRequest?.queryParams)
+        assertEquals("第一章", result.data?.first()?.chapterName)
+    }
+
+    @Test
+    fun getBookContentBlocking_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "bookInfo":{
+                      "id":5,
+                      "categoryId":7,
+                      "categoryName":"都市",
+                      "picUrl":"https://example.com/cover.png",
+                      "bookName":"Detail Book",
+                      "authorId":9,
+                      "authorName":"Author",
+                      "bookDesc":"desc",
+                      "bookStatus":1,
+                      "visitCount":99,
+                      "wordCount":12345,
+                      "commentCount":5,
+                      "firstChapterId":11,
+                      "lastChapterId":12,
+                      "lastChapterName":"最新章",
+                      "updateTime":"2026-03-18 10:00:00"
+                    },
+                    "chapterInfo":{
+                      "id":11,
+                      "bookId":5,
+                      "chapterNum":1,
+                      "chapterName":"第一章",
+                      "chapterWordCount":1000,
+                      "chapterUpdateTime":"2026-03-18 10:00:00",
+                      "isVip":0
+                    },
+                    "bookContent":"content"
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookContentBlocking(11L)
+
+        assertEquals("book/content/11", facade.lastRequest?.endpoint)
+        assertEquals("content", result.data?.bookContent)
+    }
+
+    @Test
+    fun getNewestCommentsBlocking_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "commentTotal":1,
+                    "comments":[
+                      {
+                        "id":1,
+                        "commentContent":"nice",
+                        "commentUser":"reader",
+                        "commentUserId":10,
+                        "commentUserPhoto":"https://example.com/photo.png",
+                        "commentTime":"2026-03-18 10:00:00"
+                      }
+                    ]
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getNewestCommentsBlocking(5L)
+
+        assertEquals("book/comment/newest_list", facade.lastRequest?.endpoint)
+        assertEquals(mapOf("bookId" to "5"), facade.lastRequest?.queryParams)
+        assertEquals("nice", result.data?.comments?.first()?.commentContent)
+    }
+
+    @Test
+    fun getLastChapterAboutBlocking_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":{
+                    "chapterInfo":{
+                      "id":12,
+                      "bookId":5,
+                      "chapterNum":2,
+                      "chapterName":"第二章",
+                      "chapterWordCount":1200,
+                      "chapterUpdateTime":"2026-03-18 11:00:00",
+                      "isVip":0
+                    },
+                    "chapterTotal":20,
+                    "contentSummary":"summary"
+                  }
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getLastChapterAboutBlocking(5L)
+
+        assertEquals("book/last_chapter/about", facade.lastRequest?.endpoint)
+        assertEquals(mapOf("bookId" to "5"), facade.lastRequest?.queryParams)
+        assertEquals("summary", result.data?.contentSummary)
+    }
+
     private class RecordingNetworkFacade(
         private val response: String
     ) : NetworkFacade {

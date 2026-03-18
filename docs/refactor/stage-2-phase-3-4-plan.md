@@ -38,6 +38,11 @@
 - `docs/refactor/tracking/stage-2-static-debt-baseline.md`
 - `docs/refactor/stage-2-closeout-summary.md`
 - `docs/refactor/phase-4/phase-4-wave-tracker.md`
+- `docs/refactor/phase-4/package-boundary-map.md`
+- `docs/refactor/phase-4/large-class-responsibility-slices.md`
+- `docs/refactor/phase-4/bridge-facade-delegate-map.md`
+- `docs/refactor/phase-4/host-risk-validation-matrix.md`
+- `docs/refactor/phase-4/atomic-split-backlog.md`
 - `docs/refactor/collaboration/phase-aware-gpt5.4-subagent-policy.md`
 - `docs/refactor/collaboration/phase-aware-gpt5.4-subagent-policy-review.md`
 - `docs/refactor/templates/two-person-cross-review-template.md`

@@ -8,6 +8,7 @@ import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.*
 import com.novel.rn.bridge.delegate.NavigationHostDelegate
 import com.novel.rn.bridge.delegate.NavigationHostResult
+import com.novel.rn.bridge.delegate.NavigationContentQueryDelegate
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import com.novel.rn.bridge.delegate.SelectionMenuDelegate
@@ -207,6 +208,10 @@ class NavigationBridgeModule(
 
     private val selectionMenuDelegate by lazy {
         SelectionMenuDelegate()
+    }
+
+    private val navigationContentQueryDelegate by lazy {
+        NavigationContentQueryDelegate()
     }
 
     // =================== Selection Menu (Android) ===================
@@ -548,9 +553,10 @@ class NavigationBridgeModule(
         bridgeCoroutineScopes.io.launch {
             try {
                 val response = navigationBridgeNetworkGateway.getHomeBooksHighPriority()
+                val payload = navigationContentQueryDelegate.buildHomeBooksPayload(response)
                 val dataArray = Arguments.createArray()
 
-                response.data.forEach { item ->
+                payload.data.forEach { item ->
                     val bookMap = Arguments.createMap().apply {
                         putInt("type", item.type)
                         putString("bookId", item.bookId)
@@ -563,10 +569,10 @@ class NavigationBridgeModule(
                 }
 
                 val map = Arguments.createMap().apply {
-                    response.code?.let { putString("code", it) }
-                    response.message?.let { putString("message", it) }
+                    payload.code?.let { putString("code", it) }
+                    payload.message?.let { putString("message", it) }
                     putArray("data", dataArray)
-                    putBoolean("ok", response.ok)
+                    putBoolean("ok", payload.ok)
                 }
 
                 bridgeCoroutineScopes.main.launch { promise.resolve(map) }
@@ -594,9 +600,10 @@ class NavigationBridgeModule(
         bridgeCoroutineScopes.io.launch {
             try {
                 val historyItems = historyService.getAllHistory()
+                val payload = navigationContentQueryDelegate.buildReadingHistoryPayload(historyItems)
                 val historyArray = Arguments.createArray()
                 
-                historyItems.forEach { item ->
+                payload.historyItems.forEach { item ->
                     val historyMap = Arguments.createMap()
                     historyMap.putString("id", item.id)
                     historyMap.putString("bookId", item.bookId)
@@ -607,20 +614,19 @@ class NavigationBridgeModule(
                     historyMap.putInt("currentChapter", item.currentChapter)
                     historyMap.putString("author", item.author)
                     historyMap.putString("coverUrl", item.coverUrl)
-                    historyMap.putDouble("lastReadTime", item.lastReadTime.toDouble())
-                    historyMap.putDouble("readProgress", item.readProgress.toDouble())
-                    // Mock data for fields not available in HistoryItem
-                    historyMap.putString("description", "暂无描述")
-                    historyMap.putString("type", "book")
-                    historyMap.putString("categoryId", "1")
-                    historyMap.putInt("readCount", 1)
-                    historyMap.putDouble("rating", 4.5)
+                    historyMap.putDouble("lastReadTime", item.lastReadTime)
+                    historyMap.putDouble("readProgress", item.readProgress)
+                    historyMap.putString("description", item.description)
+                    historyMap.putString("type", item.type)
+                    historyMap.putString("categoryId", item.categoryId)
+                    historyMap.putInt("readCount", item.readCount)
+                    historyMap.putDouble("rating", item.rating)
                     historyArray.pushMap(historyMap)
                 }
                 
                 val result = Arguments.createMap()
                 result.putArray("historyItems", historyArray)
-                result.putBoolean("success", true)
+                result.putBoolean("success", payload.success)
                 
                 TimberLogger.d(TAG, "获取阅读历史记录成功，共${historyItems.size}条记录")
                 promise.resolve(result)
@@ -641,13 +647,12 @@ class NavigationBridgeModule(
         bridgeCoroutineScopes.io.launch {
             try {
                 val resp = com.novel.utils.network.api.author.AuthorService().getAuthorStatusBlocking()
-                val dataVal = resp.data
-                val isAuthor = (dataVal == "0")
+                val payload = navigationContentQueryDelegate.buildAuthorStatusPayload(resp)
                 val map = Arguments.createMap().apply {
-                    resp.code?.let { putString("code", it) }
-                    resp.message?.let { putString("message", it) }
-                    putBoolean("ok", resp.ok ?: false)
-                    putBoolean("isAuthor", isAuthor)
+                    payload.code?.let { putString("code", it) }
+                    payload.message?.let { putString("message", it) }
+                    putBoolean("ok", payload.ok)
+                    putBoolean("isAuthor", payload.isAuthor)
                 }
                 bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {
@@ -672,13 +677,14 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "RN调用获取作家作品列表 pageNum=$pageNum pageSize=$pageSize")
         bridgeCoroutineScopes.io.launch {
             try {
-                val listArray = Arguments.createArray()
                 val response = navigationBridgeNetworkGateway.getAuthorBooks(
                     pageNum = pageNum,
                     pageSize = pageSize
                 )
+                val payload = navigationContentQueryDelegate.buildAuthorBooksPayload(response)
+                val listArray = Arguments.createArray()
 
-                response.list.forEach { item ->
+                payload.list.forEach { item ->
                     val bookMap = Arguments.createMap().apply {
                         putString("id", item.id)
                         putString("bookName", item.bookName)
@@ -693,9 +699,9 @@ class NavigationBridgeModule(
                 }
 
                 val map = Arguments.createMap().apply {
-                    response.code?.let { putString("code", it) }
-                    response.message?.let { putString("message", it) }
-                    putBoolean("ok", response.ok)
+                    payload.code?.let { putString("code", it) }
+                    payload.message?.let { putString("message", it) }
+                    putBoolean("ok", payload.ok)
                     putArray("list", listArray)
                 }
                 bridgeCoroutineScopes.main.launch { promise.resolve(map) }
@@ -722,10 +728,11 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "RN调用获取书籍分类 workDirection=$workDirection")
         bridgeCoroutineScopes.io.launch {
             try {
-                val arr = Arguments.createArray()
                 val response = navigationBridgeNetworkGateway.getBookCategories(workDirection)
+                val payload = navigationContentQueryDelegate.buildBookCategoriesPayload(response)
+                val arr = Arguments.createArray()
 
-                response.data.forEach { item ->
+                payload.list.forEach { item ->
                     val categoryMap = Arguments.createMap().apply {
                         putString("id", item.id)
                         putString("name", item.name)
@@ -734,7 +741,7 @@ class NavigationBridgeModule(
                 }
 
                 val map = Arguments.createMap().apply {
-                    putBoolean("ok", response.ok)
+                    putBoolean("ok", payload.ok)
                     putArray("list", arr)
                 }
                 bridgeCoroutineScopes.main.launch { promise.resolve(map) }
@@ -762,15 +769,16 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "RN调用搜索书籍 workDirection=$workDirection categoryId=$categoryId pageNum=$pageNum pageSize=$pageSize")
         bridgeCoroutineScopes.io.launch {
             try {
-                val listArr = Arguments.createArray()
                 val response = navigationBridgeNetworkGateway.searchBooks(
                     workDirection = workDirection,
                     categoryId = categoryId,
                     pageNum = pageNum,
                     pageSize = pageSize
                 )
+                val payload = navigationContentQueryDelegate.buildSearchBooksPayload(response)
+                val listArr = Arguments.createArray()
 
-                response.list.forEach { item ->
+                payload.list.forEach { item ->
                     val bookMap = Arguments.createMap().apply {
                         putString("id", item.id)
                         putString("bookName", item.bookName)
@@ -782,12 +790,12 @@ class NavigationBridgeModule(
                 }
 
                 val map = Arguments.createMap().apply {
-                    putBoolean("ok", response.ok)
+                    putBoolean("ok", payload.ok)
                     putArray("list", listArr)
-                    response.pageNum?.let { putDouble("pageNum", it.toDouble()) }
-                    response.pageSize?.let { putDouble("pageSize", it.toDouble()) }
-                    response.total?.let { putDouble("total", it.toDouble()) }
-                    response.pages?.let { putDouble("pages", it.toDouble()) }
+                    payload.pageNum?.let { putDouble("pageNum", it.toDouble()) }
+                    payload.pageSize?.let { putDouble("pageSize", it.toDouble()) }
+                    payload.total?.let { putDouble("total", it.toDouble()) }
+                    payload.pages?.let { putDouble("pages", it.toDouble()) }
                 }
                 bridgeCoroutineScopes.main.launch { promise.resolve(map) }
             } catch (e: Exception) {

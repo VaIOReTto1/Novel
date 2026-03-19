@@ -13,6 +13,7 @@ import com.novel.MainApplication
 import com.novel.utils.NavViewModel
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.network.api.author.ai.AiService
+import com.novel.rn.bridge.facade.DefaultNavigationBridgeFacade
 import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.page.read.service.HistoryService
 import com.novel.page.read.service.HistoryServiceImpl
@@ -122,6 +123,32 @@ class NavigationBridgeModule(
         entryPoint.refactorFeatureFlags()
     }
 
+    private val navigationBridgeFacade by lazy {
+        DefaultNavigationBridgeFacade(
+            bridgeIntentSink = bridgeViewModel?.let { viewModel ->
+                { intent -> viewModel.sendIntent(intent) }
+            },
+            navigateToRoute = { route ->
+                Handler(Looper.getMainLooper()).post {
+                    NavViewModel.navController.value?.navigate(route)
+                }
+            },
+            navigateBack = {
+                Handler(Looper.getMainLooper()).post {
+                    NavViewModel.navController.value?.popBackStack()
+                }
+            },
+            clearComponentCache = { componentName ->
+                try {
+                    MainApplication.getInstance()?.clearReactRootViewCache(componentName)
+                    TimberLogger.d(TAG, "已清理 $componentName 的缓存")
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "清理 $componentName 的缓存失败", e)
+                }
+            }
+        )
+    }
+
     // =================== Selection Menu (Android) ===================
     private val MENU_ID_POLISH = 0xA11001
     private val MENU_ID_EXPAND = 0xA11002
@@ -219,14 +246,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun goToLogin() {
         TimberLogger.d(TAG, "导航到登录页面")
-        
-        bridgeViewModel?.sendIntent(BridgeIntent.NavigateToLogin) ?: run {
-            TimberLogger.w(TAG, "BridgeViewModel未初始化，使用fallback导航")
-            // Fallback到直接导航
-            Handler(Looper.getMainLooper()).post {
-                NavViewModel.navController.value?.navigate("login")
-            }
-        }
+        navigationBridgeFacade.goToLogin()
     }
 
     /**
@@ -235,16 +255,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToSettings() {
         TimberLogger.d(TAG, "导航到设置页面")
-        
-        bridgeViewModel?.let { viewModel ->
-            viewModel.sendIntent(BridgeIntent.NavigateToSettings)
-        } ?: run {
-            TimberLogger.w(TAG, "BridgeViewModel未初始化，使用fallback导航")
-            // Fallback到直接导航
-            Handler(Looper.getMainLooper()).post {
-                NavViewModel.navController.value?.navigate("settings")
-            }
-        }
+        navigationBridgeFacade.navigateToSettings()
     }
 
     /**
@@ -253,25 +264,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateBack(componentName: String?) {
         TimberLogger.d(TAG, "返回上一页, 组件: $componentName")
-        
-        bridgeViewModel?.let { viewModel ->
-            viewModel.sendIntent(BridgeIntent.NavigateBack(componentName))
-        } ?: run {
-            TimberLogger.w(TAG, "BridgeViewModel未初始化，使用fallback导航")
-            // Fallback处理
-            if (!componentName.isNullOrEmpty()) {
-                try {
-                    MainApplication.getInstance()?.clearReactRootViewCache(componentName)
-                    TimberLogger.d(TAG, "已清理 $componentName 的缓存")
-                } catch (e: Exception) {
-                    TimberLogger.e(TAG, "清理 $componentName 的缓存失败", e)
-                }
-            }
-            
-            Handler(Looper.getMainLooper()).post {
-                NavViewModel.navController.value?.popBackStack()
-            }
-        }
+        navigationBridgeFacade.navigateBack(componentName)
     }
 
     /**

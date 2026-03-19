@@ -7,6 +7,7 @@ import com.novel.core.config.RefactorFeatureFlags
 import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.*
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
+import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
@@ -156,6 +157,10 @@ class NavigationBridgeModule(
                 NavViewModel.navController.value?.navigate(route)
             }
         }
+    }
+
+    private val navigationQueryDelegate by lazy {
+        NavigationQueryDelegate()
     }
 
     // =================== Selection Menu (Android) ===================
@@ -860,33 +865,19 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getBridgeStatus(callback: Callback) {
         TimberLogger.d(TAG, "获取桥接状态")
-        
-        bridgeViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            val status = mapOf(
-                "isInitialized" to currentState.isBridgeInitialized,
-                "currentRoute" to currentState.currentRoute,
-                "cachedComponentsCount" to currentState.cachedComponents.size,
-                "isLoading" to currentState.isLoading
-            )
-            
-            val bundle = Arguments.createMap().apply {
-                putBoolean("isInitialized", currentState.isBridgeInitialized)
-                putString("currentRoute", currentState.currentRoute)
-                putInt("cachedComponentsCount", currentState.cachedComponents.size)
-                putBoolean("isLoading", currentState.isLoading)
-            }
-            
-            callback.invoke(null, bundle)
-        } ?: run {
-            val bundle = Arguments.createMap().apply {
-                putBoolean("isInitialized", false)
-                putString("currentRoute", null)
-                putInt("cachedComponentsCount", 0)
-                putBoolean("isLoading", false)
-            }
-            callback.invoke(null, bundle)
+
+        val snapshot = navigationQueryDelegate.getBridgeStatus(
+            bridgeViewModel?.getStateForBridge()
+        )
+
+        val bundle = Arguments.createMap().apply {
+            putBoolean("isInitialized", snapshot.isInitialized)
+            putString("currentRoute", snapshot.currentRoute)
+            putInt("cachedComponentsCount", snapshot.cachedComponentsCount)
+            putBoolean("isLoading", snapshot.isLoading)
         }
+
+        callback.invoke(null, bundle)
     }
 
     /**
@@ -895,11 +886,14 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getCurrentActualTheme(callback: Callback) {
         TimberLogger.d(TAG, "获取当前实际主题")
-        
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.actualTheme)
-        } ?: run {
+
+        val actualTheme = navigationQueryDelegate.getCurrentActualTheme(
+            settingsViewModel?.getStateForBridge()
+        )
+
+        if (actualTheme != null) {
+            callback.invoke(null, actualTheme)
+        } else {
             callback.invoke("ViewModel未初始化", null)
         }
     }
@@ -910,11 +904,14 @@ class NavigationBridgeModule(
     @ReactMethod
     fun getCurrentNightMode(callback: Callback) {
         TimberLogger.d(TAG, "获取当前夜间模式")
-        
-        settingsViewModel?.let { viewModel ->
-            val currentState = viewModel.getStateForBridge()
-            callback.invoke(null, currentState.currentThemeMode)
-        } ?: run {
+
+        val currentThemeMode = navigationQueryDelegate.getCurrentNightMode(
+            settingsViewModel?.getStateForBridge()
+        )
+
+        if (currentThemeMode != null) {
+            callback.invoke(null, currentThemeMode)
+        } else {
             callback.invoke("ViewModel未初始化", null)
         }
     }

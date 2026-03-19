@@ -98,9 +98,16 @@
     - `docs/refactor/phase-4/host-risk-run-settings-template.md`
     - `docs/refactor/phase-4/host-risk-run-author-ai-template.md`
     - `docs/refactor/phase-4/host-risk-evidence-checklist.md`
-    - commit: `pending-after-commit`
+    - commit: `9ead07c`
+- `Wave 2 / W2-A08`
+  - 新增 `NavigationAiDelegate` 最小实现
+  - 当前先收口 `aiPolish`、`aiExpand`、`aiCondense`、`aiContinue` 的成功/失败结果判断
+  - 证据：
+    - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationAiDelegate.kt`
+    - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationAiDelegateTest.kt`
+    - commit: `49c5a2c`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A08` `NavigationAiDelegate` 最小拆分
   - `W2-A09` `NavigationThemeDelegate` 最小拆分
+  - 如设备可用，穿插执行 `W2-A11` 宿主页首开验证

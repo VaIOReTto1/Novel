@@ -220,78 +220,42 @@ class HomeStateAdapter(
     
     /** 检查是否可以执行搜索 */
     fun canPerformSearch(): Boolean {
-        val state = getCurrentSnapshot()
-        return state.searchQuery.isNotBlank() && !state.isLoading
+        return HomeStateProjector.canPerformSearch(getCurrentSnapshot())
     }
     
     /** 获取搜索提示文本 */
     fun getSearchHint(): String {
-        val state = getCurrentSnapshot()
-        return when {
-            state.isLoading -> "加载中..."
-            state.hasError -> "搜索失败，请重试"
-            else -> "搜索您喜欢的小说"
-        }
+        return HomeStateProjector.getSearchHint(getCurrentSnapshot())
     }
     
     /** 检查是否可以加载更多推荐 */
     fun canLoadMoreRecommend(): Boolean {
-        val state = getCurrentSnapshot()
-        return when {
-            state.isRecommendMode -> state.hasMoreHomeRecommend && !state.homeRecommendLoading
-            else -> state.hasMoreRecommend && !state.recommendLoading
-        }
+        return HomeStateProjector.canLoadMoreRecommend(getCurrentSnapshot())
     }
     
     /** 获取加载更多文本 */
     fun getLoadMoreText(): String {
-        val state = getCurrentSnapshot()
-        return when {
-            state.isRecommendMode && state.homeRecommendLoading -> "加载中..."
-            !state.isRecommendMode && state.recommendLoading -> "加载中..."
-            !canLoadMoreRecommend() -> "已加载全部"
-            state.hasError -> "加载失败，点击重试"
-            else -> "点击加载更多"
-        }
+        return HomeStateProjector.getLoadMoreText(getCurrentSnapshot())
     }
 
     /** 获取首页状态摘要 */
     fun getHomeStatusSummary(): String {
-        val state = getCurrentSnapshot()
-        return when {
-            state.isLoading -> "加载中"
-            state.hasError -> "加载失败"
-            state.isRefreshing -> "刷新中"
-            state.isEmpty -> "暂无数据"
-            else -> "加载完成"
-        }
+        return HomeStateProjector.getHomeStatusSummary(getCurrentSnapshot())
     }
     
     /** 检查是否显示空状态 */
     fun shouldShowEmptyState(): Boolean {
-        val state = getCurrentSnapshot()
-        return !state.isLoading && !state.hasError && 
-               state.categories.isEmpty() && 
-               state.carouselBooks.isEmpty() && 
-               state.hotBooks.isEmpty() && 
-               state.newBooks.isEmpty() && 
-               state.vipBooks.isEmpty()
+        return HomeStateProjector.shouldShowEmptyState(getCurrentSnapshot())
     }
     
     /** 检查是否显示加载更多按钮 */
     fun shouldShowLoadMoreButton(): Boolean {
-        val state = getCurrentSnapshot()
-        return canLoadMoreRecommend() && (state.recommendBooks.isNotEmpty() || state.homeRecommendBooks.isNotEmpty())
+        return HomeStateProjector.shouldShowLoadMoreButton(getCurrentSnapshot())
     }
     
     /** 获取推荐模式文本 */
     fun getRecommendModeText(): String {
-        val state = getCurrentSnapshot()
-        return if (state.isRecommendMode) {
-            "首页推荐"
-        } else {
-            "分类推荐 - ${state.selectedCategoryFilter}"
-        }
+        return HomeStateProjector.getRecommendModeText(getCurrentSnapshot())
     }
     
     // endregion
@@ -303,54 +267,7 @@ class HomeStateAdapter(
      * 保持与原有UI层的兼容性
      */
     fun toHomeUiState(): HomeUiState {
-        val state = getCurrentSnapshot()
-        return HomeUiState(
-            // 基础状态
-            version = state.version,
-            isLoading = state.isLoading,
-            error = state.error,
-            isRefreshing = state.isRefreshing,
-            
-            // 分类数据相关
-            categories = state.categories,
-            categoryLoading = state.categoryLoading,
-            
-            // 书籍推荐数据相关
-            carouselBooks = state.carouselBooks,
-            hotBooks = state.hotBooks,
-            newBooks = state.newBooks,
-            vipBooks = state.vipBooks,
-            booksLoading = state.booksLoading,
-            
-            // 搜索相关
-            searchQuery = state.searchQuery,
-            
-            // 分类筛选器状态
-            selectedCategoryFilter = state.selectedCategoryFilter,
-            categoryFilters = state.categoryFilters,
-            categoryFiltersLoading = state.categoryFiltersLoading,
-            
-            // 榜单状态
-            selectedRankType = state.selectedRankType,
-            rankBooks = state.rankBooks,
-            rankLoading = state.rankLoading,
-            
-            // 推荐书籍状态
-            recommendBooks = state.recommendBooks,
-            homeRecommendBooks = state.homeRecommendBooks,
-            recommendLoading = state.recommendLoading,
-            hasMoreRecommend = state.hasMoreRecommend,
-            recommendPage = state.recommendPage,
-            totalRecommendPages = state.totalRecommendPages,
-            
-            // 首页推荐分页状态
-            homeRecommendLoading = state.homeRecommendLoading,
-            hasMoreHomeRecommend = state.hasMoreHomeRecommend,
-            homeRecommendPage = state.homeRecommendPage,
-            
-            // 显示模式控制
-            isRecommendMode = state.isRecommendMode
-        )
+        return HomeStateProjector.toHomeUiState(getCurrentSnapshot())
     }
     
     // endregion
@@ -392,36 +309,7 @@ data class HomeScreenState(
  */
 @Stable
 fun HomeStateAdapter.toScreenState(): HomeScreenState {
-    val snapshot = getCurrentSnapshot()
-    return HomeScreenState(
-        isLoading = snapshot.isLoading,
-        error = snapshot.error,
-        isRefreshing = snapshot.isRefreshing,
-        searchQuery = snapshot.searchQuery,
-        categories = snapshot.categories,
-        selectedCategoryFilter = snapshot.selectedCategoryFilter,
-        categoryFilters = snapshot.categoryFilters,
-        carouselBooks = snapshot.carouselBooks,
-        hotBooks = snapshot.hotBooks,
-        newBooks = snapshot.newBooks,
-        vipBooks = snapshot.vipBooks,
-        rankBooks = snapshot.rankBooks,
-        selectedRankType = snapshot.selectedRankType,
-        currentRecommendBooks = if (snapshot.isRecommendMode) {
-            snapshot.homeRecommendBooks.map { HomeRecommendItem(it) }.toImmutableList()
-        } else {
-            snapshot.recommendBooks.map { CategoryRecommendItem(it) }.toImmutableList()
-        },
-        canPerformSearch = canPerformSearch(),
-        searchHint = getSearchHint(),
-        canLoadMoreRecommend = canLoadMoreRecommend(),
-        loadMoreText = getLoadMoreText(),
-        homeStatusSummary = getHomeStatusSummary(),
-        shouldShowEmptyState = shouldShowEmptyState(),
-        shouldShowLoadMoreButton = shouldShowLoadMoreButton(),
-        recommendModeText = getRecommendModeText(),
-        isRecommendMode = snapshot.isRecommendMode
-    )
+    return HomeStateProjector.toScreenState(getCurrentSnapshot())
 }
 
 /**

@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 2`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A07 / NavigationAuthorDelegate 最小拆分`
+- 当前建议下一原子主题：`Wave 2 / W2-A10 / 宿主页验证准备与证据模板`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -83,8 +83,15 @@
     - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationContentQueryDelegate.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationContentQueryDelegateTest.kt`
     - commit: `99967fb`
+- `Wave 2 / W2-A07`
+  - 新增 `NavigationAuthorDelegate` 最小实现
+  - 当前先收口 `navigateToBecomeWriterWithFlag`、`navigateToWritePage`、`navigateToBookManage` 和 `registerAuthor` 的请求构造
+  - 证据：
+    - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationAuthorDelegate.kt`
+    - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationAuthorDelegateTest.kt`
+    - commit: `46ab116`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A07` `NavigationAuthorDelegate` 最小拆分
   - `W2-A10` 宿主页验证准备与证据模板
+  - `W2-A08` `NavigationAiDelegate` 最小拆分

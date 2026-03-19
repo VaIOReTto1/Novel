@@ -131,6 +131,8 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    private val homePagingCoordinator = HomePagingCoordinator()
+
     /** 新的StateAdapter实例 */
     @Stable
     val adapter = HomeStateAdapter(state.asStable(), viewModelScope)
@@ -406,7 +408,7 @@ class HomeViewModel @Inject constructor(
      * 加载更多推荐内容
      */
     private fun loadMoreRecommend() {
-        val currentState = getCurrentState()
+        val currentUiState = currentState
 
         // 检查是否已经在加载或没有更多数据
 //        if (currentState.recommendLoading) {
@@ -414,53 +416,35 @@ class HomeViewModel @Inject constructor(
 //            return
 //        }
 
-        if (!currentState.hasMoreRecommend) {
+        if (!currentUiState.hasMoreRecommend) {
             TimberLogger.d(TAG, "没有更多推荐内容可加载")
             return
         }
 
         viewModelScope.launch {
-            try {
-                TimberLogger.d(TAG, "开始加载更多推荐内容 - 当前页: ${currentState.recommendPage}")
+            TimberLogger.d(TAG, "开始加载更多推荐内容 - 当前页: ${currentUiState.recommendPage}")
 
-                val nextPage = currentState.recommendPage + 1
-                val categoryId = getCurrentCategoryId(currentState.selectedCategoryFilter)
-
-                TimberLogger.d(
-                    TAG,
-                    "请求参数 - categoryId: $categoryId, pageNum: $nextPage, pageSize: $RECOMMEND_PAGE_SIZE"
-                )
-
-                val result = getCategoryRecommendBooksUseCase(
-                    GetCategoryRecommendBooksUseCase.Params(
-                        categoryId = categoryId,
-                        pageNum = nextPage,
-                        pageSize = RECOMMEND_PAGE_SIZE,
-                        strategy = CacheStrategy.CACHE_FIRST
+            val outcome = homePagingCoordinator.coordinateCategoryPaging(
+                currentState = currentUiState,
+                pageSize = RECOMMEND_PAGE_SIZE,
+                resolveCategoryId = ::getCurrentCategoryId,
+                loadCategoryBooks = { categoryId, pageNum, pageSize ->
+                    TimberLogger.d(
+                        TAG,
+                        "请求参数 - categoryId: $categoryId, pageNum: $pageNum, pageSize: $pageSize"
                     )
-                )
-
-                TimberLogger.d(
-                    TAG,
-                    "加载更多推荐内容成功 - 页码: $nextPage, 获取数量: ${result.list.size}, 总页数: ${result.pages}"
-                )
-
-                sendIntent(
-                    HomeIntent.CategoryRecommendBooksLoadSuccess(
-                        books = result.list.toImmutableList(),
-                        isLoadMore = true,
-                        hasMore = result.list.size >= RECOMMEND_PAGE_SIZE,
-                        totalPages = result.pages.toInt()
+                    getCategoryRecommendBooksUseCase(
+                        GetCategoryRecommendBooksUseCase.Params(
+                            categoryId = categoryId,
+                            pageNum = pageNum,
+                            pageSize = pageSize,
+                            strategy = CacheStrategy.CACHE_FIRST,
+                        )
                     )
-                )
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "加载更多推荐内容异常", e)
-                sendIntent(
-                    HomeIntent.CategoryRecommendBooksLoadFailure(
-                        e.message ?: "加载更多失败"
-                    )
-                )
-            }
+                },
+            )
+
+            outcome.intents.forEach(::sendIntent)
         }
     }
 
@@ -468,7 +452,7 @@ class HomeViewModel @Inject constructor(
      * 加载更多首页推荐内容
      */
     private fun loadMoreHomeRecommend() {
-        val currentState = getCurrentState()
+        val currentUiState = currentState
 
         // 检查是否已经在加载或没有更多数据
 //        if (currentState.homeRecommendLoading) {
@@ -476,53 +460,31 @@ class HomeViewModel @Inject constructor(
 //            return
 //        }
 
-        if (!currentState.hasMoreHomeRecommend) {
+        if (!currentUiState.hasMoreHomeRecommend) {
             TimberLogger.d(TAG, "没有更多首页推荐内容可加载")
             return
         }
 
         viewModelScope.launch {
-            try {
-                TimberLogger.d(
-                    TAG,
-                    "加载更多首页推荐内容 - 当前页: ${currentState.homeRecommendPage}"
-                )
+            TimberLogger.d(
+                TAG,
+                "加载更多首页推荐内容 - 当前页: ${currentUiState.homeRecommendPage}"
+            )
 
-                // 如果缓存数据为空，先加载数据
-                if (cachedHomeBooks.isEmpty()) {
-                    val homeBooks =
-                        getHomeRecommendBooksUseCase(GetHomeRecommendBooksUseCase.Params())
-                    cachedHomeBooks = homeBooks.toImmutableList()
-                }
+            val outcome = homePagingCoordinator.coordinateHomePaging(
+                currentState = currentUiState,
+                pageSize = RECOMMEND_PAGE_SIZE,
+                cachedHomeBooks = cachedHomeBooks,
+                loadHomeBooks = {
+                    getHomeRecommendBooksUseCase(GetHomeRecommendBooksUseCase.Params())
+                        .toImmutableList()
+                },
+            )
 
-                // 基于缓存数据进行分页 - 计算下一页数据
-                val nextPage = currentState.homeRecommendPage + 1
-                val startIndex = (nextPage - 1) * RECOMMEND_PAGE_SIZE
-                val endIndex = startIndex + RECOMMEND_PAGE_SIZE
-
-                val moreBooks = cachedHomeBooks.drop(startIndex).take(RECOMMEND_PAGE_SIZE)
-                val hasMore = endIndex < cachedHomeBooks.size
-
-                TimberLogger.d(
-                    TAG,
-                    "加载更多首页推荐内容计算 - 下一页: $nextPage, startIndex: $startIndex, endIndex: $endIndex, 缓存总数: ${cachedHomeBooks.size}"
-                )
-                TimberLogger.d(
-                    TAG,
-                    "加载更多首页推荐内容成功 - 页码: $nextPage, 获取数量: ${moreBooks.size}, 剩余: $hasMore"
-                )
-
-                sendIntent(
-                    HomeIntent.HomeRecommendBooksLoadSuccess(
-                        books = moreBooks.toImmutableList(),
-                        isRefresh = false,
-                        hasMore = hasMore
-                    )
-                )
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "加载更多首页推荐内容异常", e)
-                sendIntent(HomeIntent.HomeRecommendBooksLoadFailure(e.message ?: "加载更多失败"))
+            outcome.cachedHomeBooks?.let {
+                cachedHomeBooks = it
             }
+            outcome.intents.forEach(::sendIntent)
         }
     }
 

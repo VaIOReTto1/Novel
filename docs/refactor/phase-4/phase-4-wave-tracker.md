@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-C02 / IncrementalSyncCoordinator`
+- 当前建议下一原子主题：`Wave 3 / W3-H03 / HomeRefreshCoordinator`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -146,9 +146,17 @@
     - `android/app/src/main/java/com/novel/page/home/viewmodel/HomeViewModel.kt`
     - `android/app/src/test/java/com/novel/page/home/viewmodel/HomeInitialLoadCoordinatorTest.kt`
     - commit: `11ae6f2`
+- `Wave 3 / W3-C02`
+  - 新增 `IncrementalSyncCoordinator` 最小实现
+  - 当前先将 `NetworkCacheManager.getDataWithIncrementalSync()` 中条件请求 orchestration、304/Modified/Error 分支和异常兜底逻辑收口到独立 coordinator，不改变增量同步对外返回语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/utils/network/cache/IncrementalSyncCoordinator.kt`
+    - `android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt`
+    - `android/app/src/test/java/com/novel/utils/network/cache/IncrementalSyncCoordinatorTest.kt`
+    - commit: `0a24aad`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-C02` `IncrementalSyncCoordinator`
+  - `W3-H03` `HomeRefreshCoordinator`
   - `W3-S02` `SearchResultCacheStore`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

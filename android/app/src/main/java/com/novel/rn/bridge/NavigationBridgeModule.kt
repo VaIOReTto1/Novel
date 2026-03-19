@@ -6,6 +6,8 @@ import androidx.compose.runtime.Stable
 import com.novel.core.config.RefactorFeatureFlags
 import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.*
+import com.novel.rn.bridge.delegate.NavigationHostDelegate
+import com.novel.rn.bridge.delegate.NavigationHostResult
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -161,6 +163,45 @@ class NavigationBridgeModule(
 
     private val navigationQueryDelegate by lazy {
         NavigationQueryDelegate()
+    }
+
+    private val navigationHostDelegate by lazy {
+        NavigationHostDelegate(
+            registerComponent = { componentName ->
+                bridgeViewModel?.registerComponent(componentName)
+            },
+            notifyRouteChanged = { route ->
+                bridgeViewModel?.notifyRouteChanged(route)
+            },
+            clearComponentCache = { componentName ->
+                try {
+                    bridgeViewModel?.let { viewModel ->
+                        viewModel.sendIntent(BridgeIntent.ClearComponentCache(componentName))
+                        NavigationHostResult.Success("已清理 $componentName 的缓存")
+                    } ?: run {
+                        MainApplication.getInstance()?.clearReactRootViewCache(componentName)
+                        NavigationHostResult.Success("已清理 $componentName 的缓存")
+                    }
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "清理组件缓存失败", e)
+                    NavigationHostResult.Failure(e.message ?: "清理组件缓存失败")
+                }
+            },
+            clearAllComponentCache = {
+                try {
+                    bridgeViewModel?.let { viewModel ->
+                        viewModel.sendIntent(BridgeIntent.ClearAllComponentCache)
+                        NavigationHostResult.Success("已清理所有组件缓存")
+                    } ?: run {
+                        MainApplication.getInstance()?.clearAllReactRootViewCache()
+                        NavigationHostResult.Success("已清理所有组件缓存")
+                    }
+                } catch (e: Exception) {
+                    TimberLogger.e(TAG, "清理所有组件缓存失败", e)
+                    NavigationHostResult.Failure(e.message ?: "清理所有组件缓存失败")
+                }
+            }
+        )
     }
 
     // =================== Selection Menu (Android) ===================
@@ -797,19 +838,10 @@ class NavigationBridgeModule(
     @ReactMethod
     fun clearComponentCache(componentName: String, callback: Callback) {
         TimberLogger.d(TAG, "清理组件缓存: $componentName")
-        
-        bridgeViewModel?.let { viewModel ->
-            viewModel.sendIntent(BridgeIntent.ClearComponentCache(componentName))
-            // 由于RN桥接是同步的，我们暂时直接返回成功
-            callback.invoke(null, "已清理 $componentName 的缓存")
-        } ?: run {
-            try {
-                MainApplication.getInstance()?.clearReactRootViewCache(componentName)
-                callback.invoke(null, "已清理 $componentName 的缓存")
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "清理组件缓存失败", e)
-                callback.invoke(e.message, null)
-            }
+
+        when (val result = navigationHostDelegate.clearComponentCache(componentName)) {
+            is NavigationHostResult.Success -> callback.invoke(null, result.message)
+            is NavigationHostResult.Failure -> callback.invoke(result.message, null)
         }
     }
 
@@ -819,19 +851,10 @@ class NavigationBridgeModule(
     @ReactMethod
     fun clearAllComponentCache(callback: Callback) {
         TimberLogger.d(TAG, "清理所有组件缓存")
-        
-        bridgeViewModel?.let { viewModel ->
-            viewModel.sendIntent(BridgeIntent.ClearAllComponentCache)
-            // 由于RN桥接是同步的，我们暂时直接返回成功
-            callback.invoke(null, "已清理所有组件缓存")
-        } ?: run {
-            try {
-                MainApplication.getInstance()?.clearAllReactRootViewCache()
-                callback.invoke(null, "已清理所有组件缓存")
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "清理所有组件缓存失败", e)
-                callback.invoke(e.message, null)
-            }
+
+        when (val result = navigationHostDelegate.clearAllComponentCache()) {
+            is NavigationHostResult.Success -> callback.invoke(null, result.message)
+            is NavigationHostResult.Failure -> callback.invoke(result.message, null)
         }
     }
 
@@ -841,10 +864,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun registerComponent(componentName: String) {
         TimberLogger.d(TAG, "注册组件: $componentName")
-        
-        bridgeViewModel?.let { viewModel ->
-            viewModel.registerComponent(componentName)
-        }
+        navigationHostDelegate.registerComponent(componentName)
     }
 
     /**
@@ -853,10 +873,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun notifyRouteChanged(route: String) {
         TimberLogger.d(TAG, "路由变更: $route")
-        
-        bridgeViewModel?.let { viewModel ->
-            viewModel.notifyRouteChanged(route)
-        }
+        navigationHostDelegate.notifyRouteChanged(route)
     }
 
     /**

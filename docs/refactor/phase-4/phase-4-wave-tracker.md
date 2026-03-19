@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 2`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A10 / 宿主页验证准备与证据模板`
+- 当前建议下一原子主题：`Wave 2 / W2-A08 / NavigationAiDelegate 最小拆分`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -90,8 +90,17 @@
     - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationAuthorDelegate.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationAuthorDelegateTest.kt`
     - commit: `46ab116`
+- `Wave 2 / W2-A10`
+  - 宿主页验证准备与证据模板已落地
+  - 当前已固定 `profile`、`settings`、作者/AI 三类验证模板与 checklist
+  - 证据：
+    - `docs/refactor/phase-4/host-risk-run-profile-template.md`
+    - `docs/refactor/phase-4/host-risk-run-settings-template.md`
+    - `docs/refactor/phase-4/host-risk-run-author-ai-template.md`
+    - `docs/refactor/phase-4/host-risk-evidence-checklist.md`
+    - commit: `pending-after-commit`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A10` 宿主页验证准备与证据模板
   - `W2-A08` `NavigationAiDelegate` 最小拆分
+  - `W2-A09` `NavigationThemeDelegate` 最小拆分

@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 2`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A08 / NavigationAiDelegate 最小拆分`
+- 当前建议下一原子主题：`Wave 2 / W2-A11 / profile/settings/author-ai 宿主页首开验证`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -106,8 +106,15 @@
     - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationAiDelegate.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationAiDelegateTest.kt`
     - commit: `49c5a2c`
+- `Wave 2 / W2-A09`
+  - 新增 `NavigationThemeDelegate` 最小实现
+  - 当前先收口 `changeTheme` 中 `SettingsEffect.ShowToast / ShowError` 到 Promise 的映射逻辑
+  - 证据：
+    - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationThemeDelegate.kt`
+    - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationThemeDelegateTest.kt`
+    - commit: `4bbdbda`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A09` `NavigationThemeDelegate` 最小拆分
-  - 如设备可用，穿插执行 `W2-A11` 宿主页首开验证
+  - `W2-A11` `profile/settings/author-ai` 宿主页首开验证
+  - 若设备暂不可用，开始为 `Wave 3` 的 `HomeViewModel` / `SearchRepository` / `NetworkCacheManager` 拆分建立第一批 TDD 切口

@@ -158,6 +158,13 @@ class NetworkCacheManager @Inject constructor(
 
     @Stable
     private val cacheDir = File(context.cacheDir, CACHE_DIR_NAME)
+
+    private val cacheVersionMigrator = CacheVersionMigrator(
+        cacheDir = cacheDir,
+        gson = gson,
+        currentCacheVersion = CURRENT_CACHE_VERSION,
+        clearAllCache = ::clearAllCacheInternal,
+    )
     
     // 内存缓存
     @Stable
@@ -190,46 +197,7 @@ class NetworkCacheManager @Inject constructor(
      * 处理缓存版本迁移
      */
     private fun handleCacheVersionMigration() {
-        try {
-            val versionFile = File(cacheDir, "cache_version.txt")
-            val currentVersion = if (versionFile.exists()) {
-                versionFile.readText().toIntOrNull() ?: 1
-            } else 1
-            
-            if (currentVersion < CURRENT_CACHE_VERSION) {
-                TimberLogger.d(TAG, "检测到缓存版本升级: $currentVersion -> $CURRENT_CACHE_VERSION，开始迁移")
-                migrateCacheVersion(currentVersion, CURRENT_CACHE_VERSION)
-                versionFile.writeText(CURRENT_CACHE_VERSION.toString())
-                TimberLogger.d(TAG, "缓存版本迁移完成")
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "缓存版本迁移失败，清理所有缓存", e)
-            clearAllCacheInternal()
-        }
-    }
-    
-    /**
-     * 缓存版本迁移逻辑
-     */
-    private fun migrateCacheVersion(fromVersion: Int, toVersion: Int) {
-        when {
-            fromVersion < 2 -> {
-                // 从版本1迁移到版本2：清理旧格式缓存
-                TimberLogger.d(TAG, "迁移缓存从版本1到版本2，清理不兼容缓存")
-                cacheDir.listFiles()?.forEach { file ->
-                    if (file.name != "cache_version.txt") {
-                        try {
-                            val content = file.readText()
-                            // 尝试解析旧格式，如果失败则删除
-                            gson.fromJson(content, object : TypeToken<CacheEntry<Any?>>() {}.type)
-                        } catch (e: Exception) {
-                            TimberLogger.d(TAG, "删除不兼容缓存文件: ${file.name}")
-                            file.delete()
-                        }
-                    }
-                }
-            }
-        }
+        cacheVersionMigrator.handleMigration()
     }
     
     /**

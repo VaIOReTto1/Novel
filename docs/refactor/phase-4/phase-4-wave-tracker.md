@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 2`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A06 / profile/settings 宿主页首开验证准备与证据模板`
+- 当前建议下一原子主题：`Wave 2 / W2-A06 / NavigationContentQueryDelegate 最小拆分`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -69,8 +69,15 @@
     - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationHostDelegate.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationHostDelegateTest.kt`
     - commit: `673cd4f`
+- `Wave 2 / W2-A05`
+  - 新增 `SelectionMenuDelegate` 最小实现
+  - 当前先收口 `attachSelectionMenu` / `detachSelectionMenu` 中的 action 解析与事件 payload 组装
+  - 证据：
+    - `android/app/src/main/java/com/novel/rn/bridge/delegate/SelectionMenuDelegate.kt`
+    - `android/app/src/test/java/com/novel/rn/bridge/delegate/SelectionMenuDelegateTest.kt`
+    - commit: `c3a2bd1`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A06` `profile` / `settings` 宿主页首开验证准备与证据模板
-  - `W2-A07` 作者/AI 宿主页首开验证准备
+  - `W2-A06` `NavigationContentQueryDelegate` 最小拆分
+  - `W2-A10` 宿主页验证准备与证据模板

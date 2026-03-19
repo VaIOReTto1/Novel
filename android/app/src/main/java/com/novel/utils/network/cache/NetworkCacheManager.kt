@@ -167,6 +167,7 @@ class NetworkCacheManager @Inject constructor(
     )
     
     private val incrementalSyncCoordinator = IncrementalSyncCoordinator()
+    private val cacheCleanupCoordinator = CacheCleanupCoordinator()
 
     // 内存缓存
     @Stable
@@ -960,47 +961,23 @@ class NetworkCacheManager @Inject constructor(
      * 执行智能清理
      */
     suspend fun performSmartCleanup(strategy: CleanupStrategy = CleanupStrategy.SMART_HYBRID) = withContext(Dispatchers.IO) {
-        val startTime = System.currentTimeMillis()
-        var cleanedCount = 0
-        var spaceCleaned = 0L
-        
         try {
             TimberLogger.d(TAG, "开始执行智能清理，策略: $strategy")
-            
-            when (strategy) {
-                CleanupStrategy.LRU_ONLY -> {
-                    val result = performLRUCleanup()
-                    cleanedCount = result.first
-                    spaceCleaned = result.second
-                }
-                CleanupStrategy.TIME_BASED_ONLY -> {
-                    val result = performTimeBasedCleanup()
-                    cleanedCount = result.first
-                    spaceCleaned = result.second
-                }
-                CleanupStrategy.SMART_HYBRID -> {
-                    val result = performHybridCleanup()
-                    cleanedCount = result.first
-                    spaceCleaned = result.second
-                }
-                CleanupStrategy.STORAGE_PRESSURE -> {
-                    val result = performStoragePressureCleanup()
-                    cleanedCount = result.first
-                    spaceCleaned = result.second
-                }
-            }
-            
-            // 更新清理统计
-            cleanupStats = CleanupStats(
-                totalCleaned = cleanupStats.totalCleaned + cleanedCount,
-                spaceCleaned = cleanupStats.spaceCleaned + spaceCleaned,
-                lastCleanupTime = System.currentTimeMillis(),
-                cleanupReason = strategy.name
+
+            val summary = cacheCleanupCoordinator.performCleanup(
+                strategy = strategy,
+                currentStats = cleanupStats,
+                performLRUCleanup = ::performLRUCleanup,
+                performTimeBasedCleanup = ::performTimeBasedCleanup,
+                performHybridCleanup = ::performHybridCleanup,
+                performStoragePressureCleanup = ::performStoragePressureCleanup,
             )
-            
-            val duration = System.currentTimeMillis() - startTime
-            TimberLogger.d(TAG, "智能清理完成: 清理${cleanedCount}个条目, 释放${spaceCleaned / 1024}KB空间, 耗时${duration}ms")
-            
+
+            cleanupStats = summary.updatedStats
+            TimberLogger.d(
+                TAG,
+                "智能清理完成: 清理${summary.cleanedCount}个条目, 释放${summary.spaceCleaned / 1024}KB空间, 耗时${summary.durationMs}ms"
+            )
         } catch (e: Exception) {
             TimberLogger.e(TAG, "智能清理失败", e)
         }

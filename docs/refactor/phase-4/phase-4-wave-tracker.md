@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 2`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A02 / NavigationRouteDelegate 最小拆分`
+- 当前建议下一原子主题：`Wave 2 / W2-A03 / NavigationQueryDelegate 最小拆分`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -48,8 +48,15 @@
     - `android/app/src/main/java/com/novel/rn/bridge/facade/NavigationBridgeFacade.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/facade/NavigationBridgeFacadeTest.kt`
     - commit: `5092915`
+- `Wave 2 / W2-A02`
+  - 新增 `NavigationRouteDelegate` 最小实现
+  - 当前先收口 `timed_switch`、`help_support`、`privacy_policy`、`history`、`message`
+  - 证据：
+    - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationRouteDelegate.kt`
+    - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationRouteDelegateTest.kt`
+    - commit: `acbcfb7`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A02` `NavigationRouteDelegate` 最小拆分
+  - `W2-A03` `NavigationQueryDelegate` 最小拆分
   - `W2-A06` `profile` / `settings` 宿主页首开验证

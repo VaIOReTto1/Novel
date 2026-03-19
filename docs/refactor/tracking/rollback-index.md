@@ -17,3 +17,4 @@
 | Rollback ID | Phase | Wave | Atomic Theme | Owner Agent | Commit SHA | One-Click Command | Precheck | Postcheck | Status | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `RB-P4-W2-A01-20260319-01` | Phase 4 | Wave 2 | 建立 `NavigationBridgeFacade` 兼容壳 | `BridgeFacadeSplitAgent` | `5092915` | `git revert --no-edit 5092915` | `git status --short` | `./gradlew.bat app:testDebugUnitTest --tests "com.novel.rn.bridge.facade.NavigationBridgeFacadeTest"` | `active` | 当前仅收口登录/设置/返回三条最小导航出口 |
+| `RB-P4-W2-A02-20260319-01` | Phase 4 | Wave 2 | 抽离 `NavigationRouteDelegate` 最小实现 | `BridgeFacadeSplitAgent` | `acbcfb7` | `git revert --no-edit acbcfb7` | `git status --short` | `./gradlew.bat app:testDebugUnitTest --tests "com.novel.rn.bridge.delegate.NavigationRouteDelegateTest"` | `active` | 当前先收口五条纯 route 跳转，不改 route 语义 |

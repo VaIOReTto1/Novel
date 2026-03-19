@@ -9,6 +9,7 @@ import com.facebook.react.bridge.*
 import com.novel.rn.bridge.delegate.NavigationHostDelegate
 import com.novel.rn.bridge.delegate.NavigationHostResult
 import com.novel.rn.bridge.delegate.NavigationContentQueryDelegate
+import com.novel.rn.bridge.delegate.NavigationAuthorDelegate
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import com.novel.rn.bridge.delegate.SelectionMenuDelegate
@@ -212,6 +213,26 @@ class NavigationBridgeModule(
 
     private val navigationContentQueryDelegate by lazy {
         NavigationContentQueryDelegate()
+    }
+
+    private val navigationAuthorDelegate by lazy {
+        NavigationAuthorDelegate(
+            navigateToRoute = { route ->
+                Handler(Looper.getMainLooper()).post {
+                    NavViewModel.navController.value?.navigate(route)
+                }
+            },
+            navigateToWritePage = {
+                Handler(Looper.getMainLooper()).post {
+                    NavViewModel.navigateToWritePage()
+                }
+            },
+            navigateToBookManage = {
+                Handler(Looper.getMainLooper()).post {
+                    NavViewModel.navigateToBookManage()
+                }
+            }
+        )
     }
 
     // =================== Selection Menu (Android) ===================
@@ -421,10 +442,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToBecomeWriterWithFlag(isAuthor: Boolean) {
         TimberLogger.d(TAG, "根据传入标志导航到成为作家页面 isAuthor=$isAuthor")
-        Handler(Looper.getMainLooper()).post {
-            val route = if (isAuthor) "becomewriter?isAuthor=true" else "becomewriter?isAuthor=false"
-            NavViewModel.navController.value?.navigate(route)
-        }
+        navigationAuthorDelegate.navigateToBecomeWriterWithFlag(isAuthor)
     }
 
     /**
@@ -433,9 +451,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToWritePage() {
         TimberLogger.d(TAG, "导航到写作页面")
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToWritePage()
-        }
+        navigationAuthorDelegate.navigateToWritePage()
     }
 
     /**
@@ -818,9 +834,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToBookManage() {
         TimberLogger.d(TAG, "导航到作品管理页面")
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToBookManage()
-        }
+        navigationAuthorDelegate.navigateToBookManage()
     }
 
     /**
@@ -1069,12 +1083,9 @@ class NavigationBridgeModule(
         bridgeCoroutineScopes.io.launch {
             try {
                 val authorService = com.novel.utils.network.api.author.AuthorService()
-                val req = com.novel.utils.network.api.author.AuthorService.AuthorRegisterRequest(
+                val req = navigationAuthorDelegate.createAuthorRegisterRequest(
                     penName = penName,
-                    telPhone = penName,
-                    chatAccount = penName,
-                    email = "$penName@163.com",
-                    workDirection = sex
+                    sex = sex
                 )
                 val resp = authorService.registerAuthorBlocking(req)
                 bridgeCoroutineScopes.main.launch {

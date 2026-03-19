@@ -166,6 +166,8 @@ class NetworkCacheManager @Inject constructor(
         clearAllCache = ::clearAllCacheInternal,
     )
     
+    private val incrementalSyncCoordinator = IncrementalSyncCoordinator()
+
     // 内存缓存
     @Stable
     private val memoryCache = mutableMapOf<String, CacheEntry<*>>()
@@ -222,59 +224,41 @@ class NetworkCacheManager @Inject constructor(
         networkCall: suspend (lastModified: String?, eTag: String?) -> IncrementalNetworkResponse<T>,
         typeToken: TypeToken<T>? = null
     ): IncrementalSyncResult<T> = withContext(Dispatchers.IO) {
-        try {
-            // 获取缓存的条件信息
-            val cachedEntry = getCachedEntryInternal<T>(key, typeToken)
-            val lastModified = cachedEntry?.lastModified
-            val eTag = cachedEntry?.eTag
-            
-            TimberLogger.d(TAG, "开始增量同步: key=$key, lastModified=$lastModified, eTag=$eTag")
-            
-            // 执行条件网络请求
-            val response = networkCall(lastModified, eTag)
-            
-            when (response) {
-                is IncrementalNetworkResponse.NotModified -> {
-                    // 内容未修改，更新访问时间并返回缓存数据
-                    cachedEntry?.let { 
-                        updateAccessInfo(key, it)
-                        IncrementalSyncResult.NoChange(it.data)
-                    } ?: IncrementalSyncResult.Error(StableThrowable(Exception("No cached data available")))
-                }
-                is IncrementalNetworkResponse.Modified -> {
-                    // 内容已修改，保存新数据
-                    val newHash = response.data?.let { 
-                        if (it is String) calculateContentHash(it)
-                        else it.toString().let { str -> calculateContentHash(str) }
-                    }
-                    
-                    saveEnhancedCacheData(
-                        key = key,
-                        data = response.data,
-                        config = config,
-                        typeToken = typeToken,
-                        serverVersion = response.serverVersion,
-                        lastModified = response.lastModified,
-                        eTag = response.eTag,
-                        contentHash = newHash
-                    )
-                    
-                    val hasChanged = cachedEntry?.contentHash != newHash
-                    TimberLogger.d(TAG, "增量同步完成: key=$key, hasChanged=$hasChanged")
-                    IncrementalSyncResult.Updated(response.data, hasChanged)
-                }
-                is IncrementalNetworkResponse.Error -> {
-                    TimberLogger.e(TAG, "增量同步网络请求失败: key=$key", response.error)
-                    cachedEntry?.let { 
-                        IncrementalSyncResult.Error(response.error, it.data)
-                    } ?: IncrementalSyncResult.Error(response.error)
-                }
+        incrementalSyncCoordinator.coordinate(
+            key = key,
+            config = config,
+            networkCall = networkCall,
+            loadCachedEntry = { getCachedEntryInternal<T>(key, typeToken) },
+            updateAccessInfo = { updateAccessInfo(key, it) },
+            saveCacheData = { request ->
+                saveEnhancedCacheData(
+                    key = request.key,
+                    data = request.data,
+                    config = request.config,
+                    typeToken = typeToken,
+                    serverVersion = request.serverVersion,
+                    lastModified = request.lastModified,
+                    eTag = request.eTag,
+                    contentHash = request.contentHash
+                )
+            },
+            calculateContentHash = { data ->
+                if (data is String) calculateContentHash(data)
+                else calculateContentHash(data.toString())
+            },
+            onRequestPrepared = { lastModified, eTag ->
+                TimberLogger.d(TAG, "Incremental sync started: key=$key, lastModified=$lastModified, eTag=$eTag")
+            },
+            onDataUpdated = { hasChanged ->
+                TimberLogger.d(TAG, "Incremental sync completed: key=$key, hasChanged=$hasChanged")
+            },
+            onNetworkError = { error ->
+                TimberLogger.e(TAG, "Incremental sync request failed: key=$key", error)
+            },
+            onUnexpectedError = { error ->
+                TimberLogger.e(TAG, "Incremental sync failed: key=$key", error)
             }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "增量同步异常: key=$key", e)
-            val cachedEntry = getCachedEntryInternal<T>(key, typeToken)
-            IncrementalSyncResult.Error(StableThrowable(e), cachedEntry?.data)
-        }
+        )
     }
     
     /**

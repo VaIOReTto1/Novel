@@ -2,11 +2,11 @@
 
 ## 当前状态
 - 当前阶段：`Phase 4`
-- 当前状态：`planned`
+- 当前状态：`in_progress`
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-H01 / HomeStateProjector`
+- 当前建议下一原子主题：`Wave 3 / W3-C01 / CacheVersionMigrator`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -114,10 +114,25 @@
     - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationThemeDelegate.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationThemeDelegateTest.kt`
     - commit: `4bbdbda`
+- `Wave 3 / W3-H01`
+  - 新增 `HomeStateProjector` 最小实现
+  - 当前先将 `HomeStateAdapter` 中的首页状态投影逻辑抽离为独立 projector，不改变 UI 状态语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/home/viewmodel/HomeStateProjector.kt`
+    - `android/app/src/main/java/com/novel/page/home/viewmodel/HomeStateAdapter.kt`
+    - `android/app/src/test/java/com/novel/page/home/viewmodel/HomeStateProjectorTest.kt`
+    - commit: `b49247f`
+- `Wave 3 / W3-S01`
+  - 新增 `SearchHistoryStore` 最小实现
+  - 当前先将 `SearchRepository` 中搜索历史与展开态的 JSON 读写、去重置顶、10 条上限和异常兜底逻辑收口到独立 store
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchHistoryStore.kt`
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
+    - `android/app/src/test/java/com/novel/page/search/repository/SearchHistoryStoreTest.kt`
+    - commit: `75eb67f`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-H01` `HomeStateProjector`
   - `W3-C01` `CacheVersionMigrator`
-  - `W3-S01` `SearchHistoryStore`
+  - `W3-H02` `HomeInitialLoadCoordinator`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

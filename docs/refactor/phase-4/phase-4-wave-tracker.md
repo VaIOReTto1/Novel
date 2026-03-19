@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-C01 / CacheVersionMigrator`
+- 当前建议下一原子主题：`Wave 3 / W3-H02 / HomeInitialLoadCoordinator`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -130,9 +130,17 @@
     - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
     - `android/app/src/test/java/com/novel/page/search/repository/SearchHistoryStoreTest.kt`
     - commit: `75eb67f`
+- `Wave 3 / W3-C01`
+  - 新增 `CacheVersionMigrator` 最小实现
+  - 当前先将 `NetworkCacheManager` 中缓存版本迁移与异常回退逻辑抽离为独立 migrator，不改变旧缓存版本升级与全量清理语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/utils/network/cache/CacheVersionMigrator.kt`
+    - `android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt`
+    - `android/app/src/test/java/com/novel/utils/network/cache/CacheVersionMigratorTest.kt`
+    - commit: `c754ef3`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-C01` `CacheVersionMigrator`
   - `W3-H02` `HomeInitialLoadCoordinator`
+  - `W3-S02` `SearchResultCacheStore`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

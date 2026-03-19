@@ -3,17 +3,17 @@
 ## 当前状态
 - 当前阶段：`Phase 4`
 - 当前状态：`planned`
-- 当前激活波次：`Wave 2`
+- 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A11 / profile/settings/author-ai 宿主页首开验证`
+- 当前建议下一原子主题：`Wave 3 / W3-H01 / HomeStateProjector`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
 | --- | --- | --- | --- | --- | --- |
 | Wave 1 | `ready_for_validation` | 建立边界骨架、拆分地图、BridgeFacade 外围映射 | `BridgeFacadeSplitAgent`, `FeatureBoundarySplitAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOME-SEARCH-SPLIT` | 包边界图、职责切片图、delegate 映射表 |
 | Wave 2 | `in_progress` | 收口 Bridge 与宿主页边界 | `BridgeFacadeSplitAgent`, `HostRiskQualityAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOST-QUALITY` | BridgeFacade 接口、兼容映射、host 风险验证清单 |
-| Wave 3 | `planned` | 拆 Home/Search/Cache 超大类 | `FeatureBoundarySplitAgent`, `CacheReaderLightAgent` | `LOCK-HOME-SEARCH-SPLIT`, `LOCK-CACHE-READER-LIGHT` | 拆分前后职责对照、定向测试、静态债结果 |
+| Wave 3 | `in_progress` | 拆 Home/Search/Cache 超大类 | `FeatureBoundarySplitAgent`, `CacheReaderLightAgent` | `LOCK-HOME-SEARCH-SPLIT`, `LOCK-CACHE-READER-LIGHT` | 拆分前后职责对照、定向测试、静态债结果 |
 | Wave 4 | `planned` | Reader 轻触减重、mock 清理、阶段收尾 | `CacheReaderLightAgent`, `HostRiskQualityAgent`, `LeaderAgent` | `LOCK-CACHE-READER-LIGHT`, `LOCK-HOST-QUALITY`, `LOCK-REFRACTOR-DOCS` | mock 清单、closeout 文档、Phase 5 进入条件 |
 
 ## Wave Summary Rules
@@ -29,8 +29,9 @@
   - 下一步
 
 ## 当前未关闭风险
-- `profile-host / RN Host` 仍未形成正式验证证据
-- `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 尚未拆分
+- `profile-host / RN Host` 当前未形成正式验证证据
+- 当前 shell 的 `adb devices -l` 返回空设备列表，`W2-A11` 暂时不能实跑
+- `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 尚未完成目标拆分
 - 静态债第二轮收敛尚未开始
 
 ## 已完成的 Wave 1 资料
@@ -115,6 +116,8 @@
     - commit: `4bbdbda`
 
 ## 下一步
-- 继续推进 Wave 2：
-  - `W2-A11` `profile/settings/author-ai` 宿主页首开验证
-  - 若设备暂不可用，开始为 `Wave 3` 的 `HomeViewModel` / `SearchRepository` / `NetworkCacheManager` 拆分建立第一批 TDD 切口
+- 按静默连续推进协议切到 Wave 3：
+  - `W3-H01` `HomeStateProjector`
+  - `W3-C01` `CacheVersionMigrator`
+  - `W3-S01` `SearchHistoryStore`
+- `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

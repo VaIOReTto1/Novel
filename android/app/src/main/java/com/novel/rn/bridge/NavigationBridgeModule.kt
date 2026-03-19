@@ -10,6 +10,7 @@ import com.novel.rn.bridge.delegate.NavigationHostDelegate
 import com.novel.rn.bridge.delegate.NavigationHostResult
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
+import com.novel.rn.bridge.delegate.SelectionMenuDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
@@ -204,6 +205,10 @@ class NavigationBridgeModule(
         )
     }
 
+    private val selectionMenuDelegate by lazy {
+        SelectionMenuDelegate()
+    }
+
     // =================== Selection Menu (Android) ===================
     private val MENU_ID_POLISH = 0xA11001
     private val MENU_ID_EXPAND = 0xA11002
@@ -236,13 +241,8 @@ class NavigationBridgeModule(
                             override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean = false
 
                             override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-                                val action = when (item.itemId) {
-                                    MENU_ID_POLISH -> "polish"
-                                    MENU_ID_EXPAND -> "expand"
-                                    MENU_ID_CONDENSE -> "condense"
-                                    MENU_ID_CONTINUE -> "continue"
-                                    else -> null
-                                } ?: return false
+                                val action = selectionMenuDelegate.resolveAction(item.itemId)
+                                    ?: return false
 
                                 val start = try { v.selectionStart } catch (_: Exception) { -1 }
                                 val end = try { v.selectionEnd } catch (_: Exception) { -1 }
@@ -250,11 +250,18 @@ class NavigationBridgeModule(
                                     if (start >= 0 && end > start) v.text.substring(start, end) else ""
                                 } catch (_: Exception) { "" }
 
+                                val event = selectionMenuDelegate.buildSelectionEvent(
+                                    action = action,
+                                    selectedText = selected,
+                                    start = start,
+                                    end = end
+                                )
+
                                 val map = Arguments.createMap().apply {
-                                    putString("action", action)
-                                    if (selected.isNotEmpty()) putString("selectedText", selected)
-                                    putInt("start", start)
-                                    putInt("end", end)
+                                    putString("action", event.action)
+                                    event.selectedText?.let { putString("selectedText", it) }
+                                    putInt("start", event.start)
+                                    putInt("end", event.end)
                                 }
                                 try {
                                     reactContext

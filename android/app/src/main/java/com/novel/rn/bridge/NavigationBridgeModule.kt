@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import com.novel.core.config.RefactorFeatureFlags
 import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.*
+import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
@@ -149,6 +150,14 @@ class NavigationBridgeModule(
         )
     }
 
+    private val navigationRouteDelegate by lazy {
+        NavigationRouteDelegate { route ->
+            Handler(Looper.getMainLooper()).post {
+                NavViewModel.navController.value?.navigate(route)
+            }
+        }
+    }
+
     // =================== Selection Menu (Android) ===================
     private val MENU_ID_POLISH = 0xA11001
     private val MENU_ID_EXPAND = 0xA11002
@@ -273,10 +282,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToTimedSwitch() {
         TimberLogger.d(TAG, "导航到定时切换页面")
-        
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navController.value?.navigate("timed_switch")
-        }
+        navigationRouteDelegate.navigateToTimedSwitch()
     }
 
     /**
@@ -285,10 +291,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToHelpSupport() {
         TimberLogger.d(TAG, "导航到帮助与支持页面")
-        
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navController.value?.navigate("help_support")
-        }
+        navigationRouteDelegate.navigateToHelpSupport()
     }
 
     /**
@@ -297,10 +300,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToPrivacyPolicy() {
         TimberLogger.d(TAG, "导航到隐私政策页面")
-        
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navController.value?.navigate("privacy_policy")
-        }
+        navigationRouteDelegate.navigateToPrivacyPolicy()
     }
 
     /**
@@ -309,10 +309,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToHistory() {
         TimberLogger.d(TAG, "导航到历史页面")
-        
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToHistory()
-        }
+        navigationRouteDelegate.navigateToHistory()
     }
 
     /**
@@ -321,10 +318,7 @@ class NavigationBridgeModule(
     @ReactMethod
     fun navigateToMessage() {
         TimberLogger.d(TAG, "导航到消息页面")
-        
-        Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToMessage()
-        }
+        navigationRouteDelegate.navigateToMessage()
     }
 
     /**

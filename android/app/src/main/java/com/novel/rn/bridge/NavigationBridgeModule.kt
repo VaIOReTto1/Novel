@@ -10,6 +10,8 @@ import com.novel.rn.bridge.delegate.NavigationHostDelegate
 import com.novel.rn.bridge.delegate.NavigationHostResult
 import com.novel.rn.bridge.delegate.NavigationContentQueryDelegate
 import com.novel.rn.bridge.delegate.NavigationAuthorDelegate
+import com.novel.rn.bridge.delegate.NavigationAiDelegate
+import com.novel.rn.bridge.delegate.NavigationAiResult
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import com.novel.rn.bridge.delegate.SelectionMenuDelegate
@@ -233,6 +235,10 @@ class NavigationBridgeModule(
                 }
             }
         )
+    }
+
+    private val navigationAiDelegate by lazy {
+        NavigationAiDelegate()
     }
 
     // =================== Selection Menu (Android) ===================
@@ -970,10 +976,9 @@ class NavigationBridgeModule(
             try {
                 val resp = AiService().polishTextBlocking(text)
                 bridgeCoroutineScopes.main.launch {
-                    if (resp.ok == true) {
-                        promise.resolve(resp.data ?: "")
-                    } else {
-                        promise.reject("AI_POLISH_ERROR", resp.message ?: "AI 返回失败")
+                    when (val result = navigationAiDelegate.buildResult(resp, "AI_POLISH_ERROR")) {
+                        is NavigationAiResult.Success -> promise.resolve(result.data)
+                        is NavigationAiResult.Failure -> promise.reject(result.errorCode, result.errorMessage)
                     }
                 }
             } catch (e: Exception) {
@@ -997,10 +1002,9 @@ class NavigationBridgeModule(
             try {
                 val resp = AiService().expandTextBlocking(text, ratio)
                 bridgeCoroutineScopes.main.launch {
-                    if (resp.ok == true) {
-                        promise.resolve(resp.data ?: "")
-                    } else {
-                        promise.reject("AI_EXPAND_ERROR", resp.message ?: "AI 返回失败")
+                    when (val result = navigationAiDelegate.buildResult(resp, "AI_EXPAND_ERROR")) {
+                        is NavigationAiResult.Success -> promise.resolve(result.data)
+                        is NavigationAiResult.Failure -> promise.reject(result.errorCode, result.errorMessage)
                     }
                 }
             } catch (e: Exception) {
@@ -1024,10 +1028,9 @@ class NavigationBridgeModule(
             try {
                 val resp = AiService().condenseTextBlocking(text, ratio)
                 bridgeCoroutineScopes.main.launch {
-                    if (resp.ok == true) {
-                        promise.resolve(resp.data ?: "")
-                    } else {
-                        promise.reject("AI_CONDENSE_ERROR", resp.message ?: "AI 返回失败")
+                    when (val result = navigationAiDelegate.buildResult(resp, "AI_CONDENSE_ERROR")) {
+                        is NavigationAiResult.Success -> promise.resolve(result.data)
+                        is NavigationAiResult.Failure -> promise.reject(result.errorCode, result.errorMessage)
                     }
                 }
             } catch (e: Exception) {
@@ -1051,10 +1054,9 @@ class NavigationBridgeModule(
             try {
                 val resp = AiService().continueTextBlocking(text, length)
                 bridgeCoroutineScopes.main.launch {
-                    if (resp.ok == true) {
-                        promise.resolve(resp.data ?: "")
-                    } else {
-                        promise.reject("AI_CONTINUE_ERROR", resp.message ?: "AI 返回失败")
+                    when (val result = navigationAiDelegate.buildResult(resp, "AI_CONTINUE_ERROR")) {
+                        is NavigationAiResult.Success -> promise.resolve(result.data)
+                        is NavigationAiResult.Failure -> promise.reject(result.errorCode, result.errorMessage)
                     }
                 }
             } catch (e: Exception) {

@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 2`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 2 / W2-A06 / profile/settings 宿主页首开验证`
+- 当前建议下一原子主题：`Wave 2 / W2-A06 / profile/settings 宿主页首开验证准备与证据模板`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -62,8 +62,15 @@
     - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationQueryDelegate.kt`
     - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationQueryDelegateTest.kt`
     - commit: `4743b7c`
+- `Wave 2 / W2-A04`
+  - 新增 `NavigationHostDelegate` 最小实现
+  - 当前先收口 `registerComponent`、`notifyRouteChanged`、`clearComponentCache`、`clearAllComponentCache`
+  - 证据：
+    - `android/app/src/main/java/com/novel/rn/bridge/delegate/NavigationHostDelegate.kt`
+    - `android/app/src/test/java/com/novel/rn/bridge/delegate/NavigationHostDelegateTest.kt`
+    - commit: `673cd4f`
 
 ## 下一步
 - 继续推进 Wave 2：
-  - `W2-A06` `profile` / `settings` 宿主页首开验证
-  - `W2-A04` `NavigationHostDelegate` 最小拆分
+  - `W2-A06` `profile` / `settings` 宿主页首开验证准备与证据模板
+  - `W2-A07` 作者/AI 宿主页首开验证准备

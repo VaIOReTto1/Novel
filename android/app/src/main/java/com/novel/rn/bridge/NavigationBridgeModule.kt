@@ -12,6 +12,8 @@ import com.novel.rn.bridge.delegate.NavigationContentQueryDelegate
 import com.novel.rn.bridge.delegate.NavigationAuthorDelegate
 import com.novel.rn.bridge.delegate.NavigationAiDelegate
 import com.novel.rn.bridge.delegate.NavigationAiResult
+import com.novel.rn.bridge.delegate.NavigationThemeDelegate
+import com.novel.rn.bridge.delegate.NavigationThemeResult
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import com.novel.rn.bridge.delegate.SelectionMenuDelegate
@@ -239,6 +241,10 @@ class NavigationBridgeModule(
 
     private val navigationAiDelegate by lazy {
         NavigationAiDelegate()
+    }
+
+    private val navigationThemeDelegate by lazy {
+        NavigationThemeDelegate()
     }
 
     // =================== Selection Menu (Android) ===================
@@ -1120,20 +1126,20 @@ class NavigationBridgeModule(
         
         settingsViewModel?.let { viewModel ->
             observeEffectForPromise(viewModel, promise) { effect, promiseResolved, p ->
-                when (effect) {
-                    is SettingsEffect.ShowToast -> {
+                when (val result = navigationThemeDelegate.mapEffect(effect)) {
+                    is NavigationThemeResult.Success -> {
                         if (promiseResolved.compareAndSet(false, true)) {
-                            p.resolve(effect.message)
+                            p.resolve(result.message)
                         }
                         true // 停止监听
                     }
-                    is SettingsEffect.ShowError -> {
+                    is NavigationThemeResult.Failure -> {
                         if (promiseResolved.compareAndSet(false, true)) {
-                            p.reject("THEME_CHANGE_ERROR", effect.error)
+                            p.reject(result.errorCode, result.errorMessage)
                         }
                         true // 停止监听
                     }
-                    else -> false // 继续监听
+                    null -> false // 继续监听
                 }
             }
             

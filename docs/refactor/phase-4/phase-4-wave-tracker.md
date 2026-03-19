@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-C03 / CacheCleanupCoordinator`
+- 当前建议下一原子主题：`Wave 3 / W3-H04 / HomePagingCoordinator`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -162,9 +162,17 @@
     - `android/app/src/main/java/com/novel/page/home/viewmodel/HomeViewModel.kt`
     - `android/app/src/test/java/com/novel/page/home/viewmodel/HomeRefreshCoordinatorTest.kt`
     - commit: `39b957f`
+- `Wave 3 / W3-C03`
+  - 新增 `CacheCleanupCoordinator` 最小实现
+  - 当前先将 `NetworkCacheManager.performSmartCleanup()` 中 cleanup 策略分发、统计累加和耗时汇总逻辑收口到独立 coordinator，不改变清理策略和对外统计语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/utils/network/cache/CacheCleanupCoordinator.kt`
+    - `android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt`
+    - `android/app/src/test/java/com/novel/utils/network/cache/CacheCleanupCoordinatorTest.kt`
+    - commit: `aa59be7`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-C03` `CacheCleanupCoordinator`
+  - `W3-H04` `HomePagingCoordinator`
   - `W3-S02` `SearchResultCacheStore`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

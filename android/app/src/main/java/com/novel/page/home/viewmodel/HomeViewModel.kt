@@ -119,6 +119,12 @@ class HomeViewModel @Inject constructor(
     @Volatile
     private var cachedHomeBooks: ImmutableList<HomeService.HomeBook> = persistentListOf()
 
+    private val homeInitialLoadCoordinator = HomeInitialLoadCoordinator {
+        homeCompositeUseCase(
+            HomeCompositeUseCase.Params(loadInitialData = true),
+        )
+    }
+
     /** 新的StateAdapter实例 */
     @Stable
     val adapter = HomeStateAdapter(state.asStable(), viewModelScope)
@@ -278,44 +284,16 @@ class HomeViewModel @Inject constructor(
      */
     private fun loadInitialData() {
         viewModelScope.launch {
-            try {
-                TimberLogger.d(TAG, "开始加载初始数据")
+            TimberLogger.d(TAG, "开始加载初始数据")
 
-                val result = homeCompositeUseCase(
-                    HomeCompositeUseCase.Params(loadInitialData = true)
-                )
+            val outcome = homeInitialLoadCoordinator.coordinate()
+            outcome.cachedHomeBooks?.let {
+                cachedHomeBooks = it
+            }
+            outcome.intents.forEach(::sendIntent)
 
-                if (result.isSuccess) {
-                    // 发送各种成功Intent
-                    sendIntent(HomeIntent.CategoryFiltersLoadSuccess(result.categoryFilters.toImmutableList()))
-                    sendIntent(HomeIntent.CategoriesLoadSuccess(result.categories.toImmutableList()))
-                    sendIntent(
-                        HomeIntent.BooksLoadSuccess(
-                            carouselBooks = result.carouselBooks.toImmutableList(),
-                            hotBooks = result.hotBooks.toImmutableList(),
-                            newBooks = result.newBooks.toImmutableList(),
-                            vipBooks = result.vipBooks.toImmutableList()
-                        )
-                    )
-                    sendIntent(HomeIntent.RankBooksLoadSuccess(result.rankBooks.toImmutableList()))
-                    sendIntent(
-                        HomeIntent.HomeRecommendBooksLoadSuccess(
-                            books = result.homeRecommendBooks.toImmutableList(),
-                            isRefresh = true,
-                            hasMore = result.hasMoreRecommend
-                        )
-                    )
-
-                    // 缓存首页推荐数据
-                    cachedHomeBooks = result.homeRecommendBooks.toImmutableList()
-
-                    TimberLogger.d(TAG, "初始数据加载完成")
-                } else {
-                    sendIntent(HomeIntent.BooksLoadFailure(result.errorMessage ?: "加载失败"))
-                }
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "加载初始数据异常", e)
-                sendIntent(HomeIntent.BooksLoadFailure(e.message ?: "未知错误"))
+            if (outcome.cachedHomeBooks != null) {
+                TimberLogger.d(TAG, "初始数据加载完成")
             }
         }
     }

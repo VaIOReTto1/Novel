@@ -125,6 +125,12 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    private val homeRefreshCoordinator = HomeRefreshCoordinator {
+        homeCompositeUseCase(
+            HomeCompositeUseCase.Params(refreshData = true),
+        )
+    }
+
     /** 新的StateAdapter实例 */
     @Stable
     val adapter = HomeStateAdapter(state.asStable(), viewModelScope)
@@ -303,46 +309,17 @@ class HomeViewModel @Inject constructor(
      */
     private fun refreshData() {
         viewModelScope.launch {
-            try {
-                TimberLogger.d(TAG, "开始刷新数据")
+            TimberLogger.d(TAG, "开始刷新数据")
 
-                val result = homeCompositeUseCase(
-                    HomeCompositeUseCase.Params(refreshData = true)
-                )
+            val outcome = homeRefreshCoordinator.coordinate()
+            outcome.cachedHomeBooks?.let {
+                cachedHomeBooks = it
+            }
+            outcome.intents.forEach(::sendIntent)
+            outcome.effects.forEach(::sendEffect)
 
-                if (result.isSuccess) {
-                    // 更新缓存并发送成功Intent
-                    cachedHomeBooks = result.homeRecommendBooks.toImmutableList()
-
-                    sendIntent(HomeIntent.CategoryFiltersLoadSuccess(result.categoryFilters.toImmutableList()))
-                    sendIntent(HomeIntent.CategoriesLoadSuccess(result.categories.toImmutableList()))
-                    sendIntent(
-                        HomeIntent.BooksLoadSuccess(
-                            carouselBooks = result.carouselBooks.toImmutableList(),
-                            hotBooks = result.hotBooks.toImmutableList(),
-                            newBooks = result.newBooks.toImmutableList(),
-                            vipBooks = result.vipBooks.toImmutableList()
-                        )
-                    )
-                    sendIntent(
-                        HomeIntent.HomeRecommendBooksLoadSuccess(
-                            books = result.homeRecommendBooks.toImmutableList(),
-                            isRefresh = true,
-                            hasMore = result.hasMoreRecommend
-                        )
-                    )
-                    sendIntent(HomeIntent.RefreshComplete)
-
-                    sendEffect(HomeEffect.ShowToast("刷新成功"))
-                    TimberLogger.d(TAG, "数据刷新完成")
-                } else {
-                    sendIntent(HomeIntent.BooksLoadFailure(result.errorMessage ?: "刷新失败"))
-                    sendEffect(HomeEffect.ShowToast("刷新失败"))
-                }
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "刷新数据异常", e)
-                sendIntent(HomeIntent.BooksLoadFailure(e.message ?: "刷新失败"))
-                sendEffect(HomeEffect.ShowToast("刷新失败"))
+            if (outcome.cachedHomeBooks != null) {
+                TimberLogger.d(TAG, "数据刷新完成")
             }
         }
     }

@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 4 / W4-R02 / ReaderHistoryCoordinator`
+- 当前建议下一原子主题：`Wave 4 / W4-R03 / ReaderMappingHelper`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -218,9 +218,18 @@
     - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderViewModel.kt`
     - `android/app/src/test/java/com/novel/page/read/viewmodel/ReaderSettingsCoordinatorTest.kt`
     - commit: `1da701f`
+- `Wave 4 / W4-R02`
+  - 新增 `ReaderHistoryCoordinator` 最小实现
+  - 当前先将 `ReaderPage` 中历史写入 intent 生成与 `ReaderViewModel` 中 `HistoryService` 落库 side-effect orchestration 收口到独立 coordinator，不改历史 mock fallback 语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderHistoryCoordinator.kt`
+    - `android/app/src/main/java/com/novel/page/read/ReaderPage.kt`
+    - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderViewModel.kt`
+    - `android/app/src/test/java/com/novel/page/read/viewmodel/ReaderHistoryCoordinatorTest.kt`
+    - commit: `1b33f26`
 
 ## 下一步
 - 按静默连续推进协议继续 Wave 4：
-  - `W4-R02` `ReaderHistoryCoordinator`
   - `W4-R03` `ReaderMappingHelper`
+  - `W4-M01` `MockInventoryReport`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

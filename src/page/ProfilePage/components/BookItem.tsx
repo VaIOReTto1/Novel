@@ -11,7 +11,6 @@ interface BookItemComponentProps extends BookItemProps {
 
 export const BookItem: React.FC<BookItemComponentProps> = React.memo(({
   book,
-  onPress,
   styles,
 }) => {
   const imageHeight = React.useMemo(() => {

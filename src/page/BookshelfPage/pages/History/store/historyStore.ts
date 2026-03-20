@@ -296,7 +296,7 @@ export const useHistoryStore = create<HistoryStore>()(
     },
 
     loadMoreHistory: async () => {
-      const { hasMore, isLoadingMore, currentPage, pageSize, currentTab, sortType, historyItems } = get();
+      const { hasMore, isLoadingMore, currentPage, pageSize, currentTab, sortType } = get();
 
       if (!hasMore || isLoadingMore) return;
 

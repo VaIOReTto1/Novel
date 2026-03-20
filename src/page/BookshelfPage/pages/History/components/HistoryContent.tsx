@@ -14,7 +14,6 @@ export const HistoryContent: React.FC<BookshelfContentProps> = React.memo(({
   onBookPress,
   onBookSelect,
   loading,
-  hasMore,
 }) => {
   // 处理书籍点击
   const handleBookPress = useCallback((item: BookItemType) => {

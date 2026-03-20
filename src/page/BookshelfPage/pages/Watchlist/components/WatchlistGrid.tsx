@@ -26,7 +26,6 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
 
   const renderItem = ({ item }: { item: WatchlistItem }) => {
     const isSelected = selectedItems.has(item.id);
-    const progressPercentage = item.progress || 0;
     const coverImage = item.cover || item.coverUrl || 'https://via.placeholder.com/150x200';
 
     return (

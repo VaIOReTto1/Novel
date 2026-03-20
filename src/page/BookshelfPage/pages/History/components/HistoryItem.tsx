@@ -9,7 +9,6 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
   viewType,
   isEditing,
   isSelected,
-  onPress,
   onSelect,
   onAddToShelf,
 }) => {
@@ -20,23 +19,6 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
       // 跳转到阅读器页面
       console.log('[HistoryPage] Book pressed:', item.title);
       NavigationBridge.navigateToReader(item.id);
-    }
-  };
-
-  const formatTime = (timestamp: number) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    
-    if (days === 0) {
-      return '今天';
-    } else if (days === 1) {
-      return '昨天';
-    } else if (days < 7) {
-      return `${days}天前`;
-    } else {
-      return date.toLocaleDateString();
     }
   };
 

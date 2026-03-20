@@ -26,29 +26,6 @@ export const PostItem: React.FC<PostItemProps> = ({
   const colors = useNovelColors();
   const styles = createCommunityPageStyles(colors);
 
-  const formatTime = (publishTime: string) => {
-    // 如果已经是格式化的时间字符串，直接返回
-    if (typeof publishTime === 'string') {
-      return publishTime;
-    }
-    
-    // 如果是时间戳，进行格式化
-    const timestamp = typeof publishTime === 'number' ? publishTime : Date.parse(publishTime);
-    const now = Date.now();
-    const diff = now - timestamp;
-    const minutes = Math.floor(diff / (1000 * 60));
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    if (minutes < 60) {
-      return `${minutes}分钟前`;
-    } else if (hours < 24) {
-      return `${hours}小时前`;
-    } else {
-      return `${days}天前`;
-    }
-  };
-
   return (
     <View>
       <View style={styles.postItem}>

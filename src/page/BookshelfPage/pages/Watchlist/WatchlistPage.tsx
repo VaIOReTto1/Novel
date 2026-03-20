@@ -17,7 +17,6 @@ export const WatchlistPage: React.FC = () => {
     watchlistItems,
     isLoading,
     loadWatchlistItems,
-    removeWatchlistItems,
   } = useWatchlistStore();
   
   const {

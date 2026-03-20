@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { wp, fp, sp } from '../../../utils/theme/dimensions';
-import { typography } from '../../../utils/theme/typography';
+import { wp, fp } from '../../../utils/theme/dimensions';
 import { NovelColors } from '../../../utils/theme/colors';
 
 export const createMainPageStyles = (colors: NovelColors) => {

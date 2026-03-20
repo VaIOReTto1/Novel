@@ -23,7 +23,6 @@ const HistoryPage: React.FC = () => {
     historyItems,
     currentTab,
     viewType,
-    sortType,
     isEditing,
     selectedItems,
     isLoading,
@@ -32,7 +31,6 @@ const HistoryPage: React.FC = () => {
     isRefreshing,
     setCurrentTab,
     setViewType,
-    setSortType,
     setEditing,
     toggleItemSelection,
     selectAllItems,
@@ -103,11 +101,6 @@ const HistoryPage: React.FC = () => {
   }, [setViewType]);
 
   // 排序类型切换
-  const handleSortTypeChange = useCallback((type: string) => {
-    console.log('Sort type changed to:', type);
-    setSortType(type as 'lastRead' | 'addTime' | 'title' | 'progress');
-  }, [setSortType]);
-
   // 编辑模式切换
   const handleEditToggle = useCallback(() => {
     const newEditingState = !isEditing;

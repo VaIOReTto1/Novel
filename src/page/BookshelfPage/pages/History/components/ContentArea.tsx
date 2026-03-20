@@ -45,7 +45,7 @@ export const ContentArea: React.FC<HistoryContentAreaProps> = React.memo(({
   // 网格布局需要手动分组以支持justifyContent: 'space-between'
   const renderGridRow = ({ item: rowItems }: { item: any[] }) => (
     <View style={styles.gridRow}>
-      {rowItems.map((item, index) => (
+      {rowItems.map((item) => (
         <HistoryItem
           key={item.id}
           styles={styles}
@@ -90,7 +90,7 @@ export const ContentArea: React.FC<HistoryContentAreaProps> = React.memo(({
   const renderItem = viewType === 'grid' ? renderGridRow : renderListItem;
   const data = viewType === 'grid' ? gridData : historyItems;
   const keyExtractor = viewType === 'grid' 
-    ? (item: any[], index: number) => `row-${index}`
+    ? (_item: any[], index: number) => `row-${index}`
     : (item: any) => item.id;
 
   return (
@@ -112,7 +112,7 @@ export const ContentArea: React.FC<HistoryContentAreaProps> = React.memo(({
       maxToRenderPerBatch={10}
       windowSize={10}
       initialNumToRender={10}
-      getItemLayout={viewType === 'list' ? (data: any, index: number) => ({
+      getItemLayout={viewType === 'list' ? (_data: any, index: number) => ({
         length: 80,
         offset: 80 * index,
         index,

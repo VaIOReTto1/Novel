@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 4 / W4-M01 / MockInventoryReport`
+- 当前建议下一原子主题：`Wave 4 / W4-Q01 / touched-files 静态债清零`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -29,10 +29,9 @@
   - 下一步
 
 ## 当前未关闭风险
-- `profile-host / RN Host` 当前未形成正式验证证据
-- 当前 shell 的 `adb devices -l` 返回空设备列表，`W2-A11` 暂时不能实跑
-- `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 尚未完成目标拆分
-- 静态债第二轮收敛尚未开始
+- `V4-05` 已补齐 `profile / settings / aipage` 三类宿主页运行文档，但 `settings / aipage` 的日志强度弱于 `profile`，后续若需要更高确定性可补一轮专项日志
+- repo 级静态债仍未达到阶段阈值，`V4-06` 依旧是当前主 blocker
+- `Phase 4` closeout、`Stage 2` closeout 与 `Phase 5` 进入条件文档仍未生成
 
 ## 已完成的 Wave 1 资料
 - `docs/refactor/phase-4/package-boundary-map.md`
@@ -253,9 +252,21 @@
     - commit: `b3c2eb0`
     - `android/app/src/main/java/com/novel/page/search/viewmodel/SearchResultViewModel.kt`
     - commit: `cc29469`
+- `Wave 2 / W2-A11`
+  - `profile`、`settings`、`aipage` 宿主页运行证据已落盘
+  - 当前已形成：
+    - `profile` 的强证据链：XML + logcat + 截图
+    - `settings`、`aipage` 的正向样本：截图 + 启动日志 + 同轮人工复核结论
+  - 证据：
+    - `docs/refactor/phase-4/host-risk-run-profile-2026-03-20.md`
+    - `docs/refactor/phase-4/host-risk-run-settings-2026-03-20.md`
+    - `docs/refactor/phase-4/host-risk-run-author-ai-2026-03-20.md`
+    - `docs/refactor/evidence/profile-host-unlocked-2026-03-20.png`
+    - `docs/refactor/evidence/settings-host-unlocked-2026-03-20.png`
+    - `docs/refactor/evidence/aipage-host-unlocked-2026-03-20.png`
 
 ## 下一步
 - 按静默连续推进协议继续 Wave 4：
   - `W4-Q01` `touched-files 静态债清零`
   - `W4-Q02` `repo 级静态债对比`
-- `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker
+- `V4-05` 当前已具备 `ready_for_validation` 的证据条件，后续主线聚焦 `V4-06`

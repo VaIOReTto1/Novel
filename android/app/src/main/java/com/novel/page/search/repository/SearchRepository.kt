@@ -9,7 +9,6 @@ import com.novel.page.search.viewmodel.FilterState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.novel.utils.network.cache.NetworkCacheManager
@@ -125,16 +124,9 @@ class SearchRepository @Inject constructor(
     
     companion object {
         private const val TAG = "SearchRepository"
-        /** 搜索结果缓存最大数量 */
-        private const val SEARCH_CACHE_SIZE = 20
-        /** 搜索结果缓存过期时间（5分钟） */
-        private const val SEARCH_CACHE_DURATION_MS = 5 * 60 * 1000L
-        
     }
-    
-    /** 搜索结果缓存 */
-    @Stable
-    private val searchResultCache: ConcurrentHashMap<String, CachedSearchResult> = ConcurrentHashMap<String, CachedSearchResult>()
+
+    private val searchResultCacheStore = SearchResultCacheStore()
     
     // region 搜索结果缓存管理
     
@@ -149,83 +141,40 @@ class SearchRepository @Inject constructor(
      * 检查缓存是否有效（5分钟内）
      */
     private fun isCacheValid(cached: CachedSearchResult): Boolean {
-        return (System.currentTimeMillis() - cached.cacheTime) < SEARCH_CACHE_DURATION_MS
+        return (System.currentTimeMillis() - cached.cacheTime) < (5 * 60 * 1000L)
     }
     
     /**
      * 获取缓存的搜索结果
      */
     fun getCachedSearchResult(params: SearchParams): CachedSearchResult? {
-        val cacheKey = generateCacheKey(params)
-        val cached = searchResultCache[cacheKey]
-        
-        return if (cached != null && isCacheValid(cached)) {
-            TimberLogger.d(TAG, "返回缓存的搜索结果: $cacheKey")
-            cached
-        } else {
-            if (cached != null) {
-                TimberLogger.d(TAG, "缓存已过期，移除: $cacheKey")
-                searchResultCache.remove(cacheKey)
-            }
-            null
+        val cached = searchResultCacheStore.getCachedSearchResult(params)
+        cached?.let {
+            TimberLogger.d(TAG, "返回缓存的搜索结果: ${generateCacheKey(params)}")
         }
+        return cached
     }
     
     /**
      * 缓存搜索结果
      */
     fun cacheSearchResult(params: SearchParams, books: List<BookInfoRespDto>, totalResults: Int, hasMore: Boolean) {
-        val cacheKey = generateCacheKey(params)
-        val cachedResult = CachedSearchResult(
-            params = params,
-            result = PageRespDtoBookInfoRespDto(
-                pageNum = params.page.toLong(),
-                pageSize = 20L,
-                total = totalResults.toLong(),
-                list = books.toImmutableList(),
-                pages = if (hasMore) (params.page + 1).toLong() else params.page.toLong()
-            ),
-            cacheTime = System.currentTimeMillis()
-        )
-        
-        // 清理过期缓存
-        if (searchResultCache.size >= SEARCH_CACHE_SIZE) {
-            cleanExpiredCache()
-            
-            // 如果清理后仍然满了，移除最旧的
-            if (searchResultCache.size >= SEARCH_CACHE_SIZE) {
-                val oldestKey = searchResultCache.minByOrNull { it.value.cacheTime }?.key
-                oldestKey?.let { 
-                    searchResultCache.remove(it)
-                    TimberLogger.d(TAG, "移除最旧的缓存项: $it")
-                }
-            }
-        }
-        
-        searchResultCache[cacheKey] = cachedResult
-        TimberLogger.d(TAG, "缓存搜索结果: $cacheKey")
+        searchResultCacheStore.cacheSearchResult(params, books, totalResults, hasMore)
+        TimberLogger.d(TAG, "缓存搜索结果: ${generateCacheKey(params)}")
     }
     
     /**
      * 清理过期缓存
      */
     private fun cleanExpiredCache() {
-        val currentTime = System.currentTimeMillis()
-        val expiredKeys = searchResultCache.filter { 
-            (currentTime - it.value.cacheTime) >= SEARCH_CACHE_DURATION_MS 
-        }.keys
-        
-        expiredKeys.forEach { key ->
-            searchResultCache.remove(key)
-            TimberLogger.d(TAG, "清理过期缓存: $key")
-        }
+        return
     }
     
     /**
      * 清空搜索结果缓存
      */
     fun clearSearchResultCache() {
-        searchResultCache.clear()
+        searchResultCacheStore.clearSearchResultCache()
         TimberLogger.d(TAG, "搜索结果缓存已清空")
     }
     
@@ -233,7 +182,7 @@ class SearchRepository @Inject constructor(
      * 检查搜索结果缓存是否可用
      */
     fun isSearchResultCacheAvailable(params: SearchParams): Boolean {
-        return getCachedSearchResult(params) != null
+        return searchResultCacheStore.isSearchResultCacheAvailable(params)
     }
     
     // endregion

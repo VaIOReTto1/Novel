@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.novel.page.component.NovelText
 import com.novel.page.read.LocalReaderInfo
-import com.novel.page.read.viewmodel.ReaderInfo
+import com.novel.page.read.viewmodel.ReaderMappingHelper
 import com.novel.utils.ssp
 
 /**
@@ -53,11 +53,7 @@ fun ReaderPageInfo(
     // 计算总页数
     val totalPages by remember(readerInfo.pageCountCache, readerInfo.paginationState) {
         derivedStateOf {
-            if (readerInfo.pageCountCache != null) {
-                readerInfo.pageCountCache.totalPages
-            } else {
-                readerInfo.paginationState.estimatedTotalPages.takeIf { it > 0 } ?: 1
-            }
+            ReaderMappingHelper.totalPages(readerInfo)
         }
     }
 
@@ -70,7 +66,7 @@ fun ReaderPageInfo(
         totalChapters
     ) {
         derivedStateOf {
-            calculateGlobalPageNumber(
+            ReaderMappingHelper.calculateGlobalPageNumber(
                 readerInfo = readerInfo,
                 currentChapterIndex = currentChapterIndex,
                 totalChapters = totalChapters
@@ -81,12 +77,11 @@ fun ReaderPageInfo(
     // 构建页码信息字符串
     val pageInfo by remember(isCalculating, currentGlobalPage, totalPages) {
         derivedStateOf {
-            when {
-                isCalculating && totalPages > 0 -> "$currentGlobalPage / $totalPages (计算中...)"
-                isCalculating -> "页数计算中..."
-                totalPages > 0 -> "$currentGlobalPage / $totalPages"
-                else -> "1 / 1" // 默认显示
-            }
+            ReaderMappingHelper.buildPageInfoText(
+                readerInfo = readerInfo,
+                currentChapterIndex = currentChapterIndex,
+                totalChapters = totalChapters,
+            )
         }
     }
 
@@ -100,35 +95,4 @@ fun ReaderPageInfo(
             fontSize = 10.ssp
         )
     }
-}
-
-/**
- * 计算全书绝对页码的逻辑
- */
-private fun calculateGlobalPageNumber(
-    readerInfo: ReaderInfo,
-    currentChapterIndex: Int?,
-    totalChapters: Int?
-): Int {
-    // 优先使用页码缓存数据
-    if (readerInfo.pageCountCache != null && readerInfo.currentChapter != null) {
-        val chapterRange = readerInfo.pageCountCache.chapterPageRanges.find { 
-            it.chapterId == readerInfo.currentChapter.id 
-        }
-        if (chapterRange != null) {
-            val pageIndexInChapter = readerInfo.perChapterPageIndex.coerceAtLeast(0)
-            val totalPages = readerInfo.pageCountCache.totalPages
-            return (chapterRange.startPage + pageIndexInChapter + 1).coerceIn(1, totalPages)
-        }
-    }
-    
-    // 如果没有缓存数据，使用估算
-    if (currentChapterIndex != null && totalChapters != null) {
-        val estimatedPagesPerChapter = 5 // 假设每章平均5页
-        val pageIndexInChapter = readerInfo.perChapterPageIndex.coerceAtLeast(0)
-        return (currentChapterIndex * estimatedPagesPerChapter + pageIndexInChapter + 1).coerceAtLeast(1)
-    }
-    
-    // 最后的兜底方案
-    return (readerInfo.perChapterPageIndex + 1).coerceAtLeast(1)
 }

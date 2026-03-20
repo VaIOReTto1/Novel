@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.novel.page.read.viewmodel.PageFlipEffect
 import com.novel.page.read.viewmodel.ReaderInfo
 import com.novel.page.read.viewmodel.ReaderSettings
+import com.novel.page.read.viewmodel.ReaderMappingHelper
 
 val LocalReaderInfo = staticCompositionLocalOf<ReaderInfo> {
     error("No ReaderInfo provided")
@@ -182,12 +183,7 @@ fun ReaderPage(
     }
 
     // 将需要传递给子组件的状态打包
-    val readerInfo = ReaderInfo(
-        paginationState = state.paginationState,
-        pageCountCache = state.pageCountCache,
-        currentChapter = state.currentChapter,
-        perChapterPageIndex = state.currentPageIndex
-    )
+    val readerInfo = ReaderMappingHelper.toReaderInfo(state)
 
     // 性能优化：缓存重试回调
     val handleRetry = remember(viewModel) { {

@@ -32,7 +32,7 @@ describe('UserBridge contract', () => {
     expect(getCurrentUserData).toHaveBeenCalledTimes(1);
   });
 
-  it('keeps mock fallback contract stable when native bridge is unavailable', async () => {
+  it('fails closed when the native bridge is unavailable', async () => {
     const {
       getCurrentUserData,
       isUserLoggedIn,
@@ -40,13 +40,7 @@ describe('UserBridge contract', () => {
       getUserCoins,
     } = loadUserBridgeModule(undefined);
 
-    await expect(getCurrentUserData()).resolves.toMatchObject({
-      uid: 'mock_uid',
-      token: 'mock_token',
-      isLoggedIn: false,
-      balance: 0,
-      coins: 0,
-    });
+    await expect(getCurrentUserData()).resolves.toBeNull();
     await expect(isUserLoggedIn()).resolves.toBe(false);
     await expect(getUserBalance()).resolves.toBe(0);
     await expect(getUserCoins()).resolves.toBe(0);

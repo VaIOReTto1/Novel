@@ -213,39 +213,19 @@ const fetchCommentsFromApi = async (bookId: string): Promise<CommentResponse> =>
         comments: comments,
       };
     } else {
-      // 数据为空时，30%概率返回mock数据
-      if (Math.random() < 2) {
-        console.log('API数据为空，返回mock数据');
-        const mockComments = generateMockComments();
-        return {
-          commentTotal: mockComments.length,
-          comments: mockComments,
-        };
-      } else {
-        console.log('API数据为空，返回空数据');
-        return {
-          commentTotal: 0,
-          comments: [],
-        };
-      }
-    }
-  } catch (error) {
-    console.error('获取评论数据失败:', error);
-    // 发生错误时，30%概率返回mock数据
-    if (Math.random() < 0.3) {
-      console.log('API请求失败，返回mock数据');
-      const mockComments = generateMockComments();
-      return {
-        commentTotal: mockComments.length,
-        comments: mockComments,
-      };
-    } else {
-      console.log('API请求失败，返回空数据');
+      console.log('API数据为空，返回空数据');
       return {
         commentTotal: 0,
         comments: [],
       };
     }
+  } catch (error) {
+    console.error('获取评论数据失败:', error);
+    console.log('API请求失败，返回空数据');
+    return {
+      commentTotal: 0,
+      comments: [],
+    };
   }
 };
 

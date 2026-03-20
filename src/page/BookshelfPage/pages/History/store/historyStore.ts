@@ -296,29 +296,17 @@ export const useHistoryStore = create<HistoryStore>()(
     },
 
     loadMoreHistory: async () => {
-      const { hasMore, isLoadingMore, currentPage, pageSize, currentTab, sortType } = get();
+      const { hasMore, isLoadingMore } = get();
 
       if (!hasMore || isLoadingMore) return;
 
       try {
-        set((state: { isLoadingMore: boolean; }) => {
-          state.isLoadingMore = true;
-        });
+      set((state) => {
+        state.hasMore = false;
+        state.isLoadingMore = false;
+        state.error = null;
+      });
 
-        await delay(500);
-
-        const nextPage = currentPage + 1;
-        const mockItems = generateMockHistoryItems(nextPage, pageSize, currentTab);
-        const sortedItems = sortHistoryItems(mockItems, sortType);
-
-        set((state: { historyItems: HistoryItem[]; currentPage: any; hasMore: boolean; isLoadingMore: boolean; }) => {
-          state.historyItems.push(...sortedItems);
-          state.currentPage = nextPage;
-          state.hasMore = sortedItems.length === pageSize;
-          state.isLoadingMore = false;
-        });
-
-        console.log('[HistoryStore] Loaded more items:', sortedItems.length);
       } catch (error) {
         set((state) => {
           state.isLoadingMore = false;

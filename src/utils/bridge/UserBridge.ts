@@ -47,17 +47,7 @@ export const getCurrentUserData = async (): Promise<UserData | null> => {
           reject(new Error(error.message || '获取用户数据失败'));
         });
     } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      resolve({
-        uid: 'mock_uid',
-        token: 'mock_token',
-        nickname: '测试用户',
-        photo: '',
-        sex: 'unknown',
-        isLoggedIn: false,
-        balance: 0,
-        coins: 0,
-      });
+      resolve(null);
     }
   });
 };

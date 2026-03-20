@@ -142,7 +142,7 @@ open class HomeCompositeUseCase @Inject constructor(
                 ).first() // 使用first()确保获取到数据
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "获取分类筛选器失败", e)
-                persistentListOf(CategoryInfo("0", "推荐")) // 返回默认数据
+                persistentListOf()
             }
             
             val categories = try {
@@ -153,7 +153,11 @@ open class HomeCompositeUseCase @Inject constructor(
                 TimberLogger.e(TAG, "获取分类数据失败", e)
                 persistentListOf()
             }
-            
+
+            val resolvedCategoryFilters = categoryFilters
+                .takeUnless { isMockOnlyCategoryFilters(it) }
+                ?: categories.map { CategoryInfo(it.id.toString(), it.name) }
+
             val booksData = try {
                 getBooksDataUseCase(
                     GetBooksDataUseCase.Params(forceRefresh = false)
@@ -181,7 +185,7 @@ open class HomeCompositeUseCase @Inject constructor(
             
             Result(
                 categories = categories.toImmutableList(),
-                categoryFilters = categoryFilters.toImmutableList(),
+                categoryFilters = resolvedCategoryFilters.toImmutableList(),
                 carouselBooks = carouselBooks,
                 hotBooks = hotBooks,
                 newBooks = newBooks,
@@ -199,6 +203,11 @@ open class HomeCompositeUseCase @Inject constructor(
     /**
      * 刷新所有数据
      */
+    private fun isMockOnlyCategoryFilters(categoryFilters: List<CategoryInfo>): Boolean {
+        return categoryFilters.size == 1 &&
+            categoryFilters.first().id == "0"
+    }
+
     private suspend fun refreshAllData(): Result {
         TimberLogger.d(TAG, "刷新所有数据")
         

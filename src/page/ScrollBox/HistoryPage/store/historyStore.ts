@@ -64,45 +64,6 @@ const initialState: HistoryState = {
   cachedHistoryItems: [],
 };
 
-// 模拟API数据
-const generateMockHistoryItems = (page: number, pageSize: number, type?: string): HistoryItem[] => {
-  const items: HistoryItem[] = [];
-  const startIndex = (page - 1) * pageSize;
-
-  for (let i = 0; i < pageSize; i++) {
-    const index = startIndex + i + 1;
-    const itemType = type === 'all' ?
-      (['book', 'audio', 'video', 'drama'] as const)[index % 4] :
-      (type as 'book' | 'audio' | 'video' | 'drama');
-
-    items.push({
-      id: index,
-      title: `${getTypeTitle(itemType)} ${index}`,
-      author: `作者${index}`,
-      description: `这是${getTypeTitle(itemType)}的描述内容，讲述了一个精彩的故事...`,
-      coverUrl: `https://placehold.co/220x300?text=${index}`,
-      lastReadTime: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
-      readProgress: Math.floor(Math.random() * 100),
-      type: itemType,
-      categoryId: Math.floor(Math.random() * 10) + 1,
-      readCount: Math.floor(Math.random() * 10000),
-      rating: Math.random() * 5,
-    });
-  }
-
-  return items;
-};
-
-const getTypeTitle = (type: string): string => {
-  switch (type) {
-    case 'book': return '小说';
-    case 'audio': return '听书';
-    case 'video': return '视频';
-    case 'drama': return '短剧';
-    default: return '内容';
-  }
-};
-
 export const useHistoryStore = create<HistoryStore>()(
   immer((set, get) => ({
     ...initialState,
@@ -221,39 +182,11 @@ export const useHistoryStore = create<HistoryStore>()(
       if (!state.hasMore || state.loading) {return;}
 
       set((draft) => {
-        draft.loading = true;
+        draft.hasMore = false;
+        draft.loading = false;
+        draft.isLoadingMore = false;
         draft.error = null;
       });
-
-      try {
-        await new Promise(resolve => setTimeout(resolve, 600));
-
-        const nextPage = state.currentPage + 1;
-        const mockItems = generateMockHistoryItems(
-          nextPage,
-          state.pageSize,
-          state.selectedTab
-        );
-
-        const filteredItems = state.selectedTab === 'all' ?
-          mockItems :
-          mockItems.filter(item => item.type === state.selectedTab);
-
-        set((draft) => {
-          draft.historyItems = [...draft.historyItems, ...filteredItems];
-          draft.cachedHistoryItems = [...draft.cachedHistoryItems, ...filteredItems];
-          draft.loading = false;
-          draft.hasMore = filteredItems.length === draft.pageSize;
-          draft.currentPage = nextPage;
-        });
-
-      } catch (error) {
-        console.error('加载更多历史记录失败:', error);
-        set((draft) => {
-          draft.loading = false;
-          draft.error = error instanceof Error ? error.message : '加载更多失败';
-        });
-      }
     },
 
     refreshHistory: async () => {

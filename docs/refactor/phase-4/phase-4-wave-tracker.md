@@ -236,9 +236,15 @@
     - `android/app/src/main/java/com/novel/page/read/components/ReaderPageInfo.kt`
     - `android/app/src/test/java/com/novel/page/read/viewmodel/ReaderMappingHelperTest.kt`
     - commit: `ca2bafa`
+- `Wave 4 / W4-M01`
+  - 产出 `MockInventoryReport`
+  - 当前先将 `Phase 4` 触达范围内的生产 mock / 假数据注入点、建议先清理项与高风险暂缓项固化成 inventory 文档，作为 `W4-M02` 的唯一输入
+  - 证据：
+    - `docs/refactor/phase-4/mock-inventory-report.md`
+    - commit: `a5680aa`
 
 ## 下一步
 - 按静默连续推进协议继续 Wave 4：
-  - `W4-M01` `MockInventoryReport`
   - `W4-M02` `生产 mock 清理`
+  - `W4-Q01` `touched-files 静态债清零`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

@@ -6,18 +6,18 @@
 - 结论：
   - repo 级 `ESLint error` 已从基线 `89` 降到 `0`，已满足第二阶段阈值 `<= 72`
   - `detekt weighted issues` 已从基线 `2260` 收敛到 `1901`，已满足第二阶段阈值 `<= 1921`
-  - 因此 `V4-06` 已具备进入 `ready_for_validation` 的证据条件
+  - 因此 `V4-06` 已具备 `validated` 的证据条件
 
 ## Current Metrics
 | Metric | Baseline | Current | Delta | Target |
 | --- | --- | --- | --- | --- |
 | `RN lint errors` | `89` | `0` | `-89` | `<= 72` |
-| `RN lint warnings` | `1219` | `1015` | `-204` | n/a |
+| `RN lint warnings` | `1219` | `953` | `-266` | n/a |
 | `detekt weighted issues` | `2260` | `1901` | `-359` | `<= 1921` |
 
 ## Command Evidence
 - `npx eslint . -f json`
-  - 结果：`errors=0 warnings=1015`
+  - 结果：`errors=0 warnings=953`
   - 说明：`E1 / E2 / E3` 三个 `no-unused-vars` 历史债批次已全部落盘，repo 级 `ESLint error` 归零
 - `android/gradlew.bat app:detekt`
   - 结果：`1901 weighted issues`
@@ -31,9 +31,9 @@
 - touched-files 口径当前保持：
   - `ESLint error = 0`
   - `detekt` 无新增 blocking regressions
-- `V4-06` 当前可以从 `in_progress/yellow` 切到 `ready_for_validation/green`
+- `V4-06` 当前已具备 `validated/green` 的证据条件
 
 ## Next Action
 1. 同步 `phase-4-wave-tracker.md`、`phase-3-4-validation-board.md` 与 `decision-log.md`。
-2. 进入 `V4-04 / V4-07 / V4-08` 的剩余关闭动作。
-3. 继续以原子提交方式完成 `Phase 4` closeout 资料。
+2. 关闭 `V4-04 / V4-07 / V4-08`。
+3. 将控制面板切到 `Phase 5 planned`。

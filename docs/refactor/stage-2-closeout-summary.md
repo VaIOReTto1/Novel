@@ -1,53 +1,48 @@
-# 第二阶段关闭总结（当前状态文档）
+# 第二阶段关闭总结
 
 ## 摘要
 - 阶段：`Stage 2 = Phase 3-4`
-- 当前状态：`open`
-- 当前结论：
+- 当前状态：`closed`
+- 最终结论：
   - `Phase 3 = validated`
-  - `Phase 4 = planned`
-  - `Stage 2` 尚未关闭，关闭总结延后到 `V4-*` 全绿后生成
+  - `Phase 4 = validated`
+  - `Stage 2 = validated`
 
-## 当前达成情况
-- `Phase 3`
-  - 已正式关闭并标记为 `validated`
-  - 参考权威总结：
-    - `docs/refactor/phase-3/phase-3-closeout-assessment.md`
-- `Phase 4`
-  - 已完成计划落盘
-  - 尚未进入关闭评审
-
-## 当前已确认成果
+## 关键结果
+### Phase 3
 - 高风险生产网络路径已统一切入 `NetworkFacade`
-- Bridge 层匿名协程作用域与 `MainApplication` 初始化入口已收口
-- `StorageFacade`、`AppError`、`RefactorFeatureFlags` 首批目标已达成
-- `Phase 4` 进入条件已客观化
+- `StorageFacade`、`AppError`、rollback / kill switch 已形成稳定基线
+- `Phase 3` 权威总结见：
+  - `docs/refactor/phase-3/phase-3-closeout-assessment.md`
 
-## 当前核心证据入口
-- `docs/refactor/tracking/phase-3-4-validation-board.md`
-- `docs/refactor/phase-3/phase-3-closeout-assessment.md`
-- `docs/refactor/phases/phase-4-boundary-and-class-split.md`
-- `docs/refactor/tracking/decision-log.md`
+### Phase 4
+- `BridgeFacade` 与 delegates 成立，Bridge 契约保持兼容
+- `HomeViewModel`、`SearchRepository`、`NetworkCacheManager`、Reader 轻触边界完成阶段目标拆分
+- `profile / settings / aipage` 宿主页验证补齐
+- 第二阶段静态债达到阶段阈值：
+  - `ESLint errors: 89 -> 0`
+  - `detekt weighted issues: 2260 -> 1901`
+- 剩余低风险生产 mock 已按“触达范围收口”清理完成
 
-## 当前未完成项
-- `Phase 4` 的 `V4-01 ~ V4-08` 尚未关闭
-- `Stage 2` 最终 closeout 文档需在 `Phase 4` 完成后重写为正式总结版
+## 关闭判断
+- `V3-01 ~ V3-07 = green`
+- `V4-01 ~ V4-08 = green`
+- `npm test -- --runInBand` 当前通过
+- `android/gradlew.bat app:testDebugUnitTest` 当前通过
+
+## Carry-over To Phase 5
+- 页面主数据源仍为 mock 的 RN heavy pages
+- `GetCategoryFiltersUseCase` 的默认分类 fallback
+- 详见：
+  - `docs/refactor/phase-4/phase-5-entry-checklist.md`
 
 ## 是否允许进入下一阶段
-- 当前结论：`not yet`
-- 原因：
-  - `Stage 2` 尚未整体关闭
-  - 仅允许从 `Phase 3` 进入 `Phase 4`
-  - 不允许从当前状态直接进入 `Phase 5`
-
-## 后续更新规则
-- 当 `Phase 4` 任一关键验证项进入 `red` 时，本文件只更新阶段状态，不产出最终关闭结论。
-- 只有在 `V4-*` 全部为 `green` 时，才允许将本文件改写为真正的 `Stage 2 closeout summary`。
+- 当前结论：`yes`
+- 下一阶段状态：`Phase 5 planned`
 
 ## 关联文档
-- `docs/refactor/stage-2-phase-3-4-plan.md`
-- `docs/refactor/phases/phase-3-infra-consolidation.md`
-- `docs/refactor/phases/phase-4-boundary-and-class-split.md`
+- `docs/refactor/phase-3/phase-3-closeout-assessment.md`
+- `docs/refactor/phase-4/phase-4-closeout-assessment.md`
+- `docs/refactor/phase-4/phase-5-entry-checklist.md`
 - `docs/refactor/tracking/phase-3-4-validation-board.md`
-- `docs/refactor/tracking/stage-2-static-debt-baseline.md`
 - `docs/refactor/tracking/decision-log.md`

@@ -1,17 +1,13 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 4`
-- 阶段状态：`in_progress`
+- 当前阶段：`Phase 5`
+- 阶段状态：`planned`
 - 门禁模式：`严格门禁`
-- 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）中的 `Phase 3` 已正式关闭并标记为 `validated`。高风险生产网络路径已统一切入 `NetworkFacade`，Bridge 层匿名协程作用域与 `MainApplication` 的按需初始化入口已完成收口，`StorageFacade`/`AppError` 第一批目标均已达成，Bridge 与存储回退开关及网络结构性回退边界也已明确。
-- 下一步：继续 `Wave 4`，优先收束 `V4-04` 的生产 mock 剩余项结论，并开始 `Phase 4` closeout 文档
-- 当前 Phase 默认编制：`4 helpers + 1 Leader`
-  - `BridgeFacadeSplitAgent`
-  - `FeatureBoundarySplitAgent`
-  - `CacheReaderLightAgent`
-  - `HostRiskQualityAgent`
-- 当前激活波次：`Wave 4`
+- 最近结论：`Stage 2 = validated`。`Phase 3` 与 `Phase 4` 已完成基础设施收口、边界收口、宿主页补证、静态债冲刺与 closeout 文档闭环，当前允许切换到 `Phase 5 planned`。
+- 下一步：基于 `Phase 5` 进入清单启动真正的模块化准备，不在本轮继续扩 `Phase 4` 范围。
+- 当前 Phase 默认编制：`5 helpers + 1 Leader（planned baseline）`
+- 当前激活波次：`n/a`
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -20,7 +16,8 @@
 | Phase 1 | 发布、安全与合规治理 | validated | `Phase 0 = validated` | 全部 `V1-*` 为 `green` |
 | Phase 2 | 质量门禁与自动化护栏 | validated | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 | Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
-| Phase 4 | 边界收口与超大类拆分 | planned | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
+| Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
+| Phase 5 | Gradle 模块化准备与拆分 | planned | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
 
 ## 最近验证结论
 - `V0-01 ~ V0-06` 已全部具备绿色验证证据，Phase 0 已完成。
@@ -28,8 +25,8 @@
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - 第二阶段规划文档已落盘，`V3-05` 静态债基线已建立。
 - `V3-01 ~ V3-07` 已全部具备绿色验证证据，`Phase 3` 已正式完成。
-- `V4-05` 宿主页风险验证已进入 `ready_for_validation/green`。
-- `V4-06` 第二阶段静态债已达到当前阶段阈值，并进入 `ready_for_validation/green`。
+- `V4-01 ~ V4-08` 已全部具备绿色验证证据，`Phase 4` 已正式完成。
+- `Stage 2 = Phase 3-4` 已正式关闭并标记为 `validated`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)
@@ -47,6 +44,9 @@
 - [Phase 4 包边界图与迁移映射](./phase-4/package-boundary-map.md)
 - [Phase 4 超大类职责切片图](./phase-4/large-class-responsibility-slices.md)
 - [Phase 4 BridgeFacade 与 Delegate 映射表](./phase-4/bridge-facade-delegate-map.md)
+- [Phase 4 拆分结果矩阵](./phase-4/phase-4-split-outcome-matrix.md)
+- [Phase 4 关闭评审与签字确认报告](./phase-4/phase-4-closeout-assessment.md)
+- [Phase 5 进入条件清单](./phase-4/phase-5-entry-checklist.md)
 - [Phase 4 宿主页挂载与风险验证矩阵](./phase-4/host-risk-validation-matrix.md)
 - [Phase 4 原子拆分 Backlog](./phase-4/atomic-split-backlog.md)
 - [Phase-aware GPT-5.4 协作策略](./collaboration/phase-aware-gpt5.4-subagent-policy.md)

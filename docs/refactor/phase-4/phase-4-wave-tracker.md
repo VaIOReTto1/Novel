@@ -2,19 +2,19 @@
 
 ## 当前状态
 - 当前阶段：`Phase 4`
-- 当前状态：`in_progress`
+- 当前状态：`validated`
 - 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 4 / W4-M02 / 生产 mock 剩余项结论`
+- 当前建议下一原子主题：`none / Phase 4 closeout complete`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
 | --- | --- | --- | --- | --- | --- |
-| Wave 1 | `ready_for_validation` | 建立边界骨架、拆分地图、BridgeFacade 外围映射 | `BridgeFacadeSplitAgent`, `FeatureBoundarySplitAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOME-SEARCH-SPLIT` | 包边界图、职责切片图、delegate 映射表 |
-| Wave 2 | `in_progress` | 收口 Bridge 与宿主页边界 | `BridgeFacadeSplitAgent`, `HostRiskQualityAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOST-QUALITY` | BridgeFacade 接口、兼容映射、host 风险验证清单 |
-| Wave 3 | `in_progress` | 拆 Home/Search/Cache 超大类 | `FeatureBoundarySplitAgent`, `CacheReaderLightAgent` | `LOCK-HOME-SEARCH-SPLIT`, `LOCK-CACHE-READER-LIGHT` | 拆分前后职责对照、定向测试、静态债结果 |
-| Wave 4 | `in_progress` | Reader 轻触减重、mock 清理、阶段收尾 | `CacheReaderLightAgent`, `HostRiskQualityAgent`, `LeaderAgent` | `LOCK-CACHE-READER-LIGHT`, `LOCK-HOST-QUALITY`, `LOCK-REFRACTOR-DOCS` | mock 清单、closeout 文档、Phase 5 进入条件 |
+| Wave 1 | `validated` | 建立边界骨架、拆分地图、BridgeFacade 外围映射 | `BridgeFacadeSplitAgent`, `FeatureBoundarySplitAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOME-SEARCH-SPLIT` | 包边界图、职责切片图、delegate 映射表 |
+| Wave 2 | `validated` | 收口 Bridge 与宿主页边界 | `BridgeFacadeSplitAgent`, `HostRiskQualityAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOST-QUALITY` | BridgeFacade 接口、兼容映射、host 风险验证清单 |
+| Wave 3 | `validated` | 拆 Home/Search/Cache 超大类 | `FeatureBoundarySplitAgent`, `CacheReaderLightAgent` | `LOCK-HOME-SEARCH-SPLIT`, `LOCK-CACHE-READER-LIGHT` | 拆分前后职责对照、定向测试、静态债结果 |
+| Wave 4 | `validated` | Reader 轻触减重、mock 清理、阶段收尾 | `CacheReaderLightAgent`, `HostRiskQualityAgent`, `LeaderAgent` | `LOCK-CACHE-READER-LIGHT`, `LOCK-HOST-QUALITY`, `LOCK-REFRACTOR-DOCS` | mock 清单、closeout 文档、Phase 5 进入条件 |
 
 ## Wave Summary Rules
 - 每次波次切换都必须：
@@ -28,10 +28,10 @@
   - 当前 blocker
   - 下一步
 
-## 当前未关闭风险
-- `V4-05` 已补齐 `profile / settings / aipage` 三类宿主页运行文档，但 `settings / aipage` 的日志强度弱于 `profile`，后续若需要更高确定性可补一轮专项日志
-- `V4-04` 仍未关闭，当前高风险生产 mock 仍需要明确“继续清理”还是“带风险延期”的结论
-- `Phase 4` closeout、`Stage 2` closeout 与 `Phase 5` 进入条件文档仍未生成
+## 当前已转入 Phase 5 的风险
+- `settings / aipage` 的日志强度仍弱于 `profile`，但当前证据已足够支撑 Phase 4 关闭
+- 页面主数据源仍为 mock 的 RN heavy pages 已转入 `Phase 5 entry checklist`
+- `GetCategoryFiltersUseCase` 默认分类 fallback 已转入 `Phase 5 entry checklist`
 
 ## 已完成的 Wave 1 资料
 - `docs/refactor/phase-4/package-boundary-map.md`
@@ -266,7 +266,7 @@
     - `docs/refactor/evidence/aipage-host-unlocked-2026-03-20.png`
 
 ## 下一步
-- 按静默连续推进协议继续 Wave 4：
-  - `W4-M02` `生产 mock 剩余项结论`
-  - `W4-C01` `phase-4-closeout-assessment.md`
-- `V4-05` 与 `V4-06` 当前均已具备 `ready_for_validation` 的证据条件
+- `Phase 4` 已关闭
+- 下一步进入：
+  - `Phase 5 planned`
+  - `docs/refactor/phase-4/phase-5-entry-checklist.md`

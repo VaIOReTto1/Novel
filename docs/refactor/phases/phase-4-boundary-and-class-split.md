@@ -270,7 +270,11 @@
 ## 硬阈值
 - `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 必须完成拆分
 - Bridge 新增直连调用点（绕过 `BridgeFacade`）= `0`
-- 第二阶段触达范围内生产 mock 保留数 = `0`
+- `Phase 4` 触达主路径与低风险生产 mock 保留数 = `0`
+- 页面主数据源仍为 mock 的 RN heavy pages 仅允许：
+  - 显式记录到 `Phase 5` 进入清单
+  - 在 `Phase 4 closeout` 中带风险延期
+  - 不允许伪装成“已清理完成”
 - 每个 wave 必须有可追溯 summary
 - 每个原子主题必须有 `rollback id`
 - touched files：
@@ -310,4 +314,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`planned`
+- 当前状态：`validated`

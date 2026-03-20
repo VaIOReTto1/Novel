@@ -5,6 +5,20 @@
 - 阶段：`Phase 4 / Wave 4 / W4-M01`
 - 目标：识别 `Phase 4` 触达范围内的生产 mock、测试兜底和假数据注入点，并为 `W4-M02` 提供清理顺序
 
+## 2026-03-21 关闭结论
+- 关闭口径：`触达范围收口`
+- 已完成清理：
+  - `SearchRankingRepository.loadRanking`
+  - `SearchResultViewModel.defaultCategories`
+  - `HomeCompositeUseCase.loadInitialData` 中硬编码单项 `推荐` fallback
+  - `src/page/ScrollBox/HistoryPage/store/historyStore.ts#loadMoreHistory`
+  - `src/page/BookshelfPage/pages/History/store/historyStore.ts#loadMoreHistory`
+  - `src/utils/bridge/UserBridge.ts` native-missing mock user fallback
+  - `src/page/comment/CommentPage/store/commentStore.ts` 空数据/错误时的随机 mock fallback
+- 延期规则：
+  - 页面主数据源本身仍为 mock 的 RN heavy pages，不在 `Phase 4` 中强行替换
+  - 所有延期项已转入 `docs/refactor/phase-4/phase-5-entry-checklist.md`
+
 ## 低风险优先清理
 | Priority | Path | Symbol / Behavior | Current Behavior | Cleanup Risk |
 | --- | --- | --- | --- | --- |
@@ -47,5 +61,5 @@
 
 ## 风险声明
 - `W4-M02` 只能处理低风险候选；高风险项若进入实施，必须视为重大决策升级。
-- `V4-05` 仍为 `yellow`，当前 mock 清理不得引入额外 Host 风险。
+- `V4-05` 已补齐正向验证证据，后续 carried debt 不得重新引入 Host 风险。
 - 所有 mock 清理原子主题必须保留单独 rollback 入口，并在 touched files 维持 detekt / ESLint 零新增问题。

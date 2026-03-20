@@ -128,6 +128,7 @@ class SearchRepository @Inject constructor(
 
     private val searchResultCacheStore = SearchResultCacheStore()
     private val searchRankingRepository = SearchRankingRepository()
+    private val searchQueryRepository = SearchQueryRepository()
     
     // region 搜索结果缓存管理
     
@@ -309,87 +310,40 @@ class SearchRepository @Inject constructor(
         params: SearchParams,
         strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
     ): PageRespDtoBookInfoRespDto? {
-        return try {
-            // 先检查本地缓存
-            if (strategy == CacheStrategy.CACHE_FIRST) {
-                val cached = getCachedSearchResult(params)
-                if (cached != null) {
-                    TimberLogger.d(TAG, "使用缓存搜索结果: ${params.query}")
-                    return cached.result
+        return searchQueryRepository.searchBooksWithCache(
+            params = params,
+            getCachedSearchResult = ::getCachedSearchResult,
+            cacheSearchResult = ::cacheSearchResult,
+            executeRemoteSearch = { request ->
+                searchService.searchBooksCached(
+                    keyword = request.keyword,
+                    workDirection = request.workDirection,
+                    categoryId = request.categoryId,
+                    isVip = request.isVip,
+                    bookStatus = request.bookStatus,
+                    wordCountMin = request.wordCountMin,
+                    wordCountMax = request.wordCountMax,
+                    updateTimeMin = request.updateTimeMin,
+                    sort = request.sort,
+                    pageNum = request.pageNum,
+                    pageSize = request.pageSize,
+                    cacheManager = cacheManager,
+                    strategy = request.strategy,
+                    onCacheUpdate = {
+                        TimberLogger.d(TAG, "搜索结果缓存已更新: keyword=${request.keyword}")
+                    }
+                ).onSuccess { _, fromCache ->
+                    TimberLogger.d(TAG, "搜索成功，来源: ${if (fromCache) "缓存" else "网络"}，关键词: ${request.keyword}")
+                }.onError { error, _ ->
+                    TimberLogger.e(TAG, "搜索失败，关键词: ${request.keyword}", error)
+                }.let { result ->
+                    when (result) {
+                        is com.novel.utils.network.cache.CacheResult.Success -> result.data
+                        is com.novel.utils.network.cache.CacheResult.Error -> result.cachedData
+                    }
                 }
-            }
-            
-            // 调用网络搜索
-            val response = searchService.searchBooksCached(
-                keyword = params.query,
-                workDirection = null,
-                categoryId = params.categoryId,
-                isVip = params.filters.isVip.value,
-                bookStatus = params.filters.updateStatus.value,
-                wordCountMin = params.filters.wordCountRange.min,
-                wordCountMax = params.filters.wordCountRange.max,
-                updateTimeMin = null,
-                sort = params.filters.sortBy.value,
-                pageNum = params.page,
-                pageSize = 20,
-                cacheManager = cacheManager,
-                strategy = strategy,
-                onCacheUpdate = {
-                    TimberLogger.d(TAG, "搜索结果缓存已更新: keyword=${params.query}")
-                }
-            ).onSuccess { _, fromCache ->
-                TimberLogger.d(TAG, "搜索成功，来源: ${if (fromCache) "缓存" else "网络"}，关键词: ${params.query}")
-            }.onError { error, _ ->
-                TimberLogger.e(TAG, "搜索失败，关键词: ${params.query}", error)
-            }.let { result ->
-                when (result) {
-                    is com.novel.utils.network.cache.CacheResult.Success -> result.data
-                    is com.novel.utils.network.cache.CacheResult.Error -> result.cachedData
-                }
-            }
-            
-            if (response?.ok == true && response.data != null) {
-                val books = response.data.list.map { searchBook ->
-                    BookInfoRespDto(
-                        id = searchBook.id,
-                        categoryId = searchBook.categoryId,
-                        categoryName = searchBook.categoryName,
-                        picUrl = searchBook.picUrl,
-                        bookName = searchBook.bookName,
-                        authorId = searchBook.authorId,
-                        authorName = searchBook.authorName,
-                        bookDesc = searchBook.bookDesc,
-                        bookStatus = searchBook.bookStatus,
-                        visitCount = searchBook.visitCount,
-                        wordCount = searchBook.wordCount,
-                        commentCount = searchBook.commentCount,
-                        firstChapterId = searchBook.firstChapterId,
-                        lastChapterId = searchBook.lastChapterId,
-                        lastChapterName = searchBook.lastChapterName,
-                        updateTime = searchBook.updateTime
-                    )
-                }
-                
-                val totalResults = response.data.total?.toInt() ?: 0
-                val hasMore = (response.data.pages ?: 0) > params.page
-                
-                // 缓存结果
-                cacheSearchResult(params, books, totalResults, hasMore)
-                
-                PageRespDtoBookInfoRespDto(
-                    pageNum = response.data.pageNum,
-                    pageSize = response.data.pageSize,
-                    total = response.data.total,
-                    list = books.toImmutableList(),
-                    pages = response.data.pages
-                )
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "搜索异常，关键词: ${params.query}", e)
-            null
-        }
+            },
+        )
     }
     
     /**
@@ -409,38 +363,49 @@ class SearchRepository @Inject constructor(
         pageSize: Int = 20,
         strategy: CacheStrategy = CacheStrategy.CACHE_FIRST
     ): SearchService.BookSearchResponse? {
-        return try {
-            searchService.searchBooksCached(
-                keyword = keyword,
-                workDirection = workDirection,
-                categoryId = categoryId,
-                isVip = isVip,
-                bookStatus = bookStatus,
-                wordCountMin = wordCountMin,
-                wordCountMax = wordCountMax,
-                updateTimeMin = updateTimeMin,
-                sort = sort,
-                pageNum = pageNum,
-                pageSize = pageSize,
-                cacheManager = cacheManager,
-                strategy = strategy,
-                onCacheUpdate = {
-                    TimberLogger.d(TAG, "搜索结果缓存已更新: keyword=$keyword")
+        return searchQueryRepository.searchBooks(
+            keyword = keyword,
+            workDirection = workDirection,
+            categoryId = categoryId,
+            isVip = isVip,
+            bookStatus = bookStatus,
+            wordCountMin = wordCountMin,
+            wordCountMax = wordCountMax,
+            updateTimeMin = updateTimeMin,
+            sort = sort,
+            pageNum = pageNum,
+            pageSize = pageSize,
+            strategy = strategy,
+            executeRemoteSearch = { request ->
+                searchService.searchBooksCached(
+                    keyword = request.keyword,
+                    workDirection = request.workDirection,
+                    categoryId = request.categoryId,
+                    isVip = request.isVip,
+                    bookStatus = request.bookStatus,
+                    wordCountMin = request.wordCountMin,
+                    wordCountMax = request.wordCountMax,
+                    updateTimeMin = request.updateTimeMin,
+                    sort = request.sort,
+                    pageNum = request.pageNum,
+                    pageSize = request.pageSize,
+                    cacheManager = cacheManager,
+                    strategy = request.strategy,
+                    onCacheUpdate = {
+                        TimberLogger.d(TAG, "搜索结果缓存已更新: keyword=${request.keyword}")
+                    }
+                ).onSuccess { _, fromCache ->
+                    TimberLogger.d(TAG, "搜索成功，来源: ${if (fromCache) "缓存" else "网络"}，关键词: ${request.keyword}")
+                }.onError { error, _ ->
+                    TimberLogger.e(TAG, "搜索失败，关键词: ${request.keyword}", error)
+                }.let { result ->
+                    when (result) {
+                        is com.novel.utils.network.cache.CacheResult.Success -> result.data
+                        is com.novel.utils.network.cache.CacheResult.Error -> result.cachedData
+                    }
                 }
-            ).onSuccess { _, fromCache ->
-                TimberLogger.d(TAG, "搜索成功，来源: ${if (fromCache) "缓存" else "网络"}，关键词: $keyword")
-            }.onError { error, _ ->
-                TimberLogger.e(TAG, "搜索失败，关键词: $keyword", error)
-            }.let { result ->
-                when (result) {
-                    is com.novel.utils.network.cache.CacheResult.Success -> result.data
-                    is com.novel.utils.network.cache.CacheResult.Error -> result.cachedData
-                }
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "搜索异常，关键词: $keyword", e)
-            null
-        }
+            },
+        )
     }
     
     /**

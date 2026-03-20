@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 4 / W4-R03 / ReaderMappingHelper`
+- 当前建议下一原子主题：`Wave 4 / W4-M01 / MockInventoryReport`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -227,9 +227,18 @@
     - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderViewModel.kt`
     - `android/app/src/test/java/com/novel/page/read/viewmodel/ReaderHistoryCoordinatorTest.kt`
     - commit: `1b33f26`
+- `Wave 4 / W4-R03`
+  - 新增 `ReaderMappingHelper` 最小实现
+  - 当前先将 `ReaderPage` 中 `ReaderInfo` 构造与 `ReaderPageInfo` 中全书页码/页码文案的只读映射逻辑收口到独立 helper，不触碰翻页、分页与渲染核心算法
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderMappingHelper.kt`
+    - `android/app/src/main/java/com/novel/page/read/ReaderPage.kt`
+    - `android/app/src/main/java/com/novel/page/read/components/ReaderPageInfo.kt`
+    - `android/app/src/test/java/com/novel/page/read/viewmodel/ReaderMappingHelperTest.kt`
+    - commit: `ca2bafa`
 
 ## 下一步
 - 按静默连续推进协议继续 Wave 4：
-  - `W4-R03` `ReaderMappingHelper`
   - `W4-M01` `MockInventoryReport`
+  - `W4-M02` `生产 mock 清理`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

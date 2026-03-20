@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-C04 / CacheStatsReporter`
+- 当前建议下一原子主题：`Wave 3 / W3-S03 / SearchRankingRepository`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -186,9 +186,17 @@
     - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
     - `android/app/src/test/java/com/novel/page/search/repository/SearchResultCacheStoreTest.kt`
     - commit: `5520685`
+- `Wave 3 / W3-C04`
+  - 新增 `CacheStatsReporter` 最小实现
+  - 当前先将 `NetworkCacheManager` 中 cleanup stats 的持有、累加更新与对外暴露逻辑收口到独立 reporter，不改变 `getCleanupStats()` 语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/utils/network/cache/CacheStatsReporter.kt`
+    - `android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt`
+    - `android/app/src/test/java/com/novel/utils/network/cache/CacheStatsReporterTest.kt`
+    - commit: `0151f3a`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-C04` `CacheStatsReporter`
   - `W3-S03` `SearchRankingRepository`
+  - `W3-S04` `SearchQueryRepository`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

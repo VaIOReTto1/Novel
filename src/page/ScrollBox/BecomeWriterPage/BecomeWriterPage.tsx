@@ -42,7 +42,6 @@ const BecomeWriterPage: React.FC = () => {
     setSelectedAuthorTab,
     setSelectedActivityTab,
     toggleDataStatsExpanded,
-    handleBecomeTomatoWriter,
     hideWelcomeModal,
     setAgreementChecked,
     handleImmediateRegister,
@@ -119,12 +118,7 @@ const BecomeWriterPage: React.FC = () => {
     console.log('Activity tab changed to:', tab);
     setSelectedActivityTab(tab);
   }, [setSelectedActivityTab]);
-  // 成为番茄作家按钮点击
-  const handleBecomeTomatoWriterPress = useCallback(() => {
-    console.log('Become tomato writer button pressed');
-    handleBecomeTomatoWriter();
-  }, [handleBecomeTomatoWriter]);
-  
+
   // AI入口
   const handleAIPress = useCallback(() => {
     NavigationBridge?.navigateToAIPage?.();

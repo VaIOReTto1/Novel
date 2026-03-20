@@ -17,7 +17,6 @@ const MyReservationPage: React.FC = () => {
   const {
     loading,
     error,
-    userInfo,
     selectedTab,
     selectedSubTab,
     newReservations,

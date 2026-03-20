@@ -1,5 +1,5 @@
 ﻿import React, { useCallback, useRef } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { View, Text, Dimensions, FlatList } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Extrapolate,
@@ -53,14 +53,12 @@ const VIPCardItem = React.memo(({
   dataIndex,
   scrollX,
   isActive,
-  onPress,
 }: {
   card: VIPCard;
   styles: any;
   dataIndex: number;
   scrollX: Animated.SharedValue<number>;
   isActive: boolean;
-  onPress: () => void;
 }) => {
   const animatedStyle = useAnimatedStyle(() => {
     const inputRange = [
@@ -186,12 +184,9 @@ export const VIPCardCarousel: React.FC<VIPCardCarouselProps> = React.memo(({ sty
         dataIndex={index}
         scrollX={scrollX}
         isActive={isActive}
-        onPress={() => {
-          if (displayIdx !== currentIndex) onCardChange(displayIdx);
-        }}
       />
     );
-  }, [styles, cards.length, currentIndex, onCardChange, scrollX]);
+  }, [styles, cards.length, currentIndex, scrollX]);
 
   const keyExtractor = useCallback((item: VIPCard | null, index: number) => item && item.id !== undefined ? `${item.id}-${index}` : `placeholder-${index}` , []);
 

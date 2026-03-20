@@ -13,19 +13,6 @@ export const BenefitComparison: React.FC<BenefitComparisonProps> = React.memo(({
   comparisons,
   currentCardType,
 }) => {
-  const getColumnTitle = (column: 'normal' | 'member' | 'svip') => {
-    switch (column) {
-      case 'normal':
-        return '普通';
-      case 'member':
-        return '会员VIP';
-      case 'svip':
-        return 'SVIP';
-      default:
-        return '';
-    }
-  };
-
   // 根据当前VIP类型确定要显示的两列
   const getDisplayColumns = () => {
     switch (currentCardType) {

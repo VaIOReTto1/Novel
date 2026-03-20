@@ -167,7 +167,7 @@ class NetworkCacheManager @Inject constructor(
     )
     
     private val incrementalSyncCoordinator = IncrementalSyncCoordinator()
-    private val cacheCleanupCoordinator = CacheCleanupCoordinator()
+    private val cacheStatsReporter = CacheStatsReporter()
 
     // 内存缓存
     @Stable
@@ -180,7 +180,6 @@ class NetworkCacheManager @Inject constructor(
     val cacheUpdateState: StateFlow<Map<String, Boolean>> = _cacheUpdateState.asStateFlow()
     
     // 清理统计
-    private var cleanupStats = CleanupStats(0, 0L, 0L, "")
     
     // 后台清理任务
     private var cleanupJob: Job? = null
@@ -964,16 +963,13 @@ class NetworkCacheManager @Inject constructor(
         try {
             TimberLogger.d(TAG, "开始执行智能清理，策略: $strategy")
 
-            val summary = cacheCleanupCoordinator.performCleanup(
+            val summary = cacheStatsReporter.performCleanup(
                 strategy = strategy,
-                currentStats = cleanupStats,
                 performLRUCleanup = ::performLRUCleanup,
                 performTimeBasedCleanup = ::performTimeBasedCleanup,
                 performHybridCleanup = ::performHybridCleanup,
                 performStoragePressureCleanup = ::performStoragePressureCleanup,
             )
-
-            cleanupStats = summary.updatedStats
             TimberLogger.d(
                 TAG,
                 "智能清理完成: 清理${summary.cleanedCount}个条目, 释放${summary.spaceCleaned / 1024}KB空间, 耗时${summary.durationMs}ms"
@@ -1180,7 +1176,7 @@ class NetworkCacheManager @Inject constructor(
     /**
      * 获取清理统计信息
      */
-    fun getCleanupStats(): CleanupStats = cleanupStats
+    fun getCleanupStats(): CleanupStats = cacheStatsReporter.getCleanupStats()
 
     /**
      * 停止后台清理任务

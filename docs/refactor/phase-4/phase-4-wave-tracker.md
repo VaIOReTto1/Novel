@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-H04 / HomePagingCoordinator`
+- 当前建议下一原子主题：`Wave 3 / W3-S02 / SearchResultCacheStore`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -170,9 +170,17 @@
     - `android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt`
     - `android/app/src/test/java/com/novel/utils/network/cache/CacheCleanupCoordinatorTest.kt`
     - commit: `aa59be7`
+- `Wave 3 / W3-H04`
+  - 新增 `HomePagingCoordinator` 最小实现
+  - 当前先将 `HomeViewModel` 中分类推荐分页与首页推荐分页的“加载更多” orchestration、下一页计算和成功/失败 intent 组装逻辑收口到独立 coordinator，不改变分页语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/home/viewmodel/HomePagingCoordinator.kt`
+    - `android/app/src/main/java/com/novel/page/home/viewmodel/HomeViewModel.kt`
+    - `android/app/src/test/java/com/novel/page/home/viewmodel/HomePagingCoordinatorTest.kt`
+    - commit: `3a76dd0`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-H04` `HomePagingCoordinator`
   - `W3-S02` `SearchResultCacheStore`
+  - `W3-S03` `SearchRankingRepository`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

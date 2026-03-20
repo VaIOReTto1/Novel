@@ -89,52 +89,6 @@ const initialState: HistoryState = {
   cachedHistoryItems: [],
 };
 
-// 模拟API数据生成
-const generateMockHistoryItems = (page: number, pageSize: number, type?: string): HistoryItem[] => {
-  const items: HistoryItem[] = [];
-  const startIndex = (page - 1) * pageSize;
-
-  for (let i = 0; i < pageSize; i++) {
-    const index = startIndex + i + 1;
-    const itemType = type === 'all' ?
-      (['book', 'listening', 'drama'] as const)[index % 3] :
-      (type as 'book' | 'listening' | 'drama');
-
-    const progress = Math.floor(Math.random() * 100);
-    items.push({
-      id: `item_${index}`,
-      title: `${getTypeTitle(itemType)} ${index}`,
-      author: `作者${index}`,
-      description: `这是${getTypeTitle(itemType)}的描述内容，讲述了一个精彩的故事...`,
-      cover: `https://placehold.co/220x300?text=${index}`,
-      coverUrl: `https://placehold.co/220x300?text=${index}`,
-      lastReadTime: Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
-      lastChapter: `第${Math.floor(Math.random() * 100) + 1}章`,
-      readProgress: progress,
-      progress: progress,
-      type: itemType,
-      categoryId: Math.floor(Math.random() * 10) + 1,
-      readCount: Math.floor(Math.random() * 10000),
-      rating: Math.random() * 5,
-      tags: ['标签1', '标签2'],
-      isFinished: Math.random() > 0.7,
-      updateStatus: Math.random() > 0.5 ? '连载中' : '已完结',
-      isInShelf: Math.random() > 0.6,
-    });
-  }
-
-  return items;
-};
-
-const getTypeTitle = (type: string): string => {
-  switch (type) {
-    case 'book': return '小说';
-    case 'listening': return '听书';
-    case 'drama': return '短剧';
-    default: return '内容';
-  }
-};
-
 // 模拟API延迟
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 

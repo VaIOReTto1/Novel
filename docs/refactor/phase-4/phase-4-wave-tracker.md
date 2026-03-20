@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-S03 / SearchRankingRepository`
+- 当前建议下一原子主题：`Wave 3 / W3-S04 / SearchQueryRepository`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -194,9 +194,17 @@
     - `android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt`
     - `android/app/src/test/java/com/novel/utils/network/cache/CacheStatsReporterTest.kt`
     - commit: `0151f3a`
+- `Wave 3 / W3-S03`
+  - 新增 `SearchRankingRepository` 最小实现
+  - 当前先将 `SearchRepository` 中推荐榜/热搜短剧榜/新书榜的主路径获取、fallback 与补足 20 条逻辑收口到独立 repository，不改变榜单展示语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchRankingRepository.kt`
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
+    - `android/app/src/test/java/com/novel/page/search/repository/SearchRankingRepositoryTest.kt`
+    - commit: `5023d15`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-S03` `SearchRankingRepository`
   - `W3-S04` `SearchQueryRepository`
+  - `W4-R01` `ReaderSettingsCoordinator`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

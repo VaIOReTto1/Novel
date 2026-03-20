@@ -127,6 +127,7 @@ class SearchRepository @Inject constructor(
     }
 
     private val searchResultCacheStore = SearchResultCacheStore()
+    private val searchRankingRepository = SearchRankingRepository()
     
     // region 搜索结果缓存管理
     
@@ -223,165 +224,57 @@ class SearchRepository @Inject constructor(
      * 获取推荐榜单数据 - 使用缓存优先策略
      */
     private suspend fun getNovelRanking(): ImmutableList<SearchRankingItem> {
-        return try {
-            TimberLogger.d(TAG, "获取推荐榜单数据")
-            val rankBooks = try {
-                cachedBookRepository.getVisitRankBooks(CacheStrategy.CACHE_FIRST)
-            } catch (e: Exception) {
-                TimberLogger.w(TAG, "缓存获取推荐榜单失败，使用高优先级网络请求: ${e.message}")
-                bookService.getVisitRankBooksHighPriority().data ?: emptyList()
-            }
-            
-            val realData = rankBooks.mapIndexed { index, book ->
-                SearchRankingItem(
-                    id = book.id,
-                    title = book.bookName,
-                    author = book.authorName,
-                    rank = index + 1
-                )
-            }
-            
-            // 如果数据不足15条，添加一些测试数据
-            if (realData.size < 20) {
-                val testData = mutableListOf<SearchRankingItem>()
-                testData.addAll(realData)
-                
-                for (i in realData.size until 20) {
-                    testData.add(
-                        SearchRankingItem(
-                            id = 1000L + i,
-                            title = "测试小说${i + 1}",
-                            author = "测试作者${i + 1}",
-                            rank = i + 1
-                        )
-                    )
+        return searchRankingRepository.getNovelRanking(
+            primary = {
+                TimberLogger.d(TAG, "获取推荐榜单数据")
+                cachedBookRepository.getVisitRankBooks(CacheStrategy.CACHE_FIRST).map { book ->
+                    SearchRankingSource(book.id, book.bookName, book.authorName)
                 }
-                testData.toImmutableList()
-            } else {
-                realData.toImmutableList()
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "获取推荐榜单失败", e)
-            // 返回测试数据
-            (1..20).map { i ->
-                SearchRankingItem(
-                    id = 1000L + i,
-                    title = "测试小说$i",
-                    author = "测试作者$i",
-                    rank = i
-                )
-            }.toImmutableList()
-        }
+            },
+            fallback = {
+                bookService.getVisitRankBooksHighPriority().data.orEmpty().map { book ->
+                    SearchRankingSource(book.id, book.bookName, book.authorName)
+                }
+            },
+        )
     }
     
     /**
      * 获取热搜短剧榜数据 - 使用缓存优先策略
      */
     private suspend fun getDramaRanking(): ImmutableList<SearchRankingItem> {
-        return try {
-            TimberLogger.d(TAG, "获取热搜短剧榜数据")
-            val rankBooks = try {
-                cachedBookRepository.getUpdateRankBooks(CacheStrategy.CACHE_FIRST)
-            } catch (e: Exception) {
-                TimberLogger.w(TAG, "缓存获取热搜短剧榜失败，使用高优先级网络请求: ${e.message}")
-                bookService.getUpdateRankBooksHighPriority().data ?: emptyList()
-            }
-            
-            val realData = rankBooks.mapIndexed { index, book ->
-                SearchRankingItem(
-                    id = book.id,
-                    title = book.bookName,
-                    author = book.authorName,
-                    rank = index + 1
-                )
-            }
-            
-            // 如果数据不足20条，添加一些测试数据
-            if (realData.size < 20) {
-                val testData = mutableListOf<SearchRankingItem>()
-                testData.addAll(realData)
-                
-                for (i in realData.size until 20) {
-                    testData.add(
-                        SearchRankingItem(
-                            id = 2000L + i,
-                            title = "热门短剧${i + 1}",
-                            author = "短剧作者${i + 1}",
-                            rank = i + 1
-                        )
-                    )
+        return searchRankingRepository.getDramaRanking(
+            primary = {
+                TimberLogger.d(TAG, "获取热搜短剧榜数据")
+                cachedBookRepository.getUpdateRankBooks(CacheStrategy.CACHE_FIRST).map { book ->
+                    SearchRankingSource(book.id, book.bookName, book.authorName)
                 }
-                testData.toImmutableList()
-            } else {
-                realData.toImmutableList()
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "获取热搜短剧榜失败", e)
-            // 返回测试数据
-            (1..20).map { i ->
-                SearchRankingItem(
-                    id = 2000L + i,
-                    title = "热门短剧$i",
-                    author = "短剧作者$i",
-                    rank = i
-                )
-            }.toImmutableList()
-        }
+            },
+            fallback = {
+                bookService.getUpdateRankBooksHighPriority().data.orEmpty().map { book ->
+                    SearchRankingSource(book.id, book.bookName, book.authorName)
+                }
+            },
+        )
     }
     
     /**
      * 获取新书榜单数据 - 使用缓存优先策略
      */
     private suspend fun getNewBookRanking(): ImmutableList<SearchRankingItem> {
-        return try {
-            TimberLogger.d(TAG, "获取新书榜单数据")
-            val rankBooks = try {
-                cachedBookRepository.getNewestRankBooks(CacheStrategy.CACHE_FIRST)
-            } catch (e: Exception) {
-                TimberLogger.w(TAG, "缓存获取新书榜单失败，使用高优先级网络请求: ${e.message}")
-                bookService.getNewestRankBooksHighPriority().data ?: emptyList()
-            }
-            
-            val realData = rankBooks.mapIndexed { index, book ->
-                SearchRankingItem(
-                    id = book.id,
-                    title = book.bookName,
-                    author = book.authorName,
-                    rank = index + 1
-                )
-            }
-            
-            // 如果数据不足20条，添加一些测试数据
-            if (realData.size < 20) {
-                val testData = mutableListOf<SearchRankingItem>()
-                testData.addAll(realData)
-                
-                for (i in realData.size until 20) {
-                    testData.add(
-                        SearchRankingItem(
-                            id = 3000L + i,
-                            title = "新书推荐${i + 1}",
-                            author = "新人作者${i + 1}",
-                            rank = i + 1
-                        )
-                    )
+        return searchRankingRepository.getNewBookRanking(
+            primary = {
+                TimberLogger.d(TAG, "获取新书榜单数据")
+                cachedBookRepository.getNewestRankBooks(CacheStrategy.CACHE_FIRST).map { book ->
+                    SearchRankingSource(book.id, book.bookName, book.authorName)
                 }
-                testData.toImmutableList()
-            } else {
-                realData.toImmutableList()
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "获取新书榜单失败", e)
-            // 返回测试数据
-            (1..20).map { i ->
-                SearchRankingItem(
-                    id = 3000L + i,
-                    title = "新书推荐$i",
-                    author = "新人作者$i",
-                    rank = i
-                )
-            }.toImmutableList()
-        }
+            },
+            fallback = {
+                bookService.getNewestRankBooksHighPriority().data.orEmpty().map { book ->
+                    SearchRankingSource(book.id, book.bookName, book.authorName)
+                }
+            },
+        )
     }
     
     /**

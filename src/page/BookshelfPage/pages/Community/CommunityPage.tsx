@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useNovelColors } from '../../../../utils/theme';
 import { createCommunityPageStyles } from './styles/CommunityPageStyles';
 import { useCommunity } from './hooks/useCommunity';
-import { TabBar } from './components/TabBar';
 import { PostList } from './components/PostList';
 import { FloatingButton } from './components/FloatingButton';
 
 const CommunityPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createCommunityPageStyles(colors);
-  
+
   const {
     posts,
     circles,
@@ -50,7 +49,7 @@ const CommunityPage: React.FC = () => {
         selectedCircle={selectedCircle}
         onCircleChange={handleCircleChange}
       />
-      
+
       {/* 浮动发布按钮 */}
       <FloatingButton onPress={handlePublish} />
     </SafeAreaView>

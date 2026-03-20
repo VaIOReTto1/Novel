@@ -62,8 +62,8 @@ export const BookItem: React.FC<BookItemProps> = ({
   const getInfoStyle = () => {
     switch (viewType) {
       case 'list':
-      case 'waterfall':
         return styles.listBookInfo;
+      case 'waterfall':
         return styles.waterfallBookInfo;
       default:
         return styles.gridBookInfo;

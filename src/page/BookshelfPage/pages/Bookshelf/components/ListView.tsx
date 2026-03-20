@@ -1,10 +1,9 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import { BookshelfItem, RecommendationItem } from '../types';
+import { BookshelfItem } from '../types';
 import { BookItem } from './BookItem';
 import { LoadMoreIndicator } from './LoadMoreIndicator';
 import { EmptyState } from './EmptyState';
-import { RecommendationFlow } from './RecommendationFlow';
 import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
 
@@ -21,11 +20,6 @@ interface ListViewProps {
   isEditMode?: boolean;
   selectedItems?: string[];
   // 推荐流相关props
-  recommendations?: RecommendationItem[];
-  onRecommendationPress?: (item: RecommendationItem) => void;
-  onLoadMoreRecommendations?: () => void;
-  hasMoreRecommendations?: boolean;
-  isRecommendationLoading?: boolean;
 }
 
 export const ListView: React.FC<ListViewProps> = ({
@@ -40,24 +34,24 @@ export const ListView: React.FC<ListViewProps> = ({
   isRefreshing = false,
   isEditMode = false,
   selectedItems = [],
-  recommendations = [],
-  onRecommendationPress,
-  onLoadMoreRecommendations,
-  hasMoreRecommendations = false,
-  isRecommendationLoading = false,
 }) => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
-  const renderItem = ({ item }: { item: BookshelfItem }) => (
-    <BookItem
-      item={item}
-      onPress={onBookPress}
-      onLongPress={onBookLongPress}
-      onMenuPress={onMenuPress}
-      isSelected={selectedItems.includes(item.id)}
-      isEditMode={isEditMode}
-      viewType="list"
-    />
+  const renderItem = ({ item, index }: { item: BookshelfItem; index: number }) => (
+    <>
+      <BookItem
+        item={item}
+        onPress={onBookPress}
+        onLongPress={onBookLongPress}
+        onMenuPress={onMenuPress}
+        isSelected={selectedItems.includes(item.id)}
+        isEditMode={isEditMode}
+        viewType="list"
+      />
+      {index < data.length - 1 && (
+        <View style={styles.listSeparator} />
+      )}
+    </>
   );
 
   const renderFooter = () => {
@@ -75,7 +69,7 @@ export const ListView: React.FC<ListViewProps> = ({
   };
 
   const renderEmpty = () => {
-    if (isLoading || isRefreshing) return null;
+    if (isLoading || isRefreshing) {return null;}
     return <EmptyState type="bookshelf" />;
   };
 
@@ -103,9 +97,6 @@ export const ListView: React.FC<ListViewProps> = ({
       windowSize={10}
       initialNumToRender={8}
       getItemLayout={getItemLayout}
-      ItemSeparatorComponent={() => (
-        <View style={styles.listSeparator} />
-      )}
     />
   );
 };

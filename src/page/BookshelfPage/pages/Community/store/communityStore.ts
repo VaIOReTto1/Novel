@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { CommunityState, CommunityPost, CommunityTab, CommunitySortType, CommunityFilterOptions, CommunityCategory, CommunityCircle } from '../types';
+import { CommunityState, CommunityPost, CommunityTab, CommunitySortType, CommunityCategory, CommunityCircle } from '../types';
 
 // Mock数据
 const mockCommunityPosts: CommunityPost[] = [
@@ -11,7 +11,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user1',
       name: '天心导师',
       avatar: 'https://example.com/avatar1.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '刚刚',
     likeCount: 8,
@@ -21,7 +21,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: true,
     isTop: false,
     category: 'discussion',
-    novelName: '斗破苍穹'
+    novelName: '斗破苍穹',
   },
   {
     id: 'post2',
@@ -31,7 +31,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user2',
       name: '林夕雨落',
       avatar: 'https://example.com/avatar2.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '5分钟前',
     likeCount: 0,
@@ -41,7 +41,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'sharing',
-    novelName: '完美世界'
+    novelName: '完美世界',
   },
   {
     id: 'post3',
@@ -51,7 +51,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user3',
       name: '时光荏苒',
       avatar: 'https://example.com/avatar3.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '10分钟前',
     likeCount: 0,
@@ -61,7 +61,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'recommendation',
-    novelName: '遮天'
+    novelName: '遮天',
   },
   {
     id: 'post4',
@@ -71,7 +71,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user4',
       name: '夜雨',
       avatar: 'https://example.com/avatar4.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '15分钟前',
     images: ['https://example.com/post4_1.jpg'],
@@ -82,7 +82,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: true,
     isTop: false,
     category: 'sharing',
-    novelName: '武动乾坤'
+    novelName: '武动乾坤',
   },
   {
     id: 'post5',
@@ -92,7 +92,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user5',
       name: '天心导师',
       avatar: 'https://example.com/avatar5.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '20分钟前',
     likeCount: 0,
@@ -102,7 +102,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'question',
-    novelName: '大主宰'
+    novelName: '大主宰',
   },
   {
     id: 'post6',
@@ -112,7 +112,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user6',
       name: '书海遨游',
       avatar: 'https://example.com/avatar6.jpg',
-      level: '书虫'
+      level: '书虫',
     },
     publishTime: '25分钟前',
     likeCount: 15,
@@ -122,7 +122,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'discussion',
-    novelName: '元尊'
+    novelName: '元尊',
   },
   {
     id: 'post7',
@@ -132,7 +132,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user7',
       name: '魂师传说',
       avatar: 'https://example.com/avatar7.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '30分钟前',
     likeCount: 23,
@@ -142,7 +142,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: true,
     isTop: false,
     category: 'recommendation',
-    novelName: '斗罗大陆'
+    novelName: '斗罗大陆',
   },
   {
     id: 'post8',
@@ -152,7 +152,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user8',
       name: '迷茫读者',
       avatar: 'https://example.com/avatar8.jpg',
-      level: '新手'
+      level: '新手',
     },
     publishTime: '35分钟前',
     likeCount: 3,
@@ -162,7 +162,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'question',
-    novelName: '神墓'
+    novelName: '神墓',
   },
   {
     id: 'post9',
@@ -172,7 +172,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user9',
       name: '荒天帝',
       avatar: 'https://example.com/avatar9.jpg',
-      level: '书虫'
+      level: '书虫',
     },
     publishTime: '40分钟前',
     likeCount: 45,
@@ -182,7 +182,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: true,
     isTop: true,
     category: 'sharing',
-    novelName: '完美世界'
+    novelName: '完美世界',
   },
   {
     id: 'post10',
@@ -192,7 +192,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user10',
       name: '武道至尊',
       avatar: 'https://example.com/avatar10.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '45分钟前',
     likeCount: 12,
@@ -202,7 +202,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'discussion',
-    novelName: '武动乾坤'
+    novelName: '武动乾坤',
   },
   {
     id: 'post11',
@@ -212,7 +212,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user11',
       name: '大千探索者',
       avatar: 'https://example.com/avatar11.jpg',
-      level: '书虫'
+      level: '书虫',
     },
     publishTime: '50分钟前',
     likeCount: 18,
@@ -222,7 +222,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'discussion',
-    novelName: '大主宰'
+    novelName: '大主宰',
   },
   {
     id: 'post12',
@@ -232,7 +232,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user12',
       name: '叶天帝粉丝',
       avatar: 'https://example.com/avatar12.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '55分钟前',
     likeCount: 67,
@@ -242,7 +242,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: true,
     isTop: false,
     category: 'sharing',
-    novelName: '遮天'
+    novelName: '遮天',
   },
   {
     id: 'post13',
@@ -252,7 +252,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user13',
       name: '炎帝追随者',
       avatar: 'https://example.com/avatar13.jpg',
-      level: '书友'
+      level: '书友',
     },
     publishTime: '1小时前',
     likeCount: 28,
@@ -262,7 +262,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'discussion',
-    novelName: '斗破苍穹'
+    novelName: '斗破苍穹',
   },
   {
     id: 'post14',
@@ -272,7 +272,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user14',
       name: '小说新人',
       avatar: 'https://example.com/avatar14.jpg',
-      level: '新手'
+      level: '新手',
     },
     publishTime: '1小时前',
     likeCount: 5,
@@ -282,7 +282,7 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: false,
     isTop: false,
     category: 'question',
-    novelName: ''
+    novelName: '',
   },
   {
     id: 'post15',
@@ -292,7 +292,7 @@ const mockCommunityPosts: CommunityPost[] = [
       id: 'user15',
       name: '催更大队长',
       avatar: 'https://example.com/avatar15.jpg',
-      level: '书虫'
+      level: '书虫',
     },
     publishTime: '1小时前',
     likeCount: 89,
@@ -302,8 +302,8 @@ const mockCommunityPosts: CommunityPost[] = [
     isHot: true,
     isTop: false,
     category: 'discussion',
-    novelName: ''
-  }
+    novelName: '',
+  },
 ];
 
 // 标签页数据
@@ -332,7 +332,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '🔥',
     memberCount: 12580,
     isJoined: true,
-    description: '三十年河东，三十年河西，莫欺少年穷！'
+    description: '三十年河东，三十年河西，莫欺少年穷！',
   },
   {
     id: 'circle2',
@@ -340,7 +340,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '⚔️',
     memberCount: 9876,
     isJoined: false,
-    description: '一粒尘可填海，一根草斩尽日月星辰'
+    description: '一粒尘可填海，一根草斩尽日月星辰',
   },
   {
     id: 'circle3',
@@ -348,7 +348,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '🌟',
     memberCount: 15432,
     isJoined: true,
-    description: '叶凡的修仙之路'
+    description: '叶凡的修仙之路',
   },
   {
     id: 'circle4',
@@ -356,7 +356,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '💫',
     memberCount: 7654,
     isJoined: false,
-    description: '林动的武道传奇'
+    description: '林动的武道传奇',
   },
   {
     id: 'circle5',
@@ -364,7 +364,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '👑',
     memberCount: 11234,
     isJoined: true,
-    description: '牧尘的成长之路'
+    description: '牧尘的成长之路',
   },
   {
     id: 'circle6',
@@ -372,7 +372,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '🐉',
     memberCount: 8765,
     isJoined: false,
-    description: '周元的逆袭人生'
+    description: '周元的逆袭人生',
   },
   {
     id: 'circle7',
@@ -380,7 +380,7 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '🌊',
     memberCount: 18900,
     isJoined: true,
-    description: '唐三的魂师世界'
+    description: '唐三的魂师世界',
   },
   {
     id: 'circle8',
@@ -388,8 +388,8 @@ const mockCommunityCircles: CommunityCircle[] = [
     icon: '⚰️',
     memberCount: 6543,
     isJoined: false,
-    description: '辰南的复活之谜'
-  }
+    description: '辰南的复活之谜',
+  },
 ];
 
 // Store接口
@@ -403,17 +403,17 @@ interface CommunityStore extends CommunityState {
   setRefreshing: (isRefreshing: boolean) => void;
   setError: (error: string | null) => void;
   clearError: () => void;
-  
+
   // Data loading
   loadPosts: () => Promise<void>;
   refreshPosts: () => Promise<void>;
   loadMorePosts: () => Promise<void>;
-  
+
   // Post interactions
   likePosts: (postId: string) => void;
   commentPost: (postId: string) => void;
   sharePost: (postId: string) => void;
-  
+
   // Utility functions
   getFilteredPosts: () => CommunityPost[];
   getSortedPosts: (posts: CommunityPost[]) => CommunityPost[];
@@ -433,7 +433,7 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
   sortType: 'latest',
   filterOptions: {
     category: 'all',
-    sortType: 'latest'
+    sortType: 'latest',
   },
   loading: false,
   refreshing: false,
@@ -477,24 +477,24 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
   // Data loading
   loadPosts: async () => {
     const { loading } = get();
-    if (loading) return;
+    if (loading) {return;}
 
     set({ loading: true, error: null });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       const startIndex = 0;
       const endIndex = Math.min(PAGE_SIZE, mockCommunityPosts.length);
       const newPosts = mockCommunityPosts.slice(startIndex, endIndex);
-      
+
       set({
         posts: newPosts,
         hasMore: endIndex < mockCommunityPosts.length,
         page: 2,
         loading: false,
-        tabs: getCommunityTabsData(newPosts)
+        tabs: getCommunityTabsData(newPosts),
       });
     } catch (error) {
       set({ error: '加载失败', loading: false });
@@ -503,22 +503,22 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
 
   refreshPosts: async () => {
     const { refreshing } = get();
-    if (refreshing) return;
+    if (refreshing) {return;}
 
     set({ refreshing: true, error: null });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 800));
-      
+
       const newPosts = mockCommunityPosts.slice(0, PAGE_SIZE);
-      
+
       set({
         posts: newPosts,
         hasMore: PAGE_SIZE < mockCommunityPosts.length,
         page: 2,
         refreshing: false,
-        tabs: getCommunityTabsData(newPosts)
+        tabs: getCommunityTabsData(newPosts),
       });
     } catch (error) {
       set({ error: '刷新失败', refreshing: false });
@@ -527,24 +527,24 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
 
   loadMorePosts: async () => {
     const { loading, hasMore, page, posts } = get();
-    if (loading || !hasMore) return;
+    if (loading || !hasMore) {return;}
 
     set({ loading: true });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       const startIndex = page * PAGE_SIZE;
       const endIndex = Math.min(startIndex + PAGE_SIZE, mockCommunityPosts.length);
       const newPosts = mockCommunityPosts.slice(startIndex, endIndex);
-      
+
       set({
         posts: [...posts, ...newPosts],
         hasMore: endIndex < mockCommunityPosts.length,
         page: page + 1,
         loading: false,
-        tabs: getCommunityTabsData([...posts, ...newPosts])
+        tabs: getCommunityTabsData([...posts, ...newPosts]),
       });
     } catch (error) {
       set({ error: '加载更多失败', loading: false });
@@ -554,44 +554,44 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
   // Post interactions
   likePosts: (postId: string) => {
     set(state => ({
-      posts: state.posts.map(post => 
-        post.id === postId 
-          ? { 
-              ...post, 
+      posts: state.posts.map(post =>
+        post.id === postId
+          ? {
+              ...post,
               isLiked: !post.isLiked,
-              likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1
+              likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
             }
           : post
-      )
+      ),
     }));
   },
 
   commentPost: (postId: string) => {
     set(state => ({
-      posts: state.posts.map(post => 
-        post.id === postId 
+      posts: state.posts.map(post =>
+        post.id === postId
           ? { ...post, commentCount: post.commentCount + 1 }
           : post
-      )
+      ),
     }));
   },
 
   sharePost: (postId: string) => {
     set(state => ({
-      posts: state.posts.map(post => 
-        post.id === postId 
+      posts: state.posts.map(post =>
+        post.id === postId
           ? { ...post, shareCount: post.shareCount + 1 }
           : post
-      )
+      ),
     }));
   },
 
   // Utility functions
   getFilteredPosts: () => {
     const { posts, activeTab, selectedCategory, selectedCircle } = get();
-    
+
     let filteredPosts = posts;
-    
+
     // 按标签页过滤
     switch (activeTab) {
       case 'hot':
@@ -599,12 +599,12 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
         break;
       case 'following':
         // 这里应该根据用户关注列表过滤
-        filteredPosts = filteredPosts.filter(post => false); // 暂时返回空数组
+        filteredPosts = filteredPosts.filter(() => false); // 暂时返回空数组
         break;
       default:
         break;
     }
-    
+
     // 按圈子过滤
     if (selectedCircle !== 'all') {
       const circle = mockCommunityCircles.find(c => c.id === selectedCircle);
@@ -612,18 +612,18 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
         filteredPosts = filteredPosts.filter(post => post.novelName === circle.name);
       }
     }
-    
+
     // 按分类过滤
     if (selectedCategory !== 'all') {
       filteredPosts = filteredPosts.filter(post => post.category === selectedCategory);
     }
-    
+
     return filteredPosts;
   },
 
   getSortedPosts: (posts: CommunityPost[]) => {
     const { sortType } = get();
-    
+
     switch (sortType) {
       case 'hot':
         return [...posts].sort((a, b) => (b.likeCount + b.commentCount) - (a.likeCount + a.commentCount));
@@ -633,10 +633,10 @@ export const useCommunityStore = create<CommunityStore>((set, get) => ({
       default:
         return [...posts].sort((a, b) => {
           // 由于publishTime是字符串，这里简化处理
-          if (a.publishTime === '刚刚') return -1;
-          if (b.publishTime === '刚刚') return 1;
+          if (a.publishTime === '刚刚') {return -1;}
+          if (b.publishTime === '刚刚') {return 1;}
           return 0;
         });
     }
-  }
+  },
 }));

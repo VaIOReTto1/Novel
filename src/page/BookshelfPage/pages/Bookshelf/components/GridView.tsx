@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { BookshelfItem } from '../types';
 import { BookItem } from './BookItem';
-import { LoadMoreIndicator } from './LoadMoreIndicator'
+import { LoadMoreIndicator } from './LoadMoreIndicator';
 import { EmptyState } from './EmptyState';
 import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
@@ -62,7 +62,7 @@ export const GridView: React.FC<GridViewProps> = ({
   };
 
   const renderEmpty = () => {
-    if (isLoading || isRefreshing) return null;
+    if (isLoading || isRefreshing) {return null;}
     return <EmptyState type="bookshelf" />;
   };
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { BookshelfState, BookshelfItem, BookshelfTab, ViewType, SortType, RecommendationState, RecommendationItem } from '../types';
-import { BOOKSHELF_CATEGORIES, VIEW_TYPES, SORT_TYPES, PAGE_SIZE, RECOMMENDATION_PAGE_SIZE } from '../utils/constants';
+import { BOOKSHELF_CATEGORIES, VIEW_TYPES, SORT_TYPES } from '../utils/constants';
 
 // Mock数据
 const mockBookshelfItems: BookshelfItem[] = [
@@ -181,7 +181,7 @@ interface BookshelfStore extends BookshelfState {
   setLoading: (isLoading: boolean) => void;
   setRefreshing: (isRefreshing: boolean) => void;
   setError: (error: string | null) => void;
-  
+
   // 数据操作
   loadBookshelfItems: () => Promise<void>;
   refreshBookshelfItems: () => Promise<void>;
@@ -190,7 +190,7 @@ interface BookshelfStore extends BookshelfState {
   toggleItemSelection: (itemId: string) => void;
   selectAllItems: () => void;
   clearSelection: () => void;
-  
+
   // 获取过滤后的数据
   getFilteredItems: () => BookshelfItem[];
   getSortedItems: (items: BookshelfItem[]) => BookshelfItem[];
@@ -252,22 +252,22 @@ export const useBookshelfStore = create<BookshelfStore>((set, get) => ({
   // 数据操作
   loadBookshelfItems: async () => {
     const { isLoading } = get();
-    if (isLoading) return;
+    if (isLoading) {return;}
 
     set({ isLoading: true, error: null });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      set({ 
+
+      set({
         bookshelfItems: mockBookshelfItems,
         isLoading: false,
         page: 1,
         hasMore: false,
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '加载失败',
         isLoading: false,
       });
@@ -276,19 +276,19 @@ export const useBookshelfStore = create<BookshelfStore>((set, get) => ({
 
   refreshBookshelfItems: async () => {
     set({ isRefreshing: true, error: null });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      set({ 
+
+      set({
         bookshelfItems: mockBookshelfItems,
         isRefreshing: false,
         page: 1,
         hasMore: false,
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '刷新失败',
         isRefreshing: false,
       });
@@ -297,21 +297,21 @@ export const useBookshelfStore = create<BookshelfStore>((set, get) => ({
 
   loadMoreBookshelfItems: async () => {
     const { isLoading, hasMore } = get();
-    if (isLoading || !hasMore) return;
+    if (isLoading || !hasMore) {return;}
 
     set({ isLoading: true });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // 模拟没有更多数据
-      set({ 
+      set({
         isLoading: false,
         hasMore: false,
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '加载更多失败',
         isLoading: false,
       });
@@ -320,19 +320,19 @@ export const useBookshelfStore = create<BookshelfStore>((set, get) => ({
 
   removeBookshelfItems: async (itemIds: string[]) => {
     const { bookshelfItems } = get();
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       const updatedItems = bookshelfItems.filter(item => !itemIds.includes(item.id));
-      set({ 
+      set({
         bookshelfItems: updatedItems,
         selectedItems: new Set(),
         isEditing: false,
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '删除失败',
       });
     }
@@ -341,21 +341,20 @@ export const useBookshelfStore = create<BookshelfStore>((set, get) => ({
   toggleItemSelection: (itemId: string) => {
     const { selectedItems } = get();
     const newSelectedItems = new Set(selectedItems);
-    
+
     if (newSelectedItems.has(itemId)) {
       newSelectedItems.delete(itemId);
     } else {
       newSelectedItems.add(itemId);
     }
-    
+
     set({ selectedItems: newSelectedItems });
   },
 
   selectAllItems: () => {
-    const { bookshelfItems, currentTab } = get();
     const filteredItems = get().getFilteredItems();
     const allItemIds = new Set(filteredItems.map(item => item.id));
-    
+
     set({ selectedItems: allItemIds });
   },
 
@@ -366,18 +365,18 @@ export const useBookshelfStore = create<BookshelfStore>((set, get) => ({
   // 获取过滤后的数据
   getFilteredItems: () => {
     const { bookshelfItems, currentTab } = get();
-    
+
     if (currentTab === BOOKSHELF_CATEGORIES.ALL) {
       return bookshelfItems;
     }
-    
+
     return bookshelfItems.filter(item => item.category === currentTab);
   },
 
   // 获取排序后的数据
   getSortedItems: (items: BookshelfItem[]) => {
     const { sortType } = get();
-    
+
     return [...items].sort((a, b) => {
       switch (sortType) {
         case SORT_TYPES.LAST_READ:
@@ -406,22 +405,22 @@ export const useRecommendationStore = create<RecommendationStore>((set, get) => 
 
   loadRecommendations: async () => {
     const { isLoading } = get();
-    if (isLoading) return;
+    if (isLoading) {return;}
 
     set({ isLoading: true, error: null });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      set({ 
+
+      set({
         recommendations: mockRecommendations,
         isLoading: false,
         page: 1,
         hasMore: true,
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '加载推荐失败',
         isLoading: false,
       });
@@ -430,28 +429,28 @@ export const useRecommendationStore = create<RecommendationStore>((set, get) => 
 
   loadMoreRecommendations: async () => {
     const { isLoading, hasMore, recommendations, page } = get();
-    if (isLoading || !hasMore) return;
+    if (isLoading || !hasMore) {return;}
 
     set({ isLoading: true });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // 模拟加载更多数据
       const moreRecommendations = mockRecommendations.map((item, index) => ({
         ...item,
         id: `${item.id}_page${page + 1}_${index}`,
       }));
-      
-      set({ 
+
+      set({
         recommendations: [...recommendations, ...moreRecommendations],
         isLoading: false,
         page: page + 1,
         hasMore: page < 2, // 模拟只有2页数据
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '加载更多推荐失败',
         isLoading: false,
       });
@@ -460,19 +459,19 @@ export const useRecommendationStore = create<RecommendationStore>((set, get) => 
 
   refreshRecommendations: async () => {
     set({ isLoading: true, error: null });
-    
+
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      set({ 
+
+      set({
         recommendations: mockRecommendations,
         isLoading: false,
         page: 1,
         hasMore: true,
       });
     } catch (error) {
-      set({ 
+      set({
         error: error instanceof Error ? error.message : '刷新推荐失败',
         isLoading: false,
       });

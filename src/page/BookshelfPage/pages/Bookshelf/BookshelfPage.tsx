@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useBookshelfStore, useRecommendationStore } from './store/bookshelfStore';
 import { useViewMode } from './hooks/useViewMode';
 import { useEditMode } from './hooks/useEditMode';
@@ -14,7 +14,7 @@ import { BookshelfItem, RecommendationItem } from './types';
 export const BookshelfPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
-  
+
   // Store hooks
   const {
     bookshelfItems,
@@ -22,7 +22,6 @@ export const BookshelfPage: React.FC = () => {
     hasMore: hasMoreBookshelf,
     selectedItems,
     loadBookshelfItems,
-    removeBookshelfItems,
   } = useBookshelfStore();
 
   const {
@@ -35,16 +34,12 @@ export const BookshelfPage: React.FC = () => {
   // Custom hooks
   const {
     currentView,
-    isGridView,
-    isListView,
-    isWaterfallView,
     isTransitioning,
     switchView,
   } = useViewMode('grid');
 
   const {
     isEditMode,
-    hasSelectedItems,
     selectedCount,
     enterEditMode,
     exitEditMode,

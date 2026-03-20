@@ -1,11 +1,10 @@
 import { useCallback, useEffect } from 'react';
 import { useCommunityStore } from '../store/communityStore';
-import { CommunitySortType, CommunityCategory } from '../types';
+import { CommunitySortType } from '../types';
 
 export const useCommunity = () => {
   const {
     // State
-    posts,
     tabs,
     categories,
     circles,
@@ -17,7 +16,7 @@ export const useCommunity = () => {
     refreshing,
     hasMore,
     error,
-    
+
     // Actions
     loadPosts,
     refreshPosts,
@@ -41,7 +40,7 @@ export const useCommunity = () => {
   // 初始化加载
   useEffect(() => {
     loadPosts();
-  }, [activeTab, selectedCategory, selectedCircle, sortType]);
+  }, [loadPosts]);
 
   // 切换标签页
   const handleTabChange = useCallback((tabId: string) => {
@@ -140,7 +139,7 @@ export const useCommunity = () => {
     tabs,
     categories,
     circles,
-    
+
     // State
     activeTab,
     selectedCategory,
@@ -150,7 +149,7 @@ export const useCommunity = () => {
     refreshing,
     hasMore,
     error,
-    
+
     // Handlers
     handleTabChange,
     handleCategoryChange,

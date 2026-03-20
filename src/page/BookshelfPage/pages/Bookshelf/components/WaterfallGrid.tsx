@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, FlatList, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { BookshelfItem } from '../types';
 import { BookItem } from './BookItem';
 import { LoadMoreIndicator } from './LoadMoreIndicator';
@@ -28,10 +28,8 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
   onBookLongPress,
   onMenuPress,
   onLoadMore,
-  onRefresh,
   hasMore = false,
   isLoading = false,
-  isRefreshing = false,
   isEditMode = false,
   selectedItems = [],
 }) => {
@@ -41,7 +39,7 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
   const { leftColumnBooks, rightColumnBooks } = useMemo(() => {
     const left: BookshelfItem[] = [];
     const right: BookshelfItem[] = [];
-    
+
     data.forEach((item, index) => {
       if (index % WATERFALL_COLUMNS === 0) {
         left.push(item);
@@ -49,7 +47,7 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
         right.push(item);
       }
     });
-    
+
     return { leftColumnBooks: left, rightColumnBooks: right };
   }, [data]);
 
@@ -88,7 +86,7 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
         {renderColumn(leftColumnBooks)}
         {renderColumn(rightColumnBooks)}
       </View>
-      
+
       {(hasMore || isLoading) && (
         <LoadMoreIndicator
           isLoading={isLoading}

@@ -156,7 +156,7 @@ export const useHistoryStore = create<HistoryStore>()(
 
     // 异步操作
     loadHistoryItems: async (isRefresh = false) => {
-      const { currentPage, pageSize, selectedTab } = get();
+      const { selectedTab } = get();
       
       if (isRefresh) {
         set((state) => {

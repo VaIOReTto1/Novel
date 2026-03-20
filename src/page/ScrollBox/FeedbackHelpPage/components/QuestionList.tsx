@@ -8,23 +8,10 @@ export const QuestionList: React.FC<QuestionListProps> = React.memo(({
   questions,
   category,
   onQuestionPress,
-  onBack,
+  onBack: _onBack,
 }) => {
   const { consultCategories, getCategoryQuestions } = useFeedbackHelpStore();
   const [selectedFilter, setSelectedFilter] = useState<string>(category);
-
-  const getCategoryName = (categoryId: string) => {
-    const categoryNames: { [key: string]: string } = {
-      'member': '会员问题',
-      'account': '账号问题', 
-      'subscription': '开通续费',
-      'benefits': '类型权益',
-      'reading': '看书问题',
-      'listening': '听书问题',
-      'other': '其他问题'
-    };
-    return categoryNames[categoryId] || '相关问题';
-  };
 
   const getCategoryIcon = (categoryId: string) => {
     const categoryIcons: { [key: string]: string } = {

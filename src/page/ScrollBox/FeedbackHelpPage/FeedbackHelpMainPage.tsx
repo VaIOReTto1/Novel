@@ -19,8 +19,6 @@ export const FeedbackHelpMainPage: React.FC = React.memo(() => {
   const {
     consultCategories,
     frequentQuestions,
-    isLoading,
-    error,
     selectCategory,
     selectQuestion,
     resetToMain,

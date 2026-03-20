@@ -51,6 +51,7 @@ class ReaderViewModel @Inject constructor(
     private var lastFlipTime = 0L
 
     val readerReducer = ReaderReducer()
+    private val readerSettingsCoordinator = ReaderSettingsCoordinator()
 
     /** 新的StateAdapter实例 */
     val adapter = state.asReaderAdapter()
@@ -60,15 +61,13 @@ class ReaderViewModel @Inject constructor(
 
         // 优先加载设置以确保UI（如背景色）能立即响应
         viewModelScope.launch {
-            try {
-                TimberLogger.d(TAG, "加载初始设置")
-                val loadedSettings = settingsService.loadSettings()
-                sendIntent(ReaderIntent.UpdateSettings(loadedSettings))
-            } catch (e: Exception) {
-                TimberLogger.e(TAG, "初始设置加载失败", e)
-                val defaultSettings = ReaderSettings.getDefault()
-                sendIntent(ReaderIntent.UpdateSettings(defaultSettings))
-            }
+            TimberLogger.d(TAG, "加载初始设置")
+            sendIntent(
+                readerSettingsCoordinator.createInitialSettingsIntent(
+                    loadSettings = settingsService::loadSettings,
+                    defaultSettings = ReaderSettings::getDefault,
+                )
+            )
         }
 
         // 观察分页进度
@@ -397,22 +396,20 @@ class ReaderViewModel @Inject constructor(
                 is UpdateSettingsUseCase.UpdateResult.Success -> {
                     TimberLogger.d(TAG, "设置更新成功")
 
-                    val updatedState = result.newPageData?.let {
+                    val outcome = readerSettingsCoordinator.applyUpdateResult(
+                        currentState = getCurrentState(),
+                        result = result,
+                    )
+                    if (result.newPageData != null) {
                         TimberLogger.d(
                             TAG,
-                            "应用新的分页数据: 页数=${it.pages.size}, 新页面索引=${result.newPageIndex}"
+                            "应用新的分页数据: 页数=${result.newPageData.pages.size}, 新页面索引=${result.newPageIndex}"
                         )
-                        getCurrentState().copy(
-                            version = getCurrentState().version + 1,
-                            currentPageData = it,
-                            currentPageIndex = result.newPageIndex
-                        )
-                    } ?: getCurrentState()
+                    }
 
-                    updateState(updatedState)
+                    updateState(outcome.updatedState)
 
-                    // 如果内容重新分页，重建虚拟页面
-                    if (result.newPageData != null) {
+                    if (outcome.shouldRebuildVirtualPages) {
                         TimberLogger.d(TAG, "重新分页后重建虚拟页面")
                         buildVirtualPages(preserveCurrentIndex = true)
                     }

@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 4 / W4-Q01 / touched-files 静态债清零`
+- 当前建议下一原子主题：`Wave 4 / W4-M02 / 生产 mock 剩余项结论`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -30,7 +30,7 @@
 
 ## 当前未关闭风险
 - `V4-05` 已补齐 `profile / settings / aipage` 三类宿主页运行文档，但 `settings / aipage` 的日志强度弱于 `profile`，后续若需要更高确定性可补一轮专项日志
-- repo 级静态债仍未达到阶段阈值，`V4-06` 依旧是当前主 blocker
+- `V4-04` 仍未关闭，当前高风险生产 mock 仍需要明确“继续清理”还是“带风险延期”的结论
 - `Phase 4` closeout、`Stage 2` closeout 与 `Phase 5` 进入条件文档仍未生成
 
 ## 已完成的 Wave 1 资料
@@ -267,6 +267,6 @@
 
 ## 下一步
 - 按静默连续推进协议继续 Wave 4：
-  - `W4-Q01` `touched-files 静态债清零`
-  - `W4-Q02` `repo 级静态债对比`
-- `V4-05` 当前已具备 `ready_for_validation` 的证据条件，后续主线聚焦 `V4-06`
+  - `W4-M02` `生产 mock 剩余项结论`
+  - `W4-C01` `phase-4-closeout-assessment.md`
+- `V4-05` 与 `V4-06` 当前均已具备 `ready_for_validation` 的证据条件

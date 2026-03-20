@@ -2,16 +2,16 @@
 
 ## 当前状态
 - 当前阶段：`Phase 4`
-- 阶段状态：`planned`
+- 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
 - 最近结论：第一阶段（Phase 0-2）已正式关闭并标记为 `validated`，第二阶段（Stage 2 = Phase 3-4）中的 `Phase 3` 已正式关闭并标记为 `validated`。高风险生产网络路径已统一切入 `NetworkFacade`，Bridge 层匿名协程作用域与 `MainApplication` 的按需初始化入口已完成收口，`StorageFacade`/`AppError` 第一批目标均已达成，Bridge 与存储回退开关及网络结构性回退边界也已明确。
-- 下一步：按 `Wave 1` 进入 `Phase 4`，优先产出包边界图、四个超大类职责切片图和 `BridgeFacade` 外围映射表
+- 下一步：继续 `Wave 4`，优先收束 `V4-04` 的生产 mock 剩余项结论，并开始 `Phase 4` closeout 文档
 - 当前 Phase 默认编制：`4 helpers + 1 Leader`
   - `BridgeFacadeSplitAgent`
   - `FeatureBoundarySplitAgent`
   - `CacheReaderLightAgent`
   - `HostRiskQualityAgent`
-- 当前激活波次：`Wave 1`
+- 当前激活波次：`Wave 4`
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -28,6 +28,8 @@
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - 第二阶段规划文档已落盘，`V3-05` 静态债基线已建立。
 - `V3-01 ~ V3-07` 已全部具备绿色验证证据，`Phase 3` 已正式完成。
+- `V4-05` 宿主页风险验证已进入 `ready_for_validation/green`。
+- `V4-06` 第二阶段静态债已达到当前阶段阈值，并进入 `ready_for_validation/green`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

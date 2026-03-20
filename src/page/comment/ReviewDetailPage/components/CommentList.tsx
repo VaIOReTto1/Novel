@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
 import { useReviewDetailStore } from '../store/reviewDetailStore';
 import { parseNewsDate } from '../../../../utils/time/timeUtils';
 import { Comment } from '../types/reviewDetailTypes';
-import { wp } from '../../../../utils/theme';
 
 interface CommentListProps {
   onInputFocus?: () => void;
@@ -15,12 +14,12 @@ interface CommentListProps {
   onReply?: (commentId: string) => void;
 }
 
-export const CommentList: React.FC<CommentListProps> = ({ 
-  onInputFocus, 
-  onViewMoreReplies, 
-  onLike, 
-  onDislike, 
-  onReply 
+export const CommentList: React.FC<CommentListProps> = ({
+  onInputFocus,
+  onViewMoreReplies,
+  onLike: _onLike,
+  onDislike: _onDislike,
+  onReply: _onReply,
 }) => {
   const { colors, styles } = useReviewDetailPageStyles();
   const { hasMoreComments, isLoadingMore, toggleCommentLike, toggleCommentDislike } = useReviewDetailStore();
@@ -47,6 +46,7 @@ export const CommentList: React.FC<CommentListProps> = ({
       setCommentText('');
     }
   };
+  void handleSendComment;
 
   const renderCommentInput = () => {
     return (
@@ -70,7 +70,7 @@ export const CommentList: React.FC<CommentListProps> = ({
     );
   };
 
-  const renderCommentItem = ({ item, isReply = false, isFirst = false }: { item: Comment; isReply?: boolean; isFirst?: boolean }) => {
+  const renderCommentItem = ({ item, isReply = false, isFirst: _isFirst = false }: { item: Comment; isReply?: boolean; isFirst?: boolean }) => {
     // 如果是二级评论，使用简化显示 - userName和content在同一个Text中，颜色不同
     if (isReply) {
       return (
@@ -104,8 +104,8 @@ export const CommentList: React.FC<CommentListProps> = ({
                 {item.tag && (
                   <View style={[styles.commentTag, styles[`commentTag_${item.tag}`]]}>
                     <Text style={styles.commentTagText}>
-                      {item.tag === 'first_comment' ? '首评' : 
-                       item.tag === 'true_fan' ? '真爱粉' : 
+                      {item.tag === 'first_comment' ? '首评' :
+                       item.tag === 'true_fan' ? '真爱粉' :
                        item.tag === 'vip' ? 'VIP' : ''}
                     </Text>
                   </View>
@@ -115,7 +115,7 @@ export const CommentList: React.FC<CommentListProps> = ({
                 <Icon name="more-vert" size={20} color={colors.novelTextGray} />
               </TouchableOpacity>
             </View>
-            
+
             {/* 评论内容 */}
             <Text style={styles.commentContent}>{item.content}</Text>
 

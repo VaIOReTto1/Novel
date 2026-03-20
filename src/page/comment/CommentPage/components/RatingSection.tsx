@@ -50,7 +50,7 @@ const HeartRating = memo(({ size = 35, onStarPress }: { size?: number; onStarPre
 export const RatingSection = memo(({ 
   overallRating = 4.2, 
   totalReviews = 1234,
-  onWriteReview,
+  onWriteReview: _onWriteReview,
   bookId 
 }: RatingSectionProps) => {
   const colors = useNovelColors();

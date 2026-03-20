@@ -3,14 +3,15 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
 import { parseNewsDate } from '../../../../utils/time/timeUtils';
-import { useReviewDetailStore } from '../store/reviewDetailStore';
 import { useNovelColors } from '../../../../utils/theme/colors';
 
 const StarRating = memo(({ rating }: { rating?: number }) => {
   const colors = useNovelColors();
   const { styles } = useReviewDetailPageStyles();
 
-  if (!rating) return null;
+  if (!rating) {
+    return null;
+  }
 
   return (
     <View style={styles.starRating}>
@@ -61,7 +62,7 @@ export const ReviewContent: React.FC<ReviewContentProps> = ({ commentData }) => 
     // TODO: 实现点赞功能
     console.log('点赞评论:', commentData.id);
   };
-
+  void handleLikePress;
 
 
   return (

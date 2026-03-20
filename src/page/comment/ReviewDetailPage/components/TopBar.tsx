@@ -13,7 +13,7 @@ interface TopBarProps {
   };
 }
 
-const TopBar: React.FC<TopBarProps> = ({ onBack, bookInfo }) => {
+const TopBar: React.FC<TopBarProps> = ({ onBack, bookInfo: _bookInfo }) => {
   const { colors, styles } = useReviewDetailPageStyles();
 
   return (

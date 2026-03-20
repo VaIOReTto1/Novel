@@ -30,11 +30,9 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
     contentError,
     contentLength,
     isSubmitting,
-    showTips,
     starAnimations,
     setRating,
     setContent,
-    toggleTips,
     submitReview,
     clearErrors,
   } = useWriteReview(initialRating);
@@ -52,11 +50,14 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
 
   // 页面初始化
   useEffect(() => {
+    if (source) {
+      console.log('[WriteReviewPage] 来源:', source);
+    }
     if (!bookId) {
       console.warn('WriteReviewPage: bookId is required');
       NavigationBridge.navigateBack();
     }
-  }, [bookId]);
+  }, [bookId, source]);
 
   // 处理返回
   const handleBackPress = () => {
@@ -117,13 +118,13 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
               />
 
               {/* 表单区域 */}
-              <ReviewForm
-                content={content}
-                contentError={contentError}
-                contentLength={contentLength}
-                onContentChange={setContent}
-                onContentFocus={handleInputFocus}
-                autoFocus={true}
+            <ReviewForm
+              content={content}
+              contentError={contentError}
+              contentLength={contentLength}
+              onContentChange={setContent}
+              onContentFocus={handleInputFocus}
+              autoFocus={true}
               />
             </View>
           </ScrollView>

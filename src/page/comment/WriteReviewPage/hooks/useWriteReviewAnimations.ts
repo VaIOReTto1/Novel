@@ -29,7 +29,7 @@ export const useWriteReviewAnimations = () => {
 
   // 星级评分动画
   const createStarAnimation = (rating: number) => {
-    const starAnims = Array.from({ length: 5 }, () => useRef(new Animated.Value(1)).current);
+    const starAnims = Array.from({ length: 5 }, () => new Animated.Value(1));
     
     const animateStars = () => {
       const animations = starAnims.map((anim, index) => {

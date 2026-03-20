@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createCommentPageStyles } from '../styles/CommentPageStyles';
@@ -10,7 +10,7 @@ interface TopBarProps {
   onSearch?: (query: string) => void;
 }
 
-export const TopBar = memo(({ title = '书评详情', onBackPress, onSearch }: TopBarProps) => {
+export const TopBar = memo(({ title: _title = '书评详情', onBackPress, onSearch }: TopBarProps) => {
   const colors = useNovelColors();
   const styles = createCommentPageStyles(colors);
   const [searchQuery, setSearchQuery] = useState('');

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Animated, Text, RefreshControl, TextInput, TouchableOpacity, Dimensions, Image, Easing, BackHandler } from 'react-native';
+import { View, ScrollView, Animated, Text, RefreshControl, TouchableOpacity, Dimensions, Easing, BackHandler } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
 import { TopBar } from './components/TopBar';
@@ -9,10 +9,9 @@ import { RepliesSheet } from './components/RepliesSheet';
 import { useReviewDetailStore } from './store/reviewDetailStore';
 import { useReviewDetailPageStyles } from './hooks/useReviewDetailPageStyles';
 import { useRefresh, useAnimations } from './hooks';
-import { sp, wp } from '../../../utils/theme/dimensions';
-import { parseNewsDate } from '../../../utils/time/timeUtils';
-
 const { height: screenHeight } = Dimensions.get('window');
+const bottomInputOverlayStyle = { zIndex: 30 } as const;
+const actionButtonSpacingStyle = { marginTop: 8 } as const;
 
 const useRefreshLogic = () => {
   const { refreshReviewDetail } = useReviewDetailStore();
@@ -46,7 +45,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
     commentsCount: comments.length,
     isLoading,
     isRefreshing,
-    error
+    error,
   });
 
   useEffect(() => {
@@ -66,7 +65,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
       console.log('[ReviewDetailPage] 页面卸载，清理状态');
       reset();
     };
-  }, [commentData, reset]);
+  }, [commentData, loadReviewDetail, reset]);
 
   // Android硬件返回按钮处理
   useEffect(() => {
@@ -102,14 +101,14 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
   };
 
   const [commentText, setCommentText] = useState('');
-  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [_showCommentModal, setShowCommentModal] = useState(false);
   const [selectedComment, setSelectedComment] = useState<any>(null);
   const [modalAnimation] = useState(new Animated.Value(0));
-  
+
   // 新的半弹窗状态与动画
   const [inputBarH, setInputBarH] = useState(0);
   const [showRepliesSheet, setShowRepliesSheet] = useState(false);
-  
+
   const SHEET_TARGET_H = Math.min(screenHeight * 0.82, screenHeight - inputBarH);
   const sheetTranslateY = React.useRef(new Animated.Value(SHEET_TARGET_H)).current;
   const backdropOpacity = React.useRef(new Animated.Value(0)).current;
@@ -130,6 +129,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
       hideCommentModal();
     }
   };
+  void handleSendComment;
 
   const showCommentModalWithAnimation = () => {
     setShowCommentModal(true);
@@ -228,8 +228,8 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
         styles.container,
         {
           opacity: fadeAnim,
-          transform: [{ scale: scaleAnim }]
-        }
+          transform: [{ scale: scaleAnim }],
+        },
       ]}
     >
       <TopBar onBack={handleBack} bookInfo={bookInfo} />
@@ -259,8 +259,8 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
       </ScrollView>
 
       {/* 底部输入框 */}
-      <View 
-        style={[styles.bottomInputContainer, { zIndex: 30 }]}
+      <View
+        style={[styles.bottomInputContainer, bottomInputOverlayStyle]}
         onLayout={(e: { nativeEvent: { layout: { height: React.SetStateAction<number>; }; }; }) => setInputBarH(e.nativeEvent.layout.height)}
       >
         <TouchableOpacity
@@ -274,7 +274,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
         </TouchableOpacity>
 
         <View style={styles.commentInputActions}>
-          <TouchableOpacity style={[styles.commentActionButton, { marginTop: 8 }]} onPress={handleLike}>
+          <TouchableOpacity style={[styles.commentActionButton, actionButtonSpacingStyle]} onPress={handleLike}>
             <Icon
               name={'favorite-border'}
               size={24}
@@ -283,7 +283,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
             <Text style={styles.commentActionCount}>208</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.commentActionButton, { marginTop: 8 }]}>
+          <TouchableOpacity style={[styles.commentActionButton, actionButtonSpacingStyle]}>
             <Icon
               name="thumb-down"
               size={24}

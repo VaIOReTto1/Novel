@@ -17,7 +17,6 @@ interface ReviewFormProps {
 export const ReviewForm: React.FC<ReviewFormProps> = ({
   content,
   contentError,
-  contentLength,
   onContentChange,
   onContentFocus,
   onContentBlur,

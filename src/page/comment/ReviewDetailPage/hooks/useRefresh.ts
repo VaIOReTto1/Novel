@@ -6,13 +6,15 @@ import { useState, useCallback } from 'react';
  */
 export const useRefresh = (
   onRefresh: () => Promise<void>,
-  deps: React.DependencyList = []
+  _deps: React.DependencyList = []
 ) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleRefresh = useCallback(async () => {
-    if (isRefreshing) return;
-    
+    if (isRefreshing) {
+      return;
+    }
+
     try {
       setIsRefreshing(true);
       await onRefresh();
@@ -21,7 +23,7 @@ export const useRefresh = (
     } finally {
       setIsRefreshing(false);
     }
-  }, [isRefreshing, onRefresh, ...deps]);
+  }, [isRefreshing, onRefresh]);
 
   return {
     isRefreshing,

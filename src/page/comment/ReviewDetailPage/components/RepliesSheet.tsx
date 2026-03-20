@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, ScrollView, Animated, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, ScrollView, Animated, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { wp, sp } from '../../../../utils/theme/dimensions';
 import { parseNewsDate } from '../../../../utils/time/timeUtils';
 import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
-
-const { height: screenHeight } = Dimensions.get('window');
+const backdropTouchAreaStyle = { flex: 1 } as const;
 
 interface RepliesSheetProps {
   selectedComment: any;
@@ -28,7 +26,7 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
 }) => {
   const { colors, styles } = useReviewDetailPageStyles();
 
-  if (!selectedComment || !showRepliesSheet) return null;
+  if (!selectedComment || !showRepliesSheet) {return null;}
 
   const renderPrimaryComment = () => (
     <View style={styles.replyItem}>
@@ -49,14 +47,14 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
               <Text style={styles.commentUserName}>{selectedComment.userName}</Text>
               {selectedComment.tag && (
                 <View style={[
-                  styles.commentTag, 
+                  styles.commentTag,
                   selectedComment.tag === 'first_comment' ? styles.commentTag_first_comment :
                   selectedComment.tag === 'true_fan' ? styles.commentTag_true_fan :
-                  selectedComment.tag === 'vip' ? styles.commentTag_vip : {}
+                  selectedComment.tag === 'vip' ? styles.commentTag_vip : {},
                 ]}>
                   <Text style={styles.commentTagText}>
-                    {selectedComment.tag === 'first_comment' ? '首评' : 
-                     selectedComment.tag === 'true_fan' ? '真爱粉' : 
+                    {selectedComment.tag === 'first_comment' ? '首评' :
+                     selectedComment.tag === 'true_fan' ? '真爱粉' :
                      selectedComment.tag === 'vip' ? 'VIP' : ''}
                   </Text>
                 </View>
@@ -158,13 +156,13 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
           {
             bottom: inputBarHeight,
             opacity: backdropOpacity,
-          }
+          },
         ]}
       >
         <TouchableOpacity
           activeOpacity={1}
           onPress={onClose}
-          style={{ flex: 1 }}
+          style={backdropTouchAreaStyle}
         />
       </Animated.View>
 
@@ -176,7 +174,7 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
             bottom: inputBarHeight,
             height: sheetHeight,
             transform: [{ translateY: sheetTranslateY }],
-          }
+          },
         ]}
       >
         {/* 顶部栏 */}

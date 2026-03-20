@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 import {
   View,
-  ScrollView,
   RefreshControl,
   Animated,
   BackHandler,
@@ -11,7 +10,6 @@ import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
 import { useCommentStore } from './store/commentStore';
 import { createCommentPageStyles } from './styles/CommentPageStyles';
 import { TopBar } from './components/TopBar';
-import { RefreshIndicator } from './components/RefreshIndicator';
 import { CommentList } from './components/CommentList';
 import { RatingSection } from './components/RatingSection';
 import { CategorySection } from './components/CategorySection';
@@ -67,7 +65,7 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
   const { loadComments, loadMoreComments, isRefreshing, reset } = useCommentStore();
   const { onRefresh } = useRefresh();
   const { fadeAnim, scaleAnim } = useAnimations();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   
   // 初始化数据加载
@@ -120,8 +118,7 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
   const handleWriteReview = useCallback(() => {
     // 导航到发表评论页面
     NavigationBridge.navigateToWriteReview(bookId);
-
-  }, []);
+  }, [bookId]);
   
   return (
     <Animated.View style={[

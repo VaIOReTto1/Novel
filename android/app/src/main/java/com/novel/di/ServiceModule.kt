@@ -1,7 +1,15 @@
 package com.novel.di
 
-import com.novel.page.read.service.common.*
-import com.novel.page.read.service.settings.*
+import com.novel.page.read.service.common.AndroidServiceLogger
+import com.novel.page.read.service.common.DispatcherProvider
+import com.novel.page.read.service.common.LruSessionCache
+import com.novel.page.read.service.common.OptimizedDispatcherProvider
+import com.novel.page.read.service.common.ReaderServiceConfig
+import com.novel.page.read.service.common.ServiceLogger
+import com.novel.page.read.service.common.SessionCache
+import com.novel.page.read.service.settings.ReaderSettingsStorage
+import com.novel.page.read.service.settings.SettingsParser
+import com.novel.page.read.service.settings.SettingsSaver
 import com.novel.page.read.viewmodel.ChapterCache
 import com.novel.utils.performance.StartupPerformanceMonitor
 import dagger.Module

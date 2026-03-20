@@ -4,7 +4,7 @@ import com.novel.utils.TimberLogger
 import androidx.lifecycle.viewModelScope
 import com.novel.core.mvi.BaseMviViewModel
 import com.novel.core.mvi.MviReducer
-import com.novel.page.search.usecase.*
+import com.novel.page.search.usecase.GetCategoryFiltersUseCase
 import com.novel.page.search.repository.SearchRepository
 import com.novel.page.search.repository.SearchParams
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

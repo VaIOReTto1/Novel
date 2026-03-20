@@ -3,7 +3,10 @@ package com.novel.page.read.service
 import androidx.compose.runtime.Stable
 import com.novel.page.read.repository.ReadingProgressData
 import com.novel.page.read.repository.ReadingProgressRepository
-import com.novel.page.read.service.common.*
+import com.novel.page.read.service.common.DispatcherProvider
+import com.novel.page.read.service.common.ReaderServiceConfig
+import com.novel.page.read.service.common.SafeService
+import com.novel.page.read.service.common.ServiceLogger
 import com.novel.page.read.utils.ReaderLogTags
 import com.novel.page.read.viewmodel.PageFlipEffect
 import javax.inject.Inject

@@ -15,7 +15,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.HeaderMap
+import retrofit2.http.PATCH
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.QueryMap
+import retrofit2.http.Url
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 

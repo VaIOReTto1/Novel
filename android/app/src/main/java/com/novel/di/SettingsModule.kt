@@ -2,7 +2,11 @@
 
 import android.content.Context
 import com.novel.rn.settings.SettingsUtils
-import com.novel.rn.settings.usecase.*
+import com.novel.rn.settings.usecase.ClearCacheUseCase
+import com.novel.rn.settings.usecase.ExportUserDataUseCase
+import com.novel.rn.settings.usecase.GetUserSettingsUseCase
+import com.novel.rn.settings.usecase.ImportUserDataUseCase
+import com.novel.rn.settings.usecase.UpdateSettingsUseCase
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import dagger.Module

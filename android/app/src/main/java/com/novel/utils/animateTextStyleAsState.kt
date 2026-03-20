@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp

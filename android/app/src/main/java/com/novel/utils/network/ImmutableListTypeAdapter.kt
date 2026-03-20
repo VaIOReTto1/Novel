@@ -1,7 +1,9 @@
 package com.novel.utils.network
 
 import androidx.compose.runtime.Stable
-import com.google.gson.*
+import com.google.gson.Gson
+import com.google.gson.TypeAdapter
+import com.google.gson.TypeAdapterFactory
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter

@@ -1,8 +1,11 @@
 package com.novel.page.read.service
 
 import androidx.compose.ui.graphics.toArgb
-import com.novel.page.read.service.common.*
-import com.novel.page.read.service.settings.*
+import com.novel.page.read.service.common.DispatcherProvider
+import com.novel.page.read.service.common.SafeService
+import com.novel.page.read.service.common.ServiceLogger
+import com.novel.page.read.service.settings.SettingsParser
+import com.novel.page.read.service.settings.SettingsSaver
 import com.novel.page.read.utils.ReaderLogTags
 import com.novel.page.read.viewmodel.ReaderSettings
 import javax.inject.Inject

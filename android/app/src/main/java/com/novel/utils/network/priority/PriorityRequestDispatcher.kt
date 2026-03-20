@@ -7,7 +7,10 @@ import com.novel.utils.network.NetworkType
 import okhttp3.Call
 import okhttp3.Dispatcher
 import okhttp3.Request
-import java.util.concurrent.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.PriorityBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 import javax.inject.Singleton

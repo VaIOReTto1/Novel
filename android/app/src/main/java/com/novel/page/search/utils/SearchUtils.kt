@@ -2,7 +2,8 @@ package com.novel.page.search.utils
 
 import com.novel.utils.TimberLogger
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 /**
  * 搜索相关的工具类

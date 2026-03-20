@@ -2,7 +2,7 @@ package com.novel.rn.settings
 
 import com.novel.core.mvi.MviReducerWithEffect
 import com.novel.core.mvi.ReduceResult
-import com.novel.rn.settings.SettingsEffect.*
+import com.novel.rn.settings.SettingsEffect.ShowToast
 import com.novel.utils.TimberLogger
 
 /**

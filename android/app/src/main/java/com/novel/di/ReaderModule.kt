@@ -1,9 +1,23 @@
 package com.novel.page.read.di
 
-import com.novel.page.read.service.*
+import com.novel.page.read.service.ChapterService
+import com.novel.page.read.service.PaginationService
+import com.novel.page.read.service.ProgressService
+import com.novel.page.read.service.SettingsService
 import com.novel.page.read.service.common.DispatcherProvider
 import com.novel.page.read.service.common.ServiceLogger
-import com.novel.page.read.usecase.*
+import com.novel.page.read.usecase.BuildVirtualPagesUseCase
+import com.novel.page.read.usecase.FlipPageUseCase
+import com.novel.page.read.usecase.InitReaderUseCase
+import com.novel.page.read.usecase.LoadBookReviewsUseCase
+import com.novel.page.read.usecase.ObservePaginationProgressUseCase
+import com.novel.page.read.usecase.PaginateChapterUseCase
+import com.novel.page.read.usecase.PreloadChaptersUseCase
+import com.novel.page.read.usecase.SaveProgressUseCase
+import com.novel.page.read.usecase.SeekProgressUseCase
+import com.novel.page.read.usecase.SplitContentUseCase
+import com.novel.page.read.usecase.SwitchChapterUseCase
+import com.novel.page.read.usecase.UpdateSettingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

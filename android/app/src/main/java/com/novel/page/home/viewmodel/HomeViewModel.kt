@@ -4,7 +4,14 @@ import androidx.lifecycle.viewModelScope
 import com.novel.core.mvi.BaseMviViewModel
 import com.novel.core.mvi.MviReducer
 import com.novel.page.home.dao.IHomeRepository
-import com.novel.page.home.usecase.*
+import com.novel.page.home.usecase.GetCategoryRecommendBooksUseCase
+import com.novel.page.home.usecase.GetHomeCategoriesUseCase
+import com.novel.page.home.usecase.GetHomeRecommendBooksUseCase
+import com.novel.page.home.usecase.GetRankingBooksUseCase
+import com.novel.page.home.usecase.HomeCompositeUseCase
+import com.novel.page.home.usecase.HomeStatusCheckUseCase
+import com.novel.page.home.usecase.RefreshHomeDataUseCase
+import com.novel.page.home.usecase.SendReactNativeDataUseCase
 import com.novel.utils.TimberLogger
 import com.novel.core.asStable
 import com.novel.utils.network.cache.CacheStrategy

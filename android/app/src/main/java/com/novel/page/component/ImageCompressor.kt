@@ -1,6 +1,11 @@
 package com.novel.page.component
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
 import android.os.Build
 import com.novel.utils.TimberLogger
 import androidx.annotation.RequiresApi
@@ -11,7 +16,8 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.*
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * 图片压缩配置

@@ -3,7 +3,11 @@ package com.novel.page.login.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.novel.core.mvi.BaseMviViewModel
 import com.novel.core.mvi.MviReducer
-import com.novel.page.login.usecase.*
+import com.novel.page.login.usecase.CaptchaUseCase
+import com.novel.page.login.usecase.InitializePageUseCase
+import com.novel.page.login.usecase.LoginUseCase
+import com.novel.page.login.usecase.RegisterUseCase
+import com.novel.page.login.usecase.ValidateFormUseCase
 import com.novel.utils.TimberLogger
 import com.novel.utils.PhoneInfoUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

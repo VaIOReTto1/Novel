@@ -3,13 +3,21 @@ package com.novel.page.book.viewmodel
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.viewModelScope
 import com.novel.core.mvi.BaseMviViewModel
-import com.novel.page.book.usecase.*
+import com.novel.page.book.usecase.AddToBookshelfUseCase
+import com.novel.page.book.usecase.CheckBookInShelfUseCase
+import com.novel.page.book.usecase.FollowAuthorUseCase
+import com.novel.page.book.usecase.GetBookDetailUseCase
+import com.novel.page.book.usecase.GetLastChapterUseCase
+import com.novel.page.book.usecase.RemoveFromBookshelfUseCase
 import com.novel.page.component.StateHolderImpl
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.repository.CachedBookRepository
 import com.novel.utils.network.api.front.BookService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

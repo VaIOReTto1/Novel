@@ -3,10 +3,10 @@
 ## 当前状态
 - 当前阶段：`Phase 4`
 - 当前状态：`in_progress`
-- 当前激活波次：`Wave 3`
+- 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-S04 / SearchQueryRepository`
+- 当前建议下一原子主题：`Wave 4 / W4-R01 / ReaderSettingsCoordinator`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -202,9 +202,17 @@
     - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
     - `android/app/src/test/java/com/novel/page/search/repository/SearchRankingRepositoryTest.kt`
     - commit: `5023d15`
+- `Wave 3 / W3-S04`
+  - 新增 `SearchQueryRepository` 最小实现
+  - 当前先将 `SearchRepository` 中搜索主查询的请求参数组装、cache-first 查询路径、response 到 `PageRespDtoBookInfoRespDto` 的映射，以及 `cacheSearchResult()` 调用时机收口到独立 repository，不改变查询语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchQueryRepository.kt`
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
+    - `android/app/src/test/java/com/novel/page/search/repository/SearchQueryRepositoryTest.kt`
+    - commit: `378937c`
 
 ## 下一步
-- 按静默连续推进协议切到 Wave 3：
-  - `W3-S04` `SearchQueryRepository`
+- 按静默连续推进协议切到 Wave 4：
   - `W4-R01` `ReaderSettingsCoordinator`
+  - `W4-R02` `ReaderHistoryCoordinator`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

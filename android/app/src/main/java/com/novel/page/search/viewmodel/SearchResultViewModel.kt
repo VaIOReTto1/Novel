@@ -370,21 +370,7 @@ class SearchResultViewModel @Inject constructor(
                         updateState(newState)
                     },
                     onFailure = {
-                        // 使用默认分类
-                        val defaultCategories = persistentListOf(
-                            CategoryFilter(id = -1, name = "所有"),
-                            CategoryFilter(id = 1, name = "武侠玄幻"),
-                            CategoryFilter(id = 2, name = "都市言情"),
-                            CategoryFilter(id = 3, name = "历史军事"),
-                            CategoryFilter(id = 4, name = "游戏竞技"),
-                            CategoryFilter(id = 5, name = "科幻灵异"),
-                            CategoryFilter(id = 6, name = "其他")
-                        )
-                        val newState = reducer.handleCategoryFiltersLoaded(
-                            currentState = getCurrentState(),
-                            categoryFilters = defaultCategories
-                        )
-                        updateState(newState)
+                        TimberLogger.w(TAG, "分类筛选器加载失败，保留现有状态")
                     }
                 )
             } catch (e: Exception) {

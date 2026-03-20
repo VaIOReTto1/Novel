@@ -37,6 +37,7 @@ import com.novel.page.component.SolidCircleSlider
 import com.novel.page.component.ViewState
 import com.novel.page.read.components.*
 import com.novel.page.read.viewmodel.FlipDirection
+import com.novel.page.read.viewmodel.ReaderHistoryCoordinator
 import com.novel.page.read.viewmodel.ReaderIntent
 import com.novel.page.read.viewmodel.ReaderViewModel
 import com.novel.page.read.viewmodel.ReaderState
@@ -70,6 +71,7 @@ fun ReaderPage(
 ) {
     val viewModel: ReaderViewModel = hiltViewModel()
     val activeController = flipBookController ?: NavViewModel.currentFlipBookController()
+    val readerHistoryCoordinator = remember { ReaderHistoryCoordinator() }
 
     // 性能优化：使用 StateAdapter 的稳定状态访问方法，减少重组
     val adapter = viewModel.adapter
@@ -119,22 +121,13 @@ fun ReaderPage(
     
     // 当状态初始化完成且有书籍信息时保存历史记录
     LaunchedEffect(state.isSuccess, state.currentChapter, state.currentPageData?.bookInfo) {
-        if (state.isSuccess && state.currentChapter != null && bookId.isNotBlank()) {
-            val bookInfo = state.currentPageData?.bookInfo
-            val currentChapter = state.currentChapter
-            
-            TimberLogger.d("ReaderPage", "保存历史记录: bookInfo=$bookInfo, chapter=${currentChapter?.chapterName}")
-            
-            viewModel.sendIntent(
-                ReaderIntent.SaveToHistory(
-                    bookId = bookId,
-                    chapterId = currentChapter?.id ?: "",
-                    bookTitle = bookInfo?.bookName,
-                    author = bookInfo?.authorName,
-                    coverUrl = bookInfo?.picUrl,
-                    chapterTitle = currentChapter?.chapterName
-                )
-            )
+        val historyIntent = readerHistoryCoordinator.createSaveToHistoryIntent(
+            state = state,
+            bookId = bookId,
+        )
+        if (historyIntent != null) {
+            TimberLogger.d("ReaderPage", "保存历史记录: bookInfo=${state.currentPageData?.bookInfo}, chapter=${state.currentChapter?.chapterName}")
+            viewModel.sendIntent(historyIntent)
         }
     }
 

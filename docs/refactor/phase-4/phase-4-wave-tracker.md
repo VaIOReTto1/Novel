@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 3`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 3 / W3-S02 / SearchResultCacheStore`
+- 当前建议下一原子主题：`Wave 3 / W3-C04 / CacheStatsReporter`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -178,9 +178,17 @@
     - `android/app/src/main/java/com/novel/page/home/viewmodel/HomeViewModel.kt`
     - `android/app/src/test/java/com/novel/page/home/viewmodel/HomePagingCoordinatorTest.kt`
     - commit: `3a76dd0`
+- `Wave 3 / W3-S02`
+  - 新增 `SearchResultCacheStore` 最小实现
+  - 当前先将 `SearchRepository` 中搜索结果缓存的 key 生成、过期判断、容量淘汰和命中读取逻辑收口到独立 store，不改变搜索结果缓存语义
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchResultCacheStore.kt`
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
+    - `android/app/src/test/java/com/novel/page/search/repository/SearchResultCacheStoreTest.kt`
+    - commit: `5520685`
 
 ## 下一步
 - 按静默连续推进协议切到 Wave 3：
-  - `W3-S02` `SearchResultCacheStore`
+  - `W3-C04` `CacheStatsReporter`
   - `W3-S03` `SearchRankingRepository`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

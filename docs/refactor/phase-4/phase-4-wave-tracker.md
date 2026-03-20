@@ -6,7 +6,7 @@
 - 当前激活波次：`Wave 4`
 - 自治模式：`enabled`
 - 默认编制：`1 Leader + 4 helpers`
-- 当前建议下一原子主题：`Wave 4 / W4-R01 / ReaderSettingsCoordinator`
+- 当前建议下一原子主题：`Wave 4 / W4-R02 / ReaderHistoryCoordinator`
 
 ## Wave 总表
 | Wave | Status | Goal | Primary Owners | Primary Locks | Exit Evidence |
@@ -14,7 +14,7 @@
 | Wave 1 | `ready_for_validation` | 建立边界骨架、拆分地图、BridgeFacade 外围映射 | `BridgeFacadeSplitAgent`, `FeatureBoundarySplitAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOME-SEARCH-SPLIT` | 包边界图、职责切片图、delegate 映射表 |
 | Wave 2 | `in_progress` | 收口 Bridge 与宿主页边界 | `BridgeFacadeSplitAgent`, `HostRiskQualityAgent` | `LOCK-BRIDGE-FACADE`, `LOCK-HOST-QUALITY` | BridgeFacade 接口、兼容映射、host 风险验证清单 |
 | Wave 3 | `in_progress` | 拆 Home/Search/Cache 超大类 | `FeatureBoundarySplitAgent`, `CacheReaderLightAgent` | `LOCK-HOME-SEARCH-SPLIT`, `LOCK-CACHE-READER-LIGHT` | 拆分前后职责对照、定向测试、静态债结果 |
-| Wave 4 | `planned` | Reader 轻触减重、mock 清理、阶段收尾 | `CacheReaderLightAgent`, `HostRiskQualityAgent`, `LeaderAgent` | `LOCK-CACHE-READER-LIGHT`, `LOCK-HOST-QUALITY`, `LOCK-REFRACTOR-DOCS` | mock 清单、closeout 文档、Phase 5 进入条件 |
+| Wave 4 | `in_progress` | Reader 轻触减重、mock 清理、阶段收尾 | `CacheReaderLightAgent`, `HostRiskQualityAgent`, `LeaderAgent` | `LOCK-CACHE-READER-LIGHT`, `LOCK-HOST-QUALITY`, `LOCK-REFRACTOR-DOCS` | mock 清单、closeout 文档、Phase 5 进入条件 |
 
 ## Wave Summary Rules
 - 每次波次切换都必须：
@@ -210,9 +210,17 @@
     - `android/app/src/main/java/com/novel/page/search/repository/SearchRepository.kt`
     - `android/app/src/test/java/com/novel/page/search/repository/SearchQueryRepositoryTest.kt`
     - commit: `378937c`
+- `Wave 4 / W4-R01`
+  - 新增 `ReaderSettingsCoordinator` 最小实现
+  - 当前先将 `ReaderViewModel` 中初始设置加载与设置更新结果回灌状态的 orchestration 收口到独立 coordinator，不触碰分页/翻页核心算法
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderSettingsCoordinator.kt`
+    - `android/app/src/main/java/com/novel/page/read/viewmodel/ReaderViewModel.kt`
+    - `android/app/src/test/java/com/novel/page/read/viewmodel/ReaderSettingsCoordinatorTest.kt`
+    - commit: `1da701f`
 
 ## 下一步
-- 按静默连续推进协议切到 Wave 4：
-  - `W4-R01` `ReaderSettingsCoordinator`
+- 按静默连续推进协议继续 Wave 4：
   - `W4-R02` `ReaderHistoryCoordinator`
+  - `W4-R03` `ReaderMappingHelper`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

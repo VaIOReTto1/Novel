@@ -242,9 +242,20 @@
   - 证据：
     - `docs/refactor/phase-4/mock-inventory-report.md`
     - commit: `a5680aa`
+- `Wave 4 / W4-M02`
+  - 首批低风险生产 mock 清理已执行
+  - 当前已完成：
+    - 移除 `SearchRankingRepository` 的榜单补假条目
+    - 移除 `SearchResultViewModel` 的重复分类兜底
+  - 证据：
+    - `android/app/src/main/java/com/novel/page/search/repository/SearchRankingRepository.kt`
+    - `android/app/src/test/java/com/novel/page/search/repository/SearchRankingRepositoryTest.kt`
+    - commit: `b3c2eb0`
+    - `android/app/src/main/java/com/novel/page/search/viewmodel/SearchResultViewModel.kt`
+    - commit: `cc29469`
 
 ## 下一步
 - 按静默连续推进协议继续 Wave 4：
-  - `W4-M02` `生产 mock 清理`
   - `W4-Q01` `touched-files 静态债清零`
+  - `W4-Q02` `repo 级静态债对比`
 - `W2-A11` 保持待补证状态，直到设备可用或成为最后唯一 blocker

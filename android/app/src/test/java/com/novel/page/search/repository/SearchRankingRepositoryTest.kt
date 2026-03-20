@@ -8,7 +8,7 @@ import org.junit.Test
 class SearchRankingRepositoryTest {
 
     @Test
-    fun getNovelRanking_usesPrimaryDataAndPadsToTwenty() {
+    fun getNovelRanking_usesPrimaryDataWithoutPaddingMockRows() {
         runBlocking {
             val ranking = SearchRankingRepository().getNovelRanking(
                 primary = {
@@ -20,11 +20,10 @@ class SearchRankingRepositoryTest {
                 fallback = { error("fallback should not be called") },
             )
 
-            assertThat(ranking).hasSize(20)
+            assertThat(ranking).hasSize(2)
             assertThat(ranking.first()).isEqualTo(
                 SearchRankingItem(id = 1, title = "Novel-1", author = "Author-1", rank = 1),
             )
-            assertThat(ranking[2].title).isEqualTo("测试小说3")
         }
     }
 
@@ -47,16 +46,14 @@ class SearchRankingRepositoryTest {
     }
 
     @Test
-    fun getNewBookRanking_returnsSyntheticListWhenBothSourcesFail() {
+    fun getNewBookRanking_returnsEmptyListWhenBothSourcesFail() {
         runBlocking {
             val ranking = SearchRankingRepository().getNewBookRanking(
                 primary = { error("primary failed") },
                 fallback = { error("fallback failed") },
             )
 
-            assertThat(ranking).hasSize(20)
-            assertThat(ranking.first().title).isEqualTo("新书推荐1")
-            assertThat(ranking.first().author).isEqualTo("新人作者1")
+            assertThat(ranking).isEmpty()
         }
     }
 }

@@ -71,22 +71,6 @@ internal class SearchRankingRepository {
             )
         }
 
-        if (realData.size >= 20) {
-            return realData.toImmutableList()
-        }
-
-        val padded = realData.toMutableList()
-        val startIndex = realData.size + 1
-        for (rank in startIndex..20) {
-            padded.add(
-                SearchRankingItem(
-                    id = 1_000L * rank,
-                    title = "$fallbackTitle$rank",
-                    author = "$fallbackAuthor$rank",
-                    rank = rank,
-                ),
-            )
-        }
-        return padded.toImmutableList()
+        return realData.toImmutableList()
     }
 }

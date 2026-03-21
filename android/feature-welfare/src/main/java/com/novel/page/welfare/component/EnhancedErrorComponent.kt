@@ -9,8 +9,6 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,42 +44,19 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- * 增强版错误页面组件
- * 
- * 功能特点：
- * - 根据错误类型显示不同的图标和提示
- * - 流畅的动画效果
- * - 主题适配支持
- * - 可访问性优化
- * - 多种重试选项
- * 
- * 用户体验优化：
- * - 友好的错误提示信息
- * - 明确的操作指引
- * - 视觉层次清晰
- */
-
-/**
- * 错误类型枚举
- */
 enum class ErrorType {
-    NETWORK_ERROR,      // 网络错误
-    SSL_ERROR,          // SSL证书错误
-    HTTP_ERROR,         // HTTP错误
-    TIMEOUT_ERROR,      // 超时错误
-    UNKNOWN_ERROR       // 未知错误
+    NETWORK_ERROR,
+    SSL_ERROR,
+    HTTP_ERROR,
+    TIMEOUT_ERROR,
+    UNKNOWN_ERROR
 }
 
-/**
- * 错误信息数据类
- */
 data class ErrorInfo(
     val type: ErrorType,
     val title: String,
@@ -91,9 +66,6 @@ data class ErrorInfo(
     val secondaryAction: String? = null
 )
 
-/**
- * 增强版错误组件
- */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun EnhancedErrorComponent(
@@ -103,22 +75,16 @@ fun EnhancedErrorComponent(
     onSecondaryAction: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    
-    // 根据错误类型获取错误信息
     val errorInfo = remember(errorType, customMessage) {
         getErrorInfo(errorType, customMessage)
     }
-    
-    // 动画状态
+
     var isVisible by remember { mutableStateOf(false) }
-    
-    // 启动动画
+
     LaunchedEffect(Unit) {
         isVisible = true
     }
-    
-    // 图标动画
+
     val iconScale by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
         animationSpec = spring(
@@ -127,8 +93,7 @@ fun EnhancedErrorComponent(
         ),
         label = "icon_scale"
     )
-    
-    // 内容动画
+
     val contentAlpha by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
         animationSpec = tween(
@@ -138,16 +103,14 @@ fun EnhancedErrorComponent(
         ),
         label = "content_alpha"
     )
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // 错误图标
         Icon(
             imageVector = errorInfo.icon,
             contentDescription = errorInfo.title,
@@ -163,10 +126,9 @@ fun EnhancedErrorComponent(
                 ErrorType.UNKNOWN_ERROR -> MaterialTheme.colorScheme.onSurfaceVariant
             }
         )
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
-        // 错误标题
+
         Text(
             text = errorInfo.title,
             style = MaterialTheme.typography.headlineSmall.copy(
@@ -177,10 +139,9 @@ fun EnhancedErrorComponent(
             textAlign = TextAlign.Center,
             modifier = Modifier.alpha(contentAlpha)
         )
-        
+
         Spacer(modifier = Modifier.height(12.dp))
-        
-        // 错误描述
+
         Text(
             text = errorInfo.message,
             style = MaterialTheme.typography.bodyMedium,
@@ -191,10 +152,9 @@ fun EnhancedErrorComponent(
                 .alpha(contentAlpha)
                 .padding(horizontal = 16.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(32.dp))
-        
-        // 操作按钮区域
+
         AnimatedVisibility(
             visible = isVisible,
             enter = slideInVertically(
@@ -215,7 +175,6 @@ fun EnhancedErrorComponent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // 主要操作按钮
                 Button(
                     onClick = onRetry,
                     modifier = Modifier
@@ -239,8 +198,7 @@ fun EnhancedErrorComponent(
                         )
                     )
                 }
-                
-                // 次要操作按钮
+
                 errorInfo.secondaryAction?.let { secondaryText ->
                     onSecondaryAction?.let { action ->
                         OutlinedButton(
@@ -262,10 +220,9 @@ fun EnhancedErrorComponent(
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
-        // 额外提示信息
+
         AnimatedVisibility(
             visible = isVisible,
             enter = fadeIn(
@@ -309,9 +266,6 @@ fun EnhancedErrorComponent(
     }
 }
 
-/**
- * 根据错误类型获取错误信息
- */
 private fun getErrorInfo(errorType: ErrorType, customMessage: String?): ErrorInfo {
     return when (errorType) {
         ErrorType.NETWORK_ERROR -> {
@@ -358,9 +312,6 @@ private fun getErrorInfo(errorType: ErrorType, customMessage: String?): ErrorInf
     }
 }
 
-/**
- * 获取帮助文本
- */
 private fun getHelpText(errorType: ErrorType): String {
     return when (errorType) {
         ErrorType.NETWORK_ERROR -> "确保设备已连接到互联网，或尝试切换到其他网络"

@@ -7,5 +7,6 @@ include ':core-common'
 include ':core-bridge-contract'
 include ':core-storage'
 include ':core-network'
+include ':feature-welfare'
 include ':macrobenchmark'
 includeBuild('../node_modules/@react-native/gradle-plugin')

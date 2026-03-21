@@ -18,7 +18,7 @@
 | Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
 | Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
 | Phase 5 | Gradle 模块化准备与拆分 | validated | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
-| Phase 6 | 性能专项与基准治理 | planned | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
+| Phase 6 | 性能专项与基准治理 | in_progress | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
 
 ## 最近验证结论
 - `V0-01 ~ V0-06` 已全部具备绿色验证证据，Phase 0 已完成。

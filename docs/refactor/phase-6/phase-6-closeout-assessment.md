@@ -4,7 +4,7 @@
 - 阶段：`Phase 6 - 性能专项与基准治理`
 - 关闭状态：`validated`
 - 评审目标：确认 `Phase 6` 已在 `Phase 5` 验证后的模块边界上建立启动、滚动、搜索、Reader、Welfare/WebView、RN Host / Bridge 的可追溯性能证据与预算入口，并为 `Phase 7` 固定进入条件。
-- 发布结论：`approved for closeout`
+- 发布结论：`允许关闭`
 
 ## 评审范围
 - `docs/refactor/phases/phase-6-performance-governance.md`
@@ -29,22 +29,22 @@
 
 ### 第二轮主审
 - 二次逐字检查：
-  - 是否仍把 `DN2101` 的设备 compile blocker 误写成仓库回归。
+  - 是否仍把 `DN2101` 的设备 compile 阻塞项误写成仓库回归。
   - 是否把尚未取得的 Reader flip / settings direct sample 伪装成已测量结果。
   - 是否已经把 `Phase 7` 入口固定在包体积、依赖与构建效率治理。
 
 ### 作者闭环
-- 作者统一以“证据落盘 + accepted blocker 声明 + 阶段状态切换 + 优化欠账留痕”完成闭环。
+- 作者统一以“证据落盘 + 已接受阻塞项声明 + 阶段状态切换 + 优化欠账留痕”完成闭环。
 
 ## V6-01 ~ V6-06 结论
 | ID | 结论 | 关键依据 | 关闭判断 |
 | --- | --- | --- | --- |
 | V6-01 | Stage 3 性能 baseline 已形成可追溯入口 | `stage-3-performance-baseline-2026-03-21.md` 与全部专项 evidence 文档 | `green` |
-| V6-02 | 启动预算成立，baseline profile blocker 已被客观固化 | startup benchmark 通过、baseline profile run 阻塞、direct device compile blocker | `green` |
+| V6-02 | 启动预算成立，baseline profile 阻塞项已被客观固化 | startup benchmark 通过、baseline profile run 阻塞、direct device compile blocker | `green` |
 | V6-03 | 首页 / 搜索 / Reader 关键链路均已有正式 baseline 文档 | scroll benchmark、search log sample、reader baseline 文档 | `green` |
 | V6-04 | Welfare / WebView / Bridge 已形成聚合专项文档 | welfare log sample、RN Host rerun、bridge contract / RN smoke | `green` |
 | V6-05 | 性能观测模板已闭环 | `performance-budget-summary.md` 与统一 run-doc 模板 | `green` |
-| V6-06 | Stage 3 closeout 与 Phase 7 进入条件已明确 | `stage-3-closeout-summary.md`、`phase-7-size-dependency-build-governance.md` | `green` |
+| V6-06 | Stage 3 关闭总结与 Phase 7 进入条件已明确 | `stage-3-closeout-summary.md`、`phase-7-size-dependency-build-governance.md` | `green` |
 
 ## 代码与文档产出摘要
 ### Benchmark 主线
@@ -61,12 +61,12 @@
   - 启动 benchmark 文档
   - 滚动 benchmark 文档
   - baseline profile 运行记录
-  - direct device compile blocker 文档
+  - direct device compile 阻塞项文档
   - search / reader / welfare-webview-host 专项文档
   - 统一 `performance-budget-summary.md`
 
 ### 阶段收尾
-- `Phase 6` 门禁文档、看板、控制面板与 `Stage 3 closeout` 已切换到关闭口径。
+- `Phase 6` 门禁文档、看板、控制面板与 `Stage 3 关闭总结` 已切换到关闭口径。
 - `Phase 7` 入口文档已补齐，避免关闭后出现“状态已切换但无权威宿主文档”的问题。
 
 ## 与原始蓝图的差异
@@ -88,7 +88,7 @@
   - Welfare/WebView 初始化重复路径收敛
   - 搜索结果页首开非必要加载治理
   - RN Host 主题事件与 ReactRootView 生命周期进一步优化
-- 这些项应进入后续性能专项 backlog，而不应在文档叙述中被算作“已完成”。
+- 这些项应进入后续性能专项待办池，而不应在文档叙述中被算作“已完成”。
 
 ## 修订记录
 | 日期 | 修订项 | 影响文档 | 结果 |
@@ -98,7 +98,7 @@
 | 2026-03-21 | 关闭 `Phase 6` 并切换 `Phase 7 planned` | `README.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md`, `decision-log.md` | 完成 |
 
 ## 残余风险
-- `DN2101` 的 `cmd package compile` 仍不可用；这已被降级为 accepted environment blocker，而不是 `com.novel` 回归。
+- `DN2101` 的 `cmd package compile` 仍不可用；这已被降级为已接受的环境阻塞项，而不是 `com.novel` 回归。
 - Reader 当前仍缺少可重复的：
   - flip action 直接数值样本
   - settings update 直接数值样本
@@ -108,7 +108,7 @@
 - 结论：`通过`
 - 说明：
   - `V6-01 ~ V6-06` 已全部闭环
-  - 基线、预算、blocker 和 residual risk 都已客观留痕
+  - 基线、预算、阻塞项和残余风险都已客观留痕
   - `Phase 7` 入口已固定，不需要重新解释 `Stage 3` 结论
   - 但本轮不应被表述为“性能优化已经做完”
 

@@ -5,7 +5,7 @@
 - 阶段状态：`planned`
 - 门禁模式：`严格门禁`
 - 最近结论：`Stage 2 = validated`。`Phase 3` 与 `Phase 4` 已完成基础设施收口、边界收口、宿主页补证、静态债冲刺与 closeout 文档闭环，当前允许切换到 `Phase 5 planned`。
-- 下一步：基于 `Phase 5` 进入清单启动真正的模块化准备，不在本轮继续扩 `Phase 4` 范围。
+- 下一步：按 `Stage 3 = Phase 5-6` 的新文档体系启动模块化准备与性能专项规划。
 - 当前 Phase 默认编制：`5 helpers + 1 Leader（planned baseline）`
 - 当前激活波次：`n/a`
 
@@ -18,6 +18,7 @@
 | Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
 | Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
 | Phase 5 | Gradle 模块化准备与拆分 | planned | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
+| Phase 6 | 性能专项与基准治理 | planned | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
 
 ## 最近验证结论
 - `V0-01 ~ V0-06` 已全部具备绿色验证证据，Phase 0 已完成。
@@ -32,7 +33,9 @@
 - [总重构路线图](./master-roadmap.md)
 - [第一阶段重构总结（Phase 0-2）](./stage-1-phase-0-2-summary.md)
 - [第二阶段重构计划（Stage 2 = Phase 3-4）](./stage-2-phase-3-4-plan.md)
-- [第二阶段当前状态文档](./stage-2-closeout-summary.md)
+- [第二阶段关闭总结](./stage-2-closeout-summary.md)
+- [第三阶段重构计划（Stage 3 = Phase 5-6）](./stage-3-phase-5-6-plan.md)
+- [第三阶段当前状态文档](./stage-3-closeout-summary.md)
 - [第一阶段关闭总结（Phase 2 closeout）](./phase-2/phase-2-closeout-assessment.md)
 - [Phase 3 关闭评审与签字确认报告](./phase-3/phase-3-closeout-assessment.md)
 - [Phase 0 - 基线与控制面板](./phases/phase-0-foundation.md)
@@ -40,6 +43,8 @@
 - [Phase 2 - 质量门禁与自动化护栏](./phases/phase-2-quality-gates.md)
 - [Phase 3 - 基础设施收口](./phases/phase-3-infra-consolidation.md)
 - [Phase 4 - 边界收口与超大类拆分](./phases/phase-4-boundary-and-class-split.md)
+- [Phase 5 - Gradle 模块化与边界搬迁](./phases/phase-5-gradle-modularization.md)
+- [Phase 6 - 性能专项与基准治理](./phases/phase-6-performance-governance.md)
 - [Phase 4 Wave Tracker](./phase-4/phase-4-wave-tracker.md)
 - [Phase 4 包边界图与迁移映射](./phase-4/package-boundary-map.md)
 - [Phase 4 超大类职责切片图](./phase-4/large-class-responsibility-slices.md)
@@ -55,6 +60,8 @@
 - [Phase 0-2 验证看板](./tracking/phase-0-2-validation-board.md)
 - [Phase 3-4 验证看板](./tracking/phase-3-4-validation-board.md)
 - [第二阶段静态债基线](./tracking/stage-2-static-debt-baseline.md)
+- [第三阶段静态债基线](./tracking/stage-3-static-debt-baseline.md)
+- [Phase 5-6 验证看板](./tracking/phase-5-6-validation-board.md)
 - [Subagent Dispatch Log](./tracking/subagent-dispatch-log.md)
 - [Rollback Index](./tracking/rollback-index.md)
 - [偏差与决策日志](./tracking/decision-log.md)

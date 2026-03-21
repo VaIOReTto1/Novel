@@ -89,6 +89,24 @@
 ### Phase 8+
 - 建设可观测性、灰度、特性开关、团队治理和长期演进机制。
 
+## 5.0 Stage 分组建议
+- `Stage 1 = Phase 0-2`
+  - 基线、发布安全、质量护栏
+- `Stage 2 = Phase 3-4`
+  - 基础设施收口、边界收口与超大类拆分
+- `Stage 3 = Phase 5-6`
+  - 真正模块化、性能专项与预算治理
+- `Stage 4 = Phase 7-8+`
+  - 包体积/依赖/构建效率治理，以及可观测性、灰度和长期机制建设
+
+### 为什么 Stage 3 不是 `Phase 5-7`
+- `Phase 5` 与 `Phase 6` 强耦合：
+  - 先有稳定模块图，性能专项才有清晰观测边界
+  - 性能预算要建立在模块边界不再大幅漂移的前提上
+- `Phase 7` 更适合在 `Phase 5-6` 完成后单独处理：
+  - 包体积、依赖和构建效率基线会被模块化大幅改变
+  - 若提前并入，会让阶段目标过宽且基线持续漂移
+
 ## 5.1 Phase-aware Subagent 规划规则
 - 从本规则生效起，每个新 phase 文档都必须新增 `协作编制` 区块。
 - `协作编制` 至少必须包含：
@@ -140,7 +158,9 @@
 - 采用严格门禁：
   - `Phase 0 validated -> Phase 1`
   - `Phase 1 validated -> Phase 2`
-  - `Phase 2 validated -> 后续架构收口与模块化`
+  - `Phase 2 validated -> Stage 2`
+  - `Stage 2 validated -> Stage 3`
+  - `Stage 3 validated -> Stage 4`
 - 任一阶段存在 `red` 验证项时不得关闭阶段。
 - 阶段关闭必须同步更新：
   - `docs/refactor/README.md`

@@ -29,6 +29,7 @@
 - `android/core-common` 已落地并完成首轮共享基础抽离。
 - `android/core-storage` 已落地并完成模块级单测。
 - `android/core-network` 已以“契约优先”方式落地首批抽离，当前仍需继续向共享基础设施深化。
+- `android/core-bridge-contract` 已落地并完成第一批纯桥接 delegate/helper 抽离。
 - `Phase 5` 已从 `planned` 切换为 `in_progress`，后续不得再按纯文档准备态解释本阶段。
 
 ## 固定执行顺序

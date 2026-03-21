@@ -19,10 +19,10 @@
 | ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | V5-01 | Phase 5 | 模块图与依赖规则稳定 | 根工程模块图、依赖方向、禁止环依赖规则明确 | `docs/refactor/stage-3-phase-5-6-plan.md`, `docs/refactor/phases/phase-5-gradle-modularization.md`, `settings.gradle*`, `docs/refactor/phase-5/module-graph-current-state.md` | `settings.gradle` 已纳入 `:core-common / :core-storage / :core-network`，共享构建约定 `android/gradle/android-library-common.gradle` 已落地，当前模块图快照已归档；依赖规则仍会随着 `core-bridge-contract` 与首批 feature 模块继续收口 | `in_progress` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
-| V5-02 | Phase 5 | 首批 `core/*` 模块稳定 | `core-common / core-network / core-storage / core-bridge-contract` 可构建可集成 | `phase-5` 文档、模块源码、模块级测试命令 | `core-storage` 已落地并通过模块级单测；`core-network` 已以契约优先方式落地并通过模块级验证；`core-common` 已完成首批共享基础抽离并通过模块级单测；`core-bridge-contract` 仍未完成 | `in_progress` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
+| V5-02 | Phase 5 | 首批 `core/*` 模块稳定 | `core-common / core-network / core-storage / core-bridge-contract` 可构建可集成 | `phase-5` 文档、模块源码、模块级测试命令 | `core-storage`、`core-network`、`core-common`、`core-bridge-contract` 均已落地，并已通过模块级单测；`app:testDebugUnitTest` 当前继续通过 | `ready_for_validation` | `green` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 | V5-03 | Phase 5 | 首批 `feature/*` 模块稳定 | `feature-home / feature-search / feature-welfare / feature-rn-host` 可构建可集成 | `phase-5` 文档、模块源码、回归命令 | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 | V5-04 | Phase 5 | Bridge / RN Host 跨模块兼容稳定 | route、payload、RN Host 语义不变 | Bridge contract、host 验证、模块集成证据 | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
-| V5-05 | Phase 5 | 模块级 build/test/lint 矩阵稳定 | 模块化后命令矩阵可执行且可追溯 | 模块级 CI/workflow 文档、命令证据 | 当前已验证 `:core-common:testDebugUnitTest`、`:core-storage:testDebugUnitTest`、`:core-network:testDebugUnitTest` 与 `:app:testDebugUnitTest`；完整模块矩阵仍待随新增模块补齐 | `in_progress` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
+| V5-05 | Phase 5 | 模块级 build/test/lint 矩阵稳定 | 模块化后命令矩阵可执行且可追溯 | 模块级 CI/workflow 文档、命令证据 | 当前已验证 `:core-common:testDebugUnitTest`、`:core-bridge-contract:testDebugUnitTest`、`:core-storage:testDebugUnitTest`、`:core-network:testDebugUnitTest` 与 `:app:testDebugUnitTest`；完整模块矩阵仍待随新增模块补齐 | `in_progress` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 | V5-06 | Phase 5 | Phase 6 进入条件明确 | 性能专项入口与 carried debt 清晰 | `docs/refactor/phases/phase-6-performance-governance.md`, `decision-log.md` | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 
 ## Phase 6

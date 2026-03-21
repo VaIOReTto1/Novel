@@ -21,11 +21,14 @@
   - 存储抽象与兼容层
 - `:core-network`
   - 网络契约层
+- `:core-bridge-contract`
+  - 第一批纯桥接 contract / delegate helper
 - `:macrobenchmark`
   - 基准与 profile 相关产物
 
 ## 当前依赖方向
 - `:app -> :core-common`
+- `:app -> :core-bridge-contract`
 - `:app -> :core-storage`
 - `:app -> :core-network`
 - `:app -> :macrobenchmark`
@@ -60,6 +63,7 @@
 - `BookService` 的空 `chapterUpdateTime` 回归已作为固定门禁保留。
 - `core-storage` 已稳定。
 - `core-network` 当前仍是“契约优先”首批切口，后续需要继续向共享基础设施深化。
+- `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
 
 ## 当前阻塞与下一步
@@ -67,11 +71,14 @@
   - `android/app/src/main/java/com/novel/core/adapter/StateAdapter.kt`
   - `android/app/src/main/java/com/novel/core/config/RefactorFeatureFlags.kt`
   - `android/app/src/main/java/com/novel/core/network/LegacyApiServiceAdapter.kt`
+- 当前 `core-network` 深化策略暂缓：
+  - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
-  - 建立 `core-bridge-contract` 最小模块
-  - 继续深化 `core-network`
+  - 以 `app` 作为组合入口，进入 `feature-welfare` 首轮最小切口
+  - 在单独原子主题里继续深化 `core-network`
 
 ## 验证证据
 - `android/gradlew.bat :core-common:testDebugUnitTest`
+- `android/gradlew.bat :core-bridge-contract:testDebugUnitTest`
 - `android/gradlew.bat :core-storage:testDebugUnitTest :core-network:testDebugUnitTest`
 - `android/gradlew.bat :app:testDebugUnitTest`

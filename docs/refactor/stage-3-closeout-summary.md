@@ -14,6 +14,7 @@
 - `Phase 5` 已完成文档启动，并进入真实模块化实施
 - 共享 Android library 构建约定已落地
 - `core-common` 已完成首批共享基础抽离并通过模块级验证
+- `core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离并通过模块级验证
 - `android/core-storage` 已落地
 - `android/core-network` 已以契约优先方式落地首批抽离
 - `Phase 6` 目标与边界已明确
@@ -28,12 +29,12 @@
 - `android/app/src/test/java/com/novel/utils/network/api/front/BookServiceTest.kt`
 - `android/gradle/android-library-common.gradle`
 - `android/core-common/`
+- `android/core-bridge-contract/`
 - `android/core-storage/`
 - `android/core-network/`
 
 ## 当前未完成项
 - `core-network` 仍需从“契约优先”深化到共享基础设施
-- `core-bridge-contract` 尚未落地
 - 首批 `feature/*` 模块尚未落地
 - `Phase 6` 尚未建立新 baseline
 - `Stage 3` closeout 仍未生成正式总结版

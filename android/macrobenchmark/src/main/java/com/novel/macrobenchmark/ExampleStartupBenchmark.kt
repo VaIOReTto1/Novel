@@ -16,12 +16,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Novel应用的启动性能测试
- * 
- * 测试不同编译模式下的启动性能：
- * 1. 无编译 - 模拟首次安装后的启动
- * 2. 基准配置文件 - 使用Baseline Profile优化后的启动
- * 3. 完全AOT编译 - 全量预编译的启动性能上限
+ * Novel应用的启动性能测试。
+ *
+ * 默认套件只保留 `CompilationMode.None()` 路径，
+ * 避免设备侧 `cmd package compile` blocker 让日常 baseline 全部变红。
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -35,13 +33,10 @@ class ExampleStartupBenchmark {
         packageName = "com.novel",
         metrics = listOf(StartupTimingMetric()),
         iterations = 5,
-        startupMode = StartupMode.COLD
+        startupMode = StartupMode.COLD,
+        compilationMode = CompilationMode.None()
     ) {
-        pressHome()
-        startActivityAndWait()
-        
-        // 等待首页关键内容加载完成
-        device.wait(Until.hasObject(By.text("推荐")), 10_000)
+        waitForHomeReady()
     }
 
     @Test
@@ -52,48 +47,15 @@ class ExampleStartupBenchmark {
         startupMode = StartupMode.COLD,
         compilationMode = CompilationMode.None()
     ) {
-        pressHome()
-        startActivityAndWait()
-        
-        // 等待首页关键内容加载完成
-        device.wait(Until.hasObject(By.text("推荐")), 10_000)
-    }
-
-    @Test
-    fun startupBaselineProfile() = benchmarkRule.measureRepeated(
-        packageName = "com.novel",
-        metrics = listOf(StartupTimingMetric()),
-        iterations = 5,
-        startupMode = StartupMode.COLD,
-        compilationMode = CompilationMode.Partial()
-    ) {
-        pressHome()
-        startActivityAndWait()
-        
-        // 等待首页关键内容加载完成
-        device.wait(Until.hasObject(By.text("推荐")), 10_000)
-    }
-
-    @Test
-    fun startupFullCompilation() = benchmarkRule.measureRepeated(
-        packageName = "com.novel",
-        metrics = listOf(StartupTimingMetric()),
-        iterations = 5,
-        startupMode = StartupMode.COLD,
-        compilationMode = CompilationMode.Full()
-    ) {
-        pressHome()
-        startActivityAndWait()
-        
-        // 等待首页关键内容加载完成
-        device.wait(Until.hasObject(By.text("推荐")), 10_000)
+        waitForHomeReady()
     }
 }
 
 /**
- * Novel应用的滚动性能测试
- * 
- * 测试首页LazyColumn滚动时的帧率表现
+ * Novel应用的首页滚动性能测试。
+ *
+ * 默认滚动基线同样只保留 no-compilation 路径，
+ * profile/compile 相关探针单独放到 probe 套件。
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -107,44 +69,32 @@ class ScrollPerformanceBenchmark {
         packageName = "com.novel",
         metrics = listOf(FrameTimingMetric()),
         iterations = 5,
-        startupMode = StartupMode.WARM
-    ) {
-        scrollingActions()
-    }
-
-    @Test
-    fun scrollingPerformanceBaselineProfile() = benchmarkRule.measureRepeated(
-        packageName = "com.novel",
-        metrics = listOf(FrameTimingMetric()),
-        iterations = 5,
         startupMode = StartupMode.WARM,
-        compilationMode = CompilationMode.Partial()
+        compilationMode = CompilationMode.None()
     ) {
-        scrollingActions()
+        performHomeScrollActions()
     }
+}
 
-    private fun MacrobenchmarkScope.scrollingActions() {
-        pressHome()
-        startActivityAndWait()
-        
-        // 等待首页加载
-        device.wait(Until.hasObject(By.text("推荐")), 10_000)
-        
-        // 找到可滚动的LazyColumn
-        device.findObject(By.scrollable(true))?.apply {
-            // 避免误触系统返回/多任务手势
-            setGestureMargin(device.displayWidth / 10) // 10% 屏宽边距
+internal fun MacrobenchmarkScope.waitForHomeReady() {
+    pressHome()
+    startActivityAndWait()
+    device.wait(Until.hasObject(By.text("推荐")), 10_000)
+}
 
-            // 向下快速 fling 三次
-            repeat(3) {
-                fling(Direction.DOWN)
-                device.waitForIdle()
-            }
-            // 向上回到顶部
-            repeat(3) {
-                fling(Direction.UP)
-                device.waitForIdle()
-            }
+internal fun MacrobenchmarkScope.performHomeScrollActions() {
+    waitForHomeReady()
+
+    device.findObject(By.scrollable(true))?.apply {
+        setGestureMargin(device.displayWidth / 10)
+
+        repeat(3) {
+            fling(Direction.DOWN)
+            device.waitForIdle()
+        }
+        repeat(3) {
+            fling(Direction.UP)
+            device.waitForIdle()
         }
     }
-} 
+}

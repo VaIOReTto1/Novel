@@ -33,6 +33,7 @@
 - `android/core-common` 已完成第一批共享基础抽离，`BaseMviViewModel / BaseUseCase / AppError / StableFlow` 等共享能力已脱离 `app`。
 - `android/core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离，`NavigationHostDelegate / NavigationRouteDelegate / SelectionMenuDelegate` 已脱离 `app`。
 - `android/feature-welfare` 已完成首轮最小切口，`EnhancedErrorComponent / SkeletonLoadingComponent` 已脱离 `app`。
+- `android/feature-welfare` 已继续吸收内部工具层，`WelfarePerformanceMonitor / WebViewPreloadManager / WelfareAccessibilityHelper` 已脱离 `app`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

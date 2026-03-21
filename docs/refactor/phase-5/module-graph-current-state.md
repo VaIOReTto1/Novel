@@ -30,6 +30,9 @@
   - 当前承载：
     - `EnhancedErrorComponent`
     - `SkeletonLoadingComponent`
+    - `WelfarePerformanceMonitor`
+    - `WebViewPreloadManager`
+    - `WelfareAccessibilityHelper`
 
 ## 当前依赖方向
 - `:app -> :core-common`
@@ -70,7 +73,7 @@
 - `core-storage` 已稳定。
 - `core-network` 当前仍是“契约优先”首批切口，后续需要继续向共享基础设施深化。
 - `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
-- `feature-welfare` 已完成首轮最小切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
+- `feature-welfare` 已完成两轮低风险切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
 
 ## 当前阻塞与下一步

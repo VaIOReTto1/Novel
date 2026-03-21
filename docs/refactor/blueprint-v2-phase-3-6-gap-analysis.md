@@ -140,7 +140,7 @@
   - startup / scroll benchmark 绿色套件
   - baseline profile blocker 固化
   - Search / Reader / Welfare / RN Host / Bridge 正式证据
-  - performance budget summary
+  - 性能预算摘要
 - 本轮 `Phase 6` 的弱项是：
   - 很多真实优化动作尚未展开或只做了机会盘点
   - 启动、Compose、Reader、RN Host、数据库与缓存收益复盘都没有完成原蓝图级别的系统优化闭环
@@ -164,7 +164,7 @@
 - Reader、RN Host、WebView 这些路径虽然已采证，但还没深挖到动作级和治理级。
 
 ### 后续承接阶段
-- 继续留在后续性能专项 backlog
+- 继续留在后续性能专项待办池
 - 不应误塞给 `Phase 7` 的 size/build/dependency 主线
 
 ## 总结

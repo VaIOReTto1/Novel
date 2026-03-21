@@ -21,10 +21,10 @@
 ## 进入条件
 - `Phase 6 = validated`
 - `Stage 3 = validated`
-- `Phase 6` 中的 accepted blocker 与 residual risk 已留痕，不再混入 `Phase 7` 主线
+- `Phase 6` 中的已接受阻塞项与残余风险已留痕，不再混入 `Phase 7` 主线
 
 ## 不承接的 Phase 6 性能债
-- 以下内容不属于 `Phase 7` 主线，应留在后续性能专项 backlog：
+- 以下内容不属于 `Phase 7` 主线，应留在后续性能专项待办池：
   - 启动任务压缩与 RN 预热收益继续优化
   - Reader 初始化 / 翻页 / 设置更新的进一步减重
   - Welfare / WebView 初始化重复路径收敛
@@ -61,7 +61,7 @@
 
 ### Retry Window
 - baseline / diff / build profiling：`2` 次同环境重跑
-- 若两次后仍无法得到稳定结果，必须登记 residual risk
+- 若两次后仍无法得到稳定结果，必须登记残余风险
 
 ### Escalation Window
 - 任一优化要求改变业务功能、UI 语义、route 或 bridge payload
@@ -70,7 +70,7 @@
 ### Leader-only Actions
 - 串行执行 Gradle / npm 验证
 - 统一 artifact diff / dependency diff / build-time 口径
-- 同步看板、README、决策日志与 closeout
+- 同步看板、README、决策日志与关闭总结
 
 ## 任务拆解
 | ID | Task | Expected Outcome |
@@ -79,13 +79,13 @@
 | P7.2 | 固定 Gradle / npm dependency baseline | 依赖冗余与治理顺序明确 |
 | P7.3 | 执行第一轮 size shrink | 低风险体积收益落地 |
 | P7.4 | 执行第一轮 build efficiency 治理 | clean / incremental baseline 成立 |
-| P7.5 | 输出 Stage 4 后续门禁与 closeout 入口 | 下一阶段入口清晰 |
+| P7.5 | 输出 Stage 4 后续门禁与关闭总结入口 | 下一阶段入口清晰 |
 
 ## 交付物
 - size baseline 文档
 - dependency inventory / diff 文档
 - build efficiency baseline 文档
-- Phase 7 closeout 文档
+- Phase 7 关闭总结文档
 
 ## 当前状态
 - `planned`

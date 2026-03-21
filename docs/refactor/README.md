@@ -18,7 +18,7 @@
 | Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
 | Phase 5 | Gradle 模块化准备与拆分 | validated | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
 | Phase 6 | 性能专项与基准治理 | validated | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
-| Phase 7 | 包体积、依赖与构建效率治理 | planned | `Phase 6 = validated` | size / dependency / build baseline 与 closeout 闭环 |
+| Phase 7 | 包体积、依赖与构建效率治理 | planned | `Phase 6 = validated` | size / dependency / build baseline 与关闭总结闭环 |
 
 ## 最近验证结论
 - `V0-01 ~ V0-06` 已全部具备绿色验证证据，Phase 0 已完成。
@@ -29,7 +29,7 @@
 - `V5-01 ~ V5-06` 已全部具备绿色验证证据，Phase 5 已正式完成。
 - `V6-01 ~ V6-06` 已全部具备绿色验证证据，Phase 6 已正式完成。
 - `Stage 3 = Phase 5-6` 已正式关闭并标记为 `validated`。
-- `DN2101` 的 `cmd package compile` 已被客观固化为 accepted environment blocker，不再误判为 `Phase 5/6` 仓库回归。
+- `DN2101` 的 `cmd package compile` 已被客观固化为已接受的环境阻塞项，不再误判为 `Phase 5/6` 仓库回归。
 
 ## 推荐阅读顺序
 1. [第三阶段关闭总结](./stage-3-closeout-summary.md)

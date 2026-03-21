@@ -25,12 +25,18 @@
   - 第一批纯桥接 contract / delegate helper
 - `:macrobenchmark`
   - 基准与 profile 相关产物
+- `:feature-welfare`
+  - 首轮 welfare feature 模块
+  - 当前承载：
+    - `EnhancedErrorComponent`
+    - `SkeletonLoadingComponent`
 
 ## 当前依赖方向
 - `:app -> :core-common`
 - `:app -> :core-bridge-contract`
 - `:app -> :core-storage`
 - `:app -> :core-network`
+- `:app -> :feature-welfare`
 - `:app -> :macrobenchmark`
 - 当前未引入新的模块环依赖。
 
@@ -64,6 +70,7 @@
 - `core-storage` 已稳定。
 - `core-network` 当前仍是“契约优先”首批切口，后续需要继续向共享基础设施深化。
 - `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
+- `feature-welfare` 已完成首轮最小切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
 
 ## 当前阻塞与下一步
@@ -74,11 +81,13 @@
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
-  - 以 `app` 作为组合入口，进入 `feature-welfare` 首轮最小切口
+  - 继续扩大 `feature-welfare`，直到能搬迁更多 welfare internals
+  - 进入 `feature-search` 或 `feature-home` 的首轮最小切口
   - 在单独原子主题里继续深化 `core-network`
 
 ## 验证证据
 - `android/gradlew.bat :core-common:testDebugUnitTest`
 - `android/gradlew.bat :core-bridge-contract:testDebugUnitTest`
+- `android/gradlew.bat :feature-welfare:compileDebugKotlin`
 - `android/gradlew.bat :core-storage:testDebugUnitTest :core-network:testDebugUnitTest`
 - `android/gradlew.bat :app:testDebugUnitTest`

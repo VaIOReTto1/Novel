@@ -15,6 +15,7 @@
 - 共享 Android library 构建约定已落地
 - `core-common` 已完成首批共享基础抽离并通过模块级验证
 - `core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离并通过模块级验证
+- `feature-welfare` 已完成首轮最小切口并通过模块级验证
 - `android/core-storage` 已落地
 - `android/core-network` 已以契约优先方式落地首批抽离
 - `Phase 6` 目标与边界已明确
@@ -30,6 +31,7 @@
 - `android/gradle/android-library-common.gradle`
 - `android/core-common/`
 - `android/core-bridge-contract/`
+- `android/feature-welfare/`
 - `android/core-storage/`
 - `android/core-network/`
 

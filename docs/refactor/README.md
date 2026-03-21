@@ -5,7 +5,7 @@
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
 - 最近结论：`Stage 2 = validated`。打开书籍的运行时 blocker 已由 `BookService` 空 `chapterUpdateTime` 回归修复；`core-storage` 与契约版 `core-network` 已落地，`Phase 5` 已从文档准备态进入真实实施态。
-- 下一步：继续按固定顺序推进；其中 `doc/state sync`、`build conventions`、`core-common`、`core-bridge-contract` 已落地，当前主线转入 `feature-welfare` 首轮最小切口，并在独立原子主题中继续深化 `core-network`。
+- 下一步：继续按固定顺序推进；其中 `doc/state sync`、`build conventions`、`core-common`、`core-bridge-contract` 以及 `feature-welfare` 首轮最小切口已落地，当前主线转入扩大 welfare internals 与后续 feature 模块切口，并在独立原子主题中继续深化 `core-network`。
 - 当前 Phase 默认编制：`5 helpers + 1 Leader（active baseline）`
 - 当前激活波次：`n/a`
 
@@ -32,6 +32,7 @@
 - `android/core-storage` 已作为首个稳定 `core/*` 模块落地；`android/core-network` 已以契约优先方式落地首批抽离。
 - `android/core-common` 已完成第一批共享基础抽离，`BaseMviViewModel / BaseUseCase / AppError / StableFlow` 等共享能力已脱离 `app`。
 - `android/core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离，`NavigationHostDelegate / NavigationRouteDelegate / SelectionMenuDelegate` 已脱离 `app`。
+- `android/feature-welfare` 已完成首轮最小切口，`EnhancedErrorComponent / SkeletonLoadingComponent` 已脱离 `app`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

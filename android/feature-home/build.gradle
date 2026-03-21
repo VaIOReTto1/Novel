@@ -1,0 +1,18 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+apply from: rootProject.file("gradle/android-library-common.gradle")
+
+android {
+    namespace "com.novel.feature.home"
+    configureNovelAndroidLibrary(delegate, false)
+}
+
+dependencies {
+    implementation "androidx.compose.runtime:runtime:1.8.2"
+
+    testImplementation "junit:junit:4.13.2"
+}

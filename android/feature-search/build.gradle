@@ -1,0 +1,18 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: rootProject.file("gradle/android-library-common.gradle")
+
+android {
+    namespace "com.novel.feature.search"
+    configureNovelAndroidLibrary(delegate, false)
+}
+
+dependencies {
+    implementation project(':core-storage')
+    implementation "javax.inject:javax.inject:1"
+
+    testImplementation "junit:junit:4.13.2"
+}

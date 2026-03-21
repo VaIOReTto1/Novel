@@ -34,6 +34,8 @@
 - `android/core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离，`NavigationHostDelegate / NavigationRouteDelegate / SelectionMenuDelegate` 已脱离 `app`。
 - `android/feature-welfare` 已完成首轮最小切口，`EnhancedErrorComponent / SkeletonLoadingComponent` 已脱离 `app`。
 - `android/feature-welfare` 已继续吸收内部工具层，`WelfarePerformanceMonitor / WebViewPreloadManager / WelfareAccessibilityHelper` 已脱离 `app`。
+- `android/feature-search` 已完成首轮最小切口，`SearchPreferenceStorage` 已脱离 `app`。
+- `android/feature-home` 已完成首轮最小切口，`HomePerformanceOptimizer` 已脱离 `app`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

@@ -6,29 +6,11 @@ plugins {
     id 'kotlin-kapt'
 }
 
+apply from: rootProject.file("gradle/android-library-common.gradle")
+
 android {
     namespace "com.novel.core.storage"
-    compileSdk rootProject.ext.compileSdkVersion
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        consumerProguardFiles "consumer-rules.pro"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
-    buildFeatures {
-        buildConfig = false
-    }
+    configureNovelAndroidLibrary(delegate, false)
 }
 
 dependencies {

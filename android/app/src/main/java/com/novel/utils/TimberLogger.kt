@@ -1,9 +1,8 @@
 package com.novel.utils
 
 import androidx.compose.runtime.Stable
-import com.novel.BuildConfig
 import com.novel.core.StableThrowable
-import timber.log.Timber
+import com.novel.core.logging.CoreLogger
 
 /**
  * 统一Timber日志工具类
@@ -31,15 +30,8 @@ import timber.log.Timber
  */
 @Stable
 object TimberLogger {
-    
-    /**
-     * 调试日志
-     * 仅在Debug版本中输出，Release版本自动过滤
-     */
     fun d(tag: String, message: String) {
-        if (BuildConfig.DEBUG) {
-            Timber.tag(tag).d(message)
-        }
+        CoreLogger.d(tag, message)
     }
     
     /**
@@ -47,7 +39,7 @@ object TimberLogger {
      * 在所有版本中输出
      */
     fun i(tag: String, message: String) {
-        Timber.tag(tag).i(message)
+        CoreLogger.i(tag, message)
     }
     
     /**
@@ -55,11 +47,11 @@ object TimberLogger {
      * 在所有版本中输出
      */
     fun w(tag: String, message: String) {
-        Timber.tag(tag).w(message)
+        CoreLogger.w(tag, message)
     }
 
     fun w(tag: String, message: String, throwable: Throwable) {
-        Timber.tag(tag).w(throwable, message)
+        CoreLogger.w(tag, message, throwable)
     }
     
     /**
@@ -67,12 +59,7 @@ object TimberLogger {
      * 在所有版本中输出，专门用于Compose稳定的异常处理
      */
     fun w(tag: String, message: String, stableThrowable: StableThrowable) {
-        val warningMessage = buildString {
-            append(message)
-            stableThrowable.message?.let { append(" - ").append(it) }
-            stableThrowable.cause?.let { append(" (Caused by: ").append(it).append(")") }
-        }
-        Timber.tag(tag).w(warningMessage)
+        CoreLogger.w(tag, message, stableThrowable)
     }
     
     /**
@@ -80,7 +67,7 @@ object TimberLogger {
      * 在所有版本中输出
      */
     fun e(tag: String, message: String) {
-        Timber.tag(tag).e(message)
+        CoreLogger.e(tag, message)
     }
     
     /**
@@ -88,7 +75,7 @@ object TimberLogger {
      * 在所有版本中输出
      */
     fun e(tag: String, message: String, throwable: Throwable) {
-        Timber.tag(tag).e(throwable, message)
+        CoreLogger.e(tag, message, throwable)
     }
     
     /**
@@ -96,12 +83,7 @@ object TimberLogger {
      * 在所有版本中输出，专门用于Compose稳定的异常处理
      */
     fun e(tag: String, message: String, stableThrowable: StableThrowable) {
-        val errorMessage = buildString {
-            append(message)
-            stableThrowable.message?.let { append(" - ").append(it) }
-            stableThrowable.cause?.let { append(" (Caused by: ").append(it).append(")") }
-        }
-        Timber.tag(tag).e(errorMessage)
+        CoreLogger.e(tag, message, stableThrowable)
     }
     
     /**
@@ -109,9 +91,7 @@ object TimberLogger {
      * 仅在Debug版本中输出，Release版本自动过滤
      */
     fun v(tag: String, message: String) {
-        if (BuildConfig.DEBUG) {
-            Timber.tag(tag).v(message)
-        }
+        CoreLogger.v(tag, message)
     }
     
     /**
@@ -119,8 +99,6 @@ object TimberLogger {
      * 仅在Debug版本中输出，用于性能监控和调试
      */
     fun performance(tag: String, operationName: String, durationMs: Long) {
-        if (BuildConfig.DEBUG) {
-            Timber.tag(tag).d("Performance: $operationName took ${durationMs}ms")
-        }
+        CoreLogger.performance(tag, operationName, durationMs)
     }
 }

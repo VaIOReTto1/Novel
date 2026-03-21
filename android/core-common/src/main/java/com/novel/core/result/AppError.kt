@@ -35,11 +35,8 @@ sealed interface AppError {
             is SocketTimeoutException,
             is TimeoutCancellationException,
             is TimeoutException -> Timeout(throwable.message, throwable)
-
             is JsonParseException -> Serialization(throwable.message, throwable)
-
             is IOException -> Network(throwable.message, throwable)
-
             else -> Unexpected(throwable.message, throwable)
         }
     }

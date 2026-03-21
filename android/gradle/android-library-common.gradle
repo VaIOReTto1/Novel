@@ -1,0 +1,23 @@
+ext.configureNovelAndroidLibrary = { androidExt, boolean includeBuildConfig = false ->
+    androidExt.compileSdk rootProject.ext.compileSdkVersion
+
+    androidExt.defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    androidExt.compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    androidExt.kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    androidExt.buildFeatures {
+        buildConfig = includeBuildConfig
+    }
+}

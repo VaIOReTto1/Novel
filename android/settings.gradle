@@ -3,6 +3,7 @@ plugins { id("com.facebook.react.settings") }
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 rootProject.name = 'Novel'
 include ':app'
+include ':core-common'
 include ':core-storage'
 include ':core-network'
 include ':macrobenchmark'

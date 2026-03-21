@@ -5,7 +5,7 @@
 - 当前状态：`open`
 - 当前结论：
   - `Phase 5 = validated`
-  - `Phase 6 = planned`
+  - `Phase 6 = in_progress`
   - `Stage 3` 尚未关闭，正式 closeout 延后到 `V5-* / V6-*` 全绿后生成
 
 ## 当前达成情况
@@ -21,7 +21,7 @@
 - `android/core-storage` 已落地
 - `android/core-network` 已以契约优先方式落地首批抽离
 - `Phase 5` 的模块图、首批 core/feature 模块、兼容证据与验证矩阵已闭环
-- `Phase 6` 目标与边界已明确
+- `Phase 6` 已正式启动，并落下首份 baseline evidence 文档
 
 ## 当前核心证据入口
 - `docs/refactor/stage-3-phase-5-6-plan.md`
@@ -42,10 +42,12 @@
 - `android/core-network/`
 - `docs/refactor/phase-5/host-compat-validation-2026-03-21.md`
 - `docs/refactor/phase-5/module-verification-matrix-2026-03-21.md`
+- `docs/refactor/phase-5/phase-5-closeout-assessment.md`
+- `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md`
 
 ## 当前未完成项
 - `core-network` 仍需从“契约优先”深化到共享基础设施，但已转入 Phase 6 可承接的 carried debt
-- `Phase 6` 尚未建立新 baseline
+- `Phase 6` 的 benchmark / baseline profile 仍未拿到稳定 connected run 输出
 - `Stage 3` closeout 仍未生成正式总结版
 
 ## 是否允许进入下一阶段

@@ -28,7 +28,7 @@
 ## Phase 6
 | ID | Phase | Item | Expected | Evidence | Actual | Status | Result Analysis | Owner | Validator | Validated On |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| V6-01 | Phase 6 | Stage 3 性能 baseline 稳定 | 启动、滚动、Reader、WebView/Bridge baseline 可追溯 | `docs/refactor/phases/phase-6-performance-governance.md`, baseline 文档、证据归档 | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
+| V6-01 | Phase 6 | Stage 3 性能 baseline 稳定 | 启动、滚动、Reader、WebView/Bridge baseline 可追溯 | `docs/refactor/phases/phase-6-performance-governance.md`, `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md` | 启动日志样本已采集，macrobenchmark / baseline profile 连接真机命令已执行，但当前仍被 release/benchmark 编译缓存与 bundle 生成不稳定阻塞 | `in_progress` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 | V6-02 | Phase 6 | 启动预算与 baseline profile 稳定 | 冷启动/热启动预算和 profile 证据成立 | benchmark / baseline profile 证据 | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 | V6-03 | Phase 6 | 首页/搜索/Reader 关键链路预算稳定 | 核心交互无未解释回退 | 专项性能报告、回归命令 | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |
 | V6-04 | Phase 6 | Welfare/WebView/Bridge 性能验证稳定 | WebView、RN Host、Bridge 关键路径预算稳定 | 专项报告与运行证据 | 待执行 | `planned` | `yellow` | 当前重构实施者 | 阶段门禁批准者 | `n/a` |

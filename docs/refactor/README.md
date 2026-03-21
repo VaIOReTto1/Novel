@@ -2,11 +2,11 @@
 
 ## 当前状态
 - 当前阶段：`Phase 6`
-- 阶段状态：`planned`
+- 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：`Phase 5 = validated`。打开书籍 blocker、首批 core/feature 模块、Bridge / RN Host 兼容证据、模块矩阵与 Phase 6 入口条件均已闭环。
-- 下一步：在现有模块边界上启动 `Phase 6` 的性能 baseline、预算与专项回归治理。
-- 当前 Phase 默认编制：`3 helpers + 1 Leader（planned baseline）`
+- 最近结论：`Phase 5 = validated`。Phase 5 closeout 已落盘，Phase 6 已从已验证模块图正式启动，并落下首份 baseline evidence 文档。
+- 下一步：先稳定 macrobenchmark / baseline profile connected runs，再补首页/搜索/Reader/WebView-Bridge 的专项性能基线。
+- 当前 Phase 默认编制：`3 helpers + 1 Leader（active baseline）`
 - 当前激活波次：`n/a`
 
 ## 阶段状态总表
@@ -54,8 +54,12 @@
 - [Phase 3 - 基础设施收口](./phases/phase-3-infra-consolidation.md)
 - [Phase 4 - 边界收口与超大类拆分](./phases/phase-4-boundary-and-class-split.md)
 - [Phase 5 - Gradle 模块化与边界搬迁](./phases/phase-5-gradle-modularization.md)
+- [Phase 5 关闭评审与签字确认报告](./phase-5/phase-5-closeout-assessment.md)
 - [Phase 5 模块图现状](./phase-5/module-graph-current-state.md)
+- [Phase 5 宿主页兼容验证](./phase-5/host-compat-validation-2026-03-21.md)
+- [Phase 5 模块验证矩阵](./phase-5/module-verification-matrix-2026-03-21.md)
 - [Phase 6 - 性能专项与基准治理](./phases/phase-6-performance-governance.md)
+- [Phase 6 首轮性能基线](./phase-6/stage-3-performance-baseline-2026-03-21.md)
 - [Phase 4 Wave Tracker](./phase-4/phase-4-wave-tracker.md)
 - [Phase 4 包边界图与迁移映射](./phase-4/package-boundary-map.md)
 - [Phase 4 超大类职责切片图](./phase-4/large-class-responsibility-slices.md)

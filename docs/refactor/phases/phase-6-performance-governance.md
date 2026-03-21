@@ -52,6 +52,9 @@
 - `core-network` 的 carried debt 已在 `decision-log.md` 中保留，不再阻塞 Phase 6 启动
 - Reader 仍留在 `app`，Phase 6 只能在现有 Reader 边界上做性能治理，不得借机提前做 Reader 最终模块化
 
+## 当前基线入口
+- `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md`
+
 ## 协作编制
 ### Leader Mode
 - `single leader / three helpers`
@@ -150,4 +153,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`planned`
+- 当前状态：`in_progress`

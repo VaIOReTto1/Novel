@@ -1,0 +1,58 @@
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.ScrollPerformanceBenchmark
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.novel.macrobenchmark.ScrollPerformanceBenchmark:
+INSTRUMENTATION_STATUS: test=scrollingPerformance
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ScrollPerformanceBenchmark_scrollingPerformance_iter000_2026-03-21-14-03-39.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ScrollPerformanceBenchmark_scrollingPerformance_iter000_2026-03-21-14-03-39.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ScrollPerformanceBenchmark_scrollingPerformance_iter001_2026-03-21-14-03-54.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ScrollPerformanceBenchmark_scrollingPerformance_iter001_2026-03-21-14-03-54.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ScrollPerformanceBenchmark_scrollingPerformance_iter002_2026-03-21-14-04-08.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ScrollPerformanceBenchmark_scrollingPerformance_iter002_2026-03-21-14-04-08.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ScrollPerformanceBenchmark_scrollingPerformance_iter003_2026-03-21-14-04-22.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ScrollPerformanceBenchmark_scrollingPerformance_iter003_2026-03-21-14-04-22.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ScrollPerformanceBenchmark_scrollingPerformance_iter004_2026-03-21-14-04-44.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ScrollPerformanceBenchmark_scrollingPerformance_iter004_2026-03-21-14-04-44.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: android.studio.display.benchmark=ScrollPerformanceBenchmark_scrollingPerformance
+frameCount           min   657.0,   median   672.0,   max 1,023.0
+frameDurationCpuMs   P50     13.3,   P90     18.5,   P95     20.9,   P99     27.7
+frameOverrunMs       P50     -1.2,   P90      4.4,   P95      7.4,   P99     16.0
+
+INSTRUMENTATION_STATUS: android.studio.v2display.benchmark=ScrollPerformanceBenchmark_scrollingPerformance
+frameCount           [min   657.0](file://ScrollPerformanceBenchmark_scrollingPerformance_iter004_2026-03-21-14-04-44.perfetto-trace),   [median   672.0](file://ScrollPerformanceBenchmark_scrollingPerformance_iter002_2026-03-21-14-04-08.perfetto-trace),   [max 1,023.0](file://ScrollPerformanceBenchmark_scrollingPerformance_iter003_2026-03-21-14-04-22.perfetto-trace)
+frameDurationCpuMs   P50     13.3,   P90     18.5,   P95     20.9,   P99     27.7
+frameOverrunMs       P50     -1.2,   P90      4.4,   P95      7.4,   P99     16.0
+Traces: Iteration [0](file://ScrollPerformanceBenchmark_scrollingPerformance_iter000_2026-03-21-14-03-39.perfetto-trace) [1](file://ScrollPerformanceBenchmark_scrollingPerformance_iter001_2026-03-21-14-03-54.perfetto-trace) [2](file://ScrollPerformanceBenchmark_scrollingPerformance_iter002_2026-03-21-14-04-08.perfetto-trace) [3](file://ScrollPerformanceBenchmark_scrollingPerformance_iter003_2026-03-21-14-04-22.perfetto-trace) [4](file://ScrollPerformanceBenchmark_scrollingPerformance_iter004_2026-03-21-14-04-44.perfetto-trace)
+
+INSTRUMENTATION_STATUS: android.studio.v2display.benchmark.outputDirPath=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output
+INSTRUMENTATION_STATUS: frame_count_median=672.0
+INSTRUMENTATION_STATUS: frame_count_min=657.0
+INSTRUMENTATION_STATUS: frame_count_stddev=157.80937868200357
+INSTRUMENTATION_STATUS: frame_duration_cpu_millis_p50=13.253961
+INSTRUMENTATION_STATUS: frame_duration_cpu_millis_p90=18.490146
+INSTRUMENTATION_STATUS: frame_duration_cpu_millis_p95=20.935657699999986
+INSTRUMENTATION_STATUS: frame_duration_cpu_millis_p99=27.659753069999997
+INSTRUMENTATION_STATUS: frame_overrun_millis_p50=-1.179344
+INSTRUMENTATION_STATUS: frame_overrun_millis_p90=4.414363100000007
+INSTRUMENTATION_STATUS: frame_overrun_millis_p95=7.394900049999997
+INSTRUMENTATION_STATUS: frame_overrun_millis_p99=16.014667849999974
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.ScrollPerformanceBenchmark
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=scrollingPerformance
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 115.227
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+

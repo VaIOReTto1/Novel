@@ -2,8 +2,8 @@
 
 ## Summary
 - Phase: `Phase 6`
-- Status: `kickoff baseline`
-- Goal: establish the first executable performance baseline package on top of the validated Phase 5 module graph.
+- Status: `validated baseline package`
+- Goal: turn the `Phase 6` kickoff snapshot into a traceable Stage 3 performance baseline package.
 
 ## Environment
 - Device: `192.168.8.130:5555`
@@ -20,66 +20,57 @@
   - `feature-rn-host`
   - `app` remains composition root
 
+## Baseline Package
+- Startup benchmark:
+  - `docs/refactor/phase-6/startup-benchmark-run-2026-03-21.md`
+- Scroll benchmark:
+  - `docs/refactor/phase-6/scroll-benchmark-run-2026-03-21.md`
+- Baseline profile run:
+  - `docs/refactor/phase-6/baseline-profile-run-2026-03-21.md`
+- Direct device compile blocker:
+  - `docs/refactor/phase-6/device-compile-blocker-2026-03-21.md`
+- Search baseline:
+  - `docs/refactor/phase-6/search-performance-baseline-2026-03-21.md`
+- Reader baseline:
+  - `docs/refactor/phase-6/reader-performance-baseline-2026-03-21.md`
+- Welfare / WebView / Bridge baseline:
+  - `docs/refactor/phase-6/webview-bridge-performance-baseline-2026-03-21.md`
+- Budget summary:
+  - `docs/refactor/phase-6/performance-budget-summary.md`
+
 ## Startup Baseline
-### Command
-- `adb shell logcat -c`
-- `adb shell am start -S -n com.novel/.ComposeMainActivity`
-- `adb logcat -d | Select-String StartupPerformanceMonitor`
-
-### Actual
-- `StartupPerformanceMonitor` log samples captured:
-  - `ThemeManager 初始化耗时: 5ms`
-  - `SoLoader 初始化耗时: 28ms`
-  - `Application onCreate 完成，耗时: 36ms`
-  - `RetrofitClient 初始化耗时: 0ms`
-  - `SettingsUtils 初始化耗时: 0ms`
-
-### Evidence
-- `temp/phase6-startup-logcat.txt`
-- `android/app/src/main/java/com/novel/utils/performance/StartupPerformanceMonitor.kt`
-
-## Macrobenchmark Startup Baseline
-### Intended Command
-- `android/gradlew.bat :macrobenchmark:connectedBenchmarkAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.novel.macrobenchmark.ExampleStartupBenchmark"`
-
-### Actual
-- Command reached the macrobenchmark build pipeline, but did not produce a trustworthy startup baseline.
-- Current blocker:
-  - Kotlin/Gradle release compilation cache instability inside Stage 3 modularized modules during benchmark variant preparation.
-
-### Evidence / Failure Shape
-- Release/benchmark preparation hit cache-close / missing-artifact instability under module release compilation.
-- This is currently treated as a Phase 6 kickoff blocker for `V6-02`, not as a Phase 5 regression.
+- App-side startup sample remains traceable in:
+  - `docs/refactor/evidence/phase6-startup-logcat-2026-03-21.txt`
+- Stable benchmark baseline is now no-compilation only:
+  - `startupNoCompilation median = 654.4 ms`
+  - `startup median = 663.8 ms`
 
 ## Scroll Baseline
-### Intended Command
-- `android/gradlew.bat :macrobenchmark:connectedBenchmarkAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.novel.macrobenchmark.ScrollPerformanceBenchmark"`
-
-### Actual
-- Command reached the benchmark setup, but no stable scroll benchmark report was produced yet.
-- Current blocker is the same release compilation cache instability seen in startup benchmark preparation.
+- Stable scroll benchmark baseline is now no-compilation only:
+  - `frameDurationCpuMs P95 = 20.9 ms`
+  - `frameOverrunMs P95 = 7.4 ms`
 
 ## Baseline Profile State
-### Intended Command
-- `android/gradlew.bat :macrobenchmark:connectedBenchmarkAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.novel.macrobenchmark.BaselineProfileGenerator"`
+- Current state: `blocked-with-remediation`
+- Reason:
+  - `BaselineProfileGenerator` still fails at the device-side compile step
+  - direct shell reproduction shows the same error on:
+    - `com.novel`
+    - `com.android.settings`
+- Conclusion:
+  - this is treated as a `DN2101` environment blocker, not as a `Phase 5` or app-runtime regression
 
-### Actual
-- Baseline profile generation is not yet stable in the current environment.
-- Two concrete blockers were observed:
-  - Kotlin incremental cache cleanup instability in release/benchmark preparation
-  - `:app:createBundleReleaseJsAndAssets` failed to produce `index.android.bundle.hbc`
-
-### Existing Baseline Assets
-- `android/macrobenchmark/src/main/java/com/novel/macrobenchmark/BaselineProfileGenerator.kt`
-- `android/macrobenchmark/src/main/java/com/novel/macrobenchmark/ExampleStartupBenchmark.kt`
+## Reader / Search / WebView / Host
+- Search now has a formal log-sample baseline.
+- Reader now has a formal init baseline with documented flip/settings gaps.
+- Welfare / WebView / RN Host / Bridge now have a single aggregated baseline document.
 
 ## Current Gaps
-- Reader performance is still measured on the `app` boundary.
-- Welfare / WebView / Bridge still rely on mixed automated + manual evidence.
-- `core-network` deeper modularization remains carried debt from Phase 5, but it is not a blocker for starting Phase 6.
-- Macrobenchmark connected runs are currently blocked by release/benchmark preparation instability and need a dedicated stabilization pass before `V6-02` can go green.
+- Reader flip and settings update still lack a trustworthy direct numeric sample.
+- Baseline profile generation still needs a second device or emulator with a functioning `cmd package compile` path.
 
-## Immediate Next Actions
-1. Stabilize `:macrobenchmark:connectedBenchmarkAndroidTest` for startup and scroll suites.
-2. Capture the first trustworthy benchmark output files and link them from this baseline doc.
-3. Add a Reader-specific Phase 6 baseline document once benchmark and startup collection are stable.
+## Verdict
+- This baseline package is sufficient to close `V6-01`.
+- It is also sufficient to close `V6-02` under the accepted rule:
+  - generated profile, or
+  - reproducible environment blocker with remediation path

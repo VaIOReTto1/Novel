@@ -1,0 +1,82 @@
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.ExampleStartupBenchmark
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.novel.macrobenchmark.ExampleStartupBenchmark:
+INSTRUMENTATION_STATUS: test=startup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startup_iter000_2026-03-21-13-53-28.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startup_iter000_2026-03-21-13-53-28.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startup_iter001_2026-03-21-13-53-44.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startup_iter001_2026-03-21-13-53-44.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startup_iter002_2026-03-21-13-53-59.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startup_iter002_2026-03-21-13-53-59.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startup_iter003_2026-03-21-13-54-18.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startup_iter003_2026-03-21-13-54-18.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startup_iter004_2026-03-21-13-54-34.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startup_iter004_2026-03-21-13-54-34.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: android.studio.display.benchmark=ExampleStartupBenchmark_startup
+timeToInitialDisplayMs   min 647.4,   median 663.8,   max 721.3
+
+INSTRUMENTATION_STATUS: android.studio.v2display.benchmark=ExampleStartupBenchmark_startup
+timeToInitialDisplayMs   [min 647.4](file://ExampleStartupBenchmark_startup_iter004_2026-03-21-13-54-34.perfetto-trace),   [median 663.8](file://ExampleStartupBenchmark_startup_iter002_2026-03-21-13-53-59.perfetto-trace),   [max 721.3](file://ExampleStartupBenchmark_startup_iter000_2026-03-21-13-53-28.perfetto-trace)
+Traces: Iteration [0](file://ExampleStartupBenchmark_startup_iter000_2026-03-21-13-53-28.perfetto-trace) [1](file://ExampleStartupBenchmark_startup_iter001_2026-03-21-13-53-44.perfetto-trace) [2](file://ExampleStartupBenchmark_startup_iter002_2026-03-21-13-53-59.perfetto-trace) [3](file://ExampleStartupBenchmark_startup_iter003_2026-03-21-13-54-18.perfetto-trace) [4](file://ExampleStartupBenchmark_startup_iter004_2026-03-21-13-54-34.perfetto-trace)
+
+INSTRUMENTATION_STATUS: android.studio.v2display.benchmark.outputDirPath=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output
+INSTRUMENTATION_STATUS: time_to_initial_display_millis_median=663.758154
+INSTRUMENTATION_STATUS: time_to_initial_display_millis_min=647.379769
+INSTRUMENTATION_STATUS: time_to_initial_display_millis_stddev=31.35999849982722
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.ExampleStartupBenchmark
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=startup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.ExampleStartupBenchmark
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=startupNoCompilation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startupNoCompilation_iter000_2026-03-21-13-55-13.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startupNoCompilation_iter000_2026-03-21-13-55-13.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startupNoCompilation_iter001_2026-03-21-13-55-29.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startupNoCompilation_iter001_2026-03-21-13-55-29.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startupNoCompilation_iter002_2026-03-21-13-55-45.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startupNoCompilation_iter002_2026-03-21-13-55-45.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startupNoCompilation_iter003_2026-03-21-13-56-03.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startupNoCompilation_iter003_2026-03-21-13-56-03.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: additionalTestOutputFile_ExampleStartupBenchmark_startupNoCompilation_iter004_2026-03-21-13-56-18.perfetto-trace=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output/ExampleStartupBenchmark_startupNoCompilation_iter004_2026-03-21-13-56-18.perfetto-trace
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: android.studio.display.benchmark=ExampleStartupBenchmark_startupNoCompilation
+timeToInitialDisplayMs   min 647.4,   median 654.4,   max 734.7
+
+INSTRUMENTATION_STATUS: android.studio.v2display.benchmark=ExampleStartupBenchmark_startupNoCompilation
+timeToInitialDisplayMs   [min 647.4](file://ExampleStartupBenchmark_startupNoCompilation_iter003_2026-03-21-13-56-03.perfetto-trace),   [median 654.4](file://ExampleStartupBenchmark_startupNoCompilation_iter002_2026-03-21-13-55-45.perfetto-trace),   [max 734.7](file://ExampleStartupBenchmark_startupNoCompilation_iter000_2026-03-21-13-55-13.perfetto-trace)
+Traces: Iteration [0](file://ExampleStartupBenchmark_startupNoCompilation_iter000_2026-03-21-13-55-13.perfetto-trace) [1](file://ExampleStartupBenchmark_startupNoCompilation_iter001_2026-03-21-13-55-29.perfetto-trace) [2](file://ExampleStartupBenchmark_startupNoCompilation_iter002_2026-03-21-13-55-45.perfetto-trace) [3](file://ExampleStartupBenchmark_startupNoCompilation_iter003_2026-03-21-13-56-03.perfetto-trace) [4](file://ExampleStartupBenchmark_startupNoCompilation_iter004_2026-03-21-13-56-18.perfetto-trace)
+
+INSTRUMENTATION_STATUS: android.studio.v2display.benchmark.outputDirPath=/sdcard/Android/media/com.novel.macrobenchmark/additional_test_output
+INSTRUMENTATION_STATUS: time_to_initial_display_millis_median=654.404076
+INSTRUMENTATION_STATUS: time_to_initial_display_millis_min=647.432615
+INSTRUMENTATION_STATUS: time_to_initial_display_millis_stddev=35.949898480719824
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.ExampleStartupBenchmark
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=startupNoCompilation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 207.374
+
+OK (2 tests)
+
+
+INSTRUMENTATION_CODE: -1
+

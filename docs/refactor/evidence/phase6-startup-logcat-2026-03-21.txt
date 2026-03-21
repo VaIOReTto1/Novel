@@ -1,0 +1,5 @@
+﻿03-21 21:50:02.678 10678 10678 D StartupPerformanceMonitor: ⚙️ 组件 ThemeManager 初始化耗时: 5ms
+03-21 21:50:02.702 10678 10678 D StartupPerformanceMonitor: ⚙️ 组件 SoLoader 初始化耗时: 24ms
+03-21 21:50:02.703 10678 10678 I StartupPerformanceMonitor: ✅ Application onCreate 完成，耗时: 31ms
+03-21 21:50:02.805 10678 24340 D StartupPerformanceMonitor: ⚙️ 组件 RetrofitClient 初始化耗时: 1ms
+03-21 21:50:02.856 10678 24340 D StartupPerformanceMonitor: ⚙️ 组件 SettingsUtils 初始化耗时: 0ms

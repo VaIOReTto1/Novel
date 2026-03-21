@@ -1,0 +1,9 @@
+﻿
+=== COMMAND: adb shell cmd package compile -f -m speed-profile com.novel ===
+Error: Failed to cpmpile !
+
+
+=== COMMAND: adb shell cmd package compile -f -m speed-profile com.android.settings ===
+Error: Failed to cpmpile !
+
+

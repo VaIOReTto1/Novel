@@ -1,0 +1,57 @@
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.BaselineProfileGenerator
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.novel.macrobenchmark.BaselineProfileGenerator:
+INSTRUMENTATION_STATUS: test=generate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.novel.macrobenchmark.BaselineProfileGenerator
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Failed to compile (out=Error: Failed to cpmpile !
+)
+at androidx.benchmark.macro.CompilationMode$Companion.cmdPackageCompile$benchmark_macro_release(CompilationMode.kt:443)
+at androidx.benchmark.macro.CompilationMode$Partial.compileImpl$benchmark_macro_release(CompilationMode.kt:358)
+at androidx.benchmark.macro.CompilationMode.resetAndCompile$benchmark_macro_release(CompilationMode.kt:133)
+at androidx.benchmark.macro.BaselineProfilesKt.collect(BaselineProfiles.kt:72)
+at androidx.benchmark.macro.junit4.BaselineProfileRule.collect(BaselineProfileRule.kt:137)
+at androidx.benchmark.macro.junit4.BaselineProfileRule.collect$default(BaselineProfileRule.kt:127)
+at com.novel.macrobenchmark.BaselineProfileGenerator.generate(BaselineProfileGenerator.kt:30)
+
+INSTRUMENTATION_STATUS: stream=
+Error in generate(com.novel.macrobenchmark.BaselineProfileGenerator):
+java.lang.IllegalStateException: Failed to compile (out=Error: Failed to cpmpile !
+)
+at androidx.benchmark.macro.CompilationMode$Companion.cmdPackageCompile$benchmark_macro_release(CompilationMode.kt:443)
+at androidx.benchmark.macro.CompilationMode$Partial.compileImpl$benchmark_macro_release(CompilationMode.kt:358)
+at androidx.benchmark.macro.CompilationMode.resetAndCompile$benchmark_macro_release(CompilationMode.kt:133)
+at androidx.benchmark.macro.BaselineProfilesKt.collect(BaselineProfiles.kt:72)
+at androidx.benchmark.macro.junit4.BaselineProfileRule.collect(BaselineProfileRule.kt:137)
+at androidx.benchmark.macro.junit4.BaselineProfileRule.collect$default(BaselineProfileRule.kt:127)
+at com.novel.macrobenchmark.BaselineProfileGenerator.generate(BaselineProfileGenerator.kt:30)
+
+INSTRUMENTATION_STATUS: test=generate
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 48.406
+There was 1 failure:
+1) generate(com.novel.macrobenchmark.BaselineProfileGenerator)
+java.lang.IllegalStateException: Failed to compile (out=Error: Failed to cpmpile !
+)
+at androidx.benchmark.macro.CompilationMode$Companion.cmdPackageCompile$benchmark_macro_release(CompilationMode.kt:443)
+at androidx.benchmark.macro.CompilationMode$Partial.compileImpl$benchmark_macro_release(CompilationMode.kt:358)
+at androidx.benchmark.macro.CompilationMode.resetAndCompile$benchmark_macro_release(CompilationMode.kt:133)
+at androidx.benchmark.macro.BaselineProfilesKt.collect(BaselineProfiles.kt:72)
+at androidx.benchmark.macro.junit4.BaselineProfileRule.collect(BaselineProfileRule.kt:137)
+at androidx.benchmark.macro.junit4.BaselineProfileRule.collect$default(BaselineProfileRule.kt:127)
+at com.novel.macrobenchmark.BaselineProfileGenerator.generate(BaselineProfileGenerator.kt:30)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+

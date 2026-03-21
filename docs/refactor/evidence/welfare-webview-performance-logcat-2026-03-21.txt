@@ -1,0 +1,119 @@
+﻿03-21 21:40:59.973  1692  6156 W ActivityTaskManager: Force removing ActivityRecord{309a1 u0 com.novel/.ComposeMainActivity} t9884 f}}: app died, no saved state
+03-21 21:40:59.994  1692  6156 V WindowManager: Changing focus from Window{c419655 u0 com.novel/com.novel.ComposeMainActivity} to null,diplayid=0
+03-21 21:41:00.003  1692  6156 V OplusZoomWindowManagerService: onAnimationFinished:  r = ActivityRecord{309a1 u0 com.novel/.ComposeMainActivity} t9884 f}}
+03-21 21:41:00.005  1692  6156 W InputManager-JNI: Input channel object 'c419655 com.novel/com.novel.ComposeMainActivity (client)' was disposed without first being removed with the input manager!
+03-21 21:41:00.013  1692  6156 D OplusAlwaysAliveManager: removing: 9884, ComponentInfo{com.novel/com.novel.ComposeMainActivity}
+03-21 21:41:00.013  1692  6156 D TaskFragmentExtImpl: remove ActivityRecord{309a1 u0 com.novel/.ComposeMainActivity} t-1 f}} to mActivityRecordSum = Counter{ }
+03-21 21:41:00.025  1022  1022 D Layer   : reparent to null sequence=3330, seq[7], name=com.novel/com.novel.ComposeMainActivity#3330
+03-21 21:41:00.025  1022  1022 D Layer   : reparent to null sequence=3329, seq[5], name=c419655 com.novel/com.novel.ComposeMainActivity#3329
+03-21 21:41:00.025  1022  1022 D OplusLayer: ~Layer() sequence=3329, name=c419655 com.novel/com.novel.ComposeMainActivity#3329
+03-21 21:41:00.042  1022  1022 D Layer   : reparent to null sequence=3321, seq[2], name=ActivityRecord{309a1 u0 com.novel/.ComposeMainActivity}#3321
+03-21 21:41:00.042  1022  1022 D OplusLayer: ~Layer() sequence=3321, name=ActivityRecord{309a1 u0 com.novel/.ComposeMainActivity}#3321
+03-21 21:41:00.042  1022  1022 D OplusLayer: ~Layer() sequence=3328, name=259edd ActivityRecordInputSink com.novel/.ComposeMainActivity#3328
+03-21 21:41:00.126  1022  1022 I BufferQueueDebug: [com.novel/com.novel.ComposeMainActivity#3330](this:0xb4000076a48d29e8,id:-1,api:0,p:-1,c:1022) onDestructor()
+03-21 21:41:00.126  1022  1022 D OplusLayer: ~Layer() sequence=3330, name=com.novel/com.novel.ComposeMainActivity#3330
+03-21 21:41:00.315  1692  6156 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.novel/.ComposeMainActivity mCallingUid=2000} from uid 2000
+03-21 21:41:00.320  1692  6156 D TaskFragmentExtImpl: add ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885} to mActivityRecordSum = Counter{ com.novel/.ComposeMainActivity(1) }
+03-21 21:41:00.320  1692  6156 D ActivityTaskManager: getStartingWindowType: newTask=true, taskSwitch=true, processRunning=false, allowTaskSnapshot=true, activityCreated=false, snapshot=null, record:ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}
+03-21 21:41:00.321  1692  6156 D OplusZoomWindowRUSConfigManager: isSupportZoomModeWithPolicyLocked: target = com.novel/.ComposeMainActivity
+03-21 21:41:00.323  1692  6156 D OplusAlwaysAliveManager: process not running, cold launch: ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}, processName: com.novel
+03-21 21:41:00.348  1692  1828 I ActivityManager: Start proc 14024:com.novel/u0a307 for next-top-activity {com.novel/com.novel.ComposeMainActivity}
+03-21 21:41:00.390  1692  2780 I OplusAppSwitchManagerService: appswitch hasProcess ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}
+03-21 21:41:00.391  1692  2780 I OplusAppSwitchManagerService: appswitch hasProcess ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}
+03-21 21:41:00.391  1692  2780 I PowerHalWrapper: amsBoostNotify pid:14024,activity:com.novel.ComposeMainActivity, package:com.novel, mProcessCreatePackcom.novel 
+03-21 21:41:00.391  1692  2780 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.novel/com.novel.ComposeMainActivity pid=14024 state:1
+03-21 21:41:00.391  1692  2780 I game_scn: collectForegroundAppList packName=com.novel, actName=com.novel.ComposeMainActivity, pid=14024, uid=10307, state:RESUMED
+03-21 21:41:00.391  1692  2780 I InputDispatcher: setFocusedApplication displayId=0 ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}
+03-21 21:41:00.678  1692  1767 V OplusZoomWindowManagerService: onAnimationFinished:  r = ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}
+03-21 21:41:00.678  1692  1767 I OplusAppSwitchManagerService:  handleAppVisible , r = ActivityRecord{80bdd41 u0 com.novel/.ComposeMainActivity} t9885}
+03-21 21:41:01.105 14024 14024 D ComposeMainActivity: Activity创建开始
+03-21 21:41:01.217 14024 14024 D ComposeMainActivity: Activity创建完成
+03-21 21:41:01.220 14024 14024 D ComposeMainActivity: Activity恢复可见
+03-21 21:41:01.230 14024 14024 D WindowManager: Add to mViews: DecorView@cee6eef[ComposeMainActivity],pkg= com.novel
+03-21 21:41:01.241  1692  6156 I WindowManager: addWindow: New client android.os.BinderProxy@109f866 : window=Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity}
+03-21 21:41:01.243  1692  6156 D CoreBackPreview: Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@f49affd, mPriority=0}
+03-21 21:41:01.961  1692  2780 V WindowManager: Relayout Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity}: viewVisibility=0, oldvis=4, req=1080x2400
+03-21 21:41:01.962  1022  1557 I BufferQueueDebug: [com.novel/com.novel.ComposeMainActivity#3357](this:0xb4000076a48819e8,id:-1,api:0,p:-1,c:-1) BufferQueue core=(1022:/system/bin/surfaceflinger)
+03-21 21:41:01.967  1692  2780 V WindowManager: Changing focus from null to Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity},diplayid=0
+03-21 21:41:02.013 14024 14024 D VRI[ComposeMainActivity]: registerCallbacksForSync syncBuffer=false
+03-21 21:41:02.052 14024 30387 D BLASTBufferQueue: [VRI[ComposeMainActivity]#0](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=148065353310131(auto) mPendingTransactions.size=0 graphicBufferId=60232621359107 transform=0
+03-21 21:41:02.052 14024 30387 D VRI[ComposeMainActivity]: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
+03-21 21:41:02.054 14024 14024 D VRI[ComposeMainActivity]: draw finished.
+03-21 21:41:02.055  1692  2780 D WindowManager: finishDrawingWindow: Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity} mDrawState=DRAW_PENDING
+03-21 21:41:02.060  1692  1767 I Quality : LaunchTime2.0: com.novel/.ComposeMainActivity 1 1736 Task-data:PID: 30387 (RenderThread);16 0 11 0 0 0 0 0 0 ;12 0 44 0 0 0 0 2 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;PID: 14024 (com.novel);9 0 18 0 0 0 0 0 0 ;119 0 10 0 0 0 0 2 0 ;134 0 0 0 0 0 0 1 0 ;130 0 0 0 0 0 0 1 0 ;134 0 0 0 0 0 0 1 0 ;129 0 0 0 0 0 0 1 0 ;120 0 12 0 0 0 0 1 0 ;119 0 12 0 0 0 0 1 0 ;127 0 6 0 0 0 0 1 0 ;131 0 2 0 0 0 0 1 0 ;130 0 0 0 0 0 0 1 0 ;133 0 0 0 0 0 0 2 0 ;127 0 0 0 0 0 0 2 0 ;64 2 8 0 0 3 0 2 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;0 0 0 0 0 0 0 0 0 ;
+03-21 21:41:02.066  1022  1022 D BufferStateLayer: com.novel/com.novel.ComposeMainActivity#3357 setBuffer frameId=1, bufferId=60232621359107 fenceId=348, w= 1080, h=2400
+03-21 21:41:02.066  1022  1022 D OplusLayer: (3357,com.novel/com.novel.ComposeMainActivity#3357,com.novel) setBuffer
+03-21 21:41:02.068  1692  1712 I FocusResolver: updateFocusedWindow, fd207a7 com.novel/com.novel.ComposeMainActivity on display 0, reason: Window became focusable. Previous reason: NOT_VISIBLE, result:   FocusedWindows:
+03-21 21:41:02.068  1692  1712 I FocusResolver:     displayId=0, name='fd207a7 com.novel/com.novel.ComposeMainActivity'
+03-21 21:41:02.071  1692  1763 I ActivityTaskManager: Displayed com.novel/.ComposeMainActivity: +1s745ms
+03-21 21:41:02.080 14024 14024 D VRI[ComposeMainActivity]: onFocusEvent true
+03-21 21:41:02.116 14024 14024 D VRI[ComposeMainActivity]: registerCallbacksForSync syncBuffer=false
+03-21 21:41:02.123 14024 30387 D VRI[ComposeMainActivity]: Received frameCommittedCallback lastAttemptedDrawFrameNum=2 didProduceBuffer=true syncBuffer=false
+03-21 21:41:02.123 14024 14024 D VRI[ComposeMainActivity]: draw finished.
+03-21 21:41:02.179  1692  1712 D WindowManager: finishDrawingWindow: Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity} mDrawState=HAS_DRAWN
+03-21 21:41:02.434  1022  1022 D Layer   : reparent to null sequence=3360, seq[37], name=Surface(name=fd207a7 com.novel/com.novel.ComposeMainActivity)/@0xfae21bd - animation-leash of starting_reveal#3360
+03-21 21:41:08.530 14024 14024 D WelfareModule: 创建InitializeWelfarePageUseCase
+03-21 21:41:08.538 14024 14024 D WelfarePerformanceMonitor: ViewModel操作: initialize_start
+03-21 21:41:08.538 14024 14024 D BaseUseCase: 开始执行UseCase: InitializeWelfarePageUseCase
+03-21 21:41:08.539 14024 30564 D InitializeWelfarePageUseCase: 开始初始化福利页面
+03-21 21:41:08.539 14024 30564 D InitializeWelfarePageUseCase: 福利页面初始化成功
+03-21 21:41:08.553 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-21 21:41:08.741 14024 14024 D WebViewComponent: WebView渲染状态已恢复
+03-21 21:41:08.754 14024 14024 D WebViewComponent: WebView已挂载到界面并恢复活跃状态
+03-21 21:41:08.776 14024 14024 D WebViewComponent: DisposableEffect触发 - savedState: false, url: https://www.bing.com/, webView.url: null
+03-21 21:41:08.777 14024 14024 D WebViewComponent: 传入URL与当前URL不同，强制加载: https://www.bing.com/ (当前: null)
+03-21 21:41:08.790 14024 14024 D WelfarePage: 页面可见性: true, 生命周期状态: RESUMED
+03-21 21:41:08.792 14024 14024 D WelfarePerformanceMonitor: 开始监控页面加载: welfare_page
+03-21 21:41:08.795 14024 14024 D WelfarePerformanceMonitor: ViewModel操作: initialize_start
+03-21 21:41:08.795 14024 14024 D BaseUseCase: 开始执行UseCase: InitializeWelfarePageUseCase
+03-21 21:41:08.795 14024 30485 D InitializeWelfarePageUseCase: 开始初始化福利页面
+03-21 21:41:08.795 14024 30485 D InitializeWelfarePageUseCase: 福利页面初始化成功
+03-21 21:41:08.796 14024 14024 D WelfarePage: 渲染条件检查 - pageLoadingState: false, errorMessage: null, isLoading: true, currentUrl: https://www.bing.com/
+03-21 21:41:08.796 14024 14024 D WelfarePage: 深色模式状态变更: false
+03-21 21:41:08.796 14024 14024 D WelfarePage: WebView加载成功，深色模式支持: true
+03-21 21:41:08.840 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-21 21:41:08.913 14024 14024 D WindowManager: Add to mViews: DecorView@1282ef5[ComposeMainActivity],pkg= com.novel
+03-21 21:41:08.918  1692  2780 V WindowManager: Changing focus from Window{fd207a7 u0 com.novel/com.novel.ComposeMainActivity} to Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity},diplayid=0
+03-21 21:41:08.921  1692  2780 I WindowManager: addWindow: New client android.os.BinderProxy@def1487 : window=Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity}
+03-21 21:41:08.924  1692  2780 D CoreBackPreview: Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@4f38e9e, mPriority=0}
+03-21 21:41:08.962  1692  1712 V WindowManager: Relayout Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity}: viewVisibility=0, oldvis=0, req=960x1217
+03-21 21:41:08.963  1022  2041 I BufferQueueDebug: [com.novel/com.novel.ComposeMainActivity#3368](this:0xb40000769bc399e8,id:-1,api:0,p:-1,c:-1) BufferQueue core=(1022:/system/bin/surfaceflinger)
+03-21 21:41:08.981 14024 14024 D VRI[ComposeMainActivity]: registerCallbacksForSync syncBuffer=false
+03-21 21:41:09.087 14024 30387 D BLASTBufferQueue: [VRI[ComposeMainActivity]#2](f:0,a:1) acquireNextBufferLocked size=1152x1409 mFrameNumber=1 applyTransaction=true mTimestamp=148072388978747(auto) mPendingTransactions.size=0 graphicBufferId=60232621359115 transform=0
+03-21 21:41:09.088 14024 30387 D VRI[ComposeMainActivity]: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
+03-21 21:41:09.089 14024 14024 D VRI[ComposeMainActivity]: draw finished.
+03-21 21:41:09.092 14024 14024 D VRI[ComposeMainActivity]: onFocusEvent false
+03-21 21:41:09.093  1022  1022 D BufferStateLayer: com.novel/com.novel.ComposeMainActivity#3368 setBuffer frameId=1, bufferId=60232621359115 fenceId=565, w= 1152, h=1409
+03-21 21:41:09.093  1022  1022 D OplusLayer: (3368,com.novel/com.novel.ComposeMainActivity#3368,com.novel) setBuffer
+03-21 21:41:09.093  1692  1712 D WindowManager: finishDrawingWindow: Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity} mDrawState=DRAW_PENDING
+03-21 21:41:09.093 14024 14024 D BaseUseCase: UseCase执行成功: InitializeWelfarePageUseCase, 耗时: 555ms
+03-21 21:41:09.093 14024 14024 D WelfarePerformanceMonitor: ViewModel操作: initialize_complete
+03-21 21:41:09.109 14024 14024 D BaseUseCase: UseCase执行成功: InitializeWelfarePageUseCase, 耗时: 313ms
+03-21 21:41:09.109 14024 14024 D WelfarePerformanceMonitor: ViewModel操作: initialize_complete
+03-21 21:41:09.145  1692  2564 I FocusResolver: updateFocusedWindow, e770fb4 com.novel/com.novel.ComposeMainActivity on display 0, reason: Window became focusable. Previous reason: NOT_VISIBLE, result:   FocusedWindows:
+03-21 21:41:09.145  1692  2564 I FocusResolver:     displayId=0, name='e770fb4 com.novel/com.novel.ComposeMainActivity'
+03-21 21:41:09.168 14024 14024 D WelfarePage: 深色模式状态变更: false
+03-21 21:41:09.175 14024 14024 D VRI[ComposeMainActivity]: onFocusEvent true
+03-21 21:41:09.181 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-21 21:41:09.186  1692  2564 V WindowManager: Relayout Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity}: viewVisibility=0, oldvis=0, req=960x1217
+03-21 21:41:09.207 14024 14024 I WelfarePerformanceMonitor: 页面加载完成，耗时: 414ms
+03-21 21:41:09.207 14024 14024 D WelfarePage: 渲染条件检查 - pageLoadingState: false, errorMessage: null, isLoading: false, currentUrl: https://www.bing.com/
+03-21 21:41:09.209 14024 14024 D VRI[ComposeMainActivity]: registerCallbacksForSync syncBuffer=false
+03-21 21:41:09.213 14024 30387 D VRI[ComposeMainActivity]: Received frameCommittedCallback lastAttemptedDrawFrameNum=3 didProduceBuffer=true syncBuffer=false
+03-21 21:41:09.214 14024 14024 D VRI[ComposeMainActivity]: draw finished.
+03-21 21:41:09.221  1692  2780 D WindowManager: finishDrawingWindow: Window{e770fb4 u0 com.novel/com.novel.ComposeMainActivity} mDrawState=HAS_DRAWN
+03-21 21:41:09.361  1022  1022 D Layer   : reparent to null sequence=3369, seq[46], name=Surface(name=e770fb4 com.novel/com.novel.ComposeMainActivity)/@0x2e15e5a - animation-leash of window_animation#3369
+03-21 21:41:09.361  1022  1022 D OplusLayer: ~Layer() sequence=3369, name=Surface(name=e770fb4 com.novel/com.novel.ComposeMainActivity)/@0x2e15e5a - animation-leash of window_animation#3369
+03-21 21:41:09.496 14024 14024 D WebViewComponent: 页面开始加载: https://cn.bing.com/
+03-21 21:41:09.496 14024 14024 D WelfarePerformanceMonitor: WebView开始加载
+03-21 21:41:09.513 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-21 21:41:09.535 14024 14024 I WelfarePerformanceMonitor: 页面加载完成，耗时: 743ms
+03-21 21:41:09.535 14024 14024 D WelfarePage: 渲染条件检查 - pageLoadingState: true, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/
+03-21 21:41:09.536 14024 14024 D WelfarePage: WebView加载成功，深色模式支持: true
+03-21 21:41:09.545 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-21 21:41:09.620 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-21 21:41:09.722 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-21 21:41:09.762 14024 14024 D WebViewComponent: 页面加载完成: https://cn.bing.com/
+03-21 21:41:09.762 14024 14024 D WelfarePerformanceMonitor: WebView加载完成，耗时: 266ms
+03-21 21:41:09.772 14024 14024 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-21 21:41:09.787 14024 14024 D WelfarePage: 渲染条件检查 - pageLoadingState: false, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/

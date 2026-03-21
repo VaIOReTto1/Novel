@@ -1,0 +1,21 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
+}
+
+apply from: rootProject.file("gradle/android-library-common.gradle")
+
+android {
+    namespace "com.novel.feature.rnhost"
+    configureNovelAndroidLibrary(delegate, false)
+}
+
+dependencies {
+    implementation project(':core-storage')
+    implementation "com.google.dagger:hilt-android:2.52"
+    kapt "com.google.dagger:hilt-compiler:2.52"
+
+    testImplementation "junit:junit:4.13.2"
+}

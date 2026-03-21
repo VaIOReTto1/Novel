@@ -9,6 +9,7 @@ include ':core-storage'
 include ':core-network'
 include ':feature-home'
 include ':feature-search'
+include ':feature-rn-host'
 include ':feature-welfare'
 include ':macrobenchmark'
 includeBuild('../node_modules/@react-native/gradle-plugin')

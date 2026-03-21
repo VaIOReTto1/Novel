@@ -36,6 +36,7 @@
 - `android/feature-welfare` 已继续吸收内部工具层，`WelfarePerformanceMonitor / WebViewPreloadManager / WelfareAccessibilityHelper` 已脱离 `app`。
 - `android/feature-search` 已完成首轮最小切口，`SearchPreferenceStorage` 已脱离 `app`。
 - `android/feature-home` 已完成首轮最小切口，`HomePerformanceOptimizer` 已脱离 `app`。
+- `android/feature-rn-host` 已完成首轮最小切口，`SettingsPreferenceStorage` 已脱离 `app`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

@@ -17,6 +17,7 @@
 - `core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离并通过模块级验证
 - `feature-welfare` 已完成两轮低风险切口并通过模块级验证
 - `feature-search` 与 `feature-home` 已完成首轮最小切口并通过当前模块级验证
+- `feature-rn-host` 已完成首轮最小切口并通过当前模块级验证
 - `android/core-storage` 已落地
 - `android/core-network` 已以契约优先方式落地首批抽离
 - `Phase 6` 目标与边界已明确
@@ -33,6 +34,7 @@
 - `android/core-common/`
 - `android/core-bridge-contract/`
 - `android/feature-home/`
+- `android/feature-rn-host/`
 - `android/feature-search/`
 - `android/feature-welfare/`
 - `android/core-storage/`

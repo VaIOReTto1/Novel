@@ -33,6 +33,7 @@
 - `android/feature-welfare` 已落地两轮低风险切口，当前以 app wrapper + feature 内部组件/工具共存方式推进。
 - `android/feature-search` 已落地首轮最小切口，当前只迁出低耦合存储层。
 - `android/feature-home` 已落地首轮最小切口，当前只迁出低耦合性能 helper。
+- `android/feature-rn-host` 已落地首轮最小切口，当前只迁出低耦合设置存储层。
 - `Phase 5` 已从 `planned` 切换为 `in_progress`，后续不得再按纯文档准备态解释本阶段。
 
 ## 固定执行顺序

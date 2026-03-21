@@ -4,7 +4,7 @@
 - 阶段：`Stage 3 = Phase 5-6`
 - 当前状态：`open`
 - 当前结论：
-  - `Phase 5 = in_progress`
+  - `Phase 5 = validated`
   - `Phase 6 = planned`
   - `Stage 3` 尚未关闭，正式 closeout 延后到 `V5-* / V6-*` 全绿后生成
 
@@ -20,6 +20,7 @@
 - `feature-rn-host` 已完成首轮最小切口并通过当前模块级验证
 - `android/core-storage` 已落地
 - `android/core-network` 已以契约优先方式落地首批抽离
+- `Phase 5` 的模块图、首批 core/feature 模块、兼容证据与验证矩阵已闭环
 - `Phase 6` 目标与边界已明确
 
 ## 当前核心证据入口
@@ -39,18 +40,19 @@
 - `android/feature-welfare/`
 - `android/core-storage/`
 - `android/core-network/`
+- `docs/refactor/phase-5/host-compat-validation-2026-03-21.md`
+- `docs/refactor/phase-5/module-verification-matrix-2026-03-21.md`
 
 ## 当前未完成项
-- `core-network` 仍需从“契约优先”深化到共享基础设施
-- 首批 `feature/*` 模块尚未落地
+- `core-network` 仍需从“契约优先”深化到共享基础设施，但已转入 Phase 6 可承接的 carried debt
 - `Phase 6` 尚未建立新 baseline
 - `Stage 3` closeout 仍未生成正式总结版
 
 ## 是否允许进入下一阶段
 - 当前结论：`not yet`
 - 原因：
-  - `Stage 3` 正在实施中，但 `V5-*` 仍未关闭
-  - 当前仅允许继续推进 `Phase 5`
+  - `Phase 5` 已关闭，但 `Phase 6` 尚未实施
+  - 当前仅允许从新模块边界进入 `Phase 6`
 
 ## 后续更新规则
 - 当 `V5-*` 或 `V6-*` 出现 `red` 时，本文件只更新阶段状态，不给出最终关闭结论

@@ -23,6 +23,35 @@
 - 模块图与依赖边界稳定
 - 性能关键路径对应模块和页面入口已可单独定位
 
+## 当前模块边界输入
+- `core-common`
+  - shared core state/mvi/domain/result/logging
+- `core-storage`
+  - storage facade and settings pilot
+- `core-network`
+  - network contract layer
+- `core-bridge-contract`
+  - pure bridge delegate/helper contracts
+- `feature-home`
+  - current first slice: `HomePerformanceOptimizer`
+- `feature-search`
+  - current first slice: `SearchPreferenceStorage`
+- `feature-welfare`
+  - current slices: error/loading components + internal utilities
+- `feature-rn-host`
+  - current first slice: `SettingsPreferenceStorage`
+- `app`
+  - remains composition root
+  - still hosts `Reader`
+  - still hosts RN/Application bootstrap and root host wiring
+
+## Phase 6 Entry Conditions
+- `V5-01 ~ V5-05 = green`
+- 首批 `core/*` 与首批 `feature/*` 模块已稳定
+- `ReactNativePage / NavigationPackage / MainApplication / NavigationBridgeModule` 的 Phase 5 兼容证据已闭环
+- `core-network` 的 carried debt 已在 `decision-log.md` 中保留，不再阻塞 Phase 6 启动
+- Reader 仍留在 `app`，Phase 6 只能在现有 Reader 边界上做性能治理，不得借机提前做 Reader 最终模块化
+
 ## 协作编制
 ### Leader Mode
 - `single leader / three helpers`

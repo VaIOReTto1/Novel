@@ -1,12 +1,12 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 5`
-- 阶段状态：`in_progress`
+- 当前阶段：`Phase 6`
+- 阶段状态：`planned`
 - 门禁模式：`严格门禁`
-- 最近结论：`Stage 2 = validated`。打开书籍的运行时 blocker 已由 `BookService` 空 `chapterUpdateTime` 回归修复；`core-storage` 与契约版 `core-network` 已落地，`Phase 5` 已从文档准备态进入真实实施态。
-- 下一步：继续按固定顺序推进；其中 `doc/state sync`、`build conventions`、`core-common`、`core-bridge-contract` 以及 `feature-welfare` 首轮最小切口已落地，当前主线转入扩大 welfare internals 与后续 feature 模块切口，并在独立原子主题中继续深化 `core-network`。
-- 当前 Phase 默认编制：`5 helpers + 1 Leader（active baseline）`
+- 最近结论：`Phase 5 = validated`。打开书籍 blocker、首批 core/feature 模块、Bridge / RN Host 兼容证据、模块矩阵与 Phase 6 入口条件均已闭环。
+- 下一步：在现有模块边界上启动 `Phase 6` 的性能 baseline、预算与专项回归治理。
+- 当前 Phase 默认编制：`3 helpers + 1 Leader（planned baseline）`
 - 当前激活波次：`n/a`
 
 ## 阶段状态总表
@@ -17,7 +17,7 @@
 | Phase 2 | 质量门禁与自动化护栏 | validated | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 | Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
 | Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
-| Phase 5 | Gradle 模块化准备与拆分 | in_progress | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
+| Phase 5 | Gradle 模块化准备与拆分 | validated | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
 | Phase 6 | 性能专项与基准治理 | planned | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
 
 ## 最近验证结论
@@ -37,6 +37,7 @@
 - `android/feature-search` 已完成首轮最小切口，`SearchPreferenceStorage` 已脱离 `app`。
 - `android/feature-home` 已完成首轮最小切口，`HomePerformanceOptimizer` 已脱离 `app`。
 - `android/feature-rn-host` 已完成首轮最小切口，`SettingsPreferenceStorage` 已脱离 `app`。
+- `Phase 5` 已正式完成，当前允许切换到 `Phase 6 planned`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)

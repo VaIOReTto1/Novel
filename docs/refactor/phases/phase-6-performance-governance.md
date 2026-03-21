@@ -30,6 +30,14 @@
 ### Base Helper Count
 - `3`
 
+### Scale-Up Triggers
+- 启动、滚动/Reader、WebView/Bridge 三条性能线已经具备独立证据脚手架时，可扩展额外 helper 补专项取证。
+- baseline profile、macrobenchmark 与页面专项可以无锁并行时，可短期扩容。
+
+### Scale-Down Triggers
+- 当前只在刷新 baseline 或补 closeout 文档时，保持最小编制即可。
+- 若设备矩阵不足或 benchmark 波动过大，先收缩到 `Leader + 当前专项 owner` 稳定口径。
+
 ### Agent Roster
 - `StartupBudgetAgent`
   - 启动、baseline profile、macrobenchmark
@@ -42,6 +50,17 @@
 - `LOCK-STARTUP-BENCH`
 - `LOCK-SCROLL-READER-PERF`
 - `LOCK-WEBVIEW-BRIDGE-PERF`
+
+### Retry Window
+- benchmark / profile / macrobenchmark：`2` 次同环境重跑
+- 专项数据分析或报告生成：`2` 次口径修正重试
+- 若两次后仍无法得到稳定趋势，必须登记为 residual risk 而不是强行关闭
+
+### Escalation Window
+- 任何性能优化要求改变 UI 语义或业务功能语义
+- Reader 分页、翻页、核心渲染行为必须变化
+- Phase 6 被迫演化为新的架构重构阶段
+- 关键专项只能依赖不稳定或不可追溯的设备环境
 
 ### Leader-only Actions
 - 固定预算口径

@@ -2,11 +2,11 @@
 
 ## 当前状态
 - 当前阶段：`Phase 5`
-- 阶段状态：`planned`
+- 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：`Stage 2 = validated`。`Phase 3` 与 `Phase 4` 已完成基础设施收口、边界收口、宿主页补证、静态债冲刺与 closeout 文档闭环，当前允许切换到 `Phase 5 planned`。
-- 下一步：按 `Stage 3 = Phase 5-6` 的新文档体系启动模块化准备与性能专项规划。
-- 当前 Phase 默认编制：`5 helpers + 1 Leader（planned baseline）`
+- 最近结论：`Stage 2 = validated`。打开书籍的运行时 blocker 已由 `BookService` 空 `chapterUpdateTime` 回归修复；`core-storage` 与契约版 `core-network` 已落地，`Phase 5` 已从文档准备态进入真实实施态。
+- 下一步：继续按固定顺序推进；其中 `doc/state sync`、`build conventions`、`core-common` 已落地，当前主线进入 `deepen core-network -> core-bridge-contract -> feature-welfare`。
+- 当前 Phase 默认编制：`5 helpers + 1 Leader（active baseline）`
 - 当前激活波次：`n/a`
 
 ## 阶段状态总表
@@ -17,7 +17,7 @@
 | Phase 2 | 质量门禁与自动化护栏 | validated | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 | Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
 | Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
-| Phase 5 | Gradle 模块化准备与拆分 | planned | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
+| Phase 5 | Gradle 模块化准备与拆分 | in_progress | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
 | Phase 6 | 性能专项与基准治理 | planned | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
 
 ## 最近验证结论
@@ -28,6 +28,9 @@
 - `V3-01 ~ V3-07` 已全部具备绿色验证证据，`Phase 3` 已正式完成。
 - `V4-01 ~ V4-08` 已全部具备绿色验证证据，`Phase 4` 已正式完成。
 - `Stage 2 = Phase 3-4` 已正式关闭并标记为 `validated`。
+- 打开书籍 `reader/1334318497132552192?chapterId=1334318500051787776` 的“请求错误” blocker 已修复，并有 `BookServiceTest` 回归用例持续守门。
+- `android/core-storage` 已作为首个稳定 `core/*` 模块落地；`android/core-network` 已以契约优先方式落地首批抽离。
+- `android/core-common` 已完成第一批共享基础抽离，`BaseMviViewModel / BaseUseCase / AppError / StableFlow` 等共享能力已脱离 `app`。
 
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)
@@ -44,6 +47,7 @@
 - [Phase 3 - 基础设施收口](./phases/phase-3-infra-consolidation.md)
 - [Phase 4 - 边界收口与超大类拆分](./phases/phase-4-boundary-and-class-split.md)
 - [Phase 5 - Gradle 模块化与边界搬迁](./phases/phase-5-gradle-modularization.md)
+- [Phase 5 模块图现状](./phase-5/module-graph-current-state.md)
 - [Phase 6 - 性能专项与基准治理](./phases/phase-6-performance-governance.md)
 - [Phase 4 Wave Tracker](./phase-4/phase-4-wave-tracker.md)
 - [Phase 4 包边界图与迁移映射](./phase-4/package-boundary-map.md)

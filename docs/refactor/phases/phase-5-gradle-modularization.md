@@ -23,12 +23,40 @@
 - `docs/refactor/phase-4/phase-5-entry-checklist.md` 已接受为唯一 carried debt 入口
 - `app` 仍可稳定通过当前核心回归命令
 
+## 当前真实进度
+- 打开书籍“请求错误”运行时 blocker 已修复，`BookService` 的空 `chapterUpdateTime` 回归测试已作为 Phase 5 首个守门用例保留。
+- `android/gradle/android-library-common.gradle` 已落地，`core/*` 模块开始复用统一 Android library 构建约定。
+- `android/core-common` 已落地并完成首轮共享基础抽离。
+- `android/core-storage` 已落地并完成模块级单测。
+- `android/core-network` 已以“契约优先”方式落地首批抽离，当前仍需继续向共享基础设施深化。
+- `Phase 5` 已从 `planned` 切换为 `in_progress`，后续不得再按纯文档准备态解释本阶段。
+
+## 固定执行顺序
+1. `doc/state sync`
+2. `build conventions`
+3. `core-common`
+4. `deepen core-network`
+5. `core-bridge-contract`
+6. `feature-welfare`
+7. `feature-search`
+8. `feature-home`
+9. `feature-rn-host`
+10. `validation / closeout`
+
 ## 协作编制
 ### Leader Mode
 - `single leader / five helpers`
 
 ### Base Helper Count
 - `5`
+
+### Scale-Up Triggers
+- `core-common` 与 `core-bridge-contract` 已稳定后，可并行推进 `feature-welfare` 与第二个 feature 模块。
+- 构建约定、模块图证据、功能模块搬迁三条线已经无锁冲突时，可短期加大发散探索和代码准备并行度。
+
+### Scale-Down Triggers
+- 当前只做文档纠偏、看板同步或单一 `core/*` 模块切口时，不必同时启用全部 helpers。
+- 若 `app:testDebugUnitTest`、`lintDebug` 或模块级编译出现高优先级回归，优先收缩到 `Leader + build guard + 当前锁持有者`。
 
 ### Agent Roster
 - `ModuleGraphAgent`
@@ -48,6 +76,17 @@
 - `LOCK-FEATURE-A`
 - `LOCK-FEATURE-B`
 - `LOCK-BUILD-INTEGRATION`
+
+### Retry Window
+- 模块级代码切口：`2` 次最小修复重试
+- Gradle / verification metadata / dependency verification：`2` 次串行重试
+- 若第二次后仍失败，必须升级为 blocker 并回到上一个稳定原子提交点分析
+
+### Escalation Window
+- route / Bridge payload / RN 组件名需要变化
+- Reader 范围被迫提前进入真正模块化
+- Hilt / resources / manifest 聚合问题导致无法维持 `app` 作为稳定组合入口
+- `V5-04` 的 Bridge / RN Host 兼容证据出现不可解释回退
 
 ### Leader-only Actions
 - 调整阶段状态
@@ -110,4 +149,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`planned`
+- 当前状态：`in_progress`

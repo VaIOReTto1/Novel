@@ -3,5 +3,6 @@ plugins { id("com.facebook.react.settings") }
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 rootProject.name = 'Novel'
 include ':app'
+include ':core-storage'
 include ':macrobenchmark'
 includeBuild('../node_modules/@react-native/gradle-plugin')

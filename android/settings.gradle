@@ -4,5 +4,6 @@ extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autoli
 rootProject.name = 'Novel'
 include ':app'
 include ':core-storage'
+include ':core-network'
 include ':macrobenchmark'
 includeBuild('../node_modules/@react-native/gradle-plugin')

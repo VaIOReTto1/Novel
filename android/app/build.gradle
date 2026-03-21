@@ -232,6 +232,7 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(':core-storage')
+    implementation project(':core-network')
 
     implementation "androidx.core:core-ktx:1.16.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.9.0"

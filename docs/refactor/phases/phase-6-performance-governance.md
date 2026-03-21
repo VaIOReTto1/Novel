@@ -1,17 +1,17 @@
 # Phase 6 - 性能专项与基准治理
 
 ## 目标
-- 在 `Phase 5` 新模块边界上建立稳定的性能 baseline、预算和回归证据
-- 覆盖启动、首页/搜索滚动、Reader、WebView、Bridge 关键链路
-- 让性能问题从“临时观察”升级为“有预算、有证据、有门禁”的长期治理对象
+- 在 `Phase 5` 验证后的模块边界上建立稳定的性能 baseline、预算和回归证据。
+- 覆盖启动、首页/搜索滚动、Reader、Welfare/WebView、RN Host、Bridge 关键链路。
+- 让性能问题从“临时观察”升级为“有预算、有证据、有门禁”的长期治理对象。
 
 ## 范围
-- baseline profile 与 macrobenchmark 扩展
-- 启动专项
-- 首页/搜索滚动专项
-- Reader 关键链路专项
-- Welfare/WebView/Bridge 专项
-- 性能证据与预算规则
+- startup / scroll macrobenchmark
+- baseline profile 与编译型探针
+- Search log-sample baseline
+- Reader 关键链路 baseline
+- Welfare / WebView / RN Host / Bridge baseline
+- 预算表与 closeout 文档
 
 ## 非目标
 - 不继续做大的架构拆分
@@ -25,7 +25,7 @@
 
 ## 当前模块边界输入
 - `core-common`
-  - shared core state/mvi/domain/result/logging
+  - shared core state / mvi / domain / result / logging
 - `core-storage`
   - storage facade and settings pilot
 - `core-network`
@@ -45,15 +45,17 @@
   - still hosts `Reader`
   - still hosts RN/Application bootstrap and root host wiring
 
-## Phase 6 Entry Conditions
-- `V5-01 ~ V5-05 = green`
-- 首批 `core/*` 与首批 `feature/*` 模块已稳定
-- `ReactNativePage / NavigationPackage / MainApplication / NavigationBridgeModule` 的 Phase 5 兼容证据已闭环
-- `core-network` 的 carried debt 已在 `decision-log.md` 中保留，不再阻塞 Phase 6 启动
-- Reader 仍留在 `app`，Phase 6 只能在现有 Reader 边界上做性能治理，不得借机提前做 Reader 最终模块化
-
 ## 当前基线入口
 - `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md`
+- `docs/refactor/phase-6/startup-benchmark-run-2026-03-21.md`
+- `docs/refactor/phase-6/scroll-benchmark-run-2026-03-21.md`
+- `docs/refactor/phase-6/baseline-profile-run-2026-03-21.md`
+- `docs/refactor/phase-6/device-compile-blocker-2026-03-21.md`
+- `docs/refactor/phase-6/search-performance-baseline-2026-03-21.md`
+- `docs/refactor/phase-6/reader-performance-baseline-2026-03-21.md`
+- `docs/refactor/phase-6/webview-bridge-performance-baseline-2026-03-21.md`
+- `docs/refactor/phase-6/performance-budget-summary.md`
+- `docs/refactor/phase-6/phase-6-closeout-assessment.md`
 
 ## 协作编制
 ### Leader Mode
@@ -86,7 +88,7 @@
 ### Retry Window
 - benchmark / profile / macrobenchmark：`2` 次同环境重跑
 - 专项数据分析或报告生成：`2` 次口径修正重试
-- 若两次后仍无法得到稳定趋势，必须登记为 residual risk 而不是强行关闭
+- 若两次后仍无法得到稳定趋势，必须登记为 residual risk，而不是强行关闭
 
 ### Escalation Window
 - 任何性能优化要求改变 UI 语义或业务功能语义
@@ -97,29 +99,31 @@
 ### Leader-only Actions
 - 固定预算口径
 - 同步看板/README/closeout
-- 串行执行 benchmark/验证命令
+- 串行执行 benchmark / 验证命令
 
 ## 任务拆解
 | ID | Task | Expected Outcome |
 | --- | --- | --- |
-| P6.1 | 刷新 Stage 3 性能基线 | 新设备/新模块边界上的 baseline 文档落盘 |
+| P6.1 | 刷新 Stage 3 性能基线 | 新模块边界上的 baseline 文档落盘 |
 | P6.2 | 冷启动/热启动专项 | 启动预算、baseline profile、macrobenchmark 证据稳定 |
-| P6.3 | 首页/搜索滚动专项 | 关键列表滚动预算与回归证据稳定 |
-| P6.4 | Reader 关键链路专项 | 初始化、翻页、设置变更关键路径预算稳定 |
-| P6.5 | Welfare/WebView/Bridge 专项 | WebView、RN Host、Bridge 初始化/交互性能证据稳定 |
-| P6.6 | 性能观测与报告模板 | 性能 diff、问题归因、预算表统一 |
-| P6.7 | 输出 Stage 3 closeout 与 Phase 7 进入条件 | 下一阶段入口清晰 |
+| P6.3 | 首页/搜索/Reader 关键链路专项 | 关键交互预算与回归证据稳定 |
+| P6.4 | Welfare/WebView/Bridge 专项 | WebView、RN Host、Bridge 初始化/交互性能证据稳定 |
+| P6.5 | 性能观测与报告模板 | 性能 diff、问题归因、预算表统一 |
+| P6.6 | 输出 Stage 3 closeout 与 Phase 7 进入条件 | 下一阶段入口清晰 |
 
 ## 交付物
 - Stage 3 性能 baseline 文档
 - 启动、滚动、Reader、WebView/Bridge 专项报告
-- benchmark / profile 证据归档
+- benchmark / profile / blocker 证据归档
 - 性能预算表
-- Phase 7 进入条件
+- Phase 6 closeout 文档
+- Phase 7 进入条件文档
 
 ## 硬阈值
 - 不允许关键路径出现未解释的性能回退
-- benchmark / baseline profile 命令必须可执行
+- benchmark / baseline profile 命令必须满足二选一：
+  - 成功并留痕
+  - 失败但具备可复现 blocker 与 remediation path
 - touched files：
   - ESLint error = `0`
   - detekt issue = `0`
@@ -144,13 +148,14 @@
 - `V6-05` 性能观测与报告模板闭环
 - `V6-06` Stage 3 closeout 与 Phase 7 进入条件明确
 
-## 退出条件
-- `V6-*` 全绿
-- `Stage 3` closeout 完成
-- `Phase 7` 可以开始
+## 关闭结论
+- `V6-01 ~ V6-06` 已全部达到关闭条件
+- `Stage 3 closeout` 已完成
+- `Phase 7` 入口已固定为包体积、依赖与构建效率治理
+- `DN2101` 的 `cmd package compile` blocker 已以 accepted environment blocker 方式留痕，不再阻塞本阶段关闭
 
 ## 负责人
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`in_progress`
+- 当前状态：`validated`

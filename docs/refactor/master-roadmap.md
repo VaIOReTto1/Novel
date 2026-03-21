@@ -162,10 +162,11 @@
   - `Stage 2 validated -> Stage 3`
   - `Stage 3 validated -> Stage 4`
 - 任一阶段存在 `red` 验证项时不得关闭阶段。
-- 阶段关闭必须同步更新：
+- 阶段关闭必须同步更新：  
   - `docs/refactor/README.md`
   - 对应阶段文档
-  - `phase-0-2-validation-board.md`
+  - 对应 validation board
+  - 对应 stage closeout
   - `decision-log.md`
 - 阶段关闭或进入新阶段前，必须确认：
   - 当前 phase 的 `协作编制` 已写入阶段文档

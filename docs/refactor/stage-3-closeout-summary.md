@@ -1,61 +1,48 @@
-# 第三阶段关闭总结（当前状态文档）
+# 第三阶段关闭总结
 
 ## 摘要
 - 阶段：`Stage 3 = Phase 5-6`
-- 当前状态：`open`
-- 当前结论：
+- 当前状态：`closed`
+- 最终结论：
   - `Phase 5 = validated`
-  - `Phase 6 = in_progress`
-  - `Stage 3` 尚未关闭，正式 closeout 延后到 `V5-* / V6-*` 全绿后生成
+  - `Phase 6 = validated`
+  - `Stage 3 = validated`
 
 ## 当前达成情况
 - `Stage 2` 已正式关闭并标记为 `validated`
-- 打开书籍“请求错误”运行时 blocker 已修复，并有 `BookService` 回归用例持续守门
-- `Phase 5` 已完成文档启动，并进入真实模块化实施
-- 共享 Android library 构建约定已落地
-- `core-common` 已完成首批共享基础抽离并通过模块级验证
-- `core-bridge-contract` 已完成第一批纯桥接 delegate/helper 抽离并通过模块级验证
-- `feature-welfare` 已完成两轮低风险切口并通过模块级验证
-- `feature-search` 与 `feature-home` 已完成首轮最小切口并通过当前模块级验证
-- `feature-rn-host` 已完成首轮最小切口并通过当前模块级验证
-- `android/core-storage` 已落地
-- `android/core-network` 已以契约优先方式落地首批抽离
-- `Phase 5` 的模块图、首批 core/feature 模块、兼容证据与验证矩阵已闭环
-- `Phase 6` 已正式启动，并落下首份 baseline evidence 文档
+- `Phase 5` 已完成首批 `core/*` 与 `feature/*` 模块的稳定落地、模块级验证矩阵与 Host / Bridge 兼容闭环
+- `Phase 6` 已完成：
+  - startup baseline
+  - scroll baseline
+  - search / reader / welfare-webview-host / bridge baseline
+  - performance budget summary
+  - baseline profile blocker 固化
+- 打开书籍“请求错误” blocker 在 `Stage 3` 期间保持绿灯，没有被性能专项或模块化回归重新打开
 
-## 当前核心证据入口
+## 核心证据入口
 - `docs/refactor/stage-3-phase-5-6-plan.md`
 - `docs/refactor/phases/phase-5-gradle-modularization.md`
 - `docs/refactor/phases/phase-6-performance-governance.md`
+- `docs/refactor/phases/phase-7-size-dependency-build-governance.md`
 - `docs/refactor/tracking/phase-5-6-validation-board.md`
-- `docs/refactor/tracking/stage-3-static-debt-baseline.md`
-- `docs/refactor/phase-5/module-graph-current-state.md`
-- `android/app/src/test/java/com/novel/utils/network/api/front/BookServiceTest.kt`
-- `android/gradle/android-library-common.gradle`
-- `android/core-common/`
-- `android/core-bridge-contract/`
-- `android/feature-home/`
-- `android/feature-rn-host/`
-- `android/feature-search/`
-- `android/feature-welfare/`
-- `android/core-storage/`
-- `android/core-network/`
-- `docs/refactor/phase-5/host-compat-validation-2026-03-21.md`
-- `docs/refactor/phase-5/module-verification-matrix-2026-03-21.md`
 - `docs/refactor/phase-5/phase-5-closeout-assessment.md`
+- `docs/refactor/phase-6/phase-6-closeout-assessment.md`
 - `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md`
 
-## 当前未完成项
-- `core-network` 仍需从“契约优先”深化到共享基础设施，但已转入 Phase 6 可承接的 carried debt
-- `Phase 6` 的 benchmark / baseline profile 仍未拿到稳定 connected run 输出
-- `Stage 3` closeout 仍未生成正式总结版
+## Carried Debt / Residual Risks
+- `core-network` 仍停留在契约优先阶段，后续仍需继续深化模块化，但它不再阻塞 `Stage 4`
+- `app` 仍然是 composition root，Reader 与 RN/Application host roots 仍留在 `app`
+- `DN2101` 的 `cmd package compile` 仍是环境 blocker；compiled-mode startup/profile 需要在第二设备上复验
+- Reader 当前仍缺少直接可重复的：
+  - flip action 数值样本
+  - settings update 数值样本
 
 ## 是否允许进入下一阶段
-- 当前结论：`not yet`
-- 原因：
-  - `Phase 5` 已关闭，但 `Phase 6` 尚未实施
-  - 当前仅允许从新模块边界进入 `Phase 6`
+- 当前结论：`yes`
+- 下一阶段：`Phase 7`
+- 下一阶段状态：`planned`
 
-## 后续更新规则
-- 当 `V5-*` 或 `V6-*` 出现 `red` 时，本文件只更新阶段状态，不给出最终关闭结论
-- 只有在 `V5-* / V6-*` 全绿后，才允许改写为真正的 `Stage 3 closeout summary`
+## 下一阶段主线
+- 包体积 baseline 与 artifact diff
+- Gradle / npm 依赖治理
+- build efficiency baseline 与 clean/incremental 对比

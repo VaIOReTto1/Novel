@@ -23,6 +23,16 @@
 - `Stage 3 = validated`
 - `Phase 6` 中的 accepted blocker 与 residual risk 已留痕，不再混入 `Phase 7` 主线
 
+## 不承接的 Phase 6 性能债
+- 以下内容不属于 `Phase 7` 主线，应留在后续性能专项 backlog：
+  - 启动任务压缩与 RN 预热收益继续优化
+  - Reader 初始化 / 翻页 / 设置更新的进一步减重
+  - Welfare / WebView 初始化重复路径收敛
+  - 搜索结果页首开非必要加载治理
+  - RN Host 主题事件、ReactRootView 生命周期、Bridge 批量调用优化
+- 统一参考：
+  - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
+
 ## 协作编制
 ### Leader Mode
 - `single leader / three helpers`

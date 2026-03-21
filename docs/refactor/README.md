@@ -4,10 +4,9 @@
 - 当前阶段：`Phase 7`
 - 阶段状态：`planned`
 - 门禁模式：`严格门禁`
-- 最近结论：`Phase 6 = validated`，`Stage 3 = validated`。启动、滚动、Search、Reader、Welfare/WebView、RN Host / Bridge 的 Phase 6 baseline 已闭环，当前切换到 `Phase 7 planned`。
+- 最近结论：`Phase 6 = validated`，`Stage 3 = validated`。当前已经完成 `Phase 6` 的基线、证据、预算与 blocker 固化，但这并不等于全部性能优化已做完；剩余优化机会已转入显式文档管理。
 - 下一步：固定包体积 baseline、依赖治理入口与构建效率 baseline。
 - 当前 Phase 默认编制：`3 helpers + 1 Leader（planned baseline）`
-- 当前激活波次：`n/a`
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -32,6 +31,13 @@
 - `Stage 3 = Phase 5-6` 已正式关闭并标记为 `validated`。
 - `DN2101` 的 `cmd package compile` 已被客观固化为 accepted environment blocker，不再误判为 `Phase 5/6` 仓库回归。
 
+## 推荐阅读顺序
+1. [第三阶段关闭总结](./stage-3-closeout-summary.md)
+2. [Phase 6 关闭评审与签字确认报告](./phase-6/phase-6-closeout-assessment.md)
+3. [原始蓝图 Phase 3-6 差异审计](./blueprint-v2-phase-3-6-gap-analysis.md)
+4. [Phase 6 优化机会盘点](./phase-6/phase-6-optimization-opportunity-catalog.md)
+5. [Phase 7 - 包体积、依赖与构建效率治理](./phases/phase-7-size-dependency-build-governance.md)
+
 ## 文档索引
 - [总重构路线图](./master-roadmap.md)
 - [第一阶段重构总结（Phase 0-2）](./stage-1-phase-0-2-summary.md)
@@ -39,6 +45,7 @@
 - [第二阶段关闭总结](./stage-2-closeout-summary.md)
 - [第三阶段重构计划（Stage 3 = Phase 5-6）](./stage-3-phase-5-6-plan.md)
 - [第三阶段关闭总结](./stage-3-closeout-summary.md)
+- [原始蓝图 Phase 3-6 差异审计](./blueprint-v2-phase-3-6-gap-analysis.md)
 - [Phase 0 - 基线与控制面板](./phases/phase-0-foundation.md)
 - [Phase 1 - 发布、安全与合规治理](./phases/phase-1-release-security.md)
 - [Phase 2 - 质量门禁与自动化护栏](./phases/phase-2-quality-gates.md)
@@ -50,15 +57,16 @@
 - [Phase 5 宿主页兼容验证](./phase-5/host-compat-validation-2026-03-21.md)
 - [Phase 5 模块验证矩阵](./phase-5/module-verification-matrix-2026-03-21.md)
 - [Phase 6 - 性能专项与基准治理](./phases/phase-6-performance-governance.md)
-- [Phase 6 首轮性能基线入口](./phase-6/stage-3-performance-baseline-2026-03-21.md)
-- [Phase 6 启动 benchmark](./phase-6/startup-benchmark-run-2026-03-21.md)
-- [Phase 6 滚动 benchmark](./phase-6/scroll-benchmark-run-2026-03-21.md)
-- [Phase 6 baseline profile 运行记录](./phase-6/baseline-profile-run-2026-03-21.md)
-- [Phase 6 设备 compile blocker](./phase-6/device-compile-blocker-2026-03-21.md)
-- [Phase 6 Search baseline](./phase-6/search-performance-baseline-2026-03-21.md)
-- [Phase 6 Reader baseline](./phase-6/reader-performance-baseline-2026-03-21.md)
-- [Phase 6 WebView / Bridge baseline](./phase-6/webview-bridge-performance-baseline-2026-03-21.md)
-- [Phase 6 Budget Summary](./phase-6/performance-budget-summary.md)
+- [Stage 3 性能基线总入口](./phase-6/stage-3-performance-baseline-2026-03-21.md)
+- [启动 Benchmark 运行记录](./phase-6/startup-benchmark-run-2026-03-21.md)
+- [滚动 Benchmark 运行记录](./phase-6/scroll-benchmark-run-2026-03-21.md)
+- [Baseline Profile 运行记录](./phase-6/baseline-profile-run-2026-03-21.md)
+- [设备侧 Compile Blocker 记录](./phase-6/device-compile-blocker-2026-03-21.md)
+- [搜索性能基线](./phase-6/search-performance-baseline-2026-03-21.md)
+- [Reader 性能基线](./phase-6/reader-performance-baseline-2026-03-21.md)
+- [WebView / Bridge 性能基线](./phase-6/webview-bridge-performance-baseline-2026-03-21.md)
+- [Phase 6 性能预算摘要](./phase-6/performance-budget-summary.md)
+- [Phase 6 优化机会盘点](./phase-6/phase-6-optimization-opportunity-catalog.md)
 - [Phase 6 关闭评审与签字确认报告](./phase-6/phase-6-closeout-assessment.md)
 - [Phase 7 - 包体积、依赖与构建效率治理](./phases/phase-7-size-dependency-build-governance.md)
 - [Phase 0-2 验证看板](./tracking/phase-0-2-validation-board.md)

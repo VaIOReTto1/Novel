@@ -1,46 +1,46 @@
-# Startup Benchmark Run - 2026-03-21
+# 启动 Benchmark 运行记录 - 2026-03-21
 
-## Scenario
-- Stable startup baseline on the validated `Phase 6` benchmark suite
-- Target cases:
+## 场景
+- 在 `Phase 6` 已验证的 benchmark 套件上建立稳定的启动基线。
+- 本次覆盖的用例：
   - `ExampleStartupBenchmark.startup`
   - `ExampleStartupBenchmark.startupNoCompilation`
 
-## Command
+## 命令
 - `android/gradlew.bat :macrobenchmark:connectedBenchmarkAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.novel.macrobenchmark.ExampleStartupBenchmark"`
 
-## Device / Build
-- Device: `192.168.8.130:5555 / DN2101 / Android 13`
-- Build Variant: `debug`
-- Host App: `com.novel`
+## 设备 / 构建
+- 设备：`192.168.8.130:5555 / DN2101 / Android 13`
+- 构建变体：`debug`
+- 目标应用：`com.novel`
 
-## Expected
-- The daily startup baseline must stay green on the connected device.
-- Compiled-mode startup probes must no longer be part of the default green suite.
+## 预期
+- 默认启动基线在真机上保持绿色可重复。
+- 编译型启动探针不再阻塞默认绿色套件。
 
-## Actual
-- Command passed on the connected device.
-- `startup` recorded `timeToInitialDisplayMs`:
-  - min `647.4 ms`
-  - median `663.8 ms`
-  - max `721.3 ms`
-- `startupNoCompilation` recorded `timeToInitialDisplayMs`:
-  - min `647.4 ms`
-  - median `654.4 ms`
-  - max `734.7 ms`
-- The startup log sample still captured application-side initialization markers:
+## 实际结果
+- 命令在连接设备上执行成功。
+- `startup` 的 `timeToInitialDisplayMs`：
+  - 最小值：`647.4 ms`
+  - 中位数：`663.8 ms`
+  - 最大值：`721.3 ms`
+- `startupNoCompilation` 的 `timeToInitialDisplayMs`：
+  - 最小值：`647.4 ms`
+  - 中位数：`654.4 ms`
+  - 最大值：`734.7 ms`
+- 启动日志样本仍可追溯到应用侧初始化拆解：
   - `ThemeManager = 5 ms`
   - `SoLoader = 24 ms`
   - `Application onCreate = 31 ms`
 
-## Evidence
+## 证据
 - `docs/refactor/evidence/startup-benchmark-testlog-2026-03-21.txt`
 - `docs/refactor/evidence/startup-benchmark-report-2026-03-21.html`
 - `docs/refactor/evidence/phase6-startup-logcat-2026-03-21.txt`
 
-## Result
-- `pass`
+## 结论
+- `通过`
 
-## Residual Risk
-- This baseline is intentionally limited to `CompilationMode.None()`.
-- Compiled startup modes were moved to the probe suite because `DN2101` cannot reliably execute `cmd package compile`.
+## 残余风险
+- 当前启动基线有意限制在 `CompilationMode.None()`。
+- 编译型启动路径已被拆到 probe 套件，原因不是仓库回归，而是 `DN2101` 的设备侧 `cmd package compile` 仍不可靠。

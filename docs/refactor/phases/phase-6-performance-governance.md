@@ -8,15 +8,15 @@
 ## 范围
 - startup / scroll macrobenchmark
 - baseline profile 与编译型探针
-- Search log-sample baseline
-- Reader 关键链路 baseline
-- Welfare / WebView / RN Host / Bridge baseline
+- Search 日志样本基线
+- Reader 关键链路基线
+- Welfare / WebView / RN Host / Bridge 基线
 - 预算表与 closeout 文档
 
 ## 非目标
 - 不继续做大的架构拆分
 - 不以性能专项为名改产品语义
-- 不做 `Phase 7` 的包体积/构建效率专项
+- 不做 `Phase 7` 的包体积 / 构建效率专项
 
 ## 进入条件
 - `Phase 5 = validated`
@@ -56,6 +56,7 @@
 - `docs/refactor/phase-6/webview-bridge-performance-baseline-2026-03-21.md`
 - `docs/refactor/phase-6/performance-budget-summary.md`
 - `docs/refactor/phase-6/phase-6-closeout-assessment.md`
+- `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 
 ## 协作编制
 ### Leader Mode
@@ -65,7 +66,7 @@
 - `3`
 
 ### Scale-Up Triggers
-- 启动、滚动/Reader、WebView/Bridge 三条性能线已经具备独立证据脚手架时，可扩展额外 helper 补专项取证。
+- 启动、滚动/Reader、WebView/Bridge 三条性能线都具备独立证据脚手架时，可扩展额外 helper 补专项取证。
 - baseline profile、macrobenchmark 与页面专项可以无锁并行时，可短期扩容。
 
 ### Scale-Down Triggers
@@ -98,16 +99,16 @@
 
 ### Leader-only Actions
 - 固定预算口径
-- 同步看板/README/closeout
+- 同步看板 / README / closeout
 - 串行执行 benchmark / 验证命令
 
 ## 任务拆解
 | ID | Task | Expected Outcome |
 | --- | --- | --- |
 | P6.1 | 刷新 Stage 3 性能基线 | 新模块边界上的 baseline 文档落盘 |
-| P6.2 | 冷启动/热启动专项 | 启动预算、baseline profile、macrobenchmark 证据稳定 |
-| P6.3 | 首页/搜索/Reader 关键链路专项 | 关键交互预算与回归证据稳定 |
-| P6.4 | Welfare/WebView/Bridge 专项 | WebView、RN Host、Bridge 初始化/交互性能证据稳定 |
+| P6.2 | 冷启动 / 热启动专项 | 启动预算、baseline profile、macrobenchmark 证据稳定 |
+| P6.3 | 首页 / 搜索 / Reader 关键链路专项 | 关键交互预算与回归证据稳定 |
+| P6.4 | Welfare / WebView / Bridge 专项 | WebView、RN Host、Bridge 初始化/交互性能证据稳定 |
 | P6.5 | 性能观测与报告模板 | 性能 diff、问题归因、预算表统一 |
 | P6.6 | 输出 Stage 3 closeout 与 Phase 7 进入条件 | 下一阶段入口清晰 |
 
@@ -117,6 +118,7 @@
 - benchmark / profile / blocker 证据归档
 - 性能预算表
 - Phase 6 closeout 文档
+- Phase 6 优化机会盘点文档
 - Phase 7 进入条件文档
 
 ## 硬阈值
@@ -143,8 +145,8 @@
 ## 检验计划
 - `V6-01` Stage 3 性能 baseline 稳定
 - `V6-02` 启动预算与 baseline profile 稳定
-- `V6-03` 首页/搜索/Reader 关键链路预算稳定
-- `V6-04` Welfare/WebView/Bridge 性能验证稳定
+- `V6-03` 首页 / 搜索 / Reader 关键链路预算稳定
+- `V6-04` Welfare / WebView / Bridge 性能验证稳定
 - `V6-05` 性能观测与报告模板闭环
 - `V6-06` Stage 3 closeout 与 Phase 7 进入条件明确
 
@@ -153,6 +155,14 @@
 - `Stage 3 closeout` 已完成
 - `Phase 7` 入口已固定为包体积、依赖与构建效率治理
 - `DN2101` 的 `cmd package compile` blocker 已以 accepted environment blocker 方式留痕，不再阻塞本阶段关闭
+
+## 说明
+- `Phase 6 validated` 的含义是：
+  - 基线、证据、预算和 blocker 归档已经闭环
+- 它不等于：
+  - 所有性能优化动作都已经完成
+- 尚未完成的优化点，统一见：
+  - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 
 ## 负责人
 - Owner：当前重构实施者

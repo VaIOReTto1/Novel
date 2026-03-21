@@ -343,8 +343,11 @@ class BookService @Inject constructor(
             clazz = BookChapterResponse::class.java
         ) { response, data ->
             val latestUpdateTime = data.data
-                ?.maxByOrNull { it.chapterUpdateTime }
-                ?.chapterUpdateTime
+                ?.mapNotNull { chapter ->
+                    (chapter.chapterUpdateTime as String?)
+                        ?.takeIf { it.isNotBlank() }
+                }
+                ?.maxOrNull()
                 ?: System.currentTimeMillis().toString()
             IncrementalNetworkResponse.Modified(
                 data = data,

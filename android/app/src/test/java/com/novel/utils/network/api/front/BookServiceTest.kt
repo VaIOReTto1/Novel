@@ -375,6 +375,46 @@ class BookServiceTest {
     }
 
     @Test
+    fun getBookChaptersWithCondition_handlesNullChapterUpdateTimeWithoutThrowing() = runBlocking {
+        val facade = RecordingNetworkFacade(
+            response = """
+                {
+                  "ok":true,
+                  "data":[
+                    {
+                      "id":11,
+                      "bookId":5,
+                      "chapterNum":1,
+                      "chapterName":"第一章",
+                      "chapterWordCount":1000,
+                      "chapterUpdateTime":null,
+                      "isVip":0
+                    },
+                    {
+                      "id":12,
+                      "bookId":5,
+                      "chapterNum":2,
+                      "chapterName":"第二章",
+                      "chapterWordCount":1200,
+                      "chapterUpdateTime":null,
+                      "isVip":0
+                    }
+                  ]
+                }
+            """.trimIndent()
+        )
+        val service = BookService(gson, facade)
+
+        val result = service.getBookChaptersWithCondition(bookId = 5L)
+
+        assertTrue(result is IncrementalNetworkResponse.Modified)
+        assertEquals(
+            2,
+            (result as IncrementalNetworkResponse.Modified).data.data?.size
+        )
+    }
+
+    @Test
     fun getBookContentWithCondition_buildsExpectedGetRequestAndParsesResponse() = runBlocking {
         val facade = RecordingNetworkFacade(
             response = """

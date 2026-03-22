@@ -3,8 +3,10 @@ package com.novel.rn.bridge.network
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.utils.network.interceptor.RequestIdInterceptor
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test
 
@@ -43,7 +45,12 @@ class NavigationBridgeNetworkGatewayTest {
         assertEquals(FRONT_BASE_URL, facade.lastRequest?.baseUrl)
         assertEquals("home/books", facade.lastRequest?.endpoint)
         assertEquals(NetworkRequestMethod.GET, facade.lastRequest?.method)
-        assertEquals(mapOf("Accept" to "*/*"), facade.lastRequest?.headers)
+        assertEquals("*/*", facade.lastRequest?.headers?.get("Accept"))
+        assertNotNull(facade.lastRequest?.headers?.get(RequestIdInterceptor.REQUEST_ID_HEADER))
+        assertEquals(
+            facade.lastRequest?.headers?.get(RequestIdInterceptor.REQUEST_ID_HEADER),
+            facade.lastRequest?.headers?.get(RequestIdInterceptor.TRACE_ID_HEADER)
+        )
         assertEquals("0", result.code)
         assertEquals("ok", result.message)
         assertEquals(true, result.ok)

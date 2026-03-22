@@ -75,6 +75,16 @@ class RequestIdInterceptorTest {
         assertThat(interceptedRequest.header(RequestIdInterceptor.REQUEST_ID_HEADER)).isNotNull()
     }
 
+    @Test
+    fun `ensureTraceHeaders adds trace headers to plain header map`() {
+        val headers = RequestIdInterceptor.ensureTraceHeaders(mapOf("Accept" to "*/*"))
+
+        assertThat(headers["Accept"]).isEqualTo("*/*")
+        assertThat(headers[RequestIdInterceptor.REQUEST_ID_HEADER]).isNotNull()
+        assertThat(headers[RequestIdInterceptor.TRACE_ID_HEADER])
+            .isEqualTo(headers[RequestIdInterceptor.REQUEST_ID_HEADER])
+    }
+
     private class FakeChain(
         private val request: Request
     ) : Interceptor.Chain {

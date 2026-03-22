@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import com.novel.BuildConfig
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.interceptor.AuthInterceptor
+import com.novel.utils.network.interceptor.RequestIdInterceptor
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -174,6 +175,10 @@ object RetrofitClient {
 
             val builder = OkHttpClient.Builder()
                 .addInterceptor(authInterceptor) // 自动加Token
+                .addInterceptor { chain ->
+                    TimberLogger.d(TAG, NetworkTraceLogHelper.formatOkHttpDispatch(chain.request()))
+                    chain.proceed(chain.request())
+                }
                 .addInterceptor(logging)
 
             // 根据服务类型设置更宽松的超时，AI 接口响应较慢
@@ -253,8 +258,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("GET", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "GET请求: $endpoint")
-        getService(baseUrl).get(endpoint, params, headers)
+        getService(baseUrl).get(endpoint, params, tracedHeaders)
             .enqueue(createCallback(callback))
     }
 
@@ -273,8 +280,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("POST", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "POST请求: $endpoint")
-        getService(baseUrl).post(endpoint, createJsonBody(params), headers)
+        getService(baseUrl).post(endpoint, createJsonBody(params), tracedHeaders)
             .enqueue(createCallback(callback))
     }
 
@@ -293,8 +302,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("POST_JSON", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "POST请求(postJson): $endpoint")
-        getService(baseUrl).post(endpoint, createJsonBodyAny(params), headers)
+        getService(baseUrl).post(endpoint, createJsonBodyAny(params), tracedHeaders)
             .enqueue(createCallback(callback))
     }
 
@@ -308,8 +319,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("POST_QUERY", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "POST请求(postQuery): $endpoint")
-        getService(baseUrl).postWithQuery(endpoint, params, headers)
+        getService(baseUrl).postWithQuery(endpoint, params, tracedHeaders)
             .enqueue(createCallback(callback))
     }
 
@@ -326,8 +339,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("DELETE", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "DELETE请求: $endpoint")
-        getService(baseUrl).delete(endpoint, headers).enqueue(createCallback(callback))
+        getService(baseUrl).delete(endpoint, tracedHeaders).enqueue(createCallback(callback))
     }
 
     /**
@@ -345,8 +360,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("PATCH", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "PATCH请求: $endpoint")
-        getService(baseUrl).patch(endpoint, params, headers)
+        getService(baseUrl).patch(endpoint, params, tracedHeaders)
             .enqueue(createCallback(callback))
     }
 
@@ -365,8 +382,10 @@ object ApiService {
         headers: Map<String, String> = mapOf(),
         callback: (String?, Throwable?) -> Unit
     ) {
+        val tracedHeaders = RequestIdInterceptor.ensureTraceHeaders(headers)
+        TimberLogger.d(TAG, NetworkTraceLogHelper.formatLegacyDispatch("PUT", baseUrl, endpoint, tracedHeaders))
         TimberLogger.d(TAG, "PUT请求: $endpoint")
-        getService(baseUrl).put(endpoint, body, headers).enqueue(createCallback(callback))
+        getService(baseUrl).put(endpoint, body, tracedHeaders).enqueue(createCallback(callback))
     }
 
     /**

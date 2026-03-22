@@ -14,6 +14,24 @@ class RequestIdInterceptor @Inject constructor() : Interceptor {
     companion object {
         const val REQUEST_ID_HEADER = "X-Request-Id"
         const val TRACE_ID_HEADER = "X-Trace-Id"
+
+        fun ensureTraceHeaders(headers: Map<String, String>): Map<String, String> {
+            val existingRequestId = headers[REQUEST_ID_HEADER]
+            val existingTraceId = headers[TRACE_ID_HEADER]
+            val requestId = existingRequestId ?: generateId()
+            val traceId = existingTraceId ?: requestId
+
+            return LinkedHashMap(headers).apply {
+                if (existingRequestId == null) {
+                    put(REQUEST_ID_HEADER, requestId)
+                }
+                if (existingTraceId == null) {
+                    put(TRACE_ID_HEADER, traceId)
+                }
+            }
+        }
+
+        private fun generateId(): String = UUID.randomUUID().toString()
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -35,6 +53,4 @@ class RequestIdInterceptor @Inject constructor() : Interceptor {
 
         return chain.proceed(updatedRequest)
     }
-
-    private fun generateId(): String = UUID.randomUUID().toString()
 }

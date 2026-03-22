@@ -6,6 +6,9 @@ import com.google.gson.JsonParser
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.utils.TimberLogger
+import com.novel.utils.network.NetworkTraceLogHelper
+import com.novel.utils.network.interceptor.RequestIdInterceptor
 
 data class HomeBooksBridgeItem(
     val type: Int,
@@ -218,15 +221,15 @@ class NavigationBridgeNetworkGateway(
         endpoint: String,
         queryParams: Map<String, String> = emptyMap()
     ): JsonObject {
-        val response = networkFacade.execute(
-            NetworkRequest(
-                baseUrl = baseUrl,
-                endpoint = endpoint,
-                method = NetworkRequestMethod.GET,
-                queryParams = queryParams,
-                headers = mapOf("Accept" to "*/*")
-            )
+        val request = NetworkRequest(
+            baseUrl = baseUrl,
+            endpoint = endpoint,
+            method = NetworkRequestMethod.GET,
+            queryParams = queryParams,
+            headers = RequestIdInterceptor.ensureTraceHeaders(mapOf("Accept" to "*/*"))
         )
+        TimberLogger.d("NavigationBridgeNetworkGateway", NetworkTraceLogHelper.formatBridgeDispatch(request))
+        val response = networkFacade.execute(request)
 
         return JsonParser.parseString(response).asJsonObject
     }

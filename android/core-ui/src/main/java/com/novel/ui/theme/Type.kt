@@ -5,7 +5,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontWeight
-import com.novel.R
+import com.novel.core.ui.R
 import com.novel.utils.ssp
 
 /**

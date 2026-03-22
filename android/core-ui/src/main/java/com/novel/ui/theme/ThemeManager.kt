@@ -272,10 +272,22 @@ class ThemeManager private constructor(private val context: Context) : ViewModel
     fun notifyThemeChangedToRN(theme: String) {
         try {
             println("[ThemeManager] 准备发送主题变更事件到RN: $theme")
-            
-            val mainApplication = context.applicationContext as com.novel.MainApplication
-            val reactInstanceManager = mainApplication.reactNativeHost.reactInstanceManager
-            val reactContext = reactInstanceManager.currentReactContext
+
+            val application = context.applicationContext
+            val reactNativeHost = application.javaClass
+                .methods
+                .firstOrNull { it.name == "getReactNativeHost" && it.parameterCount == 0 }
+                ?.invoke(application)
+            val reactInstanceManager = reactNativeHost
+                ?.javaClass
+                ?.methods
+                ?.firstOrNull { it.name == "getReactInstanceManager" && it.parameterCount == 0 }
+                ?.invoke(reactNativeHost)
+            val reactContext = reactInstanceManager
+                ?.javaClass
+                ?.methods
+                ?.firstOrNull { it.name == "getCurrentReactContext" && it.parameterCount == 0 }
+                ?.invoke(reactInstanceManager) as? ReactContext
             
             // 🎯 增加安全检查
             if (reactContext != null && reactContext.hasActiveCatalystInstance()) {

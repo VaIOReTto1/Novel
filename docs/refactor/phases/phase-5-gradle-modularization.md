@@ -25,10 +25,11 @@
 - `app` 仍可稳定通过当前核心回归命令
 
 ## 当前真实进度
-- `2026-03-21` 已完成首轮 `Phase 5 validated` checkpoint，但当前模块图仍明显偏浅，`feature-home / feature-search / feature-rn-host` 仍停留在最小切口，`core-ui / core-bridge / feature-book / feature-login / feature-reader` 尚未真正落地。
+- `2026-03-21` 已完成首轮 `Phase 5 validated` checkpoint，但当前模块图仍明显偏浅，`feature-home / feature-search / feature-rn-host` 仍停留在最小切口，`core-bridge / feature-book / feature-login / feature-reader` 尚未真正落地。
 - 打开书籍“请求错误”运行时 blocker 已修复，`BookService` 的空 `chapterUpdateTime` 回归测试已作为 Phase 5 首个守门用例保留。
 - `android/gradle/android-library-common.gradle` 已落地，`core/*` 模块开始复用统一 Android library 构建约定。
 - `android/core-common` 已落地并完成首轮共享基础抽离。
+- `android/core-ui` 已落地并接管主题体系、尺寸/点击工具与首批基础 Compose 组件。
 - `android/core-storage` 已落地并完成模块级单测。
 - `android/core-network` 已以“契约优先”方式落地首批抽离，当前仍需继续向共享基础设施深化。
 - `android/core-bridge-contract` 已落地并完成第一批纯桥接 delegate/helper 抽离。

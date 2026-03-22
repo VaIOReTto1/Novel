@@ -17,6 +17,14 @@
     - `com.novel.core.result.*`
     - `com.novel.core.concurrency.*`
     - `com.novel.core.logging.CoreLogger`
+- `:core-ui`
+  - 通用主题与基础 Compose 组件
+  - 当前承载：
+    - `com.novel.ui.theme.*`
+    - `com.novel.utils.StableCallbacks`
+    - `com.novel.utils.flydp`
+    - `com.novel.utils.debounceClickable`
+    - `NovelText / NovelTextField / NovelButton / NovelDivider`
 - `:core-storage`
   - 存储抽象与兼容层
 - `:core-network`
@@ -48,7 +56,6 @@
 
 ## reopen 目标模块图
 - 已纳入本轮深化目标、但尚未真正落地：
-  - `:core-ui`
   - `:core-bridge`
   - `:feature-book`
   - `:feature-login`
@@ -62,6 +69,7 @@
 
 ## 当前依赖方向
 - `:app -> :core-common`
+- `:app -> :core-ui`
 - `:app -> :core-bridge-contract`
 - `:app -> :core-storage`
 - `:app -> :core-network`
@@ -107,6 +115,7 @@
 - `feature-home` 已完成首轮最小切口，当前只迁出 `HomePerformanceOptimizer`。
 - `feature-rn-host` 已完成首轮最小切口，当前只迁出 `SettingsPreferenceStorage`。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
+- `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
 - `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
 
 ## 当前阻塞与下一步
@@ -117,7 +126,6 @@
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
-  - 新增 `core-ui`，把主题与通用基础 Compose 组件真正迁出 `app`
   - 深化 `core-network / core-bridge`
   - 深化 `feature-home / feature-search / feature-welfare / feature-rn-host`
   - 新增 `feature-book / feature-login / feature-reader`

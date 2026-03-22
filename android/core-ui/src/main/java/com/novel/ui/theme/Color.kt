@@ -1,13 +1,12 @@
 package com.novel.ui.theme
 
 import android.util.Log
-import com.novel.utils.TimberLogger
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import timber.log.Timber
+import com.novel.core.logging.CoreLogger
 
 /**
  * 小说应用主题色彩系统
@@ -89,7 +88,7 @@ fun dynamicColor(light: Color, dark: Color): Color {
     }
     
     if (Log.isLoggable(TAG, Log.VERBOSE)) {
-        TimberLogger.v(TAG, "主题模式: 深色=$actualDarkMode, 跟随系统=$followSystemTheme, 手动设置深色=$isDarkMode")
+        CoreLogger.v(TAG, "主题模式: 深色=$actualDarkMode, 跟随系统=$followSystemTheme, 手动设置深色=$isDarkMode")
     }
     
     return if (actualDarkMode) dark else light

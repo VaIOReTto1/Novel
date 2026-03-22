@@ -51,7 +51,7 @@
   - `docs/refactor/tracking/decision-log.md`
 
 ## Carried Debt / Residual Risks
-- 模块化当前仍明显偏浅，`core-ui / core-bridge / feature-book / feature-login / feature-reader` 尚未真正落地。
+- 模块化当前仍明显偏浅，`core-bridge / feature-book / feature-login / feature-reader` 尚未真正落地。
 - 首页当前仍存在首开后需手动刷新的问题，需与 `feature-home` 深化一并关闭。
 - Reader 当前仍缺少直接可重复的：
   - flip action 数值样本

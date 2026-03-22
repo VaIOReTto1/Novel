@@ -96,12 +96,13 @@
 - `2026-03-21` 的 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-23`，由于模块图仍明显偏浅，`Phase 5` 已重新切回 `in_progress`。
 - 本轮实际落地的首批模块包括：
   - `core-common`
+  - `core-ui`
   - `core-bridge-contract`
   - `feature-welfare`
   - `feature-home`
   - `feature-search`
   - `feature-rn-host`
-- `core-ui`、`feature-login`、`feature-reader` 没在本轮落地。
+- `feature-login`、`feature-reader` 没在本轮落地。
 - `app` 仍作为 composition root。
 - `module owner / API surface 审查 / 构建时间统计` 没有形成和原蓝图同等强度的制度化文档闭环。
 
@@ -113,7 +114,7 @@
 | `core-common` | `已实现` |
 | `core-network` 深化到可复用共享基础设施 | `部分实现` |
 | `core-storage` | `已实现` |
-| `core-ui` | `未实现` |
+| `core-ui` | `已实现` |
 | `core-bridge` | `部分实现`（以 `core-bridge-contract` 形式落地） |
 | `feature-home` | `已实现`（首轮最小切口） |
 | `feature-search` | `已实现`（首轮最小切口） |

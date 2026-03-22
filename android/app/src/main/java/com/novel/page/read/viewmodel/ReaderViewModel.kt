@@ -63,6 +63,7 @@ class ReaderViewModel @Inject constructor(
     val readerReducer = ReaderReducer()
     private val readerSettingsCoordinator = ReaderSettingsCoordinator()
     private val readerHistoryCoordinator = ReaderHistoryCoordinator()
+    private val readerPerformanceTraceCoordinator = ReaderPerformanceTraceCoordinator()
 
     /** 新的StateAdapter实例 */
     val adapter = state.asReaderAdapter()
@@ -188,6 +189,13 @@ class ReaderViewModel @Inject constructor(
 
     private fun handleInitReaderAsync(intent: ReaderIntent.InitReader) {
         viewModelScope.launch {
+            val trace = startPerformanceTrace(
+                action = "init",
+                metadata = mapOf(
+                    "bookId" to intent.bookId,
+                    "entry" to (intent.chapterId ?: "restored"),
+                ),
+            )
             TimberLogger.d(
                 TAG,
                 "异步初始化阅读器: bookId=${intent.bookId}, chapterId=${intent.chapterId}"
@@ -228,6 +236,14 @@ class ReaderViewModel @Inject constructor(
                     TimberLogger.d(TAG, "检测到初始分页为单页，容器信息已就绪，触发重新分页")
                     splitContentAndBuildVirtualPages(preserveVirtualIndex = false)
                 }
+                finishPerformanceTrace(
+                    trace = trace,
+                    status = "success",
+                    metadata = mapOf(
+                        "chapterId" to result.initialChapter.id,
+                        "pageCount" to result.initialPageData.pages.size.toString(),
+                    ),
+                )
             }.onFailure { error ->
                 TimberLogger.e(TAG, "阅读器初始化失败", error)
                 val newState = readerReducer.handleInitReaderFailure(
@@ -235,6 +251,13 @@ class ReaderViewModel @Inject constructor(
                     error.message ?: "初始化失败"
                 )
                 updateState(newState)
+                finishPerformanceTrace(
+                    trace = trace,
+                    status = "failure",
+                    metadata = mapOf(
+                        "error" to (error.message ?: "unknown"),
+                    ),
+                )
                 sendEffect(ReaderEffect.ShowErrorDialog("初始化失败", error.message ?: "未知错误"))
             }
         }
@@ -249,6 +272,14 @@ class ReaderViewModel @Inject constructor(
                 return@launch
             }
             lastFlipTime = currentTime
+            val trace = startPerformanceTrace(
+                action = "flip",
+                metadata = mapOf(
+                    "source" to "page_flip_intent",
+                    "direction" to intent.direction.name,
+                    "mode" to getCurrentState().readerSettings.pageFlipEffect.name,
+                ),
+            )
 
             TimberLogger.d(TAG, "异步处理翻页操作: ${intent.direction}")
 
@@ -289,11 +320,24 @@ class ReaderViewModel @Inject constructor(
                             viewModelScope
                         )
                     }
+                    finishPerformanceTrace(
+                        trace = trace,
+                        status = "success",
+                        metadata = mapOf(
+                            "outcome" to "virtual_page_changed",
+                            "virtualIndex" to result.newVirtualPageIndex.toString(),
+                        ),
+                    )
                 }
 
                 is FlipPageUseCase.FlipResult.ChapterChanged -> {
                     TimberLogger.d(TAG, "翻页触发章节切换")
                     handleChapterSwitchResult(result.switchResult)
+                    finishPerformanceTrace(
+                        trace = trace,
+                        status = switchResultStatus(result.switchResult),
+                        metadata = mapOf("outcome" to "chapter_changed"),
+                    )
                 }
 
                 is FlipPageUseCase.FlipResult.NeedsVirtualPageRebuild -> {
@@ -322,15 +366,36 @@ class ReaderViewModel @Inject constructor(
                             viewModelScope
                         )
                     }
+                    finishPerformanceTrace(
+                        trace = trace,
+                        status = "success",
+                        metadata = mapOf(
+                            "outcome" to "virtual_page_rebuild",
+                            "virtualIndex" to result.newVirtualPageIndex.toString(),
+                        ),
+                    )
                 }
 
                 is FlipPageUseCase.FlipResult.Failure -> {
                     TimberLogger.e(TAG, "翻页失败", result.error)
+                    finishPerformanceTrace(
+                        trace = trace,
+                        status = "failure",
+                        metadata = mapOf(
+                            "outcome" to "failure",
+                            "error" to (result.error.message ?: "unknown"),
+                        ),
+                    )
                     sendEffect(ReaderEffect.ShowToast("翻页失败: ${result.error.message}"))
                 }
 
                 is FlipPageUseCase.FlipResult.NoOp -> {
                     TimberLogger.d(TAG, "翻页无操作")
+                    finishPerformanceTrace(
+                        trace = trace,
+                        status = "noop",
+                        metadata = mapOf("outcome" to "noop"),
+                    )
                 }
             }
         }
@@ -400,6 +465,13 @@ class ReaderViewModel @Inject constructor(
 
     private fun handleUpdateSettingsAsync(intent: ReaderIntent.UpdateSettings) {
         viewModelScope.launch {
+            val trace = startPerformanceTrace(
+                action = "settings_update",
+                metadata = mapOf(
+                    "mode" to intent.settings.pageFlipEffect.name,
+                    "fontSize" to intent.settings.fontSize.toString(),
+                ),
+            )
             TimberLogger.d(TAG, "异步更新阅读器设置")
 
             val result = updateSettingsUseCase.execute(intent.settings, getCurrentState())
@@ -424,6 +496,14 @@ class ReaderViewModel @Inject constructor(
                         TimberLogger.d(TAG, "重新分页后重建虚拟页面")
                         buildVirtualPages(preserveCurrentIndex = true)
                     }
+                    finishPerformanceTrace(
+                        trace = trace,
+                        status = "success",
+                        metadata = mapOf(
+                            "rebuildVirtualPages" to outcome.shouldRebuildVirtualPages.toString(),
+                            "pageCount" to (result.newPageData?.pages?.size?.toString() ?: "unchanged"),
+                        ),
+                    )
                 }
             }
         }
@@ -553,6 +633,14 @@ class ReaderViewModel @Inject constructor(
     private fun handleUpdateScrollPositionAsync(intent: ReaderIntent.UpdateScrollPosition) {
         val currentState = getCurrentState()
         if (intent.pageIndex != currentState.currentPageIndex) {
+            val trace = startPerformanceTrace(
+                action = "flip",
+                metadata = mapOf(
+                    "source" to "vertical_scroll",
+                    "fromIndex" to currentState.currentPageIndex.toString(),
+                    "toIndex" to intent.pageIndex.toString(),
+                ),
+            )
             TimberLogger.d(
                 TAG,
                 "滚动更新页面索引: ${currentState.currentPageIndex} -> ${intent.pageIndex}"
@@ -566,6 +654,11 @@ class ReaderViewModel @Inject constructor(
 
             // 页面变化后保存进度
             sendIntent(ReaderIntent.SaveProgress())
+            finishPerformanceTrace(
+                trace = trace,
+                status = "success",
+                metadata = mapOf("mode" to PageFlipEffect.VERTICAL.name),
+            )
         }
     }
 
@@ -586,6 +679,15 @@ class ReaderViewModel @Inject constructor(
             TAG,
             "异步处理滑动索引更新: from=${state.virtualPageIndex}, to=${intent.index}"
         )
+        val trace = startPerformanceTrace(
+            action = "flip",
+            metadata = mapOf(
+                "source" to "slide_index",
+                "fromIndex" to state.virtualPageIndex.toString(),
+                "toIndex" to intent.index.toString(),
+                "mode" to PageFlipEffect.SLIDE.name,
+            ),
+        )
 
         val newVirtualPage = virtualPages[intent.index]
         updateSlideFlipState(newVirtualPage, intent.index)
@@ -597,6 +699,13 @@ class ReaderViewModel @Inject constructor(
         if (newVirtualPage is VirtualPage.ContentPage) {
             sendIntent(ReaderIntent.PreloadChapters(newVirtualPage.chapterId))
         }
+        finishPerformanceTrace(
+            trace = trace,
+            status = "success",
+            metadata = mapOf(
+                "targetType" to newVirtualPage::class.simpleName.orEmpty(),
+            ),
+        )
     }
 
     private fun handleLoadBookReviewsAsync(intent: ReaderIntent.LoadBookReviews) {
@@ -1041,6 +1150,44 @@ class ReaderViewModel @Inject constructor(
 
         delay(500)                         // 给 IO 线程一个缓冲
         buildVirtualPages(preserveCurrentIndex = true)
+    }
+
+    private fun startPerformanceTrace(
+        action: String,
+        metadata: Map<String, String> = emptyMap(),
+    ): ReaderPerformanceTrace {
+        val trace = readerPerformanceTraceCoordinator.start(
+            action = action,
+            metadata = metadata,
+        )
+        TimberLogger.d(
+            ReaderLogTags.READER_PERFORMANCE_PROBE,
+            readerPerformanceTraceCoordinator.formatStartMessage(trace),
+        )
+        return trace
+    }
+
+    private fun finishPerformanceTrace(
+        trace: ReaderPerformanceTrace,
+        status: String,
+        metadata: Map<String, String> = emptyMap(),
+    ) {
+        TimberLogger.d(
+            ReaderLogTags.READER_PERFORMANCE_PROBE,
+            readerPerformanceTraceCoordinator.formatFinishMessage(
+                trace = trace,
+                status = status,
+                metadata = metadata,
+            ),
+        )
+    }
+
+    private fun switchResultStatus(result: SwitchChapterUseCase.SwitchResult): String {
+        return when (result) {
+            is SwitchChapterUseCase.SwitchResult.Success -> "success"
+            is SwitchChapterUseCase.SwitchResult.Failure -> "failure"
+            is SwitchChapterUseCase.SwitchResult.NoOp -> "noop"
+        }
     }
 
 

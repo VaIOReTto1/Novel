@@ -9,6 +9,7 @@ object ReaderLogTags {
     
     // ViewModel层
     const val READER_VIEW_MODEL = "ReaderViewModel"
+    const val READER_PERFORMANCE_PROBE = "ReaderPerfProbe"
     
     // Service层
     const val CHAPTER_SERVICE = "ChapterService"

@@ -66,13 +66,15 @@
 - Reader init 已有正式 baseline。
 - [ReaderPage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/read/ReaderPage.kt) 已通过 `ReaderStartupCoordinator` 收敛初始化入口，避免同一 `bookId/chapterId` 走重复 init 路径。
 - [ReaderPage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/read/ReaderPage.kt) 已通过 `ReaderSettingsRefreshCoordinator` 把分页刷新收敛到真正需要重新分页的设置变化上，不再把所有设置变化都等价成一次刷新。
+- [ReaderPage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/read/ReaderPage.kt) 已通过 `ReaderRestoreHintCoordinator` 改为只在“恢复入口 + 初始化成功 + 首个页面数据就绪”时显示恢复提示，不再使用固定 `delay(1000)` 的前置等待。
 
 ### 仅完成测量 / 取证
 - 当前只拿到了 Reader init 稳定样本。
-- flip / settings update 仍然只有“缺口说明”，没有动作级直接数值样本。
+- `ReaderViewModel` 已补上 `init / flip / settings_update` 动作级轻量性能 probe，开始为后续动作级样本提供统一计时日志入口。
+- flip / settings update 仍然缺正式预算值与直接样本归档，当前还处于“probe 已接通、专项取证尚未闭环”阶段。
 
 ### 仍可继续优化的点
-- `ShowProgressRestoredHint` 的固定 `delay(1000)` / `delay(3000)` 仍是粗粒度时序策略，可继续评估是否造成无意义等待或重组负担。
+- 恢复提示当前仍保留固定可见时长，后续可继续评估是否需要更精细的隐藏时机。
 - Reader 的分页、翻页、预取、设置、历史、评论虽然已有局部边界，但还没有形成原蓝图级别的完整独立压测矩阵。
 - 目前仍缺 flip / settings 的动作级直接样本，意味着 Reader 治理还停留在“先收 init 与重分页噪声”，还没有进入热点动作优化阶段。
 

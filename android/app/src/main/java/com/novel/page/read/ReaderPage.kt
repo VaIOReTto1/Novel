@@ -93,6 +93,7 @@ import com.novel.page.read.viewmodel.PageFlipEffect
 import com.novel.page.read.viewmodel.ReaderInfo
 import com.novel.page.read.viewmodel.ReaderSettings
 import com.novel.page.read.viewmodel.ReaderMappingHelper
+import com.novel.page.read.viewmodel.ReaderRestoreHintCoordinator
 import com.novel.page.read.viewmodel.ReaderSettingsRefreshCoordinator
 import com.novel.page.read.viewmodel.ReaderStartupCoordinator
 
@@ -115,6 +116,7 @@ fun ReaderPage(
     val viewModel: ReaderViewModel = hiltViewModel()
     val activeController = flipBookController ?: NavViewModel.currentFlipBookController()
     val readerHistoryCoordinator = remember { ReaderHistoryCoordinator() }
+    val readerRestoreHintCoordinator = remember { ReaderRestoreHintCoordinator() }
     val readerSettingsRefreshCoordinator = remember { ReaderSettingsRefreshCoordinator() }
     val readerStartupCoordinator = remember { ReaderStartupCoordinator() }
 
@@ -129,6 +131,7 @@ fun ReaderPage(
     val density = LocalDensity.current
 
     val coroutineScope = rememberCoroutineScope()
+    var hasShownRestoreHint by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
     var hasPendingPostInitRefresh by rememberSaveable(bookId, chapterId) { mutableStateOf(true) }
     var previousReaderSettings by remember { mutableStateOf<ReaderSettings?>(null) }
 
@@ -170,16 +173,27 @@ fun ReaderPage(
         }
     }
     
-    // 当状态初始化完成且有书籍信息时保存历史记录
-    LaunchedEffect(chapterId, bookId) {
-        if (chapterId == null && bookId.isNotBlank()) {
-            delay(1000)
+    LaunchedEffect(chapterId, state.isSuccess, state.currentPageData?.chapterId) {
+        if (readerRestoreHintCoordinator.shouldShowHint(
+                chapterId = chapterId,
+                isInitSuccess = state.isSuccess,
+                hasPageData = state.currentPageData != null,
+                hasShownHint = hasShownRestoreHint,
+            )
+        ) {
+            hasShownRestoreHint = true
             viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(true))
-            delay(3000)
+        }
+    }
+
+    LaunchedEffect(showProgressRestoredHint) {
+        if (showProgressRestoredHint) {
+            delay(readerRestoreHintCoordinator.hintVisibleDurationMs())
             viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(false))
         }
     }
 
+    // 当状态初始化完成且有书籍信息时保存历史记录
     LaunchedEffect(state.isSuccess, state.currentChapter, state.currentPageData?.bookInfo) {
         val historyIntent = readerHistoryCoordinator.createSaveToHistoryIntent(
             state = state,

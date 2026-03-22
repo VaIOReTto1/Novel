@@ -98,6 +98,9 @@
   - `c9f1f8e` `收敛阅读器初始化与分页刷新`
     - 通过 `ReaderStartupCoordinator` 和 `ReaderSettingsRefreshCoordinator` 去除重复初始化与过宽的分页刷新触发。
     - 影响：Reader 不再只是“拿到 init baseline”，而是已经落了首轮真实优化。
+  - `收敛阅读器恢复提示与动作探针`
+    - 通过 `ReaderRestoreHintCoordinator` 把恢复提示改为在恢复入口真正 ready 后显示，并为 `init / flip / settings_update` 补上轻量性能 probe。
+    - 影响：Reader 已从“只有 init 样本”推进到“动作级 probe 已接通，后续可围绕日志继续做预算化取证”。
   - `666cc72` `收敛福利页初始化路径`
     - 通过 `WelfarePageBootstrapCoordinator` 收敛 preload / performance monitor / `InitializePage` 的首次 bootstrap。
     - 影响：Welfare / WebView 不能再继续按“存在重复初始化嫌疑但尚未处理”描述。

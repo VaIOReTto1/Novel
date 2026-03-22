@@ -40,6 +40,7 @@ import androidx.lifecycle.Lifecycle
 import android.os.Bundle
 import com.novel.page.welfare.viewmodel.WelfareEffect
 import com.novel.page.welfare.viewmodel.WelfareIntent
+import com.novel.page.welfare.viewmodel.WelfarePageBootstrapCoordinator
 import com.novel.page.welfare.viewmodel.WelfareViewModel
 import com.novel.ui.theme.NovelTheme
 import com.novel.ui.theme.ThemeManager
@@ -84,9 +85,11 @@ fun WelfarePage(
     
     // 性能监控
     val performanceMonitor = remember { WelfarePerformanceMonitor.getInstance() }
+    val bootstrapCoordinator = remember { WelfarePageBootstrapCoordinator() }
     
     // WebView预加载管理器
     val webViewPreloadManager = remember { WebViewPreloadManager.getInstance(context) }
+    var hasBootstrappedPage by remember { mutableStateOf(false) }
 
     // 使用StateAdapter优化状态访问
     val adapter = viewModel.adapter
@@ -106,12 +109,25 @@ fun WelfarePage(
     var currentWebView by remember { mutableStateOf<android.webkit.WebView?>(null) }
     
     // 初始化组件
-    LaunchedEffect(Unit) {
+    LaunchedEffect(hasBootstrappedPage) {
         // 初始化WebView预加载管理器
-        webViewPreloadManager.initialize()
+        val bootstrapPlan = bootstrapCoordinator.createInitialPlan(
+            alreadyBootstrapped = hasBootstrappedPage,
+        )
+        if (bootstrapPlan.shouldInitializePreloadManager) {
+            webViewPreloadManager.initialize()
+        }
         
         // 开始性能监控
-        performanceMonitor.startPageLoad("welfare_page")
+        if (bootstrapPlan.shouldStartPerformanceMonitor) {
+            performanceMonitor.startPageLoad("welfare_page")
+        }
+        if (bootstrapPlan.shouldDispatchInitializeIntent) {
+            viewModel.sendIntent(WelfareIntent.InitializePage)
+        }
+        if (!hasBootstrappedPage) {
+            hasBootstrappedPage = true
+        }
     }
 
     // Welfare 专属红包弹窗控制
@@ -212,10 +228,6 @@ fun WelfarePage(
     }
 
     // 页面初始化
-    LaunchedEffect(Unit) {
-        viewModel.sendIntent(WelfareIntent.InitializePage)
-    }
-
     val onPageStarted = remember {
         { viewModel.sendIntent(WelfareIntent.OnPageStarted) }
     }

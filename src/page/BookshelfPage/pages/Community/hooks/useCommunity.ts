@@ -1,6 +1,9 @@
+import { Alert, Share } from 'react-native';
 import { useCallback, useEffect } from 'react';
 import { useCommunityStore } from '../store/communityStore';
 import { CommunitySortType } from '../types';
+import NavigationBridge from '../../../../../utils/bridge/NavigationBridge';
+import { createCommunityActionHandlers } from './communityHandlers';
 
 export const useCommunity = () => {
   const {
@@ -79,53 +82,26 @@ export const useCommunity = () => {
     likePosts(postId);
   }, [likePosts]);
 
-  // 评论
-  const handleComment = useCallback((postId: string) => {
-    commentPost(postId);
-    // TODO: 跳转到评论页面
-  }, [commentPost]);
-
-  // 分享
-  const handleShare = useCallback((postId: string) => {
-    sharePost(postId);
-    // TODO: 调用分享功能
-  }, [sharePost]);
-
-  // 更多操作
-  const handleMore = useCallback((postId: string) => {
-    // TODO: 显示更多操作菜单
-    console.log('More actions for post:', postId);
-  }, []);
-
-  // 用户点击
-  const handleUserPress = useCallback((userId: string) => {
-    // TODO: 跳转到用户页面
-    console.log('User pressed:', userId);
-  }, []);
-
-  // 订阅用户
-  const handleSubscribe = useCallback((userId: string) => {
-    // TODO: 实现订阅功能
-    console.log('Subscribe user:', userId);
-  }, []);
-
-  // 搜索
-  const handleSearch = useCallback(() => {
-    // TODO: 跳转到搜索页面
-    console.log('Search pressed');
-  }, []);
-
-  // 通知
-  const handleNotification = useCallback(() => {
-    // TODO: 跳转到通知页面
-    console.log('Notification pressed');
-  }, []);
-
-  // 发布
-  const handlePublish = useCallback(() => {
-    // TODO: 跳转到发布页面
-    console.log('Publish pressed');
-  }, []);
+  const {
+    handleComment,
+    handleShare,
+    handleMore,
+    handleUserPress,
+    handleSubscribe,
+    handleSearch,
+    handleNotification,
+    handlePublish,
+  } = createCommunityActionHandlers({
+    posts: sortedPosts,
+    commentPost,
+    sharePost,
+    navigateToReviewDetail: NavigationBridge.navigateToReviewDetail,
+    navigateToSearch: (query: string) => NavigationBridge.navigateToSearch(query),
+    navigateToMessage: NavigationBridge.navigateToMessage,
+    navigateToWritePage: NavigationBridge.navigateToWritePage,
+    share: (content) => Share.share(content),
+    alert: (title, message, buttons) => Alert.alert(title, message, buttons),
+  });
 
   // 重试
   const handleRetry = useCallback(() => {

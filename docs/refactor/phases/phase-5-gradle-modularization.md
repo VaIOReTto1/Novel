@@ -42,6 +42,7 @@
 - `android/feature-book` 已落地并接管书籍详情的 MVI 契约与通用格式化工具。
 - `android/feature-login` 已落地并接管登录页的 MVI 契约、reducer 与状态更新器。
 - `android/feature-reader` 已落地并接管阅读器启动/恢复/动作 trace 协调器。
+- Community 页现已补齐评论详情跳转、搜索/通知/发布桥接与原生分享，`handleUserPress / handleSubscribe` 也已改为显式 deferred，而非继续留死 TODO。
 - `Phase 5` 当前已由历史 closeout checkpoint 重新切回 `in_progress`，后续不得再按“首轮最小切口已完成”误判为蓝图目标已兑现。
 
 ## 固定执行顺序

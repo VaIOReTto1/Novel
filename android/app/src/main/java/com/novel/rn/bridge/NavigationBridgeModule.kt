@@ -409,6 +409,18 @@ class NavigationBridgeModule(
     }
 
     /**
+     * 导航到搜索页面
+     */
+    @ReactMethod
+    fun navigateToSearch(query: String?) {
+        val resolvedQuery = query.orEmpty()
+        TimberLogger.d(TAG, "导航到搜索页面, query=$resolvedQuery")
+        Handler(Looper.getMainLooper()).post {
+            NavViewModel.navigateToSearch(resolvedQuery)
+        }
+    }
+
+    /**
      * 导航到消息页面
      */
     @ReactMethod

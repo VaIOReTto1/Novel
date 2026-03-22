@@ -11,6 +11,7 @@ interface NavigationBridgeInterface {
   navigateToHelpSupport(): void;
   navigateToPrivacyPolicy(): void;
   navigateToHistory(): void;
+  navigateToSearch(query?: string): void;
   navigateToMessage(): void;
   navigateToBecomeWriter(): void;
   navigateToBecomeWriterWithStatus(): void;
@@ -98,6 +99,11 @@ export const NavigationBridge: NavigationBridgeInterface = {
   navigateToHistory: () => {
     console.log('[NavigationBridge] Navigating to history');
     NativeNavigationBridge?.navigateToHistory();
+  },
+
+  navigateToSearch: (query: string = '') => {
+    console.log('[NavigationBridge] Navigating to search with query:', query);
+    NativeNavigationBridge?.navigateToSearch?.(query);
   },
 
   navigateToMessage: () => {

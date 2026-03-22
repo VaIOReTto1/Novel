@@ -71,6 +71,17 @@ describe('NavigationBridge contract', () => {
     expect(getAuthorBooks).toHaveBeenCalledWith(1, 50);
   });
 
+  it('passes search navigation through the bridge when available', () => {
+    const navigateToSearch = jest.fn();
+    const { NavigationBridge } = loadNavigationBridgeModule({
+      navigateToSearch,
+    });
+
+    NavigationBridge.navigateToSearch('');
+
+    expect(navigateToSearch).toHaveBeenCalledWith('');
+  });
+
   it('falls back to the legacy become-writer bridge when the new flag API is absent', () => {
     const navigateToBecomeWriterWithStatus = jest.fn();
     const { NavigationBridge } = loadNavigationBridgeModule({

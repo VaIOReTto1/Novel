@@ -18,7 +18,7 @@
 - `NovelUserDefaults -> DataStore` 只做到：
   - `StorageFacade`
   - `SettingsDataStorePilot`
-  的抽象与试点，不是全量迁移。
+  的抽象与试点；当前试点范围已扩展到设置域与用户态 mirror，但仍不是全量迁移，也没有切换全部生产读路径。
 - `AppError` 已在首批 Home / Search / Bridge 边界落地。
 - `trace id / request id` 已通过 `RequestIdInterceptor` 在 `OkHttp` 请求链路注入 `X-Request-Id / X-Trace-Id` header，但还没形成正式仓库级 observability 闭环。
 - `KeyChain` 有历史迁移演练证据，但“恢复策略正式闭环”没有以 Phase 3 权威文档完全固化。
@@ -39,6 +39,7 @@
 ### 偏差原因
 - 阶段选择了“先收高风险主路径”的策略，而不是全量仓库级一次性清底。
 - 为了降低风险，DataStore 只做了低风险试点，没有推动全量 `NovelUserDefaults` 迁移。
+- 当前 `DataStore` 已从双布尔值试点扩展到设置域和用户态 mirror，但依旧停留在“兼容迁移样本 + 写链镜像”阶段，而不是仓库级主读路径切换。
 - 日志与 request tracing 更偏平台级治理；当前已完成 header 注入，但仍缺 trace id 贯穿日志、错误、证据与阶段门禁的完整 observability 方案。
 
 ### 后续承接阶段

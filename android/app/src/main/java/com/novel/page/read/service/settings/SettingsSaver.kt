@@ -40,6 +40,7 @@ class SettingsSaver @javax.inject.Inject constructor(
             saveBrightness(settings.brightness)
             saveBackgroundColor(settings.backgroundColor)
             saveTextColor(settings.textColor)
+            readerSettingsStorage.mirrorSettings(settings)
             
             logger.logInfo("所有设置保存完成", TAG)
         } catch (e: Exception) {

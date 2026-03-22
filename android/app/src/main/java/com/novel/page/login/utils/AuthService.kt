@@ -1,6 +1,9 @@
 package com.novel.page.login.utils
 
 import androidx.compose.runtime.Stable
+import com.novel.core.config.RefactorFeatureFlags
+import com.novel.core.storage.SettingsDataStoreMirrorCoordinator
+import com.novel.core.storage.SettingsDataStorePilot
 import com.novel.utils.TimberLogger
 import com.novel.page.login.dao.UserRepository
 import com.novel.rn.ReactNativeBridge
@@ -49,12 +52,16 @@ class AuthService @Inject constructor(
     /** 用户配置存储 */
     @Stable val userDefaults: NovelUserDefaults,
     /** 用户本地仓库 */
-    @Stable val userRepository: UserRepository
+    @Stable val userRepository: UserRepository,
+    @Stable private val settingsDataStorePilot: SettingsDataStorePilot,
+    @Stable private val refactorFeatureFlags: RefactorFeatureFlags,
 ) {
 
     companion object {
         private const val TAG = "AuthService"
     }
+
+    private val settingsDataStoreMirrorCoordinator = SettingsDataStoreMirrorCoordinator()
 
     /**
      * 执行用户登录
@@ -201,6 +208,10 @@ class AuthService @Inject constructor(
             userDefaults.remove(NovelUserDefaultsKey.TOKEN_EXPIRES_AT)
             userDefaults.remove(NovelUserDefaultsKey.IS_LOGGED_IN)
             userDefaults.remove(NovelUserDefaultsKey.USER_ID)
+            settingsDataStoreMirrorCoordinator.clearUserStateIfEnabled(
+                isEnabled = refactorFeatureFlags.enableSettingsDataStorePilot(),
+                clearUserState = settingsDataStorePilot::clearUserState,
+            )
             
             // 清理本地用户缓存
             userRepository.clearAllUsers()
@@ -226,14 +237,24 @@ class AuthService @Inject constructor(
     private suspend fun saveAuthInfo(token: String, uid: Int) {
         try {
             TimberLogger.d(TAG, "保存认证信息，用户ID: $uid")
-            
+            val expiresAt = System.currentTimeMillis() + 30 * 24 * 3600_000L
+
             tokenProvider.saveToken(token, "")
             userDefaults.set(
-                System.currentTimeMillis() + 30 * 24 * 3600_000L, // 30天过期
+                expiresAt, // 30天过期
                 NovelUserDefaultsKey.TOKEN_EXPIRES_AT
             )
             userDefaults.set(true, NovelUserDefaultsKey.IS_LOGGED_IN)
             userDefaults.set(uid, NovelUserDefaultsKey.USER_ID)
+            settingsDataStoreMirrorCoordinator.mirrorIfEnabled(
+                isEnabled = refactorFeatureFlags.enableSettingsDataStorePilot(),
+                snapshot = settingsDataStoreMirrorCoordinator.createUserSessionSnapshot(
+                    isLoggedIn = true,
+                    tokenExpiresAt = expiresAt,
+                    userId = uid,
+                ),
+                mirror = settingsDataStorePilot::mirror,
+            )
             
             TimberLogger.d(TAG, "认证信息保存成功")
         } catch (e: Exception) {

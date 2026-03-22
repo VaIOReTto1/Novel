@@ -9,6 +9,8 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.novel.core.config.RefactorFeatureFlags
+import com.novel.core.storage.SettingsDataStoreMirrorCoordinator
+import com.novel.core.storage.SettingsDataStoreSnapshot
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.TimberLogger
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -64,6 +66,7 @@ class SettingsUtils @Inject constructor(
     // 获取全局主题管理器
     private val themeManager by lazy { ThemeManager.getInstance(context) }
     private val settingsScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val settingsDataStoreMirrorCoordinator = SettingsDataStoreMirrorCoordinator()
 
     /**
      * 清除所有缓存
@@ -186,6 +189,7 @@ class SettingsUtils @Inject constructor(
         TimberLogger.d(TAG, "🔧 开始设置主题模式: $mode")
         settingsPreferenceStorage.setNightMode(mode)
         TimberLogger.d(TAG, "📝 已保存主题模式到配置: $mode")
+        syncSettingsDataStorePilotIfEnabled()
 
         // 🎯 优化：只通知ThemeManager，不期待返回值
         TimberLogger.d(TAG, "🎨 调用themeManager.setThemeMode: $mode")
@@ -259,6 +263,7 @@ class SettingsUtils @Inject constructor(
     fun setNightModeTime(startTime: String, endTime: String) {
         TimberLogger.d(TAG, "设置夜间模式时间: $startTime - $endTime")
         settingsPreferenceStorage.setNightModeTime(startTime, endTime)
+        syncSettingsDataStorePilotIfEnabled()
 
         // 如果定时切换已启用，重新启动检查
         if (isAutoNightModeEnabled()) {
@@ -434,14 +439,17 @@ class SettingsUtils @Inject constructor(
     }
 
     private fun syncSettingsDataStorePilotIfEnabled() {
-        if (!refactorFeatureFlags.enableSettingsDataStorePilot()) {
-            return
-        }
-
         settingsScope.launch {
-            settingsDataStorePilot.migrateIfNeeded(
-                legacyFollowSystemTheme = settingsPreferenceStorage.isFollowSystemTheme().toString(),
-                legacyAutoNightMode = settingsPreferenceStorage.isAutoNightModeEnabled().toString()
+            settingsDataStoreMirrorCoordinator.mirrorIfEnabled(
+                isEnabled = refactorFeatureFlags.enableSettingsDataStorePilot(),
+                snapshot = settingsDataStoreMirrorCoordinator.createSettingsSnapshot(
+                    nightMode = settingsPreferenceStorage.getNightMode(),
+                    followSystemTheme = settingsPreferenceStorage.isFollowSystemTheme(),
+                    autoNightModeEnabled = settingsPreferenceStorage.isAutoNightModeEnabled(),
+                    nightStartTime = settingsPreferenceStorage.getNightModeStartTime(),
+                    nightEndTime = settingsPreferenceStorage.getNightModeEndTime(),
+                ),
+                mirror = settingsDataStorePilot::mirror,
             )
         }
     }

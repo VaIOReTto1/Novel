@@ -37,7 +37,7 @@ describe('Native bridge source contracts', () => {
 
   it('keeps ThemeChanged event producer and RN consumers aligned', () => {
     const producerSource = readProjectFile(
-      'android/app/src/main/java/com/novel/ui/theme/ThemeManager.kt',
+      'android/core-ui/src/main/java/com/novel/ui/theme/ThemeManager.kt',
     );
     const themeStoreSource = readProjectFile('src/utils/theme/themeStore.ts');
     const timedSwitchSource = readProjectFile(

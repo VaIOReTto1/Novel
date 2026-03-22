@@ -1,11 +1,11 @@
 package com.novel.page.search.viewmodel
 
-internal enum class SearchCategoryFilterLoadTrigger {
+enum class SearchCategoryFilterLoadTrigger {
     SEARCH_STARTED,
     FILTER_SHEET_OPENED,
 }
 
-internal class SearchCategoryFilterLoadCoordinator {
+class SearchCategoryFilterLoadCoordinator {
 
     fun shouldLoadCategoryFilters(
         currentState: SearchResultState,

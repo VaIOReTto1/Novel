@@ -1,6 +1,6 @@
 package com.novel.rn
 
-internal class ReactNativeThemeSyncCoordinator {
+class ReactNativeThemeSyncCoordinator {
 
     fun syncActualTheme(
         actualTheme: String?,

@@ -2,7 +2,7 @@ package com.novel.page.search.viewmodel
 
 import com.novel.page.search.repository.SearchParams
 
-internal class SearchRetryPolicyCoordinator {
+class SearchRetryPolicyCoordinator {
 
     fun shouldRetry(
         params: SearchParams,

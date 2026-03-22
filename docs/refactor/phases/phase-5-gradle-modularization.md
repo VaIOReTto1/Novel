@@ -25,7 +25,7 @@
 - `app` 仍可稳定通过当前核心回归命令
 
 ## 当前真实进度
-- `2026-03-21` 已完成首轮 `Phase 5 validated` checkpoint，但当前模块图仍明显偏浅，`feature-search / feature-rn-host` 仍停留在最小切口，`feature-book / feature-login / feature-reader` 尚未真正落地，`core-network / core-bridge` 也仍处于继续深化阶段。
+- `2026-03-21` 已完成首轮 `Phase 5 validated` checkpoint，但当前模块图仍明显偏浅，`feature-book / feature-login / feature-reader` 尚未真正落地，`core-network / core-bridge` 也仍处于继续深化阶段。
 - 打开书籍“请求错误”运行时 blocker 已修复，`BookService` 的空 `chapterUpdateTime` 回归测试已作为 Phase 5 首个守门用例保留。
 - `android/gradle/android-library-common.gradle` 已落地，`core/*` 模块开始复用统一 Android library 构建约定。
 - `android/core-common` 已落地并完成首轮共享基础抽离。
@@ -35,9 +35,10 @@
 - `android/core-bridge` 已落地并接管桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade 与 network gateway。
 - `android/core-bridge-contract` 已落地并完成第一批纯桥接 delegate/helper 抽离。
 - `android/feature-welfare` 已落地两轮低风险切口，当前以 app wrapper + feature 内部组件/工具共存方式推进。
-- `android/feature-search` 已落地首轮最小切口，当前只迁出低耦合存储层。
+- `android/feature-search` 已从“单存储切口”深化到承载搜索结果页 trigger source、查询参数和性能/重试协调器。
 - `android/feature-home` 已从“单 helper 模块”深化到承载首页分类语义契约与 restore 判定协调器，并配合 app 侧修复首页首开自动加载问题。
-- `android/feature-rn-host` 已落地首轮最小切口，当前只迁出低耦合设置存储层。
+- `android/feature-rn-host` 已从“单存储切口”深化到承载主题补发与冷热路径追踪协调器。
+- `android/feature-welfare` 也已进一步接管 bootstrap 与 WebView 性能协调器。
 - `Phase 5` 当前已由历史 closeout checkpoint 重新切回 `in_progress`，后续不得再按“首轮最小切口已完成”误判为蓝图目标已兑现。
 
 ## 固定执行顺序

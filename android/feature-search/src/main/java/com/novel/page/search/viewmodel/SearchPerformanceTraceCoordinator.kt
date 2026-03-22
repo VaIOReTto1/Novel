@@ -1,12 +1,12 @@
 package com.novel.page.search.viewmodel
 
-internal data class SearchPerformanceTrace(
+data class SearchPerformanceTrace(
     val action: String,
     val startedAtMs: Long,
     val metadata: Map<String, String>,
 )
 
-internal class SearchPerformanceTraceCoordinator(
+class SearchPerformanceTraceCoordinator(
     private val nowMs: () -> Long = System::currentTimeMillis,
 ) {
 

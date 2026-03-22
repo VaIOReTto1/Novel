@@ -1,6 +1,6 @@
 package com.novel.rn
 
-internal class ReactNativeHostPathTraceCoordinator {
+class ReactNativeHostPathTraceCoordinator {
 
     fun formatContextTrace(
         trigger: String,

@@ -18,4 +18,5 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.52"
 
     testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.truth:truth:1.4.4"
 }

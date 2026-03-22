@@ -58,23 +58,6 @@ data class PageRespDtoBookInfoRespDto(
 )
 
 /**
- * 搜索参数数据类
- */
-@Stable
-data class SearchParams(
-    val query: String,
-    val page: Int,
-    val categoryId: Int?,
-    val filters: FilterState,
-    val isLoadMore: Boolean,
-    val triggerSource: SearchTriggerSource = if (isLoadMore) {
-        SearchTriggerSource.LOAD_MORE
-    } else {
-        SearchTriggerSource.INITIAL_ENTRY
-    },
-)
-
-/**
  * 缓存的搜索结果
  */
 @Stable

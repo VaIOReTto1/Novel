@@ -49,10 +49,18 @@
     - `WelfarePerformanceMonitor`
     - `WebViewPreloadManager`
     - `WelfareAccessibilityHelper`
+    - `WelfarePageBootstrapCoordinator`
+    - `WelfareWebPerformanceCoordinator`
 - `:feature-search`
   - 首轮 search feature 模块
   - 当前承载：
     - `SearchPreferenceStorage`
+    - `SearchParams`
+    - `SearchResultMvi`
+    - `SearchTriggerSource`
+    - `SearchCategoryFilterLoadCoordinator`
+    - `SearchPerformanceTraceCoordinator`
+    - `SearchRetryPolicyCoordinator`
 - `:feature-home`
   - 首轮 home feature 模块
   - 当前承载：
@@ -64,6 +72,8 @@
   - 首轮 rn-host feature 模块
   - 当前承载：
     - `SettingsPreferenceStorage`
+    - `ReactNativeThemeSyncCoordinator`
+    - `ReactNativeHostPathTraceCoordinator`
 
 ## reopen 目标模块图
 - 已纳入本轮深化目标、但尚未真正落地：
@@ -123,13 +133,14 @@
 - `core-network` 当前仍是“契约优先”首批切口，后续需要继续向共享基础设施深化。
 - `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
 - `feature-welfare` 已完成两轮低风险切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
-- `feature-search` 已完成首轮最小切口，当前只迁出 `SearchPreferenceStorage`。
+- `feature-search` 已不再只停留在存储层，当前已接管搜索结果页的 trigger source、查询参数与三类性能/重试协调器。
 - `feature-home` 已不再只停留在性能 helper，当前已接管首页分类语义契约、restore 判定协调器，并配合 app 侧修复首页首开自动加载问题。
-- `feature-rn-host` 已完成首轮最小切口，当前只迁出 `SettingsPreferenceStorage`。
+- `feature-rn-host` 已不再只停留在设置存储层，当前已接管主题补发与冷热路径追踪协调器。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
 - `core-bridge` 已完成首轮真实落地，桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade 与 network gateway 已迁出 `app`。
 - `core-network` 已不再只有契约壳，`RequestIdInterceptor / NetworkTraceLogHelper / ImmutableListTypeAdapter` 已进入共享网络层。
+- `feature-welfare` 已接管 bootstrap 与 WebView 性能协调器，不再只是组件/工具集合。
 - `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
 
 ## 当前阻塞与下一步
@@ -140,8 +151,6 @@
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
-  - 深化 `core-network / core-bridge`
-  - 深化 `feature-search / feature-welfare / feature-rn-host`
   - 新增 `feature-book / feature-login / feature-reader`
   - 收口 Community 现有跳转与分享
 

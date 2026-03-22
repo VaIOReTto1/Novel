@@ -30,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.novel.page.welfare.component.InitialLoadingState
 import com.novel.page.welfare.component.LoadingIndicator
 import com.novel.page.welfare.component.WebViewComponent
+import com.novel.page.welfare.component.WelfareWebPerformanceCoordinator
 import com.novel.page.welfare.component.rememberThemeState
 import com.novel.page.welfare.component.updateWebViewDarkMode
 import androidx.compose.runtime.mutableStateOf
@@ -85,6 +86,7 @@ fun WelfarePage(
     
     // 性能监控
     val performanceMonitor = remember { WelfarePerformanceMonitor.getInstance() }
+    val performanceCoordinator = remember { WelfareWebPerformanceCoordinator() }
     val bootstrapCoordinator = remember { WelfarePageBootstrapCoordinator() }
     
     // WebView预加载管理器
@@ -143,7 +145,11 @@ fun WelfarePage(
     
     // 监控页面加载状态变化
     LaunchedEffect(isLoading, currentUrl) {
-        if (!isLoading && currentUrl.isNotBlank()) {
+        if (performanceCoordinator.shouldRecordPageLoadComplete(
+                isLoading = isLoading,
+                currentUrl = currentUrl,
+            )
+        ) {
             performanceMonitor.recordPageLoadComplete()
         }
     }
@@ -317,6 +323,7 @@ fun WelfarePage(
                     WebViewComponent(
                         url = currentUrl,
                         modifier = Modifier.fillMaxSize(),
+                        performanceCoordinator = performanceCoordinator,
                         savedState = savedWebViewState,
                         onStateChanged = { bundle ->
                             savedWebViewState = bundle

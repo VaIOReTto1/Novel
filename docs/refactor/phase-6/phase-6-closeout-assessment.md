@@ -128,6 +128,9 @@
   - `463323c` `接通福利页WebView性能埋点`
     - 通过 `WelfareWebPerformanceCoordinator` 在 `WebViewComponent` 中接通 `FCP / TTI` 记录。
     - 影响：Welfare / WebView 文档应从“埋点代码存在但未接线”修正为“已接线，仍缺更深层治理”。
+  - `加固福利页WebView性能上报去重`
+    - 通过共享的 `WelfareWebPerformanceCoordinator` 为同一次加载补上 `FCP / TTI / pageLoadComplete` 的 once-only 保护。
+    - 影响：Welfare / WebView 已从“埋点接线”推进到“同轮加载去重”，后续可继续围绕宏基准与复用收益做更深层分析。
 
 ## 修订记录
 | 日期 | 修订项 | 影响文档 | 结果 |

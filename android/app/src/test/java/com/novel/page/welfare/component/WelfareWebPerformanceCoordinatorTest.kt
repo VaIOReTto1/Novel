@@ -29,4 +29,46 @@ class WelfareWebPerformanceCoordinatorTest {
 
         assertThat(coordinator.shouldRecordTimeToInteractive(100)).isTrue()
     }
+
+    @Test
+    fun shouldRecordPageLoadComplete_requiresReadyStateAndOnlyOncePerLoad() {
+        val coordinator = WelfareWebPerformanceCoordinator()
+
+        assertThat(
+            coordinator.shouldRecordPageLoadComplete(
+                isLoading = true,
+                currentUrl = "https://example.com",
+            ),
+        ).isFalse()
+
+        assertThat(
+            coordinator.shouldRecordPageLoadComplete(
+                isLoading = false,
+                currentUrl = "",
+            ),
+        ).isFalse()
+
+        assertThat(
+            coordinator.shouldRecordPageLoadComplete(
+                isLoading = false,
+                currentUrl = "https://example.com",
+            ),
+        ).isTrue()
+
+        assertThat(
+            coordinator.shouldRecordPageLoadComplete(
+                isLoading = false,
+                currentUrl = "https://example.com",
+            ),
+        ).isFalse()
+
+        coordinator.resetForNewPageLoad()
+
+        assertThat(
+            coordinator.shouldRecordPageLoadComplete(
+                isLoading = false,
+                currentUrl = "https://example.com",
+            ),
+        ).isTrue()
+    }
 }

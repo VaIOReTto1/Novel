@@ -1,12 +1,14 @@
 package com.novel.page.welfare.component
 
-internal class WelfareWebPerformanceCoordinator {
+class WelfareWebPerformanceCoordinator {
 
     private var firstContentfulPaintRecorded = false
+    private var pageLoadCompleteRecorded = false
     private var timeToInteractiveRecorded = false
 
     fun resetForNewPageLoad() {
         firstContentfulPaintRecorded = false
+        pageLoadCompleteRecorded = false
         timeToInteractiveRecorded = false
     }
 
@@ -16,6 +18,18 @@ internal class WelfareWebPerformanceCoordinator {
         }
 
         firstContentfulPaintRecorded = true
+        return true
+    }
+
+    fun shouldRecordPageLoadComplete(
+        isLoading: Boolean,
+        currentUrl: String,
+    ): Boolean {
+        if (pageLoadCompleteRecorded || isLoading || currentUrl.isBlank()) {
+            return false
+        }
+
+        pageLoadCompleteRecorded = true
         return true
     }
 

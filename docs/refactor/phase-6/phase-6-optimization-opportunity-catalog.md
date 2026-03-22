@@ -101,6 +101,7 @@
 - `WelfarePerformanceMonitor`、`WebViewPreloadManager` 等能力已经存在。
 - [WelfarePage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/welfare/WelfarePage.kt) 已通过 `WelfarePageBootstrapCoordinator` 收敛首次 bootstrap，只在需要时初始化 preload manager、启动监控并派发 `InitializePage`。
 - [WebViewComponent.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/welfare/component/WebViewComponent.kt) 已通过 `WelfareWebPerformanceCoordinator` 接通 `recordFirstContentfulPaint()` 与 `recordTimeToInteractive()`。
+- [WelfarePage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/welfare/WelfarePage.kt) 与 [WebViewComponent.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/welfare/component/WebViewComponent.kt) 已共用同一份 `WelfareWebPerformanceCoordinator`，为同一次页面加载补上 `FCP / TTI / pageLoadComplete` 的 once-only 保护。
 - WebView 首次加载样本、初始化耗时样本已经记录。
 
 ### 仅完成测量 / 取证

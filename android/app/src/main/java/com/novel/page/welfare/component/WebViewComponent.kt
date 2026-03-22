@@ -40,6 +40,7 @@ import com.novel.utils.TimberLogger
 fun WebViewComponent(
     url: String,
     modifier: Modifier = Modifier,
+    performanceCoordinator: WelfareWebPerformanceCoordinator,
     savedState: android.os.Bundle? = null,
     onStateChanged: (android.os.Bundle?) -> Unit = {},
     onWebViewCreated: (WebView) -> Unit = {},
@@ -58,7 +59,6 @@ fun WebViewComponent(
 ) {
     val context = LocalContext.current
     val performanceMonitor = remember { WelfarePerformanceMonitor.getInstance() }
-    val performanceCoordinator = remember { WelfareWebPerformanceCoordinator() }
     val webViewPreloadManager = remember { WebViewPreloadManager.getInstance(context) }
     
     val webView = remember {

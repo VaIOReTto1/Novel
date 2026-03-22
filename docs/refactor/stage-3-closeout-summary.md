@@ -27,7 +27,7 @@
   - Search 分类筛选延后加载
   - RN 主题补发同步
   - 非关键启动初始化与 RN 预热延后到首帧后
-- 截至 `2026-03-23`，由于 `Phase 5` 深化仍未完成、首页首开自动加载与 Community 收口仍未完成，`Stage 3` 已重新切回 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
+- 截至 `2026-03-23`，由于 `Phase 5` 深化仍未完成且 Community 收口仍未完成，`Stage 3` 已重新切回 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
 
 ## 核心证据入口
 - `docs/refactor/stage-3-phase-5-6-plan.md`
@@ -52,7 +52,6 @@
 
 ## Carried Debt / Residual Risks
 - 模块化当前仍明显偏浅，`feature-book / feature-login / feature-reader` 尚未真正落地，`core-network / core-bridge` 也仍需继续深化。
-- 首页当前仍存在首开后需手动刷新的问题，需与 `feature-home` 深化一并关闭。
 - Reader 当前仍缺少直接可重复的：
   - flip action 数值样本
   - settings update 数值样本

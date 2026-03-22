@@ -9,7 +9,6 @@ import com.novel.page.home.usecase.GetHomeCategoriesUseCase
 import com.novel.page.home.usecase.GetHomeRecommendBooksUseCase
 import com.novel.page.home.usecase.GetRankingBooksUseCase
 import com.novel.page.home.usecase.HomeCompositeUseCase
-import com.novel.page.home.usecase.HomeStatusCheckUseCase
 import com.novel.page.home.usecase.RefreshHomeDataUseCase
 import com.novel.page.home.usecase.SendReactNativeDataUseCase
 import com.novel.utils.TimberLogger
@@ -102,9 +101,7 @@ class HomeViewModel @Inject constructor(
     @Stable
     private val homeRecommendPagingSource: HomeRecommendPagingSource,
     @Stable
-    private val categoryRecommendPagingSourceFactory: CategoryRecommendPagingSourceFactory,
-    @Stable
-    private val homeStatusCheckUseCase: HomeStatusCheckUseCase
+    private val categoryRecommendPagingSourceFactory: CategoryRecommendPagingSourceFactory
 ) : BaseMviViewModel<HomeIntent, HomeState, HomeEffect>() {
 
     companion object {
@@ -139,6 +136,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private val homePagingCoordinator = HomePagingCoordinator()
+    private val homeRestoreCoordinator = HomeRestoreCoordinator()
 
     /** 新的StateAdapter实例 */
     @Stable
@@ -503,26 +501,39 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 TimberLogger.d(TAG, "检查并恢复数据")
-
-                val statusResult = homeStatusCheckUseCase(
-                    HomeStatusCheckUseCase.Params()
+                val currentState = getCurrentState()
+                val outcome = homeRestoreCoordinator.coordinate(
+                    HomeRestoreSnapshot(
+                        categoryFiltersCount = currentState.categoryFilters.size,
+                        categoryFiltersResolved = currentState.categoryFiltersResolved,
+                        rankBooksCount = currentState.rankBooks.size,
+                        rankResolved = currentState.rankResolved,
+                        isRecommendMode = currentState.isRecommendMode,
+                        homeRecommendCount = currentState.homeRecommendBooks.size,
+                        homeRecommendResolved = currentState.homeRecommendResolved,
+                        homeRecommendNetworkRetryConsumed = currentState.homeRecommendNetworkRetryConsumed,
+                        initialLoadCompleted = currentState.initialLoadCompleted,
+                        isLoading = currentState.isLoading,
+                        isRefreshing = currentState.isRefreshing,
+                        hasError = currentState.hasError,
+                    ),
                 )
 
-                val currentState = getCurrentState()
-
                 // 检查并恢复榜单数据
-                if (currentState.rankBooks.isEmpty()) {
+                if (outcome.shouldLoadRankBooks) {
                     selectRankType(currentState.selectedRankType)
                 }
 
                 // 检查并恢复分类数据
-                if (currentState.categoryFilters.size <= 1) {
+                if (outcome.shouldLoadCategoryFilters) {
                     loadCategoryFilters()
                 }
 
                 // 检查并恢复推荐数据
-                if (currentState.isRecommendMode && currentState.homeRecommendBooks.isEmpty()) {
+                if (outcome.shouldLoadHomeRecommend) {
                     loadHomeRecommendBooks()
+                } else if (outcome.shouldReloadHomeRecommendFromNetwork) {
+                    loadHomeRecommendBooks(forceNetworkOnly = true)
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "恢复数据异常", e)
@@ -554,23 +565,31 @@ class HomeViewModel @Inject constructor(
     /**
      * 加载首页推荐书籍
      */
-    private fun loadHomeRecommendBooks(isRefresh: Boolean = false) {
+    private fun loadHomeRecommendBooks(
+        isRefresh: Boolean = false,
+        forceNetworkOnly: Boolean = false,
+    ) {
         viewModelScope.launch {
             try {
-                if (isRefresh || cachedHomeBooks.isEmpty()) {
+                val shouldRefresh = isRefresh || forceNetworkOnly
+                if (shouldRefresh || cachedHomeBooks.isEmpty()) {
                     val strategy =
-                        if (isRefresh) CacheStrategy.NETWORK_ONLY else CacheStrategy.CACHE_FIRST
+                        if (forceNetworkOnly || isRefresh) {
+                            CacheStrategy.NETWORK_ONLY
+                        } else {
+                            CacheStrategy.CACHE_FIRST
+                        }
                     val homeBooks =
                         getHomeRecommendBooksUseCase(GetHomeRecommendBooksUseCase.Params(strategy))
                     cachedHomeBooks = homeBooks.toImmutableList()
                 }
 
                 // 基于缓存数据进行分页
-                val currentPage = if (isRefresh) 1 else getCurrentState().homeRecommendPage
+                val currentPage = if (shouldRefresh) 1 else getCurrentState().homeRecommendPage
                 val startIndex = (currentPage - 1) * RECOMMEND_PAGE_SIZE
                 val endIndex = startIndex + RECOMMEND_PAGE_SIZE
 
-                val currentBooks = if (isRefresh) {
+                val currentBooks = if (shouldRefresh) {
                     cachedHomeBooks.take(RECOMMEND_PAGE_SIZE)
                 } else {
                     cachedHomeBooks.take(endIndex)
@@ -581,15 +600,17 @@ class HomeViewModel @Inject constructor(
                 sendIntent(
                     HomeIntent.HomeRecommendBooksLoadSuccess(
                         books = currentBooks.toImmutableList(),
-                        isRefresh = isRefresh,
-                        hasMore = hasMore
+                        isRefresh = shouldRefresh,
+                        hasMore = hasMore,
+                        usedNetworkRetry = forceNetworkOnly,
                     )
                 )
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "加载首页推荐书籍异常", e)
                 sendIntent(
                     HomeIntent.HomeRecommendBooksLoadFailure(
-                        e.message ?: "加载推荐书籍失败"
+                        error = e.message ?: "加载推荐书籍失败",
+                        usedNetworkRetry = forceNetworkOnly,
                     )
                 )
             }

@@ -72,6 +72,7 @@ open class HomeCompositeUseCase @Inject constructor(
         val rankBooks: ImmutableList<BookService.BookRank> = persistentListOf(),
         val recommendBooks: ImmutableList<SearchService.BookInfo> = persistentListOf(),
         val homeRecommendBooks: ImmutableList<HomeService.HomeBook> = persistentListOf(),
+        val homeRecommendUsedNetworkFallback: Boolean = false,
         val hasMoreRecommend: Boolean = true,
         val totalPages: Int = 1,
         val isSuccess: Boolean = true,
@@ -174,9 +175,17 @@ open class HomeCompositeUseCase @Inject constructor(
                 GetRankingBooksUseCase.Params("点击榜") // 使用字符串常量，避免依赖具体实现类
             )
             
-            val homeRecommendResult = getHomeRecommendBooksUseCase(
+            val cacheFirstHomeRecommendResult = getHomeRecommendBooksUseCase(
                 GetHomeRecommendBooksUseCase.Params()
             )
+            val homeRecommendUsedNetworkFallback = cacheFirstHomeRecommendResult.isEmpty()
+            val homeRecommendResult = if (homeRecommendUsedNetworkFallback) {
+                getHomeRecommendBooksUseCase(
+                    GetHomeRecommendBooksUseCase.Params(strategy = CacheStrategy.NETWORK_ONLY)
+                )
+            } else {
+                cacheFirstHomeRecommendResult
+            }
             
             // 转换书籍数据为Entity
             val carouselBooks = booksData.carouselBooks.map { it.toEntity("carousel") }.toImmutableList()
@@ -195,6 +204,7 @@ open class HomeCompositeUseCase @Inject constructor(
                 vipBooks = vipBooks,
                 rankBooks = rankBooksResult.toImmutableList(),
                 homeRecommendBooks = homeRecommendResult.toImmutableList(),
+                homeRecommendUsedNetworkFallback = homeRecommendUsedNetworkFallback,
                 isSuccess = true
             )
         } catch (e: Exception) {

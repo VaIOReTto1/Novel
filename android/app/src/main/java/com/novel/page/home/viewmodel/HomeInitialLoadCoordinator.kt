@@ -33,6 +33,7 @@ internal class HomeInitialLoadCoordinator(
                             books = result.homeRecommendBooks,
                             isRefresh = true,
                             hasMore = result.hasMoreRecommend,
+                            usedNetworkRetry = result.homeRecommendUsedNetworkFallback,
                         ),
                     ),
                     cachedHomeBooks = result.homeRecommendBooks,

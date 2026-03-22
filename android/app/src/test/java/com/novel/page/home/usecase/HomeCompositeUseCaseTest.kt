@@ -128,11 +128,57 @@ class HomeCompositeUseCaseTest {
         }
     }
 
+    @Test
+    fun loadInitialData_retriesHomeRecommendWithNetworkOnly_whenCacheFirstReturnsEmpty() {
+        runBlocking {
+            val networkBooks = persistentListOf(
+                HomeService.HomeBook(
+                    type = 3,
+                    bookId = 202,
+                    picUrl = "cover",
+                    bookName = "Network Recommend",
+                    authorName = "Author",
+                    bookDesc = "desc",
+                ),
+            )
+            val repository = FakeHomeRepository(
+                categoryFiltersFlow = flow { emit(persistentListOf()) },
+                categoriesFlow = flow { emit(persistentListOf()) },
+                homeBooksByStrategy = mapOf(
+                    CacheStrategy.CACHE_FIRST to persistentListOf(),
+                    CacheStrategy.NETWORK_ONLY to networkBooks,
+                ),
+            )
+            val useCase = HomeCompositeUseCase(
+                homeRepository = repository,
+                cachedBookRepository = allocateWithoutConstructor(),
+                searchService = allocateWithoutConstructor(),
+                userRepository = allocateWithoutConstructor(),
+                tokenProvider = FakeTokenProvider,
+                userDefaults = FakeNovelUserDefaults(),
+            )
+
+            val result = useCase(
+                HomeCompositeUseCase.Params(loadInitialData = true),
+            )
+
+            assertThat(result.isSuccess).isTrue()
+            assertThat(result.homeRecommendBooks).isEqualTo(networkBooks)
+            assertThat(repository.homeBookStrategies).containsExactly(
+                CacheStrategy.CACHE_FIRST,
+                CacheStrategy.NETWORK_ONLY,
+            ).inOrder()
+        }
+    }
+
     private class FakeHomeRepository(
         private val categoryFiltersFlow: Flow<ImmutableList<BookService.BookCategory>>,
         private val categoriesFlow: Flow<ImmutableList<BookService.BookCategory>>,
         private val homeBooks: ImmutableList<HomeService.HomeBook> = persistentListOf(),
+        private val homeBooksByStrategy: Map<CacheStrategy, ImmutableList<HomeService.HomeBook>> = emptyMap(),
     ) : IHomeRepository {
+
+        val homeBookStrategies = mutableListOf<CacheStrategy>()
 
         override suspend fun getRankBooks(
             rankType: String,
@@ -141,7 +187,10 @@ class HomeCompositeUseCaseTest {
 
         override suspend fun getHomeBooks(
             strategy: CacheStrategy,
-        ): List<HomeService.HomeBook> = homeBooks
+        ): List<HomeService.HomeBook> {
+            homeBookStrategies += strategy
+            return homeBooksByStrategy[strategy] ?: homeBooks
+        }
 
         override fun getBookCategories(
             workDirection: Int,

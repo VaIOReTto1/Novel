@@ -57,6 +57,9 @@
   - 首轮 home feature 模块
   - 当前承载：
     - `HomePerformanceOptimizer`
+    - `CategoryInfo`
+    - `HomeCategoryFilterSupport`
+    - `HomeRestoreCoordinator`
 - `:feature-rn-host`
   - 首轮 rn-host feature 模块
   - 当前承载：
@@ -121,7 +124,7 @@
 - `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
 - `feature-welfare` 已完成两轮低风险切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
 - `feature-search` 已完成首轮最小切口，当前只迁出 `SearchPreferenceStorage`。
-- `feature-home` 已完成首轮最小切口，当前只迁出 `HomePerformanceOptimizer`。
+- `feature-home` 已不再只停留在性能 helper，当前已接管首页分类语义契约、restore 判定协调器，并配合 app 侧修复首页首开自动加载问题。
 - `feature-rn-host` 已完成首轮最小切口，当前只迁出 `SettingsPreferenceStorage`。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
@@ -138,9 +141,9 @@
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
   - 深化 `core-network / core-bridge`
-  - 深化 `feature-home / feature-search / feature-welfare / feature-rn-host`
+  - 深化 `feature-search / feature-welfare / feature-rn-host`
   - 新增 `feature-book / feature-login / feature-reader`
-  - 结合 `feature-home` 深化修复首页首开自动加载问题
+  - 收口 Community 现有跳转与分享
 
 ## 验证证据
 - `android/gradlew.bat :core-common:testDebugUnitTest`

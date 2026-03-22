@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 5`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 作为历史 checkpoint 保留；`2026-03-23` 起因模块化深度不足、首页首开自动加载与 Community 收口仍未完成，当前口径重新切回 `Phase 5 = in_progress`、`Stage 3 = in_progress`。`Phase 6` 继续保持 `validated`，`Phase 7` 继续保持 `planned`。
-- 下一步：继续深化 `core-bridge / core-network` 与 `feature-home / feature-search / feature-welfare / feature-rn-host / feature-book / feature-login / feature-reader`，并收口首页首开与 Community 现有跳转/分享。
+- 最近结论：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 作为历史 checkpoint 保留；`2026-03-23` 起因模块化深度不足与 Community 收口仍未完成，当前口径重新切回 `Phase 5 = in_progress`、`Stage 3 = in_progress`。`Phase 6` 继续保持 `validated`，`Phase 7` 继续保持 `planned`。
+- 下一步：继续深化 `feature-search / feature-welfare / feature-rn-host / feature-book / feature-login / feature-reader`，并收口 Community 现有跳转/分享。
 - 当前 Phase 默认编制：`5 helpers + 1 Leader（reopen baseline）`
 
 ## 阶段状态总表

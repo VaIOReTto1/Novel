@@ -17,15 +17,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 /**
- * 分类信息数据类
- */
-@Stable
-data class CategoryInfo(
-    val id: String,
-    val name: String
-)
-
-/**
  * React Native 数据传输类型
  */
 @Stable
@@ -147,11 +138,15 @@ sealed class HomeIntent : MviIntent {
     data class HomeRecommendBooksLoadSuccess(
         val books: ImmutableList<HomeService.HomeBook>,
         val isRefresh: Boolean = false,
-        val hasMore: Boolean = true
+        val hasMore: Boolean = true,
+        val usedNetworkRetry: Boolean = false,
     ) : HomeIntent()
 
     /** 首页推荐书籍加载失败 */
-    data class HomeRecommendBooksLoadFailure(val error: String) : HomeIntent()
+    data class HomeRecommendBooksLoadFailure(
+        val error: String,
+        val usedNetworkRetry: Boolean = false,
+    ) : HomeIntent()
 
     /** 分类推荐书籍加载成功 */
     data class CategoryRecommendBooksLoadSuccess(
@@ -240,6 +235,8 @@ data class HomeState(
 
     /** 分类筛选器数据加载状态 */
     val categoryFiltersLoading: Boolean = false,
+    /** 分类筛选器主链是否已完成一次真实加载判定 */
+    val categoryFiltersResolved: Boolean = false,
 
     // === 榜单状态 ===
     /** 当前选中的榜单类型（点击榜/更新榜/新书榜） */
@@ -250,6 +247,8 @@ data class HomeState(
 
     /** 榜单数据加载状态 */
     val rankLoading: Boolean = false,
+    /** 榜单主链是否已完成一次真实加载判定 */
+    val rankResolved: Boolean = false,
 
     // === 推荐书籍状态 - 支持双数据源 ===
     /** 分类搜索结果书籍列表 - 来自搜索服务的分类书籍 */
@@ -279,6 +278,12 @@ data class HomeState(
 
     /** 当前首页推荐数据的页码 */
     val homeRecommendPage: Int = 1,
+    /** 首页推荐主链是否已完成一次真实加载判定 */
+    val homeRecommendResolved: Boolean = false,
+    /** 首页推荐空态补拉的 NETWORK_ONLY 重试是否已经消费 */
+    val homeRecommendNetworkRetryConsumed: Boolean = false,
+    /** 首次初始化链路是否已完成核心数据判定 */
+    val initialLoadCompleted: Boolean = false,
 
     // === 显示模式控制 ===
     /** 当前显示模式 - true=推荐模式（显示首页推荐），false=分类模式（显示分类搜索结果） */
@@ -333,7 +338,12 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                     newState = currentState.copy(
                         version = currentState.version + 1,
                         isLoading = true,
-                        error = null
+                        error = null,
+                        categoryFiltersResolved = false,
+                        rankResolved = false,
+                        homeRecommendResolved = false,
+                        homeRecommendNetworkRetryConsumed = false,
+                        initialLoadCompleted = false,
                     )
                 )
             }
@@ -468,8 +478,9 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                     newState = currentState.copy(
                         version = currentState.version + 1,
                         categoryFilters = HomeCategoryFilterSupport.normalizeFilters(intent.filters),
-                        categoryFiltersLoading = false
-                    )
+                        categoryFiltersLoading = false,
+                        categoryFiltersResolved = true,
+                    ).recomputeInitialLoadCompleted()
                 )
             }
 
@@ -478,10 +489,11 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                     newState = currentState.copy(
                         version = currentState.version + 1,
                         categoryFiltersLoading = false,
+                        categoryFiltersResolved = true,
                         isLoading = false,
                         isRefreshing = false,
                         error = intent.error
-                    )
+                    ).recomputeInitialLoadCompleted()
                 )
             }
 
@@ -501,9 +513,12 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                         } else {
                             currentState.homeRecommendPage + 1
                         },
+                        homeRecommendResolved = true,
+                        homeRecommendNetworkRetryConsumed =
+                            currentState.homeRecommendNetworkRetryConsumed || intent.usedNetworkRetry,
                         isRefreshing = false,
                         isLoading = false
-                    )
+                    ).recomputeInitialLoadCompleted()
                 )
             }
 
@@ -512,10 +527,13 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                     newState = currentState.copy(
                         version = currentState.version + 1,
                         homeRecommendLoading = false,
+                        homeRecommendResolved = true,
+                        homeRecommendNetworkRetryConsumed =
+                            currentState.homeRecommendNetworkRetryConsumed || intent.usedNetworkRetry,
                         isRefreshing = false,
                         isLoading = false,
                         error = intent.error
-                    )
+                    ).recomputeInitialLoadCompleted()
                 )
             }
 
@@ -559,8 +577,9 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                     newState = currentState.copy(
                         version = currentState.version + 1,
                         rankBooks = intent.books,
-                        rankLoading = false
-                    )
+                        rankLoading = false,
+                        rankResolved = true,
+                    ).recomputeInitialLoadCompleted()
                 )
             }
 
@@ -569,10 +588,11 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                     newState = currentState.copy(
                         version = currentState.version + 1,
                         rankLoading = false,
+                        rankResolved = true,
                         isLoading = false,
                         isRefreshing = false,
                         error = intent.error
-                    )
+                    ).recomputeInitialLoadCompleted()
                 )
             }
 
@@ -624,4 +644,10 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
             }
         }
     }
+}
+
+private fun HomeState.recomputeInitialLoadCompleted(): HomeState {
+    return copy(
+        initialLoadCompleted = categoryFiltersResolved && rankResolved && homeRecommendResolved,
+    )
 }

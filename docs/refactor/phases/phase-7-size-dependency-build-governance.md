@@ -1,7 +1,7 @@
 # Phase 7 - 包体积、依赖与构建效率治理
 
 ## 目标
-- 在 `Stage 3 validated` 的模块图基础上，建立稳定的：
+- 在 `Stage 3` 再次关闭后的稳定模块图基础上，建立稳定的：
   - artifact / size baseline
   - Gradle 与 npm 依赖治理入口
   - 构建效率与产物差异治理入口
@@ -20,7 +20,7 @@
 
 ## 进入条件
 - `Phase 6 = validated`
-- `Stage 3 = validated`
+- `Stage 3 = validated`（当前未满足，因此 `Phase 7` 继续保持 `planned`）
 - `Phase 6` 中的已接受阻塞项与残余风险已留痕，不再混入 `Phase 7` 主线
 
 ## 不承接的 Phase 6 性能债
@@ -90,4 +90,4 @@
 - Phase 7 关闭总结文档
 
 ## 当前状态
-- `planned`
+- `planned（等待 reopened Stage 3 再次关闭后启动）`

@@ -1,12 +1,12 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 7`
-- 阶段状态：`planned`
+- 当前阶段：`Phase 5`
+- 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：`Phase 6 = validated`，`Stage 3 = validated`。当前已经完成 `Phase 6` 的基线、证据、预算与 blocker 固化，但这并不等于全部性能优化已做完；closeout 后 backlog 优化仍在持续推进，详见 [Phase 6 优化机会盘点](./phase-6/phase-6-optimization-opportunity-catalog.md) 与 [偏差与决策日志](./tracking/decision-log.md)。
-- 下一步：固定包体积 baseline、依赖治理入口与构建效率 baseline。
-- 当前 Phase 默认编制：`3 helpers + 1 Leader（planned baseline）`
+- 最近结论：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 作为历史 checkpoint 保留；`2026-03-23` 起因模块化深度不足、首页首开自动加载与 Community 收口仍未完成，当前口径重新切回 `Phase 5 = in_progress`、`Stage 3 = in_progress`。`Phase 6` 继续保持 `validated`，`Phase 7` 继续保持 `planned`。
+- 下一步：继续深化 `core-ui / core-bridge / core-network` 与 `feature-home / feature-search / feature-welfare / feature-rn-host / feature-book / feature-login / feature-reader`，并收口首页首开与 Community 现有跳转/分享。
+- 当前 Phase 默认编制：`5 helpers + 1 Leader（reopen baseline）`
 
 ## 阶段状态总表
 | Phase | 名称 | 状态 | 进入条件 | 退出条件 |
@@ -16,7 +16,7 @@
 | Phase 2 | 质量门禁与自动化护栏 | validated | `Phase 1 = validated` | 全部 `V2-*` 为 `green` |
 | Phase 3 | 基础设施收口 | validated | 第一阶段正式 `validated` | 全部 `V3-*` 为 `green` |
 | Phase 4 | 边界收口与超大类拆分 | validated | `Phase 3 = validated` | 全部 `V4-*` 为 `green` |
-| Phase 5 | Gradle 模块化准备与拆分 | validated | `Stage 2 = validated` | 模块图、入口清单与首批模块迁移稳定 |
+| Phase 5 | Gradle 模块化准备、深化与拆分 | in_progress | `Stage 2 = validated` | 模块图、入口清单、深度模块迁移与组合入口稳定 |
 | Phase 6 | 性能专项与基准治理 | validated | `Phase 5 = validated` | baseline、预算和专项证据闭环 |
 | Phase 7 | 包体积、依赖与构建效率治理 | planned | `Phase 6 = validated` | size / dependency / build baseline 与关闭总结闭环 |
 
@@ -26,9 +26,9 @@
 - `V2-01 ~ V2-09` 已全部具备绿色验证证据，Phase 2 已完成。
 - `V3-01 ~ V3-07` 已全部具备绿色验证证据，Phase 3 已正式完成。
 - `V4-01 ~ V4-08` 已全部具备绿色验证证据，Phase 4 已正式完成。
-- `V5-01 ~ V5-06` 已全部具备绿色验证证据，Phase 5 已正式完成。
+- `V5-01 ~ V5-06` 已全部具备绿色验证证据，构成 `2026-03-21` 的 Phase 5 首轮 closeout checkpoint。
 - `V6-01 ~ V6-06` 已全部具备绿色验证证据，Phase 6 已正式完成。
-- `Stage 3 = Phase 5-6` 已正式关闭并标记为 `validated`。
+- `Stage 3 = Phase 5-6` 的 `2026-03-21` closeout checkpoint 已归档；当前因 Phase 5 深化重开而重新切回 `in_progress`。
 - `DN2101` 的 `cmd package compile` 已被客观固化为已接受的环境阻塞项，不再误判为 `Phase 5/6` 仓库回归。
 
 ## 推荐阅读顺序

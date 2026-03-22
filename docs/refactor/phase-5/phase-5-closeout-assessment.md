@@ -2,9 +2,18 @@
 
 ## 摘要
 - 阶段：`Phase 5 - Gradle 模块化与边界搬迁`
-- 关闭状态：`validated`
+- 关闭状态：`validated（2026-03-21 历史 checkpoint）`
 - 评审目标：确认 `Phase 5` 已在不改变 UI/业务语义的前提下完成首批 `core/*` 与 `feature/*` 模块落地、Bridge / RN Host 兼容验证、模块级验证矩阵闭环，并为 `Phase 6` 建立稳定入口
 - 发布结论：`允许关闭`
+
+## 2026-03-23 reopen 补充说明
+- 本报告继续保留 `2026-03-21` 的 Phase 5 首轮 closeout 结论，不把当日已验证完成的 checkpoint 抹掉。
+- 截至 `2026-03-23`，由于当前模块图仍明显偏浅，`core-ui / core-bridge / feature-book / feature-login / feature-reader` 尚未落地，`feature-home / feature-search / feature-rn-host` 也仍停留在最小切口，当前阶段口径已重新切回 `Phase 5 = in_progress`。
+- reopen 后的继续推进，统一以以下文档为准：
+  - `docs/refactor/phases/phase-5-gradle-modularization.md`
+  - `docs/refactor/phase-5/module-graph-current-state.md`
+  - `docs/refactor/tracking/phase-5-6-validation-board.md`
+  - `docs/refactor/tracking/decision-log.md`
 
 ## 评审范围
 - `docs/refactor/README.md`
@@ -74,6 +83,7 @@
 | 2026-03-21 | 补齐 Phase 5 宿主页兼容验证 | `phase-5/host-compat-validation-2026-03-21.md` | 完成 |
 | 2026-03-21 | 将控制面板与看板切换到 `Phase 5 validated / Phase 6 planned` | `README.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md` | 完成 |
 | 2026-03-21 | 新增本报告作为 Phase 5 权威 closeout 文档 | `phase-5/phase-5-closeout-assessment.md` | 完成 |
+| 2026-03-23 | 将本报告降级为历史 checkpoint，并补充 reopen 说明 | `README.md`, `stage-3-phase-5-6-plan.md`, `phase-5-gradle-modularization.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md`, `decision-log.md` | 进行中 |
 
 ## 残余风险
 - `core-network` 仍停留在“契约优先”阶段，后续仍需继续深入模块化；但这一项已被明确降级为 carried debt，不再阻塞 `Phase 6`。

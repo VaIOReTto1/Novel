@@ -7,6 +7,7 @@
   - 哪些只做到部分实现
   - 哪些已延期承接
   - 哪些仍未实现
+- 截至 `2026-03-23` 复核，本审计结论继续成立；尤其是 `Phase 5` 仍不能被表述为“蓝图已全部兑现”，当前只是首轮 checkpoint 已归档、阶段本身已重新切回 `in_progress`。
 
 ## Phase 3 基础设施收口
 ### 原始目标
@@ -92,6 +93,7 @@
 
 ### 仓库事实
 - 实际拆分顺序与蓝图不同，且 `core-storage`、契约优先版 `core-network` 作为起始事实已经存在。
+- `2026-03-21` 的 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-23`，由于模块图仍明显偏浅，`Phase 5` 已重新切回 `in_progress`。
 - 本轮实际落地的首批模块包括：
   - `core-common`
   - `core-bridge-contract`

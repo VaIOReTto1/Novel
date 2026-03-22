@@ -2,6 +2,7 @@
 
 ## 目标
 - 把 `Stage 2` 已稳定下来的包边界落成真正的 Gradle 模块图
+- 继续深化已有首轮切口，并补齐 `core-ui / core-bridge / feature-book / feature-login / feature-reader`
 - 先拆稳定基础层，再拆稳定 feature，保持 app 主入口可用
 - 为 `Phase 6` 的性能预算建立更清晰的模块级观测边界
 
@@ -13,9 +14,9 @@
 - 模块级测试/构建/依赖边界收口
 
 ## 非目标
-- 不做 Reader 最终模块拆分
+- 不拆 `MainApplication / ComposeMainActivity / NavigationUtil / NavViewModel / route graph / RN host roots`
 - 不改 route / Bridge payload / RN 组件名
-- 不把所有 RN heavy pages 一次性去 mock
+- 不把模块化扩张成新的 UI / 业务语义重写
 - 不做 `Phase 6` 的性能专项实现
 
 ## 进入条件
@@ -24,6 +25,7 @@
 - `app` 仍可稳定通过当前核心回归命令
 
 ## 当前真实进度
+- `2026-03-21` 已完成首轮 `Phase 5 validated` checkpoint，但当前模块图仍明显偏浅，`feature-home / feature-search / feature-rn-host` 仍停留在最小切口，`core-ui / core-bridge / feature-book / feature-login / feature-reader` 尚未真正落地。
 - 打开书籍“请求错误”运行时 blocker 已修复，`BookService` 的空 `chapterUpdateTime` 回归测试已作为 Phase 5 首个守门用例保留。
 - `android/gradle/android-library-common.gradle` 已落地，`core/*` 模块开始复用统一 Android library 构建约定。
 - `android/core-common` 已落地并完成首轮共享基础抽离。
@@ -34,18 +36,18 @@
 - `android/feature-search` 已落地首轮最小切口，当前只迁出低耦合存储层。
 - `android/feature-home` 已落地首轮最小切口，当前只迁出低耦合性能 helper。
 - `android/feature-rn-host` 已落地首轮最小切口，当前只迁出低耦合设置存储层。
-- `Phase 5` 已从 `planned` 切换为 `in_progress`，后续不得再按纯文档准备态解释本阶段。
+- `Phase 5` 当前已由历史 closeout checkpoint 重新切回 `in_progress`，后续不得再按“首轮最小切口已完成”误判为蓝图目标已兑现。
 
 ## 固定执行顺序
 1. `doc/state sync`
-2. `build conventions`
-3. `core-common`
-4. `deepen core-network`
-5. `core-bridge-contract`
-6. `feature-welfare`
-7. `feature-search`
-8. `feature-home`
-9. `feature-rn-host`
+2. `core-ui`
+3. `deepen core-network / core-bridge`
+4. `feature-home + homepage first-load fix`
+5. `feature-search`
+6. `feature-welfare / feature-rn-host`
+7. `feature-book / feature-login`
+8. `feature-reader`
+9. `Community wiring + validation refresh`
 10. `validation / closeout`
 
 ## 协作编制
@@ -101,21 +103,21 @@
 ## 任务拆解
 | ID | Task | Expected Outcome |
 | --- | --- | --- |
-| P5.1 | 固定目标模块图与依赖规则 | 模块边界、依赖方向、禁止环依赖规则落盘 |
-| P5.2 | 建立首批构建约定 | `settings.gradle`、公共 convention、依赖共享策略稳定 |
-| P5.3 | 抽离 `core-common` | 公共 Kotlin/Compose/utility 稳定落入基础模块 |
-| P5.4 | 抽离 `core-network` 与 `core-storage` | `NetworkFacade` / `StorageFacade` 不再依赖 `app` |
-| P5.5 | 抽离 `core-bridge-contract` | Bridge contract、host contract 与兼容层稳定 |
-| P5.6 | 抽离 `feature-home` | 首页相关实现从 `app` 迁入 feature 模块 |
-| P5.7 | 抽离 `feature-search` | 搜索相关实现从 `app` 迁入 feature 模块 |
-| P5.8 | 抽离 `feature-welfare` / `feature-rn-host` | 福利、RN Host 相关实现进入稳定模块 |
-| P5.9 | 模块级测试与 lint/detekt 矩阵补齐 | 模块级 build/test/lint 命令可追溯 |
-| P5.10 | 输出 Phase 6 进入条件 | 性能专项的模块级 baseline 入口清晰 |
+| P5.1 | 重开 `Phase 5 / Stage 3` 并固定目标模块图 | 当前阶段状态、模块边界、依赖方向与历史 checkpoint 口径统一 |
+| P5.2 | 新增 `core-ui` | 通用主题与基础 Compose 组件脱离 `app` |
+| P5.3 | 深化 `core-network / core-bridge` | 共享网络原语、桥接共享层与宿主 glue 边界更清晰 |
+| P5.4 | 深化 `feature-home` 并修复首页首开 | 首页实现迁入 feature 模块，首开无需手动刷新 |
+| P5.5 | 深化 `feature-search` | 搜索页面、viewmodel、repository 与测试迁出 `app` |
+| P5.6 | 深化 `feature-welfare / feature-rn-host` | Welfare 与 RN Host 支撑层继续迁入 feature 模块 |
+| P5.7 | 新增 `feature-book / feature-login` | 书籍详情与登录 feature 真正进入独立模块 |
+| P5.8 | 新增 `feature-reader` | Reader 进入独立 feature 模块，但宿主根逻辑仍留 `app` |
+| P5.9 | 打通 Community 与刷新模块级验证矩阵 | Community 现有跳转/分享闭环，模块级 build/test/lint 命令可追溯 |
+| P5.10 | 输出 reopen closeout 与下一阶段入口 | 深化版 Phase 5 closeout 完整、Stage 3 再次具备关闭条件 |
 
 ## 交付物
 - `settings.gradle` 模块图
-- 首批 `core/*` 模块
-- 首批 `feature/*` 模块
+- 深化后的 `core/*` 模块
+- 深化后的 `feature/*` 模块
 - 模块依赖图与迁移映射
 - 模块级测试/构建命令清单
 
@@ -154,4 +156,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`validated`
+- 当前状态：`in_progress`

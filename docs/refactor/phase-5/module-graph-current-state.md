@@ -1,4 +1,4 @@
-# Phase 5 模块图现状（2026-03-21）
+# Phase 5 模块图现状（2026-03-23 reopen）
 
 ## 当前已落地图
 - `:app`
@@ -46,6 +46,20 @@
   - 当前承载：
     - `SettingsPreferenceStorage`
 
+## reopen 目标模块图
+- 已纳入本轮深化目标、但尚未真正落地：
+  - `:core-ui`
+  - `:core-bridge`
+  - `:feature-book`
+  - `:feature-login`
+  - `:feature-reader`
+- 已落地但仍明显偏浅、需要继续深化：
+  - `:core-network`
+  - `:feature-home`
+  - `:feature-search`
+  - `:feature-welfare`
+  - `:feature-rn-host`
+
 ## 当前依赖方向
 - `:app -> :core-common`
 - `:app -> :core-bridge-contract`
@@ -73,14 +87,14 @@
 
 ## 当前固定执行顺序
 1. `doc/state sync`
-2. `build conventions`
-3. `core-common`
-4. `deepen core-network`
-5. `core-bridge-contract`
-6. `feature-welfare`
-7. `feature-search`
-8. `feature-home`
-9. `feature-rn-host`
+2. `core-ui`
+3. `deepen core-network / core-bridge`
+4. `feature-home + homepage first-load fix`
+5. `feature-search`
+6. `feature-welfare / feature-rn-host`
+7. `feature-book / feature-login`
+8. `feature-reader`
+9. `Community wiring + validation refresh`
 10. `validation / closeout`
 
 ## 当前切口结果
@@ -93,6 +107,7 @@
 - `feature-home` 已完成首轮最小切口，当前只迁出 `HomePerformanceOptimizer`。
 - `feature-rn-host` 已完成首轮最小切口，当前只迁出 `SettingsPreferenceStorage`。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
+- `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
 
 ## 当前阻塞与下一步
 - 当前未解决的 `core-common` 遗留：
@@ -102,9 +117,11 @@
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
-  - 继续扩大 `feature-welfare`，直到能搬迁更多 welfare internals
-  - 继续扩大 `feature-search / feature-home / feature-rn-host`，从纯 helper/store 进入下一批低耦合切口
-  - 在单独原子主题里继续深化 `core-network`
+  - 新增 `core-ui`，把主题与通用基础 Compose 组件真正迁出 `app`
+  - 深化 `core-network / core-bridge`
+  - 深化 `feature-home / feature-search / feature-welfare / feature-rn-host`
+  - 新增 `feature-book / feature-login / feature-reader`
+  - 结合 `feature-home` 深化修复首页首开自动加载问题
 
 ## 验证证据
 - `android/gradlew.bat :core-common:testDebugUnitTest`

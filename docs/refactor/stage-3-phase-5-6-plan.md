@@ -2,7 +2,7 @@
 
 ## 摘要
 - 第三阶段建议明确为：`Stage 3 = Phase 5 + Phase 6`
-- `Phase 5`：真正的 Gradle 模块化准备与首批模块拆分
+- `Phase 5`：真正的 Gradle 模块化深化、边界搬迁与 app 组合入口收口
 - `Phase 6`：性能专项与基准治理
 - 不纳入：
   - `Phase 7` 的包体积/依赖/构建效率专项
@@ -14,6 +14,7 @@
   - 先做 `Phase 5`，把稳定边界落成真正的 Gradle 模块图
   - 再做 `Phase 6`，在新模块边界上建立性能预算、baseline profile 和专项回归
 - `Phase 7` 不适合并入本阶段，因为包体积/依赖/构建效率治理需要在模块图稳定后再做，避免前后基线持续漂移。
+- `2026-03-21` 的 `Stage 3 validated` 与 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-23`，由于模块化深度仍明显不足、首页首开自动加载和 Community 收口仍未完成，`Stage 3` 与 `Phase 5` 已重新切回 `in_progress`。
 
 ## 进入条件
 - `Stage 2 = validated`
@@ -60,7 +61,7 @@
 ### Phase 5
 - 目标是“真正模块化”，不是继续停留在单 `app` 模块内逻辑分包
 - 先拆稳定基础层和稳定 feature
-- Reader 仍然后置，不在本阶段做最终模块拆分
+- 允许把 `Reader` 真正纳入 `feature-reader`，但宿主根逻辑、route graph 与 RN/Application host roots 继续留在 `app`
 
 ### Phase 6
 - 目标是“建立稳定的性能预算与回归体系”
@@ -86,4 +87,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`planned`
+- 当前状态：`in_progress`

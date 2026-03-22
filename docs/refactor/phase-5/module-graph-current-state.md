@@ -25,6 +25,14 @@
     - `com.novel.utils.flydp`
     - `com.novel.utils.debounceClickable`
     - `NovelText / NovelTextField / NovelButton / NovelDivider`
+- `:core-bridge`
+  - 桥接共享层
+  - 当前承载：
+    - `BridgeIntent / BridgeState / BridgeEffect`
+    - `BridgeReducer`
+    - `BridgePromiseErrorMapper`
+    - `DefaultNavigationBridgeFacade`
+    - `NavigationBridgeNetworkGateway`
 - `:core-storage`
   - 存储抽象与兼容层
 - `:core-network`
@@ -56,12 +64,12 @@
 
 ## reopen 目标模块图
 - 已纳入本轮深化目标、但尚未真正落地：
-  - `:core-bridge`
   - `:feature-book`
   - `:feature-login`
   - `:feature-reader`
 - 已落地但仍明显偏浅、需要继续深化：
   - `:core-network`
+  - `:core-bridge`
   - `:feature-home`
   - `:feature-search`
   - `:feature-welfare`
@@ -70,6 +78,7 @@
 ## 当前依赖方向
 - `:app -> :core-common`
 - `:app -> :core-ui`
+- `:app -> :core-bridge`
 - `:app -> :core-bridge-contract`
 - `:app -> :core-storage`
 - `:app -> :core-network`
@@ -116,6 +125,8 @@
 - `feature-rn-host` 已完成首轮最小切口，当前只迁出 `SettingsPreferenceStorage`。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
+- `core-bridge` 已完成首轮真实落地，桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade 与 network gateway 已迁出 `app`。
+- `core-network` 已不再只有契约壳，`RequestIdInterceptor / NetworkTraceLogHelper / ImmutableListTypeAdapter` 已进入共享网络层。
 - `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
 
 ## 当前阻塞与下一步

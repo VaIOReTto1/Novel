@@ -3,10 +3,10 @@ package com.novel.rn.bridge.network
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.novel.core.logging.CoreLogger
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
-import com.novel.utils.TimberLogger
 import com.novel.utils.network.NetworkTraceLogHelper
 import com.novel.utils.network.interceptor.RequestIdInterceptor
 
@@ -228,7 +228,7 @@ class NavigationBridgeNetworkGateway(
             queryParams = queryParams,
             headers = RequestIdInterceptor.ensureTraceHeaders(mapOf("Accept" to "*/*"))
         )
-        TimberLogger.d("NavigationBridgeNetworkGateway", NetworkTraceLogHelper.formatBridgeDispatch(request))
+        CoreLogger.d("NavigationBridgeNetworkGateway", NetworkTraceLogHelper.formatBridgeDispatch(request))
         val response = networkFacade.execute(request)
 
         return JsonParser.parseString(response).asJsonObject

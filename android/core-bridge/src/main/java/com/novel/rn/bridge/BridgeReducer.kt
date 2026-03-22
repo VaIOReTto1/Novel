@@ -3,7 +3,7 @@ package com.novel.rn.bridge
 import kotlinx.collections.immutable.persistentSetOf
 import com.novel.core.mvi.MviReducerWithEffect
 import com.novel.core.mvi.ReduceResult
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 
 /**
  * 桥接模块状态处理器
@@ -24,7 +24,7 @@ class BridgeReducer : MviReducerWithEffect<BridgeIntent, BridgeState, BridgeEffe
         intent: BridgeIntent
     ): ReduceResult<BridgeState, BridgeEffect> {
         
-        TimberLogger.d(TAG, "处理桥接意图: ${intent::class.simpleName}")
+        CoreLogger.d(TAG, "处理桥接意图: ${intent::class.simpleName}")
         
         return when (intent) {
             is BridgeIntent.InitializeBridge -> {

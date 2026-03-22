@@ -97,6 +97,7 @@
 - 本轮实际落地的首批模块包括：
   - `core-common`
   - `core-ui`
+  - `core-bridge`
   - `core-bridge-contract`
   - `feature-welfare`
   - `feature-home`
@@ -115,7 +116,7 @@
 | `core-network` 深化到可复用共享基础设施 | `部分实现` |
 | `core-storage` | `已实现` |
 | `core-ui` | `已实现` |
-| `core-bridge` | `部分实现`（以 `core-bridge-contract` 形式落地） |
+| `core-bridge` | `部分实现`（`core-bridge` 与 `core-bridge-contract` 已落地，但共享层仍未完全替代 app 宿主 glue） |
 | `feature-home` | `已实现`（首轮最小切口） |
 | `feature-search` | `已实现`（首轮最小切口） |
 | `feature-login` | `未实现` |

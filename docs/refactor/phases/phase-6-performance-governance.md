@@ -55,6 +55,8 @@
 - `docs/refactor/phase-6/reader-performance-baseline-2026-03-21.md`
 - `docs/refactor/phase-6/webview-bridge-performance-baseline-2026-03-21.md`
 - `docs/refactor/phase-6/performance-budget-summary.md`
+- `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
+- `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md`
 - `docs/refactor/phase-6/phase-6-closeout-assessment.md`
 - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 

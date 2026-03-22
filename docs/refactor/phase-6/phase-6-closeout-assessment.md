@@ -145,6 +145,7 @@
 | 2026-03-21 | 补齐 Phase 6 正式 evidence package | `docs/refactor/phase-6/**`, `docs/refactor/evidence/**` | 完成 |
 | 2026-03-21 | 关闭 `Phase 6` 并切换 `Phase 7 planned` | `README.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md`, `decision-log.md` | 完成 |
 | 2026-03-22 | 继续推进 closeout 后原子优化并追平文档事实 | `android/app/**`, `docs/refactor/**` | 完成 |
+| 2026-03-22 | 新增数据库索引 / FTS4 与缓存治理报告 | `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`, `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md` | 完成 |
 
 ## 残余风险
 - `DN2101` 的 `cmd package compile` 仍不可用；这已被降级为已接受的环境阻塞项，而不是 `com.novel` 回归。
@@ -152,7 +153,7 @@
   - flip action 直接数值样本
   - settings update 直接数值样本
 - Search、Welfare/WebView、RN Host 仍缺更深层 benchmark / hotspot 级治理结论。
-- 数据库索引收益、`FTS4` 复盘与缓存清理收益复盘仍未完成。
+- 数据库索引 / `FTS4` / 缓存治理入口已落地，但收益复盘仍未完成。
 
 ## 发布质量结论
 - 结论：`通过`

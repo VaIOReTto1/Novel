@@ -65,6 +65,8 @@
 - [搜索性能基线](./phase-6/search-performance-baseline-2026-03-21.md)
 - [Reader 性能基线](./phase-6/reader-performance-baseline-2026-03-21.md)
 - [WebView / Bridge 性能基线](./phase-6/webview-bridge-performance-baseline-2026-03-21.md)
+- [数据库索引与 FTS4 治理报告](./phase-6/database-index-and-fts-governance-2026-03-22.md)
+- [缓存清理治理报告](./phase-6/cache-cleanup-governance-2026-03-22.md)
 - [Phase 6 性能预算摘要](./phase-6/performance-budget-summary.md)
 - [Phase 6 优化机会盘点](./phase-6/phase-6-optimization-opportunity-catalog.md)
 - [Phase 6 关闭评审与签字确认报告](./phase-6/phase-6-closeout-assessment.md)

@@ -32,6 +32,8 @@
   - 数据库索引收益、`FTS4` 与缓存清理收益复盘
 - 统一参考：
   - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
+  - `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
+  - `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md`
 
 ## 协作编制
 ### Leader Mode

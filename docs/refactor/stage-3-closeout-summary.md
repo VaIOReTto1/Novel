@@ -17,6 +17,8 @@
   - 搜索 / Reader / Welfare-WebView / RN Host / Bridge 基线
   - 性能预算摘要
   - baseline profile blocker 固化
+  - 数据库索引 / FTS4 治理入口
+  - 缓存清理治理入口
 - 打开书籍“请求错误” blocker 在 `Stage 3` 期间保持绿色，没有被性能专项或模块化回归重新打开。
 - closeout 后又继续落了多批低风险优化：
   - request / trace id header 注入
@@ -33,6 +35,8 @@
 - `docs/refactor/phase-5/phase-5-closeout-assessment.md`
 - `docs/refactor/phase-6/phase-6-closeout-assessment.md`
 - `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md`
+- `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
+- `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md`
 
 ## 原始蓝图与优化后续
 - 原始蓝图兑现情况见：
@@ -49,7 +53,7 @@
 - Reader 当前仍缺少直接可重复的：
   - flip action 数值样本
   - settings update 数值样本
-- 数据库索引收益、`FTS4` 复盘与缓存清理收益复盘仍未完成。
+- 数据库索引 / `FTS4` / 缓存清理的治理入口已落地，但收益复盘仍未完成。
 - 全仓 `DataStore` 与 observability 闭环仍未完成；当前只完成了低风险试点与 request / trace header 注入。
 
 ## 是否允许进入下一阶段

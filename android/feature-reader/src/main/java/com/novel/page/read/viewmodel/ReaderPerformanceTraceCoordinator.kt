@@ -1,12 +1,12 @@
 package com.novel.page.read.viewmodel
 
-internal data class ReaderPerformanceTrace(
+data class ReaderPerformanceTrace(
     val action: String,
     val startedAtMs: Long,
     val metadata: Map<String, String>,
 )
 
-internal class ReaderPerformanceTraceCoordinator(
+class ReaderPerformanceTraceCoordinator(
     private val nowMs: () -> Long = System::currentTimeMillis,
 ) {
 

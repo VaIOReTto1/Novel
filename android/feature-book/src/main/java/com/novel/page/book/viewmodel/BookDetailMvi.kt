@@ -10,7 +10,7 @@ import com.novel.core.mvi.MviEffect
 import com.novel.core.mvi.MviReducer
 import com.novel.core.mvi.MviReducerWithEffect
 import com.novel.core.mvi.ReduceResult
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 
 /**
  * BookDetail MVI契约定义
@@ -234,7 +234,7 @@ class BookDetailReducer : MviReducerWithEffect<BookDetailIntent, BookDetailState
         currentState: BookDetailState,
         intent: BookDetailIntent
     ): ReduceResult<BookDetailState, BookDetailEffect> {
-        TimberLogger.d(TAG, "处理Intent: ${intent::class.simpleName}")
+        CoreLogger.d(TAG, "处理Intent: ${intent::class.simpleName}")
         
         return when (intent) {
             is BookDetailIntent.LoadBookDetail -> {

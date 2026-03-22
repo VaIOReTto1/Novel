@@ -1,6 +1,6 @@
 package com.novel.page.read.viewmodel
 
-internal class ReaderRestoreHintCoordinator(
+class ReaderRestoreHintCoordinator(
     private val visibleDurationMs: Long = DEFAULT_VISIBLE_DURATION_MS,
 ) {
 

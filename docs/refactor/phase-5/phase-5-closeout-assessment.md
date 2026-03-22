@@ -8,7 +8,7 @@
 
 ## 2026-03-23 reopen 补充说明
 - 本报告继续保留 `2026-03-21` 的 Phase 5 首轮 closeout 结论，不把当日已验证完成的 checkpoint 抹掉。
-- 截至 `2026-03-23`，由于当前模块图仍明显偏浅，`feature-book / feature-login / feature-reader` 尚未落地，`feature-search / feature-rn-host` 也仍停留在最小切口，`core-network / core-bridge` 仍需继续深化，当前阶段口径已重新切回 `Phase 5 = in_progress`。
+- 截至 `2026-03-23`，由于当前模块图仍明显偏浅，`feature-book / feature-login / feature-reader` 虽已落地但仍未进入完整功能层迁移阶段，`feature-search / feature-rn-host` 也仍未达到终态，`core-network / core-bridge` 仍需继续深化，当前阶段口径已重新切回 `Phase 5 = in_progress`。
 - reopen 后的继续推进，统一以以下文档为准：
   - `docs/refactor/phases/phase-5-gradle-modularization.md`
   - `docs/refactor/phase-5/module-graph-current-state.md`

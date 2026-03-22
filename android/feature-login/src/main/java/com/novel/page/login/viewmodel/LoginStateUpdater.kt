@@ -1,6 +1,6 @@
 package com.novel.page.login.viewmodel
 
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 
 /**
  * Login状态更新器
@@ -24,7 +24,7 @@ object LoginStateUpdater {
      * 更新手机信息
      */
     fun updatePhoneInfo(currentState: LoginState, phoneInfo: PhoneInfo): LoginState {
-        TimberLogger.d(TAG, "更新手机信息: ${phoneInfo.operatorName}")
+        CoreLogger.d(TAG, "更新手机信息: ${phoneInfo.operatorName}")
         
         return currentState.copy(
             version = currentState.version + 1,
@@ -38,7 +38,7 @@ object LoginStateUpdater {
      * 更新验证结果
      */
     fun updateValidationResults(currentState: LoginState, validationResults: ValidationResults): LoginState {
-        TimberLogger.d(TAG, "更新验证结果，是否有效: ${validationResults.isValid}")
+        CoreLogger.d(TAG, "更新验证结果，是否有效: ${validationResults.isValid}")
         
         return currentState.copy(
             version = currentState.version + 1,
@@ -51,7 +51,7 @@ object LoginStateUpdater {
      * 更新验证码状态
      */
     fun updateCaptchaState(currentState: LoginState, captchaState: CaptchaState): LoginState {
-        TimberLogger.d(TAG, "更新验证码状态")
+        CoreLogger.d(TAG, "更新验证码状态")
         
         return currentState.copy(
             version = currentState.version + 1,
@@ -63,7 +63,7 @@ object LoginStateUpdater {
      * 更新登录成功
      */
     fun updateLoginSuccess(currentState: LoginState, message: String): UpdateResult {
-        TimberLogger.d(TAG, "登录成功: $message")
+        CoreLogger.d(TAG, "登录成功: $message")
         
         val newState = currentState.copy(
             version = currentState.version + 1,
@@ -80,7 +80,7 @@ object LoginStateUpdater {
      * 更新登录失败
      */
     fun updateLoginFailure(currentState: LoginState, message: String): UpdateResult {
-        TimberLogger.d(TAG, "登录失败: $message")
+        CoreLogger.d(TAG, "登录失败: $message")
         
         // 根据错误消息设置相应的验证错误
         val validationResults = currentState.validationResults.copy(
@@ -103,7 +103,7 @@ object LoginStateUpdater {
      * 更新注册成功
      */
     fun updateRegisterSuccess(currentState: LoginState, message: String): UpdateResult {
-        TimberLogger.d(TAG, "注册成功: $message")
+        CoreLogger.d(TAG, "注册成功: $message")
         
         val newState = currentState.copy(
             version = currentState.version + 1,
@@ -120,7 +120,7 @@ object LoginStateUpdater {
      * 更新注册失败
      */
     fun updateRegisterFailure(currentState: LoginState, message: String): UpdateResult {
-        TimberLogger.d(TAG, "注册失败: $message")
+        CoreLogger.d(TAG, "注册失败: $message")
         
         // 根据错误消息设置相应的验证错误
         val validationResults = when {

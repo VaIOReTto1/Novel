@@ -2,12 +2,12 @@ package com.novel.page.read.viewmodel
 
 import androidx.compose.ui.unit.IntSize
 
-internal data class ReaderInitialLoadPlan(
+data class ReaderInitialLoadPlan(
     val shouldInitReader: Boolean,
     val shouldShowProgressRestoredHint: Boolean,
 )
 
-internal class ReaderStartupCoordinator {
+class ReaderStartupCoordinator {
 
     fun createInitialLoadPlan(
         bookId: String,

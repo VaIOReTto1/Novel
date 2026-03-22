@@ -51,7 +51,7 @@
   - `docs/refactor/tracking/decision-log.md`
 
 ## Carried Debt / Residual Risks
-- 模块化当前仍明显偏浅，`feature-book / feature-login / feature-reader` 尚未真正落地，`core-network / core-bridge` 也仍需继续深化。
+- 模块化当前仍明显偏浅，`feature-book / feature-login / feature-reader` 虽已落地但仍未进入完整功能层迁移阶段，`core-network / core-bridge` 也仍需继续深化。
 - Reader 当前仍缺少直接可重复的：
   - flip action 数值样本
   - settings update 数值样本

@@ -1,0 +1,21 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+apply from: rootProject.file("gradle/android-library-common.gradle")
+
+android {
+    namespace "com.novel.feature.book"
+    configureNovelAndroidLibrary(delegate, false)
+}
+
+dependencies {
+    implementation project(':core-common')
+    implementation "androidx.compose.runtime:runtime:1.8.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
+
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.truth:truth:1.4.4"
+}

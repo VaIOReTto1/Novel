@@ -64,6 +64,11 @@ fun InputSection(
     onVerifyCodeInput: (String) -> Unit,
     onRefreshCaptcha: () -> Unit
 ) {
+    val phoneError = validationResults.phoneError
+    val passwordError = validationResults.passwordError
+    val passwordConfirmError = validationResults.passwordConfirmError
+    val verifyCodeError = validationResults.verifyCodeError
+
     // 构建注册模式切换的 Transition
     val transition =
         updateTransition(targetState = !isLoginMode, label = "registerTransition")
@@ -109,7 +114,7 @@ fun InputSection(
                 .height(45.wdp)
                 .width(329.wdp),
             placeText = "请输入手机号",
-            isError = validationResults.phoneError != null,
+            isError = phoneError != null,
             errorMessage = null
         )
         
@@ -118,9 +123,9 @@ fun InputSection(
             modifier = Modifier.height(19.wdp).fillMaxWidth()
         ) {
             // 手机号错误信息 - 显示在输入框下方
-            if (validationResults.phoneError != null) {
+            if (phoneError != null) {
                 NovelText(
-                    text = validationResults.phoneError,
+                    text = phoneError,
                     color = NovelColors.NovelError,
                     fontSize = 10.ssp,
                     lineHeight = 10.ssp,
@@ -140,7 +145,7 @@ fun InputSection(
                 .width(329.wdp),
             placeText = "请输入密码",
             isPassword = true,
-            isError = validationResults.passwordError != null,
+            isError = passwordError != null,
             errorMessage = null
         )
         
@@ -149,9 +154,9 @@ fun InputSection(
             modifier = Modifier.height(19.wdp).fillMaxWidth()
         ) {
             // 密码错误信息 - 显示在输入框下方
-            if (validationResults.passwordError != null) {
+            if (passwordError != null) {
                 NovelText(
-                    text = validationResults.passwordError,
+                    text = passwordError,
                     color = NovelColors.NovelError,
                     fontSize = 10.ssp,
                     lineHeight = 10.ssp,
@@ -209,7 +214,7 @@ fun InputSection(
                             .width(329.wdp),
                         placeText = "再次输入密码",
                         isPassword = true,
-                        isError = validationResults.passwordConfirmError != null,
+                        isError = passwordConfirmError != null,
                         errorMessage = null
                     )
                     
@@ -218,9 +223,9 @@ fun InputSection(
                         modifier = Modifier.height(19.wdp).fillMaxWidth()
                     ) {
                         // 确认密码错误信息 - 显示在输入框下方
-                        if (validationResults.passwordConfirmError != null) {
+                        if (passwordConfirmError != null) {
                             NovelText(
-                                text = validationResults.passwordConfirmError,
+                                text = passwordConfirmError,
                                 color = NovelColors.NovelError,
                                 fontSize = 10.ssp,
                                 lineHeight = 10.ssp,
@@ -244,7 +249,7 @@ fun InputSection(
                                 .height(45.wdp)
                                 .width(180.wdp),
                             placeText = "输入验证码",
-                            isError = validationResults.verifyCodeError != null,
+                            isError = verifyCodeError != null,
                             errorMessage = null
                         )
                         Spacer(modifier = Modifier.width(8.wdp))
@@ -266,9 +271,9 @@ fun InputSection(
                         modifier = Modifier.height(16.wdp).fillMaxWidth()
                     ) {
                         // 验证码错误信息 - 显示在输入框下方
-                        if (validationResults.verifyCodeError != null) {
+                        if (verifyCodeError != null) {
                             NovelText(
-                                text = validationResults.verifyCodeError,
+                                text = verifyCodeError,
                                 color = NovelColors.NovelError,
                                 fontSize = 10.ssp,
                                 lineHeight = 10.ssp,

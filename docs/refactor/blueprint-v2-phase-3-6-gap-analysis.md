@@ -119,9 +119,9 @@
 | `core-bridge` | `部分实现`（`core-bridge` 与 `core-bridge-contract` 已落地，但共享层仍未完全替代 app 宿主 glue） |
 | `feature-home` | `已实现`（已从首轮最小切口继续深化，但仍未达到完整 feature 搬迁终态） |
 | `feature-search` | `已实现`（已从首轮最小切口继续深化，但仍未达到完整 feature 搬迁终态） |
-| `feature-login` | `未实现` |
+| `feature-login` | `部分实现` |
 | `feature-welfare` | `已实现`（已从首轮及扩展切口继续深化，但仍未达到完整 feature 搬迁终态） |
-| `feature-reader` | `未实现` |
+| `feature-reader` | `部分实现` |
 | 引入 module owner | `延期承接` |
 | 引入 API surface 审查 | `延期承接` |
 | 引入构建时间统计 | `延期承接` |

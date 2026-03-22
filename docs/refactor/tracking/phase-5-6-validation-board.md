@@ -34,3 +34,9 @@
 | V6-04 | Phase 6 | Welfare/WebView/Bridge 性能验证稳定 | WebView、RN Host、Bridge 关键路径预算稳定 | `docs/refactor/phase-6/webview-bridge-performance-baseline-2026-03-21.md`, `docs/refactor/phase-5/host-compat-validation-2026-03-21.md`, `__tests__/bridge/NativeBridgeEventContracts.test.ts`, `__tests__/smoke/SettingsPage.smoke.test.tsx` | Welfare init / page load / WebView load 当前已留痕；`profile / settings / aipage` 冷启动宿主页 rerun 已留痕；Bridge contract 与 RN settings smoke 继续为绿色守门，说明 Phase 6 没有引入 route / payload / host 语义漂移 | `validated` | `green` | 当前重构实施者 | 阶段门禁批准者 | `2026-03-21` |
 | V6-05 | Phase 6 | 性能观测与报告模板闭环 | 性能 diff、预算表、观测模板稳定 | `docs/refactor/phase-6/performance-budget-summary.md`, `docs/refactor/phase-6/startup-benchmark-run-2026-03-21.md`, `docs/refactor/phase-6/scroll-benchmark-run-2026-03-21.md`, `docs/refactor/phase-6/baseline-profile-run-2026-03-21.md`, `docs/refactor/phase-6/search-performance-baseline-2026-03-21.md`, `docs/refactor/phase-6/reader-performance-baseline-2026-03-21.md`, `docs/refactor/phase-6/webview-bridge-performance-baseline-2026-03-21.md` | Phase 6 已形成统一模板：run doc、blocker doc、budget summary、closeout doc；每条关键链路都有当前值、accepted blocker 或 documented gap，不再依赖散文式阶段笔记 | `validated` | `green` | 当前重构实施者 | 阶段门禁批准者 | `2026-03-21` |
 | V6-06 | Phase 6 | Stage 3 closeout 与 Phase 7 进入条件明确 | 第三阶段关闭总结完成，下一阶段入口清晰 | `docs/refactor/phase-6/phase-6-closeout-assessment.md`, `docs/refactor/stage-3-closeout-summary.md`, `docs/refactor/phases/phase-7-size-dependency-build-governance.md`, `docs/refactor/tracking/decision-log.md` | `Phase 6` 已正式关闭为 `validated`，`Stage 3` 已切换为 `validated/closed`，并新增 `Phase 7` 权威入口文档，当前阶段状态切换为 `Phase 7 planned` | `validated` | `green` | 当前重构实施者 | 阶段门禁批准者 | `2026-03-21` |
+
+## Closeout 后补充说明
+- `2026-03-22` 之后继续落地的低风险优化，统一记录在：
+  - `docs/refactor/tracking/decision-log.md`
+  - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
+- 这些 follow-up 用于追平仓库事实与补充收益，不改变本看板上 `V6-01 ~ V6-06` 的 `validated / green` 关闭结论。

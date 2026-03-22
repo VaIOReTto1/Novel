@@ -103,7 +103,7 @@
 - 串行执行 benchmark / 验证命令
 
 ## 任务拆解
-| ID | Task | Expected Outcome |
+| ID | 任务 | 预期产出 |
 | --- | --- | --- |
 | P6.1 | 刷新 Stage 3 性能基线 | 新模块边界上的 baseline 文档落盘 |
 | P6.2 | 冷启动 / 热启动专项 | 启动预算、baseline profile、macrobenchmark 证据稳定 |
@@ -161,6 +161,10 @@
   - 基线、证据、预算和 blocker 归档已经闭环
 - 它不等于：
   - 所有性能优化动作都已经完成
+- `Phase 6` 关闭后仍允许继续推进低风险 backlog 优化，但这些 follow-up：
+  - 不重开 `Phase 6` 状态
+  - 不改写 `Stage 3 = validated`
+  - 必须同步记录到 `decision-log.md` 与 `phase-6-optimization-opportunity-catalog.md`
 - 尚未完成的优化点，统一见：
   - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 

@@ -196,13 +196,16 @@
 ## 六、数据库与缓存
 ### 现状
 - 原始蓝图把索引收益、FTS4 复盘、缓存清理对 IO/内存/电量影响列为 `Phase 6` 目标。
-- 当前仓库里缺少这三项已经形成正式结论的 Phase 6 文档。
+- 当前仓库里已经开始补数据库与缓存治理入口，但还没有形成最终收益结论。
 
 ### 已完成的优化
-- 暂无可以作为 `Phase 6` 正式收尾结论的明确专项文档。
+- [DatabaseGovernanceReportGenerator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/dao/DatabaseGovernanceReportGenerator.kt) 已落地，开始固定当前索引、FTS4 表/触发器与关键查询计划探针。
+- 已新增正式文档：
+  - `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
 
 ### 仅完成测量 / 取证
-- 目前更多停留在已有缓存体系、数据库配置与历史阶段证据层面。
+- 当前数据库部分已具备结构基线与 query-plan 探针入口，但尚未沉淀为真实收益复盘。
+- 缓存部分目前更多停留在已有缓存体系、清理统计与历史阶段证据层面。
 
 ### 仍可继续优化的点
 - 校验数据库索引的真实收益。
@@ -210,7 +213,9 @@
 - 观察缓存清理对 IO、内存和电量的影响，并形成专项证据。
 
 ### 证据与代码锚点
+- `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
 - [DatabaseModule.kt](/d:/program/Novel/android/app/src/main/java/com/novel/di/DatabaseModule.kt)
+- [DatabaseGovernanceReportGenerator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/dao/DatabaseGovernanceReportGenerator.kt)
 - [NetworkCacheManager.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt)
 - [CachedBookRepository.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/network/repository/CachedBookRepository.kt)
 

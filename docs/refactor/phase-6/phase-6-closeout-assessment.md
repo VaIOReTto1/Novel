@@ -131,6 +131,9 @@
   - `加固福利页WebView性能上报去重`
     - 通过共享的 `WelfareWebPerformanceCoordinator` 为同一次加载补上 `FCP / TTI / pageLoadComplete` 的 once-only 保护。
     - 影响：Welfare / WebView 已从“埋点接线”推进到“同轮加载去重”，后续可继续围绕宏基准与复用收益做更深层分析。
+  - `补齐数据库索引与 FTS4 治理报告`
+    - 通过 `DatabaseGovernanceReportGenerator` 固定当前索引、FTS4 表/触发器与关键查询计划探针。
+    - 影响：数据库专项已从“纯待办”推进到“已开始治理”，但索引收益与 FTS4 方案复盘仍未完成。
 
 ## 修订记录
 | 日期 | 修订项 | 影响文档 | 结果 |

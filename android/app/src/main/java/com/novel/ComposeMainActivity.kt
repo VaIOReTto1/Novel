@@ -52,6 +52,7 @@ class ComposeMainActivity : ComponentActivity() {
     @Stable
     private val rim: com.facebook.react.ReactInstanceManager?
         get() = (application as MainApplication).reactNativeHost.reactInstanceManager
+    private val reactNativePrewarmCoordinator = ReactNativePrewarmCoordinator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as? MainApplication)?.markFirstActivityCreate()
@@ -65,7 +66,7 @@ class ComposeMainActivity : ComponentActivity() {
         }
         
         // 在后台初始化React Native上下文，避免阻塞UI线程
-        rim?.createReactContextInBackground()
+        
 
         setContent {
             // 应用主题包装器，提供统一的视觉风格
@@ -96,6 +97,11 @@ class ComposeMainActivity : ComponentActivity() {
             lifecycleScope.launch {
                 delay(100)
                 (application as? MainApplication)?.markFirstFrameDrawn()
+                if (reactNativePrewarmCoordinator.shouldPrewarmAfterFirstFrame() &&
+                    rim?.currentReactContext == null
+                ) {
+                    rim?.createReactContextInBackground()
+                }
                 delay(200)
                 (application as? MainApplication)?.markAppFullyLoaded()
             }

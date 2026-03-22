@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.novel.utils.TimberLogger
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +21,8 @@ import com.novel.utils.AdaptiveScreen
 import com.novel.utils.NavigationSetup
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * 小说应用纯Compose主Activity
@@ -51,6 +54,7 @@ class ComposeMainActivity : ComponentActivity() {
         get() = (application as MainApplication).reactNativeHost.reactInstanceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as? MainApplication)?.markFirstActivityCreate()
         super.onCreate(savedInstanceState)
         TimberLogger.d(TAG, "Activity创建开始")
 
@@ -87,6 +91,15 @@ class ComposeMainActivity : ComponentActivity() {
         }
         
         TimberLogger.d(TAG, "Activity创建完成")
+
+        window.decorView.post {
+            lifecycleScope.launch {
+                delay(100)
+                (application as? MainApplication)?.markFirstFrameDrawn()
+                delay(200)
+                (application as? MainApplication)?.markAppFullyLoaded()
+            }
+        }
     }
 
     override fun onResume() {

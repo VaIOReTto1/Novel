@@ -33,7 +33,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import com.novel.utils.performance.StartupPerformanceMonitor
@@ -96,6 +95,7 @@ class MainApplication : Application(), ReactApplication {
     private val settingsServiceInitializer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         OnDemandInitializer { initializeSettingsServiceInternal() }
     }
+    private val deferredInitializationCoordinator = StartupDeferredInitializationCoordinator()
     
     // 启动时间监控
     private var appStartTime: Long = 0
@@ -142,7 +142,7 @@ class MainApplication : Application(), ReactApplication {
         initializeCriticalComponents()
         
         // 非关键路径初始化（后台线程，延迟式）
-        initializeNonCriticalComponentsAsync()
+        
         
         // 标记Application onCreate完成
         startupPerformanceMonitor.onApplicationCreateEnd()
@@ -207,8 +207,19 @@ class MainApplication : Application(), ReactApplication {
     /**
      * 异步初始化非关键组件（后台线程，延迟加载）
      */
-    private fun initializeNonCriticalComponentsAsync() {
-        lazyInitializationScope.launch {
+    private fun initializeNonCriticalComponentsAfterFirstFrame() {
+        val plan = deferredInitializationCoordinator.createPlanAfterFirstFrame()
+        if (plan.shouldInitializeNetwork) {
+            lazyInitializationScope.launch {
+                ensureNetworkServiceInitialized()
+            }
+        }
+        if (plan.shouldInitializeSettings) {
+            lazyInitializationScope.launch {
+                ensureSettingsServiceInitialized()
+            }
+        }
+        /*
             // 延迟初始化网络服务（非启动必需）
             delay(100) // 给主线程一些喘息时间
             ensureNetworkServiceInitialized()
@@ -217,6 +228,7 @@ class MainApplication : Application(), ReactApplication {
             delay(50)
             ensureSettingsServiceInitialized()
         }
+        */
     }
 
     /**
@@ -371,6 +383,7 @@ class MainApplication : Application(), ReactApplication {
      */
     fun markFirstFrameDrawn() {
         startupPerformanceMonitor.onFirstFrameDrawn()
+        initializeNonCriticalComponentsAfterFirstFrame()
     }
 
     /**

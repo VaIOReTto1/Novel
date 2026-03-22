@@ -35,6 +35,8 @@ class SearchResultViewModel @Inject constructor(
 
     private val reducer = SearchResultReducer()
     val adapter = SearchResultStateAdapter(state)
+    private val retryPolicyCoordinator = SearchRetryPolicyCoordinator()
+    private val performanceTraceCoordinator = SearchPerformanceTraceCoordinator()
 
     private var currentPage = 1
     private var isLoadingMore = false
@@ -69,10 +71,16 @@ class SearchResultViewModel @Inject constructor(
         TimberLogger.d(TAG, "执行搜索: ${params.query}, 页码: ${params.page}")
         currentSearchParams = params
         retryAttempts = 0
-        performSearchWithRetry(params)
+        performSearchWithRetry(
+            params = params,
+            trace = startSearchTrace(params),
+        )
     }
 
-    private fun performSearchWithRetry(params: SearchParams) {
+    private fun performSearchWithRetry(
+        params: SearchParams,
+        trace: SearchPerformanceTrace,
+    ) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             try {
@@ -99,25 +107,60 @@ class SearchResultViewModel @Inject constructor(
                     }
 
                     retryAttempts = 0
+                    finishSearchTrace(
+                        trace = trace,
+                        status = "success",
+                        metadata = mapOf(
+                            "trigger" to params.triggerSource.name,
+                            "resultCount" to books.size.toString(),
+                            "hasMore" to hasMore.toString(),
+                            "page" to params.page.toString(),
+                        ),
+                    )
                 } else {
-                    handleSearchFailure(Exception("搜索返回为空"), params)
+                    handleSearchFailure(
+                        exception = Exception("搜索返回为空"),
+                        params = params,
+                        trace = trace,
+                    )
                 }
             } catch (e: Exception) {
                 TimberLogger.e(TAG, "搜索异常", e)
-                handleSearchFailure(e, params)
+                handleSearchFailure(
+                    exception = e,
+                    params = params,
+                    trace = trace,
+                )
             }
         }
     }
 
-    private fun handleSearchFailure(exception: Throwable, params: SearchParams) {
+    private fun handleSearchFailure(
+        exception: Throwable,
+        params: SearchParams,
+        trace: SearchPerformanceTrace,
+    ) {
         retryAttempts++
 
-        if (retryAttempts <= MAX_RETRY_ATTEMPTS) {
+        if (retryPolicyCoordinator.shouldRetry(
+                params = params,
+                retryAttempts = retryAttempts,
+                maxRetryAttempts = MAX_RETRY_ATTEMPTS,
+            )
+        ) {
             TimberLogger.d(TAG, "搜索失败，准备重试($retryAttempts/$MAX_RETRY_ATTEMPTS)")
 
             viewModelScope.launch {
-                delay(RETRY_DELAY_MS * retryAttempts)
-                performSearchWithRetry(params)
+                delay(
+                    retryPolicyCoordinator.retryDelayMs(
+                        retryAttempts = retryAttempts,
+                        baseDelayMs = RETRY_DELAY_MS,
+                    ),
+                )
+                performSearchWithRetry(
+                    params = params,
+                    trace = trace,
+                )
             }
         } else {
             TimberLogger.e(TAG, "搜索失败，超出重试次数")
@@ -134,6 +177,16 @@ class SearchResultViewModel @Inject constructor(
                 isLoadingMore = false
             }
 
+            finishSearchTrace(
+                trace = trace,
+                status = "failure",
+                metadata = mapOf(
+                    "trigger" to params.triggerSource.name,
+                    "page" to params.page.toString(),
+                    "retryAttempts" to retryAttempts.toString(),
+                    "error" to (exception.message ?: "unknown"),
+                ),
+            )
             sendEffect(SearchResultEffect.ShowToast("搜索失败: ${exception.message}"))
         }
     }
@@ -182,6 +235,7 @@ class SearchResultViewModel @Inject constructor(
             categoryId = currentState.selectedCategoryId,
             filters = currentState.filters,
             isLoadMore = false,
+            triggerSource = SearchTriggerSource.INITIAL_ENTRY,
         )
 
         searchQueryChannel.trySend(params)
@@ -199,6 +253,7 @@ class SearchResultViewModel @Inject constructor(
                 categoryId = currentState.selectedCategoryId,
                 filters = currentState.filters,
                 isLoadMore = false,
+                triggerSource = SearchTriggerSource.CATEGORY_SWITCH,
             )
 
             executeSearch(params)
@@ -221,6 +276,7 @@ class SearchResultViewModel @Inject constructor(
                 categoryId = currentState.selectedCategoryId,
                 filters = currentState.filters,
                 isLoadMore = false,
+                triggerSource = SearchTriggerSource.FILTER_APPLY,
             )
 
             executeSearch(params)
@@ -253,6 +309,7 @@ class SearchResultViewModel @Inject constructor(
             categoryId = currentState.selectedCategoryId,
             filters = currentState.filters,
             isLoadMore = true,
+            triggerSource = SearchTriggerSource.LOAD_MORE,
         )
 
         executeSearch(params)
@@ -303,5 +360,33 @@ class SearchResultViewModel @Inject constructor(
                 isCategoryFiltersLoading = false
             }
         }
+    }
+
+    private fun startSearchTrace(params: SearchParams): SearchPerformanceTrace {
+        val trace = performanceTraceCoordinator.start(
+            action = "search",
+            metadata = mapOf(
+                "trigger" to params.triggerSource.name,
+                "query" to params.query,
+                "page" to params.page.toString(),
+            ),
+        )
+        TimberLogger.d(TAG, performanceTraceCoordinator.formatStartMessage(trace))
+        return trace
+    }
+
+    private fun finishSearchTrace(
+        trace: SearchPerformanceTrace,
+        status: String,
+        metadata: Map<String, String> = emptyMap(),
+    ) {
+        TimberLogger.d(
+            TAG,
+            performanceTraceCoordinator.formatFinishMessage(
+                trace = trace,
+                status = status,
+                metadata = metadata,
+            ),
+        )
     }
 }

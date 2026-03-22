@@ -107,6 +107,9 @@
   - `f679aa6` `延后搜索分类筛选加载`
     - 通过 `SearchCategoryFilterLoadCoordinator` 将 `loadCategoryFilters()` 延后到真正需要时执行。
     - 影响：Search 首开结果页的非必要负担已完成第一轮治理。
+  - `细化搜索结果页性能探针与重试策略`
+    - 为 `INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 四类动作补上统一性能 trace，并把 `load more` 从多轮自动重试中拆出。
+    - 影响：Search 已从“只有 log sample baseline”推进到“动作来源可区分、分页失败语义更稳定”的阶段。
   - `bda823f` `补发RN主题同步`
     - 通过 `ReactNativeThemeSyncCoordinator` 在 RN context 就绪后补发主题同步。
     - 影响：`ThemeChanged` 不应再被描述为“context 未就绪时永久跳过”。

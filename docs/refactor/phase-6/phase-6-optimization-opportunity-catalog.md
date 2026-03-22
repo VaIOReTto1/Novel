@@ -134,10 +134,13 @@
 - `Phase 4` 已完成 `SearchHistoryStore / SearchResultCacheStore / SearchRankingRepository / SearchQueryRepository` 等拆分。
 - 当前能够通过 debug route 稳定采 SearchResult 链路。
 - [SearchResultViewModel.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/search/viewmodel/SearchResultViewModel.kt) 已通过 `SearchCategoryFilterLoadCoordinator` 延后 `loadCategoryFilters()`，避免结果页初始化即同步承担分类筛选加载成本。
+- [SearchResultViewModel.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/search/viewmodel/SearchResultViewModel.kt) 已补上 `INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 四类动作来源标记，并为搜索主链补上统一性能 trace。
+- `load more` 已从统一自动重试路径中拆出，失败时直接回滚页码并返回失败状态，不再进行多轮自动重试。
 
 ### 仅完成测量 / 取证
 - 现在只有搜索结果页 log sample。
 - 还没有搜索结果页专项 benchmark 或专门性能回归套件。
+- 四类动作的 probe 已接通，但尚未沉淀为正式 budget / evidence 文档。
 
 ### 仍可继续优化的点
 - 同一文件中的重试策略当前是固定递增 `delay`，还没有做“结果页首开”与“用户主动重试”区分。

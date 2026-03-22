@@ -6,6 +6,7 @@ import com.novel.utils.network.api.front.SearchService
 import com.novel.page.search.component.SearchRankingItem
 import com.novel.page.search.viewmodel.BookInfoRespDto
 import com.novel.page.search.viewmodel.FilterState
+import com.novel.page.search.viewmodel.SearchTriggerSource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -65,7 +66,12 @@ data class SearchParams(
     val page: Int,
     val categoryId: Int?,
     val filters: FilterState,
-    val isLoadMore: Boolean
+    val isLoadMore: Boolean,
+    val triggerSource: SearchTriggerSource = if (isLoadMore) {
+        SearchTriggerSource.LOAD_MORE
+    } else {
+        SearchTriggerSource.INITIAL_ENTRY
+    },
 )
 
 /**

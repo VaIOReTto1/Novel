@@ -25,11 +25,11 @@
 
 ## 不承接的 Phase 6 性能债
 - 以下内容不属于 `Phase 7` 主线，应留在后续性能专项待办池：
-  - 启动任务压缩与 RN 预热收益继续优化
-  - Reader 初始化 / 翻页 / 设置更新的进一步减重
-  - Welfare / WebView 初始化重复路径收敛
-  - 搜索结果页首开非必要加载治理
-  - RN Host 主题事件、ReactRootView 生命周期、Bridge 批量调用优化
+  - Reader flip / settings 动作级治理与直接样本补齐
+  - 搜索结果页 benchmark 化与分页 / 筛选热点治理
+  - Welfare / WebView 更深层专项与重复上报治理
+  - RN Host 生命周期、warm / cold path、Bridge 批量调用与线程切换进一步优化
+  - 数据库索引收益、`FTS4` 与缓存清理收益复盘
 - 统一参考：
   - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 

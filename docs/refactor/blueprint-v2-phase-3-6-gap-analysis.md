@@ -20,7 +20,7 @@
   - `SettingsDataStorePilot`
   的抽象与试点，不是全量迁移。
 - `AppError` 已在首批 Home / Search / Bridge 边界落地。
-- `trace id / request id` 没形成正式仓库级闭环文档。
+- `trace id / request id` 已通过 `RequestIdInterceptor` 在 `OkHttp` 请求链路注入 `X-Request-Id / X-Trace-Id` header，但还没形成正式仓库级 observability 闭环。
 - `KeyChain` 有历史迁移演练证据，但“恢复策略正式闭环”没有以 Phase 3 权威文档完全固化。
 
 ### 兑现结论
@@ -34,12 +34,12 @@
 | KeyChain 保留并补恢复策略 | `部分实现` |
 | 错误模型统一进入 `AppError` | `部分实现` |
 | 日志脱敏 | `部分实现` |
-| trace id / request id 能力统一 | `未实现` |
+| trace id / request id 能力统一 | `部分实现` |
 
 ### 偏差原因
 - 阶段选择了“先收高风险主路径”的策略，而不是全量仓库级一次性清底。
 - 为了降低风险，DataStore 只做了低风险试点，没有推动全量 `NovelUserDefaults` 迁移。
-- 日志与 request tracing 更偏平台级治理，需要更明确的 observability 方案才能完整落地。
+- 日志与 request tracing 更偏平台级治理；当前已完成 header 注入，但仍缺 trace id 贯穿日志、错误、证据与阶段门禁的完整 observability 方案。
 
 ### 后续承接阶段
 - `core-network` 深化与真正的唯一主通路：后续架构 / 基础设施治理
@@ -141,8 +141,15 @@
   - baseline profile blocker 固化
   - Search / Reader / Welfare / RN Host / Bridge 正式证据
   - 性能预算摘要
+- closeout 后继续落地的低风险收益包括：
+  - 非关键启动初始化延后到首帧后
+  - RN 预热延后到首帧后
+  - Reader 初始化去重与设置触发分页刷新收敛
+  - Welfare 初始化去重与 WebView `FCP / TTI` 接线
+  - Search 分类筛选延后加载
+  - RN context 就绪后的主题补发同步
 - 本轮 `Phase 6` 的弱项是：
-  - 很多真实优化动作尚未展开或只做了机会盘点
+  - 很多真实优化动作尚未展开或只完成到第一层收敛
   - 启动、Compose、Reader、RN Host、数据库与缓存收益复盘都没有完成原蓝图级别的系统优化闭环
 
 ### 兑现结论
@@ -159,9 +166,9 @@
 | 核心指标全部优于基线且优化项都有数据证明 | `部分实现` |
 
 ### 偏差原因
-- 本轮更偏重“把基线与证据跑通”，而不是大规模性能重构。
+- 本轮更偏重“把基线、证据与第一层低风险收益跑通”，而不是大规模性能重构。
 - `DN2101` 的设备 compile blocker 让 compiled-mode startup/profile 无法成为强证据来源。
-- Reader、RN Host、WebView 这些路径虽然已采证，但还没深挖到动作级和治理级。
+- Reader、RN Host、WebView 这些路径虽然已采证且落了部分优化，但还没深挖到动作级和治理级。
 
 ### 后续承接阶段
 - 继续留在后续性能专项待办池

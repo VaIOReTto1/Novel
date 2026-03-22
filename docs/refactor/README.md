@@ -4,7 +4,7 @@
 - 当前阶段：`Phase 7`
 - 阶段状态：`planned`
 - 门禁模式：`严格门禁`
-- 最近结论：`Phase 6 = validated`，`Stage 3 = validated`。当前已经完成 `Phase 6` 的基线、证据、预算与 blocker 固化，但这并不等于全部性能优化已做完；剩余优化机会已转入显式文档管理。
+- 最近结论：`Phase 6 = validated`，`Stage 3 = validated`。当前已经完成 `Phase 6` 的基线、证据、预算与 blocker 固化，但这并不等于全部性能优化已做完；closeout 后 backlog 优化仍在持续推进，详见 [Phase 6 优化机会盘点](./phase-6/phase-6-optimization-opportunity-catalog.md) 与 [偏差与决策日志](./tracking/decision-log.md)。
 - 下一步：固定包体积 baseline、依赖治理入口与构建效率 baseline。
 - 当前 Phase 默认编制：`3 helpers + 1 Leader（planned baseline）`
 

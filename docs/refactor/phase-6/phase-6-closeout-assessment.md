@@ -83,12 +83,42 @@
 - 详见：
   - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 - 当前仍明确存在后续可继续推进的优化机会，主要集中在：
-  - 启动任务压缩与 RN 预热收益核算
-  - Reader 初始化 / 翻页 / 设置更新路径进一步减重
-  - Welfare/WebView 初始化重复路径收敛
-  - 搜索结果页首开非必要加载治理
-  - RN Host 主题事件与 ReactRootView 生命周期进一步优化
+  - 启动 warm / cold path 的进一步分流、compiled-mode 二设备复验与收益核算
+  - Reader flip / settings 动作级样本与进一步热点治理
+  - Welfare / WebView 更深层 macrobenchmark 与重复上报治理
+  - 搜索结果页 benchmark 化与分页 / 筛选热点治理
+  - RN Host 生命周期、批量调用与线程切换进一步优化
 - 这些项应进入后续性能专项待办池，而不应在文档叙述中被算作“已完成”。
+
+## Closeout 后继续推进的优化
+- 以下提交均发生在 `Phase 6 validated` 之后，用于继续消化 backlog 与追平仓库事实；它们不重开 `Phase 6` 状态：
+  - `bad7f5f` `补齐网络请求追踪头`
+    - 在 `NetworkModule` 中接入 `RequestIdInterceptor`，为 `OkHttp` 请求默认注入 `X-Request-Id / X-Trace-Id`。
+    - 影响：`Phase 3` 的 request / trace id 能力应从“未实现”修正为“部分实现”。
+  - `c9f1f8e` `收敛阅读器初始化与分页刷新`
+    - 通过 `ReaderStartupCoordinator` 和 `ReaderSettingsRefreshCoordinator` 去除重复初始化与过宽的分页刷新触发。
+    - 影响：Reader 不再只是“拿到 init baseline”，而是已经落了首轮真实优化。
+  - `666cc72` `收敛福利页初始化路径`
+    - 通过 `WelfarePageBootstrapCoordinator` 收敛 preload / performance monitor / `InitializePage` 的首次 bootstrap。
+    - 影响：Welfare / WebView 不能再继续按“存在重复初始化嫌疑但尚未处理”描述。
+  - `f679aa6` `延后搜索分类筛选加载`
+    - 通过 `SearchCategoryFilterLoadCoordinator` 将 `loadCategoryFilters()` 延后到真正需要时执行。
+    - 影响：Search 首开结果页的非必要负担已完成第一轮治理。
+  - `bda823f` `补发RN主题同步`
+    - 通过 `ReactNativeThemeSyncCoordinator` 在 RN context 就绪后补发主题同步。
+    - 影响：`ThemeChanged` 不应再被描述为“context 未就绪时永久跳过”。
+  - `28ec92d` `延后非关键启动初始化`
+    - 通过 `StartupDeferredInitializationCoordinator` 把 `RetrofitClient`、`SettingsUtils` 等初始化移到首帧后。
+    - 影响：启动专项已从纯测量进入第一轮真实减负。
+  - `955d9d0` `恢复首页分类栏首页入口`
+    - 在 `android/app` 内恢复首页本地 special filter 的唯一展示语义为 `首页`，并兼容旧值 `推荐`。
+    - 影响：这是 closeout 后继续收口的 app 层兼容修正，不改变 `Phase 5/6` 状态。
+  - `bb75095` `延后RN预热到首帧后`
+    - 通过 `ReactNativePrewarmCoordinator` 调整 RN 预热时机，避免在首屏创建期无条件预热。
+    - 影响：启动 / RN Host 文档应按“已延后到首帧后”描述，而非“仍无条件预热”。
+  - `463323c` `接通福利页WebView性能埋点`
+    - 通过 `WelfareWebPerformanceCoordinator` 在 `WebViewComponent` 中接通 `FCP / TTI` 记录。
+    - 影响：Welfare / WebView 文档应从“埋点代码存在但未接线”修正为“已接线，仍缺更深层治理”。
 
 ## 修订记录
 | 日期 | 修订项 | 影响文档 | 结果 |
@@ -96,13 +126,15 @@
 | 2026-03-21 | 将默认 startup/scroll benchmark 从 compiled-mode 噪声中拆出 | `android/macrobenchmark/**` | 完成 |
 | 2026-03-21 | 补齐 Phase 6 正式 evidence package | `docs/refactor/phase-6/**`, `docs/refactor/evidence/**` | 完成 |
 | 2026-03-21 | 关闭 `Phase 6` 并切换 `Phase 7 planned` | `README.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md`, `decision-log.md` | 完成 |
+| 2026-03-22 | 继续推进 closeout 后原子优化并追平文档事实 | `android/app/**`, `docs/refactor/**` | 完成 |
 
 ## 残余风险
 - `DN2101` 的 `cmd package compile` 仍不可用；这已被降级为已接受的环境阻塞项，而不是 `com.novel` 回归。
 - Reader 当前仍缺少可重复的：
   - flip action 直接数值样本
   - settings update 直接数值样本
-- `app` 仍是 composition root，Reader 与 RN/Application host roots 仍留在 `app`；这不阻塞 `Phase 7`。
+- Search、Welfare/WebView、RN Host 仍缺更深层 benchmark / hotspot 级治理结论。
+- 数据库索引收益、`FTS4` 复盘与缓存清理收益复盘仍未完成。
 
 ## 发布质量结论
 - 结论：`通过`

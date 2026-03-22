@@ -18,6 +18,13 @@
   - 性能预算摘要
   - baseline profile blocker 固化
 - 打开书籍“请求错误” blocker 在 `Stage 3` 期间保持绿色，没有被性能专项或模块化回归重新打开。
+- closeout 后又继续落了多批低风险优化：
+  - request / trace id header 注入
+  - Reader 初始化去重与设置刷新收敛
+  - Welfare 初始化去重与 WebView `FCP / TTI` 接线
+  - Search 分类筛选延后加载
+  - RN 主题补发同步
+  - 非关键启动初始化与 RN 预热延后到首帧后
 
 ## 核心证据入口
 - `docs/refactor/stage-3-phase-5-6-plan.md`
@@ -33,14 +40,17 @@
 - `Phase 6` 剩余可继续推进的优化机会见：
   - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 
+## Closeout 后补充优化入口
+- closeout 后继续推进的优化与文档追平记录见：
+  - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
+  - `docs/refactor/tracking/decision-log.md`
+
 ## Carried Debt / Residual Risks
-- `core-network` 仍停留在契约优先阶段，后续仍需继续深化模块化，但它不再阻塞 `Stage 4`。
-- `app` 仍然是 composition root，Reader 与 RN/Application host roots 仍留在 `app`。
-- `DN2101` 的 `cmd package compile` 仍是环境 blocker；compiled-mode startup/profile 需要在第二设备上复验。
 - Reader 当前仍缺少直接可重复的：
   - flip action 数值样本
   - settings update 数值样本
-- `Phase 6` 已达标关闭，但并不等于“所有性能优化已完成”；剩余优化点已独立留痕。
+- 数据库索引收益、`FTS4` 复盘与缓存清理收益复盘仍未完成。
+- 全仓 `DataStore` 与 observability 闭环仍未完成；当前只完成了低风险试点与 request / trace header 注入。
 
 ## 是否允许进入下一阶段
 - 当前结论：`yes`

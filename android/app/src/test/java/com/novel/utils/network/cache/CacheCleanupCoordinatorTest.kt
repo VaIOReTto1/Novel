@@ -16,10 +16,16 @@ class CacheCleanupCoordinatorTest {
                 strategy = strategy,
                 currentStats = CleanupStats(
                     totalCleaned = 0,
+                    cleanupRuns = 0,
                     spaceCleaned = 0L,
                     lastCleanupTime = 0L,
                     cleanupReason = "",
+                    lastCleanupDurationMs = 0L,
+                    entryCountBefore = 0,
+                    entryCountAfter = 0,
                 ),
+                entryCountBefore = 10,
+                entryCountAfter = 9,
                 performLRUCleanup = {
                     calls += "lru"
                     1 to 10L
@@ -55,6 +61,9 @@ class CacheCleanupCoordinatorTest {
             assertThat(summary.cleanedCount).isEqualTo(expectedResult.first)
             assertThat(summary.spaceCleaned).isEqualTo(expectedResult.second)
             assertThat(summary.updatedStats.cleanupReason).isEqualTo(strategy.name)
+            assertThat(summary.updatedStats.cleanupRuns).isEqualTo(1)
+            assertThat(summary.updatedStats.entryCountBefore).isEqualTo(10)
+            assertThat(summary.updatedStats.entryCountAfter).isEqualTo(9)
         }
     }
 
@@ -67,10 +76,16 @@ class CacheCleanupCoordinatorTest {
             strategy = CleanupStrategy.TIME_BASED_ONLY,
             currentStats = CleanupStats(
                 totalCleaned = 7,
+                cleanupRuns = 2,
                 spaceCleaned = 512L,
                 lastCleanupTime = 111L,
                 cleanupReason = "LRU_ONLY",
+                lastCleanupDurationMs = 99L,
+                entryCountBefore = 12,
+                entryCountAfter = 10,
             ),
+            entryCountBefore = 10,
+            entryCountAfter = 7,
             performLRUCleanup = { error("LRU cleanup should not run") },
             performTimeBasedCleanup = {
                 currentTime = 1_250L
@@ -86,9 +101,13 @@ class CacheCleanupCoordinatorTest {
         assertThat(summary.updatedStats).isEqualTo(
             CleanupStats(
                 totalCleaned = 10,
+                cleanupRuns = 3,
                 spaceCleaned = 768L,
                 lastCleanupTime = 1_250L,
                 cleanupReason = "TIME_BASED_ONLY",
+                lastCleanupDurationMs = 250L,
+                entryCountBefore = 10,
+                entryCountAfter = 7,
             )
         )
     }

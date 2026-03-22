@@ -200,12 +200,14 @@
 
 ### 已完成的优化
 - [DatabaseGovernanceReportGenerator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/dao/DatabaseGovernanceReportGenerator.kt) 已落地，开始固定当前索引、FTS4 表/触发器与关键查询计划探针。
+- [CacheGovernanceReportGenerator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/network/cache/CacheGovernanceReportGenerator.kt) 已落地，开始固定当前缓存体积、条目量与 cleanup 统计。
 - 已新增正式文档：
   - `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
+  - `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md`
 
 ### 仅完成测量 / 取证
 - 当前数据库部分已具备结构基线与 query-plan 探针入口，但尚未沉淀为真实收益复盘。
-- 缓存部分目前更多停留在已有缓存体系、清理统计与历史阶段证据层面。
+- 缓存部分当前已具备治理报告入口与 cleanup 统计扩展，但尚未沉淀为 IO / 内存 / 电量收益复盘。
 
 ### 仍可继续优化的点
 - 校验数据库索引的真实收益。
@@ -214,8 +216,10 @@
 
 ### 证据与代码锚点
 - `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
+- `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md`
 - [DatabaseModule.kt](/d:/program/Novel/android/app/src/main/java/com/novel/di/DatabaseModule.kt)
 - [DatabaseGovernanceReportGenerator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/dao/DatabaseGovernanceReportGenerator.kt)
+- [CacheGovernanceReportGenerator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/network/cache/CacheGovernanceReportGenerator.kt)
 - [NetworkCacheManager.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/network/cache/NetworkCacheManager.kt)
 - [CachedBookRepository.kt](/d:/program/Novel/android/app/src/main/java/com/novel/utils/network/repository/CachedBookRepository.kt)
 

@@ -121,9 +121,13 @@ enum class CleanupStrategy {
 @Stable
 data class CleanupStats(
     val totalCleaned: Int,
+    val cleanupRuns: Int,
     val spaceCleaned: Long,
     val lastCleanupTime: Long,
-    val cleanupReason: String
+    val cleanupReason: String,
+    val lastCleanupDurationMs: Long,
+    val entryCountBefore: Int,
+    val entryCountAfter: Int,
 )
 
 /**
@@ -962,17 +966,25 @@ class NetworkCacheManager @Inject constructor(
     suspend fun performSmartCleanup(strategy: CleanupStrategy = CleanupStrategy.SMART_HYBRID) = withContext(Dispatchers.IO) {
         try {
             TimberLogger.d(TAG, "开始执行智能清理，策略: $strategy")
+            val entryCountBefore = countCurrentCacheEntries()
 
             val summary = cacheStatsReporter.performCleanup(
                 strategy = strategy,
+                entryCountBefore = entryCountBefore,
+                entryCountAfter = 0,
                 performLRUCleanup = ::performLRUCleanup,
                 performTimeBasedCleanup = ::performTimeBasedCleanup,
                 performHybridCleanup = ::performHybridCleanup,
                 performStoragePressureCleanup = ::performStoragePressureCleanup,
             )
+            val entryCountAfter = countCurrentCacheEntries()
+            val updatedSummary = summary.copy(
+                updatedStats = summary.updatedStats.copy(entryCountAfter = entryCountAfter),
+            )
+            cacheStatsReporter.updateCleanupStats(updatedSummary.updatedStats)
             TimberLogger.d(
                 TAG,
-                "智能清理完成: 清理${summary.cleanedCount}个条目, 释放${summary.spaceCleaned / 1024}KB空间, 耗时${summary.durationMs}ms"
+                "智能清理完成: 清理${updatedSummary.cleanedCount}个条目, 释放${updatedSummary.spaceCleaned / 1024}KB空间, 耗时${updatedSummary.durationMs}ms"
             )
         } catch (e: Exception) {
             TimberLogger.e(TAG, "智能清理失败", e)
@@ -1178,6 +1190,14 @@ class NetworkCacheManager @Inject constructor(
      */
     fun getCleanupStats(): CleanupStats = cacheStatsReporter.getCleanupStats()
 
+    fun buildGovernanceReport(): CacheGovernanceReport {
+        val generator = CacheGovernanceReportGenerator()
+        return generator.generate(
+            cacheDir = cacheDir,
+            cleanupStats = getCleanupStats(),
+        )
+    }
+
     /**
      * 停止后台清理任务
      */
@@ -1186,4 +1206,14 @@ class NetworkCacheManager @Inject constructor(
         cleanupJob = null
         TimberLogger.d(TAG, "后台清理任务已停止")
     }
+
+    private fun countCurrentCacheEntries(): Int {
+        return try {
+            cacheDir.listFiles()?.count { it.isFile && it.name != "cache_version.txt" } ?: 0
+        } catch (e: Exception) {
+            TimberLogger.e(TAG, "统计缓存条目失败", e)
+            0
+        }
+    }
+
 }

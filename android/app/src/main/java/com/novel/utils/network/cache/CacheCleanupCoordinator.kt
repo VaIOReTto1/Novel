@@ -14,6 +14,8 @@ internal class CacheCleanupCoordinator(
     fun performCleanup(
         strategy: CleanupStrategy,
         currentStats: CleanupStats,
+        entryCountBefore: Int,
+        entryCountAfter: Int,
         performLRUCleanup: () -> Pair<Int, Long>,
         performTimeBasedCleanup: () -> Pair<Int, Long>,
         performHybridCleanup: () -> Pair<Int, Long>,
@@ -33,9 +35,13 @@ internal class CacheCleanupCoordinator(
             spaceCleaned = spaceCleaned,
             updatedStats = CleanupStats(
                 totalCleaned = currentStats.totalCleaned + cleanedCount,
+                cleanupRuns = currentStats.cleanupRuns + 1,
                 spaceCleaned = currentStats.spaceCleaned + spaceCleaned,
                 lastCleanupTime = endTime,
                 cleanupReason = strategy.name,
+                lastCleanupDurationMs = endTime - startTime,
+                entryCountBefore = entryCountBefore,
+                entryCountAfter = entryCountAfter,
             ),
             durationMs = endTime - startTime,
         )

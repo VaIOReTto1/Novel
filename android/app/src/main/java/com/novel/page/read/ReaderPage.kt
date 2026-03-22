@@ -40,10 +40,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,6 +93,8 @@ import com.novel.page.read.viewmodel.PageFlipEffect
 import com.novel.page.read.viewmodel.ReaderInfo
 import com.novel.page.read.viewmodel.ReaderSettings
 import com.novel.page.read.viewmodel.ReaderMappingHelper
+import com.novel.page.read.viewmodel.ReaderSettingsRefreshCoordinator
+import com.novel.page.read.viewmodel.ReaderStartupCoordinator
 
 val LocalReaderInfo = staticCompositionLocalOf<ReaderInfo> {
     error("No ReaderInfo provided")
@@ -109,6 +115,8 @@ fun ReaderPage(
     val viewModel: ReaderViewModel = hiltViewModel()
     val activeController = flipBookController ?: NavViewModel.currentFlipBookController()
     val readerHistoryCoordinator = remember { ReaderHistoryCoordinator() }
+    val readerSettingsRefreshCoordinator = remember { ReaderSettingsRefreshCoordinator() }
+    val readerStartupCoordinator = remember { ReaderStartupCoordinator() }
 
     // 性能优化：使用 StateAdapter 的稳定状态访问方法，减少重组
     val adapter = viewModel.adapter
@@ -121,6 +129,8 @@ fun ReaderPage(
     val density = LocalDensity.current
 
     val coroutineScope = rememberCoroutineScope()
+    var hasPendingPostInitRefresh by rememberSaveable(bookId, chapterId) { mutableStateOf(true) }
+    var previousReaderSettings by remember { mutableStateOf<ReaderSettings?>(null) }
 
     // —— 只做反向动画 + 清理 controller，不做导航 ——
     val reverseOnly = {
@@ -149,7 +159,11 @@ fun ReaderPage(
     
     LaunchedEffect(bookId, chapterId) {
         TimberLogger.d("ReaderPage", "ReaderPage参数变化: bookId=$bookId, chapterId=$chapterId")
-        if (bookId.isNotBlank()) {
+        val launchPlan = readerStartupCoordinator.createInitialLoadPlan(
+            bookId = bookId,
+            chapterId = chapterId,
+        )
+        if (launchPlan.shouldInitReader) {
             handleInitReader(bookId, chapterId)
         } else {
             TimberLogger.w("ReaderPage", "书籍ID或章节ID为空，跳过加载")
@@ -157,6 +171,15 @@ fun ReaderPage(
     }
     
     // 当状态初始化完成且有书籍信息时保存历史记录
+    LaunchedEffect(chapterId, bookId) {
+        if (chapterId == null && bookId.isNotBlank()) {
+            delay(1000)
+            viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(true))
+            delay(3000)
+            viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(false))
+        }
+    }
+
     LaunchedEffect(state.isSuccess, state.currentChapter, state.currentPageData?.bookInfo) {
         val historyIntent = readerHistoryCoordinator.createSaveToHistoryIntent(
             state = state,
@@ -165,6 +188,20 @@ fun ReaderPage(
         if (historyIntent != null) {
             TimberLogger.d("ReaderPage", "保存历史记录: bookInfo=${state.currentPageData?.bookInfo}, chapter=${state.currentChapter?.chapterName}")
             viewModel.sendIntent(historyIntent)
+        }
+
+    }
+
+    LaunchedEffect(isInitialized, state.containerSize, hasPendingPostInitRefresh) {
+        if (readerStartupCoordinator.shouldRefreshContainerAfterInit(
+                isInitialized = isInitialized,
+                containerSize = state.containerSize,
+                hasPendingPostInitRefresh = hasPendingPostInitRefresh,
+            )
+        ) {
+            viewModel.sendIntent(ReaderIntent.UpdateContainerSize(state.containerSize, density))
+            hasPendingPostInitRefresh = false
+            TimberLogger.d("ReaderPage", "初始化后补发容器尺寸更新: ${state.containerSize}")
         }
     }
 
@@ -187,33 +224,22 @@ fun ReaderPage(
         TimberLogger.d("ReaderPage", "当前翻页效果: ${state.readerSettings.pageFlipEffect}")
 
         // 强制触发更新容器尺寸，确保页数正确刷新
-        if (state.containerSize != IntSize.Zero) {
+        if (readerSettingsRefreshCoordinator.shouldRefreshPagination(
+                previousSettings = previousReaderSettings,
+                currentSettings = state.readerSettings,
+                containerSize = state.containerSize,
+            )
+        ) {
             viewModel.sendIntent(ReaderIntent.UpdateContainerSize(state.containerSize, density))
             TimberLogger.d("ReaderPage", "强制触发容器尺寸更新以刷新页数: ${state.containerSize}")
         }
     }
 
-    // 初始化阅读器并启动页数计算
-    LaunchedEffect(bookId, chapterId) {
-        viewModel.sendIntent(ReaderIntent.InitReader(bookId, chapterId))
-
-        // 确保在初始化完成后立即启动页数计算
-        delay(100) // 等待初始化完成
-        if (isInitialized && state.containerSize != IntSize.Zero) {
-            // 强制触发页数缓存更新，确保首次打开时页数能正确显示
-            viewModel.sendIntent(ReaderIntent.UpdateContainerSize(state.containerSize, density))
-        }
-
-        // 如果是恢复阅读进度（没有指定章节），显示恢复提示
-        if (chapterId == null) {
-            delay(1000) // 等待内容加载完成
-            viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(true))
-            delay(3000) // 显示3秒后自动隐藏
-            viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(false))
-        }
+    // 清理controller的DisposableEffect
+    SideEffect {
+        previousReaderSettings = state.readerSettings
     }
 
-    // 清理controller的DisposableEffect
     DisposableEffect(Unit) {
         onDispose { NavViewModel.setFlipBookController(null) }
     }

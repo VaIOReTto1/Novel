@@ -22,6 +22,7 @@ import com.novel.utils.network.cache.ReadingBehaviorAnalyzer
 import com.novel.utils.network.cache.RequestCoalescer
 import com.novel.utils.network.interceptor.AuthInterceptor
 import com.novel.utils.network.interceptor.PriorityInterceptor
+import com.novel.utils.network.interceptor.RequestIdInterceptor
 import com.novel.utils.network.interceptor.RequestCoalescingInterceptor
 import com.novel.utils.network.interceptor.SmartRetryInterceptor
 import com.novel.utils.network.priority.PriorityRequestDispatcher
@@ -134,6 +135,12 @@ object NetworkModule {
     fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor {
         return AuthInterceptor(tokenProvider)
     }
+
+    @Provides
+    @Singleton
+    fun provideRequestIdInterceptor(): RequestIdInterceptor {
+        return RequestIdInterceptor()
+    }
     
 
     
@@ -206,6 +213,7 @@ object NetworkModule {
         cache: Cache,
         certificatePinner: CertificatePinner,
         authInterceptor: AuthInterceptor,
+        requestIdInterceptor: RequestIdInterceptor,
         priorityInterceptor: PriorityInterceptor,
         smartRetryInterceptor: SmartRetryInterceptor,
         coalescingInterceptor: RequestCoalescingInterceptor,
@@ -224,6 +232,7 @@ object NetworkModule {
             .connectTimeout(timeouts.connectTimeout, TimeUnit.MILLISECONDS)
             .readTimeout(timeouts.readTimeout, TimeUnit.MILLISECONDS)
             .callTimeout(timeouts.callTimeout, TimeUnit.MILLISECONDS)
+            .addInterceptor(requestIdInterceptor)
             .addInterceptor(authInterceptor)
             .addInterceptor(priorityInterceptor)
             .addInterceptor(smartRetryInterceptor)
@@ -251,10 +260,12 @@ object NetworkModule {
     @Singleton
     fun provideStandardOkHttpClient(
         cache: Cache,
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        requestIdInterceptor: RequestIdInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
+            .addInterceptor(requestIdInterceptor)
             .addInterceptor(authInterceptor)
             .connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)

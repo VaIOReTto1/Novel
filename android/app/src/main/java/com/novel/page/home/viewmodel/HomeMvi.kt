@@ -231,11 +231,11 @@ data class HomeState(
 
     // === 分类筛选器状态 ===
     /** 当前选中的分类筛选器名称 */
-    val selectedCategoryFilter: String = "推荐",
+    val selectedCategoryFilter: String = HomeCategoryFilterSupport.HOME_FILTER_LABEL,
 
     /** 可用的分类筛选器列表 - 包含"推荐"和所有书籍分类 */
     val categoryFilters: ImmutableList<CategoryInfo> = persistentListOf(
-        CategoryInfo("0", "推荐")
+        HomeCategoryFilterSupport.homeCategoryFilter()
     ),
 
     /** 分类筛选器数据加载状态 */
@@ -361,9 +361,9 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                 ReduceResult(
                     newState = currentState.copy(
                         version = currentState.version + 1,
-                        selectedCategoryFilter = intent.categoryName,
-                        isRecommendMode = intent.categoryName == "推荐",
-                        recommendBooks = if (intent.categoryName == "推荐") persistentListOf() else currentState.recommendBooks,
+                        selectedCategoryFilter = HomeCategoryFilterSupport.normalizeSelectedFilter(intent.categoryName),
+                        isRecommendMode = HomeCategoryFilterSupport.isHomeFilter(intent.categoryName),
+                        recommendBooks = if (HomeCategoryFilterSupport.isHomeFilter(intent.categoryName)) persistentListOf() else currentState.recommendBooks,
                         recommendPage = 1
                     )
                 )
@@ -467,7 +467,7 @@ class HomeReducer : MviReducerWithEffect<HomeIntent, HomeState, HomeEffect> {
                 ReduceResult(
                     newState = currentState.copy(
                         version = currentState.version + 1,
-                        categoryFilters = intent.filters,
+                        categoryFilters = HomeCategoryFilterSupport.normalizeFilters(intent.filters),
                         categoryFiltersLoading = false
                     )
                 )

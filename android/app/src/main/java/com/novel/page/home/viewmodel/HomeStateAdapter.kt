@@ -338,8 +338,8 @@ data class HomeUiState(
     val searchQuery: String = "",
     
     // 分类筛选器状态
-    val selectedCategoryFilter: String = "推荐",
-    val categoryFilters: ImmutableList<CategoryInfo> = persistentListOf(CategoryInfo("0", "推荐")),
+    val selectedCategoryFilter: String = HomeCategoryFilterSupport.HOME_FILTER_LABEL,
+    val categoryFilters: ImmutableList<CategoryInfo> = persistentListOf(HomeCategoryFilterSupport.homeCategoryFilter()),
     val categoryFiltersLoading: Boolean = false,
     
     // 榜单状态

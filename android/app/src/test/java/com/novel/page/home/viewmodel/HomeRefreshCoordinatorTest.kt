@@ -55,7 +55,9 @@ class HomeRefreshCoordinatorTest {
 
             assertThat(outcome.cachedHomeBooks).isEqualTo(homeRecommendBooks)
             assertThat(outcome.intents).containsExactly(
-                HomeIntent.CategoryFiltersLoadSuccess(result.categoryFilters),
+                HomeIntent.CategoryFiltersLoadSuccess(
+                    persistentListOf(CategoryInfo("0", "首页")),
+                ),
                 HomeIntent.CategoriesLoadSuccess(result.categories),
                 HomeIntent.BooksLoadSuccess(
                     carouselBooks = result.carouselBooks,

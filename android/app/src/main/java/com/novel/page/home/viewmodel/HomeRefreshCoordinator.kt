@@ -18,9 +18,10 @@ internal class HomeRefreshCoordinator(
         return try {
             val result = refreshData()
             if (result.isSuccess) {
+                val normalizedCategoryFilters = HomeCategoryFilterSupport.normalizeFilters(result.categoryFilters)
                 HomeRefreshOutcome(
                     intents = listOf(
-                        HomeIntent.CategoryFiltersLoadSuccess(result.categoryFilters),
+                        HomeIntent.CategoryFiltersLoadSuccess(normalizedCategoryFilters),
                         HomeIntent.CategoriesLoadSuccess(result.categories),
                         HomeIntent.BooksLoadSuccess(
                             carouselBooks = result.carouselBooks,

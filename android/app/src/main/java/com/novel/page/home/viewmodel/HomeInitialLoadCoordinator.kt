@@ -17,9 +17,10 @@ internal class HomeInitialLoadCoordinator(
         return try {
             val result = loadInitialData()
             if (result.isSuccess) {
+                val normalizedCategoryFilters = HomeCategoryFilterSupport.normalizeFilters(result.categoryFilters)
                 HomeInitialLoadOutcome(
                     intents = listOf(
-                        HomeIntent.CategoryFiltersLoadSuccess(result.categoryFilters),
+                        HomeIntent.CategoryFiltersLoadSuccess(normalizedCategoryFilters),
                         HomeIntent.CategoriesLoadSuccess(result.categories),
                         HomeIntent.BooksLoadSuccess(
                             carouselBooks = result.carouselBooks,

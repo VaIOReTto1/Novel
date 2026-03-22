@@ -37,7 +37,7 @@ class HomeStateProjectorTest {
                     type = "carousel"
                 )
             ),
-            selectedCategoryFilter = "推荐",
+            selectedCategoryFilter = "首页",
             selectedRankType = "点击榜",
             isRecommendMode = true
         )
@@ -48,7 +48,7 @@ class HomeStateProjectorTest {
         assertTrue(uiState.isLoading)
         assertEquals("boom", uiState.error)
         assertTrue(uiState.isRefreshing)
-        assertEquals("推荐", uiState.selectedCategoryFilter)
+        assertEquals("首页", uiState.selectedCategoryFilter)
         assertEquals("点击榜", uiState.selectedRankType)
         assertTrue(uiState.isRecommendMode)
         assertEquals(1, uiState.categories.size)
@@ -59,8 +59,8 @@ class HomeStateProjectorTest {
     fun toScreenState_usesHomeRecommendBooksInRecommendMode() {
         val state = HomeState(
             searchQuery = "斗破",
-            selectedCategoryFilter = "推荐",
-            categoryFilters = persistentListOf(CategoryInfo("0", "推荐")),
+            selectedCategoryFilter = "首页",
+            categoryFilters = persistentListOf(CategoryInfo("0", "首页")),
             carouselBooks = persistentListOf(),
             hotBooks = persistentListOf(),
             newBooks = persistentListOf(),
@@ -110,7 +110,7 @@ class HomeStateProjectorTest {
         val state = HomeState(
             selectedCategoryFilter = "玄幻奇幻",
             categoryFilters = persistentListOf(
-                CategoryInfo("0", "推荐"),
+                CategoryInfo("0", "首页"),
                 CategoryInfo("1", "玄幻奇幻")
             ),
             recommendBooks = persistentListOf(

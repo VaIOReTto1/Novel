@@ -157,8 +157,8 @@ class HomeViewModel @Inject constructor(
             isRefreshing = false,
             searchQuery = "",
             categories = persistentListOf(),
-            selectedCategoryFilter = "推荐",
-            categoryFilters = persistentListOf(),
+            selectedCategoryFilter = HomeCategoryFilterSupport.HOME_FILTER_LABEL,
+            categoryFilters = persistentListOf(HomeCategoryFilterSupport.homeCategoryFilter()),
             carouselBooks = persistentListOf(),
             hotBooks = persistentListOf(),
             newBooks = persistentListOf(),
@@ -341,17 +341,18 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 TimberLogger.d(TAG, "选择分类筛选器: $categoryName")
+                val normalizedCategoryName = HomeCategoryFilterSupport.normalizeSelectedFilter(categoryName)
 
                 val result = homeCompositeUseCase(
                     HomeCompositeUseCase.Params(
-                        categoryFilter = categoryName,
+                        categoryFilter = normalizedCategoryName,
                         categoryFilters = currentState.categoryFilters,
                         currentPage = 1
                     )
                 )
 
                 if (result.isSuccess) {
-                    if (categoryName == "推荐") {
+                    if (HomeCategoryFilterSupport.isHomeFilter(normalizedCategoryName)) {
                         sendIntent(
                             HomeIntent.HomeRecommendBooksLoadSuccess(
                                 books = result.homeRecommendBooks.toImmutableList(),
@@ -537,7 +538,11 @@ class HomeViewModel @Inject constructor(
                             try {
                     getHomeCategoriesUseCase(GetHomeCategoriesUseCase.Params())
                         .collect { filters ->
-                            sendIntent(HomeIntent.CategoryFiltersLoadSuccess(filters.toImmutableList()))
+                            sendIntent(
+                                HomeIntent.CategoryFiltersLoadSuccess(
+                                    HomeCategoryFilterSupport.normalizeFilters(filters)
+                                )
+                            )
                         }
                 } catch (e: Exception) {
                 TimberLogger.e(TAG, "加载分类筛选器异常", e)
@@ -607,13 +612,16 @@ class HomeViewModel @Inject constructor(
         )
 
         // 特殊处理推荐模式
-        if (categoryName == "推荐") {
+        if (HomeCategoryFilterSupport.isHomeFilter(categoryName)) {
             TimberLogger.d(TAG, "推荐模式，返回categoryId: 0")
             return 0
         }
 
         // 查找对应的分类ID
-        val categoryInfo = currentState.categoryFilters.find { it.name == categoryName }
+        val normalizedCategoryName = HomeCategoryFilterSupport.normalizeSelectedFilter(categoryName)
+        val categoryInfo = currentState.categoryFilters.find {
+            HomeCategoryFilterSupport.normalizeSelectedFilter(it.name) == normalizedCategoryName
+        }
         val categoryId = categoryInfo?.id?.toIntOrNull() ?: run {
             // 如果找不到，尝试用分类名称创建一个映射
             val mappedId = when (categoryName) {
@@ -654,12 +662,14 @@ class HomeViewModel @Inject constructor(
                     TimberLogger.d(TAG, "收集到分类数据: ${categories.size} 个")
                     sendIntent(
                         HomeIntent.CategoryFiltersLoadSuccess(
-                            filters = categories.map { category ->
-                                CategoryInfo(
-                                    id = category.id.toString(),
-                                    name = category.name,
-                                )
-                            }.toImmutableList()
+                            filters = HomeCategoryFilterSupport.normalizeFilters(
+                                categories.map { category ->
+                                    CategoryInfo(
+                                        id = category.id.toString(),
+                                        name = category.name,
+                                    )
+                                }
+                            )
                         )
                     )
                 }

@@ -5,6 +5,7 @@ import com.novel.core.domain.FlowUseCase
 import com.novel.page.home.dao.IHomeRepository
 import com.novel.page.home.dao.HomeCategoryEntity
 import com.novel.page.home.viewmodel.CategoryInfo
+import com.novel.page.home.viewmodel.HomeCategoryFilterSupport
 import com.novel.page.login.dao.UserRepository
 import com.novel.utils.network.api.front.BookService
 import com.novel.utils.network.api.front.HomeService
@@ -50,10 +51,9 @@ class GetHomeCategoriesUseCase @Inject constructor(
                 emit(persistentListOf())
             }
             .collect { categories ->
-                val filters = mutableListOf<CategoryInfo>().apply {
-                    add(CategoryInfo("0", "推荐"))
-                    addAll(categories.map { CategoryInfo(it.id.toString(), it.name) })
-                }
+                val filters = HomeCategoryFilterSupport.normalizeFilters(
+                    categories.map { CategoryInfo(it.id.toString(), it.name) }
+                )
                 TimberLogger.d("GetHomeCategoriesUseCase", "获取分类成功: $filters")
                 emit(filters)
             }

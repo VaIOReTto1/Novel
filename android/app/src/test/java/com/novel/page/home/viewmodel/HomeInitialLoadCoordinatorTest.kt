@@ -71,7 +71,9 @@ class HomeInitialLoadCoordinatorTest {
             assertThat(outcome.cachedHomeBooks).isEqualTo(homeRecommendBooks)
             assertThat(outcome.intents).hasSize(5)
             assertThat(outcome.intents[0]).isEqualTo(
-                HomeIntent.CategoryFiltersLoadSuccess(result.categoryFilters),
+                HomeIntent.CategoryFiltersLoadSuccess(
+                    persistentListOf(CategoryInfo("0", "首页")),
+                ),
             )
             assertThat(outcome.intents[1]).isEqualTo(
                 HomeIntent.CategoriesLoadSuccess(result.categories),

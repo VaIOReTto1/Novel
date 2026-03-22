@@ -48,8 +48,9 @@ class HomeCompositeUseCaseTest {
 
             assertThat(result.isSuccess).isTrue()
             assertThat(result.categoryFilters).containsExactly(
+                CategoryInfo(id = "0", name = "首页"),
                 CategoryInfo(id = "7", name = "玄幻"),
-            )
+            ).inOrder()
             assertThat(result.categories.map { it.name }).containsExactly("玄幻")
         }
     }
@@ -74,8 +75,56 @@ class HomeCompositeUseCaseTest {
             )
 
             assertThat(result.isSuccess).isTrue()
-            assertThat(result.categoryFilters).isEmpty()
+            assertThat(result.categoryFilters).containsExactly(
+                CategoryInfo(id = "0", name = "首页"),
+            )
             assertThat(result.categories).isEmpty()
+        }
+    }
+
+    @Test
+    fun loadCategoryData_usesHomeRecommendBranch_forHomeAndLegacyRecommendFilter() {
+        runBlocking {
+            val homeBooks = persistentListOf(
+                HomeService.HomeBook(
+                    type = 3,
+                    bookId = 101,
+                    picUrl = "cover",
+                    bookName = "Home Recommend",
+                    authorName = "Author",
+                    bookDesc = "desc",
+                ),
+            )
+            val useCase = HomeCompositeUseCase(
+                homeRepository = FakeHomeRepository(
+                    categoryFiltersFlow = flow { emit(persistentListOf()) },
+                    categoriesFlow = flow { emit(persistentListOf()) },
+                    homeBooks = homeBooks,
+                ),
+                cachedBookRepository = allocateWithoutConstructor(),
+                searchService = allocateWithoutConstructor(),
+                userRepository = allocateWithoutConstructor(),
+                tokenProvider = FakeTokenProvider,
+                userDefaults = FakeNovelUserDefaults(),
+            )
+
+            val homeResult = useCase(
+                HomeCompositeUseCase.Params(
+                    categoryFilter = "首页",
+                    categoryFilters = persistentListOf(CategoryInfo("0", "首页")),
+                ),
+            )
+            val legacyResult = useCase(
+                HomeCompositeUseCase.Params(
+                    categoryFilter = "推荐",
+                    categoryFilters = persistentListOf(CategoryInfo("0", "首页")),
+                ),
+            )
+
+            assertThat(homeResult.homeRecommendBooks).isEqualTo(homeBooks)
+            assertThat(homeResult.recommendBooks).isEmpty()
+            assertThat(legacyResult.homeRecommendBooks).isEqualTo(homeBooks)
+            assertThat(legacyResult.recommendBooks).isEmpty()
         }
     }
 

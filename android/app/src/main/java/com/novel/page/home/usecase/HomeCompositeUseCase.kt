@@ -7,6 +7,7 @@ import com.novel.page.home.dao.HomeCategoryEntity
 import com.novel.page.home.dao.HomeBookEntity
 import com.novel.page.home.dao.toEntity
 import com.novel.page.home.viewmodel.CategoryInfo
+import com.novel.page.home.viewmodel.HomeCategoryFilterSupport
 import com.novel.utils.network.api.front.BookService
 import com.novel.utils.network.api.front.HomeService
 import com.novel.utils.network.api.front.SearchService
@@ -154,9 +155,11 @@ open class HomeCompositeUseCase @Inject constructor(
                 persistentListOf()
             }
 
-            val resolvedCategoryFilters = categoryFilters
-                .takeUnless { isMockOnlyCategoryFilters(it) }
-                ?: categories.map { CategoryInfo(it.id.toString(), it.name) }
+            val resolvedCategoryFilters = HomeCategoryFilterSupport.normalizeFilters(
+                categoryFilters
+                    .takeUnless { isMockOnlyCategoryFilters(it) }
+                    ?: categories.map { CategoryInfo(it.id.toString(), it.name) }
+            )
 
             val booksData = try {
                 getBooksDataUseCase(
@@ -185,7 +188,7 @@ open class HomeCompositeUseCase @Inject constructor(
             
             Result(
                 categories = categories.toImmutableList(),
-                categoryFilters = resolvedCategoryFilters.toImmutableList(),
+                categoryFilters = resolvedCategoryFilters,
                 carouselBooks = carouselBooks,
                 hotBooks = hotBooks,
                 newBooks = newBooks,
@@ -205,7 +208,8 @@ open class HomeCompositeUseCase @Inject constructor(
      */
     private fun isMockOnlyCategoryFilters(categoryFilters: List<CategoryInfo>): Boolean {
         return categoryFilters.size == 1 &&
-            categoryFilters.first().id == "0"
+            categoryFilters.first().id == HomeCategoryFilterSupport.HOME_FILTER_ID &&
+            HomeCategoryFilterSupport.isHomeFilter(categoryFilters.first().name)
     }
 
     private suspend fun refreshAllData(): Result {
@@ -230,7 +234,7 @@ open class HomeCompositeUseCase @Inject constructor(
         TimberLogger.d(TAG, "加载分类数据: categoryName=$categoryName, page=$page")
         
         return try {
-            if (categoryName == "推荐") {
+            if (HomeCategoryFilterSupport.isHomeFilter(categoryName)) {
                 // 加载首页推荐
                 val homeRecommendBooks = getHomeRecommendBooksUseCase(
                     GetHomeRecommendBooksUseCase.Params()
@@ -280,13 +284,16 @@ open class HomeCompositeUseCase @Inject constructor(
         TimberLogger.d(TAG, "可用分类筛选器: ${categoryFilters.map { "${it.name}(${it.id})" }}")
 
         // 特殊处理推荐模式
-        if (categoryName == "推荐") {
+        if (HomeCategoryFilterSupport.isHomeFilter(categoryName)) {
             TimberLogger.d(TAG, "推荐模式，返回categoryId: 0")
             return 0
         }
 
         // 查找对应的分类ID
-        val categoryInfo = categoryFilters.find { it.name == categoryName }
+        val normalizedCategoryName = HomeCategoryFilterSupport.normalizeSelectedFilter(categoryName)
+        val categoryInfo = categoryFilters.find {
+            HomeCategoryFilterSupport.normalizeSelectedFilter(it.name) == normalizedCategoryName
+        }
         val categoryId = categoryInfo?.id?.toIntOrNull() ?: run {
             // 如果找不到，尝试用分类名称创建一个映射
             val mappedId = when (categoryName) {

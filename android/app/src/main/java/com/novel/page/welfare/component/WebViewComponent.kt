@@ -58,6 +58,7 @@ fun WebViewComponent(
 ) {
     val context = LocalContext.current
     val performanceMonitor = remember { WelfarePerformanceMonitor.getInstance() }
+    val performanceCoordinator = remember { WelfareWebPerformanceCoordinator() }
     val webViewPreloadManager = remember { WebViewPreloadManager.getInstance(context) }
     
     val webView = remember {
@@ -116,6 +117,7 @@ fun WebViewComponent(
                 override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
                     super.onPageStarted(view, url, favicon)
                     TimberLogger.d("WebViewComponent", "页面开始加载: $url")
+                    performanceCoordinator.resetForNewPageLoad()
                     performanceMonitor.recordWebViewLoadStart()
                     onPageStarted()
                     url?.let { onUrlChanged(it) }
@@ -165,6 +167,13 @@ fun WebViewComponent(
                     }
                 }
                 
+                override fun onPageCommitVisible(view: WebView?, url: String?) {
+                    super.onPageCommitVisible(view, url)
+                    if (performanceCoordinator.shouldRecordFirstContentfulPaint()) {
+                        performanceMonitor.recordFirstContentfulPaint()
+                    }
+                }
+
                 override fun onReceivedError(
                     view: WebView?,
                     request: WebResourceRequest?,
@@ -253,6 +262,9 @@ fun WebViewComponent(
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
+                    if (performanceCoordinator.shouldRecordTimeToInteractive(newProgress)) {
+                        performanceMonitor.recordTimeToInteractive()
+                    }
                     onProgressChanged(newProgress)
                 }
                 

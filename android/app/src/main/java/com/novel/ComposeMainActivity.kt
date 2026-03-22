@@ -15,6 +15,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import com.novel.page.component.ImageLoaderService
 import com.novel.page.component.LocalImageLoaderService
+import com.novel.rn.ReactNativeHostPathTraceCoordinator
 import com.novel.ui.theme.NovelTheme
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.AdaptiveScreen
@@ -52,6 +53,7 @@ class ComposeMainActivity : ComponentActivity() {
     @Stable
     private val rim: com.facebook.react.ReactInstanceManager?
         get() = (application as MainApplication).reactNativeHost.reactInstanceManager
+    private val reactNativeHostPathTraceCoordinator = ReactNativeHostPathTraceCoordinator()
     private val reactNativePrewarmCoordinator = ReactNativePrewarmCoordinator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,9 +99,24 @@ class ComposeMainActivity : ComponentActivity() {
             lifecycleScope.launch {
                 delay(100)
                 (application as? MainApplication)?.markFirstFrameDrawn()
+                val hasReactContext = rim?.currentReactContext != null
+                TimberLogger.d(
+                    TAG,
+                    reactNativeHostPathTraceCoordinator.formatContextTrace(
+                        trigger = "prewarm_after_first_frame",
+                        hasReactContext = hasReactContext,
+                    ),
+                )
                 if (reactNativePrewarmCoordinator.shouldPrewarmAfterFirstFrame() &&
-                    rim?.currentReactContext == null
+                    !hasReactContext
                 ) {
+                    TimberLogger.d(
+                        TAG,
+                        reactNativeHostPathTraceCoordinator.formatContextTrace(
+                            trigger = "create_react_context_in_background",
+                            hasReactContext = false,
+                        ),
+                    )
                     rim?.createReactContextInBackground()
                 }
                 delay(200)

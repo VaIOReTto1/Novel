@@ -113,6 +113,9 @@
   - `bda823f` `补发RN主题同步`
     - 通过 `ReactNativeThemeSyncCoordinator` 在 RN context 就绪后补发主题同步。
     - 影响：`ThemeChanged` 不应再被描述为“context 未就绪时永久跳过”。
+  - `补齐RN宿主冷热路径追踪`
+    - 通过 `ReactNativeHostPathTraceCoordinator` 为 RN context 与 `ReactRootView` 增加 `ALREADY_READY / FIRST_CREATE / REUSED` 路径留痕。
+    - 影响：RN Host 已从“只有静态兼容与样本”推进到“冷热路径可追踪”，为后续 warm/cold path 专项分析提供基础。
   - `28ec92d` `延后非关键启动初始化`
     - 通过 `StartupDeferredInitializationCoordinator` 把 `RetrofitClient`、`SettingsUtils` 等初始化移到首帧后。
     - 影响：启动专项已从纯测量进入第一轮真实减负。

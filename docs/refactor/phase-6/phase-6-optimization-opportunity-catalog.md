@@ -168,10 +168,12 @@
 - `profile / settings / aipage` 的宿主页首开样本已补齐。
 - Bridge contract tests 和 RN settings smoke 持续守门。
 - [ReactNativePage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/rn/ReactNativePage.kt) 已通过 `ReactNativeThemeSyncCoordinator` 在 RN context 就绪后补发主题同步，不再把 `ThemeChanged` 永久丢弃在“context 未就绪”路径。
+- [ComposeMainActivity.kt](/d:/program/Novel/android/app/src/main/java/com/novel/ComposeMainActivity.kt) 与 [MainApplication.kt](/d:/program/Novel/android/app/src/main/java/com/novel/MainApplication.kt) 已补上 RN context 与 `ReactRootView` 的冷热路径 trace，可区分 `ALREADY_READY / FIRST_CREATE / REUSED`。
 
 ### 仅完成测量 / 取证
 - 当前主要是 route jump、RN context ready、host attach 的日志样本。
 - 还没有把 ReactRootView 生命周期、Bridge 批量调用和线程切换做成独立优化结论。
+- 冷热路径 trace 已接通，但还没有围绕这些路径建立正式 budget / diff 文档。
 
 ### 仍可继续优化的点
 - `ReactRootView` 缓存生命周期虽然已有兼容证据，但还没有形成真正的性能优化规范。

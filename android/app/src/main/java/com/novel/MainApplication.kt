@@ -20,6 +20,7 @@ import com.novel.utils.network.RetrofitClient
 import com.novel.utils.network.TokenProvider
 import com.novel.utils.network.interceptor.AuthInterceptor
 import com.novel.rn.NavigationPackage
+import com.novel.rn.ReactNativeHostPathTraceCoordinator
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 import com.facebook.react.ReactRootView
@@ -96,6 +97,7 @@ class MainApplication : Application(), ReactApplication {
         OnDemandInitializer { initializeSettingsServiceInternal() }
     }
     private val deferredInitializationCoordinator = StartupDeferredInitializationCoordinator()
+    private val reactNativeHostPathTraceCoordinator = ReactNativeHostPathTraceCoordinator()
     
     // 启动时间监控
     private var appStartTime: Long = 0
@@ -327,12 +329,34 @@ class MainApplication : Application(), ReactApplication {
         // 确保网络服务已初始化（React Native组件可能需要网络）
         ensureNetworkServiceInitialized()
 
+        val rim = reactNativeHost.reactInstanceManager
+        val hasReactContext = rim.currentReactContext != null
+        reactRootViewCache[componentName]?.let { cachedRootView ->
+            TimberLogger.d(
+                TAG,
+                reactNativeHostPathTraceCoordinator.formatRootViewTrace(
+                    componentName = componentName,
+                    reused = true,
+                    hasReactContext = hasReactContext,
+                ),
+            )
+            return cachedRootView
+        }
+
+        TimberLogger.d(
+            TAG,
+            reactNativeHostPathTraceCoordinator.formatRootViewTrace(
+                componentName = componentName,
+                reused = false,
+                hasReactContext = hasReactContext,
+            ),
+        )
+
         return reactRootViewCache.getOrPut(componentName) {
             TimberLogger.d(TAG, "创建新的ReactRootView: $componentName")
             ReactRootView(this).apply {
                 setIsFabric(BuildConfig.IS_NEW_ARCHITECTURE_ENABLED)
                 
-                val rim = reactNativeHost.reactInstanceManager
                 if (rim.currentReactContext != null) {
                     TimberLogger.d(TAG, "立即启动React应用: $componentName")
                     startReactApplication(rim, componentName, initialProps)

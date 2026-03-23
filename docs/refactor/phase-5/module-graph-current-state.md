@@ -79,6 +79,7 @@
     - `LoginMvi`
     - `LoginReducer`
     - `LoginStateUpdater`
+    - `LoginStateAdapter`
 - `:feature-reader`
   - 首轮 reader feature 模块
   - 当前承载：

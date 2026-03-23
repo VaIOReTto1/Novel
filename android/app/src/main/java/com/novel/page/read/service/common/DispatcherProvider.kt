@@ -8,50 +8,7 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * 协程调度器提供者接口
- * 
- * 提供各种协程调度器的抽象，便于：
- * - 单元测试时注入测试调度器
- * - 性能优化时切换调度器策略
- * - 统一管理协程调度
- */
-@Stable
-interface DispatcherProvider {
-    /** IO操作调度器 */
-    @Stable
-    val io: CoroutineDispatcher
-    
-    /** 默认调度器（CPU密集型任务） */
-    @Stable
-    val default: CoroutineDispatcher
-    
-    /** 主线程调度器 */
-    @Stable
-    val main: CoroutineDispatcher
-    
-    /** 不受限制的调度器 */
-    @Stable
-    val unconfined: CoroutineDispatcher
-}
-
-/**
- * 默认调度器提供者实现
- * 
- * 使用标准的Kotlin协程调度器
- */
-@Singleton
-@Stable
-class DefaultDispatcherProvider @Inject constructor() : DispatcherProvider {
-    @Stable
-    override val io: CoroutineDispatcher = Dispatchers.IO
-    @Stable
-    override val default: CoroutineDispatcher = Dispatchers.Default
-    @Stable
-    override val main: CoroutineDispatcher = Dispatchers.Main
-    @Stable
-    override val unconfined: CoroutineDispatcher = Dispatchers.Unconfined
-}
+typealias DispatcherProvider = com.novel.core.concurrency.DispatcherProvider
 
 /**
  * 性能优化调度器提供者

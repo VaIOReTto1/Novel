@@ -7,7 +7,7 @@
   - 哪些只做到部分实现
   - 哪些已延期承接
   - 哪些仍未实现
-- 截至 `2026-03-23` 复核，本审计结论继续成立；尤其是 `Phase 5` 仍不能被表述为“蓝图已全部兑现”，当前只是首轮 checkpoint 已归档、阶段本身已重新切回 `in_progress`。
+- 截至 `2026-03-24` 复核，本审计结论继续成立；尤其是 `Phase 5` 仍不能被表述为“蓝图已全部兑现”，当前只是首轮 checkpoint 已归档、阶段本身已重新切回 `in_progress`。
 
 ## Phase 3 基础设施收口
 ### 原始目标
@@ -93,7 +93,7 @@
 
 ### 仓库事实
 - 实际拆分顺序与蓝图不同，且 `core-storage`、契约优先版 `core-network` 作为起始事实已经存在。
-- `2026-03-21` 的 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-23`，由于模块图仍明显偏浅，`Phase 5` 已重新切回 `in_progress`。
+- `2026-03-21` 的 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-24`，由于模块图仍明显偏浅，`Phase 5` 已重新切回 `in_progress`。
 - 本轮实际落地的首批模块包括：
   - `core-common`
   - `core-ui`
@@ -103,7 +103,11 @@
   - `feature-home`
   - `feature-search`
   - `feature-rn-host`
-- `feature-login`、`feature-reader` 没在本轮落地。
+- reopen 后又继续补齐了：
+  - `feature-book`
+  - `feature-login`
+  - `feature-reader`
+- 但 `feature-book / feature-login / feature-reader` 当前仍停留在“模块已落地 + 首批纯逻辑层已迁入”的阶段，尚未进入完整功能层迁移终态。
 - `app` 仍作为 composition root。
 - `module owner / API surface 审查 / 构建时间统计` 没有形成和原蓝图同等强度的制度化文档闭环。
 
@@ -128,7 +132,7 @@
 
 ### 偏差原因
 - 真实模块化遵循了“app 作为 composition root”“先低风险模块切口”的保守策略。
-- `Reader` 与 `login` 没有进入本轮，主要是因为复杂度和敏感度仍高。
+- `Reader` 与 `login` 虽已在 reopen 后正式落模块，但由于复杂度和敏感度仍高，当前仍停留在浅层迁移阶段。
 - `core-bridge-contract` 是比蓝图中的 `core-bridge` 更保守的最小落地形态。
 
 ### 后续承接阶段

@@ -1,4 +1,4 @@
-# Phase 5 模块图现状（2026-03-23 reopen）
+# Phase 5 模块图现状（2026-03-24 reopen）
 
 ## 当前已落地图
 - `:app`
@@ -154,7 +154,7 @@
 - `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
 - `feature-welfare` 已完成两轮低风险切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
 - `feature-search` 已不再只停留在存储层，当前已接管搜索结果页的 trigger source、查询参数与三类性能/重试协调器。
-- `feature-home` 已不再只停留在性能 helper，当前已接管首页分类语义契约、restore 判定协调器，并配合 app 侧修复首页首开自动加载问题。
+- `feature-home` 已不再只停留在性能 helper，当前已接管首页分类语义契约、restore 判定协调器，并配合 app 侧修复首页首开榜单与推荐流在 `CACHE_FIRST` 空结果下无法自动展示的问题。
 - `feature-book` 已正式落地，并开始承载书籍详情的 MVI 契约与通用格式化工具。
 - `feature-login` 已正式落地，并开始承载登录页的 MVI 契约、reducer 与状态更新器。
 - `feature-reader` 已正式落地，并开始承载阅读器启动/恢复/动作 trace 协调器。
@@ -174,7 +174,8 @@
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：
-  - 收口 Community 现有跳转与分享
+  - 继续深化 `core-network / core-bridge`
+  - 继续扩大各 `feature-*` 内部稳定边界
 
 ## 验证证据
 - `android/gradlew.bat :core-common:testDebugUnitTest`

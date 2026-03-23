@@ -4,8 +4,8 @@
 - 当前阶段：`Phase 5`
 - 阶段状态：`in_progress`
 - 门禁模式：`严格门禁`
-- 最近结论：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 作为历史 checkpoint 保留；`2026-03-23` 起因模块化深度不足而重新切回 `Phase 5 = in_progress`、`Stage 3 = in_progress`。当前 Community 现有跳转/分享已经补齐，`Phase 6` 继续保持 `validated`，`Phase 7` 继续保持 `planned`。
-- 下一步：统一补齐本轮模块深化的验证矩阵、closeout 与 rollback 文档。
+- 最近结论：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 作为历史 checkpoint 保留；`2026-03-24` 当前口径仍是 `Phase 5 = in_progress`、`Stage 3 = in_progress`。Community 现有跳转/分享与首页首开榜单/推荐流空缓存补拉都已补齐，但模块化深度、宿主根收口与 reopen closeout 文档仍未完成；`Phase 6` 继续保持 `validated`，`Phase 7` 继续保持 `planned`。
+- 下一步：继续推进 `core-network / core-bridge` 与各 `feature-*` 的深化迁移，并同步补齐 reopen 版验证矩阵、closeout 与 rollback 文档。
 - 当前 Phase 默认编制：`5 helpers + 1 Leader（reopen baseline）`
 
 ## 阶段状态总表

@@ -2,7 +2,7 @@
 
 ## 摘要
 - 阶段：`Stage 3 = Phase 5-6`
-- 当前状态：`in_progress（2026-03-23 reopen；2026-03-21 closeout 作为历史 checkpoint 保留）`
+- 当前状态：`in_progress（2026-03-24 reopen 持续推进；2026-03-21 closeout 作为历史 checkpoint 保留）`
 - 最终结论：
   - `2026-03-21 checkpoint: Phase 5 = validated`
   - `Phase 6 = validated`
@@ -27,7 +27,7 @@
   - Search 分类筛选延后加载
   - RN 主题补发同步
   - 非关键启动初始化与 RN 预热延后到首帧后
-- 截至 `2026-03-23`，由于 `Phase 5` 深化仍未完成且 Community 收口仍未完成，`Stage 3` 已重新切回 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
+- 截至 `2026-03-24`，由于 `Phase 5` 深化仍未完成、首页首开链路刚补齐榜单与推荐流空缓存补拉且宿主根收口仍未完成，`Stage 3` 继续保持 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
 
 ## 核心证据入口
 - `docs/refactor/stage-3-phase-5-6-plan.md`

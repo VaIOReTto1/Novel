@@ -73,6 +73,7 @@
   - 当前承载：
     - `BookDetailMvi`
     - `formatWordCount`
+    - `BookDetailStateAdapter`
 - `:feature-login`
   - 首轮 login feature 模块
   - 当前承载：

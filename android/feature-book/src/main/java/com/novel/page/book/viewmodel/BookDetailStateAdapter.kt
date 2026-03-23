@@ -1,199 +1,145 @@
 package com.novel.page.book.viewmodel
 
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.Stable
+import com.novel.core.adapter.StateAdapter
 import com.novel.core.ui.StateHolderImpl
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.StateFlow
-import com.novel.core.adapter.StateAdapter
 
-/**
- * BookDetail状态适配器
- * 
- * 为BookDetail模块提供状态适配功能，方便UI层访问MVI状态的特定部分
- * 继承基础StateAdapter，提供BookDetail模块专用的状态适配功能
- * 
- * 特性：
- * - 继承基础StateAdapter的所有功能
- * - BookDetail模块专用状态访问方法
- * - 细粒度状态订阅，减少不必要的重组
- * - 类型安全的强类型状态访问
- * - UI友好的便利方法
- * - 向后兼容原有UI层格式
- * - 优化的@Composable函数提升skippable比例
- */
 @Stable
 class BookDetailStateAdapter(
     stateFlow: StateFlow<BookDetailState>
 ) : StateAdapter<BookDetailState>(stateFlow) {
-    
-    // region Composable 状态访问方法 (用于提升 skippable 比例)
-    
-    /** 书籍基本信息 - 优化版本 */
+
     @Composable
-    fun bookInfoState(): State<BookDetailState.BookInfo?> = 
+    fun bookInfoState(): State<BookDetailState.BookInfo?> =
         createStableState { it.bookInfo }
-    
-    /** 最新章节信息 - 优化版本 */
+
     @Composable
-    fun lastChapterState(): State<BookDetailState.LastChapter?> = 
+    fun lastChapterState(): State<BookDetailState.LastChapter?> =
         createStableState { it.lastChapter }
-    
-    /** 用户评价列表 - 优化版本 */
+
     @Composable
-    fun reviewsState(): State<ImmutableList<BookDetailState.BookReview>> = 
+    fun reviewsState(): State<ImmutableList<BookDetailState.BookReview>> =
         createStableState { it.reviews }
-    
-    /** 简介是否展开 - 优化版本 */
+
     @Composable
-    fun isDescriptionExpandedState(): State<Boolean> = 
+    fun isDescriptionExpandedState(): State<Boolean> =
         createStableState { it.isDescriptionExpanded }
-    
-    /** 是否在书架中 - 优化版本 */
+
     @Composable
-    fun isInBookshelfState(): State<Boolean> = 
+    fun isInBookshelfState(): State<Boolean> =
         createStableState { it.isInBookshelf }
-    
-    /** 是否关注作者 - 优化版本 */
+
     @Composable
-    fun isAuthorFollowedState(): State<Boolean> = 
+    fun isAuthorFollowedState(): State<Boolean> =
         createStableState { it.isAuthorFollowed }
-    
-    /** 当前书籍ID - 优化版本 */
+
     @Composable
-    fun currentBookIdState(): State<String?> = 
+    fun currentBookIdState(): State<String?> =
         createStableState { it.currentBookId }
-    
-    /** 书籍名称 - 优化版本 */
+
     @Composable
-    fun bookNameState(): State<String?> = 
+    fun bookNameState(): State<String?> =
         createStableState { it.bookInfo?.bookName }
-    
-    /** 作者名称 - 优化版本 */
+
     @Composable
-    fun authorNameState(): State<String?> = 
+    fun authorNameState(): State<String?> =
         createStableState { it.bookInfo?.authorName }
-    
-    /** 书籍描述 - 优化版本 */
+
     @Composable
-    fun bookDescState(): State<String?> = 
+    fun bookDescState(): State<String?> =
         createStableState { it.bookInfo?.bookDesc }
-    
-    /** 书籍封面URL - 优化版本 */
+
     @Composable
-    fun picUrlState(): State<String?> = 
+    fun picUrlState(): State<String?> =
         createStableState { it.bookInfo?.picUrl }
-    
-    /** 访问次数 - 优化版本 */
+
     @Composable
-    fun visitCountState(): State<Long> = 
+    fun visitCountState(): State<Long> =
         createStableState { it.bookInfo?.visitCount ?: 0L }
-    
-    /** 字数统计 - 优化版本 */
+
     @Composable
-    fun wordCountState(): State<Int> = 
+    fun wordCountState(): State<Int> =
         createStableState { it.bookInfo?.wordCount ?: 0 }
-    
-    /** 分类名称 - 优化版本 */
+
     @Composable
-    fun categoryNameState(): State<String?> = 
+    fun categoryNameState(): State<String?> =
         createStableState { it.bookInfo?.categoryName }
-    
-    /** 是否有书籍信息 - 优化版本 */
+
     @Composable
-    fun hasBookInfoState(): State<Boolean> = 
+    fun hasBookInfoState(): State<Boolean> =
         createStableState { it.bookInfo != null }
-    
-    /** 最新章节名称 - 优化版本 */
+
     @Composable
-    fun lastChapterNameState(): State<String?> = 
+    fun lastChapterNameState(): State<String?> =
         createStableState { it.lastChapter?.chapterName }
-    
-    /** 最新章节更新时间 - 优化版本 */
+
     @Composable
-    fun lastChapterUpdateTimeState(): State<String?> = 
+    fun lastChapterUpdateTimeState(): State<String?> =
         createStableState { it.lastChapter?.chapterUpdateTime }
-    
-    /** 是否有最新章节 - 优化版本 */
+
     @Composable
-    fun hasLastChapterState(): State<Boolean> = 
+    fun hasLastChapterState(): State<Boolean> =
         createStableState { it.lastChapter != null }
-    
-    /** 评价数量 - 优化版本 */
+
     @Composable
-    fun reviewCountState(): State<Int> = 
+    fun reviewCountState(): State<Int> =
         createStableState { it.reviews.size }
-    
-    /** 是否有评价 - 优化版本 */
+
     @Composable
-    fun hasReviewsState(): State<Boolean> = 
+    fun hasReviewsState(): State<Boolean> =
         createStableState { it.reviews.isNotEmpty() }
-    
-    /** 平均评分 - 优化版本 */
+
     @Composable
-    fun averageRatingState(): State<Float> = 
+    fun averageRatingState(): State<Float> =
         createStableState {
             val reviews = it.reviews
-            if (reviews.isEmpty()) {
-                0f
-            } else {
-                reviews.map { review -> review.rating }.average().toFloat()
-            }
+            if (reviews.isEmpty()) 0f else reviews.map { review -> review.rating }.average().toFloat()
         }
-    
-    /** 高评分评价（4星及以上）- 优化版本 */
+
     @Composable
-    fun highRatingReviewsState(): State<ImmutableList<BookDetailState.BookReview>> = 
+    fun highRatingReviewsState(): State<ImmutableList<BookDetailState.BookReview>> =
         createStableState {
             it.reviews.filter { review -> review.rating >= 4 }.toImmutableList()
         }
-    
-    /** 最新评价（前3条）- 优化版本 */
+
     @Composable
-    fun latestReviewsState(): State<ImmutableList<BookDetailState.BookReview>> = 
+    fun latestReviewsState(): State<ImmutableList<BookDetailState.BookReview>> =
         createStableState {
             it.reviews.take(3).toImmutableList()
         }
-    
-    // endregion
-    
-    // region BookDetail模块专用便利方法
-    
-    /** 检查是否可以开始阅读 */
+
     fun canStartReading(): Boolean {
         val state = getCurrentSnapshot()
         return state.bookInfo != null && !state.isLoading
     }
-    
-    /** 检查是否可以添加到书架 */
+
     fun canAddToBookshelf(): Boolean {
         val state = getCurrentSnapshot()
         return state.bookInfo != null && !state.isInBookshelf && !state.isLoading
     }
-    
-    /** 检查是否可以从书架移除 */
+
     fun canRemoveFromBookshelf(): Boolean {
         val state = getCurrentSnapshot()
         return state.bookInfo != null && state.isInBookshelf && !state.isLoading
     }
-    
-    /** 检查是否可以关注作者 */
+
     fun canFollowAuthor(): Boolean {
         val state = getCurrentSnapshot()
         return state.bookInfo != null && !state.isAuthorFollowed && !state.isLoading
     }
-    
-    /** 检查是否可以分享书籍 */
+
     fun canShareBook(): Boolean {
         val state = getCurrentSnapshot()
         return state.bookInfo != null && !state.isLoading
     }
-    
-    /** 获取书架操作文本 */
+
     fun getBookshelfActionText(): String {
         val state = getCurrentSnapshot()
         return when {
@@ -202,8 +148,7 @@ class BookDetailStateAdapter(
             else -> "加入书架"
         }
     }
-    
-    /** 获取关注作者操作文本 */
+
     fun getFollowAuthorActionText(): String {
         val state = getCurrentSnapshot()
         return when {
@@ -212,8 +157,7 @@ class BookDetailStateAdapter(
             else -> "关注作者"
         }
     }
-    
-    /** 获取阅读按钮文本 */
+
     fun getReadButtonText(): String {
         val state = getCurrentSnapshot()
         return when {
@@ -223,67 +167,49 @@ class BookDetailStateAdapter(
             else -> "暂无章节"
         }
     }
-    
-    /** 获取简介展开操作文本 */
+
     fun getDescriptionToggleText(): String {
-        val state = getCurrentSnapshot()
-        return if (state.isDescriptionExpanded) {
-            "收起"
-        } else {
-            "展开"
-        }
+        return if (getCurrentSnapshot().isDescriptionExpanded) "收起" else "展开"
     }
-    
-    /** 获取书籍统计信息文本 */
+
     fun getBookStatsText(): String {
         val state = getCurrentSnapshot()
         val bookInfo = state.bookInfo ?: return "暂无统计信息"
         return "阅读量：${formatCount(bookInfo.visitCount)} | 字数：${formatWordCount(bookInfo.wordCount)}"
     }
-    
-    /** 获取评价摘要文本 */
+
     fun getReviewSummaryText(): String {
-        val state = getCurrentSnapshot()
-        val reviews = state.reviews
+        val reviews = getCurrentSnapshot().reviews
         if (reviews.isEmpty()) {
             return "暂无评价"
         }
-        
-        val avgRating = if (reviews.isEmpty()) {
-            0f
+
+        val avgRating = reviews.map { it.rating }.average().toFloat()
+        return if (reviews.size == 1) {
+            "1条评价"
         } else {
-            reviews.map { it.rating }.average().toFloat()
-        }
-        
-        return when {
-            reviews.size == 1 -> "1条评价"
-            else -> "${reviews.size}条评价，平均${String.format("%.1f", avgRating)}星"
+            "${reviews.size}条评价，平均${String.format("%.1f", avgRating)}星"
         }
     }
-    
-    /** 获取最新章节信息文本 */
+
     fun getLastChapterInfoText(): String {
-        val state = getCurrentSnapshot()
-        val lastChapter = state.lastChapter
+        val lastChapter = getCurrentSnapshot().lastChapter
         return if (lastChapter != null) {
             "最新：${lastChapter.chapterName}"
         } else {
             "暂无章节"
         }
     }
-    
-    /** 获取更新时间文本 */
+
     fun getUpdateTimeText(): String {
-        val state = getCurrentSnapshot()
-        val lastChapter = state.lastChapter
+        val lastChapter = getCurrentSnapshot().lastChapter
         return if (lastChapter != null) {
             "更新于 ${lastChapter.chapterUpdateTime}"
         } else {
             "暂无更新"
         }
     }
-    
-    /** 获取书籍详情状态摘要 */
+
     fun getBookDetailStatusSummary(): String {
         val state = getCurrentSnapshot()
         return when {
@@ -294,20 +220,17 @@ class BookDetailStateAdapter(
             else -> "未知状态"
         }
     }
-    
-    /** 检查是否显示空状态 */
+
     fun shouldShowEmptyState(): Boolean {
         val state = getCurrentSnapshot()
         return !state.isLoading && !state.hasError && state.bookInfo == null
     }
-    
-    /** 检查是否显示重试按钮 */
+
     fun shouldShowRetryButton(): Boolean {
         val state = getCurrentSnapshot()
         return state.hasError && !state.isLoading
     }
-    
-    /** 格式化数量显示 */
+
     private fun formatCount(count: Long): String {
         return when {
             count >= 10000 -> "${count / 10000}万"
@@ -315,8 +238,7 @@ class BookDetailStateAdapter(
             else -> count.toString()
         }
     }
-    
-    /** 格式化字数显示 */
+
     private fun formatWordCount(wordCount: Int): String {
         return when {
             wordCount >= 10000 -> "${wordCount / 10000}万字"
@@ -324,15 +246,7 @@ class BookDetailStateAdapter(
             else -> "${wordCount}字"
         }
     }
-    
-    // endregion
-    
-    // region 向后兼容方法
-    
-    /**
-     * 将BookDetailState转换为UI层期望的StateHolderImpl<BookDetailUiState>格式
-     * 保持与原有UI层的兼容性
-     */
+
     fun toUiState(): StateHolderImpl<BookDetailUiState> {
         val state = getCurrentSnapshot()
         return StateHolderImpl(
@@ -370,22 +284,12 @@ class BookDetailStateAdapter(
             error = state.error
         )
     }
-    
-    // endregion
 }
 
-/**
- * StateAdapter工厂方法
- * 简化BookDetailStateAdapter的创建
- */
 fun StateFlow<BookDetailState>.asBookDetailAdapter(): BookDetailStateAdapter {
     return BookDetailStateAdapter(this)
 }
 
-/**
- * 状态组合器
- * 将多个状态组合成UI需要的复合状态
- */
 @Stable
 data class BookDetailScreenState(
     val isLoading: Boolean,
@@ -414,9 +318,6 @@ data class BookDetailScreenState(
     val shouldShowRetryButton: Boolean
 )
 
-/**
- * 将BookDetailState转换为UI友好的组合状态
- */
 fun BookDetailStateAdapter.toScreenState(): BookDetailScreenState {
     val snapshot = getCurrentSnapshot()
     return BookDetailScreenState(
@@ -447,27 +348,13 @@ fun BookDetailStateAdapter.toScreenState(): BookDetailScreenState {
     )
 }
 
-
-
-/**
- * 书籍详情页UI状态数据类（兼容性保留）
- * 
- * 保持与原有UI组件的兼容性
- */
 @Stable
 data class BookDetailUiState(
-    /** 书籍基本信息 */
     val bookInfo: BookInfo? = null,
-    /** 最新章节信息 */
     val lastChapter: LastChapter? = null,
-    /** 用户评价列表 */
     val reviews: ImmutableList<BookReview> = persistentListOf(),
-    /** 简介是否展开 */
     val isDescriptionExpanded: Boolean = false
 ) {
-    /**
-     * 书籍基本信息数据类
-     */
     @Immutable
     data class BookInfo(
         val id: String,
@@ -479,24 +366,18 @@ data class BookDetailUiState(
         val wordCount: Int,
         val categoryName: String
     )
-    
-    /**
-     * 最新章节信息数据类
-     */
+
     @Immutable
     data class LastChapter(
         val chapterName: String,
         val chapterUpdateTime: String
     )
-    
-    /**
-     * 用户评价数据类
-     */
+
     @Immutable
     data class BookReview(
         val id: String,
         val content: String,
-        val rating: Int, // 1-5星评级
+        val rating: Int,
         val readTime: String,
         val userName: String
     )

@@ -9,7 +9,7 @@ import com.novel.page.book.usecase.FollowAuthorUseCase
 import com.novel.page.book.usecase.GetBookDetailUseCase
 import com.novel.page.book.usecase.GetLastChapterUseCase
 import com.novel.page.book.usecase.RemoveFromBookshelfUseCase
-import com.novel.page.component.StateHolderImpl
+import com.novel.core.ui.StateHolderImpl
 import com.novel.utils.TimberLogger
 import com.novel.utils.network.repository.CachedBookRepository
 import com.novel.utils.network.api.front.BookService

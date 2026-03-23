@@ -4,11 +4,11 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import com.novel.core.ui.StateHolderImpl
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.StateFlow
-import com.novel.page.component.StateHolderImpl
 import com.novel.core.adapter.StateAdapter
 
 /**

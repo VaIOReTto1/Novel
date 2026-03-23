@@ -57,6 +57,7 @@
     - `SearchPreferenceStorage`
     - `SearchParams`
     - `SearchResultMvi`
+    - `SearchResultStateAdapter`
     - `SearchTriggerSource`
     - `SearchCategoryFilterLoadCoordinator`
     - `SearchPerformanceTraceCoordinator`

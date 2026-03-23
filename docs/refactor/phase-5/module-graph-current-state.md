@@ -159,10 +159,10 @@
 - `feature-login` 已正式落地，并开始承载登录页的 MVI 契约、reducer 与状态更新器。
 - `feature-reader` 已正式落地，并开始承载阅读器启动/恢复/动作 trace 协调器。
 - `feature-rn-host` 已不再只停留在设置存储层，当前已接管主题补发与冷热路径追踪协调器。
-- `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags / LegacyApiServiceAdapter` 仍暂留 `app`。
+- `core-common` 已完成第一批共享基础抽离，`StateAdapter / RefactorFeatureFlags` 仍暂留 `app`。
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
 - `core-bridge` 已完成首轮真实落地，桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade 与 network gateway 已迁出 `app`。
-- `core-network` 已不再只有契约壳，`RequestIdInterceptor / NetworkTraceLogHelper / ImmutableListTypeAdapter` 已进入共享网络层。
+- `core-network` 已不再只有契约壳，`RequestIdInterceptor / NetworkTraceLogHelper / ImmutableListTypeAdapter / LegacyApiExecutor / LegacyApiServiceAdapter` 已进入共享网络层；`DefaultLegacyApiExecutor` 当前作为宿主壳留在 `app`。
 - `feature-welfare` 已接管 bootstrap 与 WebView 性能协调器，不再只是组件/工具集合。
 - `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
 
@@ -170,7 +170,6 @@
 - 当前未解决的 `core-common` 遗留：
   - `android/app/src/main/java/com/novel/core/adapter/StateAdapter.kt`
   - `android/app/src/main/java/com/novel/core/config/RefactorFeatureFlags.kt`
-  - `android/app/src/main/java/com/novel/core/network/LegacyApiServiceAdapter.kt`
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：

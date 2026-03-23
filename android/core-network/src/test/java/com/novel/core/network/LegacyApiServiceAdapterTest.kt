@@ -1,10 +1,10 @@
 package com.novel.core.network
 
+import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.io.IOException
 
 class LegacyApiServiceAdapterTest {
 

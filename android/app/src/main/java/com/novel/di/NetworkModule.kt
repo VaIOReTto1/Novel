@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.compose.runtime.Stable
 import com.google.gson.Gson
 import com.novel.BuildConfig
-import com.novel.core.network.DefaultLegacyApiExecutor
 import com.novel.core.network.LegacyApiExecutor
 import com.novel.core.network.LegacyApiServiceAdapter
 import com.novel.core.network.NetworkFacade
+import com.novel.core.network.legacy.DefaultLegacyApiExecutor
 import com.google.gson.GsonBuilder
 import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.utils.TimberLogger

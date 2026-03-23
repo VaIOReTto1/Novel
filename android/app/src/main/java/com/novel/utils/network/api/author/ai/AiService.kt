@@ -7,6 +7,7 @@ import com.novel.core.network.LegacyApiServiceAdapter
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.network.legacy.DefaultLegacyApiExecutor
 import com.novel.core.result.AppError
 import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
@@ -36,7 +37,7 @@ class AiService @Inject constructor(
     private val networkFacade: NetworkFacade
 ) {
 
-    constructor() : this(LegacyApiServiceAdapter())
+    constructor() : this(LegacyApiServiceAdapter(DefaultLegacyApiExecutor))
     
     // region 数据结构
     /**

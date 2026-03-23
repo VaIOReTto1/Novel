@@ -8,6 +8,7 @@ import com.novel.core.network.LegacyApiServiceAdapter
 import com.novel.core.network.NetworkFacade
 import com.novel.core.network.NetworkRequest
 import com.novel.core.network.NetworkRequestMethod
+import com.novel.core.network.legacy.DefaultLegacyApiExecutor
 import com.novel.core.result.AppError
 import com.novel.core.result.DataResult
 import com.novel.utils.TimberLogger
@@ -32,7 +33,7 @@ class AuthorService @Inject constructor(
     private val networkFacade: NetworkFacade
 ) {
 
-    constructor() : this(LegacyApiServiceAdapter())
+    constructor() : this(LegacyApiServiceAdapter(DefaultLegacyApiExecutor))
 
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapterFactory(ImmutableListTypeAdapterFactory())

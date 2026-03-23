@@ -1,29 +1,16 @@
 package com.novel.core.config
 
-import com.novel.BuildConfig
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import javax.inject.Inject
 import javax.inject.Singleton
-
-data class RefactorFeatureFlagDefaults(
-    val enableBridgeErrorMapper: Boolean,
-    val enableBridgeSharedScopes: Boolean,
-    val enableSettingsDataStorePilot: Boolean
-)
-
-interface RefactorFeatureFlags {
-    fun enableBridgeErrorMapper(): Boolean
-    fun enableBridgeSharedScopes(): Boolean
-    fun enableSettingsDataStorePilot(): Boolean
-}
 
 @Singleton
 class NovelUserDefaultsBackedRefactorFeatureFlags @Inject constructor(
     private val userDefaults: NovelUserDefaults,
     private val defaults: RefactorFeatureFlagDefaults = RefactorFeatureFlagDefaults(
-        enableBridgeErrorMapper = BuildConfig.REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER,
-        enableBridgeSharedScopes = BuildConfig.REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES,
-        enableSettingsDataStorePilot = BuildConfig.REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT
+        enableBridgeErrorMapper = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER,
+        enableBridgeSharedScopes = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES,
+        enableSettingsDataStorePilot = com.novel.BuildConfig.REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT
     )
 ) : RefactorFeatureFlags {
 

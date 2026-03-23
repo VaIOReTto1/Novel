@@ -171,21 +171,8 @@ open class HomeCompositeUseCase @Inject constructor(
                 GetBooksDataUseCase.BooksData(persistentListOf(), persistentListOf(), persistentListOf(), persistentListOf())
             }
             
-            val rankBooksResult = getRankingBooksUseCase(
-                GetRankingBooksUseCase.Params("点击榜") // 使用字符串常量，避免依赖具体实现类
-            )
-            
-            val cacheFirstHomeRecommendResult = getHomeRecommendBooksUseCase(
-                GetHomeRecommendBooksUseCase.Params()
-            )
-            val homeRecommendUsedNetworkFallback = cacheFirstHomeRecommendResult.isEmpty()
-            val homeRecommendResult = if (homeRecommendUsedNetworkFallback) {
-                getHomeRecommendBooksUseCase(
-                    GetHomeRecommendBooksUseCase.Params(strategy = CacheStrategy.NETWORK_ONLY)
-                )
-            } else {
-                cacheFirstHomeRecommendResult
-            }
+            val rankBooksResult = loadRankBooksWithFallback("点击榜")
+            val homeRecommendFallbackResult = loadHomeRecommendBooksWithFallback()
             
             // 转换书籍数据为Entity
             val carouselBooks = booksData.carouselBooks.map { it.toEntity("carousel") }.toImmutableList()
@@ -203,8 +190,8 @@ open class HomeCompositeUseCase @Inject constructor(
                 newBooks = newBooks,
                 vipBooks = vipBooks,
                 rankBooks = rankBooksResult.toImmutableList(),
-                homeRecommendBooks = homeRecommendResult.toImmutableList(),
-                homeRecommendUsedNetworkFallback = homeRecommendUsedNetworkFallback,
+                homeRecommendBooks = homeRecommendFallbackResult.books.toImmutableList(),
+                homeRecommendUsedNetworkFallback = homeRecommendFallbackResult.usedNetworkFallback,
                 isSuccess = true
             )
         } catch (e: Exception) {
@@ -246,9 +233,7 @@ open class HomeCompositeUseCase @Inject constructor(
         return try {
             if (HomeCategoryFilterSupport.isHomeFilter(categoryName)) {
                 // 加载首页推荐
-                val homeRecommendBooks = getHomeRecommendBooksUseCase(
-                    GetHomeRecommendBooksUseCase.Params()
-                )
+                val homeRecommendBooks = loadHomeRecommendBooksWithFallback().books
                 
                 Result(
                     homeRecommendBooks = homeRecommendBooks.toImmutableList(),
@@ -330,9 +315,7 @@ open class HomeCompositeUseCase @Inject constructor(
         TimberLogger.d(TAG, "加载榜单数据: rankType=$rankType")
         
         return try {
-            val rankBooks = getRankingBooksUseCase(
-                GetRankingBooksUseCase.Params(rankType)
-            )
+            val rankBooks = loadRankBooksWithFallback(rankType)
             
             Result(
                 rankBooks = rankBooks.toImmutableList(),
@@ -403,6 +386,47 @@ open class HomeCompositeUseCase @Inject constructor(
             Result(isSuccess = false, errorMessage = e.message)
         }
     }
+
+    private suspend fun loadRankBooksWithFallback(rankType: String): List<BookService.BookRank> {
+        val cacheFirstRankBooks = getRankingBooksUseCase(
+            GetRankingBooksUseCase.Params(rankType = rankType)
+        )
+        return if (cacheFirstRankBooks.isEmpty()) {
+            getRankingBooksUseCase(
+                GetRankingBooksUseCase.Params(
+                    rankType = rankType,
+                    strategy = CacheStrategy.NETWORK_ONLY,
+                )
+            )
+        } else {
+            cacheFirstRankBooks
+        }
+    }
+
+    private suspend fun loadHomeRecommendBooksWithFallback(): HomeRecommendFallbackResult {
+        val cacheFirstHomeRecommendBooks = getHomeRecommendBooksUseCase(
+            GetHomeRecommendBooksUseCase.Params()
+        )
+        if (cacheFirstHomeRecommendBooks.isNotEmpty()) {
+            return HomeRecommendFallbackResult(
+                books = cacheFirstHomeRecommendBooks,
+                usedNetworkFallback = false,
+            )
+        }
+
+        val networkOnlyHomeRecommendBooks = getHomeRecommendBooksUseCase(
+            GetHomeRecommendBooksUseCase.Params(strategy = CacheStrategy.NETWORK_ONLY)
+        )
+        return HomeRecommendFallbackResult(
+            books = networkOnlyHomeRecommendBooks,
+            usedNetworkFallback = true,
+        )
+    }
+
+    private data class HomeRecommendFallbackResult(
+        val books: List<HomeService.HomeBook>,
+        val usedNetworkFallback: Boolean,
+    )
 }
 
 /**

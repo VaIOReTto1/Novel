@@ -171,19 +171,168 @@ class HomeCompositeUseCaseTest {
         }
     }
 
+    @Test
+    fun loadInitialData_retriesRankingWithNetworkOnly_whenCacheFirstReturnsEmpty() {
+        runBlocking {
+            val networkRankBooks = persistentListOf(
+                BookService.BookRank(
+                    id = 11,
+                    categoryId = 1,
+                    categoryName = "玄幻",
+                    picUrl = "cover",
+                    bookName = "Network Rank",
+                    authorName = "Author",
+                    bookDesc = "desc",
+                    wordCount = 1000,
+                    lastChapterName = "chapter",
+                    lastChapterUpdateTime = "today",
+                ),
+            )
+            val repository = FakeHomeRepository(
+                categoryFiltersFlow = flow { emit(persistentListOf()) },
+                categoriesFlow = flow { emit(persistentListOf()) },
+                rankBooksByRequest = mapOf(
+                    "点击榜" to mapOf(
+                        CacheStrategy.CACHE_FIRST to persistentListOf(),
+                        CacheStrategy.NETWORK_ONLY to networkRankBooks,
+                    ),
+                ),
+            )
+            val useCase = HomeCompositeUseCase(
+                homeRepository = repository,
+                cachedBookRepository = allocateWithoutConstructor(),
+                searchService = allocateWithoutConstructor(),
+                userRepository = allocateWithoutConstructor(),
+                tokenProvider = FakeTokenProvider,
+                userDefaults = FakeNovelUserDefaults(),
+            )
+
+            val result = useCase(
+                HomeCompositeUseCase.Params(loadInitialData = true),
+            )
+
+            assertThat(result.isSuccess).isTrue()
+            assertThat(result.rankBooks).isEqualTo(networkRankBooks)
+            assertThat(repository.rankBookRequests).containsExactly(
+                "点击榜" to CacheStrategy.CACHE_FIRST,
+                "点击榜" to CacheStrategy.NETWORK_ONLY,
+            ).inOrder()
+        }
+    }
+
+    @Test
+    fun loadCategoryData_retriesHomeRecommendWithNetworkOnly_whenHomeFilterCacheFirstReturnsEmpty() {
+        runBlocking {
+            val networkBooks = persistentListOf(
+                HomeService.HomeBook(
+                    type = 3,
+                    bookId = 303,
+                    picUrl = "cover",
+                    bookName = "Recovered Home Recommend",
+                    authorName = "Author",
+                    bookDesc = "desc",
+                ),
+            )
+            val repository = FakeHomeRepository(
+                categoryFiltersFlow = flow { emit(persistentListOf()) },
+                categoriesFlow = flow { emit(persistentListOf()) },
+                homeBooksByStrategy = mapOf(
+                    CacheStrategy.CACHE_FIRST to persistentListOf(),
+                    CacheStrategy.NETWORK_ONLY to networkBooks,
+                ),
+            )
+            val useCase = HomeCompositeUseCase(
+                homeRepository = repository,
+                cachedBookRepository = allocateWithoutConstructor(),
+                searchService = allocateWithoutConstructor(),
+                userRepository = allocateWithoutConstructor(),
+                tokenProvider = FakeTokenProvider,
+                userDefaults = FakeNovelUserDefaults(),
+            )
+
+            val result = useCase(
+                HomeCompositeUseCase.Params(
+                    categoryFilter = "首页",
+                    categoryFilters = persistentListOf(CategoryInfo("0", "首页")),
+                ),
+            )
+
+            assertThat(result.isSuccess).isTrue()
+            assertThat(result.homeRecommendBooks).isEqualTo(networkBooks)
+            assertThat(repository.homeBookStrategies).containsExactly(
+                CacheStrategy.CACHE_FIRST,
+                CacheStrategy.NETWORK_ONLY,
+            ).inOrder()
+        }
+    }
+
+    @Test
+    fun loadRankingData_retriesNetworkOnly_whenCacheFirstReturnsEmpty() {
+        runBlocking {
+            val networkRankBooks = persistentListOf(
+                BookService.BookRank(
+                    id = 21,
+                    categoryId = 2,
+                    categoryName = "仙侠",
+                    picUrl = "cover",
+                    bookName = "Recovered Rank",
+                    authorName = "Author",
+                    bookDesc = "desc",
+                    wordCount = 2000,
+                    lastChapterName = "chapter",
+                    lastChapterUpdateTime = "today",
+                ),
+            )
+            val repository = FakeHomeRepository(
+                categoryFiltersFlow = flow { emit(persistentListOf()) },
+                categoriesFlow = flow { emit(persistentListOf()) },
+                rankBooksByRequest = mapOf(
+                    "更新榜" to mapOf(
+                        CacheStrategy.CACHE_FIRST to persistentListOf(),
+                        CacheStrategy.NETWORK_ONLY to networkRankBooks,
+                    ),
+                ),
+            )
+            val useCase = HomeCompositeUseCase(
+                homeRepository = repository,
+                cachedBookRepository = allocateWithoutConstructor(),
+                searchService = allocateWithoutConstructor(),
+                userRepository = allocateWithoutConstructor(),
+                tokenProvider = FakeTokenProvider,
+                userDefaults = FakeNovelUserDefaults(),
+            )
+
+            val result = useCase(
+                HomeCompositeUseCase.Params(rankType = "更新榜"),
+            )
+
+            assertThat(result.isSuccess).isTrue()
+            assertThat(result.rankBooks).isEqualTo(networkRankBooks)
+            assertThat(repository.rankBookRequests).containsExactly(
+                "更新榜" to CacheStrategy.CACHE_FIRST,
+                "更新榜" to CacheStrategy.NETWORK_ONLY,
+            ).inOrder()
+        }
+    }
+
     private class FakeHomeRepository(
         private val categoryFiltersFlow: Flow<ImmutableList<BookService.BookCategory>>,
         private val categoriesFlow: Flow<ImmutableList<BookService.BookCategory>>,
         private val homeBooks: ImmutableList<HomeService.HomeBook> = persistentListOf(),
         private val homeBooksByStrategy: Map<CacheStrategy, ImmutableList<HomeService.HomeBook>> = emptyMap(),
+        private val rankBooksByRequest: Map<String, Map<CacheStrategy, ImmutableList<BookService.BookRank>>> = emptyMap(),
     ) : IHomeRepository {
 
         val homeBookStrategies = mutableListOf<CacheStrategy>()
+        val rankBookRequests = mutableListOf<Pair<String, CacheStrategy>>()
 
         override suspend fun getRankBooks(
             rankType: String,
             strategy: CacheStrategy,
-        ): List<BookService.BookRank> = emptyList()
+        ): List<BookService.BookRank> {
+            rankBookRequests += rankType to strategy
+            return rankBooksByRequest[rankType]?.get(strategy) ?: emptyList()
+        }
 
         override suspend fun getHomeBooks(
             strategy: CacheStrategy,

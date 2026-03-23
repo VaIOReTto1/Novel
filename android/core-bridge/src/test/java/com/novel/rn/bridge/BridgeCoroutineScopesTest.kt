@@ -1,6 +1,6 @@
 package com.novel.rn.bridge
 
-import com.novel.page.read.service.common.DispatcherProvider
+import com.novel.core.concurrency.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertNotSame
 import org.junit.Assert.assertSame

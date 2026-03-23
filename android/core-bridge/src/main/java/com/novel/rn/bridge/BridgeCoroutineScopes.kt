@@ -1,6 +1,6 @@
 package com.novel.rn.bridge
 
-import com.novel.page.read.service.common.DispatcherProvider
+import com.novel.core.concurrency.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject

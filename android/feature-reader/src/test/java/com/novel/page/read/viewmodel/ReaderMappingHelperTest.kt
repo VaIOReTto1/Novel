@@ -1,9 +1,9 @@
 package com.novel.page.read.viewmodel
 
+import androidx.compose.ui.unit.IntSize
 import com.google.common.truth.Truth.assertThat
 import com.novel.page.read.repository.PageCountCacheData
 import com.novel.page.read.repository.ProgressiveCalculationState
-import androidx.compose.ui.unit.IntSize
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Test
 

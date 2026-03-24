@@ -56,8 +56,11 @@
   - 当前承载：
     - `SearchPreferenceStorage`
     - `SearchParams`
+    - `SearchMvi`
+    - `SearchReducer`
     - `SearchResultMvi`
     - `SearchResultStateAdapter`
+    - `SearchStateAdapter`
     - `SearchTriggerSource`
     - `SearchCategoryFilterLoadCoordinator`
     - `SearchPerformanceTraceCoordinator`

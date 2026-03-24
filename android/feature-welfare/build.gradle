@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 apply from: rootProject.file("gradle/android-library-common.gradle")
@@ -26,6 +28,8 @@ dependencies {
     implementation "androidx.webkit:webkit:1.8.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0"
     implementation "javax.inject:javax.inject:1"
+    implementation "com.google.dagger:hilt-android:2.52"
+    kapt "com.google.dagger:hilt-compiler:2.52"
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.google.truth:truth:1.4.4"

@@ -1,10 +1,10 @@
 package com.novel.page.read.viewmodel
 
-internal data class ReaderHistorySaveOutcome(
+data class ReaderHistorySaveOutcome(
     val saved: Boolean,
 )
 
-internal class ReaderHistoryCoordinator {
+class ReaderHistoryCoordinator {
 
     fun createSaveToHistoryIntent(
         state: ReaderState,
@@ -16,7 +16,6 @@ internal class ReaderHistoryCoordinator {
         }
 
         val bookInfo = state.currentPageData?.bookInfo
-
         return ReaderIntent.SaveToHistory(
             bookId = bookId,
             chapterId = currentChapter.id,

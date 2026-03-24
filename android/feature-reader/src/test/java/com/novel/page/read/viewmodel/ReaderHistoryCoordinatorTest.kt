@@ -60,42 +60,36 @@ class ReaderHistoryCoordinatorTest {
     }
 
     @Test
-    fun saveHistory_returnsSuccessWhenServiceCompletes() {
-        runBlocking {
-            val coordinator = ReaderHistoryCoordinator()
-            var savedIntent: ReaderIntent.SaveToHistory? = null
-            val intent = ReaderIntent.SaveToHistory(
-                bookId = "book-1",
-                chapterId = "chapter-1",
-                bookTitle = "title",
-                author = "author",
-                coverUrl = "cover",
-                chapterTitle = "第一章",
-            )
+    fun saveHistory_returnsSuccessWhenServiceCompletes() = runBlocking {
+        val coordinator = ReaderHistoryCoordinator()
+        var savedIntent: ReaderIntent.SaveToHistory? = null
+        val intent = ReaderIntent.SaveToHistory(
+            bookId = "book-1",
+            chapterId = "chapter-1",
+            bookTitle = "title",
+            author = "author",
+            coverUrl = "cover",
+            chapterTitle = "第一章",
+        )
 
-            val outcome = coordinator.saveHistory(
-                intent = intent,
-                persist = { value ->
-                    savedIntent = value
-                },
-            )
+        val outcome = coordinator.saveHistory(
+            intent = intent,
+            persist = { value -> savedIntent = value },
+        )
 
-            assertThat(outcome.saved).isTrue()
-            assertThat(savedIntent).isEqualTo(intent)
-        }
+        assertThat(outcome.saved).isTrue()
+        assertThat(savedIntent).isEqualTo(intent)
     }
 
     @Test
-    fun saveHistory_returnsFailureWhenServiceThrows() {
-        runBlocking {
-            val coordinator = ReaderHistoryCoordinator()
+    fun saveHistory_returnsFailureWhenServiceThrows() = runBlocking {
+        val coordinator = ReaderHistoryCoordinator()
 
-            val outcome = coordinator.saveHistory(
-                intent = ReaderIntent.SaveToHistory(bookId = "book-1", chapterId = "chapter-1"),
-                persist = { error("boom") },
-            )
+        val outcome = coordinator.saveHistory(
+            intent = ReaderIntent.SaveToHistory(bookId = "book-1", chapterId = "chapter-1"),
+            persist = { error("boom") },
+        )
 
-            assertThat(outcome.saved).isFalse()
-        }
+        assertThat(outcome.saved).isFalse()
     }
 }

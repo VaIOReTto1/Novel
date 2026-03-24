@@ -46,3 +46,13 @@
   - `docs/refactor/tracking/decision-log.md`
   - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
 - 这些 follow-up 用于追平仓库事实与补充收益，不改变本看板上 `V6-01 ~ V6-06` 的 `validated / green` 关闭结论。
+
+## 2026-03-24 Wave D addendum
+- Wave D 瀹夸富鏍规敹鍙ｆ柊澧炶瘉鎹細
+  - `android/gradlew.bat :app:compileDebugKotlin --no-daemon`
+  - `android/gradlew.bat :app:testDebugUnitTest --no-daemon`
+- 鏈鐪熷疄钀藉湴鐨勫涓绘牴鍘嬭杽鍒囧彛锛?
+  - `压薄Navigation宿主根` (`b596ce2`)
+  - `压薄MainPage宿主入口` (`76def33`)
+  - `压薄ComposeMainActivity宿主入口` (`e6aad3d`)
+- `V5-10` 褰撳墠搴旇涓衡€滃涓绘牴鏀跺彛缁х画鎺ㄨ繘浣嗕粛鏈畬鎴愨€濓細`Navigation / MainPage / ComposeMainActivity` 宸叉槑鏄惧帇钖勶紝`MainApplication` 绛夐珮鏁忔牴鍏ュ彛浠嶄繚鐣欎负鍚庣画鍗曠嫭鍘熷瓙鍒囧彛銆?

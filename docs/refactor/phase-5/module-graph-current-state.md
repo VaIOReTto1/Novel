@@ -214,3 +214,9 @@
 - `android/gradlew.bat :feature-search:testDebugUnitTest`
 - `android/gradlew.bat :core-storage:testDebugUnitTest :core-network:testDebugUnitTest`
 - `android/gradlew.bat :app:testDebugUnitTest`
+
+## 2026-03-24 Wave D addendum
+- `app` 瀹夸富鏍规敹鍙ｇ户缁帹杩涳細`NavigationUtil.kt` 宸叉媶鍒嗕负瀵艰埅鍥惧畾涔変笌鐙珛 `NavViewModel.kt`锛孯N route shell 涓庡叏灞€瀵艰埅鐘舵€佷笉鍐嶆販鍦ㄥ悓涓€鏂囦欢銆?
+- `MainPage.kt` 宸叉敹鍙ｅ埌鈥滅姸鎬佽閰嶁€濆眰锛屽簳閮ㄦ爮銆乸ager 鍐呭涓?overlay 宸叉媶鍒?`MainPageHostComponents.kt`銆?
+- `ComposeMainActivity.kt` 宸叉敹鍙ｅ埌鈥滃涓昏浆鍙戝櫒鈥濆眰锛孋ompose 鍐呭鏍戝拰棣栧抚鍚庨鐑崗璋冮€昏緫宸叉媶鍒?`ComposeMainActivityContent.kt` 涓?`ComposeMainActivityFirstFrameCoordinator.kt`銆?
+- 褰撳墠 `MainApplication`銆侾N package 鐧昏涓庡皯鏁板涓绘牴 glue 浠嶆槸 Wave D 鍓╀綑鐨勯珮鏁忔敹鍙ｈ竟鐣岋紝鏈疆鍏堜互浣庨闄╁帇钖勪负姝㈡绾裤€?

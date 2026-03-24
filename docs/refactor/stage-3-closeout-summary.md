@@ -67,3 +67,9 @@
 - 包体积 baseline 与 artifact diff
 - Gradle / npm 依赖治理
 - build efficiency baseline 与 clean/incremental 对比
+
+## 2026-03-24 Wave D addendum
+- `NavigationUtil` 宸茬粡鍒嗙鍑?`NavViewModel`锛屽鑸浘銆丷N route shell 涓庡叏灞€瀵艰埅鐘舵€佺殑鍚堝苟瀹夸富鏍规帴缁撳凡缁х画鍘嬭杽銆?
+- `MainPage` 宸茬敱鈥滃ぇ鍨嬪簳閮ㄥ鍣?鈥濇敹鍙ｅ埌鈥滅姸鎬佽閰?+ feature content 瑁呴厤鈥濓紝pager / bottom bar / overlay 鍧囧凡鎷嗗嚭鐙珛瀹夸富 helper銆?
+- `ComposeMainActivity` 宸茬敱鈥滃叆鍙?+ 鍐呭鏍?+ 棣栧抚鍚庨鐑?+ lifecycle forwarding鈥濇敹鍙ｅ埌鈥滃叆鍙?+ lifecycle forwarding鈥濓紝Compose 鍐呭鏍戜笌棣栧抚鍚庨鐑崗璋冮€昏緫宸叉媶鍑恒€?
+- 鎴嚦 `2026-03-24` 鐨勫綋鍓嶅疄浜嬫眰鏄細Wave D 宸叉槑鏄炬敹绱?host root锛屼絾 `MainApplication` 绛夋渶楂橀闄╂牴鍏ュ彛浠嶆湭鍋氬ぇ姝ュ瓙鎼縼锛屽洜姝?Stage 3 / Phase 5 浠嶄繚鎸?`in_progress`鑰屼笉鎻愬墠瀹ｅ竷鍐嶅叧闂€?

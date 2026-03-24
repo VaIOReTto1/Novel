@@ -89,6 +89,7 @@
 - `:feature-reader`
   - 首轮 reader feature 模块
   - 当前承载：
+    - `PageCountCacheData / ProgressiveCalculationState`
     - `PageFlipEffect`
     - `ReaderServiceConfig`
     - `OptimizedDispatcherProvider`
@@ -168,7 +169,7 @@
 - `feature-home` 已不再只停留在性能 helper，当前已接管首页分类语义契约、restore 判定协调器，并配合 app 侧修复首页首开榜单与推荐流在 `CACHE_FIRST` 空结果下无法自动展示的问题。
 - `feature-book` 已正式落地，并开始承载书籍详情的 MVI 契约与通用格式化工具。
 - `feature-login` 已正式落地，并开始承载登录页的 MVI 契约、reducer 与状态更新器。
-- `feature-reader` 已正式落地，并开始承载阅读器启动/恢复/动作 trace 协调器，以及 `ReaderSettings` 这类稳定阅读配置契约。
+- `feature-reader` 已正式落地，并开始承载阅读器启动/恢复/动作 trace 协调器，以及 `ReaderSettings`、`PageCountCacheData / ProgressiveCalculationState` 这类稳定阅读配置与分页状态契约。
 - `feature-rn-host` 已不再只停留在设置存储层，当前已接管主题补发与冷热路径追踪协调器。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter`、`StateHolderImpl`、`RefactorFeatureFlags / RefactorFeatureFlagDefaults` 接口层，以及 `DispatcherProvider / DefaultDispatcherProvider` 共享协程调度接口层已迁入共享层；`NovelUserDefaultsBackedRefactorFeatureFlags` 已进一步迁入 `core-storage`，当前只剩 `OptimizedDispatcherProvider` 等宿主实现仍暂留 `app`。
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。

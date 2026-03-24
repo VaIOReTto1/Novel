@@ -56,38 +56,6 @@ data class BookCacheData(
 }
 
 /**
- * 页数缓存数据
- */
-@Stable
-data class PageCountCacheData(
-    val bookId: String,
-    val fontSize: Int,
-    val containerSize: IntSize,
-    val totalPages: Int,
-    val chapterPageRanges: ImmutableList<ChapterPageRange>, // 每章节的页数范围
-    val cacheTime: Long
-) {
-    @Stable
-    data class ChapterPageRange(
-        val chapterId: String,
-        val startPage: Int,
-        val endPage: Int,
-        val pageCount: Int
-    )
-}
-
-/**
- * 渐进计算状态
- */
-data class ProgressiveCalculationState(
-    val isCalculating: Boolean = false,
-    val currentCalculatedPages: Int = 0,
-    val totalChapters: Int = 0,
-    val calculatedChapters: Int = 0,
-    val estimatedTotalPages: Int = 0
-)
-
-/**
  * 单章节页数缓存数据
  */
 data class ChapterPageCountData(

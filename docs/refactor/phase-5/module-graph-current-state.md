@@ -91,6 +91,7 @@
   - 当前承载：
     - `PageFlipEffect`
     - `ReaderServiceConfig`
+    - `OptimizedDispatcherProvider`
     - `ReaderStartupCoordinator`
     - `ReaderRestoreHintCoordinator`
     - `ReaderPerformanceTraceCoordinator`
@@ -177,7 +178,7 @@
 
 ## 当前阻塞与下一步
 - 当前未解决的 `core-common` 遗留：
-  - `android/app/src/main/java/com/novel/page/read/service/common/DispatcherProvider.kt`（当前仅剩 `OptimizedDispatcherProvider` 兼容入口）
+  - `android/app/src/main/java/com/novel/page/read/service/common/DispatcherProvider.kt`（当前仅剩 `DispatcherProvider` 兼容 typealias 入口）
 - 当前 `core-network` 深化策略暂缓：
   - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
 - 下一步主线：

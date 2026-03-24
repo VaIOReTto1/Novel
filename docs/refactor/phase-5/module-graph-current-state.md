@@ -114,6 +114,7 @@
 - `:feature-rn-host`
   - 首轮 rn-host feature 模块
   - 当前承载：
+    - `ReactNativePageContent / MviModuleType`
     - `SettingsIntent / SettingsState / SettingsEffect`
     - `SettingsReducer`
     - `SettingsStateAdapter`
@@ -187,7 +188,7 @@
 - `feature-book` 已正式落地，并开始承载书籍详情的 MVI 契约与通用格式化工具。
 - `feature-login` 已正式落地，并开始承载登录页的 MVI 契约、reducer 与状态更新器。
 - `feature-reader` 已正式落地，并开始承载阅读器启动/恢复/动作 trace 协调器，以及 `ReaderMappingHelper`、`ReaderHistoryCoordinator`、`ReaderReducer`、`ReaderStateAdapter`、`ReaderIntent / ReaderState / ReaderEffect`、`ReaderSettings`、`PageCountCacheData / ProgressiveCalculationState` 这类稳定阅读配置与分页状态契约。
-- `feature-rn-host` 已不再只停留在设置存储层，当前已接管 `SettingsIntent / SettingsState / SettingsEffect / SettingsReducer / SettingsStateAdapter`，以及主题补发与冷热路径追踪协调器。
+- `feature-rn-host` 已不再只停留在设置存储层，当前已接管 `ReactNativePageContent / MviModuleType`、`SettingsIntent / SettingsState / SettingsEffect / SettingsReducer / SettingsStateAdapter`，以及主题补发与冷热路径追踪协调器；`app` 侧的 [ReactNativePage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/rn/ReactNativePage.kt) 当前只保留 `MainApplication`、rootView 与 ViewModel 宿主装配。
 - `core-common` 已完成第一批共享基础抽离，`StateAdapter`、`StateHolderImpl`、`RefactorFeatureFlags / RefactorFeatureFlagDefaults` 接口层，以及 `DispatcherProvider / DefaultDispatcherProvider` 共享协程调度接口层已迁入共享层；`NovelUserDefaultsBackedRefactorFeatureFlags` 已进一步迁入 `core-storage`，当前只剩 `OptimizedDispatcherProvider` 等宿主实现仍暂留 `app`。
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
 - `core-bridge` 已完成首轮真实落地，桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade、network gateway、`BridgeStateAdapter` 与 `BridgeCoroutineScopes` 已迁出 `app`。

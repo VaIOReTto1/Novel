@@ -1,37 +1,22 @@
 package com.novel.rn
 
 import android.annotation.SuppressLint
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.facebook.react.ReactInstanceManager
 import com.facebook.react.bridge.ReactApplicationContext
 import com.novel.MainApplication
 import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
 import com.novel.rn.settings.SettingsViewModel
-import com.novel.ui.theme.NovelColors
 import com.novel.utils.TimberLogger
-
-enum class MviModuleType {
-    SETTINGS,
-    BRIDGE,
-    BOTH,
-}
 
 @SuppressLint("VisibleForTests")
 @Composable
@@ -77,14 +62,6 @@ fun ReactNativePage(
         }
     }
 
-    if (destroyOnBack) {
-        BackHandler(enabled = true) {
-            TimberLogger.d(tag, "BackHandler触发 for $componentName, 准备销毁缓存并返回")
-            bridgeViewModel?.sendIntent(BridgeIntent.NavigateBack(componentName))
-                ?: TimberLogger.w(tag, "BridgeViewModel未初始化，无法处理返回操作")
-        }
-    }
-
     val rootView = remember(componentName, initialProps) {
         TimberLogger.d(tag, "获取缓存的ReactRootView for $componentName")
 
@@ -113,55 +90,22 @@ fun ReactNativePage(
         mainApplication.getOrCreateReactRootView(componentName, bundle)
     }
 
-    DisposableEffect(reactInstanceManager, componentName, settingsViewModel, themeSyncCoordinator) {
-        TimberLogger.d(tag, "DisposableEffect启动 for $componentName")
-
-        val contextListener = if (!isContextReady) {
-            TimberLogger.d(tag, "添加RN上下文监听器 for $componentName")
-            ReactInstanceManager.ReactInstanceEventListener { reactCtx ->
-                TimberLogger.d(tag, "RN上下文状态变更为就绪 for $componentName")
-                isContextReady = true
-                settingsViewModel?.initReactContext(reactCtx as ReactApplicationContext)
-                syncThemeToRN(componentName, settingsViewModel, themeSyncCoordinator)
-            }.also { listener ->
-                reactInstanceManager.addReactInstanceEventListener(listener)
-            }
-        } else {
-            val reactContext = reactInstanceManager.currentReactContext
-            if (reactContext != null) {
-                settingsViewModel?.initReactContext(reactContext as ReactApplicationContext)
-                syncThemeToRN(componentName, settingsViewModel, themeSyncCoordinator)
-            }
-            null
-        }
-
-        onDispose {
-            contextListener?.let { listener ->
-                TimberLogger.d(tag, "移除RN上下文监听器，防止内存泄漏 for $componentName")
-                reactInstanceManager.removeReactInstanceEventListener(listener)
-            }
-        }
-    }
-
-    AndroidView(
-        factory = {
-            TimberLogger.d(tag, "AndroidView factory返回缓存的ReactRootView for $componentName")
-            rootView
+    ReactNativePageContent(
+        componentName = componentName,
+        destroyOnBack = destroyOnBack,
+        reactInstanceManager = reactInstanceManager,
+        rootView = rootView,
+        isContextReady = isContextReady,
+        onContextReadyChanged = { isContextReady = it },
+        onReactContextReady = { reactContext ->
+            settingsViewModel?.initReactContext(reactContext as ReactApplicationContext)
+            syncThemeToRN(componentName, settingsViewModel, themeSyncCoordinator)
         },
-        modifier = Modifier
-            .fillMaxSize()
-            .background(NovelColors.NovelBackground),
+        onNavigateBack = {
+            bridgeViewModel?.sendIntent(BridgeIntent.NavigateBack(componentName))
+                ?: TimberLogger.w(tag, "BridgeViewModel未初始化，无法处理返回操作")
+        },
     )
-
-    if (!isContextReady) {
-        TimberLogger.v(tag, "显示加载指示器 for $componentName")
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            CircularProgressIndicator()
-        }
-    }
 }
 
 private fun syncThemeToRN(

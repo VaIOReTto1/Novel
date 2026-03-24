@@ -14,7 +14,7 @@
   - 先做 `Phase 5`，把稳定边界落成真正的 Gradle 模块图
   - 再做 `Phase 6`，在新模块边界上建立性能预算、baseline profile 和专项回归
 - `Phase 7` 不适合并入本阶段，因为包体积/依赖/构建效率治理需要在模块图稳定后再做，避免前后基线持续漂移。
-- `2026-03-21` 的 `Stage 3 validated` 与 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-24`，由于模块化深度仍明显不足、首页首开链路刚补齐榜单与推荐流空缓存补拉且宿主根收口仍未完成，`Stage 3` 与 `Phase 5` 继续保持 `in_progress`。
+- `2026-03-21` 的 `Stage 3 validated` 与 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-24`，虽然福利页与 RN 页面入口已开始压薄为宿主 wrapper，但模块化深度整体仍不足、首页首开链路刚补齐榜单与推荐流空缓存补拉且宿主根收口仍未全部完成，`Stage 3` 与 `Phase 5` 继续保持 `in_progress`。
 
 ## 进入条件
 - `Stage 2 = validated`

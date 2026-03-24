@@ -27,7 +27,7 @@
   - Search 分类筛选延后加载
   - RN 主题补发同步
   - 非关键启动初始化与 RN 预热延后到首帧后
-- 截至 `2026-03-24`，由于 `Phase 5` 深化仍未完成、首页首开链路刚补齐榜单与推荐流空缓存补拉且宿主根收口仍未完成，`Stage 3` 继续保持 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
+- 截至 `2026-03-24`，虽然 `feature-reader` 已继续深化，`feature-welfare` 已基本压到只剩 `WelfarePage` 宿主 wrapper，`feature-rn-host` 也已把 `Settings` 主状态层与 `ReactNativePage` 页面内容继续收进模块，但 `Phase 5` 深化与宿主根收口仍未全部完成，`Stage 3` 继续保持 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
 
 ## 核心证据入口
 - `docs/refactor/stage-3-phase-5-6-plan.md`
@@ -51,7 +51,7 @@
   - `docs/refactor/tracking/decision-log.md`
 
 ## Carried Debt / Residual Risks
-- 模块化当前仍明显偏浅，`feature-book / feature-login / feature-reader` 虽已落地但仍未进入完整功能层迁移阶段，`core-network / core-bridge` 也仍需继续深化。
+- 模块化当前仍未完全收口，`feature-book / feature-login / feature-home / feature-search / feature-reader / feature-rn-host` 虽已不同程度深化，但仍未全部进入完整功能层迁移终态，`core-network / core-bridge` 也仍需继续深化。
 - Reader 当前仍缺少直接可重复的：
   - flip action 数值样本
   - settings update 数值样本

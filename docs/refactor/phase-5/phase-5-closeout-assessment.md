@@ -6,9 +6,9 @@
 - 评审目标：确认 `Phase 5` 已在不改变 UI/业务语义的前提下完成首批 `core/*` 与 `feature/*` 模块落地、Bridge / RN Host 兼容验证、模块级验证矩阵闭环，并为 `Phase 6` 建立稳定入口
 - 发布结论：`允许关闭`
 
-## 2026-03-23 reopen 补充说明
+## 2026-03-24 reopen 补充说明
 - 本报告继续保留 `2026-03-21` 的 Phase 5 首轮 closeout 结论，不把当日已验证完成的 checkpoint 抹掉。
-- 截至 `2026-03-23`，由于当前模块图仍明显偏浅，`feature-book / feature-login / feature-reader` 虽已落地但仍未进入完整功能层迁移阶段，`feature-search / feature-rn-host` 也仍未达到终态，`core-network / core-bridge` 仍需继续深化，当前阶段口径已重新切回 `Phase 5 = in_progress`。
+- 截至 `2026-03-24`，虽然 `feature-reader` 已明显深化，`feature-welfare` 已基本压到只剩 `WelfarePage` 宿主 wrapper，`feature-rn-host` 也已把 `Settings` 主状态层与 `ReactNativePage` 页面内容继续收进模块，但 `feature-book / feature-login / feature-home / feature-search` 仍未进入完整功能层迁移终态，`core-network / core-bridge` 也仍需继续深化，当前阶段口径继续保持 `Phase 5 = in_progress`。
 - reopen 后的继续推进，统一以以下文档为准：
   - `docs/refactor/phases/phase-5-gradle-modularization.md`
   - `docs/refactor/phase-5/module-graph-current-state.md`
@@ -64,13 +64,15 @@
 
 ### Feature 模块
 - `feature-welfare`
-  - 第一批纯组件与内部工具层已迁出 `app`
+  - 当前已继续承载 `WelfarePageContent / WelfareViewModel / InitializeWelfarePageUseCase / LoadingIndicator / WebViewComponent / WelfareThemeAdapter / ThemeState / WelfareWebSecurityConfig / WelfareIntent / WelfareState / WelfareEffect / WelfareReducer / WelfareStateAdapter`
+  - `app` 侧当前只保留 `WelfarePage` 宿主 wrapper 与福利弹窗接线
 - `feature-search`
   - `SearchPreferenceStorage` 已迁出 `app`
 - `feature-home`
   - `HomePerformanceOptimizer` 已迁出 `app`
 - `feature-rn-host`
-  - `SettingsPreferenceStorage` 已迁出 `app`
+  - 当前已继续承载 `SettingsPreferenceStorage / SettingsIntent / SettingsState / SettingsEffect / SettingsReducer / SettingsStateAdapter / ReactNativePageContent / MviModuleType`
+  - `app` 侧当前只保留 `ReactNativePage` 对 `MainApplication`、rootView 与 ViewModel 的宿主装配
 
 ### 文档与门禁
 - 已形成可追溯的模块图快照、Host 兼容验证文档、模块验证矩阵。
@@ -89,9 +91,10 @@
 - `core-network` 仍停留在“契约优先”阶段，后续仍需继续深入模块化；但这一项已被明确降级为 carried debt，不再阻塞 `Phase 6`。
 - `app` 仍然是 composition root，且继续承载：
   - Reader
+  - Home / Book / Login 的主协调根
   - RN/Application host roots
-  - `ReactNativePage / NavigationPackage / MainApplication / NavigationBridgeModule`
-- `feature-welfare / feature-search / feature-home / feature-rn-host` 当前仍属于“首轮最小切口”，尚未完成最终功能层彻底搬迁。
+  - `MainPage / NavigationUtil / NavigationPackage / MainApplication / NavigationBridgeModule`
+- `feature-search / feature-home / feature-book / feature-login / feature-rn-host` 当前仍未完成最终功能层彻底搬迁；`feature-welfare` 虽已明显深化，但 `WelfarePage` 仍保留宿主 wrapper。
 - Phase 5 的设备兼容证据强度低于 Phase 4 的最强样本，但结合宿主页容器 spot-check、Bridge contract tests、RN smoke 与历史强证据，已经足够支撑 Phase 5 关闭。
 
 ## 发布质量结论

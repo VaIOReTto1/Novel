@@ -8,7 +8,7 @@ import org.junit.Test
 class RefactorFeatureFlagsTest {
 
     @Test
-    fun returnsBuildConfigDefaultsWhenNoOverrideExists() {
+    fun returnsInjectedDefaultsWhenNoOverrideExists() {
         val flags = NovelUserDefaultsBackedRefactorFeatureFlags(
             userDefaults = FakeNovelUserDefaults(),
             defaults = RefactorFeatureFlagDefaults(

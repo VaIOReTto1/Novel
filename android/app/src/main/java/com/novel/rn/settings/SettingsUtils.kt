@@ -517,7 +517,14 @@ class NightModeWorker(
             val novelUserDefaults = com.novel.utils.Store.UserDefaults.SharedPrefsUserDefaults(prefs)
             val storageFacade = com.novel.core.storage.LegacyStorageFacade(novelUserDefaults)
             val preferenceStorage = SettingsPreferenceStorage(storageFacade)
-            val featureFlags = com.novel.core.config.NovelUserDefaultsBackedRefactorFeatureFlags(novelUserDefaults)
+            val featureFlags = com.novel.core.config.NovelUserDefaultsBackedRefactorFeatureFlags(
+                novelUserDefaults,
+                com.novel.core.config.RefactorFeatureFlagDefaults(
+                    enableBridgeErrorMapper = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER,
+                    enableBridgeSharedScopes = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES,
+                    enableSettingsDataStorePilot = com.novel.BuildConfig.REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT
+                )
+            )
             val dataStorePilot = com.novel.core.storage.SettingsDataStorePilot(
                 com.novel.core.storage.SettingsDataStorePilotModule.provideSettingsPilotDataStore(applicationContext)
             )

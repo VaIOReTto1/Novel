@@ -25,8 +25,6 @@ import com.novel.rn.bridge.delegate.SelectionMenuDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.ComposeMainActivity
-import com.novel.MainApplication
-import com.novel.utils.NavViewModel
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.network.api.author.ai.AiService
 import com.novel.rn.bridge.facade.DefaultNavigationBridgeFacade
@@ -34,6 +32,8 @@ import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.page.read.service.HistoryService
 import com.novel.page.read.service.HistoryServiceImpl
 import com.novel.page.read.service.HistoryItem
+import com.novel.rn.host.DefaultHostNavigationGateway
+import com.novel.rn.host.DefaultReactRootViewCacheGateway
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
@@ -139,24 +139,24 @@ class NavigationBridgeModule(
         entryPoint.refactorFeatureFlags()
     }
 
+    private val hostNavigationGateway by lazy {
+        DefaultHostNavigationGateway()
+    }
+
+    private val reactRootViewCacheGateway by lazy {
+        DefaultReactRootViewCacheGateway()
+    }
+
     private val navigationBridgeFacade by lazy {
         DefaultNavigationBridgeFacade(
             bridgeIntentSink = bridgeViewModel?.let { viewModel ->
                 { intent -> viewModel.sendIntent(intent) }
             },
-            navigateToRoute = { route ->
-                Handler(Looper.getMainLooper()).post {
-                    NavViewModel.navController.value?.navigate(route)
-                }
-            },
-            navigateBack = {
-                Handler(Looper.getMainLooper()).post {
-                    NavViewModel.navController.value?.popBackStack()
-                }
-            },
+            navigateToRoute = hostNavigationGateway::navigateToRoute,
+            navigateBack = hostNavigationGateway::navigateBack,
             clearComponentCache = { componentName ->
                 try {
-                    MainApplication.getInstance()?.clearReactRootViewCache(componentName)
+                    reactRootViewCacheGateway.clearComponentCache(componentName)
                     TimberLogger.d(TAG, "已清理 $componentName 的缓存")
                 } catch (e: Exception) {
                     TimberLogger.e(TAG, "清理 $componentName 的缓存失败", e)
@@ -166,11 +166,7 @@ class NavigationBridgeModule(
     }
 
     private val navigationRouteDelegate by lazy {
-        NavigationRouteDelegate { route ->
-            Handler(Looper.getMainLooper()).post {
-                NavViewModel.navController.value?.navigate(route)
-            }
-        }
+        NavigationRouteDelegate(hostNavigationGateway::navigateToRoute)
     }
 
     private val navigationQueryDelegate by lazy {
@@ -191,7 +187,7 @@ class NavigationBridgeModule(
                         viewModel.sendIntent(BridgeIntent.ClearComponentCache(componentName))
                         NavigationHostResult.Success("已清理 $componentName 的缓存")
                     } ?: run {
-                        MainApplication.getInstance()?.clearReactRootViewCache(componentName)
+                        reactRootViewCacheGateway.clearComponentCache(componentName)
                         NavigationHostResult.Success("已清理 $componentName 的缓存")
                     }
                 } catch (e: Exception) {
@@ -205,7 +201,7 @@ class NavigationBridgeModule(
                         viewModel.sendIntent(BridgeIntent.ClearAllComponentCache)
                         NavigationHostResult.Success("已清理所有组件缓存")
                     } ?: run {
-                        MainApplication.getInstance()?.clearAllReactRootViewCache()
+                        reactRootViewCacheGateway.clearAllComponentCache()
                         NavigationHostResult.Success("已清理所有组件缓存")
                     }
                 } catch (e: Exception) {
@@ -226,21 +222,9 @@ class NavigationBridgeModule(
 
     private val navigationAuthorDelegate by lazy {
         NavigationAuthorDelegate(
-            navigateToRoute = { route ->
-                Handler(Looper.getMainLooper()).post {
-                    NavViewModel.navController.value?.navigate(route)
-                }
-            },
-            navigateToWritePage = {
-                Handler(Looper.getMainLooper()).post {
-                    NavViewModel.navigateToWritePage()
-                }
-            },
-            navigateToBookManage = {
-                Handler(Looper.getMainLooper()).post {
-                    NavViewModel.navigateToBookManage()
-                }
-            }
+            navigateToRoute = hostNavigationGateway::navigateToRoute,
+            navigateToWritePage = hostNavigationGateway::navigateToWritePage,
+            navigateToBookManage = hostNavigationGateway::navigateToBookManage
         )
     }
 
@@ -416,7 +400,7 @@ class NavigationBridgeModule(
         val resolvedQuery = query.orEmpty()
         TimberLogger.d(TAG, "导航到搜索页面, query=$resolvedQuery")
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToSearch(resolvedQuery)
+            hostNavigationGateway.navigateToSearch(resolvedQuery)
         }
     }
 
@@ -437,7 +421,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到成为作家页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToBecomeWriter()
+            hostNavigationGateway.navigateToBecomeWriter()
         }
     }
 
@@ -460,7 +444,7 @@ class NavigationBridgeModule(
             Handler(Looper.getMainLooper()).post {
                 val route = if (isAuthor) "becomewriter?isAuthor=true" else "becomewriter?isAuthor=false"
                 TimberLogger.d(TAG, "导航到becomewriter页面，$route")
-                NavViewModel.navController.value?.navigate(route)
+                hostNavigationGateway.navigateToRoute(route)
             }
         }
     }
@@ -490,7 +474,7 @@ class NavigationBridgeModule(
     fun navigateToAIPage() {
         TimberLogger.d(TAG, "导航到AI写作助手页面")
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToAIPage()
+            hostNavigationGateway.navigateToAIPage()
         }
     }
 
@@ -501,7 +485,7 @@ class NavigationBridgeModule(
     fun navigateToReader(bookId: String, chapterId: String?) {
         TimberLogger.d(TAG, "导航到阅读器页面，bookId=$bookId, chapterId=$chapterId")
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToReader(bookId)
+            hostNavigationGateway.navigateToReader(bookId, chapterId)
         }
     }
 
@@ -513,7 +497,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到推书中心页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToRecommendBook()
+            hostNavigationGateway.navigateToRecommendBook()
         }
     }
 
@@ -525,7 +509,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到我的预约页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToMyReservation()
+            hostNavigationGateway.navigateToMyReservation()
         }
     }
 
@@ -537,7 +521,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到会员中心页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToMemberCenter()
+            hostNavigationGateway.navigateToMemberCenter()
         }
     }
 
@@ -549,7 +533,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到看过的人页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToViewedUsers()
+            hostNavigationGateway.navigateToViewedUsers()
         }
     }
 
@@ -561,7 +545,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到反馈与帮助页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToFeedbackHelp()
+            hostNavigationGateway.navigateToFeedbackHelp()
         }
     }
 
@@ -573,7 +557,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到问题列表页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToQuestionList()
+            hostNavigationGateway.navigateToQuestionList()
         }
     }
 
@@ -585,7 +569,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到问题详情页面")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToQuestionDetail()
+            hostNavigationGateway.navigateToQuestionDetail()
         }
     }
 
@@ -874,7 +858,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到发表评论页面，bookId=$bookId, rating=$rating")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToWriteReview(bookId, rating?.toInt())
+            hostNavigationGateway.navigateToWriteReview(bookId, rating?.toInt())
         }
     }
 
@@ -886,7 +870,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "导航到评论详情页面，评论数据: $commentData")
         
         Handler(Looper.getMainLooper()).post {
-            NavViewModel.navigateToReviewDetail(commentData)
+            hostNavigationGateway.navigateToReviewDetail(commentData)
         }
     }
 

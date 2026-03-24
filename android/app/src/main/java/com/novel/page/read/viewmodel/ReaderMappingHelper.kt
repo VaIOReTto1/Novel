@@ -22,13 +22,15 @@ internal object ReaderMappingHelper {
         currentChapterIndex: Int?,
         totalChapters: Int?,
     ): Int {
-        if (readerInfo.pageCountCache != null && readerInfo.currentChapter != null) {
-            val chapterRange = readerInfo.pageCountCache.chapterPageRanges.find {
-                it.chapterId == readerInfo.currentChapter.id
+        val pageCountCache = readerInfo.pageCountCache
+        val currentChapter = readerInfo.currentChapter
+        if (pageCountCache != null && currentChapter != null) {
+            val chapterRange = pageCountCache.chapterPageRanges.find {
+                it.chapterId == currentChapter.id
             }
             if (chapterRange != null) {
                 val pageIndexInChapter = readerInfo.perChapterPageIndex.coerceAtLeast(0)
-                val totalPages = readerInfo.pageCountCache.totalPages
+                val totalPages = pageCountCache.totalPages
                 return (chapterRange.startPage + pageIndexInChapter + 1).coerceIn(1, totalPages)
             }
         }

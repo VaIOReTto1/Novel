@@ -10,12 +10,12 @@ internal class ReaderHistoryCoordinator {
         state: ReaderState,
         bookId: String,
     ): ReaderIntent.SaveToHistory? {
-        if (!state.isSuccess || state.currentChapter == null || bookId.isBlank()) {
+        val currentChapter = state.currentChapter
+        if (!state.isSuccess || currentChapter == null || bookId.isBlank()) {
             return null
         }
 
         val bookInfo = state.currentPageData?.bookInfo
-        val currentChapter = state.currentChapter
 
         return ReaderIntent.SaveToHistory(
             bookId = bookId,

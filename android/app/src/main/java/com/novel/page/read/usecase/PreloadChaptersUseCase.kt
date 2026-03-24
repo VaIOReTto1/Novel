@@ -204,8 +204,9 @@ class PreloadChaptersUseCase @Inject constructor(
             } finally {
                 preloadingChapters.remove(chapter.id)
             }
-        } else if (cachedChapter != null && cachedChapter.pageData == null && 
-                  state.containerSize.width > 0 && state.containerSize.height > 0 && state.density != null) {
+        } else if (cachedChapter != null && cachedChapter.pageData == null &&
+            state.containerSize.width > 0 && state.containerSize.height > 0) {
+            val density = state.density ?: return
             // 如果章节已缓存但没有分页数据，进行分页处理
             try {
                 logger.logDebug("为已缓存章节进行分页: ${chapter.chapterName}", TAG)
@@ -214,7 +215,7 @@ class PreloadChaptersUseCase @Inject constructor(
                     content = cachedChapter.content,
                     containerSize = state.containerSize,
                     readerSettings = state.readerSettings,
-                    density = state.density
+                    density = density
                 )
 
                 val pageData = PageData(

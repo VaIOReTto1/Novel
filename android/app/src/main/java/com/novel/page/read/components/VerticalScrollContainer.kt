@@ -352,12 +352,13 @@ private fun calculateAbsolutePageNumber(
     loadedChapters: List<PageData>
 ): Int {
     // 如果有全局页码缓存，使用缓存数据
-    if (uiState.pageCountCache != null) {
-        val chapterRange = uiState.pageCountCache.chapterPageRanges.find { 
+    val pageCountCache = uiState.pageCountCache
+    if (pageCountCache != null) {
+        val chapterRange = pageCountCache.chapterPageRanges.find {
             it.chapterId == chapterData.chapterId 
         }
         if (chapterRange != null) {
-            return (chapterRange.startPage + pageInChapter - 1 + 1).coerceIn(1, uiState.pageCountCache.totalPages)
+            return (chapterRange.startPage + pageInChapter).coerceIn(1, pageCountCache.totalPages)
         }
     }
 
@@ -390,8 +391,9 @@ private fun calculateTotalPages(
     uiState: ReaderState
 ): Int {
     // 优先使用页码缓存
-    if (uiState.pageCountCache != null) {
-        return uiState.pageCountCache.totalPages
+    val pageCountCache = uiState.pageCountCache
+    if (pageCountCache != null) {
+        return pageCountCache.totalPages
     }
     
     // 使用渐进计算状态

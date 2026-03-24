@@ -489,8 +489,9 @@ class ReaderStateAdapter(stateFlow: StateFlow<ReaderState>) : StateAdapter<Reade
             appendLine("Loaded Chapters: ${state.loadedChapterData.size}")
             appendLine("Container Size: ${state.containerSize}")
             appendLine("Has Cache: ${state.pageCountCache != null}")
-            if (state.pageCountCache != null) {
-                appendLine("Total Book Pages: ${state.pageCountCache.totalPages}")
+            val pageCountCache = state.pageCountCache
+            if (pageCountCache != null) {
+                appendLine("Total Book Pages: ${pageCountCache.totalPages}")
             }
             appendLine("UI States: Menu=${getCurrentSnapshot().isMenuVisible}, ChapterList=${getCurrentSnapshot().isChapterListVisible}, Settings=${getCurrentSnapshot().isSettingsPanelVisible}")
         }

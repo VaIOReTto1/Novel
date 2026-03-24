@@ -88,13 +88,14 @@ class UpdateSettingsUseCase @Inject constructor(
         }
 
         // 计算当前进度以便重新分页后恢复
-        val currentProgress = if (state.currentPageData?.pages?.isNotEmpty() == true && state.currentPageIndex >= 0) {
-            (state.currentPageIndex.toFloat() + 1) / state.currentPageData.pages.size.toFloat()
+        val currentPageData = state.currentPageData
+        val currentProgress = if (currentPageData?.pages?.isNotEmpty() == true && state.currentPageIndex >= 0) {
+            (state.currentPageIndex.toFloat() + 1) / currentPageData.pages.size.toFloat()
         } else 0f
         
         logger.logDebug(
             "重新分页前当前进度: ${(currentProgress * 100).toInt()}% " +
-            "(页面${state.currentPageIndex + 1}/${state.currentPageData?.pages?.size ?: 0})", 
+            "(页面${state.currentPageIndex + 1}/${currentPageData?.pages?.size ?: 0})",
             TAG
         )
 

@@ -811,14 +811,15 @@ class ReaderViewModel @Inject constructor(
 
                 // 若仍未开始全书分页，启动后台任务
                 val st = getCurrentState()
-                if (st.pageCountCache == null && st.containerSize != IntSize.Zero && st.density != null) {
+                val density = st.density
+                if (st.pageCountCache == null && st.containerSize != IntSize.Zero && density != null) {
                     TimberLogger.d(TAG, "未检测到页数缓存，启动后台全书分页计算")
                     paginationService.fetchAllBookContentAndPaginateInBackground(
                         bookId = st.bookId,
                         chapterList = st.chapterList,
                         readerSettings = st.readerSettings,
                         containerSize = st.containerSize,
-                        density = st.density
+                        density = density
                     )
                 }
             }

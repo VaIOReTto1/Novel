@@ -68,6 +68,7 @@
 - `:feature-home`
   - 首轮 home feature 模块
   - 当前承载：
+    - `HomeBookEntity / HomeBannerEntity / HomeCategoryEntity`
     - `HomePerformanceOptimizer`
     - `CategoryInfo`
     - `HomeCategoryFilterSupport`

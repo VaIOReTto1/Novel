@@ -13,7 +13,10 @@ android {
 }
 
 dependencies {
+    implementation project(':core-common')
     implementation project(':core-storage')
+    implementation "androidx.compose.runtime:runtime:1.8.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0"
     implementation "com.google.dagger:hilt-android:2.52"
     kapt "com.google.dagger:hilt-compiler:2.52"
 

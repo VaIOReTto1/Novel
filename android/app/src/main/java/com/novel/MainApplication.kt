@@ -76,6 +76,14 @@ class MainApplication : Application(), ReactApplication {
     private val deferredInitializationCoordinator = StartupDeferredInitializationCoordinator()
     private val reactNativeHostPathTraceCoordinator = ReactNativeHostPathTraceCoordinator()
     private val startupOrchestrator = MainApplicationStartupOrchestrator()
+    private val startupLifecycleReporter by lazy(LazyThreadSafetyMode.NONE) {
+        MainApplicationStartupLifecycleReporter(
+            onFirstActivityCreate = startupPerformanceMonitor::onFirstActivityCreate,
+            onFirstFrameDrawn = startupPerformanceMonitor::onFirstFrameDrawn,
+            onAppFullyLoaded = startupPerformanceMonitor::onAppFullyLoaded,
+            afterFirstFrame = ::initializeNonCriticalComponentsAfterFirstFrame,
+        )
+    }
     private val reactRootViewRegistry by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         MainApplicationReactRootViewRegistry(
             application = this,
@@ -267,15 +275,14 @@ class MainApplication : Application(), ReactApplication {
     }
 
     fun markAppFullyLoaded() {
-        startupPerformanceMonitor.onAppFullyLoaded()
+        startupLifecycleReporter.markAppFullyLoaded()
     }
 
     fun markFirstFrameDrawn() {
-        startupPerformanceMonitor.onFirstFrameDrawn()
-        initializeNonCriticalComponentsAfterFirstFrame()
+        startupLifecycleReporter.markFirstFrameDrawn()
     }
 
     fun markFirstActivityCreate() {
-        startupPerformanceMonitor.onFirstActivityCreate()
+        startupLifecycleReporter.markFirstActivityCreate()
     }
 }

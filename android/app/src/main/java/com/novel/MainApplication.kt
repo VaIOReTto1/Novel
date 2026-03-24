@@ -75,6 +75,7 @@ class MainApplication : Application(), ReactApplication {
     }
     private val deferredInitializationCoordinator = StartupDeferredInitializationCoordinator()
     private val reactNativeHostPathTraceCoordinator = ReactNativeHostPathTraceCoordinator()
+    private val startupOrchestrator = MainApplicationStartupOrchestrator()
     private val reactRootViewRegistry by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         MainApplicationReactRootViewRegistry(
             application = this,
@@ -117,15 +118,15 @@ class MainApplication : Application(), ReactApplication {
 
         initializeTimber()
 
-        TimberLogger.d(TAG, "===== MainApplication 初始化开始 =====")
+        TimberLogger.d(TAG, "===== MainApplication initialization started =====")
         instance = this
 
         initializeCriticalComponents()
 
         startupPerformanceMonitor.onApplicationCreateEnd()
 
-        logStartupTime("onCreate完成")
-        TimberLogger.i(TAG, "✅ MainApplication 初始化完成")
+        logStartupTime("onCreate completed")
+        TimberLogger.i(TAG, "MainApplication initialization completed")
         TimberLogger.d(TAG, "====================================")
     }
 
@@ -147,46 +148,45 @@ class MainApplication : Application(), ReactApplication {
     }
 
     private fun initializeCriticalComponents() {
-        TimberLogger.d(TAG, "初始化 ThemeManager...")
-        val themeStartTime = System.currentTimeMillis()
-        ThemeManager.initialize(this)
-        val themeDuration = System.currentTimeMillis() - themeStartTime
-        logComponentInitTime("ThemeManager", themeStartTime)
-        startupPerformanceMonitor.recordComponentInitTime("ThemeManager", themeDuration)
-
-        TimberLogger.d(TAG, "初始化 SoLoader...")
-        val soLoaderStartTime = System.currentTimeMillis()
-        SoLoader.init(this, OpenSourceMergedSoMapping)
-        val soLoaderDuration = System.currentTimeMillis() - soLoaderStartTime
-        logComponentInitTime("SoLoader", soLoaderStartTime)
-        startupPerformanceMonitor.recordComponentInitTime("SoLoader", soLoaderDuration)
-
-        if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-            TimberLogger.d(TAG, "启用 React Native 新架构...")
-            val newArchStartTime = System.currentTimeMillis()
-            load()
-            val newArchDuration = System.currentTimeMillis() - newArchStartTime
-            logComponentInitTime("NewArchitecture", newArchStartTime)
-            startupPerformanceMonitor.recordComponentInitTime("NewArchitecture", newArchDuration)
-        }
+        startupOrchestrator.initializeCriticalComponents(
+            isNewArchitectureEnabled = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED,
+            initializeThemeManager = {
+                TimberLogger.d(TAG, "Initialize ThemeManager")
+                ThemeManager.initialize(this)
+            },
+            initializeSoLoader = {
+                TimberLogger.d(TAG, "Initialize SoLoader")
+                SoLoader.init(this, OpenSourceMergedSoMapping)
+            },
+            initializeNewArchitecture = {
+                TimberLogger.d(TAG, "Load React Native new architecture")
+                load()
+            },
+            onComponentInitialized = { componentName, startTime, duration ->
+                logComponentInitTime(componentName, startTime)
+                startupPerformanceMonitor.recordComponentInitTime(componentName, duration)
+            },
+        )
     }
 
     private fun initializeNonCriticalComponentsAfterFirstFrame() {
-        val plan = deferredInitializationCoordinator.createPlanAfterFirstFrame()
-        if (plan.shouldInitializeNetwork) {
-            lazyInitializationScope.launch {
-                ensureNetworkServiceInitialized()
-            }
-        }
-        if (plan.shouldInitializeSettings) {
-            lazyInitializationScope.launch {
-                ensureSettingsServiceInitialized()
-            }
-        }
+        startupOrchestrator.initializeNonCriticalComponentsAfterFirstFrame(
+            plan = deferredInitializationCoordinator.createPlanAfterFirstFrame(),
+            launchNetworkInitialization = {
+                lazyInitializationScope.launch {
+                    ensureNetworkServiceInitialized()
+                }
+            },
+            launchSettingsInitialization = {
+                lazyInitializationScope.launch {
+                    ensureSettingsServiceInitialized()
+                }
+            },
+        )
     }
 
     private fun initializeNetworkServiceInternal() {
-        TimberLogger.d(TAG, "后台初始化 RetrofitClient...")
+        TimberLogger.d(TAG, "Initialize RetrofitClient in background")
         val networkStartTime = System.currentTimeMillis()
         try {
             RetrofitClient.init(
@@ -198,12 +198,12 @@ class MainApplication : Application(), ReactApplication {
             logComponentInitTime("RetrofitClient", networkStartTime)
             startupPerformanceMonitor.recordComponentInitTime("RetrofitClient", networkDuration)
         } catch (error: Exception) {
-            TimberLogger.e(TAG, "网络服务初始化失败", error)
+            TimberLogger.e(TAG, "Failed to initialize network service", error)
         }
     }
 
     private fun initializeSettingsServiceInternal() {
-        TimberLogger.d(TAG, "后台初始化自动主题切换...")
+        TimberLogger.d(TAG, "Initialize SettingsUtils in background")
         val settingsStartTime = System.currentTimeMillis()
         try {
             settingsUtils.initializeAutoThemeSwitch()
@@ -211,7 +211,7 @@ class MainApplication : Application(), ReactApplication {
             logComponentInitTime("SettingsUtils", settingsStartTime)
             startupPerformanceMonitor.recordComponentInitTime("SettingsUtils", settingsDuration)
         } catch (error: Exception) {
-            TimberLogger.e(TAG, "设置服务初始化失败", error)
+            TimberLogger.e(TAG, "Failed to initialize settings service", error)
         }
     }
 
@@ -225,7 +225,7 @@ class MainApplication : Application(), ReactApplication {
 
     override fun onTerminate() {
         super.onTerminate()
-        TimberLogger.d(TAG, "MainApplication 终止，清理资源...")
+        TimberLogger.d(TAG, "MainApplication terminating, cleaning resources")
 
         settingsUtils.cleanup()
         clearAllReactRootViewCache()
@@ -238,13 +238,13 @@ class MainApplication : Application(), ReactApplication {
         val fromOnCreateStart = currentTime - onCreateStartTime
         TimberLogger.i(
             TAG,
-            "⏱️ $milestone - 距应用启动 ${fromAppStart}ms, 距 onCreate 开始 ${fromOnCreateStart}ms",
+            "$milestone - from app start ${fromAppStart}ms, from onCreate start ${fromOnCreateStart}ms",
         )
     }
 
     private fun logComponentInitTime(componentName: String, startTime: Long) {
         val initTime = System.currentTimeMillis() - startTime
-        TimberLogger.d(TAG, "⏱️ $componentName 初始化耗时: ${initTime}ms")
+        TimberLogger.d(TAG, "$componentName initialized in ${initTime}ms")
     }
 
     @SuppressLint("VisibleForTests")

@@ -44,6 +44,7 @@
 - `:feature-welfare`
   - 首轮 welfare feature 模块
   - 当前承载：
+    - `InitializeWelfarePageUseCase`
     - `EnhancedErrorComponent`
     - `SkeletonLoadingComponent`
     - `LoadingIndicator / WebViewComponent`
@@ -186,7 +187,7 @@
 - `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
 - `core-bridge` 已完成首轮真实落地，桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade、network gateway、`BridgeStateAdapter` 与 `BridgeCoroutineScopes` 已迁出 `app`。
 - `core-network` 已不再只有契约壳，`RequestIdInterceptor / NetworkTraceLogHelper / ImmutableListTypeAdapter / LegacyApiExecutor / LegacyApiServiceAdapter` 已进入共享网络层；`DefaultLegacyApiExecutor` 当前作为宿主壳留在 `app`。
-- `feature-welfare` 已接管 bootstrap 与 WebView 性能协调器，并继续接管 `LoadingIndicator / WebViewComponent`、`WelfareThemeAdapter / ThemeState`、`WelfareWebSecurityConfig` 与 `WelfareIntent / WelfareState / WelfareEffect / WelfareReducer / WelfareStateAdapter`，不再只是组件/工具集合。
+- `feature-welfare` 已接管 bootstrap 与 WebView 性能协调器，并继续接管 `InitializeWelfarePageUseCase`、`LoadingIndicator / WebViewComponent`、`WelfareThemeAdapter / ThemeState`、`WelfareWebSecurityConfig` 与 `WelfareIntent / WelfareState / WelfareEffect / WelfareReducer / WelfareStateAdapter`，不再只是组件/工具集合。
 - `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
 
 ## 当前阻塞与下一步

@@ -25,6 +25,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.9.0"
     implementation "androidx.webkit:webkit:1.8.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0"
+    implementation "javax.inject:javax.inject:1"
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.google.truth:truth:1.4.4"

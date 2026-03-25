@@ -479,9 +479,10 @@ class ReaderViewModel @Inject constructor(
                 is UpdateSettingsUseCase.UpdateResult.Success -> {
                     TimberLogger.d(TAG, "设置更新成功")
 
-                    val outcome = readerSettingsCoordinator.applyUpdateResult(
+                    val outcome = readerSettingsCoordinator.applyUpdateSuccess(
                         currentState = getCurrentState(),
-                        result = result,
+                        newPageData = result.newPageData,
+                        newPageIndex = result.newPageIndex,
                     )
                     if (result.newPageData != null) {
                         TimberLogger.d(

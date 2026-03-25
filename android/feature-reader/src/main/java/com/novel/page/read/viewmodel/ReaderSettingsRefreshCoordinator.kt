@@ -2,7 +2,7 @@ package com.novel.page.read.viewmodel
 
 import androidx.compose.ui.unit.IntSize
 
-internal class ReaderSettingsRefreshCoordinator {
+class ReaderSettingsRefreshCoordinator {
 
     fun shouldRefreshPagination(
         previousSettings: ReaderSettings?,

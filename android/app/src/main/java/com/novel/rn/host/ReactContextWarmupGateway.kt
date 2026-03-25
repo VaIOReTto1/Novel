@@ -1,15 +1,18 @@
 package com.novel.rn.host
 
+import com.facebook.react.ReactInstanceManager
+import com.facebook.react.bridge.ReactContext
 import com.novel.MainApplication
 
-interface ReactContextWarmupGateway {
-    fun hasReactContext(): Boolean
-    fun warmUpIfNeeded()
-}
-
 class DefaultReactContextWarmupGateway(
+    private val currentReactContextAction: () -> ReactContext? = {
+        MainApplication.getInstance()?.reactNativeHost?.reactInstanceManager?.currentReactContext
+    },
+    private val reactInstanceManagerAction: () -> ReactInstanceManager? = {
+        MainApplication.getInstance()?.reactNativeHost?.reactInstanceManager
+    },
     private val hasReactContextAction: () -> Boolean = {
-        MainApplication.getInstance()?.reactNativeHost?.reactInstanceManager?.currentReactContext != null
+        currentReactContextAction() != null
     },
     private val createReactContextAction: () -> Unit = {
         MainApplication.getInstance()?.reactNativeHost?.reactInstanceManager?.createReactContextInBackground()
@@ -17,6 +20,10 @@ class DefaultReactContextWarmupGateway(
 ) : ReactContextWarmupGateway {
 
     override fun hasReactContext(): Boolean = hasReactContextAction()
+
+    override fun currentReactContextOrNull(): ReactContext? = currentReactContextAction()
+
+    override fun reactInstanceManagerOrNull(): ReactInstanceManager? = reactInstanceManagerAction()
 
     override fun warmUpIfNeeded() {
         if (!hasReactContext()) {

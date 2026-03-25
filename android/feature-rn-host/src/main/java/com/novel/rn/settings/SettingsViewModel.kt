@@ -1,4 +1,4 @@
-package com.novel.rn.settings
+﻿package com.novel.rn.settings
 
 import androidx.lifecycle.viewModelScope
 import com.facebook.react.bridge.Arguments
@@ -13,7 +13,7 @@ import com.novel.rn.settings.usecase.ExportUserDataUseCase
 import com.novel.rn.settings.usecase.GetUserSettingsUseCase
 import com.novel.rn.settings.usecase.ImportUserDataUseCase
 import com.novel.rn.settings.usecase.UpdateSettingsUseCase
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import com.novel.utils.Store.NovelKeyChain.NovelKeyChain
 import com.novel.utils.Store.NovelKeyChain.NovelKeyChainType
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
@@ -64,16 +64,16 @@ class SettingsViewModel @Inject constructor(
 
     private fun initializeThemeManager() {
         reactContext?.let { context ->
-            TimberLogger.d(TAG, "初始化ThemeManager")
+            CoreLogger.d(TAG, "初始化ThemeManager")
             themeManager = ThemeManager.getInstance(context.applicationContext)
             // 设置系统主题变化回调
             themeManager?.setSystemThemeChangeCallback { actualTheme ->
-                TimberLogger.d(TAG, "系统主题变化回调: $actualTheme")
+                CoreLogger.d(TAG, "系统主题变化回调: $actualTheme")
                 // sendThemeChangeEvent(actualTheme)
             }
-            TimberLogger.d(TAG, "ThemeManager初始化完成")
+            CoreLogger.d(TAG, "ThemeManager初始化完成")
         } ?: run {
-            TimberLogger.w(TAG, "ReactContext为空，无法初始化ThemeManager")
+            CoreLogger.w(TAG, "ReactContext为空，无法初始化ThemeManager")
         }
     }
     
@@ -81,7 +81,7 @@ class SettingsViewModel @Inject constructor(
     val adapter = SettingsStateAdapter(state)
     
     init {
-        TimberLogger.d(TAG, "SettingsViewModel初始化")
+        CoreLogger.d(TAG, "SettingsViewModel初始化")
         // 延迟加载设置，等待ReactContext初始化
     }
     
@@ -135,7 +135,7 @@ class SettingsViewModel @Inject constructor(
         // 🎯 优化：此方法已弃用，由ThemeManager统一发送事件
         return
         try {
-            TimberLogger.d(TAG, "准备发送主题变更事件到RN: $theme")
+            CoreLogger.d(TAG, "准备发送主题变更事件到RN: $theme")
 
             reactContext?.let { context ->
                 // 获取当前完整的主题状态，确保数据一致性
@@ -149,18 +149,18 @@ class SettingsViewModel @Inject constructor(
                     putBoolean("followSystem", isFollowSystem)
                 }
 
-                TimberLogger.d(TAG, "创建事件参数: colorScheme = $theme, currentThemeMode = $currentThemeMode, followSystem = $isFollowSystem")
+                CoreLogger.d(TAG, "创建事件参数: colorScheme = $theme, currentThemeMode = $currentThemeMode, followSystem = $isFollowSystem")
 
                 context
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
                     .emit("ThemeChanged", params)
 
-                TimberLogger.d(TAG, "✅ 主题变更事件已发送到RN: $theme (mode: $currentThemeMode, follow: $isFollowSystem)")
+                CoreLogger.d(TAG, "✅ 主题变更事件已发送到RN: $theme (mode: $currentThemeMode, follow: $isFollowSystem)")
             } ?: run {
-                TimberLogger.w(TAG, "ReactContext为空，无法发送主题变更事件")
+                CoreLogger.w(TAG, "ReactContext为空，无法发送主题变更事件")
             }
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "❌ 发送主题变更事件失败: $theme", e)
+            CoreLogger.e(TAG, "❌ 发送主题变更事件失败: $theme", e)
         }
     }
     
@@ -183,10 +183,10 @@ class SettingsViewModel @Inject constructor(
                 updateState(reduceResult.newState)
                 reduceResult.effect?.let { sendEffect(it) }
                 
-                TimberLogger.d(TAG, "设置加载成功: $settingsData")
+                CoreLogger.d(TAG, "设置加载成功: $settingsData")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "加载设置失败", e)
+                CoreLogger.e(TAG, "加载设置失败", e)
                 handleAsyncError("加载设置失败: ${e.message}")
             }
         }
@@ -215,10 +215,10 @@ class SettingsViewModel @Inject constructor(
                 // 通知RN主题变化
                 // updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
-                TimberLogger.d(TAG, "主题切换成功: ${updateResult.message}, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
+                CoreLogger.d(TAG, "主题切换成功: ${updateResult.message}, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "切换主题失败", e)
+                CoreLogger.e(TAG, "切换主题失败", e)
                 handleAsyncError("切换主题失败: ${e.message}")
             }
         }
@@ -247,10 +247,10 @@ class SettingsViewModel @Inject constructor(
                 // 通知RN主题变化
                 // updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
-                TimberLogger.d(TAG, "设置主题模式成功: $mode, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
+                CoreLogger.d(TAG, "设置主题模式成功: $mode, followSystem: $isFollowSystem, newThemeMode: ${updateResult.newThemeMode}")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "设置主题模式失败", e)
+                CoreLogger.e(TAG, "设置主题模式失败", e)
                 handleAsyncError("设置主题模式失败: ${e.message}")
             }
         }
@@ -275,10 +275,10 @@ class SettingsViewModel @Inject constructor(
                 // 通知RN主题变化
                 // updateResult.newActualTheme?.let { sendThemeChangeEvent(it) }
                 
-                TimberLogger.d(TAG, "设置跟随系统主题成功: $follow")
+                CoreLogger.d(TAG, "设置跟随系统主题成功: $follow")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "设置跟随系统主题失败", e)
+                CoreLogger.e(TAG, "设置跟随系统主题失败", e)
                 handleAsyncError("设置跟随系统主题失败: ${e.message}")
             }
         }
@@ -298,10 +298,10 @@ class SettingsViewModel @Inject constructor(
                 // 发送成功效果
                 sendEffect(SettingsEffect.ShowToast(updateResult.message))
                 
-                TimberLogger.d(TAG, "设置自动夜间模式成功: $enabled")
+                CoreLogger.d(TAG, "设置自动夜间模式成功: $enabled")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "设置自动夜间模式失败", e)
+                CoreLogger.e(TAG, "设置自动夜间模式失败", e)
                 handleAsyncError("设置自动夜间模式失败: ${e.message}")
             }
         }
@@ -322,10 +322,10 @@ class SettingsViewModel @Inject constructor(
                 // 发送成功效果
                 sendEffect(SettingsEffect.ShowToast(updateResult.message))
                 
-                TimberLogger.d(TAG, "设置夜间模式时间成功: $startTime - $endTime")
+                CoreLogger.d(TAG, "设置夜间模式时间成功: $startTime - $endTime")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "设置夜间模式时间失败", e)
+                CoreLogger.e(TAG, "设置夜间模式时间失败", e)
                 handleAsyncError("设置夜间模式时间失败: ${e.message}")
             }
         }
@@ -342,10 +342,10 @@ class SettingsViewModel @Inject constructor(
                 updateState(reduceResult.newState)
                 reduceResult.effect?.let { sendEffect(it) }
                 
-                TimberLogger.d(TAG, "缓存大小计算成功: ${cacheResult.cacheSize}")
+                CoreLogger.d(TAG, "缓存大小计算成功: ${cacheResult.cacheSize}")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "计算缓存大小失败", e)
+                CoreLogger.e(TAG, "计算缓存大小失败", e)
                 handleAsyncError("计算缓存大小失败: ${e.message}")
             }
         }
@@ -362,10 +362,10 @@ class SettingsViewModel @Inject constructor(
                 updateState(reduceResult.newState)
                 reduceResult.effect?.let { sendEffect(it) }
                 
-                TimberLogger.d(TAG, "缓存清理成功: ${cacheResult.message}")
+                CoreLogger.d(TAG, "缓存清理成功: ${cacheResult.message}")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "清理缓存失败", e)
+                CoreLogger.e(TAG, "清理缓存失败", e)
                 handleAsyncError("清理缓存失败: ${e.message}")
             }
         }
@@ -400,7 +400,7 @@ class SettingsViewModel @Inject constructor(
                 }
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "检查当前时间主题失败", e)
+                CoreLogger.e(TAG, "检查当前时间主题失败", e)
                 handleAsyncError("检查当前时间主题失败: ${e.message}")
             }
         }
@@ -427,39 +427,39 @@ class SettingsViewModel @Inject constructor(
     private fun handleConfirmLogout() {
         viewModelScope.launch {
             try {
-                TimberLogger.d(TAG, "开始执行退出登录流程")
+                CoreLogger.d(TAG, "开始执行退出登录流程")
                 
                 // 清除用户数据
-                TimberLogger.d(TAG, "开始清除用户数据")
+                CoreLogger.d(TAG, "开始清除用户数据")
                 clearUserDataDirectly()
-                TimberLogger.d(TAG, "用户数据清除完成")
+                CoreLogger.d(TAG, "用户数据清除完成")
                 
                 val asyncResult = SettingsAsyncResult.LogoutSuccess("退出登录成功")
                 val reduceResult = settingsReducer.handleAsyncResult(getCurrentState(), asyncResult)
                 updateState(reduceResult.newState)
                 
-                TimberLogger.d(TAG, "准备发送LogoutSuccess效果")
+                CoreLogger.d(TAG, "准备发送LogoutSuccess效果")
                 reduceResult.effect?.let { 
-                    TimberLogger.d(TAG, "发送效果: $it")
+                    CoreLogger.d(TAG, "发送效果: $it")
                     sendEffect(it) 
                 } ?: run {
-                    TimberLogger.w(TAG, "没有效果需要发送")
+                    CoreLogger.w(TAG, "没有效果需要发送")
                 }
                 
-                TimberLogger.d(TAG, "退出登录流程完成")
+                CoreLogger.d(TAG, "退出登录流程完成")
                 
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "退出登录失败", e)
+                CoreLogger.e(TAG, "退出登录失败", e)
                 val asyncResult = SettingsAsyncResult.LogoutError("退出登录失败: ${e.message}")
                 val reduceResult = settingsReducer.handleAsyncResult(getCurrentState(), asyncResult)
                 updateState(reduceResult.newState)
                 
-                TimberLogger.d(TAG, "准备发送LogoutError效果")
+                CoreLogger.d(TAG, "准备发送LogoutError效果")
                 reduceResult.effect?.let { 
-                    TimberLogger.d(TAG, "发送错误效果: $it")
+                    CoreLogger.d(TAG, "发送错误效果: $it")
                     sendEffect(it) 
                 } ?: run {
-                    TimberLogger.w(TAG, "没有错误效果需要发送")
+                    CoreLogger.w(TAG, "没有错误效果需要发送")
                 }
             }
         }
@@ -478,9 +478,9 @@ class SettingsViewModel @Inject constructor(
             // 清除用户偏好设置
             novelUserDefaults.clearAll()
             
-            TimberLogger.d(TAG, "用户数据清理完成")
+            CoreLogger.d(TAG, "用户数据清理完成")
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "清理用户数据时发生错误", e)
+            CoreLogger.e(TAG, "清理用户数据时发生错误", e)
             throw e
         }
     }
@@ -495,3 +495,4 @@ class SettingsViewModel @Inject constructor(
     // 添加公共方法供桥接模块使用
     fun getStateForBridge(): SettingsState = getCurrentState()
 }
+

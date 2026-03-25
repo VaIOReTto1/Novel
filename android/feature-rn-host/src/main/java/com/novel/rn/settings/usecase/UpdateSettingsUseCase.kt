@@ -1,9 +1,9 @@
-package com.novel.rn.settings.usecase
+﻿package com.novel.rn.settings.usecase
 
 import com.novel.core.domain.BaseUseCase
 import com.novel.rn.settings.SettingsUtils
 import com.novel.ui.theme.ThemeManager
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import javax.inject.Inject
 
 /**
@@ -39,7 +39,7 @@ class UpdateSettingsUseCase @Inject constructor(
     )
 
     override suspend fun execute(parameters: UpdateParams): UpdateResult {
-        TimberLogger.d(TAG, "开始更新设置: ${parameters::class.simpleName}")
+        CoreLogger.d(TAG, "开始更新设置: ${parameters::class.simpleName}")
         
         try {
             when (parameters) {
@@ -55,7 +55,7 @@ class UpdateSettingsUseCase @Inject constructor(
                         newActualTheme = actualTheme
                     )
                     
-                    TimberLogger.d(TAG, "主题模式更新成功: ${parameters.mode} -> $actualTheme")
+                    CoreLogger.d(TAG, "主题模式更新成功: ${parameters.mode} -> $actualTheme")
                     return result
                 }
                 
@@ -83,7 +83,7 @@ class UpdateSettingsUseCase @Inject constructor(
                         newActualTheme = actualTheme
                     )
                     
-                    TimberLogger.d(TAG, "跟随系统主题更新成功: ${parameters.follow}, newMode: $newMode, actualTheme: $actualTheme")
+                    CoreLogger.d(TAG, "跟随系统主题更新成功: ${parameters.follow}, newMode: $newMode, actualTheme: $actualTheme")
                     return result
                 }
                 
@@ -94,7 +94,7 @@ class UpdateSettingsUseCase @Inject constructor(
                         message = "自动切换夜间模式已${if (parameters.enabled) "开启" else "关闭"}"
                     )
                     
-                    TimberLogger.d(TAG, "自动夜间模式更新成功: ${parameters.enabled}")
+                    CoreLogger.d(TAG, "自动夜间模式更新成功: ${parameters.enabled}")
                     return result
                 }
                 
@@ -105,7 +105,7 @@ class UpdateSettingsUseCase @Inject constructor(
                         message = "夜间模式时间已设置为: ${parameters.startTime} - ${parameters.endTime}"
                     )
                     
-                    TimberLogger.d(TAG, "夜间模式时间更新成功: ${parameters.startTime} - ${parameters.endTime}")
+                    CoreLogger.d(TAG, "夜间模式时间更新成功: ${parameters.startTime} - ${parameters.endTime}")
                     return result
                 }
                 
@@ -122,12 +122,12 @@ class UpdateSettingsUseCase @Inject constructor(
                         newActualTheme = newActualTheme
                     )
                     
-                    TimberLogger.d(TAG, "主题切换成功: $newThemeMode -> $newActualTheme (followSystem: ${themeManager.followSystemTheme.value})")
+                    CoreLogger.d(TAG, "主题切换成功: $newThemeMode -> $newActualTheme (followSystem: ${themeManager.followSystemTheme.value})")
                     return result
                 }
             }
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "更新设置失败: ${parameters::class.simpleName}", e)
+            CoreLogger.e(TAG, "更新设置失败: ${parameters::class.simpleName}", e)
             throw e
         }
     }
@@ -141,3 +141,4 @@ class UpdateSettingsUseCase @Inject constructor(
         }
     }
 }
+

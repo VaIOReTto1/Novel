@@ -1,8 +1,8 @@
-package com.novel.rn.settings.usecase
+﻿package com.novel.rn.settings.usecase
 
 import com.novel.core.domain.BaseUseCase
 import com.novel.rn.settings.SettingsUtils
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import javax.inject.Inject
 
 /**
@@ -33,7 +33,7 @@ class ClearCacheUseCase @Inject constructor(
     )
 
     override suspend fun execute(parameters: CacheOperation): CacheResult {
-        TimberLogger.d(TAG, "开始缓存操作: ${parameters::class.simpleName}")
+        CoreLogger.d(TAG, "开始缓存操作: ${parameters::class.simpleName}")
         
         try {
             when (parameters) {
@@ -45,7 +45,7 @@ class ClearCacheUseCase @Inject constructor(
                         success = true
                     )
                     
-                    TimberLogger.d(TAG, "缓存清理完成: $clearResult")
+                    CoreLogger.d(TAG, "缓存清理完成: $clearResult")
                     return result
                 }
                 
@@ -59,12 +59,12 @@ class ClearCacheUseCase @Inject constructor(
                         success = true
                     )
                     
-                    TimberLogger.d(TAG, "缓存大小计算完成: $formattedSize")
+                    CoreLogger.d(TAG, "缓存大小计算完成: $formattedSize")
                     return result
                 }
             }
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "缓存操作失败: ${parameters::class.simpleName}", e)
+            CoreLogger.e(TAG, "缓存操作失败: ${parameters::class.simpleName}", e)
             
             // 返回业务错误而不是异常
             return CacheResult(
@@ -74,3 +74,4 @@ class ClearCacheUseCase @Inject constructor(
         }
     }
 } 
+

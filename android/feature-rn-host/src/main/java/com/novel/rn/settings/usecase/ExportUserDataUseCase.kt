@@ -1,11 +1,11 @@
-package com.novel.rn.settings.usecase
+﻿package com.novel.rn.settings.usecase
 
 import android.content.Context
 import androidx.compose.runtime.Stable
 import com.novel.core.domain.BaseUseCase
 import com.novel.rn.settings.SettingsUtils
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -70,7 +70,7 @@ class ExportUserDataUseCase @Inject constructor(
     )
 
     override suspend fun execute(parameters: ExportParams): ExportResult {
-        TimberLogger.d(TAG, "开始导出用户数据")
+        CoreLogger.d(TAG, "开始导出用户数据")
         
         try {
             val settingsBackup = SettingsBackup(
@@ -117,11 +117,11 @@ class ExportUserDataUseCase @Inject constructor(
                 message = "用户数据导出成功"
             )
             
-            TimberLogger.d(TAG, "用户数据导出成功: ${exportFile.absolutePath}, 大小: $fileSize")
+            CoreLogger.d(TAG, "用户数据导出成功: ${exportFile.absolutePath}, 大小: $fileSize")
             return result
             
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "导出用户数据失败", e)
+            CoreLogger.e(TAG, "导出用户数据失败", e)
             
             return ExportResult(
                 success = false,
@@ -139,7 +139,7 @@ class ExportUserDataUseCase @Inject constructor(
                 "settingsVersion" to "1.0"
             )
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "获取自定义设置失败", e)
+            CoreLogger.e(TAG, "获取自定义设置失败", e)
             emptyMap()
         }
     }
@@ -156,8 +156,9 @@ class ExportUserDataUseCase @Inject constructor(
             }
             "${packageInfo.versionName} ($versionCode)"
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "获取应用版本失败", e)
+            CoreLogger.e(TAG, "获取应用版本失败", e)
             "Unknown"
         }
     }
 } 
+

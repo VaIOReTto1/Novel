@@ -1,4 +1,4 @@
-package com.novel.rn.settings
+﻿package com.novel.rn.settings
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,7 +12,7 @@ import com.novel.core.config.RefactorFeatureFlags
 import com.novel.core.storage.SettingsDataStoreMirrorCoordinator
 import com.novel.core.storage.SettingsDataStoreSnapshot
 import com.novel.ui.theme.ThemeManager
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineScope
@@ -75,7 +75,7 @@ class SettingsUtils @Inject constructor(
      */
     suspend fun clearAllCache(): String = withContext(Dispatchers.IO) {
         try {
-            TimberLogger.d(TAG, "开始清理缓存...")
+            CoreLogger.d(TAG, "开始清理缓存...")
             var totalSize = 0L
 
             // 计算缓存大小
@@ -88,11 +88,11 @@ class SettingsUtils @Inject constructor(
             clearImageCache()
 
             val result = "已清理 ${formatCacheSize(totalSize)} 缓存"
-            TimberLogger.d(TAG, "缓存清理完成: $result")
+            CoreLogger.d(TAG, "缓存清理完成: $result")
             result
         } catch (e: Exception) {
             val errorMsg = "清理缓存失败: ${e.message}"
-            TimberLogger.e(TAG, errorMsg, e)
+            CoreLogger.e(TAG, errorMsg, e)
             errorMsg
         }
     }
@@ -111,10 +111,10 @@ class SettingsUtils @Inject constructor(
             totalSize += getDirSize(cacheDir)
             externalCacheDir?.let { totalSize += getDirSize(it) }
 
-            TimberLogger.d(TAG, "缓存大小计算完成: ${formatCacheSize(totalSize)}")
+            CoreLogger.d(TAG, "缓存大小计算完成: ${formatCacheSize(totalSize)}")
             totalSize
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "计算缓存大小失败", e)
+            CoreLogger.e(TAG, "计算缓存大小失败", e)
             0L
         }
     }
@@ -142,12 +142,12 @@ class SettingsUtils @Inject constructor(
             val currentMode = getCurrentNightMode()
             val isFollowingSystem = isFollowSystemTheme()
             
-            TimberLogger.d(TAG, "🎯 toggleNightMode开始 - 当前主题模式: $currentMode, 跟随系统: $isFollowingSystem")
+            CoreLogger.d(TAG, "🎯 toggleNightMode开始 - 当前主题模式: $currentMode, 跟随系统: $isFollowingSystem")
             
             val newMode = if (isFollowingSystem) {
                 // 如果当前是跟随系统主题，根据当前实际主题切换到对应的固定主题
                 val actualTheme = themeManager.getCurrentActualThemeMode()
-                TimberLogger.d(TAG, "🔄 跟随系统主题模式，当前实际主题: $actualTheme")
+                CoreLogger.d(TAG, "🔄 跟随系统主题模式，当前实际主题: $actualTheme")
                 when (actualTheme) {
                     "light" -> "dark"  // 当前是浅色，切换到深色
                     "dark" -> "light"  // 当前是深色，切换到浅色
@@ -155,7 +155,7 @@ class SettingsUtils @Inject constructor(
                 }
             } else {
                 // 如果不是跟随系统主题，在浅色和深色之间切换
-                TimberLogger.d(TAG, "🔄 固定主题模式，当前模式: $currentMode")
+                CoreLogger.d(TAG, "🔄 固定主题模式，当前模式: $currentMode")
                 when (currentMode) {
                     "light" -> "dark"
                     "dark" -> "light"
@@ -163,20 +163,20 @@ class SettingsUtils @Inject constructor(
                 }
             }
 
-            TimberLogger.d(TAG, "🔧 准备设置主题模式为: $newMode")
+            CoreLogger.d(TAG, "🔧 准备设置主题模式为: $newMode")
             setNightMode(newMode)
-            TimberLogger.d(TAG, "✅ setNightMode调用完成")
+            CoreLogger.d(TAG, "✅ setNightMode调用完成")
             
             val result = if (isFollowingSystem) {
                 "已关闭跟随系统主题，切换至${getNightModeDisplayName(newMode)}模式"
             } else {
                 "已切换至${getNightModeDisplayName(newMode)}模式"
             }
-            TimberLogger.d(TAG, "🎉 主题切换完成: $result")
+            CoreLogger.d(TAG, "🎉 主题切换完成: $result")
             result
         } catch (e: Exception) {
             val errorMsg = "切换夜间模式失败: ${e.message}"
-            TimberLogger.e(TAG, errorMsg, e)
+            CoreLogger.e(TAG, errorMsg, e)
             errorMsg
         }
     }
@@ -186,15 +186,15 @@ class SettingsUtils @Inject constructor(
      * 优化：只通知原生，不再期待回读
      */
     fun setNightMode(mode: String) {
-        TimberLogger.d(TAG, "🔧 开始设置主题模式: $mode")
+        CoreLogger.d(TAG, "🔧 开始设置主题模式: $mode")
         settingsPreferenceStorage.setNightMode(mode)
-        TimberLogger.d(TAG, "📝 已保存主题模式到配置: $mode")
+        CoreLogger.d(TAG, "📝 已保存主题模式到配置: $mode")
         syncSettingsDataStorePilotIfEnabled()
 
         // 🎯 优化：只通知ThemeManager，不期待返回值
-        TimberLogger.d(TAG, "🎨 调用themeManager.setThemeMode: $mode")
+        CoreLogger.d(TAG, "🎨 调用themeManager.setThemeMode: $mode")
         themeManager.setThemeMode(mode, notifyRN = false) // RN端会立即更新本地状态
-        TimberLogger.d(TAG, "✅ themeManager.setThemeMode调用完成")
+        CoreLogger.d(TAG, "✅ themeManager.setThemeMode调用完成")
 
         when (mode) {
             "light" -> {
@@ -239,7 +239,7 @@ class SettingsUtils @Inject constructor(
      * 使用WorkManager替换Handler轮询
      */
     fun setAutoNightMode(enabled: Boolean) {
-        TimberLogger.d(TAG, "🎯 设置自动切换夜间模式: $enabled")
+        CoreLogger.d(TAG, "🎯 设置自动切换夜间模式: $enabled")
         settingsPreferenceStorage.setAutoNightModeEnabled(enabled)
         syncSettingsDataStorePilotIfEnabled()
 
@@ -261,7 +261,7 @@ class SettingsUtils @Inject constructor(
      * 设置夜间模式时间段
      */
     fun setNightModeTime(startTime: String, endTime: String) {
-        TimberLogger.d(TAG, "设置夜间模式时间: $startTime - $endTime")
+        CoreLogger.d(TAG, "设置夜间模式时间: $startTime - $endTime")
         settingsPreferenceStorage.setNightModeTime(startTime, endTime)
         syncSettingsDataStorePilotIfEnabled()
 
@@ -289,11 +289,11 @@ class SettingsUtils @Inject constructor(
      * 🎯 优化：使用WorkManager启动基于时间的主题检查
      */
     fun startTimeBasedThemeCheckWithWorkManager() {
-        TimberLogger.d(TAG, "🎯 启动基于WorkManager的主题检查")
+        CoreLogger.d(TAG, "🎯 启动基于WorkManager的主题检查")
 
         // 如果已经在跟随系统主题，不启动定时切换
         if (isFollowSystemTheme()) {
-            TimberLogger.d(TAG, "当前跟随系统主题，跳过定时切换")
+            CoreLogger.d(TAG, "当前跟随系统主题，跳过定时切换")
             return
         }
 
@@ -314,9 +314,9 @@ class SettingsUtils @Inject constructor(
                 nightModeWorkRequest
             )
 
-            TimberLogger.d(TAG, "✅ WorkManager定时主题检查已启动，间隔: ${WORK_CHECK_INTERVAL_MINUTES}分钟")
+            CoreLogger.d(TAG, "✅ WorkManager定时主题检查已启动，间隔: ${WORK_CHECK_INTERVAL_MINUTES}分钟")
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "启动WorkManager定时主题检查失败", e)
+            CoreLogger.e(TAG, "启动WorkManager定时主题检查失败", e)
         }
     }
 
@@ -324,13 +324,13 @@ class SettingsUtils @Inject constructor(
      * 🎯 优化：停止基于WorkManager的主题检查
      */
     fun stopTimeBasedThemeCheckWithWorkManager() {
-        TimberLogger.d(TAG, "🎯 停止基于WorkManager的主题检查")
+        CoreLogger.d(TAG, "🎯 停止基于WorkManager的主题检查")
         try {
             val workManager = WorkManager.getInstance(context)
             workManager.cancelUniqueWork(NIGHT_MODE_WORK_TAG)
-            TimberLogger.d(TAG, "✅ WorkManager定时主题检查已停止")
+            CoreLogger.d(TAG, "✅ WorkManager定时主题检查已停止")
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "停止WorkManager定时主题检查失败", e)
+            CoreLogger.e(TAG, "停止WorkManager定时主题检查失败", e)
         }
     }
 
@@ -354,7 +354,7 @@ class SettingsUtils @Inject constructor(
      */
     internal fun checkAndSwitchThemeBasedOnTime() {
         if (!isAutoNightModeEnabled() || isFollowSystemTheme()) {
-            TimberLogger.v(TAG, "自动切换未启用或正在跟随系统主题，跳过时间检查")
+            CoreLogger.v(TAG, "自动切换未启用或正在跟随系统主题，跳过时间检查")
             return
         }
 
@@ -380,14 +380,14 @@ class SettingsUtils @Inject constructor(
         val currentMode = getCurrentNightMode()
         val expectedMode = if (shouldBeNightMode) "dark" else "light"
 
-        TimberLogger.v(TAG, "时间检查: 当前时间=${String.format("%02d:%02d", currentHour, currentMinute)}, " +
+        CoreLogger.v(TAG, "时间检查: 当前时间=${String.format("%02d:%02d", currentHour, currentMinute)}, " +
                 "夜间时段=${startTime}-${endTime}, 应为夜间模式=${shouldBeNightMode}, " +
                 "当前模式=${currentMode}, 期望模式=${expectedMode}")
 
         if (currentMode != expectedMode) {
-            TimberLogger.d(TAG, "🎯 时间切换主题: $currentMode -> $expectedMode")
+            CoreLogger.d(TAG, "🎯 时间切换主题: $currentMode -> $expectedMode")
             setNightMode(expectedMode)
-            TimberLogger.d(TAG, "✅ 定时主题切换完成: $expectedMode")
+            CoreLogger.d(TAG, "✅ 定时主题切换完成: $expectedMode")
         }
     }
 
@@ -402,11 +402,11 @@ class SettingsUtils @Inject constructor(
                 val minute = parts[1].toInt()
                 hour * 60 + minute
             } else {
-                TimberLogger.w(TAG, "时间格式错误: $timeStr，使用默认值")
+                CoreLogger.w(TAG, "时间格式错误: $timeStr，使用默认值")
                 22 * 60 // 默认22:00
             }
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "解析时间失败: $timeStr", e)
+            CoreLogger.e(TAG, "解析时间失败: $timeStr", e)
             22 * 60 // 默认22:00
         }
     }
@@ -415,7 +415,7 @@ class SettingsUtils @Inject constructor(
      * 初始化定时切换（在应用启动时调用）
      */
     fun initializeAutoThemeSwitch() {
-        TimberLogger.d(TAG, "初始化自动主题切换")
+        CoreLogger.d(TAG, "初始化自动主题切换")
         if (isAutoNightModeEnabled() && !isFollowSystemTheme()) {
             startTimeBasedThemeCheckWithWorkManager()
         }
@@ -425,7 +425,7 @@ class SettingsUtils @Inject constructor(
      * 清理资源（在应用退出时调用）
      */
     fun cleanup() {
-        TimberLogger.d(TAG, "清理定时器资源")
+        CoreLogger.d(TAG, "清理定时器资源")
         stopTimeBasedThemeCheckWithWorkManager()
     }
 
@@ -508,7 +508,7 @@ class NightModeWorker(
 
     override fun doWork(): Result {
         return try {
-            TimberLogger.d(TAG, "🎯 NightModeWorker执行定时主题检查")
+            CoreLogger.d(TAG, "🎯 NightModeWorker执行定时主题检查")
             
             // 获取SettingsUtils实例并执行检查
             // 注意：由于Worker运行在后台，需要确保依赖注入可用
@@ -520,9 +520,9 @@ class NightModeWorker(
             val featureFlags = com.novel.core.config.NovelUserDefaultsBackedRefactorFeatureFlags(
                 novelUserDefaults,
                 com.novel.core.config.RefactorFeatureFlagDefaults(
-                    enableBridgeErrorMapper = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER,
-                    enableBridgeSharedScopes = com.novel.BuildConfig.REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES,
-                    enableSettingsDataStorePilot = com.novel.BuildConfig.REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT
+                    enableBridgeErrorMapper = com.novel.feature.rnhost.BuildConfig.REFACTOR_ENABLE_BRIDGE_ERROR_MAPPER,
+                    enableBridgeSharedScopes = com.novel.feature.rnhost.BuildConfig.REFACTOR_ENABLE_BRIDGE_SHARED_SCOPES,
+                    enableSettingsDataStorePilot = com.novel.feature.rnhost.BuildConfig.REFACTOR_ENABLE_SETTINGS_DATASTORE_PILOT
                 )
             )
             val dataStorePilot = com.novel.core.storage.SettingsDataStorePilot(
@@ -537,11 +537,12 @@ class NightModeWorker(
             
             settingsUtils.checkAndSwitchThemeBasedOnTime()
             
-            TimberLogger.d(TAG, "✅ NightModeWorker执行完成")
+            CoreLogger.d(TAG, "✅ NightModeWorker执行完成")
             Result.success()
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "❌ NightModeWorker执行失败", e)
+            CoreLogger.e(TAG, "❌ NightModeWorker执行失败", e)
             Result.failure()
         }
     }
 }
+

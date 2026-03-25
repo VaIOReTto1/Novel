@@ -1,4 +1,4 @@
-package com.novel.rn.settings.usecase
+﻿package com.novel.rn.settings.usecase
 
 import android.content.Context
 import androidx.compose.runtime.Stable
@@ -6,7 +6,7 @@ import com.novel.core.domain.BaseUseCase
 import com.novel.rn.settings.SettingsUtils
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.Store.UserDefaults.NovelUserDefaults
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -55,7 +55,7 @@ class ImportUserDataUseCase @Inject constructor(
     )
 
     override suspend fun execute(parameters: ImportParams): ImportResult {
-        TimberLogger.d(TAG, "开始导入用户数据: ${parameters.filePath}")
+        CoreLogger.d(TAG, "开始导入用户数据: ${parameters.filePath}")
         
         try {
             val importFile = File(parameters.filePath)
@@ -73,7 +73,7 @@ class ImportUserDataUseCase @Inject constructor(
             val userDataBackup = try {
                 json.decodeFromString<ExportUserDataUseCase.UserDataBackup>(jsonString)
             } catch (e: SerializationException) {
-                TimberLogger.e(TAG, "解析备份文件失败", e)
+                CoreLogger.e(TAG, "解析备份文件失败", e)
                 return ImportResult(
                     success = false,
                     message = "备份文件格式错误: ${e.message}"
@@ -114,13 +114,13 @@ class ImportUserDataUseCase @Inject constructor(
                     themeManager.setThemeMode(settings.themeMode)
                     
                     importedCount += 4 // 主题相关的4个设置项
-                    TimberLogger.d(TAG, "主题设置导入成功")
+                    CoreLogger.d(TAG, "主题设置导入成功")
                 } else {
                     skippedCount += 4
-                    TimberLogger.d(TAG, "跳过主题设置（已存在且不覆盖）")
+                    CoreLogger.d(TAG, "跳过主题设置（已存在且不覆盖）")
                 }
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "导入主题设置失败", e)
+                CoreLogger.e(TAG, "导入主题设置失败", e)
                 skippedCount += 4
             }
             
@@ -134,7 +134,7 @@ class ImportUserDataUseCase @Inject constructor(
                         skippedCount++
                     }
                 } catch (e: Exception) {
-                    TimberLogger.e(TAG, "导入自定义设置失败: $key", e)
+                    CoreLogger.e(TAG, "导入自定义设置失败: $key", e)
                     skippedCount++
                 }
             }
@@ -147,11 +147,11 @@ class ImportUserDataUseCase @Inject constructor(
                 backupInfo = backupInfo
             )
             
-            TimberLogger.d(TAG, "用户数据导入成功: 导入${importedCount}项，跳过${skippedCount}项")
+            CoreLogger.d(TAG, "用户数据导入成功: 导入${importedCount}项，跳过${skippedCount}项")
             return result
             
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "导入用户数据失败", e)
+            CoreLogger.e(TAG, "导入用户数据失败", e)
             
             return ImportResult(
                 success = false,
@@ -168,3 +168,4 @@ class ImportUserDataUseCase @Inject constructor(
         return 4 + settings.customSettings.size // 4个主题设置 + 自定义设置
     }
 } 
+

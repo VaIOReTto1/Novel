@@ -8,11 +8,10 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.novel.ComposeMainActivity
 import com.novel.rn.bridge.BridgeCoroutineScopes
 import com.novel.rn.bridge.rejectMapped
+import com.novel.rn.host.DefaultHostBridgeViewModelGateway
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -56,6 +55,10 @@ class SettingsBridgeModule(
 
     override fun getName(): String = "SettingsBridge"
 
+    private val hostBridgeViewModelGateway by lazy {
+        DefaultHostBridgeViewModelGateway()
+    }
+
     private val bridgeCoroutineScopes: BridgeCoroutineScopes by lazy {
         EntryPointAccessors.fromApplication(
             reactContext.applicationContext,
@@ -71,17 +74,10 @@ class SettingsBridgeModule(
     }
 
     private val settingsViewModel: SettingsViewModel?
-        get() = try {
-            val activity = currentActivity as? ComposeMainActivity
-            activity?.let {
-                val vm = ViewModelProvider(it as ViewModelStoreOwner)[SettingsViewModel::class.java]
-                vm.initReactContext(reactContext)
-                vm
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "无法获取SettingsViewModel", e)
-            null
-        }
+        get() = hostBridgeViewModelGateway.getSettingsViewModelOrNull(
+            owner = currentActivity as? ViewModelStoreOwner,
+            reactContext = reactContext,
+        )
 
     /**
      * 🎯 优化：统一主题切换接口（Promise版本，单向数据流）

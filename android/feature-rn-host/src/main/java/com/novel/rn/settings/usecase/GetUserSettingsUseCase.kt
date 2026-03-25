@@ -1,10 +1,10 @@
-package com.novel.rn.settings.usecase
+﻿package com.novel.rn.settings.usecase
 
 import androidx.compose.runtime.Stable
 import com.novel.core.domain.BaseUseCase
 import com.novel.rn.settings.SettingsUtils
 import com.novel.ui.theme.ThemeManager
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import javax.inject.Inject
 
 /**
@@ -37,7 +37,7 @@ class GetUserSettingsUseCase @Inject constructor(
     )
 
     override suspend fun execute(parameters: Unit): SettingsData {
-        TimberLogger.d(TAG, "开始获取用户设置")
+        CoreLogger.d(TAG, "开始获取用户设置")
         
         try {
             // 获取主题相关设置
@@ -55,7 +55,7 @@ class GetUserSettingsUseCase @Inject constructor(
                 val size = settingsUtils.calculateCacheSize()
                 settingsUtils.formatCacheSize(size)
             } catch (e: Exception) {
-                TimberLogger.e(TAG, "计算缓存大小失败", e)
+                CoreLogger.e(TAG, "计算缓存大小失败", e)
                 "计算失败"
             }
             
@@ -69,12 +69,13 @@ class GetUserSettingsUseCase @Inject constructor(
                 cacheSize = cacheSize
             )
             
-            TimberLogger.d(TAG, "用户设置获取成功: $settingsData")
+            CoreLogger.d(TAG, "用户设置获取成功: $settingsData")
             return settingsData
             
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "获取用户设置失败", e)
+            CoreLogger.e(TAG, "获取用户设置失败", e)
             throw e
         }
     }
 } 
+

@@ -1,10 +1,10 @@
-package com.novel.rn.settings.usecase
+﻿package com.novel.rn.settings.usecase
 
 import androidx.compose.runtime.Stable
 import com.novel.core.domain.BaseUseCase
 import com.novel.rn.settings.SettingsUtils
 import com.novel.ui.theme.ThemeManager
-import com.novel.utils.TimberLogger
+import com.novel.core.logging.CoreLogger
 import javax.inject.Inject
 
 /**
@@ -63,7 +63,7 @@ class SettingsCompositeUseCase @Inject constructor(
     }
     
     override suspend fun execute(params: Params): Result {
-        TimberLogger.d(TAG, "开始执行组合操作: $params")
+        CoreLogger.d(TAG, "开始执行组合操作: $params")
         
         return try {
             when {
@@ -75,7 +75,7 @@ class SettingsCompositeUseCase @Inject constructor(
                 else -> Result(isSuccess = false, errorMessage = "未知操作类型")
             }
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "组合操作执行失败", e)
+            CoreLogger.e(TAG, "组合操作执行失败", e)
             Result(isSuccess = false, errorMessage = e.message ?: "未知错误")
         }
     }
@@ -84,19 +84,19 @@ class SettingsCompositeUseCase @Inject constructor(
      * 加载初始设置数据
      */
     private suspend fun loadInitialSettings(): Result {
-        TimberLogger.d(TAG, "加载初始设置数据")
+        CoreLogger.d(TAG, "加载初始设置数据")
         
         return try {
             val settingsData = getUserSettingsUseCase(Unit)
             
-            TimberLogger.d(TAG, "初始设置数据加载完成")
+            CoreLogger.d(TAG, "初始设置数据加载完成")
             
             Result(
                 settingsData = settingsData,
                 isSuccess = true
             )
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "加载初始设置数据失败", e)
+            CoreLogger.e(TAG, "加载初始设置数据失败", e)
             Result(isSuccess = false, errorMessage = e.message)
         }
     }
@@ -105,20 +105,20 @@ class SettingsCompositeUseCase @Inject constructor(
      * 同步主题到RN
      */
     private suspend fun syncThemeWithRN(): Result {
-        TimberLogger.d(TAG, "同步主题到RN")
+        CoreLogger.d(TAG, "同步主题到RN")
         
         return try {
             // 获取当前设置
             val settingsData = getUserSettingsUseCase(Unit)
             
-            TimberLogger.d(TAG, "主题同步到RN完成")
+            CoreLogger.d(TAG, "主题同步到RN完成")
             
             Result(
                 settingsData = settingsData,
                 isSuccess = true
             )
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "同步主题到RN失败", e)
+            CoreLogger.e(TAG, "同步主题到RN失败", e)
             Result(isSuccess = false, errorMessage = e.message)
         }
     }
@@ -127,7 +127,7 @@ class SettingsCompositeUseCase @Inject constructor(
      * 执行主题切换
      */
     private suspend fun performThemeToggle(): Result {
-        TimberLogger.d(TAG, "执行主题切换")
+        CoreLogger.d(TAG, "执行主题切换")
         
         return try {
             val updateResult = updateSettingsUseCase(UpdateSettingsUseCase.UpdateParams.ToggleTheme)
@@ -135,7 +135,7 @@ class SettingsCompositeUseCase @Inject constructor(
             // 重新获取设置数据以确保同步
             val settingsData = getUserSettingsUseCase(Unit)
             
-            TimberLogger.d(TAG, "主题切换完成")
+            CoreLogger.d(TAG, "主题切换完成")
             
             Result(
                 settingsData = settingsData,
@@ -143,7 +143,7 @@ class SettingsCompositeUseCase @Inject constructor(
                 isSuccess = true
             )
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "主题切换失败", e)
+            CoreLogger.e(TAG, "主题切换失败", e)
             Result(isSuccess = false, errorMessage = e.message)
         }
     }
@@ -152,7 +152,7 @@ class SettingsCompositeUseCase @Inject constructor(
      * 计算并清理缓存
      */
     private suspend fun calculateAndClearCache(): Result {
-        TimberLogger.d(TAG, "计算并清理缓存")
+        CoreLogger.d(TAG, "计算并清理缓存")
         
         return try {
             // 先计算缓存大小
@@ -162,14 +162,14 @@ class SettingsCompositeUseCase @Inject constructor(
             if (calculateResult.success && calculateResult.cacheSize != "0B") {
                 val clearResult = clearCacheUseCase(ClearCacheUseCase.CacheOperation.ClearAll)
                 
-                TimberLogger.d(TAG, "缓存计算和清理完成")
+                CoreLogger.d(TAG, "缓存计算和清理完成")
                 
                 Result(
                     cacheResult = clearResult,
                     isSuccess = true
                 )
             } else {
-                TimberLogger.d(TAG, "无需清理缓存")
+                CoreLogger.d(TAG, "无需清理缓存")
                 
                 Result(
                     cacheResult = calculateResult,
@@ -177,7 +177,7 @@ class SettingsCompositeUseCase @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "缓存操作失败", e)
+            CoreLogger.e(TAG, "缓存操作失败", e)
             Result(isSuccess = false, errorMessage = e.message)
         }
     }
@@ -186,17 +186,18 @@ class SettingsCompositeUseCase @Inject constructor(
      * 导出设置
      */
     private suspend fun exportSettings(exportPath: String?): Result {
-        TimberLogger.d(TAG, "导出设置")
+        CoreLogger.d(TAG, "导出设置")
         
         return try {
             // 注意：这里需要实际的ExportUserDataUseCase实例
             // 在实际使用中应该通过Hilt注入获取
-            TimberLogger.w(TAG, "导出功能需要Context依赖，请使用完整的依赖注入")
+            CoreLogger.w(TAG, "导出功能需要Context依赖，请使用完整的依赖注入")
             
             Result(isSuccess = false, errorMessage = "导出功能暂不可用")
         } catch (e: Exception) {
-            TimberLogger.e(TAG, "导出设置失败", e)
+            CoreLogger.e(TAG, "导出设置失败", e)
             Result(isSuccess = false, errorMessage = e.message)
         }
     }
 }
+

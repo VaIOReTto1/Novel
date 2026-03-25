@@ -22,21 +22,17 @@ import com.novel.rn.bridge.delegate.NavigationThemeResult
 import com.novel.rn.bridge.delegate.NavigationRouteDelegate
 import com.novel.rn.bridge.delegate.NavigationQueryDelegate
 import com.novel.rn.bridge.delegate.SelectionMenuDelegate
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.novel.ComposeMainActivity
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.network.api.author.ai.AiService
 import com.novel.rn.bridge.facade.DefaultNavigationBridgeFacade
 import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.page.read.service.HistoryService
-import com.novel.page.read.service.HistoryServiceImpl
 import com.novel.page.read.service.HistoryItem
+import com.novel.rn.host.DefaultHostBridgeViewModelGateway
 import com.novel.rn.host.DefaultHostNavigationGateway
 import com.novel.rn.host.DefaultReactRootViewCacheGateway
-import com.novel.utils.Store.UserDefaults.NovelUserDefaults
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -70,7 +66,9 @@ class NavigationBridgeModule(
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface NavigationBridgeEntryPoint {
-        fun novelUserDefaults(): NovelUserDefaults
+        fun historyService(): HistoryService
+        fun authorService(): com.novel.utils.network.api.author.AuthorService
+        fun aiService(): AiService
         fun navigationBridgeNetworkGateway(): NavigationBridgeNetworkGateway
         fun bridgeCoroutineScopes(): BridgeCoroutineScopes
         fun refactorFeatureFlags(): RefactorFeatureFlags
@@ -82,37 +80,24 @@ class NavigationBridgeModule(
 
     override fun getName(): String = "NavigationBridge"
 
+    private val hostBridgeViewModelGateway by lazy {
+        DefaultHostBridgeViewModelGateway()
+    }
+
     private val bridgeViewModel: BridgeViewModel?
-        get() = try {
-            val activity = currentActivity as? ComposeMainActivity
-            activity?.let { 
-                ViewModelProvider(it as ViewModelStoreOwner)[BridgeViewModel::class.java]
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "无法获取BridgeViewModel", e)
-            null
-        }
+        get() = hostBridgeViewModelGateway.getBridgeViewModelOrNull(currentActivity as? ViewModelStoreOwner)
 
     private val settingsViewModel: SettingsViewModel?
-        get() = try {
-            val activity = currentActivity as? ComposeMainActivity
-            activity?.let {
-                val vm = ViewModelProvider(it as ViewModelStoreOwner)[SettingsViewModel::class.java]
-                vm.initReactContext(reactContext)
-                vm
-            }
-        } catch (e: Exception) {
-            TimberLogger.e(TAG, "无法获取SettingsViewModel", e)
-            null
-        }
+        get() = hostBridgeViewModelGateway.getSettingsViewModelOrNull(
+            owner = currentActivity as? ViewModelStoreOwner,
+            reactContext = reactContext,
+        )
 
     private val historyService: HistoryService by lazy {
-        val entryPoint = EntryPointAccessors.fromApplication(
+        EntryPointAccessors.fromApplication(
             reactContext.applicationContext,
             NavigationBridgeEntryPoint::class.java
-        )
-        val userDefaults = entryPoint.novelUserDefaults()
-        HistoryServiceImpl(userDefaults)
+        ).historyService()
     }
 
     private val navigationBridgeNetworkGateway: NavigationBridgeNetworkGateway by lazy {
@@ -137,6 +122,20 @@ class NavigationBridgeModule(
             NavigationBridgeEntryPoint::class.java
         )
         entryPoint.refactorFeatureFlags()
+    }
+
+    private val authorService by lazy {
+        EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            NavigationBridgeEntryPoint::class.java,
+        ).authorService()
+    }
+
+    private val aiService by lazy {
+        EntryPointAccessors.fromApplication(
+            reactContext.applicationContext,
+            NavigationBridgeEntryPoint::class.java,
+        ).aiService()
     }
 
     private val hostNavigationGateway by lazy {
@@ -434,8 +433,7 @@ class NavigationBridgeModule(
         bridgeCoroutineScopes.io.launch {
             var isAuthor = false
             try {
-                val service = com.novel.utils.network.api.author.AuthorService()
-                val resp = service.getAuthorStatusBlocking()
+                val resp = authorService.getAuthorStatusBlocking()
                 val dataVal = resp.data
                 isAuthor = (dataVal == "0")
             } catch (e: Exception) {
@@ -675,7 +673,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "RN调用获取作家状态")
         bridgeCoroutineScopes.io.launch {
             try {
-                val resp = com.novel.utils.network.api.author.AuthorService().getAuthorStatusBlocking()
+                val resp = authorService.getAuthorStatusBlocking()
                 val payload = navigationContentQueryDelegate.buildAuthorStatusPayload(resp)
                 val map = Arguments.createMap().apply {
                     payload.code?.let { putString("code", it) }
@@ -981,7 +979,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "AI 润色，请求文本长度=${text.length}")
         bridgeCoroutineScopes.io.launch {
             try {
-                val resp = AiService().polishTextBlocking(text)
+                val resp = aiService.polishTextBlocking(text)
                 bridgeCoroutineScopes.main.launch {
                     when (val result = navigationAiDelegate.buildResult(resp, "AI_POLISH_ERROR")) {
                         is NavigationAiResult.Success -> promise.resolve(result.data)
@@ -1007,7 +1005,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "AI 扩写，请求文本长度=${text.length}，ratio=$ratio")
         bridgeCoroutineScopes.io.launch {
             try {
-                val resp = AiService().expandTextBlocking(text, ratio)
+                val resp = aiService.expandTextBlocking(text, ratio)
                 bridgeCoroutineScopes.main.launch {
                     when (val result = navigationAiDelegate.buildResult(resp, "AI_EXPAND_ERROR")) {
                         is NavigationAiResult.Success -> promise.resolve(result.data)
@@ -1033,7 +1031,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "AI 缩写，请求文本长度=${text.length}，ratio=$ratio")
         bridgeCoroutineScopes.io.launch {
             try {
-                val resp = AiService().condenseTextBlocking(text, ratio)
+                val resp = aiService.condenseTextBlocking(text, ratio)
                 bridgeCoroutineScopes.main.launch {
                     when (val result = navigationAiDelegate.buildResult(resp, "AI_CONDENSE_ERROR")) {
                         is NavigationAiResult.Success -> promise.resolve(result.data)
@@ -1059,7 +1057,7 @@ class NavigationBridgeModule(
         TimberLogger.d(TAG, "AI 续写，请求文本长度=${text.length}，length=$length")
         bridgeCoroutineScopes.io.launch {
             try {
-                val resp = AiService().continueTextBlocking(text, length)
+                val resp = aiService.continueTextBlocking(text, length)
                 bridgeCoroutineScopes.main.launch {
                     when (val result = navigationAiDelegate.buildResult(resp, "AI_CONTINUE_ERROR")) {
                         is NavigationAiResult.Success -> promise.resolve(result.data)
@@ -1091,7 +1089,6 @@ class NavigationBridgeModule(
         // 执行网络请求
         bridgeCoroutineScopes.io.launch {
             try {
-                val authorService = com.novel.utils.network.api.author.AuthorService()
                 val req = navigationAuthorDelegate.createAuthorRegisterRequest(
                     penName = penName,
                     sex = sex

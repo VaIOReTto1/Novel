@@ -2,20 +2,26 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 apply from: rootProject.file("gradle/android-library-common.gradle")
 
 android {
     namespace "com.novel.feature.home"
-    configureNovelAndroidLibrary(delegate, false)
+    configureNovelAndroidLibrary(delegate, true)
 }
 
 dependencies {
+    implementation project(':core-common')
     implementation "androidx.compose.runtime:runtime:1.8.2"
     implementation "androidx.room:room-runtime:2.7.1"
     implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
+    implementation "com.google.dagger:hilt-android:2.52"
+    kapt "com.google.dagger:hilt-compiler:2.52"
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.google.truth:truth:1.4.4"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0"
 }

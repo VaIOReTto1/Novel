@@ -1,75 +1,22 @@
-# 第三阶段关闭总结
+# Stage 3 Closeout Summary
 
-## 摘要
-- 阶段：`Stage 3 = Phase 5-6`
-- 当前状态：`in_progress（2026-03-24 reopen 持续推进；2026-03-21 closeout 作为历史 checkpoint 保留）`
-- 最终结论：
-  - `2026-03-21 checkpoint: Phase 5 = validated`
-  - `Phase 6 = validated`
-  - `2026-03-21 checkpoint: Stage 3 = validated`
+## 当前结论
+- `Stage 3 = Phase 5-6`
+- 当前状态：`validated`
+- 生效日期：`2026-03-26`
 
-## 当前达成情况
-- `Stage 2` 已正式关闭并标记为 `validated`。
-- `Phase 5` 已在 `2026-03-21` 完成首批 `core/*` 与 `feature/*` 模块的稳定落地、模块级验证矩阵与 Host / Bridge 兼容闭环。
-- `Phase 6` 已完成：
-  - 启动基线
-  - 滚动基线
-  - 搜索 / Reader / Welfare-WebView / RN Host / Bridge 基线
-  - 性能预算摘要
-  - baseline profile blocker 固化
-  - 数据库索引 / FTS4 治理入口
-  - 缓存清理治理入口
-- 打开书籍“请求错误” blocker 在 `Stage 3` 期间保持绿色，没有被性能专项或模块化回归重新打开。
-- closeout 后又继续落了多批低风险优化：
-  - request / trace id header 注入
-  - Reader 初始化去重与设置刷新收敛
-  - Welfare 初始化去重与 WebView `FCP / TTI` 接线
-  - Search 分类筛选延后加载
-  - RN 主题补发同步
-  - 非关键启动初始化与 RN 预热延后到首帧后
-- 截至 `2026-03-24`，虽然 `feature-reader` 已继续深化，`feature-welfare` 已基本压到只剩 `WelfarePage` 宿主 wrapper，`feature-rn-host` 也已把 `Settings` 主状态层与 `ReactNativePage` 页面内容继续收进模块，但 `Phase 5` 深化与宿主根收口仍未全部完成，`Stage 3` 继续保持 `in_progress`，`Phase 7` 保持 `planned` 且不提前启动。
+## 结论说明
+- `Phase 5` reopen 高风险收口已经完成，模块边界重新闭环。
+- `Phase 6` 继续保持 `validated`，本轮 reopen 没有打开新的性能 blocker。
+- `2026-03-21` 的 Stage 3 closeout 保留为历史 checkpoint；当前权威事实以 `2026-03-26 reopen closeout` 为准。
 
-## 核心证据入口
-- `docs/refactor/stage-3-phase-5-6-plan.md`
-- `docs/refactor/phases/phase-5-gradle-modularization.md`
-- `docs/refactor/phases/phase-6-performance-governance.md`
-- `docs/refactor/phase-5/phase-5-closeout-assessment.md`
-- `docs/refactor/phase-6/phase-6-closeout-assessment.md`
-- `docs/refactor/phase-6/stage-3-performance-baseline-2026-03-21.md`
-- `docs/refactor/phase-6/database-index-and-fts-governance-2026-03-22.md`
-- `docs/refactor/phase-6/cache-cleanup-governance-2026-03-22.md`
+## Stage 3 最终事实
+- `app` 只保留 Android 强制入口、route/page wrapper、RN module adapter 和 host 默认实现。
+- `feature-home/search/login/book/reader/rn-host/welfare` 已承接各自 feature 根状态机或主状态层。
+- `core-common/core-ui/core-bridge/core-bridge-contract/core-storage/core-network` 已形成可复用共享层。
 
-## 原始蓝图与优化后续
-- 原始蓝图兑现情况见：
-  - `docs/refactor/blueprint-v2-phase-3-6-gap-analysis.md`
-- `Phase 6` 剩余可继续推进的优化机会见：
-  - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
-
-## Closeout 后补充优化入口
-- closeout 后继续推进的优化与文档追平记录见：
-  - `docs/refactor/phase-6/phase-6-optimization-opportunity-catalog.md`
-  - `docs/refactor/tracking/decision-log.md`
-
-## Carried Debt / Residual Risks
-- 模块化当前仍未完全收口，`feature-book / feature-login / feature-home / feature-search / feature-reader / feature-rn-host` 虽已不同程度深化，但仍未全部进入完整功能层迁移终态，`core-network / core-bridge` 也仍需继续深化。
-- Reader 当前仍缺少直接可重复的：
-  - flip action 数值样本
-  - settings update 数值样本
-- 数据库索引 / `FTS4` / 缓存清理的治理入口已落地，但收益复盘仍未完成。
-- 全仓 `DataStore` 与 observability 闭环仍未完成；当前只完成了低风险试点与 request / trace header 注入。
-
-## 是否允许进入下一阶段
-- 当前结论：`not_yet`
-- 下一阶段：`Phase 7`
-- 下一阶段状态：`planned（保持未启动，待 Phase 5 深化再次关闭后进入）`
-
-## 下一阶段主线
-- 包体积 baseline 与 artifact diff
-- Gradle / npm 依赖治理
-- build efficiency baseline 与 clean/incremental 对比
-
-## 2026-03-24 Wave D addendum
-- `NavigationUtil` 宸茬粡鍒嗙鍑?`NavViewModel`锛屽鑸浘銆丷N route shell 涓庡叏灞€瀵艰埅鐘舵€佺殑鍚堝苟瀹夸富鏍规帴缁撳凡缁х画鍘嬭杽銆?
-- `MainPage` 宸茬敱鈥滃ぇ鍨嬪簳閮ㄥ鍣?鈥濇敹鍙ｅ埌鈥滅姸鎬佽閰?+ feature content 瑁呴厤鈥濓紝pager / bottom bar / overlay 鍧囧凡鎷嗗嚭鐙珛瀹夸富 helper銆?
-- `ComposeMainActivity` 宸茬敱鈥滃叆鍙?+ 鍐呭鏍?+ 棣栧抚鍚庨鐑?+ lifecycle forwarding鈥濇敹鍙ｅ埌鈥滃叆鍙?+ lifecycle forwarding鈥濓紝Compose 鍐呭鏍戜笌棣栧抚鍚庨鐑崗璋冮€昏緫宸叉媶鍑恒€?
-- 鎴嚦 `2026-03-24` 鐨勫綋鍓嶅疄浜嬫眰鏄細Wave D 宸叉槑鏄炬敹绱?host root锛屼絾 `MainApplication` 绛夋渶楂橀闄╂牴鍏ュ彛浠嶆湭鍋氬ぇ姝ュ瓙鎼縼锛屽洜姝?Stage 3 / Phase 5 浠嶄繚鎸?`in_progress`鑰屼笉鎻愬墠瀹ｅ竷鍐嶅叧闂€?
+## 证据入口
+- [Phase 5 closeout assessment](./phase-5/phase-5-closeout-assessment.md)
+- [Phase 5 模块验证矩阵（2026-03-26）](./phase-5/module-verification-matrix-2026-03-26.md)
+- [Phase 5 host-compat 验证（2026-03-26）](./phase-5/host-compat-validation-2026-03-26.md)
+- [Phase 5-6 验证看板](./tracking/phase-5-6-validation-board.md)

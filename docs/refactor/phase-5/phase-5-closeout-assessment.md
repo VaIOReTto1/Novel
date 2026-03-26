@@ -1,111 +1,31 @@
-# Phase 5 关闭评审与签字确认报告
+# Phase 5 Closeout Assessment
 
 ## 摘要
-- 阶段：`Phase 5 - Gradle 模块化与边界搬迁`
-- 关闭状态：`validated（2026-03-21 历史 checkpoint）`
-- 评审目标：确认 `Phase 5` 已在不改变 UI/业务语义的前提下完成首批 `core/*` 与 `feature/*` 模块落地、Bridge / RN Host 兼容验证、模块级验证矩阵闭环，并为 `Phase 6` 建立稳定入口
-- 发布结论：`允许关闭`
+- 阶段：`Phase 5`
+- 口径：`2026-03-26 reopen closeout`
+- 结论：`validated`
 
-## 2026-03-24 reopen 补充说明
-- 本报告继续保留 `2026-03-21` 的 Phase 5 首轮 closeout 结论，不把当日已验证完成的 checkpoint 抹掉。
-- 截至 `2026-03-24`，虽然 `feature-reader` 已明显深化，`feature-welfare` 已基本压到只剩 `WelfarePage` 宿主 wrapper，`feature-rn-host` 也已把 `Settings` 主状态层与 `ReactNativePage` 页面内容继续收进模块，但 `feature-book / feature-login / feature-home / feature-search` 仍未进入完整功能层迁移终态，`core-network / core-bridge` 也仍需继续深化，当前阶段口径继续保持 `Phase 5 = in_progress`。
-- reopen 后的继续推进，统一以以下文档为准：
-  - `docs/refactor/phases/phase-5-gradle-modularization.md`
-  - `docs/refactor/phase-5/module-graph-current-state.md`
-  - `docs/refactor/tracking/phase-5-6-validation-board.md`
-  - `docs/refactor/tracking/decision-log.md`
+## 关闭条件
+- `app` 不再持有 `home/search/login/book/reader` feature ViewModel 根。
+- `BridgeViewModel / SettingsViewModel` 已迁入 `feature-rn-host`。
+- `MainApplication / ComposeMainActivity / NavigationPackage / NavigationBridgeModule / SettingsBridgeModule / ReactNativePage / ReactNativeBridge / MainPage / NavigationUtil` 只保留入口、wrapper 或 adapter 职责。
+- 模块验证矩阵、host-compat 验证、rollback index、decision log、Stage 3 summary 已同步到 reopen 后真实事实。
 
-## 评审范围
-- `docs/refactor/README.md`
-- `docs/refactor/phases/phase-5-gradle-modularization.md`
-- `docs/refactor/phase-5/module-graph-current-state.md`
-- `docs/refactor/phase-5/host-compat-validation-2026-03-21.md`
-- `docs/refactor/phase-5/module-verification-matrix-2026-03-21.md`
-- `docs/refactor/tracking/phase-5-6-validation-board.md`
-- `docs/refactor/tracking/decision-log.md`
-- `docs/refactor/stage-3-closeout-summary.md`
-- 与 `V5-01 ~ V5-06` 对应的模块源码、验证命令和证据归档
+## 本轮原子提交
+1. `6e39db8` `收口RN宿主根与桥接状态层`
+2. `41a5ba8` `迁移搜索根状态机到feature-search`
+3. `6c0d662` `迁移登录根状态机到feature-login`
+4. `6799388` `迁移书籍详情根状态机到feature-book`
+5. `f8a5d7c` `迁移Reader设置协调件到feature-reader`
+6. `ff71292` `迁移首页根状态机到feature-home`
+7. `5a5c81c` `迁移阅读器根状态机到feature-reader`
+8. `bb8349e` `收口app宿主薄包装层`
 
-## 评审方法
-### 第一轮主审
-- 逐项复核 `V5-01 ~ V5-06` 是否都有可追溯证据。
-- 检查模块图、控制面板、看板、决策日志之间的阶段状态是否一致。
+## 最终验证
+- `android/gradlew.bat :core-common:testDebugUnitTest :core-ui:testDebugUnitTest :core-bridge:testDebugUnitTest :core-bridge-contract:testDebugUnitTest :core-storage:testDebugUnitTest :core-network:testDebugUnitTest :feature-home:testDebugUnitTest :feature-search:testDebugUnitTest :feature-welfare:testDebugUnitTest :feature-rn-host:testDebugUnitTest :feature-book:testDebugUnitTest :feature-login:testDebugUnitTest :feature-reader:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"`
+- `android/gradlew.bat app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"`
+- `npm test -- --runInBand __tests__/bridge/NativeBridgeEventContracts.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx`
 
-### 第二轮主审
-- 二次逐字检查：
-  - 是否存在模板占位或口径冲突
-  - 是否有未经声明的 carried debt
-  - 是否把未完成的 `core-network` 深化错误标注为已完成
-
-### 作者差异收敛
-- 作者用“事实补证 + 状态统一 + 风险声明”方式闭环发现项。
-- 所有接受项同步更新主文档、看板和决策日志。
-
-## V5-01 ~ V5-06 结论
-| ID | 结论 | 关键依据 | 关闭判断 |
-| --- | --- | --- | --- |
-| V5-01 | 模块图与依赖规则已稳定 | `module-graph-current-state.md`、`settings.gradle`、共享构建约定 | `green` |
-| V5-02 | 首批 `core/*` 模块已稳定 | `core-common / core-storage / core-network / core-bridge-contract` 源码与模块级测试命令 | `green` |
-| V5-03 | 首批 `feature/*` 模块已稳定起步 | `feature-welfare / feature-search / feature-home / feature-rn-host` 最小切口与回归命令 | `green` |
-| V5-04 | Bridge / RN Host 跨模块兼容保持稳定 | 宿主页兼容验证文档、Bridge contract tests、RN settings smoke、Phase 4 强证据基线 | `green` |
-| V5-05 | 模块级 build/test/lint 矩阵已闭环 | `module-verification-matrix-2026-03-21.md`、`npm test`、`app:testDebugUnitTest`、`lintDebug`、`compileDebugAndroidTestKotlin`、`:macrobenchmark:assemble` | `green` |
-| V5-06 | Phase 6 进入条件已明确 | `phase-6-performance-governance.md`、`decision-log.md`、`stage-3-closeout-summary.md` | `green` |
-
-## 代码与文档产出摘要
-### Core 模块
-- `core-common`
-  - 抽离共享 `core` 基础：`StableFlow / MVI / BaseUseCase / AppError / OnDemandInitializer / CoreLogger`
-- `core-storage`
-  - 延续存储抽象与兼容层
-- `core-network`
-  - 保持契约优先的首批抽离
-- `core-bridge-contract`
-  - 抽离 `NavigationHostDelegate / NavigationRouteDelegate / SelectionMenuDelegate`
-
-### Feature 模块
-- `feature-welfare`
-  - 当前已继续承载 `WelfarePageContent / WelfareViewModel / InitializeWelfarePageUseCase / LoadingIndicator / WebViewComponent / WelfareThemeAdapter / ThemeState / WelfareWebSecurityConfig / WelfareIntent / WelfareState / WelfareEffect / WelfareReducer / WelfareStateAdapter`
-  - `app` 侧当前只保留 `WelfarePage` 宿主 wrapper 与福利弹窗接线
-- `feature-search`
-  - `SearchPreferenceStorage` 已迁出 `app`
-- `feature-home`
-  - `HomePerformanceOptimizer` 已迁出 `app`
-- `feature-rn-host`
-  - 当前已继续承载 `SettingsPreferenceStorage / SettingsIntent / SettingsState / SettingsEffect / SettingsReducer / SettingsStateAdapter / ReactNativePageContent / MviModuleType`
-  - `app` 侧当前只保留 `ReactNativePage` 对 `MainApplication`、rootView 与 ViewModel 的宿主装配
-
-### 文档与门禁
-- 已形成可追溯的模块图快照、Host 兼容验证文档、模块验证矩阵。
-- 控制面板、看板、决策日志与阶段状态已统一切到 `Phase 5 = validated`。
-
-## 修订记录
-| 日期 | 修订项 | 影响文档 | 结果 |
-| --- | --- | --- | --- |
-| 2026-03-21 | 新增 Phase 5 模块图与命令矩阵证据 | `phase-5/module-graph-current-state.md`, `phase-5/module-verification-matrix-2026-03-21.md` | 完成 |
-| 2026-03-21 | 补齐 Phase 5 宿主页兼容验证 | `phase-5/host-compat-validation-2026-03-21.md` | 完成 |
-| 2026-03-21 | 将控制面板与看板切换到 `Phase 5 validated / Phase 6 planned` | `README.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md` | 完成 |
-| 2026-03-21 | 新增本报告作为 Phase 5 权威 closeout 文档 | `phase-5/phase-5-closeout-assessment.md` | 完成 |
-| 2026-03-23 | 将本报告降级为历史 checkpoint，并补充 reopen 说明 | `README.md`, `stage-3-phase-5-6-plan.md`, `phase-5-gradle-modularization.md`, `phase-5-6-validation-board.md`, `stage-3-closeout-summary.md`, `decision-log.md` | 进行中 |
-
-## 残余风险
-- `core-network` 仍停留在“契约优先”阶段，后续仍需继续深入模块化；但这一项已被明确降级为 carried debt，不再阻塞 `Phase 6`。
-- `app` 仍然是 composition root，且继续承载：
-  - Reader
-  - Home / Book / Login 的主协调根
-  - RN/Application host roots
-  - `MainPage / NavigationUtil / NavigationPackage / MainApplication / NavigationBridgeModule`
-- `feature-search / feature-home / feature-book / feature-login / feature-rn-host` 当前仍未完成最终功能层彻底搬迁；`feature-welfare` 虽已明显深化，但 `WelfarePage` 仍保留宿主 wrapper。
-- Phase 5 的设备兼容证据强度低于 Phase 4 的最强样本，但结合宿主页容器 spot-check、Bridge contract tests、RN smoke 与历史强证据，已经足够支撑 Phase 5 关闭。
-
-## 发布质量结论
-- 结论：`pass`
-- 说明：
-  - `V5-01 ~ V5-06` 全部达到绿色关闭口径
-  - 无新增 route / payload / RN 组件名变化
-  - Reader 仍留在 `app`，未违反本阶段边界
-  - Phase 6 可从当前模块边界直接启动
-
-## 签字确认
-- `Author`: 当前重构实施者 / signed / 2026-03-21
-- `Primary Reviewer`: 文档主审查者 / signed / 2026-03-21
-- `Final Approver`: 阶段门禁批准者 / signed / 2026-03-21
+## 风险结论
+- 当前剩余风险主要是环境层面的 Kotlin/KSP 增量缓存抖动，而不是 reopen 代码回归。
+- 由于最终矩阵已经在非增量模式下稳定通过，本轮 reopen closeout 可以成立。

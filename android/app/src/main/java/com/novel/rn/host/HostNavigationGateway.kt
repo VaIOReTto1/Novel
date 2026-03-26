@@ -4,36 +4,12 @@ import android.os.Handler
 import android.os.Looper
 import com.novel.utils.NavViewModel
 
-interface HostNavigationGateway {
-    fun navigateToRoute(route: String)
-    fun navigateBack()
-    fun navigateToWritePage()
-    fun navigateToBookManage()
-    fun navigateToSearch(query: String)
-    fun navigateToBecomeWriter()
-    fun navigateToAIPage()
-    fun navigateToReader(bookId: String, chapterId: String? = null)
-    fun navigateToRecommendBook()
-    fun navigateToMyReservation()
-    fun navigateToMemberCenter()
-    fun navigateToViewedUsers()
-    fun navigateToFeedbackHelp()
-    fun navigateToQuestionList()
-    fun navigateToQuestionDetail()
-    fun navigateToWriteReview(bookId: String?, rating: Int?)
-    fun navigateToReviewDetail(commentData: String)
-}
-
 class DefaultHostNavigationGateway(
     private val dispatchToHost: ((() -> Unit) -> Unit) = { block ->
         Handler(Looper.getMainLooper()).post(block)
     },
-    private val navigateToRouteAction: (String) -> Unit = { route ->
-        NavViewModel.navController.value?.navigate(route)
-    },
-    private val navigateBackAction: () -> Unit = {
-        NavViewModel.navController.value?.popBackStack()
-    },
+    private val navigateToRouteAction: (String) -> Unit = NavViewModel::navigateToRoute,
+    private val navigateBackAction: () -> Unit = NavViewModel::navigateBack,
     private val navigateToWritePageAction: () -> Unit = NavViewModel::navigateToWritePage,
     private val navigateToBookManageAction: () -> Unit = NavViewModel::navigateToBookManage,
     private val navigateToSearchAction: (String) -> Unit = NavViewModel::navigateToSearch,

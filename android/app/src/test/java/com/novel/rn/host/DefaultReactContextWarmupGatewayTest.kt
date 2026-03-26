@@ -30,4 +30,15 @@ class DefaultReactContextWarmupGatewayTest {
 
         assertThat(events).containsExactly("warmup")
     }
+
+    @Test
+    fun `currentReactContextOrNull returns current context action result`() {
+        val gateway = DefaultReactContextWarmupGateway(
+            hasReactContextAction = { false },
+            createReactContextAction = {},
+            currentReactContextAction = { null },
+        )
+
+        assertThat(gateway.currentReactContextOrNull()).isNull()
+    }
 }

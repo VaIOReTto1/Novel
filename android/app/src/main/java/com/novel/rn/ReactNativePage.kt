@@ -143,17 +143,27 @@ private fun syncThemeToRN(
     try {
         TimberLogger.d("ReactNativePage", "start theme sync to RN for $componentName")
 
-        val actualTheme = settingsViewModel?.adapter?.getCurrentSnapshot()?.actualTheme
-        when (val syncAction = themeSyncCoordinator.resolveSyncAction(actualTheme)) {
-            ReactNativeThemeSyncCoordinator.ThemeSyncAction.Skip -> {
-            TimberLogger.w(
-                "ReactNativePage",
-                "SettingsViewModel or actual theme unavailable, skip theme sync for $componentName",
+        val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
+        val settingsSnapshot = settingsViewModel?.adapter?.getCurrentSnapshot()
+        val actualTheme = settingsSnapshot?.actualTheme
+        val fallbackTheme = themeManager.getCurrentActualThemeMode()
+        val preferFallbackTheme = settingsSnapshot?.isLoading == true
+
+        when (
+            val syncAction = themeSyncCoordinator.resolveSyncAction(
+                actualTheme = actualTheme,
+                fallbackTheme = fallbackTheme,
+                preferFallbackTheme = preferFallbackTheme,
             )
-            return
+        ) {
+            ReactNativeThemeSyncCoordinator.ThemeSyncAction.Skip -> {
+                TimberLogger.w(
+                    "ReactNativePage",
+                    "SettingsViewModel or actual theme unavailable, skip theme sync for $componentName",
+                )
+                return
             }
             is ReactNativeThemeSyncCoordinator.ThemeSyncAction.Dispatch -> {
-                val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
                 themeManager.notifyThemeChangedToRN(syncAction.theme)
                 TimberLogger.d(
                     "ReactNativePage",

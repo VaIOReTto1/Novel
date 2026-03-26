@@ -24,7 +24,7 @@ class ReactNativeHostPathTraceCoordinatorTest {
                 trigger = "prewarm_after_first_frame",
                 hasReactContext = false,
             ),
-        ).isEqualTo("trigger=prewarm_after_first_frame reactContextPath=FIRST_CREATE")
+        ).isEqualTo("trigger=prewarm_after_first_frame reactContextPath=COLD_OPEN")
     }
 
     @Test
@@ -46,7 +46,7 @@ class ReactNativeHostPathTraceCoordinatorTest {
                 reused = false,
                 hasReactContext = false,
             ),
-        ).isEqualTo("component=ProfilePage reactRootViewPath=FIRST_CREATE reactContextPath=FIRST_CREATE")
+        ).isEqualTo("component=ProfilePage reactRootViewPath=COLD_OPEN reactContextPath=COLD_OPEN")
     }
 
     @Test

@@ -3,7 +3,7 @@ package com.novel.rn
 class ReactNativeHostPathTraceCoordinator {
 
     private enum class ReactRootViewPath(val value: String) {
-        COLD_OPEN("FIRST_CREATE"),
+        COLD_OPEN("COLD_OPEN"),
         OPEN("OPEN"),
         REUSED("REUSED"),
     }
@@ -15,7 +15,7 @@ class ReactNativeHostPathTraceCoordinator {
         val contextPath = if (hasReactContext) {
             "ALREADY_READY"
         } else {
-            "FIRST_CREATE"
+            "COLD_OPEN"
         }
         return "trigger=$trigger reactContextPath=$contextPath"
     }
@@ -32,7 +32,7 @@ class ReactNativeHostPathTraceCoordinator {
         val contextPath = if (hasReactContext) {
             "ALREADY_READY"
         } else {
-            "FIRST_CREATE"
+            "COLD_OPEN"
         }
         return "component=$componentName reactRootViewPath=$rootViewPath reactContextPath=$contextPath"
     }

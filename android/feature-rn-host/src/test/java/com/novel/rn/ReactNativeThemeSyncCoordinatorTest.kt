@@ -59,4 +59,17 @@ class ReactNativeThemeSyncCoordinatorTest {
                 ReactNativeThemeSyncCoordinator.ThemeSyncAction.Dispatch("dark"),
             )
     }
+
+    @Test
+    fun resolveSyncAction_prefersFallbackThemeWhileSettingsStateIsLoading() {
+        assertThat(
+            coordinator.resolveSyncAction(
+                actualTheme = "light",
+                fallbackTheme = "dark",
+                preferFallbackTheme = true,
+            ),
+        ).isEqualTo(
+            ReactNativeThemeSyncCoordinator.ThemeSyncAction.Dispatch("dark"),
+        )
+    }
 }

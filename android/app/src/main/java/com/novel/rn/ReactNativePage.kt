@@ -7,13 +7,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelStoreOwner
 import com.facebook.react.bridge.ReactApplicationContext
 import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.rn.host.hostGatewayEntryPoint
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.TimberLogger
@@ -49,6 +48,7 @@ fun ReactNativePage(
         TimberLogger.w(tag, "ReactInstanceManager unavailable for $componentName")
         return
     }
+
     var isContextReady by remember {
         mutableStateOf(reactContextWarmupGateway.hasReactContext())
     }
@@ -73,18 +73,18 @@ fun ReactNativePage(
 
     TimberLogger.d(
         tag,
-        "缁勪欢娓叉煋 - componentName: $componentName, isContextReady: $isContextReady, destroyOnBack: $destroyOnBack, mviModule: $mviModuleType",
+        "component render - componentName: $componentName, isContextReady: $isContextReady, destroyOnBack: $destroyOnBack, mviModule: $mviModuleType",
     )
 
     DisposableEffect(componentName, bridgeViewModel) {
         bridgeViewModel?.registerComponent(componentName)
         onDispose {
-            TimberLogger.d(tag, "缁勪欢娉ㄩ攢: $componentName")
+            TimberLogger.d(tag, "component disposed: $componentName")
         }
     }
 
     val rootView = remember(componentName, initialProps) {
-        TimberLogger.d(tag, "鑾峰彇缂撳瓨鐨凴eactRootView for $componentName")
+        TimberLogger.d(tag, "fetch cached ReactRootView for $componentName")
 
         val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
         val currentThemeMode = themeManager.getCurrentThemeMode()
@@ -127,7 +127,10 @@ fun ReactNativePage(
         },
         onNavigateBack = {
             bridgeViewModel?.sendIntent(BridgeIntent.NavigateBack(componentName))
-                ?: TimberLogger.w(tag, "BridgeViewModel鏈垵濮嬪寲锛屾棤娉曞鐞嗚繑鍥炴搷浣?)
+                ?: TimberLogger.w(
+                    tag,
+                    "BridgeViewModel unavailable, skip navigate back for $componentName",
+                )
         },
     )
 }
@@ -138,27 +141,27 @@ private fun syncThemeToRN(
     themeSyncCoordinator: ReactNativeThemeSyncCoordinator,
 ) {
     try {
-        TimberLogger.d("ReactNativePage", "寮€濮嬪悓姝ヤ富棰樹俊鎭埌RN for $componentName")
+        TimberLogger.d("ReactNativePage", "start theme sync to RN for $componentName")
 
         val actualTheme = settingsViewModel?.adapter?.getCurrentSnapshot()?.actualTheme
-        when (val action = themeSyncCoordinator.resolveSyncAction(actualTheme)) {
+        when (val syncAction = themeSyncCoordinator.resolveSyncAction(actualTheme)) {
             ReactNativeThemeSyncCoordinator.ThemeSyncAction.Skip -> {
-                TimberLogger.w(
-                    "ReactNativePage",
-                    "SettingsViewModel鎴朣tateAdapter鏈垵濮嬪寲锛岃烦杩囦富棰樺悓姝?for $componentName",
-                )
-                return
+            TimberLogger.w(
+                "ReactNativePage",
+                "SettingsViewModel or actual theme unavailable, skip theme sync for $componentName",
+            )
+            return
             }
-
             is ReactNativeThemeSyncCoordinator.ThemeSyncAction.Dispatch -> {
                 val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
-                themeManager.notifyThemeChangedToRN(action.theme)
+                themeManager.notifyThemeChangedToRN(syncAction.theme)
+                TimberLogger.d(
+                    "ReactNativePage",
+                    "theme synced to RN: ${syncAction.theme} for $componentName",
+                )
             }
         }
-
-        TimberLogger.d("ReactNativePage", "褰撳墠瀹為檯涓婚: $actualTheme for $componentName")
-        TimberLogger.d("ReactNativePage", "涓婚淇℃伅宸插悓姝ュ埌RN: $actualTheme for $componentName")
     } catch (e: Exception) {
-        TimberLogger.e("ReactNativePage", "鍚屾涓婚淇℃伅鍒癛N澶辫触 for $componentName", e)
+        TimberLogger.e("ReactNativePage", "theme sync to RN failed for $componentName", e)
     }
 }

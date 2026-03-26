@@ -44,9 +44,9 @@ import com.novel.page.component.ImageLoadingStrategy
 import com.novel.page.component.FlipBookAnimationController
 import com.novel.page.home.dao.HomeRepository
 import com.novel.page.home.viewmodel.CategoryInfo
+import com.novel.page.home.viewmodel.HomeRankBook
 import com.novel.ui.theme.NovelColors
 import com.novel.utils.debounceClickable
-import com.novel.utils.network.api.front.BookService
 import com.novel.utils.wdp
 import com.novel.utils.ssp
 import kotlinx.coroutines.launch
@@ -61,7 +61,7 @@ import kotlinx.collections.immutable.toImmutableList
  */
 @Composable
 fun HomeRankPanel(
-    rankBooks: ImmutableList<BookService.BookRank>,
+    rankBooks: ImmutableList<HomeRankBook>,
     selectedRankType: String,
     onRankTypeSelected: (String) -> Unit,
     onBookClick: (Long, Offset, Size) -> Unit,
@@ -126,7 +126,7 @@ fun HomeRankPanel(
 @SuppressLint("RememberReturnType")
 @Composable
 private fun RankBooksScrollableGrid(
-    books: ImmutableList<BookService.BookRank>,
+    books: ImmutableList<HomeRankBook>,
     selectedRankType: String,
     onBookClick: (Long, Offset, Size) -> Unit,
     modifier: Modifier = Modifier,
@@ -181,7 +181,7 @@ private fun RankBooksScrollableGrid(
  */
 @Composable
 private fun RankBookColumn(
-    books: ImmutableList<BookService.BookRank>,
+    books: ImmutableList<HomeRankBook>,
     startRank: Int,
     onBookClick: (Long, Offset, Size) -> Unit,
     modifier: Modifier = Modifier,
@@ -272,7 +272,7 @@ private fun RankFilterChip(
  */
 @Composable
 private fun RankBookGridItem(
-    book: BookService.BookRank,
+    book: HomeRankBook,
     rank: Int,
     onClick: (Long, Offset, Size) -> Unit,
     modifier: Modifier = Modifier,
@@ -380,7 +380,7 @@ private fun RankBookGridItem(
  */
 @Composable
 private fun BookCoverImage(
-    book: BookService.BookRank,
+    book: HomeRankBook,
     flipBookController: FlipBookAnimationController? = null
 ) {
     // 优化：使用derivedStateOf检查是否当前书籍正在进行动画，减少重复计算

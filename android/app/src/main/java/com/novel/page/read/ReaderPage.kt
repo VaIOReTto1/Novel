@@ -132,6 +132,8 @@ fun ReaderPage(
 
     val coroutineScope = rememberCoroutineScope()
     var hasShownRestoreHint by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
+    var shouldShowRestoreHintForEntry by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
+    var restoreHintManagedByCoordinator by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
     var hasPendingPostInitRefresh by rememberSaveable(bookId, chapterId) { mutableStateOf(true) }
     var previousReaderSettings by remember { mutableStateOf<ReaderSettings?>(null) }
 
@@ -167,6 +169,7 @@ fun ReaderPage(
             chapterId = chapterId,
         )
         if (launchPlan.shouldInitReader) {
+            shouldShowRestoreHintForEntry = launchPlan.shouldShowProgressRestoredHint
             handleInitReader(bookId, chapterId)
         } else {
             TimberLogger.w("ReaderPage", "书籍ID或章节ID为空，跳过加载")
@@ -175,21 +178,37 @@ fun ReaderPage(
     
     LaunchedEffect(chapterId, state.isSuccess, state.currentPageData?.chapterId) {
         if (readerRestoreHintCoordinator.shouldShowHint(
-                chapterId = chapterId,
+                shouldRestoreFromProgress = shouldShowRestoreHintForEntry,
                 isInitSuccess = state.isSuccess,
                 hasPageData = state.currentPageData != null,
                 hasShownHint = hasShownRestoreHint,
             )
         ) {
             hasShownRestoreHint = true
+            shouldShowRestoreHintForEntry = false
+            restoreHintManagedByCoordinator = true
+            TimberLogger.d(
+                "ReaderPage",
+                "trace action=restore_hint_show source=restored_progress budgetMs=${readerRestoreHintCoordinator.hintVisibleDurationMs()}",
+            )
             viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(true))
         }
     }
 
-    LaunchedEffect(showProgressRestoredHint) {
-        if (showProgressRestoredHint) {
+    LaunchedEffect(showProgressRestoredHint, restoreHintManagedByCoordinator) {
+        if (
+            readerRestoreHintCoordinator.shouldAutoDismissHint(
+                isHintVisible = showProgressRestoredHint,
+                wasShownForRestore = restoreHintManagedByCoordinator,
+            )
+        ) {
             delay(readerRestoreHintCoordinator.hintVisibleDurationMs())
+            TimberLogger.d(
+                "ReaderPage",
+                "trace action=restore_hint_hide source=restored_progress budgetMs=${readerRestoreHintCoordinator.hintVisibleDurationMs()}",
+            )
             viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(false))
+            restoreHintManagedByCoordinator = false
         }
     }
 

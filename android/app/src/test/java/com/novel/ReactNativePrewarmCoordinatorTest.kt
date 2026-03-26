@@ -12,4 +12,14 @@ class ReactNativePrewarmCoordinatorTest {
         assertThat(coordinator.shouldPrewarmAfterFirstFrame()).isTrue()
         assertThat(coordinator.shouldPrewarmAfterFirstFrame()).isFalse()
     }
+
+    @Test
+    fun createPlanAfterFirstFrame_skipsPrewarmWhenReactContextAlreadyExists() {
+        val coordinator = ReactNativePrewarmCoordinator()
+
+        val plan = coordinator.createPlanAfterFirstFrame(hasReactContext = true)
+
+        assertThat(plan.shouldCreateReactContextInBackground).isFalse()
+        assertThat(coordinator.shouldPrewarmAfterFirstFrame()).isFalse()
+    }
 }

@@ -17,4 +17,14 @@ class StartupDeferredInitializationCoordinatorTest {
         assertThat(secondPlan.shouldInitializeNetwork).isEqualTo(false)
         assertThat(secondPlan.shouldInitializeSettings).isEqualTo(false)
     }
+
+    @Test
+    fun createPlanAfterFirstFrame_requiresFirstFrameGateToOpen() {
+        val coordinator = StartupDeferredInitializationCoordinator()
+
+        val plan = coordinator.createPlanAfterFirstFrame(firstFrameDrawn = false)
+
+        assertThat(plan.shouldInitializeNetwork).isEqualTo(false)
+        assertThat(plan.shouldInitializeSettings).isEqualTo(false)
+    }
 }

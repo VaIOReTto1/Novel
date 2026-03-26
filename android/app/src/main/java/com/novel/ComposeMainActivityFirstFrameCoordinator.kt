@@ -3,21 +3,38 @@ package com.novel
 import com.facebook.react.ReactInstanceManager
 import com.novel.rn.ReactNativeHostPathTraceCoordinator
 import com.novel.utils.TimberLogger
-import kotlinx.coroutines.delay
+
+internal data class ComposeMainActivityFirstFramePlan(
+    val shouldMarkFirstFrameDrawn: Boolean,
+    val shouldCreateReactContextInBackground: Boolean,
+    val shouldMarkAppFullyLoaded: Boolean,
+)
 
 internal class ComposeMainActivityFirstFrameCoordinator(
     private val hostPathTraceCoordinator: ReactNativeHostPathTraceCoordinator = ReactNativeHostPathTraceCoordinator(),
     private val reactNativePrewarmCoordinator: ReactNativePrewarmCoordinator = ReactNativePrewarmCoordinator(),
 ) {
 
+    internal fun createPlan(hasReactContext: Boolean): ComposeMainActivityFirstFramePlan {
+        val prewarmPlan = reactNativePrewarmCoordinator.createPlanAfterFirstFrame(
+            hasReactContext = hasReactContext,
+        )
+        return ComposeMainActivityFirstFramePlan(
+            shouldMarkFirstFrameDrawn = true,
+            shouldCreateReactContextInBackground = prewarmPlan.shouldCreateReactContextInBackground,
+            shouldMarkAppFullyLoaded = true,
+        )
+    }
+
     suspend fun onFirstFrameRendered(
         application: MainApplication?,
         reactInstanceManager: ReactInstanceManager?,
     ) {
-        delay(100)
-        application?.markFirstFrameDrawn()
-
         val hasReactContext = reactInstanceManager?.currentReactContext != null
+        val plan = createPlan(hasReactContext = hasReactContext)
+        if (plan.shouldMarkFirstFrameDrawn) {
+            application?.markFirstFrameDrawn()
+        }
         TimberLogger.d(
             "ComposeMainActivity",
             hostPathTraceCoordinator.formatContextTrace(
@@ -26,7 +43,7 @@ internal class ComposeMainActivityFirstFrameCoordinator(
             ),
         )
 
-        if (reactNativePrewarmCoordinator.shouldPrewarmAfterFirstFrame() && !hasReactContext) {
+        if (plan.shouldCreateReactContextInBackground) {
             TimberLogger.d(
                 "ComposeMainActivity",
                 hostPathTraceCoordinator.formatContextTrace(
@@ -37,7 +54,8 @@ internal class ComposeMainActivityFirstFrameCoordinator(
             reactInstanceManager?.createReactContextInBackground()
         }
 
-        delay(200)
-        application?.markAppFullyLoaded()
+        if (plan.shouldMarkAppFullyLoaded) {
+            application?.markAppFullyLoaded()
+        }
     }
 }

@@ -6,6 +6,38 @@ import org.junit.Test
 class WelfareWebPerformanceCoordinatorTest {
 
     @Test
+    fun createNavigationPlan_onlyStartsMonitoringOncePerDistinctUrl() {
+        val coordinator = WelfareWebPerformanceCoordinator()
+
+        assertThat(
+            coordinator.createNavigationPlan(currentUrl = ""),
+        ).isEqualTo(
+            WelfareNavigationPlan(
+                shouldStartPageLoadMonitoring = false,
+                shouldResetPerLoadMarkers = false,
+            ),
+        )
+
+        assertThat(
+            coordinator.createNavigationPlan(currentUrl = "https://example.com"),
+        ).isEqualTo(
+            WelfareNavigationPlan(
+                shouldStartPageLoadMonitoring = true,
+                shouldResetPerLoadMarkers = true,
+            ),
+        )
+
+        assertThat(
+            coordinator.createNavigationPlan(currentUrl = "https://example.com"),
+        ).isEqualTo(
+            WelfareNavigationPlan(
+                shouldStartPageLoadMonitoring = false,
+                shouldResetPerLoadMarkers = false,
+            ),
+        )
+    }
+
+    @Test
     fun shouldRecordFirstContentfulPaint_onlyReturnsTrueOncePerLoad() {
         val coordinator = WelfareWebPerformanceCoordinator()
 

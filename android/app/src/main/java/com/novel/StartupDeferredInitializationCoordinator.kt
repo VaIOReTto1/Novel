@@ -9,8 +9,8 @@ internal class StartupDeferredInitializationCoordinator {
 
     private var hasScheduledDeferredInitialization = false
 
-    fun createPlanAfterFirstFrame(): StartupDeferredInitializationPlan {
-        if (hasScheduledDeferredInitialization) {
+    fun createPlanAfterFirstFrame(firstFrameDrawn: Boolean = true): StartupDeferredInitializationPlan {
+        if (!firstFrameDrawn || hasScheduledDeferredInitialization) {
             return StartupDeferredInitializationPlan(
                 shouldInitializeNetwork = false,
                 shouldInitializeSettings = false,

@@ -1,7 +1,6 @@
 package com.novel.page.read.viewmodel
 
 import com.google.common.truth.Truth.assertThat
-import com.novel.page.read.usecase.UpdateSettingsUseCase
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Test
 
@@ -34,7 +33,7 @@ class ReaderSettingsCoordinatorTest {
     }
 
     @Test
-    fun applyUpdateResult_updatesStateWhenNewPageDataExists() {
+    fun applyUpdateSuccess_updatesStateWhenNewPageDataExists() {
         val coordinator = ReaderSettingsCoordinator()
         val currentState = ReaderState(version = 3)
         val newPageData = PageData(
@@ -44,12 +43,10 @@ class ReaderSettingsCoordinatorTest {
             pages = persistentListOf("page-1", "page-2"),
         )
 
-        val outcome = coordinator.applyUpdateResult(
+        val outcome = coordinator.applyUpdateSuccess(
             currentState = currentState,
-            result = UpdateSettingsUseCase.UpdateResult.Success(
-                newPageData = newPageData,
-                newPageIndex = 1,
-            ),
+            newPageData = newPageData,
+            newPageIndex = 1,
         )
 
         assertThat(outcome.updatedState.currentPageData).isEqualTo(newPageData)
@@ -59,16 +56,14 @@ class ReaderSettingsCoordinatorTest {
     }
 
     @Test
-    fun applyUpdateResult_keepsStateWhenNoPageDataReturned() {
+    fun applyUpdateSuccess_keepsStateWhenNoPageDataReturned() {
         val coordinator = ReaderSettingsCoordinator()
         val currentState = ReaderState(version = 7)
 
-        val outcome = coordinator.applyUpdateResult(
+        val outcome = coordinator.applyUpdateSuccess(
             currentState = currentState,
-            result = UpdateSettingsUseCase.UpdateResult.Success(
-                newPageData = null,
-                newPageIndex = 0,
-            ),
+            newPageData = null,
+            newPageIndex = 0,
         )
 
         assertThat(outcome.updatedState).isEqualTo(currentState)

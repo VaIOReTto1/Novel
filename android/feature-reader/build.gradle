@@ -17,6 +17,7 @@ dependencies {
     implementation project(':core-common')
     implementation "androidx.compose.ui:ui:1.8.2"
     implementation "androidx.compose.runtime:runtime:1.8.2"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0"
     implementation "javax.inject:javax.inject:1"
     implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
     implementation "com.google.dagger:hilt-android:2.52"

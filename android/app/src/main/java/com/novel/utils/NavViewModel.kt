@@ -77,6 +77,10 @@ object NavViewModel : ViewModel() {
         navigateDebounced(route)
     }
 
+    fun navigateToRoute(route: String) {
+        navigateDebounced(route)
+    }
+
     fun navigateToHistory() = navigateDebounced("history")
 
     fun navigateToMessage() = navigateDebounced("message")

@@ -2,11 +2,6 @@ package com.novel.rn.host
 
 import com.novel.MainApplication
 
-interface ReactRootViewCacheGateway {
-    fun clearComponentCache(componentName: String)
-    fun clearAllComponentCache()
-}
-
 class DefaultReactRootViewCacheGateway(
     private val clearComponentCacheAction: (String) -> Unit = { componentName ->
         MainApplication.getInstance()?.clearReactRootViewCache(componentName)

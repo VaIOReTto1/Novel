@@ -896,7 +896,7 @@ private fun RecommendItemStaggeredCard(
                 is CategoryRecommendItem -> {
                     Spacer(modifier = Modifier.height(5.wdp))
                     NovelText(
-                        text = "${item.data.categoryName} · ${formatWordCount(item.data.wordCount.toLong())}",
+                        text = "${item.categoryName} · ${formatWordCount(item.wordCount)}",
                         fontSize = 12.ssp,
                         color = NovelColors.NovelTextGray,
                         maxLines = 1,
@@ -906,7 +906,7 @@ private fun RecommendItemStaggeredCard(
                 is HomeRecommendItem -> {
                     Spacer(modifier = Modifier.height(5.wdp))
                     NovelText(
-                        text = HtmlTextUtil.cleanHtml(item.data.bookDesc),
+                        text = HtmlTextUtil.cleanHtml(item.description),
                         fontSize = 12.ssp,
                         color = NovelColors.NovelTextGray,
                         maxLines = 2,

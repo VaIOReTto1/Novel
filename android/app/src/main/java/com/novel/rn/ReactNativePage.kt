@@ -10,11 +10,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.os.bundleOf
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.facebook.react.bridge.ReactApplicationContext
-import com.novel.MainApplication
 import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import com.novel.rn.host.hostGatewayEntryPoint
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.TimberLogger
 
@@ -28,24 +28,45 @@ fun ReactNativePage(
 ) {
     val tag = "ReactNativePage"
     val context = LocalContext.current
-    val mainApplication = context.applicationContext as MainApplication
+    val viewModelStoreOwner = context as? ViewModelStoreOwner
+    val hostGatewayEntryPoint = remember(context.applicationContext) {
+        context.applicationContext.hostGatewayEntryPoint()
+    }
+    val hostBridgeViewModelGateway = remember(hostGatewayEntryPoint) {
+        hostGatewayEntryPoint.hostBridgeViewModelGateway()
+    }
+    val reactContextWarmupGateway = remember(hostGatewayEntryPoint) {
+        hostGatewayEntryPoint.reactContextWarmupGateway()
+    }
+    val reactRootViewRegistryGateway = remember(hostGatewayEntryPoint) {
+        hostGatewayEntryPoint.reactRootViewRegistryGateway()
+    }
     val themeSyncCoordinator = remember { ReactNativeThemeSyncCoordinator() }
 
-    val reactInstanceManager = remember { mainApplication.reactNativeHost.reactInstanceManager }
+    val reactInstanceManager = remember {
+        reactContextWarmupGateway.reactInstanceManagerOrNull()
+    } ?: run {
+        TimberLogger.w(tag, "ReactInstanceManager unavailable for $componentName")
+        return
+    }
     var isContextReady by remember {
-        mutableStateOf(reactInstanceManager.currentReactContext != null)
+        mutableStateOf(reactContextWarmupGateway.hasReactContext())
     }
 
     val settingsViewModel: SettingsViewModel? =
         if (mviModuleType == MviModuleType.SETTINGS || mviModuleType == MviModuleType.BOTH) {
-            hiltViewModel()
+            remember(viewModelStoreOwner, mviModuleType) {
+                hostBridgeViewModelGateway.getSettingsViewModelOrNull(viewModelStoreOwner)
+            }
         } else {
             null
         }
 
     val bridgeViewModel: BridgeViewModel? =
         if (mviModuleType == MviModuleType.BRIDGE || mviModuleType == MviModuleType.BOTH) {
-            hiltViewModel()
+            remember(viewModelStoreOwner, mviModuleType) {
+                hostBridgeViewModelGateway.getBridgeViewModelOrNull(viewModelStoreOwner)
+            }
         } else {
             null
         }
@@ -87,7 +108,7 @@ fun ReactNativePage(
             putBoolean("initialIsDarkMode", isDarkMode)
         }
 
-        mainApplication.getOrCreateReactRootView(componentName, bundle)
+        reactRootViewRegistryGateway.getOrCreateReactRootView(componentName, bundle)
     }
 
     ReactNativePageContent(
@@ -98,7 +119,10 @@ fun ReactNativePage(
         isContextReady = isContextReady,
         onContextReadyChanged = { isContextReady = it },
         onReactContextReady = { reactContext ->
-            settingsViewModel?.initReactContext(reactContext as ReactApplicationContext)
+            hostBridgeViewModelGateway.getSettingsViewModelOrNull(
+                owner = viewModelStoreOwner,
+                reactContext = reactContext as ReactApplicationContext,
+            )
             syncThemeToRN(componentName, settingsViewModel, themeSyncCoordinator)
         },
         onNavigateBack = {

@@ -3,7 +3,7 @@ package com.novel.rn
 import android.annotation.SuppressLint
 import com.novel.utils.TimberLogger
 import com.facebook.react.bridge.Arguments
-import com.novel.MainApplication
+import com.novel.rn.host.DefaultReactContextWarmupGateway
 import com.novel.utils.network.api.front.HomeService
 
 /**
@@ -54,9 +54,8 @@ object ReactNativeBridge {
         sex: String? = null
     ) {
         TimberLogger.d(TAG, "🚀 发送用户数据到RN: uid=${uid.take(8)}***, nickname=$nickname")
-        
-        val application = MainApplication.getInstance()
-        val reactContext = application?.reactNativeHost?.reactInstanceManager?.currentReactContext
+
+        val reactContext = DefaultReactContextWarmupGateway().currentReactContextOrNull()
         
         reactContext?.let { context ->
             val params = Arguments.createMap().apply {

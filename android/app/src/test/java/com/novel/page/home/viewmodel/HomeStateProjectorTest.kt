@@ -2,9 +2,6 @@ package com.novel.page.home.viewmodel
 
 import com.novel.page.home.dao.HomeBookEntity
 import com.novel.page.home.dao.HomeCategoryEntity
-import com.novel.utils.network.api.front.BookService
-import com.novel.utils.network.api.front.HomeService
-import com.novel.utils.network.api.front.SearchService
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -20,9 +17,7 @@ class HomeStateProjectorTest {
             isLoading = true,
             error = "boom",
             isRefreshing = true,
-            categories = persistentListOf(
-                HomeCategoryEntity(1, "玄幻", null, 0)
-            ),
+            categories = persistentListOf(HomeCategoryEntity(1, "玄幻", null, 0)),
             carouselBooks = persistentListOf(
                 HomeBookEntity(
                     id = 11,
@@ -34,12 +29,12 @@ class HomeStateProjectorTest {
                     isCompleted = false,
                     isVip = false,
                     updateTime = 1L,
-                    type = "carousel"
-                )
+                    type = "carousel",
+                ),
             ),
             selectedCategoryFilter = "首页",
             selectedRankType = "点击榜",
-            isRecommendMode = true
+            isRecommendMode = true,
         )
 
         val uiState = HomeStateProjector.toHomeUiState(state)
@@ -61,37 +56,26 @@ class HomeStateProjectorTest {
             searchQuery = "斗破",
             selectedCategoryFilter = "首页",
             categoryFilters = persistentListOf(CategoryInfo("0", "首页")),
-            carouselBooks = persistentListOf(),
-            hotBooks = persistentListOf(),
-            newBooks = persistentListOf(),
-            vipBooks = persistentListOf(),
             rankBooks = persistentListOf(
-                BookService.BookRank(
+                HomeRankBook(
                     id = 1,
-                    categoryId = 1,
-                    categoryName = "玄幻",
-                    picUrl = "cover",
                     bookName = "Rank Book",
-                    authorName = "Author",
-                    bookDesc = "desc",
-                    wordCount = 1000,
-                    lastChapterName = "chapter",
-                    lastChapterUpdateTime = "today"
-                )
-            ),
-            homeRecommendBooks = persistentListOf(
-                HomeService.HomeBook(
-                    type = 3,
-                    bookId = 101,
                     picUrl = "cover",
-                    bookName = "Home Recommend",
-                    authorName = "Author",
-                    bookDesc = "desc"
-                )
+                    categoryName = "玄幻",
+                ),
+            ),
+            currentRecommendBooks = persistentListOf(
+                HomeRecommendItem(
+                    id = 101,
+                    title = "Home Recommend",
+                    author = "Author",
+                    coverUrl = "cover",
+                    description = "desc",
+                ),
             ),
             isRecommendMode = true,
             hasMoreHomeRecommend = true,
-            homeRecommendLoading = false
+            homeRecommendLoading = false,
         )
 
         val screenState = HomeStateProjector.toScreenState(state)
@@ -111,31 +95,22 @@ class HomeStateProjectorTest {
             selectedCategoryFilter = "玄幻奇幻",
             categoryFilters = persistentListOf(
                 CategoryInfo("0", "首页"),
-                CategoryInfo("1", "玄幻奇幻")
+                CategoryInfo("1", "玄幻奇幻"),
             ),
-            recommendBooks = persistentListOf(
-                SearchService.BookInfo(
+            currentRecommendBooks = persistentListOf(
+                CategoryRecommendItem(
                     id = 201,
-                    categoryId = 1,
+                    title = "Category Recommend",
+                    author = "Author",
+                    coverUrl = "cover",
                     categoryName = "玄幻奇幻",
-                    picUrl = "cover",
-                    bookName = "Category Recommend",
-                    authorId = 2,
-                    authorName = "Author",
-                    bookDesc = "desc",
                     bookStatus = 1,
-                    visitCount = 10,
                     wordCount = 3000,
-                    commentCount = 1,
-                    firstChapterId = 1,
-                    lastChapterId = 2,
-                    lastChapterName = "chapter",
-                    updateTime = "today"
-                )
+                ),
             ),
             isRecommendMode = false,
             hasMoreRecommend = false,
-            recommendLoading = false
+            recommendLoading = false,
         )
 
         val screenState = HomeStateProjector.toScreenState(state)

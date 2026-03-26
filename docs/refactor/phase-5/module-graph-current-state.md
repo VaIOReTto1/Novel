@@ -1,222 +1,96 @@
-# Phase 5 模块图现状（2026-03-24 reopen）
+# Phase 5 模块图当前事实
 
-## 当前已落地图
+## 口径
+- 生效日期：`2026-03-26`
+- 状态：`validated`
+- 说明：本文件描述 reopen 收口完成后的当前事实，不再沿用 `2026-03-21` checkpoint 的旧口径。
+
+## 模块职责
 - `:app`
-  - 组合入口与宿主模块
-  - 当前依赖：
-    - `:core-common`
-    - `:core-storage`
-    - `:core-network`
-    - `:macrobenchmark`
+  - `MainApplication`
+  - `ComposeMainActivity`
+  - `MainPage / NavigationUtil / ReaderPage / ReactNativePage`
+  - `NavigationPackage / NavigationBridgeModule / SettingsBridgeModule / ReactNativeBridge`
+  - 默认 host gateway / default service implementation / Hilt binding
 - `:core-common`
-  - 共享基础能力
-  - 当前承载：
-    - `com.novel.core.*` 稳定包装
-    - `com.novel.core.mvi.*`
-    - `com.novel.core.domain.*`
-    - `com.novel.core.result.*`
-    - `com.novel.core.concurrency.*`
-    - `com.novel.core.logging.CoreLogger`
+  - `CoreLogger`
+  - 通用 MVI / domain / concurrency / adapter
 - `:core-ui`
-  - 通用主题与基础 Compose 组件
-  - 当前承载：
-    - `com.novel.ui.theme.*`
-    - `com.novel.utils.StableCallbacks`
-    - `com.novel.utils.flydp`
-    - `com.novel.utils.debounceClickable`
-    - `NovelText / NovelTextField / NovelButton / NovelDivider`
+  - 共享主题、尺寸与通用 Compose 组件
 - `:core-bridge`
-  - 桥接共享层
-  - 当前承载：
-    - `BridgeIntent / BridgeState / BridgeEffect`
-    - `BridgeReducer`
-    - `BridgePromiseErrorMapper`
-    - `DefaultNavigationBridgeFacade`
-    - `NavigationBridgeNetworkGateway`
-- `:core-storage`
-  - 存储抽象与兼容层
-- `:core-network`
-  - 网络契约层
+  - `BridgeStateAdapter`
+  - `DefaultNavigationBridgeFacade`
+  - `NavigationBridgeNetworkGateway`
+  - `BridgeCoroutineScopes`
 - `:core-bridge-contract`
-  - 第一批纯桥接 contract / delegate helper
-- `:macrobenchmark`
-  - 基准与 profile 相关产物
-- `:feature-welfare`
-  - 首轮 welfare feature 模块
-  - 当前承载：
-    - `WelfarePageContent`
-    - `WelfareViewModel`
-    - `InitializeWelfarePageUseCase`
-    - `EnhancedErrorComponent`
-    - `SkeletonLoadingComponent`
-    - `LoadingIndicator / WebViewComponent`
-    - `WelfareThemeAdapter / ThemeState`
-    - `WelfarePerformanceMonitor`
-    - `WebViewPreloadManager`
-    - `WelfareAccessibilityHelper`
-    - `WelfareWebSecurityConfig`
-    - `WelfareIntent / WelfareState / WelfareEffect`
-    - `WelfareReducer`
-    - `WelfareStateAdapter`
-    - `WelfarePageBootstrapCoordinator`
-    - `WelfareWebPerformanceCoordinator`
-- `:feature-search`
-  - 首轮 search feature 模块
-  - 当前承载：
-    - `SearchPreferenceStorage`
-    - `SearchParams`
-    - `SearchMvi`
-    - `SearchReducer`
-    - `SearchResultMvi`
-    - `SearchResultStateAdapter`
-    - `SearchStateAdapter`
-    - `SearchTriggerSource`
-    - `SearchCategoryFilterLoadCoordinator`
-    - `SearchPerformanceTraceCoordinator`
-    - `SearchRetryPolicyCoordinator`
+  - delegate / contract / helper
+- `:core-storage`
+  - 共享存储抽象与兼容层
+- `:core-network`
+  - 共享网络契约与执行器适配
 - `:feature-home`
-  - 首轮 home feature 模块
-  - 当前承载：
-    - `HomeBookEntity / HomeBannerEntity / HomeCategoryEntity`
-    - `HomePerformanceOptimizer`
-    - `CategoryInfo`
-    - `HomeCategoryFilterSupport`
-    - `HomeRestoreCoordinator`
-- `:feature-book`
-  - 首轮 book feature 模块
-  - 当前承载：
-    - `BookDetailMvi`
-    - `formatWordCount`
-    - `BookDetailStateAdapter`
+  - `HomeViewModel`
+  - `HomeMvi / HomeStateAdapter / HomeStateProjector`
+  - `HomeFeedGateway / HomeRnSyncGateway`
+- `:feature-search`
+  - `SearchViewModel / SearchResultViewModel`
+  - 搜索 MVI、状态适配与搜索 gateway
 - `:feature-login`
-  - 首轮 login feature 模块
-  - 当前承载：
-    - `LoginMvi`
-    - `LoginReducer`
-    - `LoginStateUpdater`
-    - `LoginStateAdapter`
+  - `LoginViewModel`
+  - 登录 MVI、状态适配与登录 gateway
+- `:feature-book`
+  - `BookDetailViewModel`
+  - 书详情 MVI、状态适配与书详情 gateway
 - `:feature-reader`
-  - 首轮 reader feature 模块
-  - 当前承载：
-    - `ReaderMappingHelper`
-    - `ReaderHistoryCoordinator`
-    - `ReaderReducer`
-    - `ReaderStateAdapter`
-    - `ReaderIntent / ReaderState / ReaderEffect`
-    - `PageCountCacheData / ProgressiveCalculationState`
-    - `PageFlipEffect`
-    - `ReaderServiceConfig`
-    - `OptimizedDispatcherProvider`
-    - `ReaderSettings`
-    - `ReaderStartupCoordinator`
-    - `ReaderRestoreHintCoordinator`
-    - `ReaderPerformanceTraceCoordinator`
+  - `ReaderViewModel`
+  - `ReaderIntent / ReaderState / ReaderEffect / ReaderReducer / ReaderStateAdapter`
+  - `ReaderSettingsCoordinator / ReaderSettingsRefreshCoordinator / ReaderHistoryCoordinator / ReaderMappingHelper`
+  - `ReaderPaginationGateway / ReaderSettingsGateway / ReaderHistoryGateway`
 - `:feature-rn-host`
-  - 首轮 rn-host feature 模块
-  - 当前承载：
-    - `ReactNativePageContent / MviModuleType`
-    - `SettingsIntent / SettingsState / SettingsEffect`
-    - `SettingsReducer`
-    - `SettingsStateAdapter`
-    - `SettingsPreferenceStorage`
-    - `ReactNativeThemeSyncCoordinator`
-    - `ReactNativeHostPathTraceCoordinator`
+  - `BridgeViewModel`
+  - `SettingsViewModel`
+  - `ReactNativePageContent`
+  - `HostNavigationGateway / ReactRootViewCacheGateway / ReactContextWarmupGateway / ReactRootViewRegistryGateway`
+- `:feature-welfare`
+  - welfare 主状态层、页面内容、初始化 usecase 与 WebView 适配
 
-## reopen 目标模块图
-- 已纳入本轮深化目标、但尚未真正落地：
-- 已落地但仍明显偏浅、需要继续深化：
-  - `:core-network`
-  - `:core-bridge`
-  - `:feature-book`
-  - `:feature-login`
-  - `:feature-reader`
-  - `:feature-home`
-  - `:feature-search`
-  - `:feature-welfare`
-  - `:feature-rn-host`
-
-## 当前依赖方向
-- `:app -> :core-common`
-- `:app -> :core-ui`
-- `:app -> :core-bridge`
-- `:app -> :core-bridge-contract`
-- `:app -> :core-storage`
-- `:app -> :core-network`
- - `:app -> :feature-book`
+## 依赖方向
+- `:app -> :core-*`
 - `:app -> :feature-home`
- - `:app -> :feature-login`
- - `:app -> :feature-reader`
-- `:app -> :feature-rn-host`
 - `:app -> :feature-search`
+- `:app -> :feature-login`
+- `:app -> :feature-book`
+- `:app -> :feature-reader`
+- `:app -> :feature-rn-host`
 - `:app -> :feature-welfare`
-- `:app -> :macrobenchmark`
-- 当前未引入新的模块环依赖。
+- 当前没有新增 Gradle 循环依赖。
 
-## 已落地的共享构建约定
-- `android/gradle/android-library-common.gradle`
-  - 统一：
-    - `compileSdk / minSdk / targetSdk`
-    - Java 17
-    - `consumer-rules.pro`
-    - `AndroidJUnitRunner`
-    - `buildConfig` 开关入口
-- 当前已接入该约定的模块：
-  - `:core-common`
-  - `:core-storage`
-  - `:core-network`
+## app 薄壳边界
+- 允许留在 `app` 的内容：
+  - Android 强制入口
+  - route/page wrapper
+  - RN module adapter
+  - host gateway 默认实现
+  - service 默认实现
+- 不再允许留在 `app` 的内容：
+  - `home/search/login/book/reader` feature ViewModel 根
+  - `BridgeViewModel / SettingsViewModel`
+  - 首页、搜索、登录、书详情、阅读器的稳定状态机与可复用 feature 逻辑
 
-## 当前固定执行顺序
-1. `doc/state sync`
-2. `core-ui`
-3. `deepen core-network / core-bridge`
-4. `feature-home + homepage first-load fix`
-5. `feature-search`
-6. `feature-welfare / feature-rn-host`
-7. `feature-book / feature-login`
-8. `feature-reader`
-9. `Community wiring + validation refresh`
-10. `validation / closeout`
+## 当前高风险根收口结果
+- `MainApplication`
+  - 保留为 Application 入口与 registry/orchestrator/reporter 转发
+- `NavigationPackage`
+  - 保留 RN native module 注册适配
+- `NavigationBridgeModule / SettingsBridgeModule`
+  - 保留 RN adapter、Promise 映射、delegate/facade 调用
+- `ReactNativePage / ReactNativeBridge`
+  - 通过 host gateway 工作，不再直接碰 `MainApplication` 或 `ViewModelProvider`
 
-## 当前切口结果
-- `BookService` 的空 `chapterUpdateTime` 回归已作为固定门禁保留。
-- `core-storage` 已稳定。
-- `core-network` 当前仍是“契约优先”首批切口，后续需要继续向共享基础设施深化。
-- `core-bridge-contract` 已完成第一批纯 Kotlin bridge delegate/helper 抽离。
-- `feature-welfare` 已完成两轮低风险切口，当前仍保留 `WelfarePage` 作为 app 宿主 wrapper。
-- `feature-search` 已不再只停留在存储层，当前已接管搜索结果页的 trigger source、查询参数与三类性能/重试协调器。
-- `feature-home` 已不再只停留在性能 helper，当前已接管首页分类语义契约、restore 判定协调器，并配合 app 侧修复首页首开榜单与推荐流在 `CACHE_FIRST` 空结果下无法自动展示的问题。
-- `feature-book` 已正式落地，并开始承载书籍详情的 MVI 契约与通用格式化工具。
-- `feature-login` 已正式落地，并开始承载登录页的 MVI 契约、reducer 与状态更新器。
-- `feature-reader` 已正式落地，并开始承载阅读器启动/恢复/动作 trace 协调器，以及 `ReaderMappingHelper`、`ReaderHistoryCoordinator`、`ReaderReducer`、`ReaderStateAdapter`、`ReaderIntent / ReaderState / ReaderEffect`、`ReaderSettings`、`PageCountCacheData / ProgressiveCalculationState` 这类稳定阅读配置与分页状态契约。
-- `feature-rn-host` 已不再只停留在设置存储层，当前已接管 `ReactNativePageContent / MviModuleType`、`SettingsIntent / SettingsState / SettingsEffect / SettingsReducer / SettingsStateAdapter`，以及主题补发与冷热路径追踪协调器；`app` 侧的 [ReactNativePage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/rn/ReactNativePage.kt) 当前只保留 `MainApplication`、rootView 与 ViewModel 宿主装配。
-- `core-common` 已完成第一批共享基础抽离，`StateAdapter`、`StateHolderImpl`、`RefactorFeatureFlags / RefactorFeatureFlagDefaults` 接口层，以及 `DispatcherProvider / DefaultDispatcherProvider` 共享协程调度接口层已迁入共享层；`NovelUserDefaultsBackedRefactorFeatureFlags` 已进一步迁入 `core-storage`，当前只剩 `OptimizedDispatcherProvider` 等宿主实现仍暂留 `app`。
-- `core-ui` 已完成首轮真实落地，主题体系、尺寸/点击工具与首批基础 Compose 组件已迁出 `app`。
-- `core-bridge` 已完成首轮真实落地，桥接 MVI 契约、共享 reducer、Promise error mapper、bridge facade、network gateway、`BridgeStateAdapter` 与 `BridgeCoroutineScopes` 已迁出 `app`。
-- `core-network` 已不再只有契约壳，`RequestIdInterceptor / NetworkTraceLogHelper / ImmutableListTypeAdapter / LegacyApiExecutor / LegacyApiServiceAdapter` 已进入共享网络层；`DefaultLegacyApiExecutor` 当前作为宿主壳留在 `app`。
-- `feature-welfare` 已接管 bootstrap 与 WebView 性能协调器，并继续接管 `WelfarePageContent`、`WelfareViewModel`、`InitializeWelfarePageUseCase`、`LoadingIndicator / WebViewComponent`、`WelfareThemeAdapter / ThemeState`、`WelfareWebSecurityConfig` 与 `WelfareIntent / WelfareState / WelfareEffect / WelfareReducer / WelfareStateAdapter`，`app` 侧当前只剩 `WelfarePage` 的宿主 wrapper 与福利弹窗接线。
-- `2026-03-21` 的首轮 closeout 只能视为 checkpoint，不应被误读为蓝图中所有目标模块均已落地。
-
-## 当前阻塞与下一步
-- 当前未解决的 `core-common` 遗留：
-  - `android/app/src/main/java/com/novel/page/read/service/common/DispatcherProvider.kt`（当前仅剩 `DispatcherProvider` 兼容 typealias 入口）
-- 当前 `core-network` 深化策略暂缓：
-  - 直接搬迁共享网络原语时曾触发默认 `app` 编译链不稳定，已回退到上一个稳定边界，后续需要换更保守的切口。
-- 下一步主线：
-  - 继续深化 `core-network / core-bridge`
-  - 继续扩大各 `feature-*` 内部稳定边界
-
-## 验证证据
-- `android/gradlew.bat :core-common:testDebugUnitTest`
-- `android/gradlew.bat :core-bridge-contract:testDebugUnitTest`
-- `android/gradlew.bat :feature-welfare:compileDebugKotlin`
-- `android/gradlew.bat :feature-home:testDebugUnitTest`
-- `android/gradlew.bat :feature-rn-host:testDebugUnitTest`
-- `android/gradlew.bat :feature-search:testDebugUnitTest`
-- `android/gradlew.bat :core-storage:testDebugUnitTest :core-network:testDebugUnitTest`
-- `android/gradlew.bat :app:testDebugUnitTest`
-
-## 2026-03-24 Wave D addendum
-- `app` 瀹夸富鏍规敹鍙ｇ户缁帹杩涳細`NavigationUtil.kt` 宸叉媶鍒嗕负瀵艰埅鍥惧畾涔変笌鐙珛 `NavViewModel.kt`锛孯N route shell 涓庡叏灞€瀵艰埅鐘舵€佷笉鍐嶆販鍦ㄥ悓涓€鏂囦欢銆?
-- `MainPage.kt` 宸叉敹鍙ｅ埌鈥滅姸鎬佽閰嶁€濆眰锛屽簳閮ㄦ爮銆乸ager 鍐呭涓?overlay 宸叉媶鍒?`MainPageHostComponents.kt`銆?
-- `ComposeMainActivity.kt` 宸叉敹鍙ｅ埌鈥滃涓昏浆鍙戝櫒鈥濆眰锛孋ompose 鍐呭鏍戝拰棣栧抚鍚庨鐑崗璋冮€昏緫宸叉媶鍒?`ComposeMainActivityContent.kt` 涓?`ComposeMainActivityFirstFrameCoordinator.kt`銆?
-- 褰撳墠 `MainApplication`銆侾N package 鐧昏涓庡皯鏁板涓绘牴 glue 浠嶆槸 Wave D 鍓╀綑鐨勯珮鏁忔敹鍙ｈ竟鐣岋紝鏈疆鍏堜互浣庨闄╁帇钖勪负姝㈡绾裤€?
+## 剩余允许直连
+- `MainApplication.getInstance()`
+  - 仅允许出现在 app-host 默认实现中
+- `ViewModelProvider(...)`
+  - 仅允许出现在 `HostBridgeViewModelGateway`
+- `NavViewModel.navController`
+  - 仅允许出现在 `NavigationUtil`、`iosSwipeBack` 等导航 wrapper / host adapter 中

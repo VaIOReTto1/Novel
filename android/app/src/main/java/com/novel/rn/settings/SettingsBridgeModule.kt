@@ -11,7 +11,7 @@ import com.facebook.react.bridge.ReactMethod
 import androidx.lifecycle.ViewModelStoreOwner
 import com.novel.rn.bridge.BridgeCoroutineScopes
 import com.novel.rn.bridge.rejectMapped
-import com.novel.rn.host.DefaultHostBridgeViewModelGateway
+import com.novel.rn.host.hostGatewayEntryPoint
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -56,7 +56,7 @@ class SettingsBridgeModule(
     override fun getName(): String = "SettingsBridge"
 
     private val hostBridgeViewModelGateway by lazy {
-        DefaultHostBridgeViewModelGateway()
+        reactContext.applicationContext.hostGatewayEntryPoint().hostBridgeViewModelGateway()
     }
 
     private val bridgeCoroutineScopes: BridgeCoroutineScopes by lazy {

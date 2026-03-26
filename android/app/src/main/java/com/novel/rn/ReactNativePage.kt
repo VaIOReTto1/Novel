@@ -14,9 +14,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
 import androidx.lifecycle.ViewModelStoreOwner
-import com.novel.rn.host.DefaultHostBridgeViewModelGateway
-import com.novel.rn.host.DefaultReactContextWarmupGateway
-import com.novel.rn.host.DefaultReactRootViewRegistryGateway
+import com.novel.rn.host.hostGatewayEntryPoint
 import com.novel.rn.settings.SettingsViewModel
 import com.novel.utils.TimberLogger
 
@@ -31,9 +29,18 @@ fun ReactNativePage(
     val tag = "ReactNativePage"
     val context = LocalContext.current
     val viewModelStoreOwner = context as? ViewModelStoreOwner
-    val hostBridgeViewModelGateway = remember { DefaultHostBridgeViewModelGateway() }
-    val reactContextWarmupGateway = remember { DefaultReactContextWarmupGateway() }
-    val reactRootViewRegistryGateway = remember { DefaultReactRootViewRegistryGateway() }
+    val hostGatewayEntryPoint = remember(context.applicationContext) {
+        context.applicationContext.hostGatewayEntryPoint()
+    }
+    val hostBridgeViewModelGateway = remember(hostGatewayEntryPoint) {
+        hostGatewayEntryPoint.hostBridgeViewModelGateway()
+    }
+    val reactContextWarmupGateway = remember(hostGatewayEntryPoint) {
+        hostGatewayEntryPoint.reactContextWarmupGateway()
+    }
+    val reactRootViewRegistryGateway = remember(hostGatewayEntryPoint) {
+        hostGatewayEntryPoint.reactRootViewRegistryGateway()
+    }
     val themeSyncCoordinator = remember { ReactNativeThemeSyncCoordinator() }
 
     val reactInstanceManager = remember {

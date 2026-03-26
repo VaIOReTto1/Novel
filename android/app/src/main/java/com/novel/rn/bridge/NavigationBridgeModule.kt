@@ -29,9 +29,7 @@ import com.novel.rn.bridge.facade.DefaultNavigationBridgeFacade
 import com.novel.rn.bridge.network.NavigationBridgeNetworkGateway
 import com.novel.page.read.service.HistoryService
 import com.novel.page.read.service.HistoryItem
-import com.novel.rn.host.DefaultHostBridgeViewModelGateway
-import com.novel.rn.host.DefaultHostNavigationGateway
-import com.novel.rn.host.DefaultReactRootViewCacheGateway
+import com.novel.rn.host.hostGatewayEntryPoint
 import javax.inject.Inject
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.EntryPoint
@@ -81,7 +79,7 @@ class NavigationBridgeModule(
     override fun getName(): String = "NavigationBridge"
 
     private val hostBridgeViewModelGateway by lazy {
-        DefaultHostBridgeViewModelGateway()
+        reactContext.applicationContext.hostGatewayEntryPoint().hostBridgeViewModelGateway()
     }
 
     private val bridgeViewModel: BridgeViewModel?
@@ -139,11 +137,11 @@ class NavigationBridgeModule(
     }
 
     private val hostNavigationGateway by lazy {
-        DefaultHostNavigationGateway()
+        reactContext.applicationContext.hostGatewayEntryPoint().hostNavigationGateway()
     }
 
     private val reactRootViewCacheGateway by lazy {
-        DefaultReactRootViewCacheGateway()
+        reactContext.applicationContext.hostGatewayEntryPoint().reactRootViewCacheGateway()
     }
 
     private val navigationBridgeFacade by lazy {

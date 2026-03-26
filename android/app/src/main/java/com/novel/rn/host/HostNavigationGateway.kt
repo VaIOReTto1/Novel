@@ -8,12 +8,8 @@ class DefaultHostNavigationGateway(
     private val dispatchToHost: ((() -> Unit) -> Unit) = { block ->
         Handler(Looper.getMainLooper()).post(block)
     },
-    private val navigateToRouteAction: (String) -> Unit = { route ->
-        NavViewModel.navController.value?.navigate(route)
-    },
-    private val navigateBackAction: () -> Unit = {
-        NavViewModel.navController.value?.popBackStack()
-    },
+    private val navigateToRouteAction: (String) -> Unit = NavViewModel::navigateToRoute,
+    private val navigateBackAction: () -> Unit = NavViewModel::navigateBack,
     private val navigateToWritePageAction: () -> Unit = NavViewModel::navigateToWritePage,
     private val navigateToBookManageAction: () -> Unit = NavViewModel::navigateToBookManage,
     private val navigateToSearchAction: (String) -> Unit = NavViewModel::navigateToSearch,

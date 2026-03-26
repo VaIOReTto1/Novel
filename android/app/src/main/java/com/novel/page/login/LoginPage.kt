@@ -44,7 +44,6 @@ import com.novel.page.login.viewmodel.LoginIntent
 import com.novel.page.login.viewmodel.LoginViewModel
 import com.novel.ui.theme.NovelColors
 import com.novel.utils.NavViewModel
-import com.novel.utils.NavViewModel.navController
 import com.novel.utils.wdp
 import kotlinx.coroutines.flow.collectLatest
 import com.novel.page.login.component.InputSection
@@ -100,14 +99,14 @@ fun LoginPage() {
                     shouldTriggerBounce = true
                 }
                 is LoginEffect.NavigateToHome ->
-                    navController.value?.navigate("home")
+                    NavViewModel.navigateToRoute("home")
 
                 is LoginEffect.LaunchTelService -> {}
                 is LoginEffect.NavigateToPrivacyPolicy ->
-                    navController.value?.navigate("userAgreement")
+                    NavViewModel.navigateToRoute("userAgreement")
 
                 is LoginEffect.NavigateToTermsOfService ->
-                    navController.value?.navigate("registerAgreement")
+                    NavViewModel.navigateToRoute("registerAgreement")
 
                 is LoginEffect.FocusSmsCodeInput -> {}
                 is LoginEffect.NavigateBack -> {

@@ -44,6 +44,19 @@ class DatabaseGovernanceReportGeneratorTest {
     }
 
     @Test
+    fun generate_detectsTableScanWhenEqpOmitsTableKeyword() {
+        val generator = DatabaseGovernanceReportGenerator(
+            source = EqpVariantDatabaseGovernanceSource(),
+        )
+
+        val report = generator.generate()
+
+        assertEquals(3, report.summary.queryPlanCount)
+        assertEquals(3, report.summary.queriesWithTableScan)
+        assertTrue(report.recommendations.any { it.id == "query-plan-table-scan" })
+    }
+
+    @Test
     fun toMarkdown_rendersSummaryAndRecommendationSections() {
         val generator = DatabaseGovernanceReportGenerator(
             source = FakeDatabaseGovernanceSource(),
@@ -133,6 +146,20 @@ class DatabaseGovernanceReportGeneratorTest {
 
         override fun explainQueryPlan(sql: String, bindArgs: List<Any?>): List<String> {
             return listOf("SCAN TABLE home_books")
+        }
+    }
+
+    private class EqpVariantDatabaseGovernanceSource : DatabaseGovernanceSource {
+        override fun listTrackedTables(): List<String> = listOf("home_books")
+
+        override fun listIndexes(tableName: String): List<DatabaseIndexEntry> = emptyList()
+
+        override fun listFtsTables(): List<DatabaseFtsEntry> = emptyList()
+
+        override fun listTriggers(): List<DatabaseTriggerEntry> = emptyList()
+
+        override fun explainQueryPlan(sql: String, bindArgs: List<Any?>): List<String> {
+            return listOf("SCAN home_books")
         }
     }
 }

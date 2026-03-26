@@ -162,7 +162,7 @@ class DatabaseGovernanceReportGenerator(
         queryPlans: List<DatabaseQueryPlanEntry>,
     ): DatabaseGovernanceSummary {
         val queriesWithTableScan = queryPlans.count { plan ->
-            plan.details.any { detail -> detail.contains("SCAN TABLE", ignoreCase = true) }
+            plan.details.any(::containsTableScan)
         }
 
         return DatabaseGovernanceSummary(
@@ -183,7 +183,7 @@ class DatabaseGovernanceReportGenerator(
         val recommendations = mutableListOf<DatabaseGovernanceRecommendation>()
 
         val scannedPlans = queryPlans.filter { plan ->
-            plan.details.any { detail -> detail.contains("SCAN TABLE", ignoreCase = true) }
+            plan.details.any(::containsTableScan)
         }
         if (scannedPlans.isNotEmpty()) {
             recommendations += DatabaseGovernanceRecommendation(
@@ -218,6 +218,10 @@ class DatabaseGovernanceReportGenerator(
         return recommendations
     }
 
+    private fun containsTableScan(detail: String): Boolean {
+        return TABLE_SCAN_REGEX.containsMatchIn(detail)
+    }
+
     private fun defaultQuerySpecs(): List<QuerySpec> {
         return listOf(
             QuerySpec(
@@ -242,6 +246,10 @@ class DatabaseGovernanceReportGenerator(
         val sql: String,
         val bindArgs: List<Any?> = emptyList(),
     )
+
+    private companion object {
+        val TABLE_SCAN_REGEX = Regex("""\bSCAN(?:\s+TABLE)?\b""", RegexOption.IGNORE_CASE)
+    }
 }
 
 class RoomDatabaseGovernanceSource(

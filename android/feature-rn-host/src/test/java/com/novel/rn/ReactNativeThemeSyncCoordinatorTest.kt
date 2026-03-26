@@ -45,4 +45,18 @@ class ReactNativeThemeSyncCoordinatorTest {
         assertThat(synced).isEqualTo(true)
         assertThat(emittedTheme).isEqualTo("dark")
     }
+
+    @Test
+    fun resolveSyncAction_returnsSkipWhenThemeMissing() {
+        assertThat(coordinator.resolveSyncAction(null))
+            .isEqualTo(ReactNativeThemeSyncCoordinator.ThemeSyncAction.Skip)
+    }
+
+    @Test
+    fun resolveSyncAction_returnsDispatchWithTrimmedTheme() {
+        assertThat(coordinator.resolveSyncAction(" dark "))
+            .isEqualTo(
+                ReactNativeThemeSyncCoordinator.ThemeSyncAction.Dispatch("dark"),
+            )
+    }
 }

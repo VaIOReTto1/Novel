@@ -73,18 +73,18 @@ fun ReactNativePage(
 
     TimberLogger.d(
         tag,
-        "组件渲染 - componentName: $componentName, isContextReady: $isContextReady, destroyOnBack: $destroyOnBack, mviModule: $mviModuleType",
+        "缁勪欢娓叉煋 - componentName: $componentName, isContextReady: $isContextReady, destroyOnBack: $destroyOnBack, mviModule: $mviModuleType",
     )
 
     DisposableEffect(componentName, bridgeViewModel) {
         bridgeViewModel?.registerComponent(componentName)
         onDispose {
-            TimberLogger.d(tag, "组件注销: $componentName")
+            TimberLogger.d(tag, "缁勪欢娉ㄩ攢: $componentName")
         }
     }
 
     val rootView = remember(componentName, initialProps) {
-        TimberLogger.d(tag, "获取缓存的ReactRootView for $componentName")
+        TimberLogger.d(tag, "鑾峰彇缂撳瓨鐨凴eactRootView for $componentName")
 
         val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
         val currentThemeMode = themeManager.getCurrentThemeMode()
@@ -127,7 +127,7 @@ fun ReactNativePage(
         },
         onNavigateBack = {
             bridgeViewModel?.sendIntent(BridgeIntent.NavigateBack(componentName))
-                ?: TimberLogger.w(tag, "BridgeViewModel未初始化，无法处理返回操作")
+                ?: TimberLogger.w(tag, "BridgeViewModel鏈垵濮嬪寲锛屾棤娉曞鐞嗚繑鍥炴搷浣?)
         },
     )
 }
@@ -138,24 +138,27 @@ private fun syncThemeToRN(
     themeSyncCoordinator: ReactNativeThemeSyncCoordinator,
 ) {
     try {
-        TimberLogger.d("ReactNativePage", "开始同步主题信息到RN for $componentName")
+        TimberLogger.d("ReactNativePage", "寮€濮嬪悓姝ヤ富棰樹俊鎭埌RN for $componentName")
 
         val actualTheme = settingsViewModel?.adapter?.getCurrentSnapshot()?.actualTheme
-        if (!themeSyncCoordinator.syncActualTheme(actualTheme) { theme ->
-                val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
-                themeManager.notifyThemeChangedToRN(theme)
+        when (val action = themeSyncCoordinator.resolveSyncAction(actualTheme)) {
+            ReactNativeThemeSyncCoordinator.ThemeSyncAction.Skip -> {
+                TimberLogger.w(
+                    "ReactNativePage",
+                    "SettingsViewModel鎴朣tateAdapter鏈垵濮嬪寲锛岃烦杩囦富棰樺悓姝?for $componentName",
+                )
+                return
             }
-        ) {
-            TimberLogger.w(
-                "ReactNativePage",
-                "SettingsViewModel或StateAdapter未初始化，跳过主题同步 for $componentName",
-            )
-            return
+
+            is ReactNativeThemeSyncCoordinator.ThemeSyncAction.Dispatch -> {
+                val themeManager = com.novel.ui.theme.ThemeManager.getInstance()
+                themeManager.notifyThemeChangedToRN(action.theme)
+            }
         }
 
-        TimberLogger.d("ReactNativePage", "当前实际主题: $actualTheme for $componentName")
-        TimberLogger.d("ReactNativePage", "主题信息已同步到RN: $actualTheme for $componentName")
+        TimberLogger.d("ReactNativePage", "褰撳墠瀹為檯涓婚: $actualTheme for $componentName")
+        TimberLogger.d("ReactNativePage", "涓婚淇℃伅宸插悓姝ュ埌RN: $actualTheme for $componentName")
     } catch (e: Exception) {
-        TimberLogger.e("ReactNativePage", "同步主题信息到RN失败 for $componentName", e)
+        TimberLogger.e("ReactNativePage", "鍚屾涓婚淇℃伅鍒癛N澶辫触 for $componentName", e)
     }
 }

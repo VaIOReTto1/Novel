@@ -9,7 +9,16 @@ class SearchRetryPolicyCoordinator {
         retryAttempts: Int,
         maxRetryAttempts: Int,
     ): Boolean {
-        return !params.isLoadMore && retryAttempts <= maxRetryAttempts
+        return params.triggerSource != SearchTriggerSource.LOAD_MORE &&
+            retryAttempts < maxRetryAttempts
+    }
+
+    fun createRetryParams(params: SearchParams): SearchParams {
+        if (params.isLoadMore) {
+            return params
+        }
+
+        return params.copy(triggerSource = SearchTriggerSource.USER_RETRY)
     }
 
     fun retryDelayMs(

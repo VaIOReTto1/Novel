@@ -133,8 +133,16 @@ class SearchResultViewModel @Inject constructor(
     ) {
         if (retryPolicyCoordinator.shouldRetry(params, retryAttempts, MAX_RETRY_ATTEMPTS)) {
             retryAttempts++
-            delay(RETRY_DELAY_MS)
-            performSearchWithRetry(params, trace)
+            delay(
+                retryPolicyCoordinator.retryDelayMs(
+                    retryAttempts = retryAttempts,
+                    baseDelayMs = RETRY_DELAY_MS,
+                ),
+            )
+            performSearchWithRetry(
+                retryPolicyCoordinator.createRetryParams(params),
+                trace,
+            )
             return
         }
 
@@ -155,7 +163,7 @@ class SearchResultViewModel @Inject constructor(
             trace,
             status = "failure",
             metadata = mapOf(
-                "trigger" to params.triggerSource.name,
+                "trigger" to trace.metadata["trigger"].orEmpty().ifBlank { params.triggerSource.name },
                 "page" to params.page.toString(),
             ),
         )

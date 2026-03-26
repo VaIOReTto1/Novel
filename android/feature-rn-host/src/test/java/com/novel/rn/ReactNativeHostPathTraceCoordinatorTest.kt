@@ -48,4 +48,15 @@ class ReactNativeHostPathTraceCoordinatorTest {
             ),
         ).isEqualTo("component=ProfilePage reactRootViewPath=FIRST_CREATE reactContextPath=FIRST_CREATE")
     }
+
+    @Test
+    fun formatRootViewTrace_marksWarmOpenSeparatelyFromColdCreate() {
+        assertThat(
+            coordinator.formatRootViewTrace(
+                componentName = "ProfilePage",
+                reused = false,
+                hasReactContext = true,
+            ),
+        ).isEqualTo("component=ProfilePage reactRootViewPath=OPEN reactContextPath=ALREADY_READY")
+    }
 }

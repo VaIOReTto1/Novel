@@ -9,6 +9,8 @@
     "start": "react-native start",
     "web": "webpack serve --config webpack.config.js",
     "test": "jest",
+    "harness:refresh": "node scripts/harness-refresh.js",
+    "harness:check": "node scripts/harness-check.js",
     "version:show": "node scripts/version-sync.js show",
     "version:patch": "node scripts/version-sync.js patch",
     "version:minor": "node scripts/version-sync.js minor",

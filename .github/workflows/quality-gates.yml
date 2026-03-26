@@ -11,6 +11,21 @@ permissions:
   contents: read
 
 jobs:
+  harness-docs:
+    name: Harness Docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run harness check
+        run: npm run harness:check
+      - name: Run harness refresh
+        run: npm run harness:refresh
+      - name: Verify generated snapshot is committed
+        run: git diff --exit-code -- docs/harness/generated/workspace-snapshot.md
+
   rn-tests:
     name: RN Tests
     runs-on: ubuntu-latest

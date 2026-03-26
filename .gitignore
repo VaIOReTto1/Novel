@@ -75,6 +75,5 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-.trae/rules/project_rules.md
 .trae/.ignore
 .vercel/project.json

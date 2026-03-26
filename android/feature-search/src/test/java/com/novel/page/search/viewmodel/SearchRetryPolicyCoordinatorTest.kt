@@ -65,8 +65,21 @@ class SearchRetryPolicyCoordinatorTest {
     }
 
     @Test
-    fun createRetryParams_marksManualRetryTrigger_forNonLoadMoreSearch() {
-        val retryParams = coordinator.createRetryParams(
+    fun createAutomaticRetryParams_preservesOriginalTrigger_forAutomaticRetry() {
+        val retryParams = coordinator.createAutomaticRetryParams(
+            createParams(
+                triggerSource = SearchTriggerSource.INITIAL_ENTRY,
+                isLoadMore = false,
+            ),
+        )
+
+        assertThat(retryParams.triggerSource).isEqualTo(SearchTriggerSource.INITIAL_ENTRY)
+        assertThat(retryParams.page).isEqualTo(1)
+    }
+
+    @Test
+    fun createUserRetryParams_marksManualRetryTrigger() {
+        val retryParams = coordinator.createUserRetryParams(
             createParams(
                 triggerSource = SearchTriggerSource.INITIAL_ENTRY,
                 isLoadMore = false,
@@ -74,7 +87,6 @@ class SearchRetryPolicyCoordinatorTest {
         )
 
         assertThat(retryParams.triggerSource).isEqualTo(SearchTriggerSource.USER_RETRY)
-        assertThat(retryParams.page).isEqualTo(1)
     }
 
     @Test

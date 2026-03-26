@@ -13,7 +13,11 @@ class SearchRetryPolicyCoordinator {
             retryAttempts < maxRetryAttempts
     }
 
-    fun createRetryParams(params: SearchParams): SearchParams {
+    fun createAutomaticRetryParams(params: SearchParams): SearchParams {
+        return params
+    }
+
+    fun createUserRetryParams(params: SearchParams): SearchParams {
         if (params.isLoadMore) {
             return params
         }

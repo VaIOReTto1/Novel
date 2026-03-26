@@ -140,7 +140,7 @@ class SearchResultViewModel @Inject constructor(
                 ),
             )
             performSearchWithRetry(
-                retryPolicyCoordinator.createRetryParams(params),
+                retryPolicyCoordinator.createAutomaticRetryParams(params),
                 trace,
             )
             return

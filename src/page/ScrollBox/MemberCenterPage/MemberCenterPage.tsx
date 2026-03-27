@@ -39,7 +39,7 @@ const MemberCenterPage: React.FC = () => {
   } = useMemberCenterStore();
 
   const colors = useNovelColors();
-  
+
   // 获取当前卡片信息
   const currentCard = vipCards[currentCardIndex];
   const currentCardType = currentCard?.type || 'member';
@@ -56,8 +56,8 @@ const MemberCenterPage: React.FC = () => {
         console.log('[MemberCenterPage] 开始初始化数据');
         await loadInitialData();
         console.log('[MemberCenterPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[MemberCenterPage] 初始化失败:', error);
+      } catch (err) {
+        console.error('[MemberCenterPage] 初始化失败:', err);
       }
     };
 
@@ -123,7 +123,7 @@ const MemberCenterPage: React.FC = () => {
     handleTaskPress(taskId);
   }, [handleTaskPress]);
 
-   const themeColors = getVIPThemeColors(currentCardType);  // member / svip / adfree
+  const themeColors = getVIPThemeColors(currentCardType);  // member / svip / adfree
 
   // 获取当前选中的套餐
   const selectedPackage = pricePackages.find(pkg => pkg.id === selectedPackageId) || null;
@@ -132,10 +132,10 @@ const MemberCenterPage: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <TopBar 
-          styles={styles} 
+        <TopBar
+          styles={styles}
           title="会员中心"
-          onBackPress={handleBackPress} 
+          onBackPress={handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载中...</Text>
@@ -148,10 +148,10 @@ const MemberCenterPage: React.FC = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <TopBar 
-          styles={styles} 
+        <TopBar
+          styles={styles}
           title="会员中心"
-          onBackPress={handleBackPress} 
+          onBackPress={handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载失败: {error}</Text>
@@ -163,10 +163,10 @@ const MemberCenterPage: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* 固定顶部导航 */}
-      <TopBar 
-        styles={styles} 
+      <TopBar
+        styles={styles}
         title={currentCard?.title || '会员中心'}
-        onBackPress={handleBackPress} 
+        onBackPress={handleBackPress}
       />
 
       {/* 滚动内容区域 */}

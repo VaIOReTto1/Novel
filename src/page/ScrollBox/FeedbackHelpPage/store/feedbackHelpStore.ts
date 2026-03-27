@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { 
-  FeedbackHelpState, 
-  ConsultCategory, 
-  FrequentQuestion, 
-  QuestionDetail 
+import {
+  FeedbackHelpState,
+  ConsultCategory,
+  FrequentQuestion,
+  QuestionDetail,
 } from '../types';
 
 // Mock 咨询场景数据
@@ -14,43 +14,43 @@ const mockConsultCategories: ConsultCategory[] = [
     title: '会员问题',
     icon: '👑',
     bgGradient: ['#ffb3ba', '#ffdfba'],
-    items: ['开通续费', '类型权益', '会员特权', '价格政策']
+    items: ['开通续费', '类型权益', '会员特权', '价格政策'],
   },
   {
     id: 'account',
     title: '账号问题',
     icon: '👤',
     bgGradient: ['#baffc9', '#bae1ff'],
-    items: ['登录问题', '资料修改', '账号换绑', '密码重置']
+    items: ['登录问题', '资料修改', '账号换绑', '密码重置'],
   },
   {
     id: 'subscription',
     title: '开通续费',
     icon: '💳',
     bgGradient: ['#ffb3ba', '#ffdfba'],
-    items: ['支付问题', '续费失败', '退款申请', '发票开具']
+    items: ['支付问题', '续费失败', '退款申请', '发票开具'],
   },
   {
     id: 'benefits',
     title: '类型权益',
     icon: '🎁',
     bgGradient: ['#ffffba', '#ffb3ba'],
-    items: ['VIP权益', '免广告', '离线下载', '专属内容']
+    items: ['VIP权益', '免广告', '离线下载', '专属内容'],
   },
   {
     id: 'reading',
     title: '看书问题',
     icon: '📖',
     bgGradient: ['#baffc9', '#ffffba'],
-    items: ['找书催更', '低质侵权', '下载导入', '阅读设置']
+    items: ['找书催更', '低质侵权', '下载导入', '阅读设置'],
   },
   {
     id: 'listening',
     title: '听书问题',
     icon: '🎧',
     bgGradient: ['#bae1ff', '#ffdfba'],
-    items: ['听书方式', '听书下载', '听书异常', '音质问题']
-  }
+    items: ['听书方式', '听书下载', '听书异常', '音质问题'],
+  },
 ];
 
 // Mock 常见问题数据
@@ -60,127 +60,127 @@ const mockFrequentQuestions: FrequentQuestion[] = [
     title: '书籍下架/分类消失',
     category: 'reading',
     priority: 1,
-    viewCount: 15847
+    viewCount: 15847,
   },
   {
     id: 'q2',
     title: '如何打开/关闭评论、段评、章评',
     category: 'reading',
     priority: 2,
-    viewCount: 12456
+    viewCount: 12456,
   },
   {
     id: 'q3',
     title: '成为作者/作者收益/作者数据问题',
     category: 'member',
     priority: 3,
-    viewCount: 9876
+    viewCount: 9876,
   },
   {
     id: 'q4',
     title: '没有找到我的问题怎么办?',
     category: 'other',
     priority: 4,
-    viewCount: 7654
+    viewCount: 7654,
   },
   {
     id: 'q5',
     title: 'VIP会员有什么权益?',
     category: 'member',
     priority: 5,
-    viewCount: 8765
+    viewCount: 8765,
   },
   {
     id: 'q6',
     title: '听书功能如何使用?',
     category: 'listening',
     priority: 6,
-    viewCount: 6543
+    viewCount: 6543,
   },
   {
     id: 'q7',
     title: '如何修改个人资料?',
     category: 'account',
     priority: 7,
-    viewCount: 5432
+    viewCount: 5432,
   },
   {
     id: 'q8',
     title: '支付失败怎么办?',
     category: 'subscription',
     priority: 8,
-    viewCount: 4321
+    viewCount: 4321,
   },
   {
     id: 'q9',
     title: '如何开通VIP会员?',
     category: 'subscription',
     priority: 9,
-    viewCount: 3987
+    viewCount: 3987,
   },
   {
     id: 'q10',
     title: '忘记密码怎么办?',
     category: 'account',
     priority: 10,
-    viewCount: 3654
+    viewCount: 3654,
   },
   {
     id: 'q11',
     title: '如何下载离线阅读?',
     category: 'reading',
     priority: 11,
-    viewCount: 3321
+    viewCount: 3321,
   },
   {
     id: 'q12',
     title: '听书音质问题',
     category: 'listening',
     priority: 12,
-    viewCount: 2987
+    viewCount: 2987,
   },
   {
     id: 'q13',
     title: '会员自动续费如何取消?',
     category: 'subscription',
     priority: 13,
-    viewCount: 2654
+    viewCount: 2654,
   },
   {
     id: 'q14',
     title: '如何绑定手机号?',
     category: 'account',
     priority: 14,
-    viewCount: 2321
+    viewCount: 2321,
   },
   {
     id: 'q15',
     title: '阅读记录丢失怎么办?',
     category: 'reading',
     priority: 15,
-    viewCount: 1987
+    viewCount: 1987,
   },
   {
     id: 'q16',
     title: '听书下载失败',
     category: 'listening',
     priority: 16,
-    viewCount: 1654
+    viewCount: 1654,
   },
   {
     id: 'q17',
     title: 'VIP特权无法使用',
     category: 'benefits',
     priority: 17,
-    viewCount: 1432
+    viewCount: 1432,
   },
   {
     id: 'q18',
     title: '如何申请退款?',
     category: 'subscription',
     priority: 18,
-    viewCount: 1298
-  }
+    viewCount: 1298,
+  },
 ];
 
 // Mock 问题详情数据
@@ -205,10 +205,10 @@ const mockQuestionDetails: { [id: string]: QuestionDetail } = {
     tags: ['书籍下架', '内容调整', '版权', '推荐'],
     isResolved: false,
     relatedQuestions: ['q2', 'q5'],
-    lastUpdated: '2024-01-15 14:30:00'
+    lastUpdated: '2024-01-15 14:30:00',
   },
   'q2': {
-    id: 'q2', 
+    id: 'q2',
     title: '如何打开/关闭评论、段评、章评',
     content: `您可以在阅读设置中管理评论显示功能：
 
@@ -230,11 +230,11 @@ const mockQuestionDetails: { [id: string]: QuestionDetail } = {
     tags: ['评论设置', '阅读体验', '段评', '章评'],
     isResolved: true,
     relatedQuestions: ['q1', 'q7'],
-    lastUpdated: '2024-01-14 16:45:00'
+    lastUpdated: '2024-01-14 16:45:00',
   },
   'q3': {
     id: 'q3',
-    title: '成为作者/作者收益/作者数据问题', 
+    title: '成为作者/作者收益/作者数据问题',
     content: `关于成为作者的相关问题，为您详细说明：
 
 成为作者条件：
@@ -260,7 +260,7 @@ const mockQuestionDetails: { [id: string]: QuestionDetail } = {
     tags: ['作者申请', '收益分成', '数据统计', '创作'],
     isResolved: false,
     relatedQuestions: ['q5', 'q8'],
-    lastUpdated: '2024-01-13 10:20:00'
+    lastUpdated: '2024-01-13 10:20:00',
   },
   'q4': {
     id: 'q4',
@@ -294,7 +294,7 @@ const mockQuestionDetails: { [id: string]: QuestionDetail } = {
     tags: ['客服热线', '在线咨询', '意见反馈', '社区'],
     isResolved: true,
     relatedQuestions: ['q1', 'q8'],
-    lastUpdated: '2024-01-12 18:00:00'
+    lastUpdated: '2024-01-12 18:00:00',
   },
   'q5': {
     id: 'q5',
@@ -330,7 +330,7 @@ const mockQuestionDetails: { [id: string]: QuestionDetail } = {
     tags: ['VIP权益', '会员特权', '免费阅读', '听书'],
     isResolved: true,
     relatedQuestions: ['q3', 'q6'],
-    lastUpdated: '2024-01-11 14:15:00'
+    lastUpdated: '2024-01-11 14:15:00',
   },
   'q6': {
     id: 'q6',
@@ -361,7 +361,7 @@ VIP用户可下载听书内容，无网络也能收听。`,
     tags: ['听书使用', '播放设置', '离线下载', '操作技巧'],
     isResolved: true,
     relatedQuestions: ['q5', 'q12'],
-    lastUpdated: '2024-01-10 11:30:00'
+    lastUpdated: '2024-01-10 11:30:00',
   },
   'q7': {
     id: 'q7',
@@ -393,7 +393,7 @@ VIP用户可下载听书内容，无网络也能收听。`,
     tags: ['个人资料', '昵称修改', '头像上传', '安全验证'],
     isResolved: true,
     relatedQuestions: ['q10', 'q14'],
-    lastUpdated: '2024-01-09 15:20:00'
+    lastUpdated: '2024-01-09 15:20:00',
   },
   'q8': {
     id: 'q8',
@@ -427,8 +427,8 @@ VIP用户可下载听书内容，无网络也能收听。`,
     tags: ['支付失败', '网络问题', '银行卡', '客服'],
     isResolved: true,
     relatedQuestions: ['q9', 'q13'],
-    lastUpdated: '2024-01-08 09:45:00'
-  }
+    lastUpdated: '2024-01-08 09:45:00',
+  },
 };
 
 // 生成更多问题详情
@@ -463,7 +463,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['VIP开通', '套餐选择', '支付方式', '新用户'],
       isResolved: true,
       relatedQuestions: ['q5', 'q8'],
-      lastUpdated: '2024-01-07 16:30:00'
+      lastUpdated: '2024-01-07 16:30:00',
     },
     'q10': {
       id: 'q10',
@@ -494,7 +494,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['密码重置', '手机验证', '邮箱找回', '账号安全'],
       isResolved: true,
       relatedQuestions: ['q7', 'q14'],
-      lastUpdated: '2024-01-06 13:45:00'
+      lastUpdated: '2024-01-06 13:45:00',
     },
     'q11': {
       id: 'q11',
@@ -525,7 +525,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['离线下载', '存储管理', '下载设置', '省电'],
       isResolved: true,
       relatedQuestions: ['q1', 'q15'],
-      lastUpdated: '2024-01-05 10:20:00'
+      lastUpdated: '2024-01-05 10:20:00',
     },
     'q12': {
       id: 'q12',
@@ -555,7 +555,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['音质设置', '播放问题', '网络优化', '设备建议'],
       isResolved: true,
       relatedQuestions: ['q6', 'q16'],
-      lastUpdated: '2024-01-04 14:10:00'
+      lastUpdated: '2024-01-04 14:10:00',
     },
     'q13': {
       id: 'q13',
@@ -588,7 +588,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['自动续费', '取消续费', '微信支付', '支付宝'],
       isResolved: true,
       relatedQuestions: ['q8', 'q9'],
-      lastUpdated: '2024-01-03 11:55:00'
+      lastUpdated: '2024-01-03 11:55:00',
     },
     'q14': {
       id: 'q14',
@@ -620,7 +620,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['手机绑定', '验证码', '账号安全', '更换手机'],
       isResolved: true,
       relatedQuestions: ['q7', 'q10'],
-      lastUpdated: '2024-01-02 09:30:00'
+      lastUpdated: '2024-01-02 09:30:00',
     },
     'q15': {
       id: 'q15',
@@ -652,7 +652,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['阅读记录', '云端同步', '数据恢复', '备份'],
       isResolved: true,
       relatedQuestions: ['q1', 'q11'],
-      lastUpdated: '2024-01-01 16:20:00'
+      lastUpdated: '2024-01-01 16:20:00',
     },
     'q16': {
       id: 'q16',
@@ -683,7 +683,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['下载失败', '存储空间', '网络问题', '技术支持'],
       isResolved: true,
       relatedQuestions: ['q6', 'q12'],
-      lastUpdated: '2023-12-31 12:40:00'
+      lastUpdated: '2023-12-31 12:40:00',
     },
     'q17': {
       id: 'q17',
@@ -715,7 +715,7 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['VIP特权', '权益失效', '状态刷新', '客服'],
       isResolved: false,
       relatedQuestions: ['q5', 'q9'],
-      lastUpdated: '2023-12-30 15:15:00'
+      lastUpdated: '2023-12-30 15:15:00',
     },
     'q18': {
       id: 'q18',
@@ -748,10 +748,10 @@ const generateMoreQuestionDetails = (): { [id: string]: QuestionDetail } => {
       tags: ['退款申请', '退款条件', '处理时间', '客服咨询'],
       isResolved: true,
       relatedQuestions: ['q8', 'q13'],
-      lastUpdated: '2023-12-29 10:05:00'
-    }
+      lastUpdated: '2023-12-29 10:05:00',
+    },
   };
-  
+
   return details;
 };
 
@@ -763,35 +763,35 @@ export const useFeedbackHelpStore = create<FeedbackHelpState>()(
     consultCategories: mockConsultCategories,
     frequentQuestions: mockFrequentQuestions,
     questionDetails: allQuestionDetails,
-    
+
     // 初始状态
     currentView: 'main',
     selectedCategory: null,
     selectedQuestion: null,
     isLoading: false,
     error: null,
-    
+
     // Actions
     setCurrentView: (view: 'main' | 'questions' | 'detail') => set(state => {
       state.currentView = view;
     }),
-    
+
     selectCategory: (categoryId: string) => set(state => {
       state.selectedCategory = categoryId;
       state.currentView = 'questions';
     }),
-    
+
     selectQuestion: (questionId: string) => set(state => {
       state.selectedQuestion = questionId;
       state.currentView = 'detail';
     }),
-    
+
     markQuestionResolved: (questionId: string, isResolved: boolean) => set(state => {
       if (state.questionDetails[questionId]) {
         state.questionDetails[questionId].isResolved = isResolved;
       }
     }),
-    
+
     goBack: () => set(state => {
       if (state.currentView === 'detail') {
         state.currentView = 'questions';
@@ -801,42 +801,42 @@ export const useFeedbackHelpStore = create<FeedbackHelpState>()(
         state.selectedCategory = null;
       }
     }),
-    
+
     resetToMain: () => set(state => {
       state.currentView = 'main';
       state.selectedCategory = null;
       state.selectedQuestion = null;
     }),
-    
+
     setLoading: (loading: boolean) => set(state => {
       state.isLoading = loading;
     }),
-    
+
     setError: (error: string | null) => set(state => {
       state.error = error;
     }),
-    
+
     // 获取分类相关问题
     getCategoryQuestions: (categoryId: string): FrequentQuestion[] => {
       const state = get();
       return state.frequentQuestions.filter(q => q.category === categoryId);
     },
-    
+
     // 获取问题详情
     getQuestionDetail: (questionId: string): QuestionDetail | null => {
       const state = get();
       return state.questionDetails[questionId] || null;
     },
-    
+
     // 搜索问题
     searchQuestions: (keyword: string): FrequentQuestion[] => {
       const state = get();
-      if (!keyword.trim()) return state.frequentQuestions;
-      
-      return state.frequentQuestions.filter(q => 
+      if (!keyword.trim()) {return state.frequentQuestions;}
+
+      return state.frequentQuestions.filter(q =>
         q.title.toLowerCase().includes(keyword.toLowerCase())
       );
-    }
+    },
   }))
 );
 

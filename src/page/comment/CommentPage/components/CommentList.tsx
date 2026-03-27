@@ -28,7 +28,7 @@ const StarRating = memo(({ rating }: { rating?: number }) => {
   const colors = useNovelColors();
   const styles = createCommentPageStyles(colors);
 
-  if (!rating) return null;
+  if (!rating) {return null;}
 
   return (
     <View style={styles.starRating}>
@@ -111,8 +111,8 @@ const CommentItem = memo(({ item, bookInfo }: { item: Comment; bookInfo?: { book
             {item.tag && (
               <View style={[styles.commentTag, styles[`commentTag_${item.tag}`]]}>
                 <Text style={styles.commentTagText}>
-                  {item.tag === 'first_comment' ? '首评' : 
-                   item.tag === 'true_fan' ? '真爱粉' : 
+                  {item.tag === 'first_comment' ? '首评' :
+                   item.tag === 'true_fan' ? '真爱粉' :
                    item.tag === 'vip' ? 'VIP' : ''}
                 </Text>
               </View>
@@ -262,7 +262,7 @@ const FooterComponent = memo(() => {
   const styles = createCommentPageStyles(colors);
   const { loading, hasMore, comments } = useCommentStore();
 
-  if (comments.length === 0) return null;
+  if (comments.length === 0) {return null;}
 
   if (loading) {
     return (

@@ -17,19 +17,19 @@ interface UnifiedScrollViewProps {
   onLoadMore: () => void;
   hasMore: boolean;
   isLoading: boolean;
-  
+
   // 推荐数据
   recommendations: RecommendationItem[];
   onRecommendationPress: (item: RecommendationItem) => void;
   onLoadMoreRecommendations: () => void;
   hasMoreRecommendations: boolean;
   isRecommendationLoading: boolean;
-  
+
   // 视图状态
   currentView: ViewType;
   isEditMode: boolean;
   selectedItems: string[];
-  
+
   // 刷新控制
   isRefreshing: boolean;
   onRefresh: () => void;

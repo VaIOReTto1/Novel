@@ -124,7 +124,7 @@ export const createMyReservationPageStyles = (colors: NovelColors) => StyleSheet
     backgroundColor: colors.novelSecondaryBackground,
     position: 'relative',
   },
-  
+
   // 预约卡片样式
   reservationCard: {
     position: 'relative',

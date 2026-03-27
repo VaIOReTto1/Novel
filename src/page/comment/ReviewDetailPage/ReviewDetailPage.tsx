@@ -56,8 +56,8 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
         setParsedCommentData(comment);
         // 调用API加载评论详情和回复数据
         loadReviewDetail(comment.id);
-      } catch (error) {
-        console.error('[ReviewDetailPage] 解析评论数据失败:', error);
+      } catch (err) {
+        console.error('[ReviewDetailPage] 解析评论数据失败:', err);
       }
     }
 
@@ -100,7 +100,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
     console.log('回复评论:', commentId);
   };
 
-  const [commentText, setCommentText] = useState('');
+  const [_commentText, _setCommentText] = useState('');
   const [_showCommentModal, setShowCommentModal] = useState(false);
   const [selectedComment, setSelectedComment] = useState<any>(null);
   const [modalAnimation] = useState(new Animated.Value(0));
@@ -121,16 +121,6 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
     }
   };
 
-  const handleSendComment = () => {
-    if (commentText.trim()) {
-      // TODO: 实现发送评论功能
-      console.log('发送评论:', commentText);
-      setCommentText('');
-      hideCommentModal();
-    }
-  };
-  void handleSendComment;
-
   const showCommentModalWithAnimation = () => {
     setShowCommentModal(true);
     Animated.timing(modalAnimation, {
@@ -140,16 +130,6 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
     }).start();
   };
 
-  const hideCommentModal = () => {
-    Animated.timing(modalAnimation, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start(() => {
-      setShowCommentModal(false);
-      setCommentText('');
-    });
-  };
 
   const handleCommentInputFocus = () => {
     showCommentModalWithAnimation();

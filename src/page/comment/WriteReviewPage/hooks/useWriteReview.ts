@@ -8,10 +8,10 @@ const submitComment = async (data: CommentSubmitRequest): Promise<boolean> => {
   try {
     // 这里应该调用实际的API
     console.log('提交评论:', data);
-    
+
     // 模拟网络延迟
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     // 模拟成功率（90%成功）
     if (Math.random() > 0.1) {
       return true;
@@ -36,7 +36,7 @@ const initialState: WriteReviewState = {
 export const useWriteReview = (initialRating?: number) => {
   const [state, setState] = useState<WriteReviewState>({
     ...initialState,
-    rating: initialRating || 0
+    rating: initialRating || 0,
   });
   const starAnimations = useRef([...Array(5)].map(() => new Animated.Value(1))).current;
 
@@ -46,7 +46,7 @@ export const useWriteReview = (initialRating?: number) => {
 
   const setRating = useCallback((rating: number) => {
     updateState({ rating });
-    
+
     // 星星动画效果
     starAnimations.forEach((animation, index) => {
       if (index < rating) {
@@ -69,10 +69,10 @@ export const useWriteReview = (initialRating?: number) => {
 
 
   const setContent = useCallback((content: string) => {
-    updateState({ 
-      content, 
+    updateState({
+      content,
       contentLength: content.length,
-      contentError: '' // 清除错误
+      contentError: '', // 清除错误
     });
   }, [updateState]);
 
@@ -132,7 +132,7 @@ export const useWriteReview = (initialRating?: number) => {
       };
 
       const success = await submitComment(submitData);
-      
+
       if (success) {
         Alert.alert(
           '提交成功',
@@ -143,8 +143,8 @@ export const useWriteReview = (initialRating?: number) => {
               onPress: () => {
                 // 返回上一页
                 NavigationBridge.navigateBack();
-              }
-            }
+              },
+            },
           ]
         );
         return true;

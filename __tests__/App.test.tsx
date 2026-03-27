@@ -15,11 +15,11 @@ const mockHomeSubscribe = jest.fn(() => mockHomeUnsubscribe);
 const mockInitializeFromProps = jest.fn();
 
 jest.mock('../src/page/ProfilePage/ProfilePage', () => {
-  const React = require('react');
-  const { Text } = require('react-native');
+  const ReactMock = require('react');
+  const { Text: MockText } = require('react-native');
 
   return function MockProfilePage() {
-    return React.createElement(Text, null, 'ProfilePage');
+    return ReactMock.createElement(MockText, null, 'ProfilePage');
   };
 });
 

@@ -24,9 +24,9 @@ export const TabBar: React.FC<TabBarProps> = ({
       <View style={styles.circleTabHeader}>
         <Text style={styles.circleTabTitle}>最常访问</Text>
       </View>
-      
+
       {/* 圈子列表 */}
-      <ScrollView 
+      <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.circleScrollView}
@@ -50,7 +50,7 @@ export const TabBar: React.FC<TabBarProps> = ({
             selectedCircle === 'all' && styles.activeAllCircleName,
           ]}>全部</Text>
         </TouchableOpacity>
-        
+
         {/* 圈子选项 */}
         {circles.map((circle) => {
           const isActive = circle.id === selectedCircle;

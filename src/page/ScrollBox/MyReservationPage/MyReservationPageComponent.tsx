@@ -10,7 +10,7 @@ interface MyReservationPageComponentProps {
 const MyReservationPageComponent: React.FC<MyReservationPageComponentProps> = ({ source }) => {
   useEffect(() => {
     console.log('[MyReservationPageComponent] 组件初始化，来源:', source);
-    
+
     // 初始化RN页面
     initializeRNPage('MyReservationPage').catch((error) => {
       console.error('[MyReservationPageComponent] 页面初始化失败:', error);

@@ -40,8 +40,8 @@ const MyReservationPage: React.FC = () => {
         console.log('[MyReservationPage] 开始初始化数据');
         await loadInitialData();
         console.log('[MyReservationPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[MyReservationPage] 初始化失败:', error);
+      } catch (err) {
+        console.error('[MyReservationPage] 初始化失败:', err);
       }
     };
 
@@ -132,11 +132,11 @@ const MyReservationPage: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <TopBar 
-          styles={styles} 
+        <TopBar
+          styles={styles}
           selectedTab={selectedTab}
           onTabChange={handleMainTabChange}
-          onBackPress={handleBackPress} 
+          onBackPress={handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载中...</Text>
@@ -149,11 +149,11 @@ const MyReservationPage: React.FC = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <TopBar 
-          styles={styles} 
+        <TopBar
+          styles={styles}
           selectedTab={selectedTab}
           onTabChange={handleMainTabChange}
-          onBackPress={handleBackPress} 
+          onBackPress={handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载失败: {error}</Text>
@@ -165,11 +165,11 @@ const MyReservationPage: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* 顶部导航（包含Tab切换） */}
-      <TopBar 
-        styles={styles} 
+      <TopBar
+        styles={styles}
         selectedTab={selectedTab}
         onTabChange={handleMainTabChange}
-        onBackPress={handleBackPress} 
+        onBackPress={handleBackPress}
       />
 
       {/* 我的预约的子Tab */}

@@ -33,14 +33,14 @@ export const getVIPThemeColors = (cardType: string) => {
     case 'svip':
       return {
         primary: '#ff6b6b',
-        light: '#ff8e8e', 
+        light: '#ff8e8e',
         gradient: VIP_COLORS.svipGradient,
       };
     case 'adfree':
       return {
         primary: '#4ecdc4',
         light: '#7fcdcd',
-        gradient: VIP_COLORS.adfreeGradient
+        gradient: VIP_COLORS.adfreeGradient,
       };
     default:
       return {
@@ -53,7 +53,7 @@ export const getVIPThemeColors = (cardType: string) => {
 
 export const createMemberCenterPageStyles = (colors: NovelColors, currentCardType: string = 'member') => {
   const themeColors = getVIPThemeColors(currentCardType);
-  
+
   return StyleSheet.create({
   container: {
     flex: 1,
@@ -110,7 +110,7 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     color: colors.novelText,
     fontWeight: '400',
   },
-  
+
   // 右侧下拉菜单
   menuDropdown: {
     position: 'absolute',
@@ -165,7 +165,7 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     justifyContent: 'center',   // 垂直居中
     alignItems: 'center',       // 水平居中
   },
-  
+
   // 3D卡片效果
   cardContainer: {
     width: '100%',
@@ -205,7 +205,7 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
+
   // 卡片指示器 - 动态主题色
   cardIndicatorContainer: {
     flexDirection: 'row',
@@ -363,7 +363,7 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     backgroundColor: themeColors.primary + '30',
   },
   comparisonHeaderText: {
-    
+
     paddingVertical: wp(12),
     fontSize: fp(14),
     color: colors.novelText,
@@ -590,4 +590,4 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     marginTop: wp(8),
   },
 });
-}
+};

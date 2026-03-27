@@ -16,7 +16,7 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
 
     // 滚动视图
     scrollView: {
-      flex: 1
+      flex: 1,
     },
 
     scrollContent: {

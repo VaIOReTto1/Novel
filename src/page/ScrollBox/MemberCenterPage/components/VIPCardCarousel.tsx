@@ -15,7 +15,7 @@ import { wp } from '../../../../utils/theme/dimensions';
 /**
  * -------------------------------------------------------------
  * VIP卡片无限循环轮播组件
- * 
+ *
  * 核心实现原理：
  * 1. 【首尾克隆】：在原始数据前后各添加CLONE个哨兵元素，形成 [尾部克隆...原始数据...头部克隆] 结构
  * 2. 【无缝跳转】：当滚动到边界克隆区域时，利用scrollTo瞬间跳转到对应的真实位置，实现视觉上的无限循环
@@ -23,7 +23,7 @@ import { wp } from '../../../../utils/theme/dimensions';
  * 4. 【边界优化】：改进索引计算逻辑，处理边界情况下的索引映射，避免跳跃和闪烁
  * 5. 【3D动效】：左右卡片采用±35°旋转、0.75倍缩放、透明度渐变，突出中心卡片的1.1倍放大效果
  * 6. 【性能优化】：使用getItemLayout预计算布局，snapToInterval确保精确对齐，decelerationRate="fast"提升响应速度
- * 
+ *
  * 关键参数：
  * - CLONE = 2：每侧克隆数量，平衡性能与无限循环效果
  * - CARD_TOTAL = CARD_WIDTH + CARD_SPACING：单个卡片占用的总宽度
@@ -96,7 +96,7 @@ const VIPCardItem = React.memo(({
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[
-            styles.card
+            styles.card,
           ]}
         >
           <View>
@@ -130,7 +130,7 @@ export const VIPCardCarousel: React.FC<VIPCardCarouselProps> = React.memo(({ sty
       // ⌈ 计算真实索引并回调 JS 层 - 优化边界处理 ⌉
       const idx = Math.round(x / CARD_TOTAL);
       let actual;
-      
+
       // 处理边界情况，确保索引计算的准确性
       if (idx < CLONE) {
         actual = cards.length - (CLONE - idx);
@@ -139,10 +139,10 @@ export const VIPCardCarousel: React.FC<VIPCardCarouselProps> = React.memo(({ sty
       } else {
         actual = idx - CLONE;
       }
-      
+
       // 确保索引在有效范围内
       actual = ((actual % cards.length) + cards.length) % cards.length;
-      
+
       if (actual !== lastIndexRef.current) {
         lastIndexRef.current = actual;
         runOnJS(onCardChange)(actual);
@@ -152,10 +152,10 @@ export const VIPCardCarousel: React.FC<VIPCardCarouselProps> = React.memo(({ sty
     onMomentumEnd: (event) => {
       const x = event.contentOffset.x;
       const idx = Math.round(x / CARD_TOTAL);
-      
+
       // 安全的边界检测，避免崩溃
-      if (cards.length === 0) return;
-      
+      if (cards.length === 0) {return;}
+
       // ▸ 如果滑到"伪首/伪尾"，瞬间跳回真实位置
       if (idx < CLONE) {
         const target = (cards.length + idx) * CARD_TOTAL;   // 伪首 → 真尾
@@ -196,7 +196,7 @@ export const VIPCardCarousel: React.FC<VIPCardCarouselProps> = React.memo(({ sty
     index,
   }), []);
 
-  if (!cards || cards.length === 0) return null;
+  if (!cards || cards.length === 0) {return null;}
 
   // ➜ 组装无限循环数据
   const data = [

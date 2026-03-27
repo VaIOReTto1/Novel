@@ -8,7 +8,7 @@ interface UserSectionProps {
 
 export const UserSection: React.FC<UserSectionProps> = React.memo(({
   styles,
-  userName = "安国的尹锋"
+  userName = '安国的尹锋',
 }) => {
   return (
     <View style={styles.userSection}>

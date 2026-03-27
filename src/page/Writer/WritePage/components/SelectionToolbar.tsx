@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const RN: any = require('react-native');
 const { Modal, TextInput, Keyboard } = RN;
 import { useNovelColors } from '../../../../utils/theme/colors';

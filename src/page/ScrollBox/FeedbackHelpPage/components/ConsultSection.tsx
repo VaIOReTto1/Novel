@@ -17,7 +17,7 @@ export const ConsultSection: React.FC<ConsultSectionProps> = React.memo(({
           <Text style={styles.moreIcon}>›</Text>
         </TouchableOpacity>
       </View>
-      
+
       <View style={styles.consultGrid}>
         {categories.map((category) => (
           <TouchableOpacity
@@ -36,7 +36,7 @@ export const ConsultSection: React.FC<ConsultSectionProps> = React.memo(({
                 <Text style={styles.consultItemTitle}>{category.title}</Text>
                 <Text style={styles.consultArrow}>›</Text>
               </View>
-              
+
               <View style={styles.consultItemContent}>
                 {category.items.map((item, index) => (
                   <Text key={index} style={styles.consultItemText}>

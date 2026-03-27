@@ -7,7 +7,7 @@ import {HistoryEntry} from '../types';
 // 统一成功提示（Android 用 Toast，iOS 回退到 Alert）
 const notifySuccess = () => {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+
     const RN: any = require('react-native');
     const Platform = RN.Platform;
     const ToastAndroid = RN.ToastAndroid;
@@ -211,7 +211,7 @@ export const useWriteStore = create<WriteStore>()(
           return;
         }
         try {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
+
           const Clipboard =
             require('@react-native-clipboard/clipboard').default;
           Clipboard.setString(s.selectedText);
@@ -275,7 +275,7 @@ export const useWriteStore = create<WriteStore>()(
         return;
       }
       try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
+
         const Clipboard: any =
           require('@react-native-clipboard/clipboard').default;
         const maybe = Clipboard?.getString?.();

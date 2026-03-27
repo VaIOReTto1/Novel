@@ -58,11 +58,6 @@ export const ReviewContent: React.FC<ReviewContentProps> = ({ commentData }) => 
     );
   }
 
-  const handleLikePress = () => {
-    // TODO: 实现点赞功能
-    console.log('点赞评论:', commentData.id);
-  };
-  void handleLikePress;
 
 
   return (

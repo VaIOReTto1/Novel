@@ -15,23 +15,23 @@ jest.mock(
 );
 
 jest.mock('react-native-reanimated', () => {
-  const ReactNative = require('react-native');
+  const ReactNativeModule = require('react-native');
   const createAnimatedComponent = (component) => component;
   const Animated = {
-    View: ReactNative.View,
-    Text: ReactNative.Text,
-    ScrollView: ReactNative.ScrollView,
-    FlatList: ReactNative.FlatList,
+    View: ReactNativeModule.View,
+    Text: ReactNativeModule.Text,
+    ScrollView: ReactNativeModule.ScrollView,
+    FlatList: ReactNativeModule.FlatList,
     createAnimatedComponent,
   };
 
   const Reanimated = {
     __esModule: true,
     default: Animated,
-    View: ReactNative.View,
-    Text: ReactNative.Text,
-    ScrollView: ReactNative.ScrollView,
-    FlatList: ReactNative.FlatList,
+    View: ReactNativeModule.View,
+    Text: ReactNativeModule.Text,
+    ScrollView: ReactNativeModule.ScrollView,
+    FlatList: ReactNativeModule.FlatList,
     createAnimatedComponent,
     useSharedValue: (value) => ({ value }),
     useAnimatedStyle: (updater) => updater(),

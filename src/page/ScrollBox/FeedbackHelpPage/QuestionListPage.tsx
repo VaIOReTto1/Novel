@@ -118,7 +118,7 @@ export const QuestionListPage: React.FC = React.memo(() => {
   }
 
   const categoryQuestions = getCategoryQuestions(selectedCategory);
-  
+
   return (
     <View style={styles.container}>
       <TopBar

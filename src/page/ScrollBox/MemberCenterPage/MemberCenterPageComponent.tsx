@@ -10,7 +10,7 @@ interface MemberCenterPageComponentProps {
 const MemberCenterPageComponent: React.FC<MemberCenterPageComponentProps> = ({ source }) => {
   useEffect(() => {
     console.log('[MemberCenterPageComponent] 组件初始化，来源:', source);
-    
+
     // 初始化RN页面
     initializeRNPage('MemberCenterPage').catch((error) => {
       console.error('[MemberCenterPageComponent] 页面初始化失败:', error);

@@ -30,7 +30,7 @@ export const useWriteReviewAnimations = () => {
   // 星级评分动画
   const createStarAnimation = (rating: number) => {
     const starAnims = Array.from({ length: 5 }, () => new Animated.Value(1));
-    
+
     const animateStars = () => {
       const animations = starAnims.map((anim, index) => {
         if (index < rating) {
@@ -53,16 +53,16 @@ export const useWriteReviewAnimations = () => {
           useNativeDriver: true,
         });
       });
-      
+
       Animated.stagger(50, animations).start();
     };
-    
+
     return { starAnims, animateStars };
   };
 
   // 提交按钮动画
   const submitButtonAnim = useRef(new Animated.Value(1)).current;
-  
+
   const animateSubmitButton = (isSubmitting: boolean) => {
     if (isSubmitting) {
       Animated.loop(

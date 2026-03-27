@@ -93,25 +93,25 @@ export const useCommentStore = create<CommentStore>((set, get) => ({
 
   loadComments: async (bookId: string) => {
     const { loading, isRefreshing, pageSize } = get();
-    if (loading || isRefreshing) return;
+    if (loading || isRefreshing) {return;}
 
     set({ loading: true, error: null, currentBookId: bookId, currentPage: 0 });
-    
+
     try {
       console.log('[CommentStore] 开始加载评论数据，bookId:', bookId);
       const response = await fetchCommentsFromApi(bookId);
-      
+
       // 实现分页逻辑，初始只显示前pageSize条评论
       const initialComments = response.comments.slice(0, pageSize);
       const hasMoreData = response.comments.length > pageSize;
-      
+
       set({
         comments: initialComments,
         loading: false,
         hasMore: hasMoreData,
         currentPage: 1,
       });
-      
+
       console.log('[CommentStore] 评论数据加载成功，显示', initialComments.length, '条，总共', response.comments.length, '条');
     } catch (error) {
       console.error('[CommentStore] 加载评论数据失败:', error);
@@ -121,27 +121,27 @@ export const useCommentStore = create<CommentStore>((set, get) => ({
 
   refreshComments: async () => {
     const { isRefreshing, loading, pageSize } = get();
-    if (isRefreshing || loading) return;
+    if (isRefreshing || loading) {return;}
 
     set({ isRefreshing: true, error: null });
-    
+
     try {
       console.log('[CommentStore] 开始刷新评论数据');
       // 获取当前bookId，从comments中获取或使用默认值
       const currentBookId = get().currentBookId || 'default-book-id';
       const response = await fetchCommentsFromApi(currentBookId);
-      
+
       // 刷新时重置为第一页
       const initialComments = response.comments.slice(0, pageSize);
       const hasMoreData = response.comments.length > pageSize;
-      
+
       set({
         comments: initialComments,
         isRefreshing: false,
         hasMore: hasMoreData,
         currentPage: 1,
       });
-      
+
       console.log('[CommentStore] 评论数据刷新成功');
     } catch (error) {
       console.error('[CommentStore] 刷新评论数据失败:', error);
@@ -151,34 +151,34 @@ export const useCommentStore = create<CommentStore>((set, get) => ({
 
   loadMoreComments: async () => {
     const { loading, isRefreshing, hasMore, currentPage, pageSize, comments } = get();
-    if (loading || isRefreshing || !hasMore) return;
+    if (loading || isRefreshing || !hasMore) {return;}
 
     set({ loading: true });
-    
+
     try {
       console.log('[CommentStore] 开始加载更多评论数据，当前页:', currentPage);
-      
+
       // 获取当前bookId
       const currentBookId = get().currentBookId || 'default-book-id';
       const response = await fetchCommentsFromApi(currentBookId);
-      
+
       // 计算下一页的数据
       const startIndex = currentPage * pageSize;
       const endIndex = startIndex + pageSize;
       const nextPageComments = response.comments.slice(startIndex, endIndex);
-      
+
       if (nextPageComments.length > 0) {
         // 合并新数据到现有评论列表
         const updatedComments = [...comments, ...nextPageComments];
         const hasMoreData = endIndex < response.comments.length;
-        
+
         set({
           comments: updatedComments,
           loading: false,
           hasMore: hasMoreData,
           currentPage: currentPage + 1,
         });
-        
+
         console.log('[CommentStore] 加载更多评论成功，新增', nextPageComments.length, '条，总计', updatedComments.length, '条');
       } else {
         // 没有更多数据
@@ -205,7 +205,7 @@ export const useCommentStore = create<CommentStore>((set, get) => ({
       }
       return comment;
     });
-    
+
     set({ comments: updatedComments });
     console.log('[CommentStore] 评论点赞状态已更新，commentId:', commentId);
   },

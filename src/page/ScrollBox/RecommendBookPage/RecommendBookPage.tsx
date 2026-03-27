@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
+import { Alert, View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
 import { useRecommendBookStore } from './store/recommendBookStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createRecommendBookPageStyles } from './styles/RecommendBookPageStyles';
@@ -40,8 +40,8 @@ const RecommendBookPage: React.FC = () => {
         console.log('[RecommendBookPage] 开始初始化数据');
         await loadInitialData();
         console.log('[RecommendBookPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[RecommendBookPage] 初始化失败:', error);
+      } catch (err) {
+        console.error('[RecommendBookPage] 初始化失败:', err);
       }
     };
 
@@ -80,7 +80,7 @@ const RecommendBookPage: React.FC = () => {
   // 提现按钮点击
   const handleWithdrawPress = useCallback(() => {
     console.log('Withdraw button pressed');
-    alert('提现功能开发中...');
+    Alert.alert('提现功能开发中...');
   }, []);
 
   // 查看更多任务

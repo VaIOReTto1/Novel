@@ -9,7 +9,7 @@ import Svg, {
   Line,
   RadialGradient,
   Stop,
-  Path
+  Path,
 } from 'react-native-svg';
 import Animated, {
   useSharedValue,
@@ -57,16 +57,16 @@ const ThemeSwitcher = memo(function ThemeSwitcher({
     // 与 Compose 原文同样的起始位置：
     // initialOffset = center - Offset(radius * 2.3f, radius * 2.3f)
     const start = baseR * 2.3;
-  
+
     // “咬合”圆沿对角线移动，但系数调成 1.9，确保最终位置落在 0.4 * size
     const offset = baseR * 1.65 * progress.value;
-  
+
     // 计算中心点
     const bx = cx - start + offset;
     const by = cy - start + offset;
     return { cx: bx, cy: by, r: baseR * 1.55 };
   });
-  
+
 
   // 光芒：黄色直线，矩阵旋转 + 轻微缩放
   const raysProps = useAnimatedProps(() => {

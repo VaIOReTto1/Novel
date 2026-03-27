@@ -32,7 +32,7 @@ export const TaskCards: React.FC<TaskCardsProps> = React.memo(
     return (
       /* ================= 云朵渐变背景卡片 ================= */
       <LinearGradient
-        colors={gradientWithAlpha}    // 
+        colors={gradientWithAlpha}    //
         locations={[0, 0.35, 1]}                     // 深色仅 10%
         start={{ x: 0, y: 0 }}                      // 左上开始
         end={{ x: 1, y: 1 }}                        // 右下结束

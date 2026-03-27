@@ -24,7 +24,7 @@ export function useTypewriter(fullText: string, msPerChar = 20) {
     const timer = setInterval(() => {
       setTypedLength(len => {
         const target = textRef.current.length;
-        if (len >= target) return len;
+        if (len >= target) {return len;}
         return Math.min(target, len + 1);
       });
     }, msPerChar);

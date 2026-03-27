@@ -10,11 +10,11 @@ interface TopBarProps {
   title?: string;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ 
-  onBackPress, 
+export const TopBar: React.FC<TopBarProps> = ({
+  onBackPress,
   onSubmit,
   canSubmit = false,
-  title = '点评此书' 
+  title = '点评此书',
 }) => {
   const colors = useNovelColors();
   const styles = createWriteReviewPageStyles(colors);

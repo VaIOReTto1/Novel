@@ -39,8 +39,8 @@ export const useEditMode = () => {
   }, [isAllSelected, clearSelection, selectAllItems]);
 
   const deleteSelectedItems = useCallback(async () => {
-    if (selectedItems.size === 0) return;
-    
+    if (selectedItems.size === 0) {return;}
+
     const idsToDelete = Array.from(selectedItems);
     await removeWatchlistItems(idsToDelete);
   }, [selectedItems, removeWatchlistItems]);

@@ -265,7 +265,7 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
      backgroundColor: colors.novelSecondaryBackground + '80',
      borderRadius: wp(12),
    },
- 
+
    followButtonText: {
      fontSize: sp(12),
      color: colors.novelMain,
@@ -707,7 +707,7 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
   actionTextActive: {
     color: colors.novelMain,
   },
-  
+
   // 回复列表样式
   repliesSection: {
     backgroundColor: colors.novelBackground,

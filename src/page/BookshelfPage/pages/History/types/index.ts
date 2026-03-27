@@ -34,7 +34,7 @@ export interface BookItem {
     isNew?: boolean; // 是否为新书
     tags?: string[]; // 标签
   }
-  
+
   // Tab数据
 export interface TabData {
   id: string;
@@ -126,7 +126,7 @@ export interface RefreshIndicatorState {
   pullDistance: number;
   threshold: number;
 }
-  
+
   // 社区帖子数据
   export interface CommunityPost {
     id: string;
@@ -142,7 +142,7 @@ export interface RefreshIndicatorState {
     isFollowed?: boolean;
     tags?: string[];
   }
-  
+
   // 页面状态
   export interface BookshelfState {
     // 数据
@@ -150,7 +150,7 @@ export interface RefreshIndicatorState {
     historyBooks: BookItem[];
     seriesBooks: BookItem[];
     communityPosts: CommunityPost[];
-    
+
     // UI状态
     currentTab: string;
     viewType: 'grid' | 'list'; // 网格/列表视图
@@ -158,7 +158,7 @@ export interface RefreshIndicatorState {
     isRefreshing: boolean;
     hasMore: boolean;
     error: string | null;
-    
+
     // 方法
     setCurrentTab: (tabId: string) => void;
     setViewType: (type: 'grid' | 'list') => void;
@@ -170,7 +170,7 @@ export interface RefreshIndicatorState {
     addBook: (book: BookItem) => void;
     removeBook: (bookId: string) => void;
   }
-  
+
   // TopBar属性
   export interface BookshelfTopBarProps {
     styles: any;
@@ -179,7 +179,7 @@ export interface RefreshIndicatorState {
     onSearch?: () => void;
     showSearch?: boolean;
   }
-  
+
   // Tab区域属性
   export interface BookshelfTabsProps {
     styles: any;
@@ -189,7 +189,7 @@ export interface RefreshIndicatorState {
     viewType: 'grid' | 'list';
     onViewTypeChange: (type: 'grid' | 'list') => void;
   }
-  
+
   // 书籍项属性
   export interface BookshelfItemProps {
     item: BookItem;
@@ -197,7 +197,7 @@ export interface RefreshIndicatorState {
     viewType: 'grid' | 'list';
     onPress: () => void;
   }
-  
+
   // 内容区域属性
   export interface BookshelfContentProps {
     styles: any;
@@ -209,7 +209,7 @@ export interface RefreshIndicatorState {
     onRefresh: () => void;
     onLoadMore: () => void;
   }
-  
+
   // 社区内容属性
   export interface CommunityContentProps {
     styles: any;
@@ -220,7 +220,7 @@ export interface RefreshIndicatorState {
     onRefresh: () => void;
     onLoadMore: () => void;
   }
-  
+
   // 空状态属性
   export interface EmptyStateProps {
     styles: any;
@@ -230,7 +230,7 @@ export interface RefreshIndicatorState {
     buttonText?: string;
     onButtonPress?: () => void;
   }
-  
+
   // 加载指示器属性
   export interface LoadMoreIndicatorProps {
     loading: boolean;

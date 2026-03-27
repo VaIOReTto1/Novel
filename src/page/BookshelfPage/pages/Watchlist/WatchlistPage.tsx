@@ -12,13 +12,13 @@ import { useEditMode } from './hooks/useEditMode';
 export const WatchlistPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createWatchlistPageStyles(colors);
-  
+
   const {
     watchlistItems,
     isLoading,
     loadWatchlistItems,
   } = useWatchlistStore();
-  
+
   const {
     isEditMode,
     selectedItems,
@@ -66,7 +66,7 @@ export const WatchlistPage: React.FC = () => {
         onEditPress={handleEditPress}
         isEditMode={isEditMode}
       />
-      
+
       {isEditMode && (
         <EditToolbar
           selectedCount={selectedItems.size}
@@ -76,7 +76,7 @@ export const WatchlistPage: React.FC = () => {
           isAllSelected={isAllSelected}
         />
       )}
-      
+
       <View style={{ flex: 1 }}>
         {watchlistItems.length === 0 ? (
           <EmptyState onFindDramas={handleFindDramas} />

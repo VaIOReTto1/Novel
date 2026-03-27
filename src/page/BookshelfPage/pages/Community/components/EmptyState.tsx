@@ -26,9 +26,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <Text style={styles.emptyIcon}>{icon}</Text>
       <Text style={styles.emptyTitle}>{title}</Text>
       <Text style={styles.emptyDescription}>{description}</Text>
-      
+
       {buttonText && onButtonPress && (
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.emptyButton}
           onPress={onButtonPress}
         >

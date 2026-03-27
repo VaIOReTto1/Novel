@@ -16,17 +16,17 @@ export const useMainBookshelfStore = create<MainBookshelfState>()(
     currentTab: 'bookshelf',
     isLoading: false,
     error: null,
-    
+
     // Actions
     setCurrentTab: (tabId: string) => set(state => {
       console.log('[MainBookshelfStore] 切换到Tab:', tabId);
       state.currentTab = tabId;
     }),
-    
+
     setLoading: (loading: boolean) => set(state => {
       state.isLoading = loading;
     }),
-    
+
     setError: (error: string | null) => set(state => {
       state.error = error;
     }),

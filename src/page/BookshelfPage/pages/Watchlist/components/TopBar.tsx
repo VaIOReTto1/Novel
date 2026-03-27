@@ -36,7 +36,7 @@ export const TopBar: React.FC<TopBarProps> = ({
         >
           <Text style={[
             styles.topBarActionLabel,
-            isEditMode && styles.activeTopBarActionLabel
+            isEditMode && styles.activeTopBarActionLabel,
           ]}>
             {isEditMode ? '完成' : '编辑'}
           </Text>

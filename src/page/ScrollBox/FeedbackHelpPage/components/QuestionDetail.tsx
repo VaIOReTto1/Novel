@@ -16,7 +16,7 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
     <View style={styles.detailContainer}>
       <View style={styles.detailHeader}>
         <Text style={styles.detailTitle}>{detail.title}</Text>
-        
+
         <View style={styles.detailMeta}>
           {detail.tags.map((tag, index) => (
             <View key={index} style={styles.detailTag}>
@@ -25,10 +25,10 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
           ))}
         </View>
       </View>
-      
+
       <ScrollView style={styles.detailContent} showsVerticalScrollIndicator={false}>
         <Text style={styles.detailText}>{detail.content}</Text>
-        
+
         {detail.relatedQuestions && detail.relatedQuestions.length > 0 && (
           <View style={styles.relatedSection}>
             <Text style={styles.relatedTitle}>相关问题</Text>
@@ -47,7 +47,7 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
           </View>
         )}
       </ScrollView>
-      
+
       <View style={styles.resolutionSection}>
         <View style={styles.resolutionButtons}>
           <TouchableOpacity
@@ -62,7 +62,7 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
               已解决
             </Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={[styles.resolutionButton, styles.unresolvedButton]}
             onPress={() => handleResolve(false)}

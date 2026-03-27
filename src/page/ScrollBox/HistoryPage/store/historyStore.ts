@@ -118,7 +118,7 @@ export const useHistoryStore = create<HistoryStore>()(
     // 异步操作
     loadHistoryItems: async (isRefresh = false) => {
       const { selectedTab } = get();
-      
+
       if (isRefresh) {
         set((state) => {
           state.currentPage = 1;
@@ -138,7 +138,7 @@ export const useHistoryStore = create<HistoryStore>()(
       try {
         // 使用真实的桥接方法获取历史数据
         const historyData = await NavigationBridge.getReadingHistory();
-        
+
         // 转换数据格式以匹配HistoryItem接口
         const convertedItems: HistoryItem[] = historyData.historyItems.map((item: any, index: number) => ({
           id: index + 1,
@@ -155,8 +155,8 @@ export const useHistoryStore = create<HistoryStore>()(
         }));
 
         // 根据选中的tab过滤数据
-        const filteredItems = selectedTab === 'all' ? 
-          convertedItems : 
+        const filteredItems = selectedTab === 'all' ?
+          convertedItems :
           convertedItems.filter(item => item.type === selectedTab);
 
         set((state) => {

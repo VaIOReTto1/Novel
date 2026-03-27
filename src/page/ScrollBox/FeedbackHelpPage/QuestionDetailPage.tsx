@@ -109,7 +109,7 @@ export const QuestionDetailPage: React.FC = React.memo(() => {
   }
 
   const questionDetail = questionDetails[selectedQuestion];
-  
+
   // 如果问题详情不存在
   if (!questionDetail) {
     return (

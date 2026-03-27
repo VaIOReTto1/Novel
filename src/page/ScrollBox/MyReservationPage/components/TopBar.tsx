@@ -13,11 +13,11 @@ const MAIN_TAB_DATA = [
   { key: 'mine', name: '我的预约' },
 ] as const;
 
-export const TopBar: React.FC<TopBarComponentProps> = ({ 
-  styles, 
+export const TopBar: React.FC<TopBarComponentProps> = ({
+  styles,
   selectedTab,
   onTabChange,
-  onBackPress
+  onBackPress,
 }) => {
   const handleTabPress = useCallback((tab: 'new' | 'mine') => {
     onTabChange(tab);
@@ -25,14 +25,14 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
 
   return (
     <View style={styles.topBar}>
-      <TouchableOpacity 
-        style={styles.backButton} 
+      <TouchableOpacity
+        style={styles.backButton}
         onPress={onBackPress}
         activeOpacity={0.7}
       >
         <Text style={styles.backArrow}>‹</Text>
       </TouchableOpacity>
-      
+
       {/* 中间的Tab切换 */}
       <View style={styles.topBarTabsContainer}>
           {MAIN_TAB_DATA.map((tab) => (
@@ -44,14 +44,14 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
             >
               <Text style={[
                 styles.topBarTabText,
-                selectedTab === tab.key && styles.activeTopBarTabText
+                selectedTab === tab.key && styles.activeTopBarTabText,
               ]}>
                 {tab.name}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-      
+
       {/* 右侧占位，保持居中 */}
       <View style={styles.backButton} />
     </View>

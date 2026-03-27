@@ -14,14 +14,14 @@ export const TopBar = memo(({ title: _title = '书评详情', onBackPress, onSea
   const colors = useNovelColors();
   const styles = createCommentPageStyles(colors);
   const [searchQuery, setSearchQuery] = useState('');
-  Icon.loadFont(); 
-  
+  Icon.loadFont();
+
   const handleSearch = () => {
     if (onSearch) {
       onSearch(searchQuery);
     }
   };
-  
+
   return (
     <View style={styles.topBar}>
       <TouchableOpacity
@@ -31,7 +31,7 @@ export const TopBar = memo(({ title: _title = '书评详情', onBackPress, onSea
       >
         <Icon name="arrow-back-ios" size={24} color={colors.novelText} />
       </TouchableOpacity>
-      
+
       <View style={styles.searchContainer}>
         <Icon name="search" size={20} color={colors.novelTextGray} />
         <TextInput
@@ -46,8 +46,7 @@ export const TopBar = memo(({ title: _title = '书评详情', onBackPress, onSea
           style={styles.searchButton}
           onPress={handleSearch}
           activeOpacity={0.7}
-        >
-        </TouchableOpacity>
+         />
       </View>
     </View>
   );

@@ -33,7 +33,7 @@ export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
     <View style={styles.viewSwitcher}>
       {viewOptions.map((option) => {
         const isActive = option.type === currentView;
-        
+
         return (
           <TouchableOpacity
             key={option.type}

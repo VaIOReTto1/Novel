@@ -53,7 +53,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       fontSize: fp(12),
       color: colors.novelText,
     },
-    
+
     // 搜索容器样式
     searchContainer: {
       flex: 1,
@@ -79,7 +79,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
     searchPlaceholder: {
       color: '#999999', // 写死的占位符颜色
     },
-    
+
     // 历史按钮样式
     historyButton: {
       justifyContent: 'center',
@@ -150,7 +150,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       fontSize: fp(16),
       color: colors.novelTextGray,
     },
-    
+
     // 咨询场景网格
     consultGrid: {
       flexDirection: 'row',
@@ -293,7 +293,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       flex: 1,
       flexDirection: 'row',
     },
-    
+
     // 左侧分类筛选样式
     categoryFilterContainer: {
       width: wp(100),
@@ -334,7 +334,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       color: colors.novelMain,
       fontWeight: '600',
     },
-    
+
     // 右侧问题列表样式
     questionListRight: {
       flex: 1,
@@ -465,7 +465,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       lineHeight: fp(22),
       marginBottom: wp(20),
     },
-    
+
     // 相关问题区域
     relatedSection: {
       marginTop: wp(24),
@@ -497,7 +497,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       fontSize: fp(16),
       color: colors.novelTextGray,
     },
-    
+
     // 解决状态按钮
     resolutionSection: {
       paddingHorizontal: wp(20),

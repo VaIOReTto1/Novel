@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { Alert } from 'react-native';
 import {
   UserInfo,
   DataStats,
@@ -194,17 +195,17 @@ export const useRecommendBookStore = create<RecommendBookStore>()(
 
     handleViewAllTasks: () => {
       console.log('[RecommendBookStore] 查看更多任务');
-      alert('查看更多任务功能开发中...');
+      Alert.alert('查看更多任务功能开发中...');
     },
 
     handleServicePress: (serviceId: string) => {
       console.log(`[RecommendBookStore] 服务点击: ${serviceId}`);
-      alert('服务功能开发中...');
+      Alert.alert('服务功能开发中...');
     },
 
     handleTaskPress: (taskId: string) => {
       console.log(`[RecommendBookStore] 任务点击: ${taskId}`);
-      alert('任务详情功能开发中...');
+      Alert.alert('任务详情功能开发中...');
     },
   }))
 );

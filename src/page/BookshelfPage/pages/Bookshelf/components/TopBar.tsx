@@ -23,7 +23,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 }) => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
-  
+
   const viewOptions = [
     { type: 'grid' as ViewType, icon: '⊞', label: '网格' },
     { type: 'list' as ViewType, icon: '☰', label: '列表' },
@@ -33,8 +33,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   const currentViewOption = viewOptions.find(option => option.type === currentView);
 
   const handleViewPress = () => {
-    if (isTransitioning) return;
-    
+    if (isTransitioning) {return;}
+
     const currentIndex = viewOptions.findIndex(option => option.type === currentView);
     const nextIndex = (currentIndex + 1) % viewOptions.length;
     onViewChange(viewOptions[nextIndex].type);
@@ -64,7 +64,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           >
             <Text style={[
               styles.topBarActionLabel,
-              isTransitioning && { opacity: 0.3 }
+              isTransitioning && { opacity: 0.3 },
             ]}>
               {currentViewOption?.label || '网格'}
             </Text>
@@ -91,7 +91,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           >
             <Text style={[
               styles.topBarActionLabel,
-              isEditMode && styles.activeTopBarActionLabel
+              isEditMode && styles.activeTopBarActionLabel,
             ]}>
               {isEditMode ? '完成' : '编辑'}
             </Text>

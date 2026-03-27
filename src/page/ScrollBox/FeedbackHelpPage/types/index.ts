@@ -34,14 +34,14 @@ export interface FeedbackHelpState {
   consultCategories: ConsultCategory[];
   frequentQuestions: FrequentQuestion[];
   questionDetails: { [id: string]: QuestionDetail };
-  
+
   // UI状态
   currentView: 'main' | 'questions' | 'detail';
   selectedCategory: string | null;
   selectedQuestion: string | null;
   isLoading: boolean;
   error: string | null;
-  
+
   // 方法
   setCurrentView: (view: 'main' | 'questions' | 'detail') => void;
   selectCategory: (categoryId: string) => void;

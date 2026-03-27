@@ -8,7 +8,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       flex: 1,
       backgroundColor: colors.novelBackground,
     },
-    
+
     // TopBar样式
     topBar: {
       flexDirection: 'row',
@@ -18,31 +18,31 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       paddingVertical: 4,
       backgroundColor: colors.novelBackground,
     },
-    
+
     closeButton: {
       width: 40,
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
     },
-    
+
     closeIcon: {
       fontSize: 30,
       color: colors.novelText,
       fontWeight: '400',
     },
-    
+
     titleContainer: {
       flex: 1,
       alignItems: 'center',
     },
-    
+
     topBarTitle: {
       fontSize: 18,
       fontWeight: '500',
       color: colors.novelText,
     },
-    
+
     submitButton: {
       paddingHorizontal: 16,
       paddingVertical: 4,
@@ -50,17 +50,17 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       borderRadius: 16,
       alignItems: 'center',
     },
-    
+
     submitButtonText: {
       fontSize: 10,
       fontWeight: '600',
       color: colors.novelBackground,
     },
-    
+
     scrollContainer: {
       flex: 1,
     },
-    
+
     contentContainer: {
     },
 
@@ -69,7 +69,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       backgroundColor: colors.novelBackground,
       alignItems: 'center',
     },
-    
+
     sectionTitle: {
       fontSize: 16,
       fontWeight: '500',
@@ -77,29 +77,29 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       marginBottom: 16,
       textAlign: 'center',
     },
-    
+
     starContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
     },
-    
+
     starButton: {
       marginHorizontal: 2,
     },
-    
+
     starButtonSelected: {
       transform: [{ scale: 1.1 }],
     },
-    
+
     starText: {
       fontSize: 32,
       color: colors.novelLightGray,
     },
-    
+
     starTextSelected: {
       color: colors.novelMain,
     },
-    
+
     ratingLabel: {
       fontSize: 14,
       color: colors.novelMain,
@@ -115,33 +115,33 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       paddingVertical: 0,
       marginBottom: 0,
     },
-    
+
     divider: {
       height: 1,
       backgroundColor: colors.novelDivider,
       marginVertical: 16,
     },
-    
+
     inputSection: {
       flex: 1,
     },
-    
+
     inputHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: 8,
     },
-    
+
     charCount: {
       fontSize: 12,
       color: colors.novelTextGray,
     },
-    
+
     charCountError: {
       color: colors.novelError,
     },
-    
+
     titleInput: {
       borderWidth: 0,
       borderBottomWidth: 1,
@@ -154,7 +154,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       backgroundColor: 'transparent',
       minHeight: 44,
     },
-    
+
     contentInput: {
       flex: 1,
       borderWidth: 0,
@@ -163,11 +163,11 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       backgroundColor: colors.novelBackground,
       textAlignVertical: 'top',
     },
-    
+
     inputError: {
       borderColor: colors.novelError,
     },
-    
+
     errorText: {
       fontSize: 12,
       color: colors.novelError,
@@ -194,7 +194,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       marginBottom: 24,
       overflow: 'hidden',
     },
-    
+
     tipsHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -202,42 +202,42 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       padding: 16,
       backgroundColor: colors.novelSecondaryBackground,
     },
-    
+
     tipsTitle: {
       fontSize: 14,
       fontWeight: '500',
       color: colors.novelText,
     },
-    
+
     tipsToggle: {
       fontSize: 12,
       color: colors.novelTextGray,
       transform: [{ rotate: '0deg' }],
     },
-    
+
     tipsToggleExpanded: {
       transform: [{ rotate: '180deg' }],
     },
-    
+
     tipsContent: {
       padding: 16,
       paddingTop: 0,
       backgroundColor: colors.novelSecondaryBackground,
     },
-    
+
     tipItem: {
       flexDirection: 'row',
       alignItems: 'flex-start',
       marginBottom: 8,
     },
-    
+
     tipBullet: {
       fontSize: 14,
       color: colors.novelMain,
       marginRight: 8,
       marginTop: 2,
     },
-    
+
     tipText: {
       flex: 1,
       fontSize: 14,

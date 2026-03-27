@@ -74,8 +74,8 @@ const HistoryPage: React.FC = () => {
         console.log('[HistoryPage] 开始初始化数据');
         await loadHistoryItems();
         console.log('[HistoryPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[HistoryPage] 初始化失败:', error);
+      } catch (err) {
+        console.error('[HistoryPage] 初始化失败:', err);
       }
     };
 
@@ -147,8 +147,8 @@ const HistoryPage: React.FC = () => {
     console.log('Add to shelf:', item.title);
     try {
       await toggleShelfStatus(item);
-    } catch (error) {
-      console.error('Failed to toggle shelf status:', error);
+    } catch (err) {
+      console.error('Failed to toggle shelf status:', err);
     }
   }, [toggleShelfStatus]);
 
@@ -180,9 +180,9 @@ const HistoryPage: React.FC = () => {
         viewType={viewType}
         onViewTypeChange={handleViewTypeChange}
       />
-      
+
       <View style={styles.tabsDivider} />
-      
+
       <View style={styles.contentContainer}>
         {(isPullingDown || isRefreshing) && (
           <RefreshIndicator
@@ -194,7 +194,7 @@ const HistoryPage: React.FC = () => {
             spinStyle={spinStyle}
           />
         )}
-        
+
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
@@ -222,7 +222,7 @@ const HistoryPage: React.FC = () => {
           />
         </ScrollView>
       </View>
-      
+
       {isEditing && (
         <EditToolbar
           styles={styles}

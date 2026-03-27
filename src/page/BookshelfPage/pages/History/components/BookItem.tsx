@@ -20,7 +20,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 0) {
       return '今天';
     } else if (diffDays === 1) {
@@ -51,7 +51,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
         {isEditing && (
           <View style={[
             styles.editCheckbox,
-            isSelected && styles.editCheckboxSelected
+            isSelected && styles.editCheckboxSelected,
           ]}>
             {isSelected && (
               <Text style={styles.editCheckIcon}>✓</Text>
@@ -71,7 +71,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
               <Text style={styles.placeholderText}>暂无封面</Text>
             </View>
           )}
-          
+
           {/* 状态标签 */}
           {item.isFinished ? (
             <View style={[styles.bookBadge, styles.finishedBadge]}>
@@ -104,11 +104,11 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
 
           {/* 进度条 */}
           <View style={styles.listProgressBar}>
-            <View 
+            <View
               style={[
                 styles.listProgressFill,
-                { width: `${item.progress}%` }
-              ]} 
+                { width: `${item.progress}%` },
+              ]}
             />
           </View>
         </View>
@@ -127,7 +127,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
       {isEditing && (
         <View style={[
           styles.editCheckbox,
-          isSelected && styles.editCheckboxSelected
+          isSelected && styles.editCheckboxSelected,
         ]}>
           {isSelected && (
             <Text style={styles.editCheckIcon}>✓</Text>
@@ -147,7 +147,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
             <Text style={styles.placeholderText}>暂无封面</Text>
           </View>
         )}
-        
+
         {/* 状态标签 */}
         {item.isFinished ? (
           <View style={[styles.bookBadge, styles.finishedBadge]}>
@@ -178,11 +178,11 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
 
         {/* 进度条 */}
         <View style={styles.gridProgressBar}>
-          <View 
+          <View
             style={[
               styles.gridProgressFill,
-              { width: `${item.progress}%` }
-            ]} 
+              { width: `${item.progress}%` },
+            ]}
           />
         </View>
       </View>

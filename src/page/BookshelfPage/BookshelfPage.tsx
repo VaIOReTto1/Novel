@@ -63,16 +63,16 @@ export const MainPage: React.FC = React.memo(() => {
       />
 
       {/* 使用display样式来隐藏/显示页面，避免重新挂载 */}
-      <View style={[styles.pageContainer, { display: currentTab === 'history' ? 'flex' : 'none' }]}>
+      <View style={[styles.pageContainer, currentTab === 'history' ? styles.pageVisible : styles.pageHidden]}>
         <HistoryPage />
       </View>
-      <View style={[styles.pageContainer, { display: currentTab === 'bookshelf' ? 'flex' : 'none' }]}>
+      <View style={[styles.pageContainer, currentTab === 'bookshelf' ? styles.pageVisible : styles.pageHidden]}>
         <BookshelfPage />
       </View>
-      <View style={[styles.pageContainer, { display: currentTab === 'watchlist' ? 'flex' : 'none' }]}>
+      <View style={[styles.pageContainer, currentTab === 'watchlist' ? styles.pageVisible : styles.pageHidden]}>
         <WatchlistPage />
       </View>
-      <View style={[styles.pageContainer, { display: currentTab === 'community' ? 'flex' : 'none' }]}>
+      <View style={[styles.pageContainer, currentTab === 'community' ? styles.pageVisible : styles.pageHidden]}>
         <CommunityPage />
       </View>
     </View>

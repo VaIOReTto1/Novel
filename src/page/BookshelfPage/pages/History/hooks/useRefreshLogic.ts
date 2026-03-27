@@ -48,11 +48,11 @@ export const useRefreshLogic = ({
   const handleScroll = useCallback((event: any) => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
     const paddingToBottom = 50;
-    
+
     // 检查是否到达底部
-    const isCloseToBottom = layoutMeasurement.height + contentOffset.y >= 
+    const isCloseToBottom = layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
-    
+
     if (isCloseToBottom) {
       handleLoadMore();
     }
@@ -61,11 +61,11 @@ export const useRefreshLogic = ({
     if (contentOffset.y < 0) {
       const distance = Math.abs(contentOffset.y);
       setPullDistance(distance);
-      
+
       if (distance > 10) {
         setIsPullingDown(true);
       }
-      
+
       // 触发刷新
       if (distance > PULL_THRESHOLD && !hasTriggeredRefresh && !isRefreshing) {
         setHasTriggeredRefresh(true);

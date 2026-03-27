@@ -15,14 +15,14 @@ export interface WriteReviewState {
   // 表单数据
   rating: number;
   content: string;
-  
+
   // UI状态
   isSubmitting: boolean;
   showTips: boolean;
-  
+
   // 验证状态
   contentError: string;
-  
+
   // 字符计数
   contentLength: number;
 }
@@ -31,18 +31,18 @@ export interface WriteReviewActions {
   // 表单操作
   setRating: (rating: number) => void;
   setContent: (content: string) => void;
-  
+
   // UI操作
   setSubmitting: (submitting: boolean) => void;
   toggleTips: () => void;
-  
+
   // 验证操作
   validateForm: () => boolean;
   clearErrors: () => void;
-  
+
   // 提交操作
   submitReview: (bookId: string) => Promise<boolean>;
-  
+
   // 重置操作
   reset: () => void;
 }

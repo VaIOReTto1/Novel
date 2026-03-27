@@ -58,7 +58,7 @@ export const EditToolbar: React.FC<EditToolbarProps> = ({
             取消
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={styles.editToolbarButton}
           onPress={onSelectAll}
@@ -97,7 +97,7 @@ export const EditToolbar: React.FC<EditToolbarProps> = ({
             </Text>
           </TouchableOpacity>
         )}
-        
+
         <TouchableOpacity
           style={[
             styles.editActionButton,

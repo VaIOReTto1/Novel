@@ -10,12 +10,12 @@ export interface ReviewData {
 export interface WriteReviewState {
   // 表单数据
   reviewData: ReviewData;
-  
+
   // 状态管理
   isSubmitting: boolean;
   loading: boolean;
   error: string | null;
-  
+
   // 页面参数
   bookId: string | null;
   source: string | null;
@@ -25,17 +25,17 @@ interface WriteReviewActions {
   // 初始化
   initialize: (bookId?: string, source?: string) => void;
   reset: () => void;
-  
+
   // 表单操作
   updateRating: (rating: number) => void;
   updateTitle: (title: string) => void;
   updateContent: (content: string) => void;
   updateReviewData: (data: Partial<ReviewData>) => void;
-  
+
   // 提交操作
   submitReview: () => Promise<boolean>;
   setSubmitting: (isSubmitting: boolean) => void;
-  
+
   // 错误处理
   setError: (error: string | null) => void;
   clearError: () => void;
@@ -47,7 +47,7 @@ const initialState: WriteReviewState = {
   reviewData: {
     rating: 5,
     title: '',
-    content: ''
+    content: '',
   },
   isSubmitting: false,
   loading: false,
@@ -94,7 +94,7 @@ export const useWriteReviewStore = create<WriteReviewStore>()(
 
     submitReview: async () => {
       const { reviewData, bookId, source } = get();
-      
+
       // 表单验证
       if (!reviewData.title.trim()) {
         set((state) => {
@@ -102,7 +102,7 @@ export const useWriteReviewStore = create<WriteReviewStore>()(
         });
         return false;
       }
-      
+
       if (!reviewData.content.trim()) {
         set((state) => {
           state.error = '请输入评论内容';
@@ -117,13 +117,13 @@ export const useWriteReviewStore = create<WriteReviewStore>()(
 
       try {
         console.log('[WriteReviewStore] 提交评论:', { ...reviewData, bookId, source });
-        
+
         // TODO: 实现真实的API调用
         // const response = await submitReviewAPI({ ...reviewData, bookId, source });
-        
+
         // 模拟API调用
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         console.log('[WriteReviewStore] 评论提交成功');
         return true;
       } catch (error) {

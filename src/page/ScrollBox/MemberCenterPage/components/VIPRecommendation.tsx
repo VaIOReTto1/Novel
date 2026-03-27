@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Alert, View, Text, TouchableOpacity, Image } from 'react-native';
 import { VIPRecommendation as VIPRecommendationType } from '../types';
 
 interface VIPRecommendationProps {
@@ -15,7 +15,7 @@ export const VIPRecommendation: React.FC<VIPRecommendationProps> = React.memo(({
 }) => {
   const handleRecommendationPress = useCallback((id: string) => {
     console.log(`VIP推荐点击: ${id}`);
-    alert('VIP推荐功能开发中...');
+    Alert.alert('VIP推荐功能开发中...');
   }, []);
 
   // 免广告VIP不显示推荐内容
@@ -37,7 +37,7 @@ export const VIPRecommendation: React.FC<VIPRecommendationProps> = React.memo(({
   return (
     <View style={styles.recommendationContainer}>
       <Text style={styles.recommendationTitle}>{getTitle()}</Text>
-      
+
       <View style={styles.recommendationGrid}>
         {recommendations.map((item) => (
           <TouchableOpacity

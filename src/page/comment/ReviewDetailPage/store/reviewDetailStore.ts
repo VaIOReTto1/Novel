@@ -6,19 +6,19 @@ interface ReviewDetailState {
   // 数据状态
   reviewDetail: ReviewDetail | null;
   comments: Comment[];
-  
+
   // 加载状态
   isLoading: boolean;
   isRefreshing: boolean;
   isLoadingMore: boolean;
-  
+
   // 分页状态
   currentPage: number;
   hasMoreComments: boolean;
-  
+
   // 错误状态
   error: string | null;
-  
+
   // Actions
   loadReviewDetail: (reviewId: string) => Promise<void>;
   refreshReviewDetail: () => Promise<void>;
@@ -46,12 +46,12 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
   loadReviewDetail: async (reviewId: string) => {
     try {
       set({ isLoading: true, error: null });
-      
+
       const [reviewResponse, commentsResponse] = await Promise.all([
         reviewDetailApi.getReviewDetail(reviewId),
         reviewDetailApi.getComments(reviewId, 1),
       ]);
-      
+
       set({
         reviewDetail: reviewResponse.data,
         comments: commentsResponse.data.list,
@@ -70,16 +70,16 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
 
   refreshReviewDetail: async () => {
     const { reviewDetail } = get();
-    if (!reviewDetail) return;
-    
+    if (!reviewDetail) {return;}
+
     try {
       set({ isRefreshing: true, error: null });
-      
+
       const [reviewResponse, commentsResponse] = await Promise.all([
         reviewDetailApi.getReviewDetail(reviewDetail.id),
         reviewDetailApi.getComments(reviewDetail.id, 1),
       ]);
-      
+
       set({
         reviewDetail: reviewResponse.data,
         comments: commentsResponse.data.list,
@@ -98,15 +98,15 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
 
   loadMoreComments: async () => {
     const { reviewDetail, currentPage, hasMoreComments, isLoadingMore } = get();
-    
-    if (!reviewDetail || !hasMoreComments || isLoadingMore) return;
-    
+
+    if (!reviewDetail || !hasMoreComments || isLoadingMore) {return;}
+
     try {
       set({ isLoadingMore: true, error: null });
-      
+
       const nextPage = currentPage + 1;
       const response = await reviewDetailApi.getComments(reviewDetail.id, nextPage);
-      
+
       set((state) => ({
         comments: [...state.comments, ...response.data.list],
         currentPage: nextPage,
@@ -124,14 +124,14 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
 
   toggleLike: async (reviewId: string) => {
     const { reviewDetail } = get();
-    if (!reviewDetail || reviewDetail.id !== reviewId) return;
-    
+    if (!reviewDetail || reviewDetail.id !== reviewId) {return;}
+
     // 乐观更新
     const newIsLiked = !reviewDetail.isLiked;
-    const newLikeCount = newIsLiked 
-      ? reviewDetail.likeCount + 1 
+    const newLikeCount = newIsLiked
+      ? reviewDetail.likeCount + 1
       : reviewDetail.likeCount - 1;
-    
+
     set({
       reviewDetail: {
         ...reviewDetail,
@@ -139,7 +139,7 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
         likeCount: newLikeCount,
       },
     });
-    
+
     try {
       await reviewDetailApi.toggleLike(reviewId);
     } catch (error) {
@@ -157,20 +157,20 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
 
   toggleCommentLike: async (commentId: string) => {
     const { comments } = get();
-    
+
     // 递归查找评论（包括回复）
     const findAndUpdateComment = (commentsList: Comment[], id: string): Comment[] => {
       return commentsList.map(comment => {
         if (comment.id === id) {
           const newIsLiked = !comment.isLiked;
-          const newLikeCount = newIsLiked 
-            ? comment.likeCount + 1 
+          const newLikeCount = newIsLiked
+            ? comment.likeCount + 1
             : comment.likeCount - 1;
           const newIsDisliked = newIsLiked ? false : comment.isDisliked;
-          const newDislikeCount = newIsLiked && comment.isDisliked 
-            ? Math.max(0, comment.dislikeCount - 1) 
+          const newDislikeCount = newIsLiked && comment.isDisliked
+            ? Math.max(0, comment.dislikeCount - 1)
             : comment.dislikeCount;
-          
+
           return {
             ...comment,
             isLiked: newIsLiked,
@@ -179,23 +179,23 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
             dislikeCount: newDislikeCount,
           };
         }
-        
+
         if (comment.replies && comment.replies.length > 0) {
           return {
             ...comment,
             replies: findAndUpdateComment(comment.replies, id),
           };
         }
-        
+
         return comment;
       });
     };
-    
+
     const originalComments = [...comments];
     const updatedComments = findAndUpdateComment(comments, commentId);
-    
+
     set({ comments: updatedComments });
-    
+
     try {
       await reviewDetailApi.toggleCommentLike(commentId);
     } catch (error) {
@@ -207,20 +207,20 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
 
   toggleCommentDislike: async (commentId: string) => {
     const { comments } = get();
-    
+
     // 递归查找评论（包括回复）
     const findAndUpdateComment = (commentsList: Comment[], id: string): Comment[] => {
       return commentsList.map(comment => {
         if (comment.id === id) {
           const newIsDisliked = !comment.isDisliked;
-          const newDislikeCount = newIsDisliked 
-            ? comment.dislikeCount + 1 
+          const newDislikeCount = newIsDisliked
+            ? comment.dislikeCount + 1
             : comment.dislikeCount - 1;
           const newIsLiked = newIsDisliked ? false : comment.isLiked;
-          const newLikeCount = newIsDisliked && comment.isLiked 
-            ? Math.max(0, comment.likeCount - 1) 
+          const newLikeCount = newIsDisliked && comment.isLiked
+            ? Math.max(0, comment.likeCount - 1)
             : comment.likeCount;
-          
+
           return {
             ...comment,
             isDisliked: newIsDisliked,
@@ -229,23 +229,23 @@ export const useReviewDetailStore = create<ReviewDetailState>((set, get) => ({
             likeCount: newLikeCount,
           };
         }
-        
+
         if (comment.replies && comment.replies.length > 0) {
           return {
             ...comment,
             replies: findAndUpdateComment(comment.replies, id),
           };
         }
-        
+
         return comment;
       });
     };
-    
+
     const originalComments = [...comments];
     const updatedComments = findAndUpdateComment(comments, commentId);
-    
+
     set({ comments: updatedComments });
-    
+
     try {
       await reviewDetailApi.toggleCommentDislike(commentId);
     } catch (error) {

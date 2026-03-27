@@ -20,7 +20,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
   onContentChange,
   onContentFocus,
   onContentBlur,
-  autoFocus = false
+  autoFocus = false,
 }) => {
   const colors = useNovelColors();
   const styles = createWriteReviewPageStyles(colors);
@@ -39,14 +39,14 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
     <View style={styles.formContainer}>
       {/* 分割线 */}
       <View style={styles.divider} />
-      
+
       {/* 内容输入 */}
       <View style={styles.inputSection}>
         <TextInput
           ref={textInputRef}
           style={[
             styles.contentInput,
-            contentError && styles.inputError
+            contentError && styles.inputError,
           ]}
           value={content}
           onChangeText={onContentChange}
@@ -60,7 +60,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
           returnKeyType="default"
           autoFocus={autoFocus}
         />
-        
+
         {contentError ? (
           <Text style={styles.errorText}>{contentError}</Text>
         ) : null}

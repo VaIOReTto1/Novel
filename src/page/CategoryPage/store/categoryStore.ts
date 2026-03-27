@@ -54,14 +54,14 @@ export const useCategoryStore = create<CategoryState>()(
 
         loadCategories: async () => {
             const { tab } = get();
-            if (tab !== 'male') return;
+            if (tab !== 'male') {return;}
             try {
                 const res = await NavigationBridge.getBookCategories(0);
                 const list = (res?.list || []) as any[];
                 set(s => {
                     s.categories = list.map(x => ({ id: x.id, name: x.name }));
                     if (!s.activeCategory && s.categories.length > 0)
-                        s.activeCategory = s.categories[0].id;
+                        {s.activeCategory = s.categories[0].id;}
                 });
             } catch (e) {
                 console.warn('[categoryStore] loadCategories failed', e);
@@ -70,7 +70,7 @@ export const useCategoryStore = create<CategoryState>()(
 
         loadBooks: async (reset = false) => {
             const { tab, activeCategory, pageNum, loading } = get();
-            if (loading) return;
+            if (loading) {return;}
             const workDirection = tab === 'male' ? 0 : 1;
             try {
                 set(s => {

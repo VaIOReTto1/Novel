@@ -8,11 +8,11 @@ import { createReviewDetailPageStyles } from '../styles/ReviewDetailPageStyles';
  */
 export const useReviewDetailPageStyles = () => {
   const colors = useNovelColors();
-  
+
   const styles = useMemo(() => {
     return createReviewDetailPageStyles(colors);
   }, [colors]);
-  
+
   return {
     colors,
     styles,
@@ -26,7 +26,7 @@ export const useReviewDetailPageStyles = () => {
 export const useReviewDetailPageLogic = () => {
   // 这里可以添加页面特定的逻辑
   // 例如：数据获取、状态管理、事件处理等
-  
+
   return {
     // 返回页面逻辑相关的状态和方法
   };
@@ -39,7 +39,7 @@ export const useReviewDetailPageLogic = () => {
 export const useReviewDetailPageAnimations = () => {
   // 这里可以添加页面特定的动画逻辑
   // 例如：淡入淡出、滑动动画等
-  
+
   return {
     // 返回动画相关的状态和方法
   };

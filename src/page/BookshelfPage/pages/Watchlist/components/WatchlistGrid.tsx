@@ -49,7 +49,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
             style={styles.gridItemImage}
             resizeMode="cover"
           />
-          
+
           {/* 选择状态 */}
           {isEditMode && (
             <View style={styles.selectionCheckbox}>
@@ -58,7 +58,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
               </Text>
             </View>
           )}
-          
+
           {/* 更新提示 */}
           {!item.isFinished && item.lastUpdate && (
             <View style={styles.updateBadge}>
@@ -66,7 +66,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
             </View>
           )}
         </View>
-        
+
         <View style={styles.gridItemContent}>
           <Text style={styles.gridItemTitle} numberOfLines={2}>
             {item.title}
@@ -80,8 +80,8 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
   };
 
   const renderFooter = () => {
-    if (!loading) return null;
-    
+    if (!loading) {return null;}
+
     return (
       <View style={styles.loadingFooter}>
         <ActivityIndicator size="small" color={colors.novelBackground} />

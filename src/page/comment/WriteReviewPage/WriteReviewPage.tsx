@@ -23,7 +23,7 @@ import {
 const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initialRating }) => {
   const colors = useNovelColors();
   const styles = createWriteReviewPageStyles(colors);
-  
+
   const {
     rating,
     content,
@@ -66,8 +66,8 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
 
   // 处理提交
   const handleSubmit = async () => {
-    if (!bookId) return;
-    
+    if (!bookId) {return;}
+
     await submitReview(bookId);
   };
 
@@ -97,8 +97,8 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
       <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
         <View style={styles.container}>
           {/* 顶部导航栏 */}
-          <TopBar 
-            onBackPress={handleBackPress} 
+          <TopBar
+            onBackPress={handleBackPress}
             canSubmit={canSubmit}
             onSubmit={handleSubmit}
           />

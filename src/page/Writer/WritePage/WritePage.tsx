@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const RN: any = require('react-native');
 const { TextInput, BackHandler, Modal, ActivityIndicator, Keyboard } = RN;
 import { createWritePageStyles } from './styles/WritePageStyles';

@@ -7,7 +7,7 @@ export const WelcomePanel: React.FC = () => {
   const colors = useNovelColors();
   const styles = createWritePageStyles(colors);
   const [closed, setClosed] = useState(false);
-  if (closed) return null;
+  if (closed) {return null;}
   return (
     <View style={styles.welcomePanel}>
       <TouchableOpacity style={styles.closeBtn} onPress={() => setClosed(true)}>

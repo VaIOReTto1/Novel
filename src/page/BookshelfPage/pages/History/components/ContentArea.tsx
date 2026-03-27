@@ -79,9 +79,9 @@ export const ContentArea: React.FC<HistoryContentAreaProps> = React.memo(({
   );
 
   // 将数据分组为每行3个项目（仅网格模式）
-  const gridData = viewType === 'grid' 
+  const gridData = viewType === 'grid'
     ? historyItems.reduce((rows: any[][], item: any, index: number) => {
-        if (index % 3 === 0) rows.push([]);
+        if (index % 3 === 0) {rows.push([]);}
         rows[rows.length - 1].push(item);
         return rows;
       }, [])
@@ -89,7 +89,7 @@ export const ContentArea: React.FC<HistoryContentAreaProps> = React.memo(({
 
   const renderItem = viewType === 'grid' ? renderGridRow : renderListItem;
   const data = viewType === 'grid' ? gridData : historyItems;
-  const keyExtractor = viewType === 'grid' 
+  const keyExtractor = viewType === 'grid'
     ? (_item: any[], index: number) => `row-${index}`
     : (item: any) => item.id;
 

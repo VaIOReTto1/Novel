@@ -24,8 +24,8 @@ export const useEditMode = () => {
   }, [selectAllItems]);
 
   const deleteSelectedItems = useCallback(async () => {
-    if (selectedItems.size === 0) return;
-    
+    if (selectedItems.size === 0) {return;}
+
     try {
       const itemIds = Array.from(selectedItems);
       await removeBookshelfItems(itemIds);

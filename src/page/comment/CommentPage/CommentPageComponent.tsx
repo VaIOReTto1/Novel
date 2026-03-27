@@ -30,7 +30,7 @@ const CommentPageComponent: React.FC<CommentPageComponentProps> = ({ bookData, b
   // 解析bookData或使用bookId
   let parsedBookInfo = null;
   let finalBookId = bookId;
-  
+
   if (bookData) {
     try {
       parsedBookInfo = JSON.parse(bookData);

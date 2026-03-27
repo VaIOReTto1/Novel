@@ -25,30 +25,30 @@ export const SubTabsSection: React.FC<SubTabsSectionProps> = React.memo(({
       <TouchableOpacity
         style={[
           styles.subTab,
-          selectedTab === 'online' && styles.activeSubTab
+          selectedTab === 'online' && styles.activeSubTab,
         ]}
         onPress={() => handleTabPress('online')}
         activeOpacity={0.7}
       >
         <Text style={[
           styles.subTabText,
-          selectedTab === 'online' && styles.activeSubTabText
+          selectedTab === 'online' && styles.activeSubTabText,
         ]}>
           已上线 {onlineCount}
         </Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[
           styles.subTab,
-          selectedTab === 'offline' && styles.activeSubTab
+          selectedTab === 'offline' && styles.activeSubTab,
         ]}
         onPress={() => handleTabPress('offline')}
         activeOpacity={0.7}
       >
         <Text style={[
           styles.subTabText,
-          selectedTab === 'offline' && styles.activeSubTabText
+          selectedTab === 'offline' && styles.activeSubTabText,
         ]}>
           待上线 {offlineCount}
         </Text>

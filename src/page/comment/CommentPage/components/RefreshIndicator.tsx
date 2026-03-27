@@ -13,15 +13,15 @@ interface RefreshIndicatorProps {
   refreshText?: string;
 }
 
-export const RefreshIndicator = memo(({ 
-  isRefreshing, 
-  refreshText = '正在刷新...' 
+export const RefreshIndicator = memo(({
+  isRefreshing,
+  refreshText = '正在刷新...',
 }: RefreshIndicatorProps) => {
   const colors = useNovelColors();
   const styles = createCommentPageStyles(colors);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
-  
+
   useEffect(() => {
     if (isRefreshing) {
       Animated.parallel([
@@ -52,9 +52,9 @@ export const RefreshIndicator = memo(({
       ]).start();
     }
   }, [isRefreshing, fadeAnim, scaleAnim]);
-  
-  if (!isRefreshing) return null;
-  
+
+  if (!isRefreshing) {return null;}
+
   return (
     <Animated.View
       style={[

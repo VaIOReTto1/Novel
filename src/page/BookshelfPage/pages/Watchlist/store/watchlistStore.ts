@@ -203,18 +203,18 @@ export const useWatchlistStore = create<WatchlistStore>((set, get) => ({
 
   loadWatchlistItems: async () => {
     const { isLoading, page } = get();
-    if (isLoading) return;
+    if (isLoading) {return;}
 
     set({ isLoading: true, error: null });
 
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       const startIndex = (page - 1) * PAGE_SIZE;
       const endIndex = startIndex + PAGE_SIZE;
       const newItems = mockWatchlistItems.slice(startIndex, endIndex);
-      
+
       set(state => ({
         watchlistItems: page === 1 ? newItems : [...state.watchlistItems, ...newItems],
         hasMore: endIndex < mockWatchlistItems.length,
@@ -230,7 +230,7 @@ export const useWatchlistStore = create<WatchlistStore>((set, get) => ({
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       set(state => ({
         watchlistItems: state.watchlistItems.filter(item => !ids.includes(item.id)),
         selectedItems: new Set(),
@@ -295,18 +295,18 @@ export const useDramaRecommendationStore = create<DramaRecommendationStore>((set
 
   loadRecommendations: async () => {
     const { isLoading, page } = get();
-    if (isLoading) return;
+    if (isLoading) {return;}
 
     set({ isLoading: true, error: null });
 
     try {
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 800));
-      
+
       const startIndex = (page - 1) * RECOMMENDATION_PAGE_SIZE;
       const endIndex = startIndex + RECOMMENDATION_PAGE_SIZE;
       const newItems = mockRecommendations.slice(startIndex, endIndex);
-      
+
       set(state => ({
         recommendations: page === 1 ? newItems : [...state.recommendations, ...newItems],
         hasMore: endIndex < mockRecommendations.length,

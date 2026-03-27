@@ -26,7 +26,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
   return (
     <View style={styles.filterContainer}>
-      <ScrollView 
+      <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.filterScrollView}
@@ -52,10 +52,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </TouchableOpacity>
           );
         })}
-        
+
         {/* 分隔符 */}
         <View style={{ width: 16 }} />
-        
+
         {/* 排序筛选 */}
         {sortTypes.map((sortType) => {
           const isActive = sortType.key === selectedSort;

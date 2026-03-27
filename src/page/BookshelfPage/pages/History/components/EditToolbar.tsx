@@ -10,19 +10,19 @@ export const EditToolbar: React.FC<HistoryEditToolbarProps> = React.memo(({
   onCancel,
   visible,
 }) => {
-  if (!visible) return null;
+  if (!visible) {return null;}
 
   return (
     <View style={styles.editToolbar}>
       <View style={styles.editToolbarLeft}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.selectAllButton}
           onPress={onSelectAll}
           activeOpacity={0.7}
         >
           <View style={[
             styles.editCheckbox,
-            selectedCount > 0 && styles.editCheckboxSelected
+            selectedCount > 0 && styles.editCheckboxSelected,
           ]}>
             {selectedCount > 0 && (
               <Text style={styles.editCheckIcon}>✓</Text>
@@ -43,7 +43,7 @@ export const EditToolbar: React.FC<HistoryEditToolbarProps> = React.memo(({
         >
           <Text style={[
             styles.editActionText,
-            selectedCount === 0 && { opacity: 0.5 }
+            selectedCount === 0 && { opacity: 0.5 },
           ]}>
             删除 {selectedCount > 0 && `(${selectedCount})`}
           </Text>

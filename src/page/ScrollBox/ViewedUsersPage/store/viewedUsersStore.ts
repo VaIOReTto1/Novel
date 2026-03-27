@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { Alert } from 'react-native';
 import {
   UserInfo,
   RecommendUser,
@@ -312,7 +313,7 @@ export const useViewedUsersStore = create<ViewedUsersStore>()(
 
     handleUserPress: (userId: string) => {
       console.log(`[ViewedUsersStore] 用户点击: ${userId}`);
-      alert('用户详情功能开发中...');
+      Alert.alert('用户详情功能开发中...');
     },
   }))
 );

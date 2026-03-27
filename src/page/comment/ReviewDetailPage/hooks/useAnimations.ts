@@ -8,7 +8,7 @@ import { Animated } from 'react-native';
 export   const useAnimations = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
-  
+
   useEffect(() => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
@@ -24,6 +24,6 @@ export   const useAnimations = () => {
       }),
     ]).start();
   }, [fadeAnim, scaleAnim]);
-  
+
   return { fadeAnim, scaleAnim };
 };

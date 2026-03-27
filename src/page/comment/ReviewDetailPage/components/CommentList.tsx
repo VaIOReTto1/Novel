@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
@@ -29,8 +29,6 @@ export const CommentList: React.FC<CommentListProps> = ({
   const { comments } = useReviewDetailStore();
 
   console.log('[CommentList] comments from store:', comments);
-  const [commentText, setCommentText] = useState('');
-
   const handleLikePress = (commentId: string) => {
     toggleCommentLike(commentId);
   };
@@ -38,15 +36,6 @@ export const CommentList: React.FC<CommentListProps> = ({
   const handleDislikePress = (commentId: string) => {
     toggleCommentDislike(commentId);
   };
-
-  const handleSendComment = () => {
-    if (commentText.trim()) {
-      // TODO: 实现发送评论功能
-      console.log('发送评论:', commentText);
-      setCommentText('');
-    }
-  };
-  void handleSendComment;
 
   const renderCommentInput = () => {
     return (

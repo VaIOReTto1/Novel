@@ -31,20 +31,20 @@ export const PostItem: React.FC<PostItemProps> = ({
       <View style={styles.postItem}>
         {/* 第一行：头像、标题、来源、订阅按钮、菜单 */}
         <View style={styles.postHeader}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.userAvatar}
             onPress={() => onUserPress?.(post.author.id)}
           >
             {post.author.avatar ? (
-              <Image 
-                source={{ uri: post.author.avatar }} 
+              <Image
+                source={{ uri: post.author.avatar }}
                 style={styles.userAvatar}
               />
             ) : (
               <View style={styles.userAvatar} />
             )}
           </TouchableOpacity>
-          
+
           <View style={styles.headerContent}>
             <TouchableOpacity onPress={() => onUserPress?.(post.author.id)}>
               <Text style={styles.userName}>{post.author.name}</Text>
@@ -55,16 +55,16 @@ export const PostItem: React.FC<PostItemProps> = ({
               </Text>
             )}
           </View>
-          
+
           <View style={styles.headerActions}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.subscribeButton}
               onPress={() => onSubscribe?.(post.author.id)}
             >
               <Text style={styles.subscribeButtonText}>订阅</Text>
             </TouchableOpacity>
-            
-            <TouchableOpacity 
+
+            <TouchableOpacity
               style={styles.moreButton}
               onPress={() => onMore?.(post.id)}
             >
@@ -79,7 +79,7 @@ export const PostItem: React.FC<PostItemProps> = ({
             {post.title}
           </Text>
         )}
-        
+
         {/* 评论内容 */}
         <Text style={styles.postContent} numberOfLines={6}>
           {post.content}
@@ -87,13 +87,13 @@ export const PostItem: React.FC<PostItemProps> = ({
 
         {/* 图片 */}
         {post.images && post.images.length > 0 && (
-          <ScrollView 
+          <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={styles.postImages}
           >
             {post.images.map((image, index) => (
-              <Image 
+              <Image
                 key={index}
                 source={{ uri: image }}
                 style={styles.postImage}
@@ -104,7 +104,7 @@ export const PostItem: React.FC<PostItemProps> = ({
 
         {/* 最后一行：三个按钮 space-around */}
         <View style={styles.postActions}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionButton}
             onPress={() => onShare?.(post.id)}
           >
@@ -112,7 +112,7 @@ export const PostItem: React.FC<PostItemProps> = ({
             <Text style={styles.actionText}>{post.shareCount}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionButton}
             onPress={() => onComment?.(post.id)}
           >
@@ -120,7 +120,7 @@ export const PostItem: React.FC<PostItemProps> = ({
             <Text style={styles.actionText}>{post.commentCount}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionButton}
             onPress={() => onLike?.(post.id)}
           >
@@ -139,7 +139,7 @@ export const PostItem: React.FC<PostItemProps> = ({
           </TouchableOpacity>
         </View>
       </View>
-      
+
       {/* 底部分割线 */}
       <View style={styles.bottomDivider} />
     </View>

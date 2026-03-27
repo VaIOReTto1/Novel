@@ -32,13 +32,13 @@ export const EditToolbar: React.FC<EditToolbarProps> = ({
           {isAllSelected ? '取消全选' : '全选'}
         </Text>
       </TouchableOpacity>
-      
+
       <View style={styles.editToolbarCenter}>
         <Text style={styles.editToolbarSelectedText}>
           已选择 {selectedCount}/{totalCount} 项
         </Text>
       </View>
-      
+
       <TouchableOpacity
         style={[
           styles.editToolbarButton,

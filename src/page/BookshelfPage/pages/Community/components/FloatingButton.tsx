@@ -16,7 +16,7 @@ export const FloatingButton: React.FC<FloatingButtonProps> = ({
   const styles = createCommunityPageStyles(colors);
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.floatingButton}
       onPress={onPress}
       activeOpacity={0.8}

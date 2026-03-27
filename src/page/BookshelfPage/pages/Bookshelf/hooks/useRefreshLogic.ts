@@ -30,8 +30,8 @@ export const useRefreshLogic = () => {
 
   // 加载更多书架数据
   const onLoadMore = useCallback(async () => {
-    if (!hasMore) return;
-    
+    if (!hasMore) {return;}
+
     try {
       await loadMoreBookshelfItems();
     } catch (error) {
@@ -53,7 +53,7 @@ export const useRefreshLogic = () => {
     if (refreshTimeoutRef.current) {
       clearTimeout(refreshTimeoutRef.current);
     }
-    
+
     refreshTimeoutRef.current = setTimeout(() => {
       onRefresh();
     }, 300);

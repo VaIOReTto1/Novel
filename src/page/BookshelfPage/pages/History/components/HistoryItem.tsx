@@ -51,7 +51,7 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
             </View>
           </View>
         )}
-        
+
         <View style={styles.gridCover}>
           <Image
             source={{ uri: item.cover || 'https://via.placeholder.com/120x160' }}
@@ -61,11 +61,11 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
           <View style={styles.gridProgress}>
             <View style={[
               styles.gridProgressBar,
-              { width: `${Math.floor(item.progress * 100)}%` }
+              { width: `${Math.floor(item.progress * 100)}%` },
             ]} />
           </View>
         </View>
-        
+
         <View style={styles.gridInfo}>
           <Text style={styles.gridTitle} numberOfLines={2}>
             {item.title}
@@ -73,13 +73,13 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
           <Text style={styles.gridProgress}>
             {getProgressText(item.progress)}
           </Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.gridAddToShelfButton}
             onPress={() => onAddToShelf?.(item)}
           >
             <Text style={[
               styles.gridAddToShelfText,
-              item.isInShelf && styles.gridAddedToShelfText
+              item.isInShelf && styles.gridAddedToShelfText,
             ]}>
               {item.isInShelf ? '已加入' : '加入书架'}
             </Text>
@@ -110,7 +110,7 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
           </View>
         </View>
       )}
-      
+
       <View style={styles.listCover}>
         <Image
           source={{ uri: item.cover || 'https://via.placeholder.com/60x80' }}
@@ -118,23 +118,23 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
           resizeMode="cover"
         />
       </View>
-      
+
       <View style={styles.listContent}>
          <Text style={styles.listTitle} numberOfLines={1}>
             {item.title}
           </Text>
-        
+
         <View style={styles.listFooter}>
           <Text style={styles.listChapter} numberOfLines={1}>
             {item.lastChapter}
           </Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.addToShelfButton}
             onPress={() => onAddToShelf?.(item)}
           >
             <Text style={[
               styles.addToShelfText,
-              item.isInShelf && styles.addedToShelfText
+              item.isInShelf && styles.addedToShelfText,
             ]}>
               {item.isInShelf ? '已加入' : '加入书架'}
             </Text>

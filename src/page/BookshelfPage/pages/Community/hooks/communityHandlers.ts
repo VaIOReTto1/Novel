@@ -77,7 +77,7 @@ export const createCommunityActionHandlers = (deps: CommunityActionDeps) => {
       {
         text: '分享',
         onPress: () => {
-          void handleShare(postId);
+          handleShare(postId).catch(() => undefined);
         },
       },
       {

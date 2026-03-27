@@ -6,10 +6,10 @@ export const useViewMode = (initialView: ViewType = 'grid') => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const switchView = useCallback((newView: ViewType) => {
-    if (newView === currentView || isTransitioning) return;
+    if (newView === currentView || isTransitioning) {return;}
 
     setIsTransitioning(true);
-    
+
     // 添加过渡动画延迟
     setTimeout(() => {
       setCurrentView(newView);

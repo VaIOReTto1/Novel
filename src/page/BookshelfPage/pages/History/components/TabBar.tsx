@@ -16,7 +16,7 @@ export const TabBar: React.FC<HistoryTabBarProps> = React.memo(({
 }) => {
   const handleSortPress = useCallback(() => {
     // 循环切换排序方式
-    const sortOptions: Array<'lastRead' | 'addTime' | 'title' | 'progress'> = 
+    const sortOptions: Array<'lastRead' | 'addTime' | 'title' | 'progress'> =
       ['lastRead', 'addTime', 'title', 'progress'];
     const currentIndex = sortOptions.indexOf(sortType);
     const nextIndex = (currentIndex + 1) % sortOptions.length;
@@ -38,7 +38,7 @@ export const TabBar: React.FC<HistoryTabBarProps> = React.memo(({
       <View style={styles.tabBarContent}>
         {/* 左侧Tab区域 */}
         <View style={styles.tabsContainer}>
-          <ScrollView 
+          <ScrollView
             style={styles.tabScrollView}
             contentContainerStyle={styles.tabsScroll}
             horizontal
@@ -104,7 +104,7 @@ export const TabBar: React.FC<HistoryTabBarProps> = React.memo(({
               </TouchableOpacity>
             </>
           )}
-          
+
           {/* 编辑按钮 */}
           <TouchableOpacity
             style={styles.staticButton}

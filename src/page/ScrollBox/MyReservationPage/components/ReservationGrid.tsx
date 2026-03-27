@@ -37,7 +37,7 @@ const ReservationCard: React.FC<{
           style={styles.cardImage}
           resizeMode="cover"
         />
-        
+
         {/* 标签 */}
         <View style={styles.cardBadge}>
           <Text style={styles.cardBadgeText}>即将上线</Text>
@@ -60,14 +60,14 @@ const ReservationCard: React.FC<{
           <TouchableOpacity
             style={[
               styles.cardButton,
-              item.isReserved && styles.reservedButton
+              item.isReserved && styles.reservedButton,
             ]}
             onPress={handleReservePress}
             activeOpacity={0.7}
           >
             <Text style={[
               styles.cardButtonText,
-              item.isReserved && styles.reservedButtonText
+              item.isReserved && styles.reservedButtonText,
             ]}>
               {item.isReserved ? '已预约' : '免费预约'}
             </Text>

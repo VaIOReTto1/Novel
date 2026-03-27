@@ -18,19 +18,19 @@ const COMMENT_CATEGORIES = [
   { id: 'update', name: '更新 54' },
 ];
 
-export const CategorySection = memo(({ 
+export const CategorySection = memo(({
   onCategoryChange,
-  selectedCategory = 'all'
+  selectedCategory = 'all',
 }: CategorySectionProps) => {
   const colors = useNovelColors();
   const styles = createCommentPageStyles(colors);
   const [activeCategory, setActiveCategory] = useState(selectedCategory);
-  
+
   const handleCategoryPress = (categoryId: string) => {
     setActiveCategory(categoryId);
     onCategoryChange?.(categoryId);
   };
-  
+
   return (
     <View style={styles.categorySection}>
       <View style={styles.categoryTabs}>
@@ -41,14 +41,14 @@ export const CategorySection = memo(({
               key={category.id}
               style={[
                 styles.categoryTab,
-                isActive && styles.categoryTabActive
+                isActive && styles.categoryTabActive,
               ]}
               onPress={() => handleCategoryPress(category.id)}
               activeOpacity={0.8}
             >
               <Text style={[
                 styles.categoryTabText,
-                isActive && styles.categoryTabTextActive
+                isActive && styles.categoryTabTextActive,
               ]}>
                 {category.name}
               </Text>

@@ -2,8 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
-
 const ROOT = path.resolve(__dirname, '..');
 const errors = [];
 const warnings = [];
@@ -38,13 +36,6 @@ const readText = (relativePath) =>
   fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
 
 const exists = (relativePath) => fs.existsSync(path.join(ROOT, relativePath));
-
-const run = (command) =>
-  execSync(command, {
-    cwd: ROOT,
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-  }).trim();
 
 const capture = (text, pattern, fallback = 'unknown') => {
   const match = text.match(pattern);

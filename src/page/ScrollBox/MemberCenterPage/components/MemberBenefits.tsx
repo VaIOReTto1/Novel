@@ -29,7 +29,7 @@ export const MemberBenefits: React.FC<MemberBenefitsProps> = React.memo(({
   return (
     <View style={styles.benefitsContainer}>
       <Text style={styles.benefitsTitle}>{getTitle()}</Text>
-      
+
       <View style={styles.benefitsList}>
         {benefits.map((benefit) => (
           <View key={benefit.id} style={styles.benefitItem}>

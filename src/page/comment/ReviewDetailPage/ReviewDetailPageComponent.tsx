@@ -29,7 +29,7 @@ const ReviewDetailPageComponent: React.FC<ReviewDetailPageComponentProps> = ({ c
   // 解析commentData以提取bookInfo
   let parsedCommentData = null;
   let bookInfo = null;
-  
+
   try {
     if (commentData) {
       parsedCommentData = JSON.parse(commentData);

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Alert, View, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from 'react-native';
 import { TopBarProps } from '../types';
 
 interface TopBarComponentProps extends TopBarProps {
@@ -13,10 +13,10 @@ interface MenuOption {
   onPress: () => void;
 }
 
-export const TopBar: React.FC<TopBarComponentProps> = ({ 
-  styles, 
+export const TopBar: React.FC<TopBarComponentProps> = ({
+  styles,
   title,
-  onBackPress
+  onBackPress,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -36,8 +36,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       onPress: () => {
         handleMenuClose();
         console.log('分享会员');
-        alert('分享会员功能开发中...');
-      }
+        Alert.alert('分享会员功能开发中...');
+      },
     },
     {
       id: 'contact',
@@ -46,8 +46,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       onPress: () => {
         handleMenuClose();
         console.log('联系客服');
-        alert('联系客服功能开发中...');
-      }
+        Alert.alert('联系客服功能开发中...');
+      },
     },
     {
       id: 'help',
@@ -56,26 +56,26 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       onPress: () => {
         handleMenuClose();
         console.log('帮助中心');
-        alert('帮助中心功能开发中...');
-      }
-    }
+        Alert.alert('帮助中心功能开发中...');
+      },
+    },
   ];
 
   return (
     <>
       <View style={styles.topBar}>
-        <TouchableOpacity 
-          style={styles.backButton} 
+        <TouchableOpacity
+          style={styles.backButton}
           onPress={onBackPress}
           activeOpacity={0.7}
         >
           <Text style={styles.backArrow}>‹</Text>
         </TouchableOpacity>
-        
+
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
         </View>
-        
+
         {/* 右侧菜单按钮 */}
         <TouchableOpacity
           style={styles.menuButton}

@@ -49,7 +49,7 @@ const mockComments = [
         createTime: '2025-08-09T20:30:00Z', // 昨天 - 显示"昨天 20:30"
         parentId: 'comment_001',
         replyToUser: '毛线球提督',
-        tag: undefined
+        tag: undefined,
       },
       {
         id: 'reply_002',
@@ -65,7 +65,7 @@ const mockComments = [
         createTime: '2025-07-15T14:20:00Z', // 本年其他日期 - 显示"7月15日"
         parentId: 'comment_001',
         replyToUser: '毛线球提督',
-        tag: undefined
+        tag: undefined,
       },
       {
         id: 'reply_003',
@@ -81,9 +81,9 @@ const mockComments = [
         createTime: '2024-12-25T09:15:00Z', // 往年 - 显示"2024-12-25 09:15"
         parentId: 'comment_001',
         replyToUser: '毛线球提督',
-        tag: undefined
-      }
-    ]
+        tag: undefined,
+      },
+    ],
   },
   {
     id: 'comment_002',
@@ -113,9 +113,9 @@ const mockComments = [
         createTime: '2025-08-09T15:45:00Z', // 昨天下午 - 显示"昨天 15:45"
         parentId: 'comment_002',
         replyToUser: '毛线球提督',
-        tag: undefined
-      }
-    ]
+        tag: undefined,
+      },
+    ],
   },
   {
     id: 'comment_003',
@@ -130,7 +130,7 @@ const mockComments = [
     isDisliked: false,
     createTime: '2025-03-20T11:00:00Z', // 本年春天 - 显示"3月20日"
     tag: 'true_fan',
-    replies: []
+    replies: [],
   },
   {
     id: 'comment_004',
@@ -145,7 +145,7 @@ const mockComments = [
     isDisliked: false,
     createTime: '2025-01-01T00:00:00Z', // 本年元旦 - 显示"1月1日"
     tag: undefined,
-    replies: []
+    replies: [],
   },
   {
     id: 'comment_005',
@@ -160,8 +160,8 @@ const mockComments = [
     isDisliked: false,
     createTime: '2023-06-15T18:30:00Z', // 往年 - 显示"2023-06-15 18:30"
     tag: 'vip',
-    replies: []
-  }
+    replies: [],
+  },
 ];
 
 export const reviewDetailApi = {
@@ -169,7 +169,7 @@ export const reviewDetailApi = {
   getReviewDetail: async (reviewId: string): Promise<ApiResponse<ReviewDetail>> => {
     console.log('[ReviewDetailApi] 获取评论详情:', reviewId);
     await delay(50);
-    
+
     return {
       code: 200,
       message: '获取成功',
@@ -188,11 +188,11 @@ export const reviewDetailApi = {
   ): Promise<ApiResponse<CommentListResponse>> => {
     console.log('[ReviewDetailApi] 获取评论列表:', { reviewId, page, pageSize });
     await delay(100);
-    
+
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const comments = mockComments.slice(startIndex, endIndex);
-    
+
     return {
       code: 200,
       message: '获取成功',
@@ -210,14 +210,14 @@ export const reviewDetailApi = {
   toggleLike: async (reviewId: string): Promise<ApiResponse<{ isLiked: boolean; likeCount: number }>> => {
     console.log('[ReviewDetailApi] 切换点赞状态:', reviewId);
     await delay(300);
-    
+
     // 模拟切换点赞状态
     const isLiked = !mockReviewDetail.isLiked;
     const likeCount = isLiked ? mockReviewDetail.likeCount + 1 : mockReviewDetail.likeCount - 1;
-    
+
     mockReviewDetail.isLiked = isLiked;
     mockReviewDetail.likeCount = likeCount;
-    
+
     return {
       code: 200,
       message: isLiked ? '点赞成功' : '取消点赞成功',
@@ -232,27 +232,27 @@ export const reviewDetailApi = {
   toggleCommentLike: async (commentId: string): Promise<ApiResponse<{ isLiked: boolean; likeCount: number; isDisliked: boolean; dislikeCount: number }>> => {
     console.log('[ReviewDetailApi] 切换评论点赞状态:', commentId);
     await delay(300);
-    
+
     const findComment = (comments: any[], id: string): any => {
       for (const comment of comments) {
-        if (comment.id === id) return comment;
+        if (comment.id === id) {return comment;}
         if (comment.replies) {
           const found = findComment(comment.replies, id);
-          if (found) return found;
+          if (found) {return found;}
         }
       }
       return null;
     };
-    
+
     const comment = findComment(mockComments, commentId);
     if (!comment) {
       throw new Error('评论不存在');
     }
-    
+
     // 模拟切换点赞状态
     const wasLiked = comment.isLiked;
     const wasDisliked = comment.isDisliked;
-    
+
     if (wasLiked) {
       // 取消点赞
       comment.isLiked = false;
@@ -267,7 +267,7 @@ export const reviewDetailApi = {
         comment.dislikeCount = Math.max(0, comment.dislikeCount - 1);
       }
     }
-    
+
     return {
       code: 200,
       message: comment.isLiked ? '点赞成功' : '取消点赞成功',
@@ -284,27 +284,27 @@ export const reviewDetailApi = {
   toggleCommentDislike: async (commentId: string): Promise<ApiResponse<{ isLiked: boolean; likeCount: number; isDisliked: boolean; dislikeCount: number }>> => {
     console.log('[ReviewDetailApi] 切换评论踩状态:', commentId);
     await delay(300);
-    
+
     const findComment = (comments: any[], id: string): any => {
       for (const comment of comments) {
-        if (comment.id === id) return comment;
+        if (comment.id === id) {return comment;}
         if (comment.replies) {
           const found = findComment(comment.replies, id);
-          if (found) return found;
+          if (found) {return found;}
         }
       }
       return null;
     };
-    
+
     const comment = findComment(mockComments, commentId);
     if (!comment) {
       throw new Error('评论不存在');
     }
-    
+
     // 模拟切换踩状态
     const wasLiked = comment.isLiked;
     const wasDisliked = comment.isDisliked;
-    
+
     if (wasDisliked) {
       // 取消踩
       comment.isDisliked = false;
@@ -319,7 +319,7 @@ export const reviewDetailApi = {
         comment.likeCount = Math.max(0, comment.likeCount - 1);
       }
     }
-    
+
     return {
       code: 200,
       message: comment.isDisliked ? '踩成功' : '取消踩成功',

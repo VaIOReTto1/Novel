@@ -14,8 +14,8 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(({
   return (
     <View style={styles.emptyContainer}>
       <View style={styles.emptyIcon}>
-        <Image 
-          source={{ uri: 'https://placehold.co/160' }} 
+        <Image
+          source={{ uri: 'https://placehold.co/160' }}
           style={{ width: 80, height: 80 }}
           resizeMode="cover"
         />

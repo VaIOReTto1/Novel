@@ -161,7 +161,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   gridItemImage: {
     width: '100%',
-    aspectRatio: 3/4,
+    aspectRatio: 3 / 4,
     borderRadius: wp(8),
     backgroundColor: colors.novelLightGray,
   },
@@ -221,7 +221,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   gridDramaCover: {
     width: '100%',
-    aspectRatio: 3/4, // 剧集封面比例
+    aspectRatio: 3 / 4, // 剧集封面比例
     backgroundColor: colors.novelLightGray,
   },
 
@@ -330,7 +330,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   waterfallDramaCover: {
     width: '100%',
-    aspectRatio: 3/4,
+    aspectRatio: 3 / 4,
     backgroundColor: colors.novelLightGray,
   },
 

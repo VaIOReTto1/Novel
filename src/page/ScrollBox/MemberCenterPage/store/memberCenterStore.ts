@@ -1,39 +1,40 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { 
-  UserInfo, 
-  VIPCard, 
-  VIPBenefit, 
-  PricePackage, 
-  BenefitComparison, 
+import { Alert } from 'react-native';
+import {
+  UserInfo,
+  VIPCard,
+  VIPBenefit,
+  PricePackage,
+  BenefitComparison,
   VIPRecommendation,
-  TaskCard
+  TaskCard,
 } from '../types';
 
 export interface MemberCenterState {
   loading: boolean;
   error: string | null;
-  
+
   // User Info
   userInfo: UserInfo | null;
-  
+
   // VIP Cards
   vipCards: VIPCard[];
   currentCardIndex: number;
-  
+
   // Current VIP Type Benefits
   currentBenefits: VIPBenefit[];
-  
+
   // Price Packages
   pricePackages: PricePackage[];
   selectedPackageId: string | null;
-  
+
   // Benefit Comparison
   benefitComparison: BenefitComparison[];
-  
+
   // VIP Recommendations (only for member and svip)
   vipRecommendations: VIPRecommendation[];
-  
+
   // Task Cards (only for certain VIP types)
   taskCards: TaskCard[];
 }
@@ -55,21 +56,21 @@ type MemberCenterStore = MemberCenterState & MemberCenterActions;
 const initialState: MemberCenterState = {
   loading: false,
   error: null,
-  
+
   userInfo: null,
-  
+
   vipCards: [],
   currentCardIndex: 0,
-  
+
   currentBenefits: [],
-  
+
   pricePackages: [],
   selectedPackageId: null,
-  
+
   benefitComparison: [],
-  
+
   vipRecommendations: [],
-  
+
   taskCards: [],
 };
 
@@ -77,7 +78,7 @@ const initialState: MemberCenterState = {
 const generateMockUserInfo = (): UserInfo => ({
   id: 1,
   name: '安国的尹锋',
-  avatar: 'https://placehold.co/96'
+  avatar: 'https://placehold.co/96',
 });
 
 const generateMockVIPCards = (): VIPCard[] => [
@@ -87,7 +88,7 @@ const generateMockVIPCards = (): VIPCard[] => [
     title: '会员VIP',
     subtitle: '享受优质体验',
     bgGradient: ['#ff6b35', '#ff8c42', '#ffa726'],
-    isActive: true
+    isActive: true,
   },
   {
     id: 'svip',
@@ -95,7 +96,7 @@ const generateMockVIPCards = (): VIPCard[] => [
     title: 'SVIP',
     subtitle: '尊享至上服务',
     bgGradient: ['#ff6b6b', '#ff8e8e', '#ffb3b3'],
-    isActive: false
+    isActive: false,
   },
   {
     id: 'adfree',
@@ -103,8 +104,8 @@ const generateMockVIPCards = (): VIPCard[] => [
     title: '免广告VIP',
     subtitle: '纯净阅读体验',
     bgGradient: ['#4ecdc4', '#7fcdcd', '#a8e6cf'],
-    isActive: false
-  }
+    isActive: false,
+  },
 ];
 
 export const vipBenefitsMock: Record<string, VIPBenefit[]> = {
@@ -149,7 +150,7 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: true,
-        isSelected: true // 默认选择第一个
+        isSelected: true, // 默认选择第一个
       },
       {
         id: 'weekly',
@@ -158,7 +159,7 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: false,
-        isSelected: false
+        isSelected: false,
       },
       {
         id: 'monthly_single',
@@ -167,8 +168,8 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: false,
-        isSelected: false
-      }
+        isSelected: false,
+      },
     ];
   } else if (cardType === 'svip') {
     return [
@@ -179,7 +180,7 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: true,
-        isSelected: true // 默认选择第一个
+        isSelected: true, // 默认选择第一个
       },
       {
         id: 'daily',
@@ -188,7 +189,7 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: false,
-        isSelected: false
+        isSelected: false,
       },
       {
         id: 'monthly_single',
@@ -197,8 +198,8 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: false,
-        isSelected: false
-      }
+        isSelected: false,
+      },
     ];
   } else if (cardType === 'adfree') {
     return [
@@ -209,7 +210,7 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: true,
-        isSelected: true // 默认选择第一个
+        isSelected: true, // 默认选择第一个
       },
       {
         id: 'daily',
@@ -218,7 +219,7 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: false,
-        isSelected: false
+        isSelected: false,
       },
       {
         id: 'weekly',
@@ -227,8 +228,8 @@ const generateMockPricePackages = (cardType: string): PricePackage[] => {
         originalPrice: '',
         discount: '',
         isRecommended: false,
-        isSelected: false
-      }
+        isSelected: false,
+      },
     ];
   }
 
@@ -246,9 +247,9 @@ const generateMockBenefitComparison = (cardType: string): BenefitComparison[] =>
         { category: '离线阅读', normal: '——', member: '不限时免广告', svip: '不限时免广告', adfree: '——' },
         { category: '自动阅读', normal: '——', member: '不限时免广告', svip: '不限时免广告', adfree: '——' },
         { category: '专属标识', normal: '——', member: 'VIP标识', svip: 'SVIP标识', adfree: '——' },
-        { category: '专属贴纸', normal: '——', member: '全套贴纸任选', svip: '全套贴纸任选', adfree: '——' }
+        { category: '专属贴纸', normal: '——', member: '全套贴纸任选', svip: '全套贴纸任选', adfree: '——' },
       ];
-    
+
     case 'svip':
       return [
         { category: '免广告特权', normal: '有听读广告', member: '听读无广告', svip: '完全无广告', adfree: '听读无广告' },
@@ -259,9 +260,9 @@ const generateMockBenefitComparison = (cardType: string): BenefitComparison[] =>
         { category: '自动阅读', normal: '——', member: '不限时免广告', svip: '无限制自动阅读', adfree: '——' },
         { category: '专属标识', normal: '——', member: 'VIP标识', svip: 'SVIP尊享标识', adfree: '——' },
         { category: '专属贴纸', normal: '——', member: '全套贴纸任选', svip: 'SVIP专属贴纸', adfree: '——' },
-        { category: '专属客服', normal: '——', member: '——', svip: '1对1专属客服', adfree: '——' }
+        { category: '专属客服', normal: '——', member: '——', svip: '1对1专属客服', adfree: '——' },
       ];
-      
+
     case 'adfree':
       return [
         { category: '免广告特权', normal: '有听读广告', member: '听读无广告', svip: '完全无广告', adfree: '听读无广告' },
@@ -272,9 +273,9 @@ const generateMockBenefitComparison = (cardType: string): BenefitComparison[] =>
         { category: '自动阅读', normal: '——', member: '——', svip: '无限制自动阅读', adfree: '——' },
         { category: '专属标识', normal: '——', member: '——', svip: 'SVIP尊享标识', adfree: 'VIP标识' },
         { category: '专属贴纸', normal: '——', member: '——', svip: 'SVIP专属贴纸', adfree: '——' },
-        { category: '专属客服', normal: '——', member: '——', svip: '1对1专属客服', adfree: '——' }
+        { category: '专属客服', normal: '——', member: '——', svip: '1对1专属客服', adfree: '——' },
       ];
-      
+
     default:
       return generateMockBenefitComparison('member');
   }
@@ -285,31 +286,31 @@ const generateMockVIPRecommendations = (): VIPRecommendation[] => [
     id: '1',
     title: '圣人三韩当（全三册）',
     coverUrl: 'https://placehold.co/150x200?text=Book1',
-    description: '《圣人三韩当》全册为韩国文学史上的经典之作——集教育思想、史学分析为一体...'
+    description: '《圣人三韩当》全册为韩国文学史上的经典之作——集教育思想、史学分析为一体...',
   },
   {
     id: '2',
     title: '特殊罪案调查组',
     coverUrl: 'https://placehold.co/150x200?text=Book2',
-    description: '真实案例改编，展示现代刑侦技术...'
+    description: '真实案例改编，展示现代刑侦技术...',
   },
   {
     id: '3',
     title: '打造第二大脑',
     coverUrl: 'https://placehold.co/150x200?text=Book3',
-    description: '知识管理新理念，提升个人效率...'
+    description: '知识管理新理念，提升个人效率...',
   },
   {
     id: '4',
     title: '黑川雨十',
     coverUrl: 'https://placehold.co/150x200?text=Book4',
-    description: '日本推理小说巅峰之作...'
-  }
+    description: '日本推理小说巅峰之作...',
+  },
 ];
 
 const generateMockTaskCards = (cardType: string): TaskCard[] => {
   /** 仅“会员VIP”（出版 VIP）才展示任务卡，其他返回空数组 */
-  if (cardType !== 'member') return [];
+  if (cardType !== 'member') {return [];}
 
   return [
     {
@@ -431,32 +432,32 @@ export const useMemberCenterStore = create<MemberCenterStore>()(
     setCurrentCard: (index: number) => {
       const state = get();
       const newCard = state.vipCards[index];
-      
-      if (!newCard) return;
+
+      if (!newCard) {return;}
 
       set((draft) => {
         // 更新当前卡片索引
         draft.currentCardIndex = index;
-        
+
         // 重置所有卡片的激活状态
         draft.vipCards.forEach(card => {
           card.isActive = false;
         });
-        
+
         // 激活当前卡片
         draft.vipCards[index].isActive = true;
-        
+
         // 更新相关数据
         draft.currentBenefits = vipBenefitsMock[newCard.type];
         draft.pricePackages = generateMockPricePackages(newCard.type);
         draft.selectedPackageId = draft.pricePackages.find(p => p.isSelected)?.id || null;
-        
+
         // 根据卡片类型生成不同的权益对比
         draft.benefitComparison = generateMockBenefitComparison(newCard.type);
-        
+
         // 根据卡片类型生成任务卡片
         draft.taskCards = generateMockTaskCards(newCard.type);
-        
+
         // 免广告VIP不显示推荐
         if (newCard.type === 'adfree') {
           draft.vipRecommendations = [];
@@ -464,7 +465,7 @@ export const useMemberCenterStore = create<MemberCenterStore>()(
           draft.vipRecommendations = generateMockVIPRecommendations();
         }
       });
-      
+
       console.log(`[MemberCenterStore] 切换到卡片: ${newCard.type}`);
     },
 
@@ -483,36 +484,36 @@ export const useMemberCenterStore = create<MemberCenterStore>()(
       const state = get();
       const selectedPackage = state.pricePackages.find(p => p.isSelected);
       const currentCard = state.vipCards[state.currentCardIndex];
-      
+
       console.log(`[MemberCenterStore] 购买: ${currentCard?.title} - ${selectedPackage?.duration}`);
-      alert(`购买 ${currentCard?.title} - ${selectedPackage?.duration} 功能开发中...`);
+      Alert.alert(`购买 ${currentCard?.title} - ${selectedPackage?.duration} 功能开发中...`);
     },
 
     handlePrivacyPress: () => {
       console.log('[MemberCenterStore] 隐私政策点击');
-      alert('隐私政策功能开发中...');
+      Alert.alert('隐私政策功能开发中...');
     },
 
     handleTermsPress: () => {
       console.log('[MemberCenterStore] 服务条款点击');
-      alert('服务条款功能开发中...');
+      Alert.alert('服务条款功能开发中...');
     },
 
     handleTaskPress: (taskId: string) => {
       const state = get();
       const task = state.taskCards.find(t => t.id === taskId);
-      
-      if (!task) return;
-      
+
+      if (!task) {return;}
+
       if (task.isCompleted) {
         console.log(`[MemberCenterStore] 任务已完成: ${task.title}`);
-        alert(`任务"${task.title}"已完成！`);
+        Alert.alert(`任务"${task.title}"已完成！`);
         return;
       }
-      
+
       console.log(`[MemberCenterStore] 执行任务: ${task.title}`);
-      alert(`正在跳转到"${task.title}"任务页面...`);
-      
+      Alert.alert(`正在跳转到"${task.title}"任务页面...`);
+
       // 这里可以添加实际的任务跳转逻辑
     },
   }))

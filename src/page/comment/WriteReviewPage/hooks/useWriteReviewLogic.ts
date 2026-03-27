@@ -34,9 +34,9 @@ export const useWriteReviewLogic = () => {
   // 处理提交
   const handleSubmit = useCallback(async () => {
     console.log('[useWriteReviewLogic] 开始提交评论');
-    
+
     const success = await submitReview();
-    
+
     if (success) {
       Alert.alert('成功', '评论发表成功', [
         {
@@ -44,8 +44,8 @@ export const useWriteReviewLogic = () => {
           onPress: () => {
             console.log('[useWriteReviewLogic] 评论提交成功，返回上一页');
             NavigationBridge.navigateBack();
-          }
-        }
+          },
+        },
       ]);
     } else if (error) {
       Alert.alert('提示', error);
@@ -68,7 +68,7 @@ export const useWriteReviewLogic = () => {
     reviewData,
     isSubmitting,
     error,
-    
+
     // 操作
     handleRatingPress,
     handleTitleChange,

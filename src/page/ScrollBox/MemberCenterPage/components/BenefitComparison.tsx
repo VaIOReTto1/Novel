@@ -62,7 +62,7 @@ export const BenefitComparison: React.FC<BenefitComparisonProps> = React.memo(({
   return (
     <View style={styles.comparisonContainer}>
       <Text style={styles.comparisonTitle}>会员权益对比</Text>
-      
+
       <View style={styles.comparisonTable}>
         {/* 表头 */}
         <View style={styles.comparisonHeader}>
@@ -71,11 +71,11 @@ export const BenefitComparison: React.FC<BenefitComparisonProps> = React.memo(({
           </View>
           <View style={[
             styles.comparisonHeaderCellHighlight,
-            styles.comparisonHeaderCell
+            styles.comparisonHeaderCell,
           ]}>
             <Text style={[
               styles.comparisonHeaderText,
-              styles.comparisonHighlight
+              styles.comparisonHighlight,
             ]}>
               {getDisplayColumnTitle(primaryColumn)}
             </Text>
@@ -95,11 +95,11 @@ export const BenefitComparison: React.FC<BenefitComparisonProps> = React.memo(({
             </View>
             <View style={[
               styles.comparisonCell,
-              styles.comparisonCellHighlight
+              styles.comparisonCellHighlight,
             ]}>
               <Text style={[
                 styles.comparisonCellText,
-                styles.comparisonHighlight
+                styles.comparisonHighlight,
               ]}>
                 {getColumnValue(comparison, primaryColumn)}
               </Text>

@@ -50,6 +50,10 @@ const initialState: UserState = {
   isAuthor: false,
 };
 
+const persistUserCache = (operation: Promise<unknown>) => {
+  operation.catch(() => undefined);
+};
+
 export const useUserStore = create<UserStore>()(
   immer((set) => ({
     ...initialState,
@@ -62,7 +66,7 @@ export const useUserStore = create<UserStore>()(
       state.sex = userData.sex || null;
       state.isLoggedIn = true;
       // 异步缓存
-      void AsyncStorage.setItem('NOVEL_USER_CACHE', JSON.stringify({
+      persistUserCache(AsyncStorage.setItem('NOVEL_USER_CACHE', JSON.stringify({
         uid: state.uid,
         token: state.token,
         nickname: state.nickname,
@@ -72,7 +76,7 @@ export const useUserStore = create<UserStore>()(
         balance: state.balance,
         coins: state.coins,
         isAuthor: state.isAuthor,
-      }));
+      })));
     }),
 
     handleNativeUserData: (userData) => set((state) => {
@@ -83,7 +87,7 @@ export const useUserStore = create<UserStore>()(
       state.sex = userData.sex || null;
       state.isLoggedIn = true;
       // 异步缓存
-      void AsyncStorage.setItem('NOVEL_USER_CACHE', JSON.stringify({
+      persistUserCache(AsyncStorage.setItem('NOVEL_USER_CACHE', JSON.stringify({
         uid: state.uid,
         token: state.token,
         nickname: state.nickname,
@@ -93,7 +97,7 @@ export const useUserStore = create<UserStore>()(
         balance: state.balance,
         coins: state.coins,
         isAuthor: state.isAuthor,
-      }));
+      })));
     }),
 
     logout: () => set((state) => {
@@ -106,7 +110,7 @@ export const useUserStore = create<UserStore>()(
       state.balance = 0.00;
       state.coins = 0;
       state.isAuthor = false;
-      void AsyncStorage.removeItem('NOVEL_USER_CACHE');
+      persistUserCache(AsyncStorage.removeItem('NOVEL_USER_CACHE'));
     }),
 
     initializeFromCache: async () => {
@@ -134,17 +138,17 @@ export const useUserStore = create<UserStore>()(
     setAuthorStatus: (isAuthor) => set((state) => {
       state.isAuthor = isAuthor;
       // 更新缓存
-      void AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ isAuthor }));
+      persistUserCache(AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ isAuthor })));
     }),
 
     setBalance: (balance) => set((state) => {
       state.balance = balance;
-      void AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ balance }));
+      persistUserCache(AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ balance })));
     }),
 
     setCoins: (coins) => set((state) => {
       state.coins = coins;
-      void AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ coins }));
+      persistUserCache(AsyncStorage.mergeItem('NOVEL_USER_CACHE', JSON.stringify({ coins })));
     }),
   }))
 );

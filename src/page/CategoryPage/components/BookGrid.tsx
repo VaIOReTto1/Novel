@@ -27,7 +27,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ data, columns, onEndReached,
     };
 
     const renderItem = ({ item }: { item: BookItem }) => (
-        <TouchableOpacity 
+        <TouchableOpacity
             style={[{ width: `${100 / columns}%` }, styles.gridItemWrapper]}
             onPress={() => handleBookPress(item)}
             activeOpacity={0.7}

@@ -78,7 +78,7 @@ export interface CommunityState {
 }
 
 // 社区操作类型
-export type CommunityAction = 
+export type CommunityAction =
   | 'like'
   | 'comment'
   | 'share'
@@ -86,7 +86,7 @@ export type CommunityAction =
   | 'report';
 
 // 社区菜单操作类型
-export type CommunityMenuAction = 
+export type CommunityMenuAction =
   | 'search'
   | 'notification'
   | 'publish'

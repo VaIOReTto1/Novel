@@ -201,7 +201,7 @@ export const useHistoryStore = create<HistoryStore>()(
 
         // 使用真实的桥接方法获取历史数据
         const historyData = await NavigationBridge.getReadingHistory();
-        
+
         // 转换数据格式以匹配HistoryItem接口
         const convertedItems: HistoryItem[] = historyData.historyItems.map((item: any) => ({
           id: item.id?.toString() || Math.random().toString(),
@@ -225,8 +225,8 @@ export const useHistoryStore = create<HistoryStore>()(
         }));
 
         // 根据选中的tab过滤数据
-        const filteredItems = currentTab === 'all' ? 
-          convertedItems : 
+        const filteredItems = currentTab === 'all' ?
+          convertedItems :
           convertedItems.filter(item => item.type === currentTab);
 
         set((state: { historyItems: HistoryItem[]; cachedHistoryItems: HistoryItem[]; isRefreshing: boolean; loading: boolean; hasMore: boolean; }) => {
@@ -252,7 +252,7 @@ export const useHistoryStore = create<HistoryStore>()(
     loadMoreHistory: async () => {
       const { hasMore, isLoadingMore } = get();
 
-      if (!hasMore || isLoadingMore) return;
+      if (!hasMore || isLoadingMore) {return;}
 
       try {
       set((state) => {
@@ -323,13 +323,13 @@ export const useHistoryStore = create<HistoryStore>()(
       try {
         // 模拟API调用延迟
         await delay(500);
-        
+
         set((state) => {
           const itemIndex = state.historyItems.findIndex(historyItem => historyItem.id === item.id);
           if (itemIndex !== -1) {
             state.historyItems[itemIndex].isInShelf = !state.historyItems[itemIndex].isInShelf;
           }
-          
+
           // 同时更新缓存数据
           const cachedIndex = state.cachedHistoryItems.findIndex(historyItem => historyItem.id === item.id);
           if (cachedIndex !== -1) {

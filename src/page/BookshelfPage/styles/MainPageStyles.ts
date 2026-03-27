@@ -44,6 +44,12 @@ export const createMainPageStyles = (colors: NovelColors) => {
     pageContainer: {
       flex: 1,
     },
+    pageVisible: {
+      display: 'flex',
+    },
+    pageHidden: {
+      display: 'none',
+    },
 
     // 加载状态
     loadingContainer: {

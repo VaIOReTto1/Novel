@@ -47,17 +47,17 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <Text style={styles.emptyIcon}>
         {content.icon}
       </Text>
-      
+
       <Text style={styles.emptyTitle}>
         {content.title}
       </Text>
-      
+
       {content.description && (
         <Text style={styles.emptyDescription}>
           {content.description}
         </Text>
       )}
-      
+
       {content.actionText && onAction && (
         <TouchableOpacity
           style={styles.emptyAction}

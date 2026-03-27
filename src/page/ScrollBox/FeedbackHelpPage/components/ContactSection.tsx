@@ -16,7 +16,7 @@ export const ContactSection: React.FC<ContactSectionProps> = React.memo(({
         <Text style={styles.contactButtonIcon}>✏️</Text>
         <Text style={styles.contactButtonText}>意见反馈</Text>
       </TouchableOpacity>
-      
+
       <View style={styles.contactInfo}>
         <Text style={styles.contactInfoText}>
           番茄官方服务热线：957124，工作时间8:30-22:00

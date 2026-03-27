@@ -84,20 +84,20 @@ export const FeedbackHelpMainPage: React.FC = React.memo(() => {
         pageType="main"
         searchPlaceholder="听书"
       />
-      
+
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <UserSection styles={styles} />
-        
+
         <ConsultSection
           styles={styles}
           categories={consultCategories}
           onCategoryPress={handleCategoryPress}
         />
-        
+
         <FrequentQuestions
           styles={styles}
           questions={frequentQuestions}

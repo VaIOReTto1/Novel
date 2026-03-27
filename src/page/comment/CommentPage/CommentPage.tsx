@@ -17,11 +17,11 @@ import { CategorySection } from './components/CategorySection';
 // 自定义Hook：刷新逻辑
 const useRefresh = () => {
   const { refreshComments } = useCommentStore();
-  
+
   const onRefresh = useCallback(async () => {
     await refreshComments();
   }, [refreshComments]);
-  
+
   return { onRefresh };
 };
 
@@ -29,7 +29,7 @@ const useRefresh = () => {
 const useAnimations = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
-  
+
   useEffect(() => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
@@ -45,7 +45,7 @@ const useAnimations = () => {
       }),
     ]).start();
   }, [fadeAnim, scaleAnim]);
-  
+
   return { fadeAnim, scaleAnim };
 };
 
@@ -67,14 +67,14 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
   const { fadeAnim, scaleAnim } = useAnimations();
   const [, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  
+
   // 初始化数据加载
   useEffect(() => {
     console.log('[CommentPage] 页面初始化，bookId:', bookId);
     if (bookId) {
       loadComments(bookId);
     }
-    
+
     // 页面卸载时重置状态
     return () => {
       reset();
@@ -91,13 +91,13 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
 
     return () => backHandler.remove();
   }, []);
-  
+
   // 返回按钮处理
   const handleBackPress = useCallback(() => {
     console.log('[CommentPage] 用户点击返回按钮');
     NavigationBridge.navigateBack('CommentPageComponent');
   }, []);
-  
+
   // 加载更多评论
   const handleLoadMore = useCallback(() => {
     loadMoreComments();
@@ -119,7 +119,7 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
     // 导航到发表评论页面
     NavigationBridge.navigateToWriteReview(bookId);
   }, [bookId]);
-  
+
   return (
     <Animated.View style={[
       styles.container,
@@ -129,8 +129,8 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
       },
     ]}>
       <TopBar onBackPress={handleBackPress} onSearch={handleSearch} />
-      
-      <CommentList 
+
+      <CommentList
         onEndReached={handleLoadMore}
         refreshControl={
           <RefreshControl
@@ -144,7 +144,7 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
         ListHeaderComponent={
           <View>
             <RatingSection onWriteReview={handleWriteReview} bookId={bookId} />
-            <CategorySection 
+            <CategorySection
               selectedCategory={selectedCategory}
               onCategoryChange={handleCategoryChange}
             />

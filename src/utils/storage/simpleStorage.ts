@@ -11,7 +11,7 @@ function createStorage(): StorageLike {
 	try {
 		// 优先使用社区维护的 AsyncStorage 包（RN 官方已弃用 RN.AsyncStorage）
 		// 动态 require 以兼容 Web/Node 环境
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 		const AS: any = require('@react-native-async-storage/async-storage');
 		const asyncStorage = AS?.default ?? AS;
 		if (asyncStorage && typeof asyncStorage.getItem === 'function') {
@@ -24,7 +24,7 @@ function createStorage(): StorageLike {
 	} catch {}
 
 	try {
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 		const RN: any = require('react-native');
 		const asyncStorage = RN?.AsyncStorage;
 		if (asyncStorage && typeof asyncStorage.getItem === 'function') {

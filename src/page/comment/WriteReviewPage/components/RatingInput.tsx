@@ -11,16 +11,16 @@ interface RatingInputProps {
 
 const RATING_LABELS = {
   1: '太差了',
-  2: '有点差', 
+  2: '有点差',
   3: '一般般',
   4: '优秀',
-  5: '很优秀'
+  5: '很优秀',
 };
 
-export const RatingInput: React.FC<RatingInputProps> = ({ 
-  rating, 
+export const RatingInput: React.FC<RatingInputProps> = ({
+  rating,
   onRatingChange,
-  starAnimations = []
+  starAnimations = [],
 }) => {
   const colors = useNovelColors();
   const styles = createWriteReviewPageStyles(colors);
@@ -39,9 +39,9 @@ export const RatingInput: React.FC<RatingInputProps> = ({
       isSelected && styles.starButtonSelected,
       animation && {
         transform: [{
-          scale: animation
-        }]
-      }
+          scale: animation,
+        }],
+      },
     ];
 
     return (
@@ -53,7 +53,7 @@ export const RatingInput: React.FC<RatingInputProps> = ({
       >
         <Text style={[
           styles.starText,
-          isSelected && styles.starTextSelected
+          isSelected && styles.starTextSelected,
         ]}>
           ★
         </Text>
@@ -66,7 +66,7 @@ export const RatingInput: React.FC<RatingInputProps> = ({
       <View style={styles.starContainer}>
         {[0, 1, 2, 3, 4].map(renderStar)}
       </View>
-      
+
       {rating > 0 && (
         <Text style={styles.ratingLabel}>
           {RATING_LABELS[rating as keyof typeof RATING_LABELS]}

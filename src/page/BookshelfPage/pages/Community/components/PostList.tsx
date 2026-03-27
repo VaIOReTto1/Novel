@@ -67,10 +67,10 @@ export const PostList: React.FC<PostListProps> = ({
           selectedCircle={selectedCircle}
           onCircleChange={onCircleChange}
         />
-        
+
         {/* 与TabBar的间距 */}
         <View style={styles.topDivider} />
-        
+
         {/* 最热评论标题 */}
         <View style={styles.hotCommentHeader}>
           <Text style={styles.hotCommentTitle}>最热评论</Text>
@@ -80,12 +80,12 @@ export const PostList: React.FC<PostListProps> = ({
   };
 
   const renderFooter = () => {
-    if (!hasMore) return null;
+    if (!hasMore) {return null;}
     return <LoadingIndicator />;
   };
 
   const renderEmpty = () => {
-    if (loading) return <LoadingIndicator />;
+    if (loading) {return <LoadingIndicator />;}
     return (
       <EmptyState
         title="暂无帖子"

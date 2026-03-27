@@ -41,8 +41,8 @@ const ViewedUsersPage: React.FC = () => {
         console.log('[ViewedUsersPage] 开始初始化数据');
         await loadInitialData();
         console.log('[ViewedUsersPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[ViewedUsersPage] 初始化失败:', error);
+      } catch (err) {
+        console.error('[ViewedUsersPage] 初始化失败:', err);
       }
     };
 

@@ -21,23 +21,23 @@ export const TopBar: React.FC<TopBarProps> = ({
     <View style={styles.topBar}>
       <View style={styles.topBarContent}>
         <Text style={styles.topBarTitle}>圈子</Text>
-        
+
         <View style={styles.topBarActions}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.topBarButton}
             onPress={onSearch}
           >
             <Text style={styles.topBarButtonText}>🔍</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={styles.topBarButton}
             onPress={onNotification}
           >
             <Text style={styles.topBarButtonText}>🔔</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={styles.topBarButton}
             onPress={onPublish}
           >

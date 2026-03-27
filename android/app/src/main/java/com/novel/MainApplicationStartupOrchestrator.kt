@@ -23,11 +23,11 @@ internal class MainApplicationStartupOrchestrator(
         launchNetworkInitialization: () -> Unit,
         launchSettingsInitialization: () -> Unit,
     ) {
-        if (plan.shouldInitializeNetwork) {
-            launchNetworkInitialization()
-        }
-        if (plan.shouldInitializeSettings) {
-            launchSettingsInitialization()
+        plan.tasks.forEach { task ->
+            when (task.id) {
+                StartupDeferredInitializationTaskId.NETWORK -> launchNetworkInitialization()
+                StartupDeferredInitializationTaskId.SETTINGS -> launchSettingsInitialization()
+            }
         }
     }
 

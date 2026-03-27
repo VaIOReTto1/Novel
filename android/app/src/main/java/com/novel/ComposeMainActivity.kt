@@ -110,5 +110,8 @@ class ComposeMainActivity : ComponentActivity() {
         RuntimeDebugScenarioStore.updateSearchPageSizeOverride(
             intent?.getStringExtra("debug_search_page_size")?.toIntOrNull(),
         )
+        RuntimeDebugScenarioStore.updateReaderAutoFlipDirection(
+            intent?.getStringExtra("debug_reader_auto_flip"),
+        )
     }
 }

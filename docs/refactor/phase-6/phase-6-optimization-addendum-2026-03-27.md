@@ -15,6 +15,7 @@
 - Reader
   - `ReaderRestoreHintCoordinator` 改为只自动关闭“恢复入口触发的提示”。
   - `ReaderPerformanceTraceCoordinator` 新增 `init / flip / settings_update` 动作级预算与状态输出。
+  - `ReaderPage` 已接入 debug-only 自动 flip scenario，避免后续继续依赖人工 swipe 取证。
 - Welfare / WebView
   - `WelfarePageContent` 中分散的副作用继续收口到 `WelfarePageBootstrapCoordinator` 和 `WelfareWebPerformanceCoordinator`。
   - `FCP / TTI / pageLoadComplete` 的 once-only 判定继续集中。
@@ -24,10 +25,12 @@
 - [StartupDeferredInitializationCoordinator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/StartupDeferredInitializationCoordinator.kt)
 - [ReaderRestoreHintCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderRestoreHintCoordinator.kt)
 - [ReaderPerformanceTraceCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderPerformanceTraceCoordinator.kt)
+- [ReaderDebugScenarioCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderDebugScenarioCoordinator.kt)
 - [WelfarePageContent.kt](/d:/program/Novel/android/feature-welfare/src/main/java/com/novel/page/welfare/WelfarePageContent.kt)
 
 ### Wave 1 验证
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-reader:testDebugUnitTest --tests com.novel.page.read.viewmodel.ReaderRestoreHintCoordinatorTest --tests com.novel.page.read.viewmodel.ReaderPerformanceTraceCoordinatorTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-reader:testDebugUnitTest --tests com.novel.page.read.viewmodel.ReaderDebugScenarioCoordinatorTest --tests com.novel.page.read.viewmodel.ReaderStartupCoordinatorTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-welfare:testDebugUnitTest --tests com.novel.page.welfare.viewmodel.WelfarePageBootstrapCoordinatorTest --tests com.novel.page.welfare.component.WelfareWebPerformanceCoordinatorTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :app:testDebugUnitTest --tests com.novel.ComposeMainActivityFirstFrameCoordinatorTest --tests com.novel.ReactNativePrewarmCoordinatorTest --tests com.novel.StartupDeferredInitializationCoordinatorTest --tests com.novel.MainApplicationStartupOrchestratorTest`
 
@@ -87,6 +90,8 @@
 ## 设备证据同步
 - `2026-03-27` 当天新增设备侧 addendum：
   - [device-evidence-addendum-2026-03-27.md](./device-evidence-addendum-2026-03-27.md)
+- `2026-03-28` 后续补齐缺口：
+  - [device-evidence-addendum-2026-03-28.md](./device-evidence-addendum-2026-03-28.md)
 - 该 addendum 已补齐：
   - Startup 关键路径样本
   - Search `INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY`
@@ -94,5 +99,4 @@
   - RN Host `COLD_OPEN / OPEN / REUSED`
   - Reader `init / settings_update`
 - 当前仍保留的设备侧缺口：
-  - Search `LOAD_MORE`
-  - Reader `flip`
+  - 无

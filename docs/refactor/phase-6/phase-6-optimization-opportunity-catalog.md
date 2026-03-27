@@ -9,14 +9,15 @@
 - 当前权威补充入口：
   - [phase-6-optimization-addendum-2026-03-27.md](./phase-6-optimization-addendum-2026-03-27.md)
   - [device-evidence-addendum-2026-03-27.md](./device-evidence-addendum-2026-03-27.md)
+  - [device-evidence-addendum-2026-03-28.md](./device-evidence-addendum-2026-03-28.md)
 
 ## 本轮结果总览
 | 方向 | 已被本轮实现关闭 | 已补证据但仍需二次深化 | 仍未进入实施的下一批 backlog |
 | --- | --- | --- | --- |
 | Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
-| Reader | `init / settings_update` 动作预算、恢复提示策略收口、动作级归档模板落地 | `flip` 设备样本仍缺 | 完整动作级压测矩阵 |
+| Reader | `init / settings_update / flip` 动作预算与真机样本补齐、恢复提示策略收口、动作级归档模板落地 | 动作级多次采样与压测矩阵仍可深化 | 完整动作级压测矩阵 |
 | Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
-| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY` 设备样本补齐、热点动作矩阵落地、`LOAD_MORE` debug scenario 落地 | `LOAD_MORE` 真机样本缺口仍在 | 热点 benchmark 与正式 budget diff |
+| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 真机样本补齐、热点动作矩阵落地 | 热点 benchmark 与正式 budget diff 仍待深化 | 热点 benchmark 与正式 budget diff |
 | RN Host / Bridge | `COLD_OPEN / OPEN / REUSED` 语义与主题同步样本补齐、返回缓存策略显式化 | root view 生命周期治理仍可继续沉淀 | 更系统的 host path 规范与批量调用收益复盘 |
 | 数据库 / 缓存 | 治理报告增强完成 | recommendation 已有，但收益证明不足 | 索引、`FTS4`、cleanup 对 IO / 内存 / 电量的定量复盘 |
 
@@ -39,6 +40,8 @@
 - `ReaderRestoreHintCoordinator` 已从固定时长退出，转为 restore-aware dismissal。
 - `2026-03-27` 已补到当天真机 `init` 与 `settings_update` 样本。
 - Reader 动作级归档模板已落到独立文档。
+- `flip` 的自动取证 scenario 已落地，后续无需继续依赖人工 swipe。
+- `2026-03-28` 已补到当天真机 `flip` 样本。
 
 ### Welfare / WebView
 - `WelfarePageBootstrapCoordinator` 与 `WelfareWebPerformanceCoordinator` 已继续收口分散副作用。
@@ -56,6 +59,7 @@
   的设备样本。
 - Search 热点动作矩阵已落到独立文档。
 - `LOAD_MORE` 的 debug-only `pageSize override` 场景已落地，后续无需再靠碰运气找多页 query。
+- `2026-03-28` 已补到当天真机 `LOAD_MORE` 样本。
 
 ### RN Host / Bridge
 - `ReactNativeHostPathTraceCoordinator` 的 `COLD_OPEN / OPEN / REUSED` 已从日志枚举推进到当天设备证据。
@@ -75,7 +79,8 @@
 
 ### Reader
 - 当前已经有 `init / settings_update` 的当天真机样本。
-- 但 `flip` 仍没有可信设备样本，说明 Reader 动作级证据还没完全闭环。
+- `flip` 也已补到当天真机样本。
+- 当前更适合继续深化的是“多次采样 / 压测矩阵”，而不是补第一条动作样本。
 
 ### Welfare / WebView
 - 首开与复开样本都已补齐。
@@ -83,8 +88,8 @@
 
 ### Search
 - 首开、分类切换、筛选应用都已有样本。
-- 但 `search-load-more-probe-2026-03-27.txt` 显示多组 query 均返回 `hasMore=false`，所以 `LOAD_MORE` 的缺口仍然客观存在。
-- 当前已经新增 `search-load-more-debug-scenario-2026-03-27.md`，因此剩下的缺口是“真机样本未补”，而不是“没有可控场景”。
+- `LOAD_MORE` 也已补到当天真机样本。
+- 当前更适合继续深化的是 benchmark / budget diff，而不是首条分页样本。
 
 ### RN Host / Bridge
 - 当前已经能在当天样本里看到：
@@ -104,7 +109,6 @@
 - 首帧后任务收益的长期复核与更细粒度扩展
 
 ### Reader
-- `flip` 的稳定设备样本
 - 动作级样本从模板走向稳定多次采样
 
 ### Welfare / WebView
@@ -112,7 +116,6 @@
 - 首开 / 复开 / 回退复用的专项 benchmark 化
 
 ### Search
-- `LOAD_MORE` 真机样本
 - 搜索结果页热点 benchmark
 - 正式 budget / diff 文档
 
@@ -132,6 +135,7 @@
   - `docs/refactor/evidence/search-hot-actions-logcat-2026-03-27.txt`
   - `docs/refactor/evidence/search-load-more-probe-2026-03-27.txt`
   - `docs/refactor/evidence/search-page-size-sweep-2026-03-27.txt`
+  - `docs/refactor/evidence/search-load-more-logcat-2026-03-28.txt`
   - `docs/refactor/phase-6/search-hot-action-matrix-2026-03-27.md`
   - `docs/refactor/phase-6/search-load-more-debug-scenario-2026-03-27.md`
 - Welfare / WebView
@@ -141,14 +145,15 @@
   - `docs/refactor/phase-6/rn-host-root-view-cache-policy-2026-03-27.md`
 - Reader
   - `docs/refactor/evidence/reader-performance-logcat-2026-03-27.txt`
+  - `docs/refactor/evidence/reader-flip-logcat-2026-03-28.txt`
   - `docs/refactor/phase-6/reader-action-evidence-template-2026-03-27.md`
+  - `docs/refactor/phase-6/reader-flip-debug-scenario-2026-03-27.md`
 
 ## 总结
 - 本轮已实现关闭的条目，不应继续留在“仍可继续优化的点”里。
 - 当前真正还在 backlog 里的，主要是：
-  - Search `LOAD_MORE`
-  - Reader `flip`
   - Startup 首帧继续收敛
+  - Search / Reader 更系统的 benchmark 与多次采样矩阵
   - Welfare / WebView 更深 benchmark
   - 数据库 / 缓存收益复盘
 - 这些项都应继续留在 `Phase 6` 的优化池，而不是误转成 `Phase 7` 的主线内容。

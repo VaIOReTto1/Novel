@@ -37,9 +37,10 @@ adb shell am start -S -n com.novel/.ComposeMainActivity `
   - 首屏 `hasMore=true`
   - 可以触发 `LOAD_MORE`
 
-## 当前限制
+## 当前状态更新
 - 这是 debug-only 的内部取证支架，不改变正式 route 或 bridge contract。
-- 当前设备掉线，尚未基于这条 scenario 补到新的 `LOAD_MORE` 真机样本。
+- 该 scenario 已在 `2026-03-28` 被实际用于补齐 `LOAD_MORE` 真机样本：
+  - `docs/refactor/phase-6/device-evidence-addendum-2026-03-28.md`
 
 ## 主要引用
 - `android/feature-search/src/main/java/com/novel/page/search/repository/SearchParams.kt`

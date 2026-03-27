@@ -1,0 +1,22 @@
+﻿## cold_open_profile_debug_route
+03-27 21:13:10.820 31379 31379 D ComposeMainActivity: trigger=prewarm_after_first_frame reactContextPath=COLD_OPEN
+03-27 21:13:10.820 31379 31379 D ComposeMainActivity: trigger=create_react_context_in_background reactContextPath=COLD_OPEN
+03-27 21:13:10.853 31379 31379 D MainApplication: component=Novel reactRootViewPath=COLD_OPEN reactContextPath=COLD_OPEN
+03-27 21:13:15.411 31379 31379 D MainApplication: React context ready, start application: Novel
+03-27 21:13:15.421 31379 31379 D ReactNativePage: start theme sync to RN for Novel
+03-27 21:13:15.426 31379 31379 D ReactNativePage: theme synced to RN: light for Novel
+03-27 21:13:15.433 31379 31379 D ReactNativePage: start theme sync to RN for Novel
+03-27 21:13:15.440 31379 31379 D ReactNativePage: theme synced to RN: light for Novel
+
+## open_and_reused_from_main_tabs
+03-27 21:13:21.396 31498 31498 D ComposeMainActivity: trigger=prewarm_after_first_frame reactContextPath=COLD_OPEN
+03-27 21:13:21.396 31498 31498 D ComposeMainActivity: trigger=create_react_context_in_background reactContextPath=COLD_OPEN
+03-27 21:13:27.863 31498 31498 D MainApplication: component=BookshelfPageComponent reactRootViewPath=OPEN reactContextPath=ALREADY_READY
+03-27 21:13:27.885 31498 31498 D ReactNativePage: start theme sync to RN for BookshelfPageComponent
+03-27 21:13:27.888 31498 31498 D ReactNativePage: theme synced to RN: light for BookshelfPageComponent
+03-27 21:13:38.076 31498 31498 D MainApplication: component=BookshelfPageComponent reactRootViewPath=REUSED reactContextPath=ALREADY_READY
+03-27 21:13:38.104 31498 31498 D ReactNativePage: start theme sync to RN for BookshelfPageComponent
+03-27 21:13:38.107 31498 31498 D ReactNativePage: theme synced to RN: light for BookshelfPageComponent
+03-27 21:13:43.188 31498 31498 D MainApplication: component=Novel reactRootViewPath=OPEN reactContextPath=ALREADY_READY
+03-27 21:13:43.234 31498 31498 D ReactNativePage: start theme sync to RN for Novel
+03-27 21:13:43.238 31498 31498 D ReactNativePage: theme synced to RN: light for Novel

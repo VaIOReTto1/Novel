@@ -1,0 +1,32 @@
+﻿03-27 21:11:54.531 30031 30031 D StartupPerformanceMonitor: ⚙️ 组件 ThemeManager 初始化耗时: 5ms
+03-27 21:11:54.555 30031 30031 D StartupPerformanceMonitor: ⚙️ 组件 SoLoader 初始化耗时: 23ms
+03-27 21:11:54.555 30031 30031 I StartupPerformanceMonitor: ✅ Application onCreate 完成，耗时: 29ms
+03-27 21:11:54.575 30031 30031 D StartupPerformanceMonitor: 🎬 首个Activity创建: 1774617114574
+03-27 21:11:54.879 30031 30031 D NavigationSetup: NavigationSetup recomposed
+03-27 21:11:55.011 30031 30031 D NavigationSetup: Attach NavController to NavViewModel
+03-27 21:11:55.529  1692  1763 I ActivityTaskManager: Displayed com.novel/.ComposeMainActivity: +1s751ms
+03-27 21:11:55.545 30031 30031 I StartupPerformanceMonitor: 🎨 首帧绘制完成，总启动时间: 1019ms
+03-27 21:11:55.546 30031 30031 D ComposeMainActivity: trigger=prewarm_after_first_frame reactContextPath=COLD_OPEN
+03-27 21:11:55.546 30031 30031 D ComposeMainActivity: trigger=create_react_context_in_background reactContextPath=COLD_OPEN
+03-27 21:11:55.546 30031 30748 D StartupPerformanceMonitor: ⚙️ 组件 RetrofitClient 初始化耗时: 0ms
+03-27 21:11:55.546 30031 30747 D StartupPerformanceMonitor: ⚙️ 组件 SettingsUtils 初始化耗时: 0ms
+03-27 21:11:55.612 30031 30031 I StartupPerformanceMonitor: 🎯 应用完全加载完成，总耗时: 1086ms
+03-27 21:12:00.614 30031 30747 I StartupPerformanceMonitor: 📊 开始生成启动性能报告...
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: ==================== 启动性能报告 ====================
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: 📊 总启动时间: 1086ms
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: 📱 Application初始化: 29ms
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: 🎬 首个Activity创建: 971ms
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: 🎨 首帧绘制: 971ms
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: 🎯 完全加载: 1086ms
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor: 📈 组件初始化详情:
+03-27 21:12:00.616 30031 30747 I StartupPerformanceMonitor:    SoLoader: 23ms
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    SettingsUtils: 0ms
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    RetrofitClient: 0ms
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    ThemeManager: 5ms
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor: 💾 内存使用:
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    堆内存: 67MB / 384MB
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    系统内存: 4065MB / 11504MB
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor: 💡 优化建议:
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    • 总启动时间(1086ms)良好
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor:    • 首帧渲染时间(971ms)较长，建议优化布局复杂度和减少主线程工作
+03-27 21:12:00.617 30031 30747 I StartupPerformanceMonitor: ====================================================

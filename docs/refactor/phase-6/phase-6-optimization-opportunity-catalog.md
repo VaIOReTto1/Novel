@@ -13,17 +13,22 @@
 ## 本轮结果总览
 | 方向 | 已被本轮实现关闭 | 已补证据但仍需二次深化 | 仍未进入实施的下一批 backlog |
 | --- | --- | --- | --- |
-| Startup | 首帧后 gate-driven prewarm、固定 delay 移除 | 首帧时间仍偏高，任务清单还不够制度化 | compiled-mode / 第二设备复验 |
-| Reader | `init / settings_update` 动作预算、恢复提示策略收口 | `flip` 设备样本仍缺 | 完整动作级压测矩阵 |
+| Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
+| Reader | `init / settings_update` 动作预算、恢复提示策略收口、动作级归档模板落地 | `flip` 设备样本仍缺 | 完整动作级压测矩阵 |
 | Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
-| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY` 设备样本补齐 | `LOAD_MORE` 样本缺口仍在 | 热点 benchmark 与正式 budget diff |
-| RN Host / Bridge | `COLD_OPEN / OPEN / REUSED` 语义与主题同步样本补齐 | root view 生命周期治理仍可继续沉淀 | 更系统的 host path 规范与批量调用收益复盘 |
+| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY` 设备样本补齐、热点动作矩阵落地 | `LOAD_MORE` 样本缺口仍在 | 热点 benchmark 与正式 budget diff |
+| RN Host / Bridge | `COLD_OPEN / OPEN / REUSED` 语义与主题同步样本补齐、返回缓存策略显式化 | root view 生命周期治理仍可继续沉淀 | 更系统的 host path 规范与批量调用收益复盘 |
 | 数据库 / 缓存 | 治理报告增强完成 | recommendation 已有，但收益证明不足 | 索引、`FTS4`、cleanup 对 IO / 内存 / 电量的定量复盘 |
 
 ## 一、已被本轮实现关闭
 ### Startup
 - `ComposeMainActivityFirstFrameCoordinator` 已从固定 `delay(100/200)` 收敛到显式 first-frame plan。
 - `ReactNativePrewarmCoordinator` 与 `StartupDeferredInitializationCoordinator` 的触发已收口为首帧后 gate-driven 路径。
+- `StartupDeferredInitializationCoordinator` 已从粗粒度布尔分支升级为正式任务清单，包含：
+  - task id
+  - priority
+  - trigger
+  - expected benefit
 - `2026-03-27` 真机样本已证明：
   - `prewarm_after_first_frame`
   - `create_react_context_in_background`
@@ -33,6 +38,7 @@
 - `ReaderPerformanceTraceCoordinator` 的 `init / settings_update / flip` 预算与 trace 格式已经落地。
 - `ReaderRestoreHintCoordinator` 已从固定时长退出，转为 restore-aware dismissal。
 - `2026-03-27` 已补到当天真机 `init` 与 `settings_update` 样本。
+- Reader 动作级归档模板已落到独立文档。
 
 ### Welfare / WebView
 - `WelfarePageBootstrapCoordinator` 与 `WelfareWebPerformanceCoordinator` 已继续收口分散副作用。
@@ -48,10 +54,12 @@
   - `CATEGORY_SWITCH`
   - `FILTER_APPLY`
   的设备样本。
+- Search 热点动作矩阵已落到独立文档。
 
 ### RN Host / Bridge
 - `ReactNativeHostPathTraceCoordinator` 的 `COLD_OPEN / OPEN / REUSED` 已从日志枚举推进到当天设备证据。
 - `ReactNativeThemeSyncCoordinator` 与 `ReactNativePage.kt` 的主题同步规则已有运行时样本支撑。
+- 宿主页返回时的 root view cache 语义已由显式 policy 守门，不再只靠 `destroyOnBack` 的隐含理解。
 
 ### 数据库 / 缓存
 - `DatabaseGovernanceReportGenerator` 已具备 summary / scan risk / FTS coverage warning。
@@ -62,7 +70,7 @@
 - `2026-03-27` 样本中：
   - `首帧绘制 = 1019ms`
   - `完全加载 = 1086ms`
-- 当前已经有样本，但优化建议仍提示“首帧渲染时间较长”，说明这条线还没到彻底关账。
+- 当前已经有样本且任务清单已 formalize，但优化建议仍提示“首帧渲染时间较长”，说明这条线还没到彻底关账。
 
 ### Reader
 - 当前已经有 `init / settings_update` 的当天真机样本。
@@ -82,7 +90,7 @@
   - `OPEN`
   - `REUSED`
   - `theme synced to RN: light`
-- 但 `ReactRootView` 缓存生命周期治理仍未沉淀成更正式的长期规范。
+- 返回时的缓存保留 / 清理语义已经显式化，但 `ReactRootView` 完整生命周期治理仍未沉淀成更正式的长期规范。
 
 ### 数据库 / 缓存
 - 当前 recommendation / warning 已经足以支持治理讨论。
@@ -91,11 +99,11 @@
 ## 三、仍未进入实施的下一批 backlog
 ### Startup
 - compiled-mode startup / baseline profile 的第二设备复验
-- 首帧后任务清单的优先级、收益复核与更正式治理表
+- 首帧后任务收益的长期复核与更细粒度扩展
 
 ### Reader
 - `flip` 的稳定设备样本
-- `settings_update` / `flip` / `init` 的完整动作级样本归档模板
+- 动作级样本从模板走向稳定多次采样
 
 ### Welfare / WebView
 - 更深层的 WebView cache / cookie / 预加载收益量化
@@ -117,15 +125,19 @@
 ## 证据更新
 - Startup
   - `docs/refactor/evidence/phase6-startup-logcat-2026-03-27.txt`
+  - `docs/refactor/phase-6/startup-deferred-task-catalog-2026-03-27.md`
 - Search
   - `docs/refactor/evidence/search-hot-actions-logcat-2026-03-27.txt`
   - `docs/refactor/evidence/search-load-more-probe-2026-03-27.txt`
+  - `docs/refactor/phase-6/search-hot-action-matrix-2026-03-27.md`
 - Welfare / WebView
   - `docs/refactor/evidence/welfare-webview-performance-logcat-2026-03-27.txt`
 - RN Host
   - `docs/refactor/evidence/rn-host-path-logcat-2026-03-27.txt`
+  - `docs/refactor/phase-6/rn-host-root-view-cache-policy-2026-03-27.md`
 - Reader
   - `docs/refactor/evidence/reader-performance-logcat-2026-03-27.txt`
+  - `docs/refactor/phase-6/reader-action-evidence-template-2026-03-27.md`
 
 ## 总结
 - 本轮已实现关闭的条目，不应继续留在“仍可继续优化的点”里。

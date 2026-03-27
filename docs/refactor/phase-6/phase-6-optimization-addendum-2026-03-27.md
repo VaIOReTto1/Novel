@@ -11,6 +11,7 @@
 - 启动
   - `ComposeMainActivityFirstFrameCoordinator` 从固定 `delay(100/200)` 过渡到显式 first-frame plan。
   - `ReactNativePrewarmCoordinator` 与 `StartupDeferredInitializationCoordinator` 继续保留，但触发策略改为 gate-driven。
+  - `StartupDeferredInitializationCoordinator` 已升级为正式任务清单，而不再只是 `network/settings` 两个布尔分支。
 - Reader
   - `ReaderRestoreHintCoordinator` 改为只自动关闭“恢复入口触发的提示”。
   - `ReaderPerformanceTraceCoordinator` 新增 `init / flip / settings_update` 动作级预算与状态输出。
@@ -20,6 +21,7 @@
 
 ### Wave 1 代码锚点
 - [ComposeMainActivityFirstFrameCoordinator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/ComposeMainActivityFirstFrameCoordinator.kt)
+- [StartupDeferredInitializationCoordinator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/StartupDeferredInitializationCoordinator.kt)
 - [ReaderRestoreHintCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderRestoreHintCoordinator.kt)
 - [ReaderPerformanceTraceCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderPerformanceTraceCoordinator.kt)
 - [WelfarePageContent.kt](/d:/program/Novel/android/feature-welfare/src/main/java/com/novel/page/welfare/WelfarePageContent.kt)
@@ -27,7 +29,7 @@
 ### Wave 1 验证
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-reader:testDebugUnitTest --tests com.novel.page.read.viewmodel.ReaderRestoreHintCoordinatorTest --tests com.novel.page.read.viewmodel.ReaderPerformanceTraceCoordinatorTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-welfare:testDebugUnitTest --tests com.novel.page.welfare.viewmodel.WelfarePageBootstrapCoordinatorTest --tests com.novel.page.welfare.component.WelfareWebPerformanceCoordinatorTest`
-- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :app:testDebugUnitTest --tests com.novel.ComposeMainActivityFirstFrameCoordinatorTest --tests com.novel.ReactNativePrewarmCoordinatorTest --tests com.novel.StartupDeferredInitializationCoordinatorTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :app:testDebugUnitTest --tests com.novel.ComposeMainActivityFirstFrameCoordinatorTest --tests com.novel.ReactNativePrewarmCoordinatorTest --tests com.novel.StartupDeferredInitializationCoordinatorTest --tests com.novel.MainApplicationStartupOrchestratorTest`
 
 ## Wave 2：Search + RN Host/Bridge
 - Search
@@ -38,16 +40,20 @@
   - `ReactNativeHostPathTraceCoordinator` 现在区分 `COLD_OPEN / OPEN / REUSED`。
   - `ReactNativeThemeSyncCoordinator` 由布尔返回改为显式 action model。
   - `ReactNativePage.kt` 补上主题同步调用对齐与宿主页返回路径的编译修复。
+  - 宿主页返回时的 root view cache 语义已通过显式 policy 协调器收口。
 
 ### Wave 2 代码锚点
 - [SearchRetryPolicyCoordinator.kt](/d:/program/Novel/android/feature-search/src/main/java/com/novel/page/search/viewmodel/SearchRetryPolicyCoordinator.kt)
 - [SearchResultViewModel.kt](/d:/program/Novel/android/feature-search/src/main/java/com/novel/page/search/viewmodel/SearchResultViewModel.kt)
 - [ReactNativeHostPathTraceCoordinator.kt](/d:/program/Novel/android/feature-rn-host/src/main/java/com/novel/rn/ReactNativeHostPathTraceCoordinator.kt)
 - [ReactNativeThemeSyncCoordinator.kt](/d:/program/Novel/android/feature-rn-host/src/main/java/com/novel/rn/ReactNativeThemeSyncCoordinator.kt)
+- [ReactRootViewBackNavigationPolicyCoordinator.kt](/d:/program/Novel/android/feature-rn-host/src/main/java/com/novel/rn/ReactRootViewBackNavigationPolicyCoordinator.kt)
 - [ReactNativePage.kt](/d:/program/Novel/android/app/src/main/java/com/novel/rn/ReactNativePage.kt)
 
 ### Wave 2 验证
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-search:testDebugUnitTest --tests com.novel.page.search.viewmodel.SearchRetryPolicyCoordinatorTest --tests com.novel.page.search.viewmodel.SearchPerformanceTraceCoordinatorTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :core-bridge:testDebugUnitTest --tests com.novel.rn.bridge.facade.NavigationBridgeFacadeTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-rn-host:testDebugUnitTest --tests com.novel.rn.bridge.BridgeViewModelTest --tests com.novel.rn.ReactRootViewBackNavigationPolicyCoordinatorTest`
 - `ReactNativeThemeSyncCoordinatorTest` 与 `ReactNativeHostPathTraceCoordinatorTest` 的逻辑测试已落地；`feature-rn-host` Gradle 单测在本机仍存在模块级生成源码/构建产物噪音，需要后续继续清理验证环境。
 
 ## Wave 3：数据库与缓存治理

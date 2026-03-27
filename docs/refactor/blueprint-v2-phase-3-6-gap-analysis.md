@@ -19,7 +19,7 @@
 | `Phase 3` | `部分兑现` | `无新增关闭项，仅补齐当前执行动作映射` | `core-network / storage / observability governance` |
 | `Phase 4` | `主要兑现，carried debt 已治理化` | `schema / compatibility 独立治理`、`生产 mock 退出治理规则` | `Reader 深拆`、`RN heavy pages mock 退场` |
 | `Phase 5` | `主要兑现，治理工件已补齐` | `module owner matrix`、`API surface checklist`、`build-time baseline / diff 入口` | `core-network / core-bridge 深化自动化`、`Phase 7 build governance` |
-| `Phase 6` | `已兑现主目标，仍有持续优化 backlog` | `Wave 1-3 优化` 与 `2026-03-27` 设备证据补齐 | `Search LOAD_MORE`、`Reader flip`、数据库/缓存收益复盘 |
+| `Phase 6` | `已兑现主目标，仍有持续优化 backlog` | `Wave 1-3 优化`、`2026-03-27` 设备证据补齐、Startup 任务清单治理、RN Host 返回缓存策略显式化 | `Search LOAD_MORE`、`Reader flip`、数据库/缓存收益复盘 |
 
 ## Phase 3 基础设施收口
 ### 原始蓝图目标
@@ -152,6 +152,9 @@
 - `Wave 1-3` 的代码优化已落地，并同步到 `phase-6-optimization-addendum-2026-03-27.md`。
 - `2026-03-27` 新增设备侧证据总入口：
   - `docs/refactor/phase-6/device-evidence-addendum-2026-03-27.md`
+- `2026-03-27` 同时新增两份治理落点：
+  - `docs/refactor/phase-6/startup-deferred-task-catalog-2026-03-27.md`
+  - `docs/refactor/phase-6/rn-host-root-view-cache-policy-2026-03-27.md`
 - 当天设备样本已经覆盖：
   - Startup
   - Search `INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY`
@@ -165,13 +168,15 @@
 - `Wave 1-3` 的首轮优化已经完成。
 - 本轮 device evidence 已把关键路径从“仅文档/单测可见”推进到“有当天设备样本”。
 - 数据库 / 缓存治理入口已从静态盘点升级为 summary + recommendation / warning。
+- Startup 首帧后任务已经从布尔开关升级为正式任务清单。
+- RN Host 返回时的 root view cache 语义已经从隐含规则升级为显式 policy。
 
 ### 仍未兑现项
 | 条目 | 当前执行动作 | 当前状态 |
 | --- | --- | --- |
 | Search `LOAD_MORE` 设备样本 | 当天对 `的 / 天 / 王 / 都市` 真实 query 探针均返回 `hasMore=false`，保留待补 | `carried debt` |
 | Reader `flip` 直接设备样本 | 已尝试 swipe，但未抓到可信 trace，继续保留 | `carried debt` |
-| Startup 首帧时间进一步收敛 | 监控仍给出“首帧渲染时间较长”建议 | `carried debt` |
+| Startup 首帧时间进一步收敛 | 任务清单已 formalize，但监控仍给出“首帧渲染时间较长”建议 | `carried debt` |
 | Welfare / WebView 更深层 cache / cookie / benchmark 复盘 | 已有首开/复开样本，尚未形成专项 benchmark | `carried debt` |
 | 数据库索引收益、`FTS4` 最优性、cleanup 对 IO / 内存 / 电量收益复盘 | 当前仍停在治理报告增强，不是最终收益证明 | `carried debt` |
 
@@ -184,10 +189,14 @@
 - `Wave 1-3` 首轮优化收敛
 - Startup / Search / Welfare-WebView / RN Host / Reader 的设备侧样本补齐
 - `COLD_OPEN / OPEN / REUSED` 的宿主页语义从单测/日志设计推进为当天设备证据
+- Startup 首帧后任务清单正式化
+- RN Host 返回缓存策略正式化
 
 ### 本轮关闭后的残余 debt
 - `Search LOAD_MORE` 与 `Reader flip` 仍需更稳定的设备路径或专用探针。
 - Welfare / WebView 仍缺专项 benchmark。
+- Startup 虽已有正式任务清单，但仍需要继续压低首帧时间。
+- RN Host 虽已有返回缓存 policy，但更完整的 root view 生命周期治理仍待继续沉淀。
 - 数据库 / 缓存仍缺真实收益复盘。
 - 这些项都应继续留在 `Phase 6` backlog，不应误塞给 `Phase 7`。
 

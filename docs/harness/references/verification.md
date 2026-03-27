@@ -18,4 +18,5 @@
 - If the current task changes only harness docs/scripts, at minimum run:
   - `npm run harness:refresh`
   - `npm run harness:check`
+  - `git diff --exit-code -- docs/harness/generated/workspace-snapshot.md`
   - targeted harness Jest coverage

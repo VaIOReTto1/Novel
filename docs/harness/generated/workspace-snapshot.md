@@ -1,20 +1,20 @@
 <!-- generated, do not edit by hand -->
-<!-- source-head: 813536c609d3969c3d03630c2241e9f216909a78 -->
+<!-- source-head: 81ec19bc0d286e15da81bd9d2c994e25837ec18f -->
 # Workspace Snapshot
 
 ## Git State
 - Branch: `main`
-- Head: `813536c`
+- Head: `81ec19b`
 
 ## Recent Commits
-- 813536c 迁移NovelKeyChain到core-storage
-- 03b57b6 抽离RN模块注册表
-- b6007c7 引入宿主导航与缓存网关
-- 06cd6fd 抽离应用启动生命周期上报器
-- 96f6ac5 抽离应用启动编排器
-- 004d43e 抽离ReactRootView缓存注册表
-- f0be13b 同步WaveD宿主根收口文档
-- e6aad3d 压薄ComposeMainActivity宿主入口
+- 81ec19b Merge pull request #5 from VaIOReTto1/codex-wave2-search-rn-host
+- 3883383 补齐福利页多次采样矩阵
+- 37d8f0b 继续收敛首页首帧延后UI负担
+- 4658202 补齐Phase6量化矩阵与编译阻塞留痕
+- 8af7ee5 补齐搜索与阅读器真机取证缺口
+- 9f6c025 补齐搜索分页调试取证支架
+- 738d432 同步Phase6剩余优化治理入口
+- 44f5184 显式化RN宿主页缓存返回策略
 
 ## Android Modules
 - :app
@@ -89,7 +89,7 @@
 
 ## Refactor Summary
 - Current phase: Phase 5
-- Phase status: in_progress
-- Latest closeout: 2026-03-21
-- Stage summary: Stage 3 = Phase 5-6 = in_progress（2026-03-24 reopen 持续推进；2026-03-21 closeout 作为历史 checkpoint 保留）
+- Phase status: validated
+- Latest closeout: see-control-panel
+- Stage summary: Stage 3 = validated
 - Effective date: see-stage-summary

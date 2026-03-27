@@ -41,6 +41,7 @@ fun ReactNativePage(
         hostGatewayEntryPoint.reactRootViewRegistryGateway()
     }
     val themeSyncCoordinator = remember { ReactNativeThemeSyncCoordinator() }
+    val backNavigationPolicyCoordinator = remember { ReactRootViewBackNavigationPolicyCoordinator() }
 
     val reactInstanceManager = remember {
         reactContextWarmupGateway.reactInstanceManagerOrNull()
@@ -126,7 +127,12 @@ fun ReactNativePage(
             syncThemeToRN(componentName, settingsViewModel, themeSyncCoordinator)
         },
         onNavigateBack = {
-            bridgeViewModel?.sendIntent(BridgeIntent.NavigateBack(componentName))
+            bridgeViewModel?.sendIntent(
+                backNavigationPolicyCoordinator.resolveNavigateBackIntent(
+                    componentName = componentName,
+                    destroyOnBack = destroyOnBack,
+                ),
+            )
                 ?: TimberLogger.w(
                     tag,
                     "BridgeViewModel unavailable, skip navigate back for $componentName",

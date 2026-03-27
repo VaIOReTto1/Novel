@@ -17,11 +17,24 @@ import com.novel.core.mvi.MviEffect
  */
 
 // ==================== Intent ====================
+enum class BridgeComponentCachePolicy {
+    CLEAR_COMPONENT_CACHE,
+    RETAIN_COMPONENT_CACHE,
+}
+
 sealed class BridgeIntent : MviIntent {
     // 导航相关
     object NavigateToLogin : BridgeIntent()
     object NavigateToSettings : BridgeIntent()
-    data class NavigateBack(val componentName: String? = null) : BridgeIntent()
+    data class NavigateBack(
+        val componentName: String? = null,
+        val cachePolicy: BridgeComponentCachePolicy =
+            if (componentName.isNullOrEmpty()) {
+                BridgeComponentCachePolicy.RETAIN_COMPONENT_CACHE
+            } else {
+                BridgeComponentCachePolicy.CLEAR_COMPONENT_CACHE
+            },
+    ) : BridgeIntent()
     
     // 组件缓存管理
     data class ClearComponentCache(val componentName: String) : BridgeIntent()

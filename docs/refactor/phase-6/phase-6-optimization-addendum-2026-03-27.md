@@ -36,6 +36,7 @@
   - `SearchRetryPolicyCoordinator` 现在按触发源区分 `INITIAL_ENTRY / FILTER_APPLY / USER_RETRY / LOAD_MORE`。
   - 非 `LOAD_MORE` 重试会转换为 `USER_RETRY`，同时保留失败 trace 的原始 trigger 语义。
   - `SearchPerformanceTraceCoordinator` 输出的 metadata 顺序被固定，便于日志样本对比。
+  - `SearchResultViewModel` / `SearchQueryRepository` / `SearchResultCacheStore` 已支持 debug-only `pageSize override`，用于在当前数据集下稳定制造 `LOAD_MORE` 取证场景。
 - RN Host / Bridge
   - `ReactNativeHostPathTraceCoordinator` 现在区分 `COLD_OPEN / OPEN / REUSED`。
   - `ReactNativeThemeSyncCoordinator` 由布尔返回改为显式 action model。
@@ -45,6 +46,7 @@
 ### Wave 2 代码锚点
 - [SearchRetryPolicyCoordinator.kt](/d:/program/Novel/android/feature-search/src/main/java/com/novel/page/search/viewmodel/SearchRetryPolicyCoordinator.kt)
 - [SearchResultViewModel.kt](/d:/program/Novel/android/feature-search/src/main/java/com/novel/page/search/viewmodel/SearchResultViewModel.kt)
+- [SearchParams.kt](/d:/program/Novel/android/feature-search/src/main/java/com/novel/page/search/repository/SearchParams.kt)
 - [ReactNativeHostPathTraceCoordinator.kt](/d:/program/Novel/android/feature-rn-host/src/main/java/com/novel/rn/ReactNativeHostPathTraceCoordinator.kt)
 - [ReactNativeThemeSyncCoordinator.kt](/d:/program/Novel/android/feature-rn-host/src/main/java/com/novel/rn/ReactNativeThemeSyncCoordinator.kt)
 - [ReactRootViewBackNavigationPolicyCoordinator.kt](/d:/program/Novel/android/feature-rn-host/src/main/java/com/novel/rn/ReactRootViewBackNavigationPolicyCoordinator.kt)
@@ -52,6 +54,8 @@
 
 ### Wave 2 验证
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-search:testDebugUnitTest --tests com.novel.page.search.viewmodel.SearchRetryPolicyCoordinatorTest --tests com.novel.page.search.viewmodel.SearchPerformanceTraceCoordinatorTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-search:testDebugUnitTest --tests com.novel.page.search.viewmodel.SearchResultViewModelTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :app:testDebugUnitTest --tests com.novel.page.search.repository.SearchResultCacheStoreTest --tests com.novel.page.search.repository.SearchQueryRepositoryTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :core-bridge:testDebugUnitTest --tests com.novel.rn.bridge.facade.NavigationBridgeFacadeTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-rn-host:testDebugUnitTest --tests com.novel.rn.bridge.BridgeViewModelTest --tests com.novel.rn.ReactRootViewBackNavigationPolicyCoordinatorTest`
 - `ReactNativeThemeSyncCoordinatorTest` 与 `ReactNativeHostPathTraceCoordinatorTest` 的逻辑测试已落地；`feature-rn-host` Gradle 单测在本机仍存在模块级生成源码/构建产物噪音，需要后续继续清理验证环境。

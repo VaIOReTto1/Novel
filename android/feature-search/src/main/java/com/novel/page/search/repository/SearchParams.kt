@@ -8,6 +8,7 @@ import com.novel.page.search.viewmodel.SearchTriggerSource
 data class SearchParams(
     val query: String,
     val page: Int,
+    val pageSize: Int = 20,
     val categoryId: Int?,
     val filters: FilterState,
     val isLoadMore: Boolean,

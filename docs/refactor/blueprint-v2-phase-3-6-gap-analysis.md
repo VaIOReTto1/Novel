@@ -174,7 +174,7 @@
 ### 仍未兑现项
 | 条目 | 当前执行动作 | 当前状态 |
 | --- | --- | --- |
-| Search `LOAD_MORE` 设备样本 | 当天对 `的 / 天 / 王 / 都市` 真实 query 探针均返回 `hasMore=false`，保留待补 | `carried debt` |
+| Search `LOAD_MORE` 真机样本 | 当天对 `的 / 天 / 王 / 都市` 真实 query 探针均返回 `hasMore=false`；现已补上 debug-only `pageSize override` 场景，待设备恢复后补真机样本 | `carried debt` |
 | Reader `flip` 直接设备样本 | 已尝试 swipe，但未抓到可信 trace，继续保留 | `carried debt` |
 | Startup 首帧时间进一步收敛 | 任务清单已 formalize，但监控仍给出“首帧渲染时间较长”建议 | `carried debt` |
 | Welfare / WebView 更深层 cache / cookie / benchmark 复盘 | 已有首开/复开样本，尚未形成专项 benchmark | `carried debt` |

@@ -94,7 +94,22 @@ class SearchResultCacheStoreTest {
         assertThat(store.getCachedSearchResult(params)).isNull()
     }
 
-    private fun searchParams(query: String = "keyword", page: Int): SearchParams {
+    @Test
+    fun cacheKey_distinguishesDifferentPageSizes() {
+        val store = SearchResultCacheStore()
+        val defaultParams = searchParams(page = 1, pageSize = 20)
+        val debugParams = searchParams(page = 1, pageSize = 5)
+
+        store.cacheSearchResult(defaultParams, listOf(book(1, "default")), totalResults = 21, hasMore = true)
+        store.cacheSearchResult(debugParams, listOf(book(2, "debug")), totalResults = 21, hasMore = true)
+
+        assertThat(store.getCachedSearchResult(defaultParams)?.result?.list?.first()?.bookName)
+            .isEqualTo("default")
+        assertThat(store.getCachedSearchResult(debugParams)?.result?.list?.first()?.bookName)
+            .isEqualTo("debug")
+    }
+
+    private fun searchParams(query: String = "keyword", page: Int, pageSize: Int = 20): SearchParams {
         return SearchParams(
             query = query,
             page = page,
@@ -106,6 +121,7 @@ class SearchResultCacheStoreTest {
                 sortBy = SortBy.NULL,
             ),
             isLoadMore = false,
+            pageSize = pageSize,
         )
     }
 

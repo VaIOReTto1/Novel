@@ -16,7 +16,7 @@
 | Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
 | Reader | `init / settings_update` 动作预算、恢复提示策略收口、动作级归档模板落地 | `flip` 设备样本仍缺 | 完整动作级压测矩阵 |
 | Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
-| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY` 设备样本补齐、热点动作矩阵落地 | `LOAD_MORE` 样本缺口仍在 | 热点 benchmark 与正式 budget diff |
+| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY` 设备样本补齐、热点动作矩阵落地、`LOAD_MORE` debug scenario 落地 | `LOAD_MORE` 真机样本缺口仍在 | 热点 benchmark 与正式 budget diff |
 | RN Host / Bridge | `COLD_OPEN / OPEN / REUSED` 语义与主题同步样本补齐、返回缓存策略显式化 | root view 生命周期治理仍可继续沉淀 | 更系统的 host path 规范与批量调用收益复盘 |
 | 数据库 / 缓存 | 治理报告增强完成 | recommendation 已有，但收益证明不足 | 索引、`FTS4`、cleanup 对 IO / 内存 / 电量的定量复盘 |
 
@@ -55,6 +55,7 @@
   - `FILTER_APPLY`
   的设备样本。
 - Search 热点动作矩阵已落到独立文档。
+- `LOAD_MORE` 的 debug-only `pageSize override` 场景已落地，后续无需再靠碰运气找多页 query。
 
 ### RN Host / Bridge
 - `ReactNativeHostPathTraceCoordinator` 的 `COLD_OPEN / OPEN / REUSED` 已从日志枚举推进到当天设备证据。
@@ -83,6 +84,7 @@
 ### Search
 - 首开、分类切换、筛选应用都已有样本。
 - 但 `search-load-more-probe-2026-03-27.txt` 显示多组 query 均返回 `hasMore=false`，所以 `LOAD_MORE` 的缺口仍然客观存在。
+- 当前已经新增 `search-load-more-debug-scenario-2026-03-27.md`，因此剩下的缺口是“真机样本未补”，而不是“没有可控场景”。
 
 ### RN Host / Bridge
 - 当前已经能在当天样本里看到：
@@ -110,7 +112,7 @@
 - 首开 / 复开 / 回退复用的专项 benchmark 化
 
 ### Search
-- `LOAD_MORE` 设备样本
+- `LOAD_MORE` 真机样本
 - 搜索结果页热点 benchmark
 - 正式 budget / diff 文档
 
@@ -129,7 +131,9 @@
 - Search
   - `docs/refactor/evidence/search-hot-actions-logcat-2026-03-27.txt`
   - `docs/refactor/evidence/search-load-more-probe-2026-03-27.txt`
+  - `docs/refactor/evidence/search-page-size-sweep-2026-03-27.txt`
   - `docs/refactor/phase-6/search-hot-action-matrix-2026-03-27.md`
+  - `docs/refactor/phase-6/search-load-more-debug-scenario-2026-03-27.md`
 - Welfare / WebView
   - `docs/refactor/evidence/welfare-webview-performance-logcat-2026-03-27.txt`
 - RN Host

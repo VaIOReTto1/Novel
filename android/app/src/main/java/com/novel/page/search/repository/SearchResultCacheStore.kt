@@ -40,7 +40,7 @@ class SearchResultCacheStore(
             params = params,
             result = PageRespDtoBookInfoRespDto(
                 pageNum = params.page.toLong(),
-                pageSize = 20L,
+                pageSize = params.pageSize.toLong(),
                 total = totalResults.toLong(),
                 list = books.toImmutableList(),
                 pages = if (hasMore) (params.page + 1).toLong() else params.page.toLong(),
@@ -69,7 +69,7 @@ class SearchResultCacheStore(
     }
 
     private fun generateCacheKey(params: SearchParams): String {
-        return "${params.query}-${params.categoryId}-${params.filters.hashCode()}-${params.page}"
+        return "${params.query}-${params.categoryId}-${params.filters.hashCode()}-${params.page}-${params.pageSize}"
     }
 
     private fun isCacheValid(cached: CachedSearchResult): Boolean {

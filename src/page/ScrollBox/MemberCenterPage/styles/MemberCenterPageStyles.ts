@@ -127,6 +127,9 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     elevation: 5,
     zIndex: 20,
   },
+  menuOverlay: {
+    flex: 1,
+  },
   menuItem: {
     paddingHorizontal: wp(16),
     paddingVertical: wp(12),
@@ -204,6 +207,13 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cardBottomIconText: {
+    fontSize: fp(20),
+    color: colors.novelBackground,
+  },
+  overflowVisible: {
+    overflow: 'visible',
   },
 
   // 卡片指示器 - 动态主题色

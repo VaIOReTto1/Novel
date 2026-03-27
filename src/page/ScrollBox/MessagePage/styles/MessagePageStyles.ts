@@ -51,6 +51,9 @@ export const createMessagePageStyles = (colors: NovelColors) => StyleSheet.creat
     minWidth: wp(32),
     minHeight: wp(32),
   },
+  markAllIcon: {
+    fontSize: 20,
+  },
 
   // 主消息列表样式
   mainMessagesSection: {
@@ -134,6 +137,9 @@ export const createMessagePageStyles = (colors: NovelColors) => StyleSheet.creat
     borderTopColor: colors.novelDivider,
     borderBottomWidth: 0.5,
     borderBottomColor: colors.novelDivider,
+  },
+  tabsSectionContainer: {
+    backgroundColor: 'transparent',
   },
   tabsScroll: {
     flexDirection: 'row',

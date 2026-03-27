@@ -83,5 +83,12 @@ export const createPrivacyPolicyPageStyles = (colors: NovelColors) => {
       color: colors.novelTextGray,
       lineHeight: fp(20),
     },
+    descriptionSectionTitle: {
+      marginTop: 16,
+      fontWeight: '600',
+    },
+    descriptionClosingText: {
+      marginTop: 24,
+    },
   });
 };

@@ -3,7 +3,6 @@ import { View, Text, ScrollView } from 'react-native';
 import { BookItem } from './BookItem';
 import { BookshelfContentProps } from '../../../types';
 import { BookItem as BookItemType } from '../../../types';
-import { wp } from '../../../../../utils/theme/dimensions';
 
 export const HistoryContent: React.FC<BookshelfContentProps> = React.memo(({
   styles,
@@ -103,11 +102,11 @@ export const HistoryContent: React.FC<BookshelfContentProps> = React.memo(({
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.gridContainer}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={styles.gridColumns}>
           {/* 左列 */}
-          <View style={{ flex: 1, marginRight: wp(4) }}>
+          <View style={styles.gridColumnLeft}>
             {leftColumnBooks.map((book: BookItemType, index: number) => (
-              <View key={`left-${book.id}`} style={{ marginBottom: wp(12) }}>
+              <View key={`left-${book.id}`} style={styles.gridColumnItem}>
                 <BookItem
                   item={book}
                   index={index * 3}
@@ -123,9 +122,9 @@ export const HistoryContent: React.FC<BookshelfContentProps> = React.memo(({
           </View>
 
           {/* 中列 */}
-          <View style={{ flex: 1, marginHorizontal: wp(2) }}>
+          <View style={styles.gridColumnMiddle}>
             {middleColumnBooks.map((book: BookItemType, index: number) => (
-              <View key={`middle-${book.id}`} style={{ marginBottom: wp(12) }}>
+              <View key={`middle-${book.id}`} style={styles.gridColumnItem}>
                 <BookItem
                   item={book}
                   index={index * 3 + 1}
@@ -141,9 +140,9 @@ export const HistoryContent: React.FC<BookshelfContentProps> = React.memo(({
           </View>
 
           {/* 右列 */}
-          <View style={{ flex: 1, marginLeft: wp(4) }}>
+          <View style={styles.gridColumnRight}>
             {rightColumnBooks.map((book: BookItemType, index: number) => (
-              <View key={`right-${book.id}`} style={{ marginBottom: wp(12) }}>
+              <View key={`right-${book.id}`} style={styles.gridColumnItem}>
                 <BookItem
                   item={book}
                   index={index * 3 + 2}

@@ -302,6 +302,10 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
     color: colors.novelText,
     lineHeight: fp(20),
   },
+  commentContentMeasurement: {
+    position: 'absolute',
+    opacity: 0,
+  },
 
   commentContentCollapsed: {
     // 样式在numberOfLines中处理
@@ -400,6 +404,10 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
 
   // 星级评分样式
   starRating: {
+    flexDirection: 'row',
+    gap: wp(2),
+  },
+  heartRating: {
     flexDirection: 'row',
     gap: wp(2),
   },

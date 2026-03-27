@@ -77,7 +77,7 @@ export const WatchlistPage: React.FC = () => {
         />
       )}
 
-      <View style={{ flex: 1 }}>
+      <View style={styles.content}>
         {watchlistItems.length === 0 ? (
           <EmptyState onFindDramas={handleFindDramas} />
         ) : (

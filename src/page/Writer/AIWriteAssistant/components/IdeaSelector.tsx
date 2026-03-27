@@ -36,10 +36,10 @@ export const IdeaSelector: React.FC<Props> = ({ onClose, onSelect, selected }) =
                         return (
                             <TouchableOpacity
                                 key={opt.key}
-                                style={[styles.ideaGridItem, active && { backgroundColor: colors.novelMain + '20' }]}
+                                style={[styles.ideaGridItem, active && styles.ideaGridItemActive]}
                                 onPress={() => onSelect(opt.key)}
                             >
-                                <Text style={[styles.ideaGridText, active && { color: colors.novelMain, fontWeight: '800' }]}>{opt.label}</Text>
+                                <Text style={[styles.ideaGridText, active && styles.ideaGridTextActive]}>{opt.label}</Text>
                             </TouchableOpacity>
                         );
                     })}

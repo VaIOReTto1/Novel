@@ -43,7 +43,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
   if (viewType === 'list') {
     return (
       <TouchableOpacity
-        style={[styles.listItem, isEditing && { opacity: 0.8 }]}
+        style={[styles.listItem, isEditing && styles.editingItem]}
         onPress={handlePress}
         activeOpacity={0.7}
       >
@@ -119,7 +119,7 @@ export const BookItem: React.FC<BookItemProps> = React.memo(({
   // 网格视图
   return (
     <TouchableOpacity
-      style={[styles.gridItem, isEditing && { opacity: 0.8 }]}
+      style={[styles.gridItem, isEditing && styles.editingItem]}
       onPress={handlePress}
       activeOpacity={0.7}
     >

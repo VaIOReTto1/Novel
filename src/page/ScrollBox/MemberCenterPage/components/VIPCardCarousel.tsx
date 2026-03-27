@@ -36,6 +36,9 @@ const CARD_SPACING = wp(0);
 const CARD_TOTAL = CARD_WIDTH + CARD_SPACING;
 const SIDE_CARD_SCALE = 0.95;   // 侧卡更小，突出中心
 const CLONE = 2;                // 每侧克隆 2 张哨兵
+const CAROUSEL_CONTENT_PADDING = {
+  paddingHorizontal: (screenWidth - CARD_WIDTH) / 2 - CARD_SPACING / 2,
+};
 
 interface VIPCardCarouselProps {
   styles: any;
@@ -104,7 +107,7 @@ const VIPCardItem = React.memo(({
             <Text style={styles.cardSubtitle}>{card.subtitle}</Text>
           </View>
           <View style={styles.cardBottomIcon}>
-            <Text style={{ fontSize: 20, color: 'white' }}>👑</Text>
+            <Text style={styles.cardBottomIconText}>👑</Text>
           </View>
         </LinearGradient>
     </Animated.View>
@@ -222,11 +225,8 @@ export const VIPCardCarousel: React.FC<VIPCardCarouselProps> = React.memo(({ sty
         bounces={false}
         getItemLayout={getItemLayout}
         initialScrollIndex={currentIndex + CLONE}
-        style={{ overflow: 'visible' }}
-        contentContainerStyle={{
-          paddingHorizontal: (screenWidth - CARD_WIDTH) / 2 - CARD_SPACING / 2,
-          overflow: 'visible',
-        }}
+        style={styles.overflowVisible}
+        contentContainerStyle={[styles.overflowVisible, CAROUSEL_CONTENT_PADDING]}
       />
 
       {/* 指示器 */}

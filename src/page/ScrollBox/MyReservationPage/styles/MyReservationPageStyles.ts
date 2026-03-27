@@ -221,6 +221,10 @@ export const createMyReservationPageStyles = (colors: NovelColors) => StyleSheet
     alignItems: 'center',
     marginBottom: wp(24),
   },
+  emptyImageAsset: {
+    width: 80,
+    height: 80,
+  },
   emptyIconText: {
     fontSize: fp(48),
   },

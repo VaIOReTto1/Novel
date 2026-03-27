@@ -96,7 +96,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
       renderItem={renderItem}
       keyExtractor={(item: { id: any; }) => item.id}
       numColumns={3}
-      columnWrapperStyle={[{justifyContent: 'space-between'}]}
+      columnWrapperStyle={styles.gridColumnWrapper}
       contentContainerStyle={styles.gridContainer}
       showsVerticalScrollIndicator={false}
       ListFooterComponent={renderFooter}

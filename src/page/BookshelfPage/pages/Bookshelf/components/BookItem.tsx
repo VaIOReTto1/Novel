@@ -227,7 +227,7 @@ export const BookItem: React.FC<BookItemProps> = ({
                 style={styles.gridMenuButton}
                 onPress={handleMenuPress}
               >
-                <Text style={{ fontSize: 16, color: '#666' }}>⋮</Text>
+                <Text style={styles.menuButtonText}>⋮</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -237,7 +237,7 @@ export const BookItem: React.FC<BookItemProps> = ({
           <View style={styles.listBookHeader}>
             <View style={styles.listBookTitleContainer}>
               <Text
-                style={[styles.bookTitle, { marginTop: 10 }]}
+                style={[styles.bookTitle, styles.listBookTitle]}
                 numberOfLines={1}
               >
                 {item.title}
@@ -248,7 +248,7 @@ export const BookItem: React.FC<BookItemProps> = ({
                 style={styles.listMenuButton}
                 onPress={handleMenuPress}
               >
-                <Text style={{ fontSize: 16, color: '#666' }}>⋮</Text>
+                <Text style={styles.menuButtonText}>⋮</Text>
               </TouchableOpacity>
             )}
           </View>

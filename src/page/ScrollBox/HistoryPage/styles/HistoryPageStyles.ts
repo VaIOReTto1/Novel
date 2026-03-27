@@ -136,6 +136,25 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   gridContainer: {
     paddingTop: wp(12),
   },
+  gridColumns: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  gridColumnLeft: {
+    flex: 1,
+    marginRight: 4,
+  },
+  gridColumnMiddle: {
+    flex: 1,
+    marginHorizontal: 2,
+  },
+  gridColumnRight: {
+    flex: 1,
+    marginLeft: 4,
+  },
+  gridColumnItem: {
+    marginBottom: 12,
+  },
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',

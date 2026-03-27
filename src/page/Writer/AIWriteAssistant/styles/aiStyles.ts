@@ -180,7 +180,14 @@ export const createAIStyles = (colors: NovelColors) =>
       marginBottom: wp(8),
       backgroundColor: colors.novelSecondaryBackground,
     },
+    ideaGridItemActive: {
+      backgroundColor: colors.novelMain + '20',
+    },
     ideaGridText: {color: colors.novelText, fontSize: fp(13)},
+    ideaGridTextActive: {
+      color: colors.novelMain,
+      fontWeight: '800',
+    },
 
     // 推理展示
     thinkingContainer: {

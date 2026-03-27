@@ -66,6 +66,12 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     marginBottom: wp(16),
   },
 
+  transparentSectionHeader: {
+    backgroundColor: 'transparent',
+    padding: 0,
+    marginTop: wp(16),
+  },
+
   // 用户信息样式
   profileSection: {
     flexDirection: 'row',

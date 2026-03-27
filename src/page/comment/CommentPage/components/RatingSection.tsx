@@ -29,7 +29,7 @@ const HeartRating = memo(({ size = 35, onStarPress }: { size?: number; onStarPre
   };
 
   return (
-    <View style={{ flexDirection: 'row', gap: 2 }}>
+    <View style={styles.heartRating}>
       {[1, 2, 3, 4, 5].map((star) => (
         <TouchableOpacity
           key={star}

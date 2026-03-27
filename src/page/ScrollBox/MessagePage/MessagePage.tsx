@@ -265,7 +265,7 @@ const MessagePage: React.FC = () => {
                 setTabsYPosition(y);
               }
             }}
-            style={{ backgroundColor: 'transparent' }}
+            style={styles.tabsSectionContainer}
           >
             <TabsArea
               styles={styles}

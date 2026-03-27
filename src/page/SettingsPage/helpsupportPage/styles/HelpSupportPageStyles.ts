@@ -83,5 +83,11 @@ export const createHelpSupportPageStyles = (colors: NovelColors) => {
       color: colors.novelTextGray,
       lineHeight: fp(20),
     },
+    descriptionSectionTitle: {
+      marginTop: 16,
+    },
+    descriptionClosingText: {
+      marginTop: 24,
+    },
   });
 };

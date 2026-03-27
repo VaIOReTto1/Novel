@@ -136,7 +136,7 @@ const CommentItem = memo(({ item, bookInfo }: { item: Comment; bookInfo?: { book
         {/* 隐形测量用 */}
         {fullLines.length === 0 && (
           <Text
-            style={[styles.commentContent, { position: 'absolute', opacity: 0 }]}
+            style={[styles.commentContent, styles.commentContentMeasurement]}
             onTextLayout={onTextLayout}
           >
             {item.commentContent}

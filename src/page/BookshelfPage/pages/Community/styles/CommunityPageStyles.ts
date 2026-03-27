@@ -415,6 +415,10 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
     flexGrow: 0,
   },
 
+  filterSpacer: {
+    width: 16,
+  },
+
   filterItem: {
     paddingHorizontal: wp(12),
     paddingVertical: hp(6),

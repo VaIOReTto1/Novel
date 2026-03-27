@@ -14,7 +14,7 @@ export const CopyrightSection: React.FC<CopyrightSectionProps> = React.memo(({
   return (
     <View>
       {/* 标题与副标题：移到外层 */}
-      <View style={[styles.section, { backgroundColor: 'transparent', padding: 0, marginTop: 16 }]}>
+      <View style={[styles.section, styles.transparentSectionHeader]}>
         <Text style={styles.sectionTitle}>版权改编</Text>
         <Text style={styles.sectionSubtitle}>
           助力你的作品改编为爆火动漫、优秀短剧

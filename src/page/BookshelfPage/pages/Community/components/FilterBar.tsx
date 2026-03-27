@@ -54,7 +54,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         })}
 
         {/* 分隔符 */}
-        <View style={{ width: 16 }} />
+        <View style={styles.filterSpacer} />
 
         {/* 排序筛选 */}
         {sortTypes.map((sortType) => {

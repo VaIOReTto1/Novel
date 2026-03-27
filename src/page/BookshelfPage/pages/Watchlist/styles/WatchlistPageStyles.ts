@@ -10,6 +10,10 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
     backgroundColor: colors.novelBackground,
   },
 
+  content: {
+    flex: 1,
+  },
+
   // TopBar 样式
   topBarContainer: {
     flexDirection: 'row',
@@ -142,6 +146,10 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
   gridContainer: {
     paddingHorizontal: wp(12),
     paddingTop: wp(8),
+  },
+
+  gridColumnWrapper: {
+    justifyContent: 'space-between',
   },
 
   gridItem: {

@@ -94,7 +94,7 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
         onRequestClose={handleMenuClose}
       >
         <TouchableWithoutFeedback onPress={handleMenuClose}>
-          <View style={{ flex: 1 }}>
+          <View style={styles.menuOverlay}>
             <View style={styles.menuDropdown}>
               {menuOptions.map((option) => (
                 <TouchableOpacity

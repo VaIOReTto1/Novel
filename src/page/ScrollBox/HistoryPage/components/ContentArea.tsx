@@ -85,11 +85,11 @@ export const ContentArea: React.FC<ContentAreaProps> = React.memo(({
 
   return (
     <View style={styles.gridContainer}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={styles.gridColumns}>
         {/* 左列 */}
-        <View style={{ flex: 1, marginRight: 4 }}>
+        <View style={styles.gridColumnLeft}>
           {leftColumnItems.map((item, index) => (
-            <View key={`left-${item.id}`} style={{ marginBottom: 12 }}>
+            <View key={`left-${item.id}`} style={styles.gridColumnItem}>
               <HistoryItem
                 item={item}
                 index={index * 3}
@@ -102,9 +102,9 @@ export const ContentArea: React.FC<ContentAreaProps> = React.memo(({
         </View>
 
         {/* 中列 */}
-        <View style={{ flex: 1, marginHorizontal: 2 }}>
+        <View style={styles.gridColumnMiddle}>
           {middleColumnItems.map((item, index) => (
-            <View key={`middle-${item.id}`} style={{ marginBottom: 12 }}>
+            <View key={`middle-${item.id}`} style={styles.gridColumnItem}>
               <HistoryItem
                 item={item}
                 index={index * 3 + 1}
@@ -117,9 +117,9 @@ export const ContentArea: React.FC<ContentAreaProps> = React.memo(({
         </View>
 
         {/* 右列 */}
-        <View style={{ flex: 1, marginLeft: 4 }}>
+        <View style={styles.gridColumnRight}>
           {rightColumnItems.map((item, index) => (
-            <View key={`right-${item.id}`} style={{ marginBottom: 12 }}>
+            <View key={`right-${item.id}`} style={styles.gridColumnItem}>
               <HistoryItem
                 item={item}
                 index={index * 3 + 2}

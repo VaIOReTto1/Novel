@@ -92,6 +92,25 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     paddingHorizontal: wp(12),
     paddingTop: wp(12),
   },
+  gridColumns: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  gridColumnLeft: {
+    flex: 1,
+    marginRight: wp(4),
+  },
+  gridColumnMiddle: {
+    flex: 1,
+    marginHorizontal: wp(2),
+  },
+  gridColumnRight: {
+    flex: 1,
+    marginLeft: wp(4),
+  },
+  gridColumnItem: {
+    marginBottom: wp(12),
+  },
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -226,6 +245,9 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     bottom: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     zIndex: 1,
+  },
+  editingItem: {
+    opacity: 0.8,
   },
   selectionCheckbox: {
     position: 'absolute',
@@ -375,5 +397,8 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   selectedCountText: {
     fontSize: fp(14),
     color: colors.novelTextGray,
+  },
+  editToolbarDeleteTextDisabled: {
+    opacity: 0.5,
   },
 });

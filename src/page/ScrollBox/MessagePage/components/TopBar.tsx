@@ -30,7 +30,7 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
         onPress={onMarkAllReadPress}
         activeOpacity={0.7}
       >
-        <Text style={{ fontSize: 20 }}>🗑</Text>
+        <Text style={styles.markAllIcon}>🗑</Text>
       </TouchableOpacity>
     </View>
   );

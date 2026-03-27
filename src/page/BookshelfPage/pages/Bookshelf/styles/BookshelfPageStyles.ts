@@ -501,6 +501,10 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
     justifyContent: 'center',
   },
 
+  listBookTitle: {
+    marginTop: wp(10),
+  },
+
   listMenuButton: {
     marginTop: wp(5),
     marginLeft: wp(8),
@@ -1135,6 +1139,11 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
     alignItems: 'flex-end',
   },
 
+  topBarActionsRow: {
+    flexDirection: 'row',
+    gap: wp(8),
+  },
+
   adBanner: {
     width: wp(181),
     height: wp(30),
@@ -1167,6 +1176,10 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
     color: colors.novelText,
     fontWeight: '800',
     textAlign: 'center',
+  },
+
+  topBarActionLabelDisabled: {
+    opacity: 0.3,
   },
 
   activeTopBarActionLabel: {

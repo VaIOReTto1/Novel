@@ -54,7 +54,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 
       {/* 右侧功能按钮 */}
       <View style={styles.topBarRight}>
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <View style={styles.topBarActionsRow}>
           {/* 视图切换按钮 */}
           <TouchableOpacity
             style={styles.topBarActionButton}
@@ -64,7 +64,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           >
             <Text style={[
               styles.topBarActionLabel,
-              isTransitioning && { opacity: 0.3 },
+              isTransitioning && styles.topBarActionLabelDisabled,
             ]}>
               {currentViewOption?.label || '网格'}
             </Text>

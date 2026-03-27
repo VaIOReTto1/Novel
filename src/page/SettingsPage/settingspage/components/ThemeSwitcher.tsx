@@ -1,6 +1,6 @@
 // ThemeSwitcher.tsx
 import React, { useEffect, memo } from 'react';
-import { Pressable, PressableProps } from 'react-native';
+import { Pressable, PressableProps, StyleSheet } from 'react-native';
 import Svg, {
   Defs,
   Mask,
@@ -22,6 +22,12 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedG = Animated.createAnimatedComponent(G);
 const AnimatedLine = Animated.createAnimatedComponent(Line);
 const AnimatedPath = Animated.createAnimatedComponent(Path);
+const themeSwitcherStyles = StyleSheet.create({
+  pressable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export type ThemeSwitcherProps = {
   /** true = 月亮；false = 太阳 */
@@ -138,6 +144,7 @@ const ThemeSwitcher = memo(function ThemeSwitcher({
       key: i,
     };
   });
+  const pressableSizeStyle = { width: size + 12, height: size + 12 };
 
   return (
     <Pressable
@@ -148,7 +155,8 @@ const ThemeSwitcher = memo(function ThemeSwitcher({
       accessibilityLabel={accessibilityLabel}
       hitSlop={8}
       style={[
-        { width: size + 12, height: size + 12, alignItems: 'center', justifyContent: 'center' },
+        pressableSizeStyle,
+        themeSwitcherStyles.pressable,
         // @ts-ignore
         pressableProps.style,
       ]}

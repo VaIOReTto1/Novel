@@ -62,9 +62,18 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Make Gradle executable
         run: chmod +x android/gradlew
-      - name: Run Android JVM and lint gates
+      - name: Run Android JVM tests
         working-directory: android
-        run: ./gradlew app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble
+        run: ./gradlew app:testDebugUnitTest --stacktrace --console=plain
+      - name: Run Android lint
+        working-directory: android
+        run: ./gradlew app:lintDebug --stacktrace --console=plain
+      - name: Run Android test compile gate
+        working-directory: android
+        run: ./gradlew app:compileDebugAndroidTestKotlin --stacktrace --console=plain
+      - name: Assemble macrobenchmark artifacts
+        working-directory: android
+        run: ./gradlew :macrobenchmark:assemble --stacktrace --console=plain
       - name: Upload Android reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -74,6 +83,7 @@ jobs:
             android/app/build/reports
             android/app/build/test-results
             android/macrobenchmark/build/reports
+            android/build/reports/problems
           if-no-files-found: ignore
 
   android-smoke:
@@ -97,15 +107,19 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Make Gradle executable
         run: chmod +x android/gradlew
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: Run connected smoke suite on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
           arch: x86_64
           profile: pixel_6
-          script: |
-            cd android
-            ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest,com.novel.page.login.LoginSmokeTest,com.novel.page.search.SearchSmokeTest,com.novel.page.read.viewmodel.ReaderSmokeTest
+          working-directory: ./android
+          script: ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest,com.novel.page.login.LoginSmokeTest,com.novel.page.search.SearchSmokeTest,com.novel.page.read.viewmodel.ReaderSmokeTest --stacktrace --console=plain
       - name: Upload smoke reports
         if: always()
         uses: actions/upload-artifact@v4

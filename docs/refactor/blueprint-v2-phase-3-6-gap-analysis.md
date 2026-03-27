@@ -172,6 +172,7 @@
 - RN Host 返回时的 root view cache 语义已经从隐含规则升级为显式 policy。
 - Startup / Search / Reader 多次采样矩阵已经落盘。
 - Welfare / WebView 路径矩阵已经落盘。
+- Welfare / WebView 多次采样矩阵已经落盘。
 - 数据库 / 缓存治理已经有样例输出与 recommendation 解读。
 - `MainPage` 的短剧 toast 与启动弹窗判定已延后到首帧后再揭示。
 

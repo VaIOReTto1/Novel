@@ -110,6 +110,7 @@
 - `2026-03-28` 新增多次采样矩阵：
   - [perf-multisample-matrix-2026-03-28.md](./perf-multisample-matrix-2026-03-28.md)
   - [welfare-webview-path-matrix-2026-03-28.md](./welfare-webview-path-matrix-2026-03-28.md)
+  - [welfare-webview-multisample-matrix-2026-03-28.md](./welfare-webview-multisample-matrix-2026-03-28.md)
 - `2026-03-28` 新增治理样例输出：
   - [database-governance-sample-output-2026-03-28.md](./database-governance-sample-output-2026-03-28.md)
   - [cache-governance-sample-output-2026-03-28.md](./cache-governance-sample-output-2026-03-28.md)

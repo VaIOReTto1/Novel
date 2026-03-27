@@ -16,7 +16,7 @@
 | --- | --- | --- | --- |
 | Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地、主页面非关键 overlay 延后到首帧后 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
 | Reader | `init / settings_update / flip` 动作预算与真机样本补齐、恢复提示策略收口、动作级归档模板落地、多次采样矩阵落地 | benchmark 化仍可深化 | 完整动作级压测矩阵 |
-| Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐、路径矩阵落地 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
+| Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐、路径矩阵落地、多次采样矩阵落地 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
 | Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 真机样本补齐、热点动作矩阵落地、多次采样矩阵落地 | benchmark 与正式 budget diff 仍待深化 | 热点 benchmark 与正式 budget diff |
 | RN Host / Bridge | `COLD_OPEN / OPEN / REUSED` 语义与主题同步样本补齐、返回缓存策略显式化 | root view 生命周期治理仍可继续沉淀 | 更系统的 host path 规范与批量调用收益复盘 |
 | 数据库 / 缓存 | 治理报告增强完成、样例输出与 recommendation 解读落地 | 收益证明仍不足 | 索引、`FTS4`、cleanup 对 IO / 内存 / 电量的定量复盘 |
@@ -52,6 +52,7 @@
   - 返回首页后复开样本
   - `savedState restore` 样本
 - Welfare / WebView 路径矩阵已落到独立文档。
+- Welfare / WebView 多次采样矩阵已落到独立文档。
 
 ### Search
 - `SearchRetryPolicyCoordinator` 已按 `INITIAL_ENTRY / FILTER_APPLY / USER_RETRY / LOAD_MORE` 固定触发源语义。
@@ -154,6 +155,8 @@
   - `docs/refactor/evidence/welfare-webview-performance-logcat-2026-03-27.txt`
   - `docs/refactor/evidence/welfare-webview-path-matrix-logcat-2026-03-28.txt`
   - `docs/refactor/phase-6/welfare-webview-path-matrix-2026-03-28.md`
+  - `docs/refactor/evidence/welfare-webview-multisample-2026-03-28.txt`
+  - `docs/refactor/phase-6/welfare-webview-multisample-matrix-2026-03-28.md`
 - RN Host
   - `docs/refactor/evidence/rn-host-path-logcat-2026-03-27.txt`
   - `docs/refactor/phase-6/rn-host-root-view-cache-policy-2026-03-27.md`

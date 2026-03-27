@@ -1,0 +1,36 @@
+﻿### run=1
+03-28 02:00:09.965 32254 32254 D WelfareModule: 创建InitializeWelfarePageUseCase
+03-28 02:00:09.972 32254 32254 D BaseUseCase: 开始执行UseCase: InitializeWelfarePageUseCase
+03-28 02:00:09.972 32254 14719 D InitializeWelfarePageUseCase: 开始初始化福利页面
+03-28 02:00:09.972 32254 14719 D InitializeWelfarePageUseCase: 福利页面初始化成功
+03-28 02:00:10.374 32254 32254 D BaseUseCase: UseCase执行成功: InitializeWelfarePageUseCase, 耗时: 401ms
+03-28 02:00:10.438 32254 32254 I WelfarePerformanceMonitor: 页面加载完成，耗时: 231ms
+03-28 02:00:10.760 32254 32254 I WelfarePerformanceMonitor: 页面加载完成，耗时: 1ms
+03-28 02:00:10.949 32254 32254 D WelfarePerformanceMonitor: 页面可交互时间: 190ms
+03-28 02:00:10.952 32254 32254 D WelfarePerformanceMonitor: WebView加载完成，耗时: 223ms
+03-28 02:00:11.336 32254 32254 D WelfarePerformanceMonitor: 首次内容绘制时间: 577ms
+
+### run=2
+03-28 02:00:32.553 10614 10614 D WelfareModule: 创建InitializeWelfarePageUseCase
+03-28 02:00:32.559 10614 10614 D BaseUseCase: 开始执行UseCase: InitializeWelfarePageUseCase
+03-28 02:00:32.560 10614 14958 D InitializeWelfarePageUseCase: 开始初始化福利页面
+03-28 02:00:32.561 10614 14958 D InitializeWelfarePageUseCase: 福利页面初始化成功
+03-28 02:00:32.947 10614 10614 D BaseUseCase: UseCase执行成功: InitializeWelfarePageUseCase, 耗时: 388ms
+03-28 02:00:33.007 10614 10614 I WelfarePerformanceMonitor: 页面加载完成，耗时: 224ms
+03-28 02:00:33.507 10614 10614 I WelfarePerformanceMonitor: 页面加载完成，耗时: 0ms
+03-28 02:00:33.686 10614 10614 D WelfarePerformanceMonitor: 页面可交互时间: 179ms
+03-28 02:00:33.691 10614 10614 D WelfarePerformanceMonitor: WebView加载完成，耗时: 241ms
+03-28 02:00:34.023 10614 10614 D WelfarePerformanceMonitor: 首次内容绘制时间: 515ms
+
+### run=3
+03-28 02:00:55.858 14705 14705 D WelfareModule: 创建InitializeWelfarePageUseCase
+03-28 02:00:55.865 14705 14705 D BaseUseCase: 开始执行UseCase: InitializeWelfarePageUseCase
+03-28 02:00:55.866 14705 15195 D InitializeWelfarePageUseCase: 开始初始化福利页面
+03-28 02:00:55.867 14705 15195 D InitializeWelfarePageUseCase: 福利页面初始化成功
+03-28 02:00:56.260 14705 14705 D BaseUseCase: UseCase执行成功: InitializeWelfarePageUseCase, 耗时: 394ms
+03-28 02:00:56.319 14705 14705 I WelfarePerformanceMonitor: 页面加载完成，耗时: 213ms
+03-28 02:00:56.644 14705 14705 I WelfarePerformanceMonitor: 页面加载完成，耗时: 1ms
+03-28 02:00:56.827 14705 14705 D WelfarePerformanceMonitor: 页面可交互时间: 184ms
+03-28 02:00:56.831 14705 14705 D WelfarePerformanceMonitor: WebView加载完成，耗时: 208ms
+03-28 02:00:57.213 14705 14705 D WelfarePerformanceMonitor: 首次内容绘制时间: 570ms
+

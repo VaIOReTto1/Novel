@@ -1,204 +1,204 @@
 # 原始蓝图 Phase 3-6 兑现情况审计
 
 ## 摘要
-- 本文档用于对照 [Novel 超大型 Android 重构执行蓝图 v2](/d:/program/Novel/docs/refactor/Novel%20超大型%20Android%20重构执行蓝图%20v2.md) 中 `Phase 3-6` 的原始目标，审计当前仓库事实。
+- 本文档以 [Novel 超大型 Android 重构执行蓝图 v2](/d:/program/Novel/docs/refactor/Novel%20超大型%20Android%20重构执行蓝图%20v2.md) 为原始输入，审计 `Phase 3-6` 在当前仓库中的兑现程度。
 - 当前阶段口径以 [docs/refactor/README.md](/d:/program/Novel/docs/refactor/README.md) 为准：
   - `Phase 5 = validated`
   - `Stage 3 = Phase 5-6 = validated`
   - `Phase 6 = validated`
   - `Phase 7 = planned`
-- 本文档不推翻既有 closeout 结论，而是回答：
+- 本文档不负责改阶段状态；它负责回答：
   - 哪些蓝图目标已经兑现
-  - 哪些只兑现到主路径或首轮切口
-  - 哪些仍属于 carried debt
-  - 哪些后续应继续留在优化或治理待办池
+  - 哪些只兑现到主路径或治理入口
+  - 哪些仍是 carried debt
+  - 本轮到底关闭了哪些项，哪些没有
 
 ## 审计总览
-| 阶段 | 蓝图目标 | 当前审计结论 |
-| --- | --- | --- |
-| `Phase 3` | 基础设施收口，收成“一套主系统” | `部分兑现` |
-| `Phase 4` | 边界收口与超大类拆分 | `主要兑现，仍有 carried debt` |
-| `Phase 5` | 真正的 Gradle 模块化演进 | `首轮 closeout 已兑现，但未达到蓝图理想终态` |
-| `Phase 6` | 基线、预算与真实收益优化闭环 | `基线与证据已兑现，深层优化仍未做完` |
+| 阶段 | 当前审计结论 | 本轮关闭项 | 当前残余 debt 归属 |
+| --- | --- | --- | --- |
+| `Phase 3` | `部分兑现` | `无新增关闭项，仅补齐当前执行动作映射` | `core-network / storage / observability governance` |
+| `Phase 4` | `主要兑现，carried debt 已治理化` | `schema / compatibility 独立治理`、`生产 mock 退出治理规则` | `Reader 深拆`、`RN heavy pages mock 退场` |
+| `Phase 5` | `主要兑现，治理工件已补齐` | `module owner matrix`、`API surface checklist`、`build-time baseline / diff 入口` | `core-network / core-bridge 深化自动化`、`Phase 7 build governance` |
+| `Phase 6` | `已兑现主目标，仍有持续优化 backlog` | `Wave 1-3 优化` 与 `2026-03-27` 设备证据补齐 | `Search LOAD_MORE`、`Reader flip`、数据库/缓存收益复盘 |
 
 ## Phase 3 基础设施收口
-### 原始目标
+### 原始蓝图目标
 - 把“多套系统并存”收成“一套主系统”。
 
 ### 当前仓库事实
-- 高风险主网络路径已经统一到 `NetworkFacade` 入口，但仓库中仍保留 legacy transport 适配壳。
-- 协程模型在阶段触达范围内已统一大部分高风险路径，但 `runBlocking` 没有在全仓库绝迹。
-- `NovelUserDefaults -> DataStore` 已形成：
-  - `StorageFacade`
-  - `SettingsDataStorePilot`
-  的抽象与试点，且试点范围已扩展到设置域和用户态 mirror；但这仍不是全量迁移。
-- `AppError` 已在 Home / Search / Bridge 等高风险边界落地。
-- `RequestIdInterceptor` 已在主 `OkHttp` 路径注入 `X-Request-Id / X-Trace-Id`，并把 trace 留痕补到 `ApiService / RetrofitClient / NavigationBridgeNetworkGateway`。
-- `KeyChain` 有迁移演练与兼容保留，但“恢复策略正式闭环”仍未形成仓库级统一治理文档。
+- 高风险主网络路径已经统一到 `NetworkFacade` 入口，但仓库中仍保留 legacy transport 兼容壳。
+- `StorageFacade + SettingsDataStorePilot` 已经覆盖设置域与部分用户态配置试点，但还不是全量 DataStore 主读。
+- `AppError`、`X-Request-Id / X-Trace-Id` 已在 Home / Search / Bridge 等高风险边界落地。
+- `trace id / request id` 已能进入主请求链路和 bridge 网络入口，但仍没有完整 observability 平台。
 
-### 兑现结论
-| 原始动作 | 结论 |
-| --- | --- |
-| 网络层统一到唯一主栈 | `部分实现` |
-| `ApiService / RetrofitClient` 降级为适配层 | `部分实现` |
-| 协程模型统一 | `部分实现` |
-| `NovelUserDefaults` 迁往 `DataStore` 抽象 | `部分实现` |
-| SharedPreferences 兼容迁移 | `已实现` |
-| KeyChain 保留并补恢复策略 | `部分实现` |
-| 错误模型统一进入 `AppError` | `部分实现` |
-| 日志脱敏与 trace id / request id 治理 | `部分实现` |
+### 已兑现项
+- 高风险主网络入口已收敛到 `NetworkFacade` 主通路。
+- `StorageFacade`、`SettingsDataStorePilot`、SharedPreferences 兼容层已经建立。
+- `AppError` 第一批统一边界已经完成。
+- `RequestIdInterceptor` 与主链路 trace 注入已经完成。
+
+### 仍未兑现项
+| 条目 | 当前执行动作 | 当前状态 |
+| --- | --- | --- |
+| 全仓库真正只剩一套网络系统 | 继续以 `core-network` 深化为主，不重开大范围替换 | `carried debt` |
+| DataStore 从试点扩到全量正式主读 | 保持安全域渐进迁移，不把镜像试点伪装成全量完成 | `carried debt` |
+| trace / request id 从链路留痕升级到统一证据体系 | 继续作为 observability 治理项保留 | `carried debt` |
+| KeyChain 恢复策略形成仓库级治理闭环 | 仍未形成独立治理入口 | `carried debt` |
 
 ### 偏差原因
-- 本阶段选择了“先收高风险主路径”，没有做全仓库一次性清底。
-- `DataStore` 采用试点和 mirror 策略以降低迁移风险，没有直接切到全部生产主读路径。
-- trace / request id 先以“可取证、可追踪”为目标，并未扩展成完整 observability 体系。
+- `Phase 3` 真实执行策略是“先收高风险主路径”，不是一次性把全仓库旧系统清零。
+- 存储迁移为了降低风险采用 mirror / pilot 策略，没有直接切成全量主读。
+- trace / request id 以“可追踪、可取证”为先，而不是在本阶段就做完整监控平台。
 
-### 后续承接
-- `core-network` 深化与真正唯一主通路：后续基础设施治理
-- `DataStore` 全量迁移：后续存储治理
-- trace / request id：后续可观测性治理
+### 本轮要关闭的项
+- 本轮没有把 `Phase 3` debt 伪装成已关闭。
+- 本轮只补齐了这些 debt 的当前执行动作和归属阶段，避免它们继续漂浮在“以后再看”的状态。
+
+### 本轮关闭后的残余 debt
+- `core-network` 仍需继续深化到更完整的共享基础设施。
+- `DataStore` 仍需继续扩大主读范围。
+- `trace / request id` 仍需进入更正式的证据与 observability 治理。
 
 ## Phase 4 边界收口与超大类拆分
-### 原始目标
+### 原始蓝图目标
 - 把“功能还在，但复杂度失控”的状态扭回来。
 
 ### 当前仓库事实
-- 已完成高风险类的首轮边界收口：
-  - `NavigationBridgeModule`
-  - `HomeViewModel`
-  - `SearchRepository`
-  - `NetworkCacheManager`
-- `ReaderViewModel` 没按蓝图的大拆路线推进，而是采用轻触式减重：
-  - `ReaderSettingsCoordinator`
-  - `ReaderHistoryCoordinator`
-  - `ReaderMappingHelper`
-- `BridgeFacade` 已形成并成为统一出口。
-- 蓝图中理想化的 package 目标结构没有完整落成。
-- schema 校验与兼容字段策略没有形成与 `BridgeFacade` 同强度的独立交付。
-- 生产路径去 mock 只完成了触达范围收口，不是全仓库全面清零。
+- `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 的首轮拆分已经完成。
+- `ReaderViewModel` 没按蓝图理想顺序做大拆，而是以 settings / history / mapping / trace 等轻触式减重为主。
+- `BridgeFacade` 与 delegate 体系已经落地。
+- `2026-03-27` 起新增两份独立治理工件：
+  - `docs/refactor/phase-4/bridge-schema-compat-governance-2026-03-27.md`
+  - `docs/refactor/phase-4/production-mock-exit-governance-2026-03-27.md`
 
-### 兑现结论
-| 原始动作 | 结论 |
-| --- | --- |
-| 单 `app` 内先做逻辑模块化 | `已实现` |
-| package 目标结构完整落成 | `未实现` |
-| `NavigationBridgeModule` 拆分 | `已实现` |
-| `HomeViewModel` 拆分 | `已实现` |
-| `SearchRepository` 拆分 | `已实现` |
-| `NetworkCacheManager` 拆分 | `已实现` |
-| `ReaderViewModel` 按原顺序大拆 | `延期承接` |
-| 统一 `BridgeFacade` 出口 | `已实现` |
-| schema / compatibility 独立治理 | `部分实现` |
-| 生产路径去 mock | `部分实现` |
+### 已兑现项
+- 单 `app` 内先做逻辑模块化边界已完成。
+- `NavigationBridgeModule`、`HomeViewModel`、`SearchRepository`、`NetworkCacheManager` 的阶段目标已兑现。
+- `BridgeFacade` 成立且旧协议兼容已保留。
+- `schema / compatibility` 已不再只是附着在 `BridgeFacade` 上，而是形成独立治理入口。
+- 生产 mock 不再只有 inventory，已经形成退出治理规则与 carried debt 归属。
+
+### 仍未兑现项
+| 条目 | 当前执行动作 | 当前状态 |
+| --- | --- | --- |
+| Reader 按原蓝图顺序大拆 | 继续保持“轻触式优化 + coordinator/policy 下沉” | `carried debt` |
+| 理想 package 目标结构完整落成 | 不再作为当前阶段强制门禁，只保留为蓝图理想形态 | `carried debt` |
+| RN heavy pages 主数据 mock 全部退出生产路径 | 以退出治理文档管理，不在本轮硬清 | `carried debt` |
 
 ### 偏差原因
-- 执行时优先保证 UI 和业务语义不变，因此对 Reader 采用更保守的轻触式减重。
-- mock 清理如果做全量会放大范围，因此收敛为“触达范围收口”。
-- 蓝图 package 结构偏理想化，实际实现围绕高风险类和边界收口展开。
+- 实际执行优先保持 UI / 业务语义稳定，因此 Reader 没走大拆路线。
+- mock 清理若做成全量强推，会把范围扩成新的数据源专项。
+- 蓝图中的 package 目标结构偏理想化，真实实现更偏“先收主要矛盾”。
 
-### 后续承接
-- Reader 深拆：后续 Reader 专项治理
-- schema / compatibility：后续 Bridge 治理
-- mock 余项：后续边界与数据源治理
+### 本轮要关闭的项
+- `schema / compatibility 独立治理`
+  - 已由 `bridge-schema-compat-governance-2026-03-27.md` 关闭“没有独立治理工件”的缺口。
+- `生产路径去 mock` 的治理层
+  - 已由 `production-mock-exit-governance-2026-03-27.md` 关闭“只有 inventory、没有退出治理”的缺口。
+
+### 本轮关闭后的残余 debt
+- `ReaderViewModel` 深拆仍是明确延期项，不应伪装成已完成。
+- RN heavy pages 的主数据 mock 仍未退出，但现在已经有清单、owner 面和退出前提。
+- package 结构的理想终态仍未完全落地，但不再是当前阶段关闭的阻塞项。
 
 ## Phase 5 真正的模块化演进
-### 原始目标
-- 在边界稳定后做真正的 Gradle 模块拆分，降低编译、依赖与认知复杂度。
+### 原始蓝图目标
+- 在边界稳定后做真正的 Gradle 模块拆分，并补上 owner、API surface、build-time 治理。
 
 ### 当前仓库事实
-- 当前模块图已形成：
-  - `app`
-  - `core-common`
-  - `core-ui`
-  - `core-bridge`
-  - `core-bridge-contract`
-  - `core-storage`
-  - `core-network`
-  - `feature-home`
-  - `feature-search`
-  - `feature-login`
-  - `feature-book`
-  - `feature-reader`
-  - `feature-rn-host`
-  - `feature-welfare`
+- 当前模块图已经稳定为：
+  - `app + core-* + feature-* + macrobenchmark`
 - `app` 已压薄为 Android 强制入口、route/page wrapper、RN module adapter 与极薄 host adapter。
-- `home/search/login/book/reader/rn-host` 根状态机或主状态层已进入各自 feature 模块。
-- `2026-03-26 reopen closeout` 已成为当前权威事实，`2026-03-21` 只保留为历史 checkpoint。
-- 但蓝图里更深层的 module owner、API surface 审查、构建时间治理，并未形成同等强度的制度化闭环。
+- `home/search/login/book/reader/rn-host/welfare` 的稳定 feature 根已经进入对应模块。
+- `2026-03-27` 起补齐了三份工程治理工件：
+  - `module-owner-matrix-2026-03-27.md`
+  - `api-surface-review-checklist.md`
+  - `build-time-baseline-and-diff-entrypoints-2026-03-27.md`
+- 同日也记录了当前 build-time 基线样本：`docs/refactor/evidence/build-time-baseline-2026-03-27.json`
 
-### 兑现结论
-| 原始动作 | 结论 |
-| --- | --- |
-| 在边界稳定后做 Gradle 模块拆分 | `已实现` |
-| 拆分顺序完全按蓝图执行 | `未实现` |
-| `core-common` | `已实现` |
-| `core-network` 深化为共享基础设施 | `部分实现` |
-| `core-storage` | `已实现` |
-| `core-ui` | `已实现` |
-| `core-bridge` | `部分实现` |
-| `feature-home` | `已实现（按当前阶段目标）` |
-| `feature-search` | `已实现（按当前阶段目标）` |
-| `feature-login` | `已实现（按当前阶段目标）` |
-| `feature-book` | `已实现（按当前阶段目标）` |
-| `feature-reader` | `已实现（按当前阶段目标）` |
-| `feature-welfare` | `已实现（按当前阶段目标）` |
-| module owner / API surface / build-time governance | `延期承接` |
+### 已兑现项
+- Gradle 模块图与 `app` 薄壳边界已兑现。
+- `feature-home / search / login / book / reader / rn-host / welfare` 的阶段目标已兑现。
+- `module owner` 已从口头共识升级为矩阵工件。
+- `API surface` 已从隐含 review 规则升级为正式 checklist。
+- `build-time baseline / diff` 已不再只有 Phase 7 计划项，而是有 Phase 5 当天样本入口。
+
+### 仍未兑现项
+| 条目 | 当前执行动作 | 当前状态 |
+| --- | --- | --- |
+| `core-network` 深化到更完整共享基础设施 | 继续保留为后续 core governance 深化线 | `carried debt` |
+| `core-bridge / core-bridge-contract` 的更强自动化护栏 | 继续依赖 contract tests + control-plane 文档，尚无脚本化 schema manifest | `carried debt` |
+| CODEOWNERS / reviewer 自动分发 / build diff 自动化 | 当前只落了文档工件，还没到平台自动化 | `carried debt` |
 
 ### 偏差原因
-- 真实模块化遵循“`app` 作为 composition root + 先低风险切口”的保守策略，而非完全按蓝图顺序推进。
-- `core-bridge-contract` 是比蓝图中 `core-bridge` 更保守的契约层落地形态。
-- 当前阶段目标已经兑现，但蓝图理想终态中的制度化治理尚未同步完成。
+- 真实模块化优先保证 `app` 仍是稳定 composition root，而不是按蓝图理想顺序机械推进。
+- 当前阶段先把治理工件落到 repo 内，未同步上升为平台级自动护栏。
+- 更完整的 build-efficiency / artifact diff 体系仍属于 `Phase 7` 的专项范围。
 
-### 后续承接
-- `core-network` 深化：后续 core 模块治理
-- owner / API surface / build-time：后续工程治理阶段
+### 本轮要关闭的项
+- `module owner / API surface / build-time governance`
+  - 本轮已由三份正式工程工件关闭“延期承接但没有落点”的状态。
+
+### 本轮关闭后的残余 debt
+- `core-network` 与 `core-bridge` 的进一步深化仍在。
+- owner / API / build-time 的自动化强度仍不足，但已经不是“没有工件”，而是“还没进入平台护栏”。
+- `Phase 7` 仍保持 `planned`，后续负责更完整的 artifact / dependency / build 治理。
 
 ## Phase 6 性能专项治理
-### 原始目标
-- 在结构稳定基础上做真实收益优化，而不是前期边改边猜。
+### 原始蓝图目标
+- 在结构稳定基础上做真实收益优化与证据闭环，而不是边改边猜。
 
 ### 当前仓库事实
-- 已完成 startup / scroll benchmark、Search / Reader / Welfare / RN Host / Bridge 基线与预算摘要。
-- `DN2101` 设备 compile blocker 已被固化为环境阻塞项，不再误判为仓库代码回归。
-- closeout 后又继续落地一批低风险优化：
-  - 非关键启动初始化延后到首帧后
-  - RN 预热延后到首帧后
-  - Reader 初始化去重与设置触发分页刷新收敛
-  - Welfare 初始化去重与 WebView `FCP / TTI` 接线
-  - Search 分类筛选延后加载
-  - RN context 就绪后的主题补发同步
-- 数据库索引 / FTS4 / 缓存治理已形成治理入口，但尚未形成收益复盘闭环。
+- `Wave 1-3` 的代码优化已落地，并同步到 `phase-6-optimization-addendum-2026-03-27.md`。
+- `2026-03-27` 新增设备侧证据总入口：
+  - `docs/refactor/phase-6/device-evidence-addendum-2026-03-27.md`
+- 当天设备样本已经覆盖：
+  - Startup
+  - Search `INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY`
+  - Welfare / WebView 首开与复开
+  - RN Host `COLD_OPEN / OPEN / REUSED`
+  - Reader `init / settings_update`
+- 数据库与缓存治理报告已增强为 recommendation / warning 入口，但还不是最终收益证明。
 
-### 兑现结论
-| 原始动作 | 结论 |
-| --- | --- |
-| 启动专项基线建立 | `已实现` |
-| Application 冷启动任务压缩 | `部分实现` |
-| RN 上下文预热策略真正优化 | `部分实现` |
-| 首帧前非必要初始化清理 | `部分实现` |
-| Reader 动作级压测与边界深化 | `部分实现` |
-| RN Host 生命周期 / Bridge 线程切换规范优化 | `部分实现` |
-| 数据库索引收益、FTS4、缓存清理收益复盘 | `未实现` |
-| 核心指标全部优于基线且优化项都有数据证明 | `部分实现` |
+### 已兑现项
+- startup / scroll / search / reader / welfare / rn host / bridge 的基线与预算入口已建立。
+- `Wave 1-3` 的首轮优化已经完成。
+- 本轮 device evidence 已把关键路径从“仅文档/单测可见”推进到“有当天设备样本”。
+- 数据库 / 缓存治理入口已从静态盘点升级为 summary + recommendation / warning。
+
+### 仍未兑现项
+| 条目 | 当前执行动作 | 当前状态 |
+| --- | --- | --- |
+| Search `LOAD_MORE` 设备样本 | 当天对 `的 / 天 / 王 / 都市` 真实 query 探针均返回 `hasMore=false`，保留待补 | `carried debt` |
+| Reader `flip` 直接设备样本 | 已尝试 swipe，但未抓到可信 trace，继续保留 | `carried debt` |
+| Startup 首帧时间进一步收敛 | 监控仍给出“首帧渲染时间较长”建议 | `carried debt` |
+| Welfare / WebView 更深层 cache / cookie / benchmark 复盘 | 已有首开/复开样本，尚未形成专项 benchmark | `carried debt` |
+| 数据库索引收益、`FTS4` 最优性、cleanup 对 IO / 内存 / 电量收益复盘 | 当前仍停在治理报告增强，不是最终收益证明 | `carried debt` |
 
 ### 偏差原因
-- 当前 `Phase 6` 更偏重“基线、证据、预算、blocker 固化 + 首轮低风险优化”，而不是把深层热点全部做完。
-- Reader、RN Host、WebView、数据库与缓存虽已取证，但很多仍停留在“已测量 / 已接 probe / 已有治理入口”的阶段。
+- `Phase 6` 真实策略更偏“基线 + 预算 + 低风险优化 + 设备证据补齐”，不是一次性把所有热点都打成硬门禁。
+- 真实设备样本受后端数据集与交互路径限制，`Search LOAD_MORE`、`Reader flip` 仍不能假装已经拿到。
+- 数据库与缓存治理更接近“风险识别入口”，而不是完整性能科学实验。
 
-### 后续承接
-- 继续留在后续性能专项待办池
-- 不应误塞给 `Phase 7` 的 size / dependency / build 主线
+### 本轮要关闭的项
+- `Wave 1-3` 首轮优化收敛
+- Startup / Search / Welfare-WebView / RN Host / Reader 的设备侧样本补齐
+- `COLD_OPEN / OPEN / REUSED` 的宿主页语义从单测/日志设计推进为当天设备证据
+
+### 本轮关闭后的残余 debt
+- `Search LOAD_MORE` 与 `Reader flip` 仍需更稳定的设备路径或专用探针。
+- Welfare / WebView 仍缺专项 benchmark。
+- 数据库 / 缓存仍缺真实收益复盘。
+- 这些项都应继续留在 `Phase 6` backlog，不应误塞给 `Phase 7`。
 
 ## 总结
-- `Phase 3-6` 已经兑现了“分阶段收口、保守落地、证据闭环”的主目标。
-- 但如果按蓝图理想强度衡量：
-  - `Phase 3` 是“主路径统一了”，不是“全仓库只剩一套系统”
-  - `Phase 4` 是“主要矛盾收口了”，不是“理想 package 结构完整落地”
-  - `Phase 5` 是“模块化真实落地并完成本阶段 closeout”，不是“所有治理配套都做完了”
-  - `Phase 6` 是“基线和证据达标”，不是“性能优化已经做完”
-- 因此当前正确口径应是：
+- 当前正确口径仍然是：
   - `Stage 3 = validated`
   - `Phase 5 = validated`
   - `Phase 6 = validated`
   - `Phase 7 = planned`
-  - 同时保留 `Phase 3-6` 的 carried debt 与后续性能 backlog
+- 但蓝图视角下的剩余事实也应明确保留：
+  - `Phase 3` 仍有基础设施 carried debt
+  - `Phase 4` 的结构性 debt 已治理化，但没有被“全部清零”
+  - `Phase 5` 的治理工件已补齐，但自动化与 deeper core governance 仍在后续
+  - `Phase 6` 已完成主目标与当天设备证据补齐，但仍存在真实的持续优化 backlog

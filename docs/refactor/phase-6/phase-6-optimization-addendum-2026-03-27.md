@@ -73,3 +73,16 @@
 - `feature-rn-host` 的 Gradle 单测在本机仍可受到生成源码或构建目录噪音影响；当前逻辑级测试和 app 侧相关测试已通过，但模块级 clean verification 仍建议在后续补证。
 - 本轮没有重跑完整 benchmark 套件，仍属于“选择性补基线”。
 - 数据库与缓存治理已经拥有更强的治理输出，但索引收益、FTS4 最优性、IO / 内存 / 电量收益复盘仍未完成。
+
+## 设备证据同步
+- `2026-03-27` 当天新增设备侧 addendum：
+  - [device-evidence-addendum-2026-03-27.md](./device-evidence-addendum-2026-03-27.md)
+- 该 addendum 已补齐：
+  - Startup 关键路径样本
+  - Search `INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY`
+  - Welfare / WebView 首开与复开
+  - RN Host `COLD_OPEN / OPEN / REUSED`
+  - Reader `init / settings_update`
+- 当前仍保留的设备侧缺口：
+  - Search `LOAD_MORE`
+  - Reader `flip`

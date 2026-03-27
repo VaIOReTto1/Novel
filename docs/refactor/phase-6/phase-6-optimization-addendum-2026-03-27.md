@@ -12,6 +12,7 @@
   - `ComposeMainActivityFirstFrameCoordinator` 从固定 `delay(100/200)` 过渡到显式 first-frame plan。
   - `ReactNativePrewarmCoordinator` 与 `StartupDeferredInitializationCoordinator` 继续保留，但触发策略改为 gate-driven。
   - `StartupDeferredInitializationCoordinator` 已升级为正式任务清单，而不再只是 `network/settings` 两个布尔分支。
+  - `MainPage` 的短剧 toast 与启动弹窗判定已延后到首帧后再揭示。
 - Reader
   - `ReaderRestoreHintCoordinator` 改为只自动关闭“恢复入口触发的提示”。
   - `ReaderPerformanceTraceCoordinator` 新增 `init / flip / settings_update` 动作级预算与状态输出。
@@ -23,6 +24,7 @@
 ### Wave 1 代码锚点
 - [ComposeMainActivityFirstFrameCoordinator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/ComposeMainActivityFirstFrameCoordinator.kt)
 - [StartupDeferredInitializationCoordinator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/StartupDeferredInitializationCoordinator.kt)
+- [MainPageStartupUiCoordinator.kt](/d:/program/Novel/android/app/src/main/java/com/novel/page/MainPageStartupUiCoordinator.kt)
 - [ReaderRestoreHintCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderRestoreHintCoordinator.kt)
 - [ReaderPerformanceTraceCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderPerformanceTraceCoordinator.kt)
 - [ReaderDebugScenarioCoordinator.kt](/d:/program/Novel/android/feature-reader/src/main/java/com/novel/page/read/viewmodel/ReaderDebugScenarioCoordinator.kt)
@@ -33,6 +35,7 @@
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-reader:testDebugUnitTest --tests com.novel.page.read.viewmodel.ReaderDebugScenarioCoordinatorTest --tests com.novel.page.read.viewmodel.ReaderStartupCoordinatorTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :feature-welfare:testDebugUnitTest --tests com.novel.page.welfare.viewmodel.WelfarePageBootstrapCoordinatorTest --tests com.novel.page.welfare.component.WelfareWebPerformanceCoordinatorTest`
 - `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :app:testDebugUnitTest --tests com.novel.ComposeMainActivityFirstFrameCoordinatorTest --tests com.novel.ReactNativePrewarmCoordinatorTest --tests com.novel.StartupDeferredInitializationCoordinatorTest --tests com.novel.MainApplicationStartupOrchestratorTest`
+- `android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :app:testDebugUnitTest --tests com.novel.page.MainPageStartupUiCoordinatorTest`
 
 ## Wave 2：Search + RN Host/Bridge
 - Search
@@ -87,6 +90,7 @@
 - 本轮没有重跑完整 benchmark 套件，仍属于“选择性补基线”。
 - 数据库与缓存治理已经拥有更强的治理输出，但索引收益、FTS4 最优性、IO / 内存 / 电量收益复盘仍未完成。
 - `2026-03-28` 再次执行 `StartupCompilationProbeBenchmark` 时，release APK 安装阶段仍会在 `DN2101` 上触发无线 adb `device offline`，compiled-mode 数据本身尚未真正开始执行。
+- `2026-03-28` 安装带有最新 `MainPage` 首帧优化的 debug APK 时，也出现了无线 adb `EOF / 连接被主机中止`，因此首帧前后对比样本尚未补齐。
 
 ## 设备证据同步
 - `2026-03-27` 当天新增设备侧 addendum：

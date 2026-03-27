@@ -173,12 +173,14 @@
 - Startup / Search / Reader 多次采样矩阵已经落盘。
 - Welfare / WebView 路径矩阵已经落盘。
 - 数据库 / 缓存治理已经有样例输出与 recommendation 解读。
+- `MainPage` 的短剧 toast 与启动弹窗判定已延后到首帧后再揭示。
 
 ### 仍未兑现项
 | 条目 | 当前执行动作 | 当前状态 |
 | --- | --- | --- |
 | Startup 首帧时间进一步收敛 | 任务清单已 formalize，但监控仍给出“首帧渲染时间较长”建议 | `carried debt` |
 | Startup compiled-mode probe | release APK 已能产出，但 `DN2101` 的 benchmark 安装阶段仍会掉成 `device offline` | `carried debt` |
+| Startup 最新收敛改动对比样本 | `MainPage` deferred overlays 已落代码，但最新 debug APK 安装时无线 adb 发生 `EOF / 连接被主机中止`，前后对比样本未补齐 | `carried debt` |
 | Welfare / WebView 更深层 cache / cookie / benchmark 复盘 | 已有首开/复开样本，尚未形成专项 benchmark | `carried debt` |
 | 数据库索引收益、`FTS4` 最优性、cleanup 对 IO / 内存 / 电量收益复盘 | 当前仍停在治理报告增强，不是最终收益证明 | `carried debt` |
 

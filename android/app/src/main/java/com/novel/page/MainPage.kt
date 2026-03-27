@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,9 +36,12 @@ fun MainPage() {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val globalFlipBookController = rememberFlipBookAnimationController()
+    val startupUiCoordinator = remember { MainPageStartupUiCoordinator() }
+    val startupUiState = remember { startupUiCoordinator.createInitialUiState() }
 
     var launchDialogType by remember { mutableStateOf<LaunchDialogType?>(null) }
-    var showShortDramaToast by remember { mutableStateOf(true) }
+    var showShortDramaToast by remember { mutableStateOf(startupUiState.showShortDramaToast) }
+    var hasRevealedDeferredUi by remember { mutableStateOf(false) }
     val shortDramaData = remember {
         ShortDramaToastData(
             imageUrl = null,
@@ -48,7 +52,17 @@ fun MainPage() {
     }
 
     LaunchedEffect(Unit) {
-        launchDialogType = DialogLaunchManager.getInstance(context).getDialogTypeToShow()
+        withFrameNanos { }
+        val plan = startupUiCoordinator.createAfterFirstFramePlan(
+            hasRevealedDeferredUi = hasRevealedDeferredUi,
+        )
+        if (plan.shouldRevealShortDramaToast) {
+            showShortDramaToast = true
+        }
+        if (plan.shouldLoadLaunchDialog) {
+            launchDialogType = DialogLaunchManager.getInstance(context).getDialogTypeToShow()
+        }
+        hasRevealedDeferredUi = true
     }
 
     val navigateToPage: (Int) -> Unit = { pageIndex ->

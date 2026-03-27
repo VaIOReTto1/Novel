@@ -14,7 +14,7 @@
 ## 本轮结果总览
 | 方向 | 已被本轮实现关闭 | 已补证据但仍需二次深化 | 仍未进入实施的下一批 backlog |
 | --- | --- | --- | --- |
-| Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
+| Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地、主页面非关键 overlay 延后到首帧后 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
 | Reader | `init / settings_update / flip` 动作预算与真机样本补齐、恢复提示策略收口、动作级归档模板落地、多次采样矩阵落地 | benchmark 化仍可深化 | 完整动作级压测矩阵 |
 | Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐、路径矩阵落地 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
 | Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 真机样本补齐、热点动作矩阵落地、多次采样矩阵落地 | benchmark 与正式 budget diff 仍待深化 | 热点 benchmark 与正式 budget diff |
@@ -30,6 +30,7 @@
   - priority
   - trigger
   - expected benefit
+- `MainPage` 的短剧 toast 与启动弹窗判定已延后到首帧后再揭示。
 - `2026-03-27` 真机样本已证明：
   - `prewarm_after_first_frame`
   - `create_react_context_in_background`
@@ -79,6 +80,7 @@
   - `首帧绘制 = 1019ms`
   - `完全加载 = 1086ms`
 - 当前已经有样本且任务清单已 formalize，但优化建议仍提示“首帧渲染时间较长”，说明这条线还没到彻底关账。
+- 当前还新增了 `MainPage` deferred overlays 优化，但真机前后对比样本被无线 adb 安装失败阻塞。
 
 ### Reader
 - 当前已经有 `init / settings_update` 的当天真机样本。
@@ -140,6 +142,7 @@
   - `docs/refactor/phase-6/perf-multisample-matrix-2026-03-28.md`
   - `docs/refactor/evidence/startup-compilation-probe-blocker-2026-03-28.txt`
   - `docs/refactor/phase-6/startup-compilation-probe-blocker-2026-03-28.md`
+  - `docs/refactor/phase-6/main-page-deferred-overlays-2026-03-28.md`
 - Search
   - `docs/refactor/evidence/search-hot-actions-logcat-2026-03-27.txt`
   - `docs/refactor/evidence/search-load-more-probe-2026-03-27.txt`

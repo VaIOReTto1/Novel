@@ -42,7 +42,7 @@ internal class SearchQueryRepository {
             wordCountMax = params.filters.wordCountRange.max,
             sort = params.filters.sortBy.value,
             pageNum = params.page,
-            pageSize = 20,
+            pageSize = params.pageSize,
             strategy = com.novel.utils.network.cache.CacheStrategy.CACHE_FIRST,
         )
 

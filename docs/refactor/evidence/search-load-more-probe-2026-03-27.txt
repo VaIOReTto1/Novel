@@ -1,0 +1,8 @@
+﻿### query=的
+03-27 21:12:22.042 30737 30737 D SearchResultViewModel: phase=finish action=search status=success durationMs=99 trigger=INITIAL_ENTRY query=的 page=1 resultCount=15 hasMore=false
+### query=天
+03-27 21:12:28.610 30887 30887 D SearchResultViewModel: phase=finish action=search status=success durationMs=92 trigger=INITIAL_ENTRY query=天 page=1 resultCount=15 hasMore=false
+### query=王
+03-27 21:12:34.456 31028 31028 D SearchResultViewModel: phase=finish action=search status=success durationMs=58 trigger=INITIAL_ENTRY query=王 page=1 resultCount=8 hasMore=false
+### query=都市
+03-27 21:12:40.266 31157 31157 D SearchResultViewModel: phase=finish action=search status=success durationMs=68 trigger=INITIAL_ENTRY query=都市 page=1 resultCount=1 hasMore=false

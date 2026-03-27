@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.novel.core.logging.CoreLogger
 import com.novel.core.mvi.BaseMviViewModel
 import com.novel.core.mvi.MviReducer
+import com.novel.debug.RuntimeDebugScenarioStore
 import com.novel.page.search.gateway.CategoryFilterGateway
 import com.novel.page.search.gateway.SearchQueryGateway
 import com.novel.page.search.repository.SearchParams
@@ -36,6 +37,7 @@ class SearchResultViewModel @Inject constructor(
     val adapter = SearchResultStateAdapter(state)
     private val retryPolicyCoordinator = SearchRetryPolicyCoordinator()
     private val performanceTraceCoordinator = SearchPerformanceTraceCoordinator()
+    private val searchDebugPaginationCoordinator = SearchDebugPaginationCoordinator()
 
     private var currentPage = 1
     private var isLoadingMore = false
@@ -46,6 +48,9 @@ class SearchResultViewModel @Inject constructor(
     @Stable
     private var searchJob: Job? = null
 
+    private var debugSearchPageSizeOverrideProvider: () -> Int? =
+        RuntimeDebugScenarioStore::currentSearchPageSizeOverride
+
     private var currentSearchParams: SearchParams? = null
     private var retryAttempts = 0
     private val categoryFilterLoadCoordinator = SearchCategoryFilterLoadCoordinator()
@@ -53,6 +58,17 @@ class SearchResultViewModel @Inject constructor(
 
     init {
         setupSearchDebounce()
+    }
+
+    internal constructor(
+        searchQueryGateway: SearchQueryGateway,
+        categoryFilterGateway: CategoryFilterGateway,
+        debugSearchPageSizeOverrideProvider: () -> Int?,
+    ) : this(
+        searchQueryGateway = searchQueryGateway,
+        categoryFilterGateway = categoryFilterGateway,
+    ) {
+        this.debugSearchPageSizeOverrideProvider = debugSearchPageSizeOverrideProvider
     }
 
     override fun createInitialState(): SearchResultState = SearchResultState()
@@ -133,8 +149,16 @@ class SearchResultViewModel @Inject constructor(
     ) {
         if (retryPolicyCoordinator.shouldRetry(params, retryAttempts, MAX_RETRY_ATTEMPTS)) {
             retryAttempts++
-            delay(RETRY_DELAY_MS)
-            performSearchWithRetry(params, trace)
+            delay(
+                retryPolicyCoordinator.retryDelayMs(
+                    retryAttempts = retryAttempts,
+                    baseDelayMs = RETRY_DELAY_MS,
+                ),
+            )
+            performSearchWithRetry(
+                retryPolicyCoordinator.createAutomaticRetryParams(params),
+                trace,
+            )
             return
         }
 
@@ -155,7 +179,7 @@ class SearchResultViewModel @Inject constructor(
             trace,
             status = "failure",
             metadata = mapOf(
-                "trigger" to params.triggerSource.name,
+                "trigger" to trace.metadata["trigger"].orEmpty().ifBlank { params.triggerSource.name },
                 "page" to params.page.toString(),
             ),
         )
@@ -169,6 +193,7 @@ class SearchResultViewModel @Inject constructor(
             SearchParams(
                 query = query,
                 page = currentPage,
+                pageSize = currentSearchPageSize(),
                 categoryId = getCurrentState().selectedCategoryId,
                 filters = getCurrentState().filters,
                 isLoadMore = false,
@@ -185,6 +210,7 @@ class SearchResultViewModel @Inject constructor(
                 SearchParams(
                     query = currentState.query,
                     page = currentPage,
+                    pageSize = currentSearchPageSize(),
                     categoryId = currentState.selectedCategoryId,
                     filters = currentState.filters,
                     isLoadMore = false,
@@ -207,6 +233,7 @@ class SearchResultViewModel @Inject constructor(
                 SearchParams(
                     query = currentState.query,
                     page = currentPage,
+                    pageSize = currentSearchPageSize(),
                     categoryId = currentState.selectedCategoryId,
                     filters = currentState.filters,
                     isLoadMore = false,
@@ -232,6 +259,7 @@ class SearchResultViewModel @Inject constructor(
             SearchParams(
                 query = currentState.query,
                 page = currentPage,
+                pageSize = currentSearchPageSize(),
                 categoryId = currentState.selectedCategoryId,
                 filters = currentState.filters,
                 isLoadMore = true,
@@ -272,6 +300,13 @@ class SearchResultViewModel @Inject constructor(
                 isCategoryFiltersLoading = false
             }
         }
+    }
+
+    private fun currentSearchPageSize(): Int {
+        return searchDebugPaginationCoordinator.resolvePageSize(
+            defaultPageSize = 20,
+            overridePageSize = debugSearchPageSizeOverrideProvider(),
+        )
     }
 
     private fun startSearchTrace(params: SearchParams): SearchPerformanceTrace {

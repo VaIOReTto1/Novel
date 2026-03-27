@@ -73,4 +73,35 @@ class MainApplicationStartupOrchestratorTest {
 
         assertThat(events).containsExactly("network")
     }
+
+    @Test
+    fun `initializeNonCriticalComponentsAfterFirstFrame preserves declared task order`() {
+        val events = mutableListOf<String>()
+        val orchestrator = MainApplicationStartupOrchestrator()
+
+        orchestrator.initializeNonCriticalComponentsAfterFirstFrame(
+            plan = StartupDeferredInitializationPlan(
+                shouldInitializeNetwork = true,
+                shouldInitializeSettings = true,
+                tasks = listOf(
+                    StartupDeferredInitializationTask(
+                        id = StartupDeferredInitializationTaskId.NETWORK,
+                        priority = StartupDeferredInitializationPriority.HIGH,
+                        trigger = "after_first_frame",
+                        expectedBenefit = "network",
+                    ),
+                    StartupDeferredInitializationTask(
+                        id = StartupDeferredInitializationTaskId.SETTINGS,
+                        priority = StartupDeferredInitializationPriority.MEDIUM,
+                        trigger = "after_first_frame",
+                        expectedBenefit = "settings",
+                    ),
+                ),
+            ),
+            launchNetworkInitialization = { events += "network" },
+            launchSettingsInitialization = { events += "settings" },
+        )
+
+        assertThat(events).containsExactly("network", "settings").inOrder()
+    }
 }

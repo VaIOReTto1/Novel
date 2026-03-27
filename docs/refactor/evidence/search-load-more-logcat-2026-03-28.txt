@@ -1,0 +1,7 @@
+﻿03-28 00:05:47.075 16906 16906 D NavigationSetup: NavigationSetup recomposed
+03-28 00:05:47.205 16906 16906 D NavigationSetup: Attach NavController to NavViewModel
+03-28 00:05:47.759 16906 16906 D NavigationSetup: Navigate to debug route: search_result?query=我
+03-28 00:05:47.783 16906 16906 D NavigationSetup: NavigationSetup recomposed
+03-28 00:05:48.581 16906 16906 D SearchResultViewModel: phase=finish action=search status=success durationMs=90 trigger=INITIAL_ENTRY query=我 page=1 resultCount=5 hasMore=true
+03-28 00:05:48.792 16906 16906 D SearchResultViewModel: phase=finish action=search status=success durationMs=51 trigger=LOAD_MORE query=我 page=2 resultCount=5 hasMore=true
+03-28 00:05:52.898 16906 16906 D SearchResultViewModel: phase=finish action=search status=success durationMs=75 trigger=LOAD_MORE query=我 page=3 resultCount=5 hasMore=true

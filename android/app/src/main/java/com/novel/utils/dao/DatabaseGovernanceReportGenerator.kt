@@ -1,8 +1,5 @@
 package com.novel.utils.dao
 
-import androidx.sqlite.db.SupportSQLiteDatabase
-import com.novel.utils.TimberLogger
-
 data class DatabaseIndexEntry(
     val tableName: String,
     val indexName: String,
@@ -28,11 +25,27 @@ data class DatabaseQueryPlanEntry(
     val details: List<String>,
 )
 
+data class DatabaseGovernanceSummary(
+    val totalIndexes: Int,
+    val ftsTableCount: Int,
+    val triggerCount: Int,
+    val queryPlanCount: Int,
+    val queriesWithTableScan: Int,
+)
+
+data class DatabaseGovernanceRecommendation(
+    val id: String,
+    val severity: String,
+    val message: String,
+)
+
 data class DatabaseGovernanceReport(
     val indexes: List<DatabaseIndexEntry>,
     val ftsTables: List<DatabaseFtsEntry>,
     val triggers: List<DatabaseTriggerEntry>,
     val queryPlans: List<DatabaseQueryPlanEntry>,
+    val summary: DatabaseGovernanceSummary,
+    val recommendations: List<DatabaseGovernanceRecommendation>,
 )
 
 interface DatabaseGovernanceSource {
@@ -60,11 +73,27 @@ class DatabaseGovernanceReportGenerator(
             )
         }
 
+        val ftsTables = source.listFtsTables()
+        val triggers = source.listTriggers()
+        val summary = buildSummary(
+            indexes = indexes,
+            ftsTables = ftsTables,
+            triggers = triggers,
+            queryPlans = queryPlans,
+        )
+
         return DatabaseGovernanceReport(
             indexes = indexes,
-            ftsTables = source.listFtsTables(),
-            triggers = source.listTriggers(),
+            ftsTables = ftsTables,
+            triggers = triggers,
             queryPlans = queryPlans,
+            summary = summary,
+            recommendations = buildRecommendations(
+                summary = summary,
+                ftsTables = ftsTables,
+                triggers = triggers,
+                queryPlans = queryPlans,
+            ),
         )
     }
 
@@ -73,18 +102,23 @@ class DatabaseGovernanceReportGenerator(
         generatedOn: String,
     ): String {
         return buildString {
-            appendLine("# 数据库索引与FTS4治理报告")
+            appendLine("# 数据库索引与FTS4治理报告 / Database Governance Report")
             appendLine()
-            appendLine("## 摘要")
-            appendLine("- 日期：`$generatedOn`")
-            appendLine("- 范围：Room 索引、FTS4 虚拟表/触发器、关键查询 `EXPLAIN QUERY PLAN`。")
-            appendLine("- 结论：当前数据库结构已具备显式索引和 FTS4 基础治理入口，但收益复盘仍需继续。")
+            appendLine("## 摘要 / Summary")
+            appendLine("- generated_on: `$generatedOn`")
+            appendLine("- total_indexes: `${report.summary.totalIndexes}`")
+            appendLine("- fts_table_count: `${report.summary.ftsTableCount}`")
+            appendLine("- trigger_count: `${report.summary.triggerCount}`")
+            appendLine("- query_plan_count: `${report.summary.queryPlanCount}`")
+            appendLine("- queries_with_table_scan: `${report.summary.queriesWithTableScan}`")
             appendLine()
             appendLine("## 当前索引清单")
             appendLine("| 表 | 索引名 | 唯一 | 列 | 来源 |")
             appendLine("| --- | --- | --- | --- | --- |")
             report.indexes.forEach { entry ->
-                appendLine("| ${entry.tableName} | ${entry.indexName} | ${entry.unique} | ${entry.columns.joinToString(", ")} | ${entry.origin} |")
+                appendLine(
+                    "| ${entry.tableName} | ${entry.indexName} | ${entry.unique} | ${entry.columns.joinToString(", ")} | ${entry.origin} |",
+                )
             }
             appendLine()
             appendLine("## FTS4 表")
@@ -102,13 +136,90 @@ class DatabaseGovernanceReportGenerator(
             appendLine("## 关键查询计划")
             report.queryPlans.forEach { plan ->
                 appendLine("### `${plan.id}`")
-                appendLine("- SQL：`${plan.sql}`")
+                appendLine("- sql: `${plan.sql}`")
                 plan.details.forEach { detail ->
-                    appendLine("- Plan：`$detail`")
+                    appendLine("- plan: `$detail`")
                 }
                 appendLine()
             }
+            appendLine("## 风险提示 / Recommendations")
+            if (report.recommendations.isEmpty()) {
+                appendLine("- none")
+            } else {
+                report.recommendations.forEach { recommendation ->
+                    appendLine(
+                        "- ${recommendation.severity} `${recommendation.id}`: ${recommendation.message}",
+                    )
+                }
+            }
         }
+    }
+
+    private fun buildSummary(
+        indexes: List<DatabaseIndexEntry>,
+        ftsTables: List<DatabaseFtsEntry>,
+        triggers: List<DatabaseTriggerEntry>,
+        queryPlans: List<DatabaseQueryPlanEntry>,
+    ): DatabaseGovernanceSummary {
+        val queriesWithTableScan = queryPlans.count { plan ->
+            plan.details.any(::containsTableScan)
+        }
+
+        return DatabaseGovernanceSummary(
+            totalIndexes = indexes.size,
+            ftsTableCount = ftsTables.size,
+            triggerCount = triggers.size,
+            queryPlanCount = queryPlans.size,
+            queriesWithTableScan = queriesWithTableScan,
+        )
+    }
+
+    private fun buildRecommendations(
+        summary: DatabaseGovernanceSummary,
+        ftsTables: List<DatabaseFtsEntry>,
+        triggers: List<DatabaseTriggerEntry>,
+        queryPlans: List<DatabaseQueryPlanEntry>,
+    ): List<DatabaseGovernanceRecommendation> {
+        val recommendations = mutableListOf<DatabaseGovernanceRecommendation>()
+
+        val scannedPlans = queryPlans.filter { plan ->
+            plan.details.any(::containsTableScan)
+        }
+        if (scannedPlans.isNotEmpty()) {
+            recommendations += DatabaseGovernanceRecommendation(
+                id = "query-plan-table-scan",
+                severity = "risk",
+                message = "Table scans still appear in query plans: ${scannedPlans.joinToString { it.id }}",
+            )
+        }
+
+        if (ftsTables.isEmpty()) {
+            recommendations += DatabaseGovernanceRecommendation(
+                id = "fts-coverage-missing",
+                severity = "risk",
+                message = "No FTS coverage was detected in the current governance snapshot.",
+            )
+        } else if (triggers.isEmpty()) {
+            recommendations += DatabaseGovernanceRecommendation(
+                id = "fts-trigger-missing",
+                severity = "warning",
+                message = "FTS tables exist but trigger coverage is missing from the snapshot.",
+            )
+        }
+
+        if (summary.totalIndexes == 0) {
+            recommendations += DatabaseGovernanceRecommendation(
+                id = "tracked-index-missing",
+                severity = "warning",
+                message = "Tracked tables currently expose no secondary indexes in the governance snapshot.",
+            )
+        }
+
+        return recommendations
+    }
+
+    private fun containsTableScan(detail: String): Boolean {
+        return TABLE_SCAN_REGEX.containsMatchIn(detail)
     }
 
     private fun defaultQuerySpecs(): List<QuerySpec> {
@@ -135,6 +246,10 @@ class DatabaseGovernanceReportGenerator(
         val sql: String,
         val bindArgs: List<Any?> = emptyList(),
     )
+
+    private companion object {
+        val TABLE_SCAN_REGEX = Regex("""\bSCAN(?:\s+TABLE)?\b""", RegexOption.IGNORE_CASE)
+    }
 }
 
 class RoomDatabaseGovernanceSource(
@@ -178,7 +293,7 @@ class RoomDatabaseGovernanceSource(
         val db = database.openHelper.readableDatabase
         val entries = mutableListOf<DatabaseFtsEntry>()
         db.query(
-            "SELECT name, sql FROM sqlite_master WHERE type = 'table' AND sql LIKE 'CREATE VIRTUAL TABLE%' AND name LIKE '%fts%'"
+            "SELECT name, sql FROM sqlite_master WHERE type = 'table' AND sql LIKE 'CREATE VIRTUAL TABLE%' AND name LIKE '%fts%'",
         ).useCursor { cursor ->
             while (cursor.moveToNext()) {
                 entries += DatabaseFtsEntry(
@@ -194,7 +309,7 @@ class RoomDatabaseGovernanceSource(
         val db = database.openHelper.readableDatabase
         val entries = mutableListOf<DatabaseTriggerEntry>()
         db.query(
-            "SELECT name, tbl_name, sql FROM sqlite_master WHERE type = 'trigger' AND name LIKE 'book_fts_%'"
+            "SELECT name, tbl_name, sql FROM sqlite_master WHERE type = 'trigger' AND name LIKE 'book_fts_%'",
         ).useCursor { cursor ->
             while (cursor.moveToNext()) {
                 entries += DatabaseTriggerEntry(

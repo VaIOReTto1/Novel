@@ -1,0 +1,14 @@
+Date: 2026-03-27
+Source: direct front API sweep against /api/front/search/books?pageNum=1&pageSize=20
+
+Top totals from current dataset:
+- query=我 pages=1 total=17 count=17
+- query=大 pages=1 total=16 count=16
+- query=的 pages=1 total=15 count=15
+- query=天 pages=1 total=15 count=15
+- query=一 pages=1 total=11 count=11
+- query=生 pages=1 total=11 count=11
+
+Conclusion:
+- Under the current backend dataset, pageSize=20 does not yield a multi-page result for the sampled high-frequency queries.
+- query=我 is the strongest current candidate for a debug-only smaller page size scenario.

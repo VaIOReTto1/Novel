@@ -1,6 +1,7 @@
 package com.novel.rn.bridge
 
 import com.google.common.truth.Truth.assertThat
+import com.novel.rn.bridge.BridgeComponentCachePolicy
 import com.novel.rn.host.HostNavigationGateway
 import com.novel.rn.host.ReactRootViewCacheGateway
 import kotlinx.coroutines.Dispatchers
@@ -61,6 +62,29 @@ class BridgeViewModelTest {
         advanceUntilIdle()
 
         assertThat(events).containsExactly("clear:profile", "back").inOrder()
+    }
+
+    @Test
+    fun `navigate back can retain cache for reusable host pages`() = runTest(dispatcher) {
+        val events = mutableListOf<String>()
+        val viewModel = BridgeViewModel(
+            hostNavigationGateway = FakeHostNavigationGateway(
+                onNavigateBack = { events += "back" },
+            ),
+            reactRootViewCacheGateway = FakeReactRootViewCacheGateway(
+                onClearComponentCache = { componentName -> events += "clear:$componentName" },
+            ),
+        )
+
+        viewModel.sendIntent(
+            BridgeIntent.NavigateBack(
+                componentName = "Novel",
+                cachePolicy = BridgeComponentCachePolicy.RETAIN_COMPONENT_CACHE,
+            ),
+        )
+        advanceUntilIdle()
+
+        assertThat(events).containsExactly("back")
     }
 
     private class FakeHostNavigationGateway(

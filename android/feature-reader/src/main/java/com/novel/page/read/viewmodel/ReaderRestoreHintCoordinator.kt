@@ -5,15 +5,22 @@ class ReaderRestoreHintCoordinator(
 ) {
 
     fun shouldShowHint(
-        chapterId: String?,
+        shouldRestoreFromProgress: Boolean,
         isInitSuccess: Boolean,
         hasPageData: Boolean,
         hasShownHint: Boolean,
     ): Boolean {
-        return chapterId == null &&
+        return shouldRestoreFromProgress &&
             isInitSuccess &&
             hasPageData &&
             !hasShownHint
+    }
+
+    fun shouldAutoDismissHint(
+        isHintVisible: Boolean,
+        wasShownForRestore: Boolean,
+    ): Boolean {
+        return isHintVisible && wasShownForRestore
     }
 
     fun hintVisibleDurationMs(): Long = visibleDurationMs

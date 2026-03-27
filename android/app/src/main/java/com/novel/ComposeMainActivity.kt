@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.lifecycleScope
+import com.novel.debug.RuntimeDebugScenarioStore
 import com.novel.page.component.ImageLoaderService
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.TimberLogger
@@ -38,6 +39,7 @@ class ComposeMainActivity : ComponentActivity() {
         (application as? MainApplication)?.markFirstActivityCreate()
         super.onCreate(savedInstanceState)
         TimberLogger.d(TAG, "Activity created")
+        applyDebugRuntimeScenarios()
 
         setContent {
             ComposeMainActivityContent(
@@ -97,5 +99,19 @@ class ComposeMainActivity : ComponentActivity() {
         } else {
             null
         }
+    }
+
+    private fun applyDebugRuntimeScenarios() {
+        if (!BuildConfig.DEBUG) {
+            RuntimeDebugScenarioStore.updateSearchPageSizeOverride(null)
+            return
+        }
+
+        RuntimeDebugScenarioStore.updateSearchPageSizeOverride(
+            intent?.getStringExtra("debug_search_page_size")?.toIntOrNull(),
+        )
+        RuntimeDebugScenarioStore.updateReaderAutoFlipDirection(
+            intent?.getStringExtra("debug_reader_auto_flip"),
+        )
     }
 }

@@ -10,6 +10,10 @@ class SearchPerformanceTraceCoordinator(
     private val nowMs: () -> Long = System::currentTimeMillis,
 ) {
 
+    private companion object {
+        val METADATA_PRIORITY = listOf("trigger", "query", "page", "resultCount", "hasMore")
+    }
+
     fun start(
         action: String,
         metadata: Map<String, String> = emptyMap(),
@@ -46,8 +50,16 @@ class SearchPerformanceTraceCoordinator(
     }
 
     private fun StringBuilder.appendFormattedMetadata(metadata: Map<String, String>) {
-        metadata.forEach { (key, value) ->
+        metadata
+            .entries
+            .sortedWith(
+                compareBy<Map.Entry<String, String>>(
+                    { METADATA_PRIORITY.indexOf(it.key).let { index -> if (index == -1) Int.MAX_VALUE else index } },
+                    { it.key },
+                ),
+            )
+            .forEach { (key, value) ->
             append(" $key=$value")
-        }
+            }
     }
 }

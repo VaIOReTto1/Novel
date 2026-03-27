@@ -1,0 +1,7 @@
+﻿03-27 21:12:06.117 30451 30451 D NavigationSetup: NavigationSetup recomposed
+03-27 21:12:06.293 30451 30451 D NavigationSetup: Attach NavController to NavViewModel
+03-27 21:12:06.899 30451 30451 D NavigationSetup: Navigate to debug route: search_result?query=的
+03-27 21:12:06.925 30451 30451 D NavigationSetup: NavigationSetup recomposed
+03-27 21:12:07.980 30451 30451 D SearchResultViewModel: phase=finish action=search status=success durationMs=82 trigger=INITIAL_ENTRY query=的 page=1 resultCount=15 hasMore=false
+03-27 21:12:09.165 30451 30451 D SearchResultViewModel: phase=finish action=search status=success durationMs=62 trigger=CATEGORY_SWITCH query=的 page=1 resultCount=1 hasMore=false
+03-27 21:12:15.323 30451 30451 D SearchResultViewModel: phase=finish action=search status=success durationMs=253 trigger=FILTER_APPLY query=的 page=1 resultCount=0 hasMore=false

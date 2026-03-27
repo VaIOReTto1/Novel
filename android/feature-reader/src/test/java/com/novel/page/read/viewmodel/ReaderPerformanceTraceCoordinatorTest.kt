@@ -15,7 +15,7 @@ class ReaderPerformanceTraceCoordinatorTest {
         )
 
         assertThat(coordinator.formatStartMessage(trace))
-            .isEqualTo("phase=start action=init bookId=book-1 entry=restored")
+            .isEqualTo("phase=start action=init budgetMs=1200 bookId=book-1 entry=restored")
     }
 
     @Test
@@ -36,7 +36,21 @@ class ReaderPerformanceTraceCoordinatorTest {
                 metadata = mapOf("rebuild" to "true"),
             ),
         ).isEqualTo(
-            "phase=finish action=settings_update status=success durationMs=360 fontSize=18 rebuild=true",
+            "phase=finish action=settings_update status=success durationMs=360 budgetMs=400 budgetStatus=within fontSize=18 rebuild=true",
         )
+    }
+
+    @Test
+    fun formatFinishMessage_marksOverBudgetActions() {
+        var now = 100L
+        val coordinator = ReaderPerformanceTraceCoordinator(nowMs = { now })
+        val trace = coordinator.start(action = "flip")
+
+        now = 500L
+
+        assertThat(coordinator.formatFinishMessage(trace = trace, status = "success"))
+            .isEqualTo(
+                "phase=finish action=flip status=success durationMs=400 budgetMs=250 budgetStatus=over",
+            )
     }
 }

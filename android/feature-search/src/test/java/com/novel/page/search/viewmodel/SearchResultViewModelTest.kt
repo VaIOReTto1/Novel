@@ -34,8 +34,9 @@ class SearchResultViewModelTest {
 
     @Test
     fun `perform search updates search results`() = runTest(dispatcher) {
+        val gateway = FakeSearchQueryGateway()
         val viewModel = SearchResultViewModel(
-            searchQueryGateway = FakeSearchQueryGateway(),
+            searchQueryGateway = gateway,
             categoryFilterGateway = FakeCategoryFilterGateway(),
         )
 
@@ -45,10 +46,29 @@ class SearchResultViewModelTest {
         val state = viewModel.state.value
         assertThat(state.books).hasSize(1)
         assertThat(state.totalResults).isEqualTo(1)
+        assertThat(gateway.lastParams?.pageSize).isEqualTo(20)
+    }
+
+    @Test
+    fun `perform search uses debug page size override when provided`() = runTest(dispatcher) {
+        val gateway = FakeSearchQueryGateway()
+        val viewModel = SearchResultViewModel(
+            searchQueryGateway = gateway,
+            categoryFilterGateway = FakeCategoryFilterGateway(),
+            debugSearchPageSizeOverrideProvider = { 5 },
+        )
+
+        viewModel.sendIntent(SearchResultIntent.PerformSearch("novel"))
+        advanceUntilIdle()
+
+        assertThat(gateway.lastParams?.pageSize).isEqualTo(5)
     }
 
     private class FakeSearchQueryGateway : SearchQueryGateway {
+        var lastParams: SearchParams? = null
+
         override suspend fun searchBooks(params: SearchParams): SearchQueryResult {
+            lastParams = params
             return SearchQueryResult(
                 list = persistentListOf(
                     BookInfoRespDto(

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.novel.core.logging.CoreLogger
 import com.novel.core.mvi.BaseMviViewModel
 import com.novel.core.mvi.MviReducer
+import com.novel.rn.bridge.BridgeComponentCachePolicy
 import com.novel.rn.host.HostNavigationGateway
 import com.novel.rn.host.ReactRootViewCacheGateway
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,7 +53,7 @@ class BridgeViewModel @Inject constructor(
             BridgeIntent.InitializeBridge -> handleInitializeBridge()
             BridgeIntent.NavigateToLogin -> handleNavigateToLogin()
             BridgeIntent.NavigateToSettings -> handleNavigateToSettings()
-            is BridgeIntent.NavigateBack -> handleNavigateBack(intent.componentName)
+            is BridgeIntent.NavigateBack -> handleNavigateBack(intent.componentName, intent.cachePolicy)
             is BridgeIntent.ClearComponentCache -> handleClearComponentCache(intent.componentName)
             BridgeIntent.ClearAllComponentCache -> handleClearAllComponentCache()
             else -> Unit
@@ -89,8 +90,14 @@ class BridgeViewModel @Inject constructor(
         }
     }
 
-    private fun handleNavigateBack(componentName: String?) {
-        if (!componentName.isNullOrEmpty()) {
+    private fun handleNavigateBack(
+        componentName: String?,
+        cachePolicy: BridgeComponentCachePolicy,
+    ) {
+        if (
+            cachePolicy == BridgeComponentCachePolicy.CLEAR_COMPONENT_CACHE &&
+            !componentName.isNullOrEmpty()
+        ) {
             clearComponentCacheInternal(componentName)
         }
 

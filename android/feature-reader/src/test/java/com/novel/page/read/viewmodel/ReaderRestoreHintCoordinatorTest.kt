@@ -10,7 +10,7 @@ class ReaderRestoreHintCoordinatorTest {
     @Test
     fun shouldShowHint_returnsTrue_onlyWhenRestoreEntryIsReady() {
         val shouldShow = coordinator.shouldShowHint(
-            chapterId = null,
+            shouldRestoreFromProgress = true,
             isInitSuccess = true,
             hasPageData = true,
             hasShownHint = false,
@@ -22,7 +22,7 @@ class ReaderRestoreHintCoordinatorTest {
     @Test
     fun shouldShowHint_returnsFalse_whenChapterIdProvided() {
         val shouldShow = coordinator.shouldShowHint(
-            chapterId = "chapter-2",
+            shouldRestoreFromProgress = false,
             isInitSuccess = true,
             hasPageData = true,
             hasShownHint = false,
@@ -34,7 +34,7 @@ class ReaderRestoreHintCoordinatorTest {
     @Test
     fun shouldShowHint_returnsFalse_whenInitNotReady() {
         val shouldShow = coordinator.shouldShowHint(
-            chapterId = null,
+            shouldRestoreFromProgress = true,
             isInitSuccess = false,
             hasPageData = true,
             hasShownHint = false,
@@ -47,7 +47,7 @@ class ReaderRestoreHintCoordinatorTest {
     fun shouldShowHint_returnsFalse_whenPageDataMissingOrAlreadyShown() {
         assertThat(
             coordinator.shouldShowHint(
-                chapterId = null,
+                shouldRestoreFromProgress = true,
                 isInitSuccess = true,
                 hasPageData = false,
                 hasShownHint = false,
@@ -56,10 +56,27 @@ class ReaderRestoreHintCoordinatorTest {
 
         assertThat(
             coordinator.shouldShowHint(
-                chapterId = null,
+                shouldRestoreFromProgress = true,
                 isInitSuccess = true,
                 hasPageData = true,
                 hasShownHint = true,
+            ),
+        ).isFalse()
+    }
+
+    @Test
+    fun shouldAutoDismissHint_onlyTracksRestoreManagedVisibility() {
+        assertThat(
+            coordinator.shouldAutoDismissHint(
+                isHintVisible = true,
+                wasShownForRestore = true,
+            ),
+        ).isTrue()
+
+        assertThat(
+            coordinator.shouldAutoDismissHint(
+                isHintVisible = true,
+                wasShownForRestore = false,
             ),
         ).isFalse()
     }

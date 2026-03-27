@@ -1,0 +1,54 @@
+﻿## Startup
+### run=1
+03-28 00:33:48.342  1692  1763 I ActivityTaskManager: Displayed com.novel/.ComposeMainActivity: +1s736ms
+03-28 00:33:48.357 26693 26693 I StartupPerformanceMonitor: 🎨 首帧绘制完成，总启动时间: 1000ms
+03-28 00:33:53.426 26693 30732 I StartupPerformanceMonitor: 📊 总启动时间: 1065ms
+03-28 00:33:53.426 26693 30732 I StartupPerformanceMonitor: 🎨 首帧绘制: 949ms
+03-28 00:33:53.426 26693 30732 I StartupPerformanceMonitor: 🎯 完全加载: 1065ms
+
+### run=2
+03-28 00:33:58.102  1692  1763 I ActivityTaskManager: Displayed com.novel/.ComposeMainActivity: +1s705ms
+03-28 00:33:58.125 29089 29089 I StartupPerformanceMonitor: 🎨 首帧绘制完成，总启动时间: 1009ms
+03-28 00:34:03.192 29089 30879 I StartupPerformanceMonitor: 📊 总启动时间: 1071ms
+03-28 00:34:03.192 29089 30879 I StartupPerformanceMonitor: 🎨 首帧绘制: 961ms
+03-28 00:34:03.192 29089 30879 I StartupPerformanceMonitor: 🎯 完全加载: 1071ms
+
+### run=3
+03-28 00:34:07.974  1692  1763 I ActivityTaskManager: Displayed com.novel/.ComposeMainActivity: +1s748ms
+03-28 00:34:07.978 30726 30726 I StartupPerformanceMonitor: 🎨 首帧绘制完成，总启动时间: 1019ms
+03-28 00:34:13.042 30726 31033 I StartupPerformanceMonitor: 📊 总启动时间: 1079ms
+03-28 00:34:13.042 30726 31033 I StartupPerformanceMonitor: 🎨 首帧绘制: 974ms
+03-28 00:34:13.042 30726 31033 I StartupPerformanceMonitor: 🎯 完全加载: 1079ms
+
+## Search
+### run=1
+03-28 00:34:18.581 30868 30868 D SearchResultViewModel: phase=finish action=search status=success durationMs=94 trigger=INITIAL_ENTRY query=我 page=1 resultCount=5 hasMore=true
+03-28 00:34:18.787 30868 30868 D SearchResultViewModel: phase=finish action=search status=success durationMs=50 trigger=LOAD_MORE query=我 page=2 resultCount=5 hasMore=true
+03-28 00:34:22.981 30868 30868 D SearchResultViewModel: phase=finish action=search status=success durationMs=165 trigger=LOAD_MORE query=我 page=3 resultCount=5 hasMore=true
+
+### run=2
+03-28 00:34:29.417 31019 31019 D SearchResultViewModel: phase=finish action=search status=success durationMs=180 trigger=INITIAL_ENTRY query=我 page=1 resultCount=5 hasMore=true
+03-28 00:34:29.815 31019 31019 D SearchResultViewModel: phase=finish action=search status=success durationMs=92 trigger=LOAD_MORE query=我 page=2 resultCount=5 hasMore=true
+03-28 00:34:33.651 31019 31019 D SearchResultViewModel: phase=finish action=search status=success durationMs=76 trigger=LOAD_MORE query=我 page=3 resultCount=5 hasMore=true
+
+### run=3
+03-28 00:34:40.034 31159 31159 D SearchResultViewModel: phase=finish action=search status=success durationMs=171 trigger=INITIAL_ENTRY query=我 page=1 resultCount=5 hasMore=true
+03-28 00:34:40.425 31159 31159 D SearchResultViewModel: phase=finish action=search status=success durationMs=90 trigger=LOAD_MORE query=我 page=2 resultCount=5 hasMore=true
+03-28 00:34:44.431 31159 31159 D SearchResultViewModel: phase=finish action=search status=success durationMs=75 trigger=LOAD_MORE query=我 page=3 resultCount=5 hasMore=true
+
+## Reader
+### run=1
+03-28 00:34:50.095 31334 31334 D ReaderPerfProbe: phase=finish action=settings_update status=success durationMs=5 budgetMs=400 budgetStatus=within mode=PAGECURL fontSize=16 rebuildVirtualPages=false pageCount=unchanged
+03-28 00:34:50.546 31334 31334 D ReaderPerfProbe: phase=finish action=init status=success durationMs=384 budgetMs=1200 budgetStatus=within bookId=1334318497132552192 entry=1334318500051787776 chapterId=1334318500051787776 pageCount=7
+03-28 00:34:50.950 31334 31334 D ReaderPerfProbe: phase=finish action=flip status=success durationMs=49 budgetMs=250 budgetStatus=within source=page_flip_intent direction=NEXT mode=PAGECURL outcome=virtual_page_rebuild virtualIndex=2
+
+### run=2
+03-28 00:35:04.284 31484 31484 D ReaderPerfProbe: phase=finish action=settings_update status=success durationMs=4 budgetMs=400 budgetStatus=within mode=PAGECURL fontSize=16 rebuildVirtualPages=false pageCount=unchanged
+03-28 00:35:04.751 31484 31484 D ReaderPerfProbe: phase=finish action=init status=success durationMs=399 budgetMs=1200 budgetStatus=within bookId=1334318497132552192 entry=1334318500051787776 chapterId=1334318500051787776 pageCount=7
+03-28 00:35:05.088 31484 31484 D ReaderPerfProbe: phase=finish action=flip status=success durationMs=39 budgetMs=250 budgetStatus=within source=page_flip_intent direction=NEXT mode=PAGECURL outcome=virtual_page_rebuild virtualIndex=2
+
+### run=3
+03-28 00:35:18.873 31647 31647 D ReaderPerfProbe: phase=finish action=settings_update status=success durationMs=4 budgetMs=400 budgetStatus=within mode=PAGECURL fontSize=16 rebuildVirtualPages=false pageCount=unchanged
+03-28 00:35:19.325 31647 31647 D ReaderPerfProbe: phase=finish action=init status=success durationMs=381 budgetMs=1200 budgetStatus=within bookId=1334318497132552192 entry=1334318500051787776 chapterId=1334318500051787776 pageCount=7
+03-28 00:35:19.754 31647 31647 D ReaderPerfProbe: phase=finish action=flip status=success durationMs=41 budgetMs=250 budgetStatus=within source=page_flip_intent direction=NEXT mode=PAGECURL outcome=virtual_page_rebuild virtualIndex=2
+

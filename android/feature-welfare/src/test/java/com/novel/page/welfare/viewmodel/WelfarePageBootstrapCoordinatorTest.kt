@@ -12,7 +12,6 @@ class WelfarePageBootstrapCoordinatorTest {
         ).createInitialPlan(alreadyBootstrapped = false)
 
         assertThat(outcome.shouldInitializePreloadManager).isEqualTo(true)
-        assertThat(outcome.shouldStartPerformanceMonitor).isEqualTo(true)
         assertThat(outcome.shouldDispatchInitializeIntent).isEqualTo(false)
     }
 
@@ -23,7 +22,6 @@ class WelfarePageBootstrapCoordinatorTest {
         ).createInitialPlan(alreadyBootstrapped = true)
 
         assertThat(outcome.shouldInitializePreloadManager).isEqualTo(false)
-        assertThat(outcome.shouldStartPerformanceMonitor).isEqualTo(false)
         assertThat(outcome.shouldDispatchInitializeIntent).isEqualTo(false)
     }
 
@@ -34,7 +32,6 @@ class WelfarePageBootstrapCoordinatorTest {
         ).createInitialPlan(alreadyBootstrapped = false)
 
         assertThat(outcome.shouldInitializePreloadManager).isEqualTo(true)
-        assertThat(outcome.shouldStartPerformanceMonitor).isEqualTo(true)
         assertThat(outcome.shouldDispatchInitializeIntent).isEqualTo(true)
     }
 }

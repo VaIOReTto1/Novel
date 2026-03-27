@@ -1,0 +1,78 @@
+﻿03-27 21:12:51.634 31268 31268 D WelfareModule: 创建InitializeWelfarePageUseCase
+03-27 21:12:51.635 31268 31268 D BaseMviViewModel: 初始化MVI ViewModel: WelfareViewModel
+03-27 21:12:51.638 31268 31268 D WelfareViewModel: WelfareViewModel初始化 - MVI版本
+03-27 21:12:51.641 31268 31268 D WelfareViewModel: 开始初始化福利页面
+03-27 21:12:51.641 31268 31268 D WelfarePerformanceMonitor: ViewModel操作: initialize_start
+03-27 21:12:51.641 31268 31268 D BaseUseCase: 开始执行UseCase: InitializeWelfarePageUseCase
+03-27 21:12:51.641 31268 31509 D InitializeWelfarePageUseCase: 开始初始化福利页面
+03-27 21:12:51.641 31268 31509 D InitializeWelfarePageUseCase: 福利页面初始化成功
+03-27 21:12:51.660 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-27 21:12:51.822 31268 31268 D WebViewComponent: WebView渲染状态已恢复
+03-27 21:12:51.836 31268 31268 D WebViewComponent: WebView已挂载到界面并恢复活跃状态
+03-27 21:12:51.859 31268 31268 D WebViewComponent: DisposableEffect触发 - savedState: false, url: https://www.bing.com/, webView.url: null
+03-27 21:12:51.859 31268 31268 D WebViewComponent: 传入URL与当前URL不同，强制加载: https://www.bing.com/ (当前: null)
+03-27 21:12:51.874 31268 31268 D WelfarePage: 页面可见性: true, 生命周期状态: RESUMED
+03-27 21:12:51.877 31268 31268 D WelfarePerformanceMonitor: 开始监控页面加载: https://www.bing.com/
+03-27 21:12:51.879 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: false, errorMessage: null, isLoading: true, currentUrl: https://www.bing.com/
+03-27 21:12:51.880 31268 31268 D WelfarePage: 深色模式状态变更: false
+03-27 21:12:51.880 31268 31268 D WelfarePage: WebView加载成功，深色模式支持: true
+03-27 21:12:51.899 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-27 21:12:51.961 31268 31268 D BaseUseCase: UseCase执行成功: InitializeWelfarePageUseCase, 耗时: 320ms
+03-27 21:12:51.961 31268 31268 D WelfarePerformanceMonitor: ViewModel操作: initialize_complete
+03-27 21:12:51.961 31268 31268 D WelfareViewModel: 福利页面初始化完成
+03-27 21:12:52.003 31268 31268 D WelfarePage: 深色模式状态变更: false
+03-27 21:12:52.012 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-27 21:12:52.034 31268 31268 I WelfarePerformanceMonitor: 页面加载完成，耗时: 156ms
+03-27 21:12:52.034 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: false, errorMessage: null, isLoading: false, currentUrl: https://www.bing.com/
+03-27 21:12:52.040 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://www.bing.com/
+03-27 21:12:52.434 31268 31268 D WebViewComponent: 页面开始加载: https://cn.bing.com/
+03-27 21:12:52.434 31268 31268 D WelfarePerformanceMonitor: WebView开始加载
+03-27 21:12:52.436 31268 31268 D WelfareViewModel: 更新URL: https://www.bing.com/ -> https://cn.bing.com/
+03-27 21:12:52.448 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:12:52.461 31268 31268 D WelfarePerformanceMonitor: 开始监控页面加载: https://cn.bing.com/
+03-27 21:12:52.462 31268 31268 I WelfarePerformanceMonitor: 页面加载完成，耗时: 1ms
+03-27 21:12:52.462 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: true, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/
+03-27 21:12:52.462 31268 31268 D WelfarePage: WebView加载成功，深色模式支持: true
+03-27 21:12:52.469 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:12:52.561 31268 31268 D WelfarePerformanceMonitor: 页面可交互时间: 100ms
+03-27 21:12:52.565 31268 31268 D WebViewComponent: 页面加载完成: https://cn.bing.com/
+03-27 21:12:52.565 31268 31268 D WelfarePerformanceMonitor: WebView加载完成，耗时: 131ms
+03-27 21:12:52.574 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:12:52.584 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: false, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/
+03-27 21:12:52.806 31268 31268 D WelfarePerformanceMonitor: 首次内容绘制时间: 345ms
+03-27 21:12:57.961 31268 31268 D WebViewComponent: 开始保存WebView状态，当前URL: https://cn.bing.com/
+03-27 21:12:57.962 31268 31268 D WebViewComponent: WebView状态已保存到Bundle
+03-27 21:12:57.964 31268 31268 D WebViewComponent: WebView资源已清理
+03-27 21:12:58.126 31268 31268 D WebViewComponent: 页面开始加载: about:blank
+03-27 21:12:58.126 31268 31268 D WelfarePerformanceMonitor: WebView开始加载
+03-27 21:12:58.128 31268 31268 D WelfareViewModel: 忽略无效URL更新: about:blank
+03-27 21:12:58.129 31268 31268 D WelfarePerformanceMonitor: 页面可交互时间: 5668ms
+03-27 21:12:58.132 31268 31268 D WebViewComponent: 页面加载完成: about:blank
+03-27 21:12:58.132 31268 31268 D WelfarePerformanceMonitor: WebView加载完成，耗时: 6ms
+03-27 21:12:59.862 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:12:59.863 31268 31268 D WebViewComponent: WebView渲染状态已恢复
+03-27 21:12:59.877 31268 31268 D WebViewComponent: WebView已挂载到界面并恢复活跃状态
+03-27 21:12:59.890 31268 31268 D WebViewComponent: DisposableEffect触发 - savedState: true, url: https://cn.bing.com/, webView.url: null
+03-27 21:12:59.890 31268 31268 D WebViewComponent: 开始恢复WebView状态
+03-27 21:12:59.892 31268 31268 D WebViewComponent: WebView状态已恢复，当前URL: https://cn.bing.com/
+03-27 21:12:59.892 31268 31268 D WebViewComponent: 传入URL与当前URL相同，无需重新加载: https://cn.bing.com/
+03-27 21:12:59.902 31268 31268 D WelfarePage: 页面可见性: true, 生命周期状态: RESUMED
+03-27 21:12:59.904 31268 31268 D WelfarePerformanceMonitor: 开始监控页面加载: https://cn.bing.com/
+03-27 21:12:59.904 31268 31268 I WelfarePerformanceMonitor: 页面加载完成，耗时: 0ms
+03-27 21:12:59.905 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: false, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/
+03-27 21:12:59.906 31268 31268 D WelfarePage: 深色模式状态变更: false
+03-27 21:12:59.906 31268 31268 D WelfarePage: WebView加载成功，深色模式支持: true
+03-27 21:12:59.932 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:13:00.205 31268 31268 D WelfarePage: 深色模式状态变更: false
+03-27 21:13:00.220 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:13:00.249 31268 31268 D WebViewComponent: 页面开始加载: https://cn.bing.com/
+03-27 21:13:00.249 31268 31268 D WelfarePerformanceMonitor: WebView开始加载
+03-27 21:13:00.259 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:13:00.288 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: true, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/
+03-27 21:13:00.336 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:13:00.357 31268 31268 D WelfarePerformanceMonitor: 页面可交互时间: 452ms
+03-27 21:13:00.362 31268 31268 D WebViewComponent: 页面加载完成: https://cn.bing.com/
+03-27 21:13:00.362 31268 31268 D WelfarePerformanceMonitor: WebView加载完成，耗时: 113ms
+03-27 21:13:00.370 31268 31268 D WelfarePage: 显示WebView组件 - URL: https://cn.bing.com/
+03-27 21:13:00.381 31268 31268 D WelfarePage: 渲染条件检查- pageLoadingState: false, errorMessage: null, isLoading: false, currentUrl: https://cn.bing.com/
+03-27 21:13:00.595 31268 31268 D WelfarePerformanceMonitor: 首次内容绘制时间: 691ms

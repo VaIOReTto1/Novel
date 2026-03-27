@@ -37,6 +37,59 @@ class SearchRetryPolicyCoordinatorTest {
     }
 
     @Test
+    fun shouldRetry_returnsTrue_forUserRetryWithinLimit() {
+        val shouldRetry = coordinator.shouldRetry(
+            params = createParams(
+                triggerSource = SearchTriggerSource.USER_RETRY,
+                isLoadMore = false,
+            ),
+            retryAttempts = 2,
+            maxRetryAttempts = 3,
+        )
+
+        assertThat(shouldRetry).isTrue()
+    }
+
+    @Test
+    fun shouldRetry_returnsFalse_forFilterApplyBeyondLimit() {
+        val shouldRetry = coordinator.shouldRetry(
+            params = createParams(
+                triggerSource = SearchTriggerSource.FILTER_APPLY,
+                isLoadMore = false,
+            ),
+            retryAttempts = 4,
+            maxRetryAttempts = 3,
+        )
+
+        assertThat(shouldRetry).isFalse()
+    }
+
+    @Test
+    fun createAutomaticRetryParams_preservesOriginalTrigger_forAutomaticRetry() {
+        val retryParams = coordinator.createAutomaticRetryParams(
+            createParams(
+                triggerSource = SearchTriggerSource.INITIAL_ENTRY,
+                isLoadMore = false,
+            ),
+        )
+
+        assertThat(retryParams.triggerSource).isEqualTo(SearchTriggerSource.INITIAL_ENTRY)
+        assertThat(retryParams.page).isEqualTo(1)
+    }
+
+    @Test
+    fun createUserRetryParams_marksManualRetryTrigger() {
+        val retryParams = coordinator.createUserRetryParams(
+            createParams(
+                triggerSource = SearchTriggerSource.INITIAL_ENTRY,
+                isLoadMore = false,
+            ),
+        )
+
+        assertThat(retryParams.triggerSource).isEqualTo(SearchTriggerSource.USER_RETRY)
+    }
+
+    @Test
     fun retryDelayMs_scalesLinearlyWithAttemptCount() {
         assertThat(
             coordinator.retryDelayMs(

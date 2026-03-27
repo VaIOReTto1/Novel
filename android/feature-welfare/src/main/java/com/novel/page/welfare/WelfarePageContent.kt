@@ -91,14 +91,18 @@ fun WelfarePageContent(
         if (bootstrapPlan.shouldInitializePreloadManager) {
             webViewPreloadManager.initialize()
         }
-        if (bootstrapPlan.shouldStartPerformanceMonitor) {
-            performanceMonitor.startPageLoad("welfare_page")
-        }
         if (bootstrapPlan.shouldDispatchInitializeIntent) {
             viewModel.sendIntent(WelfareIntent.InitializePage)
         }
         if (!hasBootstrappedPage) {
             hasBootstrappedPage = true
+        }
+    }
+
+    LaunchedEffect(currentUrl) {
+        val navigationPlan = performanceCoordinator.createNavigationPlan(currentUrl = currentUrl)
+        if (navigationPlan.shouldStartPageLoadMonitoring) {
+            performanceMonitor.startPageLoad(currentUrl)
         }
     }
 

@@ -1,0 +1,29 @@
+﻿03-27 21:10:21.135 24922 24922 D BaseMviViewModel: 初始化MVI ViewModel: ReaderViewModel
+03-27 21:10:21.140 24922 24922 D ReaderViewModel: ReaderViewModel初始化
+03-27 21:10:21.140 24922 24922 D ReaderViewModel: 加载初始设置
+03-27 21:10:21.144 24922 24922 D ReaderPerfProbe: phase=start action=settings_update budgetMs=400 mode=PAGECURL fontSize=16
+03-27 21:10:21.145 24922 24922 D ReaderViewModel: 异步更新阅读器设置
+03-27 21:10:21.149 24922 24922 D ReaderViewModel: 设置更新成功
+03-27 21:10:21.149 24922 24922 D ReaderPerfProbe: phase=finish action=settings_update status=success durationMs=5 budgetMs=400 budgetStatus=within mode=PAGECURL fontSize=16 rebuildVirtualPages=false pageCount=unchanged
+03-27 21:10:21.150 24922 24922 D ReaderViewModel: 分页进度更新: 章节 0/0, 估算总页=0
+03-27 21:10:21.213 24922 24922 D ReaderViewModel: 容器尺寸无变化，跳过更新
+03-27 21:10:21.257 24922 24922 D ReaderPage: ReaderPage参数变化: bookId=1334318497132552192, chapterId=1334318500051787776
+03-27 21:10:21.257 24922 24922 D ReaderPage: 开始加载书籍和章节内容
+03-27 21:10:21.258 24922 24922 D ReaderPerfProbe: phase=start action=init budgetMs=1200 bookId=1334318497132552192 entry=1334318500051787776
+03-27 21:10:21.258 24922 24922 D ReaderViewModel: 异步初始化阅读器: bookId=1334318497132552192, chapterId=1334318500051787776
+03-27 21:10:21.261 24922 24922 D ReaderPage: 设置状态变化监听触发
+03-27 21:10:21.261 24922 24922 D ReaderPage: 当前背景颜色: #FFF5F5DC
+03-27 21:10:21.261 24922 24922 D ReaderPage: 当前文字颜色: #FF2E2E2E
+03-27 21:10:21.261 24922 24922 D ReaderPage: 当前字体大小: 16sp
+03-27 21:10:21.262 24922 24922 D ReaderPage: 当前翻页效果: PAGECURL
+03-27 21:10:22.074 24922 24922 D ReaderViewModel: 阅读器初始化成功: 章节=第一章 想要个孩子？, 页面=0
+03-27 21:10:22.075 24922 24922 D ReaderViewModel: 构建虚拟页面: preserve=false
+03-27 21:10:22.078 24922 24922 D ReaderViewModel: 虚拟页面构建成功: 总页数=14, 当前索引=1
+03-27 21:10:22.078 24922 24922 D ReaderPerfProbe: phase=finish action=init status=success durationMs=820 budgetMs=1200 budgetStatus=within bookId=1334318497132552192 entry=1334318500051787776 chapterId=1334318500051787776 pageCount=7
+03-27 21:10:22.819 24922 24922 D ReaderPage: 保存历史记录: bookInfo=BookInfo(bookId=1334318497132552192, bookName=我有家诸天最强当铺, authorName=白袍小飞, bookDesc=&nbsp;&nbsp;&nbsp;&nbsp;诸天万界最强当铺，本店物资丰富、价格公道、童叟无欺，只有您想不到的，没有本店没有的。<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;只要您能拿出有价值的东西来典当，本店保证，什么神仙皇帝，在您面前都得靠边站。<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;本店营业地址不定，联系方式暂无，如需交易，请在心中默念：第一当铺，诸天最强，我要交易，快快现身。<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;第一当铺掌柜楚河的私密日记第一页：经营当铺？小意思，不就是做奸商吗，没有人比我更懂做奸商。<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;第一当铺掌柜楚河的私密日记第二页：我从没想过赚穷人的钱，干翻那些大人物，他们的钱就是我的了。, picUrl=/localPic/2020/12/03/c734eb38ee9d4968988642d0665d7e22.jpg, visitCount=500, wordCount=418946, categoryName=网游竞技), chapter=第一章 想要个孩子？
+03-27 21:10:22.821 24922 24922 D ReaderViewModel: 异步保存历史记录: bookId=1334318497132552192, chapterId=1334318500051787776
+03-27 21:10:22.823 24922 24922 D ReaderViewModel: 容器尺寸无变化，跳过更新
+03-27 21:10:22.823 24922 24922 D ReaderPage: 初始化后补发容器尺寸更新: 1080 x 2155
+03-27 21:10:22.827 24922 24922 D ReaderViewModel: 异步加载书籍评论: bookId=1334318497132552192
+03-27 21:10:22.918 24922 24922 D ReaderViewModel: 历史记录保存成功
+03-27 21:10:22.923 24922 24922 D ReaderViewModel: 书籍评论加载成功: 评论数=5

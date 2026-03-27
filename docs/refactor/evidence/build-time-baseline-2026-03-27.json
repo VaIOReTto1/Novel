@@ -1,0 +1,29 @@
+﻿{
+    "recorded_on":  "2026-03-27",
+    "branch":  "codex-wave2-search-rn-host",
+    "head":  "224e16a7a2f2759dc182d8f3b001e3f4a966f139",
+    "mode":  "android/gradlew.bat --no-daemon -Pkotlin.incremental=false -Pkapt.incremental.apt=false",
+    "working_directory":  "d:/program/Novel/android",
+    "results":  [
+                    {
+                        "command":  "app:testDebugUnitTest",
+                        "seconds":  288.88
+                    },
+                    {
+                        "command":  "app:lintDebug",
+                        "seconds":  84.29
+                    },
+                    {
+                        "command":  "app:compileDebugAndroidTestKotlin",
+                        "seconds":  63.07
+                    },
+                    {
+                        "command":  ":macrobenchmark:assemble",
+                        "seconds":  45.81
+                    },
+                    {
+                        "command":  ":feature-search:testDebugUnitTest",
+                        "seconds":  47.31
+                    }
+                ]
+}

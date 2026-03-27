@@ -1,10 +1,32 @@
 package com.novel.page.welfare.component
 
+data class WelfareNavigationPlan(
+    val shouldStartPageLoadMonitoring: Boolean,
+    val shouldResetPerLoadMarkers: Boolean,
+)
+
 class WelfareWebPerformanceCoordinator {
 
     private var firstContentfulPaintRecorded = false
     private var pageLoadCompleteRecorded = false
     private var timeToInteractiveRecorded = false
+    private var lastTrackedUrl: String? = null
+
+    fun createNavigationPlan(currentUrl: String): WelfareNavigationPlan {
+        if (currentUrl.isBlank() || currentUrl == lastTrackedUrl) {
+            return WelfareNavigationPlan(
+                shouldStartPageLoadMonitoring = false,
+                shouldResetPerLoadMarkers = false,
+            )
+        }
+
+        lastTrackedUrl = currentUrl
+        resetForNewPageLoad()
+        return WelfareNavigationPlan(
+            shouldStartPageLoadMonitoring = true,
+            shouldResetPerLoadMarkers = true,
+        )
+    }
 
     fun resetForNewPageLoad() {
         firstContentfulPaintRecorded = false

@@ -1,0 +1,16 @@
+Date: 2026-03-28
+Command:
+- android/gradlew.bat --no-daemon "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false" :macrobenchmark:connectedBenchmarkAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.novel.macrobenchmark.StartupCompilationProbeBenchmark"
+
+Observed blocker:
+- compilation probe no longer fails because of duplicate SearchRankingItem definitions
+- benchmark reached release APK packaging successfully
+- UTP / ddmlib failed while installing release APK to device
+
+Key error:
+- Failed to install split APK(s): [D:\program\Novel\android\app\build\outputs\apk\release\app-release.apk]
+- device offline
+
+Conclusion:
+- current compiled-mode blocker on 2026-03-28 is an unstable wireless adb / release install path during benchmark setup
+- not the previous duplicate-class packaging problem

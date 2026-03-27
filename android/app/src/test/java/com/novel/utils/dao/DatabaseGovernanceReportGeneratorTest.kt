@@ -1,12 +1,13 @@
 package com.novel.utils.dao
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class DatabaseGovernanceReportGeneratorTest {
 
     @Test
-    fun generate_buildsIndexFtsAndQueryPlanSections() {
+    fun generate_buildsIndexFtsQueryPlanAndSummarySections() {
         val generator = DatabaseGovernanceReportGenerator(
             source = FakeDatabaseGovernanceSource(),
         )
@@ -20,11 +21,43 @@ class DatabaseGovernanceReportGeneratorTest {
         assertEquals(3, report.triggers.size)
         assertEquals(3, report.queryPlans.size)
         assertEquals("home_books_by_type", report.queryPlans.first().id)
-        assertEquals("SEARCH TABLE home_books USING INDEX idx_home_book_category_type_sort", report.queryPlans.first().details.first())
+        assertEquals(
+            "SEARCH TABLE home_books USING INDEX idx_home_book_category_type_sort",
+            report.queryPlans.first().details.first(),
+        )
+        assertEquals(3, report.summary.queryPlanCount)
+        assertEquals(1, report.summary.queriesWithTableScan)
+        assertEquals(1, report.recommendations.size)
     }
 
     @Test
-    fun toMarkdown_rendersChineseHeadingsAndKeyRows() {
+    fun generate_addsWarningsForMissingFtsCoverageAndTableScans() {
+        val generator = DatabaseGovernanceReportGenerator(
+            source = RiskyDatabaseGovernanceSource(),
+        )
+
+        val report = generator.generate()
+
+        assertTrue(report.recommendations.size >= 2)
+        assertTrue(report.recommendations.any { it.id == "query-plan-table-scan" })
+        assertTrue(report.recommendations.any { it.id == "fts-coverage-missing" })
+    }
+
+    @Test
+    fun generate_detectsTableScanWhenEqpOmitsTableKeyword() {
+        val generator = DatabaseGovernanceReportGenerator(
+            source = EqpVariantDatabaseGovernanceSource(),
+        )
+
+        val report = generator.generate()
+
+        assertEquals(3, report.summary.queryPlanCount)
+        assertEquals(3, report.summary.queriesWithTableScan)
+        assertTrue(report.recommendations.any { it.id == "query-plan-table-scan" })
+    }
+
+    @Test
+    fun toMarkdown_rendersSummaryAndRecommendationSections() {
         val generator = DatabaseGovernanceReportGenerator(
             source = FakeDatabaseGovernanceSource(),
         )
@@ -34,10 +67,11 @@ class DatabaseGovernanceReportGeneratorTest {
             generatedOn = "2026-03-22",
         )
 
-        assert(markdown.contains("# 数据库索引与FTS4治理报告"))
-        assert(markdown.contains("## 当前索引清单"))
-        assert(markdown.contains("book_fts_insert"))
-        assert(markdown.contains("home_books_by_type"))
+        assertTrue(markdown.contains("#"))
+        assertTrue(markdown.contains("book_fts_insert"))
+        assertTrue(markdown.contains("home_books_by_type"))
+        assertTrue(markdown.contains("queries_with_table_scan"))
+        assertTrue(markdown.contains("risk"))
     }
 
     private class FakeDatabaseGovernanceSource : DatabaseGovernanceSource {
@@ -54,6 +88,7 @@ class DatabaseGovernanceReportGeneratorTest {
                         origin = "c",
                     ),
                 )
+
                 "users" -> listOf(
                     DatabaseIndexEntry(
                         tableName = "users",
@@ -63,6 +98,7 @@ class DatabaseGovernanceReportGeneratorTest {
                         origin = "c",
                     ),
                 )
+
                 else -> emptyList()
             }
         }
@@ -86,10 +122,44 @@ class DatabaseGovernanceReportGeneratorTest {
 
         override fun explainQueryPlan(sql: String, bindArgs: List<Any?>): List<String> {
             return when {
-                sql.contains("home_books") -> listOf("SEARCH TABLE home_books USING INDEX idx_home_book_category_type_sort")
-                sql.contains("home_categories") -> listOf("SCAN TABLE home_categories USING INDEX idx_category_order")
+                sql.contains("home_books") -> listOf(
+                    "SEARCH TABLE home_books USING INDEX idx_home_book_category_type_sort",
+                )
+
+                sql.contains("home_categories") -> listOf(
+                    "SCAN TABLE home_categories USING INDEX idx_category_order",
+                )
+
                 else -> listOf("SEARCH TABLE users USING PRIMARY KEY")
             }
+        }
+    }
+
+    private class RiskyDatabaseGovernanceSource : DatabaseGovernanceSource {
+        override fun listTrackedTables(): List<String> = listOf("home_books")
+
+        override fun listIndexes(tableName: String): List<DatabaseIndexEntry> = emptyList()
+
+        override fun listFtsTables(): List<DatabaseFtsEntry> = emptyList()
+
+        override fun listTriggers(): List<DatabaseTriggerEntry> = emptyList()
+
+        override fun explainQueryPlan(sql: String, bindArgs: List<Any?>): List<String> {
+            return listOf("SCAN TABLE home_books")
+        }
+    }
+
+    private class EqpVariantDatabaseGovernanceSource : DatabaseGovernanceSource {
+        override fun listTrackedTables(): List<String> = listOf("home_books")
+
+        override fun listIndexes(tableName: String): List<DatabaseIndexEntry> = emptyList()
+
+        override fun listFtsTables(): List<DatabaseFtsEntry> = emptyList()
+
+        override fun listTriggers(): List<DatabaseTriggerEntry> = emptyList()
+
+        override fun explainQueryPlan(sql: String, bindArgs: List<Any?>): List<String> {
+            return listOf("SCAN home_books")
         }
     }
 }

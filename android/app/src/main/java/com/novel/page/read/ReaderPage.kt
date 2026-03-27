@@ -1,6 +1,7 @@
 package com.novel.page.read
 
 import com.novel.core.StableThrowable
+import com.novel.debug.RuntimeDebugScenarioStore
 import com.novel.utils.TimberLogger
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -81,6 +82,7 @@ import com.novel.page.read.viewmodel.ReaderHistoryCoordinator
 import com.novel.page.read.viewmodel.ReaderIntent
 import com.novel.page.read.viewmodel.ReaderViewModel
 import com.novel.page.read.viewmodel.ReaderState
+import com.novel.page.read.viewmodel.ReaderDebugScenarioCoordinator
 import com.novel.ui.theme.NovelColors
 import com.novel.utils.debounceClickable
 import com.novel.utils.wdp
@@ -117,6 +119,7 @@ fun ReaderPage(
     val activeController = flipBookController ?: NavViewModel.currentFlipBookController()
     val readerHistoryCoordinator = remember { ReaderHistoryCoordinator() }
     val readerRestoreHintCoordinator = remember { ReaderRestoreHintCoordinator() }
+    val readerDebugScenarioCoordinator = remember { ReaderDebugScenarioCoordinator() }
     val readerSettingsRefreshCoordinator = remember { ReaderSettingsRefreshCoordinator() }
     val readerStartupCoordinator = remember { ReaderStartupCoordinator() }
 
@@ -132,6 +135,8 @@ fun ReaderPage(
 
     val coroutineScope = rememberCoroutineScope()
     var hasShownRestoreHint by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
+    var shouldShowRestoreHintForEntry by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
+    var restoreHintManagedByCoordinator by rememberSaveable(bookId, chapterId) { mutableStateOf(false) }
     var hasPendingPostInitRefresh by rememberSaveable(bookId, chapterId) { mutableStateOf(true) }
     var previousReaderSettings by remember { mutableStateOf<ReaderSettings?>(null) }
 
@@ -167,6 +172,7 @@ fun ReaderPage(
             chapterId = chapterId,
         )
         if (launchPlan.shouldInitReader) {
+            shouldShowRestoreHintForEntry = launchPlan.shouldShowProgressRestoredHint
             handleInitReader(bookId, chapterId)
         } else {
             TimberLogger.w("ReaderPage", "书籍ID或章节ID为空，跳过加载")
@@ -175,21 +181,37 @@ fun ReaderPage(
     
     LaunchedEffect(chapterId, state.isSuccess, state.currentPageData?.chapterId) {
         if (readerRestoreHintCoordinator.shouldShowHint(
-                chapterId = chapterId,
+                shouldRestoreFromProgress = shouldShowRestoreHintForEntry,
                 isInitSuccess = state.isSuccess,
                 hasPageData = state.currentPageData != null,
                 hasShownHint = hasShownRestoreHint,
             )
         ) {
             hasShownRestoreHint = true
+            shouldShowRestoreHintForEntry = false
+            restoreHintManagedByCoordinator = true
+            TimberLogger.d(
+                "ReaderPage",
+                "trace action=restore_hint_show source=restored_progress budgetMs=${readerRestoreHintCoordinator.hintVisibleDurationMs()}",
+            )
             viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(true))
         }
     }
 
-    LaunchedEffect(showProgressRestoredHint) {
-        if (showProgressRestoredHint) {
+    LaunchedEffect(showProgressRestoredHint, restoreHintManagedByCoordinator) {
+        if (
+            readerRestoreHintCoordinator.shouldAutoDismissHint(
+                isHintVisible = showProgressRestoredHint,
+                wasShownForRestore = restoreHintManagedByCoordinator,
+            )
+        ) {
             delay(readerRestoreHintCoordinator.hintVisibleDurationMs())
+            TimberLogger.d(
+                "ReaderPage",
+                "trace action=restore_hint_hide source=restored_progress budgetMs=${readerRestoreHintCoordinator.hintVisibleDurationMs()}",
+            )
             viewModel.sendIntent(ReaderIntent.ShowProgressRestoredHint(false))
+            restoreHintManagedByCoordinator = false
         }
     }
 
@@ -216,6 +238,21 @@ fun ReaderPage(
             viewModel.sendIntent(ReaderIntent.UpdateContainerSize(state.containerSize, density))
             hasPendingPostInitRefresh = false
             TimberLogger.d("ReaderPage", "初始化后补发容器尺寸更新: ${state.containerSize}")
+        }
+    }
+
+    LaunchedEffect(isInitialized, state.currentPageData?.chapterId) {
+        val autoFlipPlan = readerDebugScenarioCoordinator.createAutoFlipPlan(
+            isInitialized = isInitialized,
+            hasCurrentPage = state.currentPageData != null,
+            direction = readerDebugScenarioCoordinator.resolveAutoFlipDirection(
+                RuntimeDebugScenarioStore.currentReaderAutoFlipDirection(),
+            ),
+        )
+        val autoFlipDirection = autoFlipPlan.direction
+        if (autoFlipPlan.shouldTriggerAutoFlip && autoFlipDirection != null) {
+            TimberLogger.d("ReaderPage", "触发debug自动翻页: $autoFlipDirection")
+            viewModel.sendIntent(ReaderIntent.PageFlip(autoFlipDirection))
         }
     }
 

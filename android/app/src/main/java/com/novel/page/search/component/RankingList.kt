@@ -24,7 +24,6 @@ import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
 import kotlinx.collections.immutable.ImmutableList
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 
 /**
@@ -158,25 +157,6 @@ private fun RankingSectionItem(
         )
     }
 }
-
-/**
- * 排行榜项数据类
- * 
- * 榜单中单个条目的数据结构
- * 
- * @param id 书籍ID
- * @param title 书籍标题
- * @param author 作者名字
- * @param rank 排名序号
- */
-@Stable
-data class SearchRankingItem(
-    val id: Long,
-    val title: String,
-    val author: String,
-    val rank: Int
-)
-
 
 /**
  * 榜单列表组件

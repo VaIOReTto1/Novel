@@ -86,6 +86,7 @@
 - `feature-rn-host` 的 Gradle 单测在本机仍可受到生成源码或构建目录噪音影响；当前逻辑级测试和 app 侧相关测试已通过，但模块级 clean verification 仍建议在后续补证。
 - 本轮没有重跑完整 benchmark 套件，仍属于“选择性补基线”。
 - 数据库与缓存治理已经拥有更强的治理输出，但索引收益、FTS4 最优性、IO / 内存 / 电量收益复盘仍未完成。
+- `2026-03-28` 再次执行 `StartupCompilationProbeBenchmark` 时，release APK 安装阶段仍会在 `DN2101` 上触发无线 adb `device offline`，compiled-mode 数据本身尚未真正开始执行。
 
 ## 设备证据同步
 - `2026-03-27` 当天新增设备侧 addendum：
@@ -100,3 +101,11 @@
   - Reader `init / settings_update`
 - 当前仍保留的设备侧缺口：
   - 无
+
+## 量化沉淀同步
+- `2026-03-28` 新增多次采样矩阵：
+  - [perf-multisample-matrix-2026-03-28.md](./perf-multisample-matrix-2026-03-28.md)
+  - [welfare-webview-path-matrix-2026-03-28.md](./welfare-webview-path-matrix-2026-03-28.md)
+- `2026-03-28` 新增治理样例输出：
+  - [database-governance-sample-output-2026-03-28.md](./database-governance-sample-output-2026-03-28.md)
+  - [cache-governance-sample-output-2026-03-28.md](./cache-governance-sample-output-2026-03-28.md)

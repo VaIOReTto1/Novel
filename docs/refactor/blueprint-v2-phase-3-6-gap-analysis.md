@@ -170,11 +170,15 @@
 - 数据库 / 缓存治理入口已从静态盘点升级为 summary + recommendation / warning。
 - Startup 首帧后任务已经从布尔开关升级为正式任务清单。
 - RN Host 返回时的 root view cache 语义已经从隐含规则升级为显式 policy。
+- Startup / Search / Reader 多次采样矩阵已经落盘。
+- Welfare / WebView 路径矩阵已经落盘。
+- 数据库 / 缓存治理已经有样例输出与 recommendation 解读。
 
 ### 仍未兑现项
 | 条目 | 当前执行动作 | 当前状态 |
 | --- | --- | --- |
 | Startup 首帧时间进一步收敛 | 任务清单已 formalize，但监控仍给出“首帧渲染时间较长”建议 | `carried debt` |
+| Startup compiled-mode probe | release APK 已能产出，但 `DN2101` 的 benchmark 安装阶段仍会掉成 `device offline` | `carried debt` |
 | Welfare / WebView 更深层 cache / cookie / benchmark 复盘 | 已有首开/复开样本，尚未形成专项 benchmark | `carried debt` |
 | 数据库索引收益、`FTS4` 最优性、cleanup 对 IO / 内存 / 电量收益复盘 | 当前仍停在治理报告增强，不是最终收益证明 | `carried debt` |
 

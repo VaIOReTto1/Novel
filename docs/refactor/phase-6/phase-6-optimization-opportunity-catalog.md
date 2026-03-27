@@ -15,11 +15,11 @@
 | 方向 | 已被本轮实现关闭 | 已补证据但仍需二次深化 | 仍未进入实施的下一批 backlog |
 | --- | --- | --- | --- |
 | Startup | 首帧后 gate-driven prewarm、固定 delay 移除、正式任务清单落地 | 首帧时间仍偏高 | compiled-mode / 第二设备复验 |
-| Reader | `init / settings_update / flip` 动作预算与真机样本补齐、恢复提示策略收口、动作级归档模板落地 | 动作级多次采样与压测矩阵仍可深化 | 完整动作级压测矩阵 |
-| Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
-| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 真机样本补齐、热点动作矩阵落地 | 热点 benchmark 与正式 budget diff 仍待深化 | 热点 benchmark 与正式 budget diff |
+| Reader | `init / settings_update / flip` 动作预算与真机样本补齐、恢复提示策略收口、动作级归档模板落地、多次采样矩阵落地 | benchmark 化仍可深化 | 完整动作级压测矩阵 |
+| Welfare / WebView | bootstrap / once-only 协调继续收口，首开/复开样本补齐、路径矩阵落地 | FCP / TTI 仍有波动 | cache / cookie / 更深 benchmark |
+| Search | trigger-aware retry、`INITIAL_ENTRY / CATEGORY_SWITCH / FILTER_APPLY / LOAD_MORE` 真机样本补齐、热点动作矩阵落地、多次采样矩阵落地 | benchmark 与正式 budget diff 仍待深化 | 热点 benchmark 与正式 budget diff |
 | RN Host / Bridge | `COLD_OPEN / OPEN / REUSED` 语义与主题同步样本补齐、返回缓存策略显式化 | root view 生命周期治理仍可继续沉淀 | 更系统的 host path 规范与批量调用收益复盘 |
-| 数据库 / 缓存 | 治理报告增强完成 | recommendation 已有，但收益证明不足 | 索引、`FTS4`、cleanup 对 IO / 内存 / 电量的定量复盘 |
+| 数据库 / 缓存 | 治理报告增强完成、样例输出与 recommendation 解读落地 | 收益证明仍不足 | 索引、`FTS4`、cleanup 对 IO / 内存 / 电量的定量复盘 |
 
 ## 一、已被本轮实现关闭
 ### Startup
@@ -42,6 +42,7 @@
 - Reader 动作级归档模板已落到独立文档。
 - `flip` 的自动取证 scenario 已落地，后续无需继续依赖人工 swipe。
 - `2026-03-28` 已补到当天真机 `flip` 样本。
+- Reader 多次采样矩阵已落到独立文档。
 
 ### Welfare / WebView
 - `WelfarePageBootstrapCoordinator` 与 `WelfareWebPerformanceCoordinator` 已继续收口分散副作用。
@@ -49,6 +50,7 @@
   - 首开样本
   - 返回首页后复开样本
   - `savedState restore` 样本
+- Welfare / WebView 路径矩阵已落到独立文档。
 
 ### Search
 - `SearchRetryPolicyCoordinator` 已按 `INITIAL_ENTRY / FILTER_APPLY / USER_RETRY / LOAD_MORE` 固定触发源语义。
@@ -60,6 +62,7 @@
 - Search 热点动作矩阵已落到独立文档。
 - `LOAD_MORE` 的 debug-only `pageSize override` 场景已落地，后续无需再靠碰运气找多页 query。
 - `2026-03-28` 已补到当天真机 `LOAD_MORE` 样本。
+- Search 多次采样矩阵已落到独立文档。
 
 ### RN Host / Bridge
 - `ReactNativeHostPathTraceCoordinator` 的 `COLD_OPEN / OPEN / REUSED` 已从日志枚举推进到当天设备证据。
@@ -101,19 +104,21 @@
 
 ### 数据库 / 缓存
 - 当前 recommendation / warning 已经足以支持治理讨论。
+- 样例输出与 recommendation 解读也已落地。
 - 但它们仍是“风险识别入口”，不是“收益已经被定量证明”。
 
 ## 三、仍未进入实施的下一批 backlog
 ### Startup
 - compiled-mode startup / baseline profile 的第二设备复验
 - 首帧后任务收益的长期复核与更细粒度扩展
+- 当前 `DN2101` 上 compiled-mode benchmark 安装路径仍被无线 adb `device offline` 阻塞
 
 ### Reader
-- 动作级样本从模板走向稳定多次采样
+- 动作级 benchmark / 压测矩阵
 
 ### Welfare / WebView
 - 更深层的 WebView cache / cookie / 预加载收益量化
-- 首开 / 复开 / 回退复用的专项 benchmark 化
+- 更系统的专项 benchmark 化
 
 ### Search
 - 搜索结果页热点 benchmark
@@ -131,6 +136,10 @@
 - Startup
   - `docs/refactor/evidence/phase6-startup-logcat-2026-03-27.txt`
   - `docs/refactor/phase-6/startup-deferred-task-catalog-2026-03-27.md`
+  - `docs/refactor/evidence/perf-multisample-2026-03-28.txt`
+  - `docs/refactor/phase-6/perf-multisample-matrix-2026-03-28.md`
+  - `docs/refactor/evidence/startup-compilation-probe-blocker-2026-03-28.txt`
+  - `docs/refactor/phase-6/startup-compilation-probe-blocker-2026-03-28.md`
 - Search
   - `docs/refactor/evidence/search-hot-actions-logcat-2026-03-27.txt`
   - `docs/refactor/evidence/search-load-more-probe-2026-03-27.txt`
@@ -140,6 +149,8 @@
   - `docs/refactor/phase-6/search-load-more-debug-scenario-2026-03-27.md`
 - Welfare / WebView
   - `docs/refactor/evidence/welfare-webview-performance-logcat-2026-03-27.txt`
+  - `docs/refactor/evidence/welfare-webview-path-matrix-logcat-2026-03-28.txt`
+  - `docs/refactor/phase-6/welfare-webview-path-matrix-2026-03-28.md`
 - RN Host
   - `docs/refactor/evidence/rn-host-path-logcat-2026-03-27.txt`
   - `docs/refactor/phase-6/rn-host-root-view-cache-policy-2026-03-27.md`
@@ -148,12 +159,16 @@
   - `docs/refactor/evidence/reader-flip-logcat-2026-03-28.txt`
   - `docs/refactor/phase-6/reader-action-evidence-template-2026-03-27.md`
   - `docs/refactor/phase-6/reader-flip-debug-scenario-2026-03-27.md`
+  - `docs/refactor/phase-6/perf-multisample-matrix-2026-03-28.md`
+- 数据库 / 缓存
+  - `docs/refactor/phase-6/database-governance-sample-output-2026-03-28.md`
+  - `docs/refactor/phase-6/cache-governance-sample-output-2026-03-28.md`
 
 ## 总结
 - 本轮已实现关闭的条目，不应继续留在“仍可继续优化的点”里。
 - 当前真正还在 backlog 里的，主要是：
   - Startup 首帧继续收敛
-  - Search / Reader 更系统的 benchmark 与多次采样矩阵
+  - Search / Reader 更系统的 benchmark 与 budget diff
   - Welfare / WebView 更深 benchmark
   - 数据库 / 缓存收益复盘
 - 这些项都应继续留在 `Phase 6` 的优化池，而不是误转成 `Phase 7` 的主线内容。

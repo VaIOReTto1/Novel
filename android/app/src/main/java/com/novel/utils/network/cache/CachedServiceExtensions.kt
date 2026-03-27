@@ -23,25 +23,25 @@ object CacheKeys {
     /** 章节内容缓存键 */
     fun bookContent(chapterId: Long) = "book_content_$chapterId"
     /** 访问排行榜缓存键 */
-    fun visitRankBooks() = "visit_rank_books"
+    const val visitRankBooks = "visit_rank_books"
     /** 更新排行榜缓存键 */
-    fun updateRankBooks() = "update_rank_books"
+    const val updateRankBooks = "update_rank_books"
     /** 新书排行榜缓存键 */
-    fun newestRankBooks() = "newest_rank_books"
+    const val newestRankBooks = "newest_rank_books"
     /** 书籍分类缓存键 */
     fun bookCategories(workDirection: Int) = "book_categories_$workDirection"
     /** 搜索结果缓存键 */
     fun searchBooks(params: String) = "search_books_$params"
     /** 首页推荐缓存键 */
-    fun homeBooks() = "home_books"
+    const val homeBooks = "home_books"
     /** 友情链接缓存键 */
-    fun friendLinks() = "friend_links"
+    const val friendLinks = "friend_links"
     /** 最新资讯缓存键 */
-    fun latestNews() = "latest_news"
+    const val latestNews = "latest_news"
     /** 资讯详情缓存键 */  
     fun newsInfo(newsId: Long) = "news_info_$newsId"
     /** 用户信息缓存键 */
-    fun userInfo() = "user_info"
+    const val userInfo = "user_info"
     /** 用户评论缓存键 */
     fun userComments(pageNum: Int, pageSize: Int) = "user_comments_${pageNum}_$pageSize"
 }
@@ -146,7 +146,7 @@ suspend fun BookService.getVisitRankBooksCached(
     onCacheUpdate: ((BookService.BookRankResponse) -> Unit)? = null
 ): CacheResult<BookService.BookRankResponse> {
     return cacheManager.getCachedData(
-        key = CacheKeys.visitRankBooks(),
+        key = CacheKeys.visitRankBooks,
         config = CacheConfigs.SHORT_CACHE, // 排行榜更新频繁，缓存时间短
         networkCall = { getVisitRankBooksBlocking() },
         strategy = strategy,
@@ -161,7 +161,7 @@ suspend fun BookService.getUpdateRankBooksCached(
     onCacheUpdate: ((BookService.BookRankResponse) -> Unit)? = null
 ): CacheResult<BookService.BookRankResponse> {
     return cacheManager.getCachedData(
-        key = CacheKeys.updateRankBooks(),
+        key = CacheKeys.updateRankBooks,
         config = CacheConfigs.SHORT_CACHE,
         networkCall = { getUpdateRankBooksBlocking() },
         strategy = strategy,
@@ -176,7 +176,7 @@ suspend fun BookService.getNewestRankBooksCached(
     onCacheUpdate: ((BookService.BookRankResponse) -> Unit)? = null
 ): CacheResult<BookService.BookRankResponse> {
     return cacheManager.getCachedData(
-        key = CacheKeys.newestRankBooks(),
+        key = CacheKeys.newestRankBooks,
         config = CacheConfigs.SHORT_CACHE,
         networkCall = { getNewestRankBooksBlocking() },
         strategy = strategy,
@@ -259,7 +259,7 @@ suspend fun HomeService.getHomeBookseCached(
     onCacheUpdate: ((HomeService.HomeBooksResponse) -> Unit)? = null
 ): CacheResult<HomeService.HomeBooksResponse> {
     return cacheManager.getCachedData(
-        key = CacheKeys.homeBooks(),
+        key = CacheKeys.homeBooks,
         config = CacheConfigs.MEDIUM_CACHE,
         networkCall = { getHomeBooksBlocking() },
         strategy = strategy,
@@ -274,7 +274,7 @@ suspend fun HomeService.getFriendLinksCached(
     onCacheUpdate: ((HomeService.FriendLinksResponse) -> Unit)? = null
 ): CacheResult<HomeService.FriendLinksResponse> {
     return cacheManager.getCachedData(
-        key = CacheKeys.friendLinks(),
+        key = CacheKeys.friendLinks,
         config = CacheConfigs.EXTRA_LONG_CACHE, // 友情链接变动较少
         networkCall = { getFriendLinksBlocking() },
         strategy = strategy,
@@ -292,7 +292,7 @@ suspend fun NewsService.getLatestNewsCached(
     onCacheUpdate: ((NewsService.NewsListResponse) -> Unit)? = null
 ): CacheResult<NewsService.NewsListResponse> {
     return cacheManager.getCachedData(
-        key = CacheKeys.latestNews(),
+        key = CacheKeys.latestNews,
         config = CacheConfigs.SHORT_CACHE, // 新闻更新频繁
         networkCall = { getLatestNewsBlocking() },
         strategy = strategy,
@@ -326,7 +326,7 @@ suspend fun UserService.getUserInfoCached(
     onCacheUpdate: ((UserService.UserInfoResponse?) -> Unit)? = null
 ): CacheResult<UserService.UserInfoResponse?> {
     return cacheManager.getCachedData(
-        key = CacheKeys.userInfo(),
+        key = CacheKeys.userInfo,
         config = CacheConfigs.MEDIUM_CACHE,
         networkCall = { getUserInfoBlocking() },
         strategy = strategy,

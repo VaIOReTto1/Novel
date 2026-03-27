@@ -1,6 +1,7 @@
 package com.novel.page.read.service.settings
 
 import androidx.compose.ui.graphics.toArgb
+import java.util.Locale
 import com.novel.page.read.service.common.ServiceLogger
 import com.novel.page.read.service.common.ReaderServiceConfig
 import com.novel.page.read.viewmodel.PageFlipEffect
@@ -126,7 +127,7 @@ class SettingsSaver @javax.inject.Inject constructor(
      */
     private fun formatColor(color: androidx.compose.ui.graphics.Color): String {
         val colorInt = color.toArgb()
-        return String.format("#%08X", colorInt)
+        return String.format(Locale.US, "#%08X", colorInt)
     }
 
     /**
@@ -134,7 +135,7 @@ class SettingsSaver @javax.inject.Inject constructor(
      */
     private fun colorToHex(color: androidx.compose.ui.graphics.Color): String {
         return try {
-            String.format("#%08X", color.toArgb())
+            String.format(Locale.US, "#%08X", color.toArgb())
         } catch (e: Exception) {
             "INVALID_COLOR"
         }

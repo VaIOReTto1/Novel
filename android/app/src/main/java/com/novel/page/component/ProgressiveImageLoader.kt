@@ -163,7 +163,7 @@ class ProgressiveImageLoader @Inject constructor(
             
             // 首先加载原始图片
             val originalBitmap = imageLoader.loadImage(url, needToken)
-                ?: throw IllegalStateException("无法加载原始图片")
+                ?: error("无法加载原始图片")
             
             // 按层级顺序处理
             for ((index, layer) in layers.withIndex()) {

@@ -1,6 +1,7 @@
 package com.novel.page.read.usecase
 
 import androidx.compose.runtime.Stable
+import java.util.Locale
 import androidx.compose.ui.graphics.toArgb
 import com.novel.page.read.service.SettingsService
 import com.novel.page.read.service.common.DispatcherProvider
@@ -184,7 +185,7 @@ class UpdateSettingsUseCase @Inject constructor(
      */
     private fun colorToHex(color: androidx.compose.ui.graphics.Color): String {
         return try {
-            String.format("#%08X", color.toArgb())
+            String.format(Locale.US, "#%08X", color.toArgb())
         } catch (e: Exception) {
             "INVALID_COLOR"
         }

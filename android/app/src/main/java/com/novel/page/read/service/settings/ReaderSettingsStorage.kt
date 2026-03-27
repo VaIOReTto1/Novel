@@ -1,6 +1,7 @@
 package com.novel.page.read.service.settings
 
 import com.novel.core.config.RefactorFeatureFlags
+import java.util.Locale
 import com.novel.core.storage.SettingsDataStoreMirrorCoordinator
 import com.novel.core.storage.SettingsDataStorePilot
 import com.novel.core.storage.StorageFacade
@@ -63,8 +64,8 @@ class ReaderSettingsStorage @Inject constructor(
                 pageFlipEffect = settings.pageFlipEffect.name,
                 fontSize = settings.fontSize,
                 brightness = settings.brightness,
-                backgroundColor = String.format("#%08X", settings.backgroundColor.toArgb()),
-                textColor = String.format("#%08X", settings.textColor.toArgb()),
+                backgroundColor = String.format(Locale.US, "#%08X", settings.backgroundColor.toArgb()),
+                textColor = String.format(Locale.US, "#%08X", settings.textColor.toArgb()),
             ),
         )
     }

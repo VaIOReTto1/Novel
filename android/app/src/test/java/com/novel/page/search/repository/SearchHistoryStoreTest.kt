@@ -140,15 +140,15 @@ class SearchHistoryStoreTest {
 
     private class ThrowingStorageFacade : StorageFacade {
         override fun putString(key: String, value: String) {
-            throw IllegalStateException("putString failed for $key")
+            error("putString failed for $key")
         }
 
         override fun getString(key: String): String? {
-            throw IllegalStateException("getString failed for $key")
+            error("getString failed for $key")
         }
 
         override fun remove(key: String) {
-            throw IllegalStateException("remove failed for $key")
+            error("remove failed for $key")
         }
 
         override fun putInt(key: NovelUserDefaultsKey, value: Int) {

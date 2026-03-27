@@ -1,6 +1,7 @@
 package com.novel.page.read
 
 import com.novel.core.StableThrowable
+import java.util.Locale
 import com.novel.debug.RuntimeDebugScenarioStore
 import com.novel.utils.TimberLogger
 import androidx.compose.animation.AnimatedVisibility
@@ -73,10 +74,11 @@ import com.novel.page.component.ViewState
 import com.novel.page.read.components.ChapterListPanel
 import com.novel.page.read.components.CoverFlipContainer
 import com.novel.page.read.components.NoAnimationContainer
-import com.novel.page.read.components.PageCurlFlipContainer
+import com.novel.page.read.components.PageCurlFlipContainerCallbacks
 import com.novel.page.read.components.ReaderSettingsPanel
 import com.novel.page.read.components.SlideFlipContainer
 import com.novel.page.read.components.VerticalScrollContainer
+import com.novel.page.read.components.pageCurlFlipContainer
 import com.novel.page.read.viewmodel.FlipDirection
 import com.novel.page.read.viewmodel.ReaderHistoryCoordinator
 import com.novel.page.read.viewmodel.ReaderIntent
@@ -261,7 +263,7 @@ fun ReaderPage(
         TimberLogger.d(
             "ReaderPage",
             "当前背景颜色: ${
-                String.format(
+                String.format(Locale.US, 
                     "#%08X",
                     state.readerSettings.backgroundColor.toArgb()
                 )
@@ -269,7 +271,7 @@ fun ReaderPage(
         )
         TimberLogger.d(
             "ReaderPage",
-            "当前文字颜色: ${String.format("#%08X", state.readerSettings.textColor.toArgb())}"
+            "当前文字颜色: ${String.format(Locale.US, "#%08X", state.readerSettings.textColor.toArgb())}"
         )
         TimberLogger.d("ReaderPage", "当前字体大小: ${state.readerSettings.fontSize}sp")
         TimberLogger.d("ReaderPage", "当前翻页效果: ${state.readerSettings.pageFlipEffect}")
@@ -603,13 +605,15 @@ private fun IntegratedPageFlipContainer(
             }
         )
 
-        PageFlipEffect.PAGECURL -> PageCurlFlipContainer(
+        PageFlipEffect.PAGECURL -> pageCurlFlipContainer(
             uiState = state,
             readerSettings = state.readerSettings,
-            onPageChange = onPageChange,
-            onSwipeBack = onSwipeBack,
-            onLoadBookReviews = { bookId -> onIntent(ReaderIntent.LoadBookReviews(bookId)) },
-            onClick = onClick
+            callbacks = PageCurlFlipContainerCallbacks(
+                onPageChange = onPageChange,
+                onSwipeBack = onSwipeBack,
+                onLoadBookReviews = { bookId -> onIntent(ReaderIntent.LoadBookReviews(bookId)) },
+                onClick = onClick,
+            )
         )
 
         PageFlipEffect.VERTICAL -> VerticalScrollContainer(

@@ -1,6 +1,7 @@
 package com.novel.page.read.service.settings
 
 import androidx.compose.ui.graphics.Color
+import java.util.Locale
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
@@ -158,10 +159,10 @@ class SettingsParser @javax.inject.Inject constructor(
 
         // 2. 确保对比度充足
         val contrast = ColorUtils.calculateContrast(validTextColor.toArgb(), validBackgroundColor.toArgb())
-        logger.logDebug("颜色对比度检查: ${String.format("%.2f", contrast)}", TAG)
+        logger.logDebug("颜色对比度检查: ${String.format(Locale.US, "%.2f", contrast)}", TAG)
         
         if (contrast < ReaderServiceConfig.MIN_COLOR_CONTRAST) {
-            logger.logWarning("颜色对比度不足 (${String.format("%.2f", contrast)})，重置文字颜色", TAG)
+            logger.logWarning("颜色对比度不足 (${String.format(Locale.US, "%.2f", contrast)})，重置文字颜色", TAG)
             // 基于背景亮度选择高对比度的文字颜色
             validTextColor = if (validBackgroundColor.luminance() > ReaderServiceConfig.BRIGHTNESS_THRESHOLD) {
                 ReaderServiceConfig.DEFAULT_TEXT_COLOR
@@ -179,7 +180,7 @@ class SettingsParser @javax.inject.Inject constructor(
      */
     private fun colorToHex(color: Color): String {
         return try {
-            String.format("#%08X", color.toArgb())
+            String.format(Locale.US, "#%08X", color.toArgb())
         } catch (e: Exception) {
             "INVALID_COLOR"
         }

@@ -495,7 +495,7 @@ class ImagePreloadManager @Inject constructor(
                         
                         TimberLogger.v(TAG, "预加载完成: ${task.url}, 耗时: ${loadTime}ms")
                     } else {
-                        throw IllegalStateException("图片加载返回null")
+                        error("图片加载返回null")
                     }
                 }
                 

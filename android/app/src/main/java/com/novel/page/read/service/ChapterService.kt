@@ -1,6 +1,7 @@
 package com.novel.page.read.service
 
 import android.annotation.SuppressLint
+import java.util.Locale
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.Density
 import com.novel.page.read.service.common.DispatcherProvider
@@ -354,7 +355,7 @@ class ChapterService @Inject constructor(
             val stats = sessionCache.getStats()
             logger.logPerformance(
                 "SessionCache: size=${stats.size}/${stats.maxSize}, " +
-                "hitRate=${String.format("%.2f", stats.hitRate * 100)}%, " +
+                "hitRate=${String.format(Locale.US, "%.2f", stats.hitRate * 100)}%, " +
                 "evictions=${stats.evictionCount}",
                 0, TAG
             )

@@ -26,7 +26,6 @@
     <ID>CyclomaticComplexMethod:NetworkMonitor.kt$NetworkMonitor$fun getRecommendedConcurrency(): Int</ID>
     <ID>CyclomaticComplexMethod:NoAnimationContainer.kt$@Composable fun NoAnimationContainer( uiState: ReaderState, readerSettings: ReaderSettings, onPageChange: (FlipDirection) -&gt; Unit, onSwipeBack: (() -&gt; Unit)? = null, onLoadBookReviews: ((String) -&gt; Unit)? = null, onClick: () -&gt; Unit )</ID>
     <ID>CyclomaticComplexMethod:NovelImageView.kt$@Composable fun NovelImageView( imageUrl: String?, loadingStrategy: ImageLoadingStrategy = ImageLoadingStrategy.STANDARD, needToken: Boolean = false, useAdvancedCache: Boolean = true, isLoading: Boolean = false, error: String? = null, widthDp: Int = 0, heightDp: Int = 0, contentScale: ContentScale = ContentScale.Fit, crossfadeDuration: Int = 300, cachePolicy: Pair&lt;CachePolicy, CachePolicy&gt;? = null, retryDebounceMs: Long = 500, @SuppressLint("ModifierParameter") modifier: Modifier = Modifier, onRetry: () -&gt; Unit = {}, placeholderContent: @Composable () -&gt; Unit = { Box( modifier .background(NovelColors.NovelMainLight) .wrapContentSize(Alignment.Center) ) { CircularProgressIndicator( strokeWidth = 2.wdp, modifier = Modifier .size(24.wdp), color = NovelColors.NovelTextGray ) } }, errorContent: @Composable (retry: () -&gt; Unit) -&gt; Unit = { retry -&gt; Box( modifier .background(NovelColors.NovelMainLight) .wrapContentSize(Alignment.Center) ) { IconButton(onClick = { retry() }) { Icon( imageVector = Icons.Default.Refresh, contentDescription = "加载失败，点击重试", tint = NovelColors.NovelText, modifier = Modifier .size(24.wdp) .debounceClickable(onClick = { retry() }) ) } } } )</ID>
-    <ID>CyclomaticComplexMethod:PageCurlFlipContainer.kt$@OptIn(ExperimentalPageCurlApi::class) @Composable fun PageCurlFlipContainer( uiState: ReaderState, readerSettings: ReaderSettings, onPageChange: (FlipDirection) -&gt; Unit, onSwipeBack: (() -&gt; Unit)? = null, onLoadBookReviews: ((String) -&gt; Unit)? = null, onClick: () -&gt; Unit )</ID>
     <ID>CyclomaticComplexMethod:PageSplitter.kt$PageSplitter.Companion$fun splitContent( content: String, containerSize: IntSize, readerSettings: ReaderSettings, density: Density ): List&lt;String&gt;</ID>
     <ID>CyclomaticComplexMethod:ProgressiveImageLoader.kt$@Composable fun ProgressiveImageView( url: String?, layers: List&lt;ProgressiveLayer&gt; = ProgressiveLayer.createDefaultLayers(), needToken: Boolean = false, modifier: Modifier = Modifier, contentScale: ContentScale = ContentScale.Fit, placeholder: @Composable () -&gt; Unit = { Box( modifier = Modifier .fillMaxSize() .background(NovelColors.NovelMainLight), contentAlignment = Alignment.Center ) { CircularProgressIndicator( strokeWidth = 2.wdp, color = NovelColors.NovelTextGray ) } }, errorContent: @Composable () -&gt; Unit = { Box( modifier = Modifier .fillMaxSize() .background(NovelColors.NovelMainLight), contentAlignment = Alignment.Center ) { // 显示错误图标或重试按钮 } }, onLoadingStateChange: (ProgressiveLoadState) -&gt; Unit = {} )</ID>
     <ID>CyclomaticComplexMethod:ReactNativePage.kt$@SuppressLint("VisibleForTests") @Composable fun ReactNativePage( componentName: String = "Novel", initialProps: Map&lt;String, Any&gt; = mapOf("nativeMessage" to "ProfilePage"), destroyOnBack: Boolean = false, mviModuleType: MviModuleType, )</ID>
@@ -58,26 +57,6 @@
     <ID>ForbiddenComment:HomeCompositeUseCase.kt$HomeStatusCheckUseCase$// TODO: 检查榜单数据状态</ID>
     <ID>ForbiddenComment:SearchPage.kt$// TODO: 集成Toast显示组件</ID>
     <ID>ForbiddenComment:SearchResultPage.kt$// TODO: 显示Toast</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun friendLinks()</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun homeBooks()</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun latestNews()</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun newestRankBooks()</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun updateRankBooks()</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun userInfo()</ID>
-    <ID>FunctionOnlyReturningConstant:CachedServiceExtensions.kt$CacheKeys$fun visitRankBooks()</ID>
-    <ID>ImplicitDefaultLocale:ChapterService.kt$ChapterService$String.format("%.2f", stats.hitRate * 100)</ID>
-    <ID>ImplicitDefaultLocale:PageCurlFlipContainer.kt$String.format("#%08X", readerSettings.backgroundColor.value.toInt())</ID>
-    <ID>ImplicitDefaultLocale:PageCurlFlipContainer.kt$String.format("#%08X", readerSettings.textColor.value.toInt())</ID>
-    <ID>ImplicitDefaultLocale:ReaderPage.kt$String.format( "#%08X", state.readerSettings.backgroundColor.toArgb() )</ID>
-    <ID>ImplicitDefaultLocale:ReaderPage.kt$String.format("#%08X", state.readerSettings.textColor.toArgb())</ID>
-    <ID>ImplicitDefaultLocale:ReaderSettingsStorage.kt$ReaderSettingsStorage$String.format("#%08X", settings.backgroundColor.toArgb())</ID>
-    <ID>ImplicitDefaultLocale:ReaderSettingsStorage.kt$ReaderSettingsStorage$String.format("#%08X", settings.textColor.toArgb())</ID>
-    <ID>ImplicitDefaultLocale:SettingsParser.kt$SettingsParser$String.format("#%08X", color.toArgb())</ID>
-    <ID>ImplicitDefaultLocale:SettingsParser.kt$SettingsParser$String.format("%.2f", contrast)</ID>
-    <ID>ImplicitDefaultLocale:SettingsSaver.kt$SettingsSaver$String.format("#%08X", color.toArgb())</ID>
-    <ID>ImplicitDefaultLocale:SettingsSaver.kt$SettingsSaver$String.format("#%08X", colorInt)</ID>
-    <ID>ImplicitDefaultLocale:SettingsService.kt$SettingsService$String.format("#%08X", color.toArgb())</ID>
-    <ID>ImplicitDefaultLocale:UpdateSettingsUseCase.kt$UpdateSettingsUseCase$String.format("#%08X", color.toArgb())</ID>
     <ID>InvalidPackageDeclaration:ReaderModule.kt$package com.novel.page.read.di</ID>
     <ID>LargeClass:CachedBookRepository.kt$CachedBookRepository</ID>
     <ID>LargeClass:NavigationBridgeModule.kt$NavigationBridgeModule : ReactContextBaseJavaModule</ID>
@@ -126,7 +105,6 @@
     <ID>LongMethod:NovelImageView.kt$@Composable fun NovelImageView( imageUrl: String?, loadingStrategy: ImageLoadingStrategy = ImageLoadingStrategy.STANDARD, needToken: Boolean = false, useAdvancedCache: Boolean = true, isLoading: Boolean = false, error: String? = null, widthDp: Int = 0, heightDp: Int = 0, contentScale: ContentScale = ContentScale.Fit, crossfadeDuration: Int = 300, cachePolicy: Pair&lt;CachePolicy, CachePolicy&gt;? = null, retryDebounceMs: Long = 500, @SuppressLint("ModifierParameter") modifier: Modifier = Modifier, onRetry: () -&gt; Unit = {}, placeholderContent: @Composable () -&gt; Unit = { Box( modifier .background(NovelColors.NovelMainLight) .wrapContentSize(Alignment.Center) ) { CircularProgressIndicator( strokeWidth = 2.wdp, modifier = Modifier .size(24.wdp), color = NovelColors.NovelTextGray ) } }, errorContent: @Composable (retry: () -&gt; Unit) -&gt; Unit = { retry -&gt; Box( modifier .background(NovelColors.NovelMainLight) .wrapContentSize(Alignment.Center) ) { IconButton(onClick = { retry() }) { Icon( imageVector = Icons.Default.Refresh, contentDescription = "加载失败，点击重试", tint = NovelColors.NovelText, modifier = Modifier .size(24.wdp) .debounceClickable(onClick = { retry() }) ) } } } )</ID>
     <ID>LongMethod:PageContentDisplay.kt$@Composable fun PageContentDisplay( page: String, chapterName: String, isFirstPage: Boolean = false, isBookDetailPage: Boolean = false, // 新增：是否是书籍详情页 bookInfo: PageData.BookInfo? = null, // 新增：书籍信息 readerSettings: ReaderSettings = ReaderSettings(), // 新增：导航到阅读器回调 showNavigationInfo: Boolean = true, // 新增：是否显示导航信息 bookReviews: kotlinx.collections.immutable.ImmutableList&lt;BookReview&gt; = persistentListOf(), // 新增：书籍评论 isLoadingReviews: Boolean = false, // 新增：是否正在加载评论 onLoadBookReviews: ((String) -&gt; Unit)? = null, // 新增：加载评论回调 onClick: () -&gt; Unit = {} )</ID>
     <ID>LongMethod:PageCurl.kt$@ExperimentalPageCurlApi @Composable fun PageCurl( count: Int, modifier: Modifier = Modifier, state: PageCurlState = rememberPageCurlState(), config: PageCurlConfig = rememberPageCurlConfig(), content: @Composable (Int) -&gt; Unit )</ID>
-    <ID>LongMethod:PageCurlFlipContainer.kt$@OptIn(ExperimentalPageCurlApi::class) @Composable fun PageCurlFlipContainer( uiState: ReaderState, readerSettings: ReaderSettings, onPageChange: (FlipDirection) -&gt; Unit, onSwipeBack: (() -&gt; Unit)? = null, onLoadBookReviews: ((String) -&gt; Unit)? = null, onClick: () -&gt; Unit )</ID>
     <ID>LongMethod:PageFlipEffectControl.kt$@Composable fun PageFlipEffectControl( currentEffect: PageFlipEffect, backgroundColor: Color, onEffectChange: (PageFlipEffect) -&gt; Unit )</ID>
     <ID>LongMethod:PaginationService.kt$PaginationService$private suspend fun fetchAndBuildBookCache( bookId: String, chapterList: List&lt;Chapter&gt;, existingBookCache: BookCacheData?, readerSettings: ReaderSettings, containerSize: IntSize, density: Density ): BookCacheData</ID>
     <ID>LongMethod:ProgressiveImageLoader.kt$@Composable fun ProgressiveImageView( url: String?, layers: List&lt;ProgressiveLayer&gt; = ProgressiveLayer.createDefaultLayers(), needToken: Boolean = false, modifier: Modifier = Modifier, contentScale: ContentScale = ContentScale.Fit, placeholder: @Composable () -&gt; Unit = { Box( modifier = Modifier .fillMaxSize() .background(NovelColors.NovelMainLight), contentAlignment = Alignment.Center ) { CircularProgressIndicator( strokeWidth = 2.wdp, color = NovelColors.NovelTextGray ) } }, errorContent: @Composable () -&gt; Unit = { Box( modifier = Modifier .fillMaxSize() .background(NovelColors.NovelMainLight), contentAlignment = Alignment.Center ) { // 显示错误图标或重试按钮 } }, onLoadingStateChange: (ProgressiveLoadState) -&gt; Unit = {} )</ID>
@@ -624,8 +602,6 @@
     <ID>MaxLineLength:NetworkCacheManager.kt$NetworkCacheManager$val bScore = b.second.accessCount.toFloat() / (System.currentTimeMillis() - b.second.lastAccessTime + 1)</ID>
     <ID>MaxLineLength:NetworkCacheManager.kt$NetworkCacheManager$val entry = gson.fromJson(content, object : TypeToken&lt;CacheEntry&lt;Any?&gt;&gt;() {}.type) as CacheEntry&lt;*&gt;</ID>
     <ID>MaxLineLength:NovelImageView.kt$val imageUrl = if(imageUrl?.startsWith("/data/user") == true) imageUrl else "https://youke1.picui.cn/s1/2025/07/25/688361799097c.jpg"</ID>
-    <ID>MaxLineLength:PageCurlFlipContainer.kt$TimberLogger.d("PageCurlFlipContainer", "文字颜色: ${String.format("#%08X", readerSettings.textColor.value.toInt())}")</ID>
-    <ID>MaxLineLength:PageCurlFlipContainer.kt$TimberLogger.d("PageCurlFlipContainer", "背景颜色: ${String.format("#%08X", readerSettings.backgroundColor.value.toInt())}")</ID>
     <ID>MaxLineLength:PageSplitter.kt$PageSplitter.Companion$val firstPageMaxLines = ((availH - titleLineHeight - titleBottomPx) / metrics.lineHeight).toInt().coerceAtLeast(1)</ID>
     <ID>MaxLineLength:PageSplitter.kt$PageSplitter.Companion$while</ID>
     <ID>MaxLineLength:PriorityRequestDispatcher.kt$PriorityRequestDispatcher$TimberLogger.d(TAG, "创建OkHttp分发器: maxRequests=${dispatcher.maxRequests}, maxPerHost=${dispatcher.maxRequestsPerHost}")</ID>
@@ -796,7 +772,6 @@
     <ID>TooManyFunctions:BookCacheManager.kt$BookCacheManager</ID>
     <ID>TooManyFunctions:BookService.kt$BookService</ID>
     <ID>TooManyFunctions:CachedBookRepository.kt$CachedBookRepository</ID>
-    <ID>TooManyFunctions:CachedServiceExtensions.kt$CacheKeys</ID>
     <ID>TooManyFunctions:CachedServiceExtensions.kt$com.novel.utils.network.cache.CachedServiceExtensions.kt</ID>
     <ID>TooManyFunctions:CurlDraw.kt$com.novel.page.component.pagecurl.page.CurlDraw.kt</ID>
     <ID>TooManyFunctions:HistoryService.kt$HistoryServiceImpl : HistoryService</ID>
@@ -823,8 +798,6 @@
     <ID>TooManyFunctions:StartupPerformanceMonitor.kt$StartupPerformanceMonitor</ID>
     <ID>TooManyFunctions:UserDao.kt$UserDao</ID>
     <ID>TooManyFunctions:UserService.kt$UserService</ID>
-    <ID>TopLevelPropertyNaming:PageCurlState.kt$private const val DefaultAnimDuration: Int = 450</ID>
-    <ID>TopLevelPropertyNaming:PageCurlState.kt$private const val DefaultMidPointDuration: Int = 150</ID>
     <ID>UnusedParameter:ActionButtons.kt$isFirstEnabled: Boolean = true</ID>
     <ID>UnusedParameter:BuildVirtualPagesUseCase.kt$BuildVirtualPagesUseCase$loadedChapterData: Map&lt;String, PageData&gt;</ID>
     <ID>UnusedParameter:CachedBookRepository.kt$CachedBookRepository$strategy: CacheStrategy = CacheStrategy.CACHE_FIRST</ID>
@@ -882,11 +855,6 @@
     <ID>UnusedPrivateProperty:RequestCoalescer.kt$RequestCoalescer$val currentTime = System.currentTimeMillis()</ID>
     <ID>UnusedPrivateProperty:RequestCoalescer.kt$RequestCoalescer$val toRemove = mutableListOf&lt;String&gt;()</ID>
     <ID>UnusedPrivateProperty:ResourceService.kt$ResourceService$val body = MultipartBody.Part.createFormData("file", imageFile.name, requestFile)</ID>
-    <ID>UseCheckOrError:ImagePreloadManager.kt$ImagePreloadManager$throw IllegalStateException("图片加载返回null")</ID>
-    <ID>UseCheckOrError:ProgressiveImageLoader.kt$ProgressiveImageLoader$throw IllegalStateException("无法加载原始图片")</ID>
-    <ID>UseCheckOrError:SearchHistoryStoreTest.kt$SearchHistoryStoreTest.ThrowingStorageFacade$throw IllegalStateException("getString failed for $key")</ID>
-    <ID>UseCheckOrError:SearchHistoryStoreTest.kt$SearchHistoryStoreTest.ThrowingStorageFacade$throw IllegalStateException("putString failed for $key")</ID>
-    <ID>UseCheckOrError:SearchHistoryStoreTest.kt$SearchHistoryStoreTest.ThrowingStorageFacade$throw IllegalStateException("remove failed for $key")</ID>
     <ID>UtilityClassWithPublicConstructor:RCTDeviceEventEmitter.kt$RCTDeviceEventEmitter</ID>
     <ID>VariableNaming:ActionButtons.kt$val TAG = "ActionButtons"</ID>
     <ID>VariableNaming:AdaptiveScreen.kt$val DESIGN_HEIGHT = 852.dp</ID>

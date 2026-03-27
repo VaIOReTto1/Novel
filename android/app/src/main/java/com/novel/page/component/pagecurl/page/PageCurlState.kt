@@ -244,9 +244,9 @@ private val DefaultNext: suspend Animatable<Edge, AnimationVector4D>.(Size) -> U
     animateTo(
         targetValue = size.start,
         animationSpec = keyframes {
-            durationMillis = DefaultAnimDuration
+            durationMillis = DEFAULT_ANIM_DURATION
             size.end at 0
-            size.middle at DefaultMidPointDuration
+            size.middle at DEFAULT_MID_POINT_DURATION
         }
     )
 }
@@ -258,15 +258,15 @@ private val DefaultPrev: suspend Animatable<Edge, AnimationVector4D>.(Size) -> U
     animateTo(
         targetValue = size.end,
         animationSpec = keyframes {
-            durationMillis = DefaultAnimDuration
+            durationMillis = DEFAULT_ANIM_DURATION
             size.start at 0
-            size.middle at DefaultAnimDuration - DefaultMidPointDuration
+            size.middle at DEFAULT_ANIM_DURATION - DEFAULT_MID_POINT_DURATION
         }
     )
 }
 
-private const val DefaultAnimDuration: Int = 450
-private const val DefaultMidPointDuration: Int = 150
+private const val DEFAULT_ANIM_DURATION: Int = 450
+private const val DEFAULT_MID_POINT_DURATION: Int = 150
 
 private val Size.start: Edge
     get() = Edge(Offset(0f, 0f), Offset(0f, height))

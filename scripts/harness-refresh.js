@@ -59,12 +59,8 @@ const walkFiles = (startPath, predicate, acc = []) => {
 };
 
 const getGitState = () => {
-  const head = run('git rev-parse HEAD');
   return {
     branch: run('git branch --show-current'),
-    head,
-    shortHead: run('git rev-parse --short HEAD'),
-    recentCommits: run('git log --oneline -n 8').split(/\r?\n/),
   };
 };
 
@@ -117,30 +113,41 @@ const getVerificationCommands = () => {
   }
 
   const workflowLines = workflow.split(/\r?\n/);
-  let inScriptBlock = false;
-  let scriptIndent = 0;
+  let inCommandBlock = false;
+  let commandBlockIndent = 0;
 
   for (const line of workflowLines) {
     const trimmed = line.trim();
     const indent = line.length - line.trimStart().length;
 
-    if (inScriptBlock) {
-      if (trimmed && indent > scriptIndent) {
+    if (inCommandBlock) {
+      if (trimmed && indent > commandBlockIndent) {
         commands.push(trimmed);
         continue;
       }
-      if (trimmed && indent <= scriptIndent) {
-        inScriptBlock = false;
+      if (trimmed && indent <= commandBlockIndent) {
+        inCommandBlock = false;
       }
     }
 
     if (trimmed.startsWith('run: ')) {
-      commands.push(trimmed.slice(5).trim());
+      const command = trimmed.slice(5).trim();
+      if (command === '|') {
+        inCommandBlock = true;
+        commandBlockIndent = indent;
+      } else {
+        commands.push(command);
+      }
     }
 
-    if (trimmed === 'script: |') {
-      inScriptBlock = true;
-      scriptIndent = indent;
+    if (trimmed.startsWith('script: ')) {
+      const command = trimmed.slice(8).trim();
+      if (command === '|') {
+        inCommandBlock = true;
+        commandBlockIndent = indent;
+      } else {
+        commands.push(command);
+      }
     }
   }
 
@@ -179,15 +186,10 @@ const renderSnapshot = () => {
 
   return [
     '<!-- generated, do not edit by hand -->',
-    `<!-- source-head: ${gitState.head} -->`,
     '# Workspace Snapshot',
     '',
     '## Git State',
     `- Branch: \`${gitState.branch}\``,
-    `- Head: \`${gitState.shortHead}\``,
-    '',
-    '## Recent Commits',
-    ...gitState.recentCommits.map((commit) => `- ${commit}`),
     '',
     '## Android Modules',
     ...modules.map((moduleName) => `- ${moduleName}`),

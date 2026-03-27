@@ -20,7 +20,7 @@
 - 根 `README.md` 的技术版本和成熟度描述仍可能落后于当前代码与当前 refactor 文档
 - `2026-03-21` 的 `Phase 5 / Stage 3 validated` 只应视为历史 checkpoint，不能直接当当前状态
 - `2026-03-26` 的 reopen closeout 记录也只能当历史痕迹，当前项目级权威文档仍是 `Phase 5 = in_progress`
-- `docs/harness/generated/workspace-snapshot.md` 在 `HEAD` 变化后必须重新生成
+- `docs/harness/generated/workspace-snapshot.md` 在模块图、验证命令、harness 脚本或 workflow 输入变化后必须重新生成
 - `.trae/rules/project_rules.md` 现在只是 shim，不再承担项目事实说明
 
 ## Primary Source Refs

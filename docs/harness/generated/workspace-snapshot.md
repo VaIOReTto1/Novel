@@ -1,20 +1,8 @@
 <!-- generated, do not edit by hand -->
-<!-- source-head: 81ec19bc0d286e15da81bd9d2c994e25837ec18f -->
 # Workspace Snapshot
 
 ## Git State
 - Branch: `main`
-- Head: `81ec19b`
-
-## Recent Commits
-- 81ec19b Merge pull request #5 from VaIOReTto1/codex-wave2-search-rn-host
-- 3883383 补齐福利页多次采样矩阵
-- 37d8f0b 继续收敛首页首帧延后UI负担
-- 4658202 补齐Phase6量化矩阵与编译阻塞留痕
-- 8af7ee5 补齐搜索与阅读器真机取证缺口
-- 9f6c025 补齐搜索分页调试取证支架
-- 738d432 同步Phase6剩余优化治理入口
-- 44f5184 显式化RN宿主页缓存返回策略
 
 ## Android Modules
 - :app
@@ -81,9 +69,14 @@
 - yarn install --frozen-lockfile
 - npm test -- --runInBand
 - chmod +x android/gradlew
-- ./gradlew app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble
-- cd android
-- ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest,com.novel.page.login.LoginSmokeTest,com.novel.page.search.SearchSmokeTest,com.novel.page.read.viewmodel.ReaderSmokeTest
+- ./gradlew app:testDebugUnitTest --stacktrace --console=plain
+- ./gradlew app:lintDebug --stacktrace --console=plain
+- ./gradlew app:compileDebugAndroidTestKotlin --stacktrace --console=plain
+- ./gradlew :macrobenchmark:assemble --stacktrace --console=plain
+- echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+- sudo udevadm control --reload-rules
+- sudo udevadm trigger --name-match=kvm
+- ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest,com.novel.page.login.LoginSmokeTest,com.novel.page.search.SearchSmokeTest,com.novel.page.read.viewmodel.ReaderSmokeTest --stacktrace --console=plain
 - npm run lint
 - ./gradlew app:detekt
 

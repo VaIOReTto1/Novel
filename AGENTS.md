@@ -95,7 +95,7 @@
 - Root `README.md` can lag behind code and refactor docs.
 - `.trae/rules/project_rules.md` is a shim, not a fact source.
 - Historical `docs/refactor` checkpoint files are not always current authority.
-- Generated snapshot freshness depends on the current `HEAD`.
+- Generated snapshot freshness depends on current committed repo facts and harness/workflow inputs, not on raw `HEAD` movement alone.
 
 ## Working Style
 - Prefer executable truth over prose when they disagree.

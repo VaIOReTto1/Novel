@@ -137,22 +137,6 @@ const validateCurrentFocusStructure = () => {
   }
 };
 
-const validateSnapshotFreshness = () => {
-  if (!exists('docs/harness/generated/workspace-snapshot.md')) {
-    return;
-  }
-
-  const snapshot = readText('docs/harness/generated/workspace-snapshot.md');
-  const snapshotHead = capture(snapshot, /<!-- source-head: ([a-f0-9]+) -->/);
-  const currentHead = run('git rev-parse HEAD');
-
-  if (snapshotHead !== currentHead) {
-    addError(
-      `workspace-snapshot.md is stale: expected ${currentHead}, found ${snapshotHead}`,
-    );
-  }
-};
-
 const validateRelativeLinks = () => {
   const filesToScan = [
     path.join(ROOT, 'AGENTS.md'),
@@ -241,7 +225,6 @@ validateRequiredFiles();
 validateAgentsLinks();
 validateCommitRule();
 validateCurrentFocusStructure();
-validateSnapshotFreshness();
 validateRelativeLinks();
 validatePrimarySourceRefs();
 validateCurrentFocusFreshness();

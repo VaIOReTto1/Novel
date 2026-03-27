@@ -217,6 +217,7 @@ ksp {
 detekt {
     toolVersion = "1.23.4"
     config.setFrom(file("../detekt.yml"))
+    baseline = file("detekt-baseline.xml")
     buildUponDefaultConfig = true
     
     reports {

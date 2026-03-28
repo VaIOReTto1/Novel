@@ -39,6 +39,9 @@ const capture = (text, pattern, fallback = 'unknown') => {
   return match ? match[1].trim() : fallback;
 };
 
+const escapeRegExp = (value) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 const walkFiles = (startPath, predicate, acc = []) => {
   if (!fs.existsSync(startPath)) {
     return acc;
@@ -156,7 +159,6 @@ const getVerificationCommands = () => {
 
 const getRefactorSummary = () => {
   const refactorReadme = readText('docs/refactor/README.md');
-  const stageSummary = readText('docs/refactor/stage-3-closeout-summary.md');
 
   const currentPhase = capture(refactorReadme, /当前阶段：`([^`]+)`/);
   const phaseStatus = capture(refactorReadme, /阶段状态：`([^`]+)`/);
@@ -165,15 +167,34 @@ const getRefactorSummary = () => {
     /最近结论：`([^`]+)`/,
     'see-control-panel',
   );
-  const stageLabel = capture(stageSummary, /阶段：`([^`]+)`/, 'Stage 3');
-  const stageStatus = capture(stageSummary, /当前状态：`([^`]+)`/);
+  const currentStageDescriptor = capture(
+    refactorReadme,
+    /当前 Stage：`([^`]+)`/,
+    'Stage 3',
+  );
+  const currentStageLabel = currentStageDescriptor.split('=')
+    .map((part) => part.trim())
+    .filter(Boolean)[0] || currentStageDescriptor;
+  const stageStatusPattern = new RegExp(
+    `\`${escapeRegExp(currentStageLabel)} = ([^\`]+)\``,
+    'g',
+  );
+  const stageMatches = [...refactorReadme.matchAll(stageStatusPattern)];
+  const stageStatus = stageMatches.length > 0
+    ? stageMatches[stageMatches.length - 1][1].trim()
+    : 'unknown';
+  const effectiveDate = capture(
+    refactorReadme,
+    /最新生效切换：`([^`]+)`/,
+    'see-control-panel',
+  );
 
   return {
     currentPhase,
     phaseStatus,
     latestCloseout,
-    stageSummaryLine: `${stageLabel} = ${stageStatus}`,
-    effectiveDate: 'see-stage-summary',
+    stageSummaryLine: `${currentStageLabel} = ${stageStatus}`,
+    effectiveDate,
   };
 };
 

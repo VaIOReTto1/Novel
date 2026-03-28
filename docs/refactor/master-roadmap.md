@@ -1,10 +1,21 @@
 # Novel 重构总路线图
 
+## 0. 当前权威状态
+- 当前控制面已切换到：`Stage 4 = in_progress`
+- 当前默认主线：`Phase 7 = in_progress`
+- 当前排队阶段：`Phase 8 = planned`
+- `Stage 3 = validated` 继续以 `2026-03-26` closeout 为准
+- 当前 authority 入口：
+  - `docs/refactor/README.md`
+  - `docs/refactor/stage-4-phase-7-8-plan.md`
+  - `docs/refactor/phases/phase-7-size-dependency-build-governance.md`
+  - `docs/refactor/tracking/phase-7-8-validation-board.md`
+
 ## 1. 项目现状摘要
 - 当前项目是 `React Native + Android Compose/Kotlin` 的混合架构大型小说阅读应用。
 - Android 原生已承担首页、书详情、阅读器、搜索、登录、福利等关键体验页面；RN 侧承载分类、书架、我的、设置、作者、AI 等大量业务页面。
 - Android 侧已接入 Hilt、MVI、Room、Paging3、Baseline Profile、Macrobenchmark、加密存储、性能监控、图片与网络缓存，但体系化程度不足。
-- 当前工程存在网络栈双轨并存、超大类膨胀、发布配置不生产化、数据库迁移策略不安全、自动化护栏薄弱、资源与依赖膨胀、协议边界不够稳定等问题。
+- 当前工程存在网络栈双轨并存、超大类膨胀、发布与治理体系仍未完全制度化、数据库迁移策略不安全、自动化护栏薄弱、资源与依赖膨胀、协议边界不够稳定等问题。
 
 ## 2. 主要问题分层
 
@@ -23,7 +34,7 @@
 
 ### 包体积
 - Android 资源尤其字体资源体积偏大。
-- Release 尚未完全启用 `minify`、`shrinkResources` 等包体治理手段。
+- Release 已开启 `minify` 与 `shrinkResources`，但仍缺 size baseline / artifact diff / JS-native assets 治理。
 
 ### 安全
 - Release 路径仍存在全局明文流量、硬编码 `http://` endpoint、权限过宽、证书锁定未真正落地等问题。
@@ -38,11 +49,11 @@
 - 稳定的 fixture、fake data source、Bridge contract tests 尚未建立。
 
 ### 发布
-- Release 构建链路、签名、环境注入、供应链审计和依赖验证不完整。
+- Release 构建链路已基本生产化，且仓库已存在 `verification-metadata.xml`，但环境注入、catalog/BOM、供应链审计和依赖统一治理仍不完整。
 - Phase 间没有系统化的关闭标准和回滚触发条件。
 
 ### 可观测性
-- 启动、卡顿、Bridge、WebView、缓存、权限拒绝、构建产物等指标未沉淀为长期看板。
+- 启动、Bridge、WebView 等局部监控能力已存在，但尚未沉淀为统一指标目录、长期看板与 rollout 控制面。
 
 ### 合规
 - 权限申请说明、最小权限策略、日志脱敏、WebView 内容来源与第三方依赖合规能力需要补强。
@@ -86,17 +97,17 @@
 ### Phase 7
 - 开展包体积、依赖与构建效率治理。
 
-### Phase 8+
+### Phase 8
 - 建设可观测性、灰度、特性开关、团队治理和长期演进机制。
 
-## 5.0 Stage 分组建议
+## 5.0 当前 Stage 分组
 - `Stage 1 = Phase 0-2`
   - 基线、发布安全、质量护栏
 - `Stage 2 = Phase 3-4`
   - 基础设施收口、边界收口与超大类拆分
 - `Stage 3 = Phase 5-6`
   - 真正模块化、性能专项与预算治理
-- `Stage 4 = Phase 7-8+`
+- `Stage 4 = Phase 7-8`
   - 包体积/依赖/构建效率治理，以及可观测性、灰度和长期机制建设
 
 ### 为什么 Stage 3 不是 `Phase 5-7`
@@ -134,7 +145,7 @@
 | Phase 5 | `5` | Module graph、core module、feature A、feature B、build integration | 模块搬迁与构建集成并行 |
 | Phase 6 | `3` | Startup、Reader/scroll、benchmark/observability | WebView 与 DB 性能专项独立成线 |
 | Phase 7 | `3` | Size shrink、dependency/build、artifact diff | npm 与 Gradle 依赖治理拆线 |
-| Phase 8+ | `3` | Observability、governance/ADR、rollout/flag | Crash/ANR 与治理建设并行 |
+| Phase 8 | `3` | Observability、governance/ADR、rollout/flag | Crash/ANR 与治理建设并行 |
 
 ## 6. 全局补充优化点
 - 无障碍：语义标签、TalkBack、点击区域、对比度、字体缩放与阅读器极限字号。

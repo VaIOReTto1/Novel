@@ -1,4 +1,7 @@
-# 第三阶段重构计划（Stage 3 = Phase 5-6）
+# 第三阶段重构计划（Stage 3 = Phase 5-6，已关闭阶段参考）
+
+> 当前主线已切换为 `Stage 4 = Phase 7-8`。
+> 本文件保留为 `Stage 3` 的历史参考与关闭依据；当前 authority 请以 `docs/refactor/stage-4-phase-7-8-plan.md`、`docs/refactor/README.md` 与对应 validation board 为准。
 
 ## 摘要
 - 第三阶段建议明确为：`Stage 3 = Phase 5 + Phase 6`
@@ -6,7 +9,7 @@
 - `Phase 6`：性能专项与基准治理
 - 不纳入：
   - `Phase 7` 的包体积/依赖/构建效率专项
-  - `Phase 8+` 的治理、灰度与长期机制建设
+  - `Phase 8` 的治理、灰度与长期机制建设
 
 ## 阶段定位
 - `Stage 2` 已经把基础设施、边界和超大类职责收到了可模块化的程度。
@@ -14,7 +17,7 @@
   - 先做 `Phase 5`，把稳定边界落成真正的 Gradle 模块图
   - 再做 `Phase 6`，在新模块边界上建立性能预算、baseline profile 和专项回归
 - `Phase 7` 不适合并入本阶段，因为包体积/依赖/构建效率治理需要在模块图稳定后再做，避免前后基线持续漂移。
-- `2026-03-21` 的 `Stage 3 validated` 与 `Phase 5 validated` 只应视为首轮 closeout checkpoint；截至 `2026-03-24`，虽然福利页与 RN 页面入口已开始压薄为宿主 wrapper，但模块化深度整体仍不足、首页首开链路刚补齐榜单与推荐流空缓存补拉且宿主根收口仍未全部完成，`Stage 3` 与 `Phase 5` 继续保持 `in_progress`。
+- `2026-03-21` 的 `Stage 3 validated` 与 `Phase 5 validated` 只应视为首轮 closeout checkpoint；当前最终关闭口径以后续 `2026-03-26` reopen closeout 为准，`Stage 3` 已回到 `validated`。
 
 ## 进入条件
 - `Stage 2 = validated`
@@ -87,4 +90,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`in_progress`
+- 当前状态：`validated（历史收口参考）`

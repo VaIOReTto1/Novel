@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-28 | Stage 4 cutover | control-plane | 正式将项目控制面切换为 `Stage 4 = in_progress`，并固定 `Phase 7 = in_progress`、`Phase 8 = planned` | `Stage 3` 已在 `2026-03-26` closeout 收口，且仓库已具备 size / dependency / build / observability 治理的宿主条件 | `README`、路线图、阶段宿主文档、validation board 与 harness 导航统一切换到 Stage 4 口径 | 继续以 `Phase 7` 为当前默认主线推进，待其收口后再切入 `Phase 8` |
 | 2026-03-28 | CI gate recovery | quality | `android-detekt-observe` 改用 committed `android/app/detekt-baseline.xml` 冻结历史 finding，`android-smoke` 保持 observe | `app:detekt` 当前仍有 `1481` weighted issues，emulator smoke 路径仍需继续观察 | detekt job 可以真实通过且不放松规则，smoke job 继续保留 artifact 与 flake 可观测性 | 后续按月收缩 baseline，并在 smoke emulator 连续稳定后再评估升级为 blocking |
 | 2026-03-26 | Phase 5 reopen | architecture | 将 `home/search/login/book/reader/rn-host` 根状态机全部收入各自 feature 模块，`app` 只保留 Android 强制入口与 host wrapper | 继续把 feature 根留在 `app` 会让 reopen 无法真正 closeout | `app` 不再直接承载 feature ViewModel 根 | 进入 thin-app sweep 与文档重建 |
 | 2026-03-26 | Phase 5 reopen | architecture | `ReaderViewModel` 迁移采用 `ReaderPaginationGateway / ReaderSettingsGateway / ReaderHistoryGateway` + app 默认实现，而不是一次性迁完整 service/usecase 根 | Reader 依赖树过深，一次性迁移风险高 | 行为语义保持不变，同时 `feature-reader` 获得根状态机所有权 | 后续如需继续深挖，再逐步下沉 service/usecase |

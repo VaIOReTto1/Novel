@@ -1,5 +1,10 @@
 # Rollback Index
 
+## 当前 Stage 4 文档切主线
+| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
+| --- | --- | --- | --- | --- |
+| `RB-STAGE4-DOCS-20260328-01` | `提交后生成` | Stage 4 控制面切换与 Phase 7-8 文档骨架建立 | `git revert --no-edit <本提交 SHA>` | `npm run harness:check` |
+
 ## 当前 reopen 原子提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |

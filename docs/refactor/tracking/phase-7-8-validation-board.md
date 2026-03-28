@@ -9,8 +9,8 @@
 ## Phase 7
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V7-01 | size baseline 与 artifact diff 入口 | APK / AAB / fonts / JS-native assets 组成可追溯 | 待开展 | `in_progress` | `pending` |
-| V7-02 | Gradle / npm dependency inventory | 版本分散、重复依赖、catalog/BOM 路线明确 | 待开展 | `in_progress` | `pending` |
+| V7-01 | size baseline 与 artifact diff 入口 | APK / AAB / fonts / JS-native assets 组成可追溯 | 已由 `size-baseline-and-artifact-entrypoints-2026-03-28.md` 与 `phase7-release-artifact-inventory-2026-03-28.json` 固定首批基线：`AAB 72.60 MiB`、`APK 98.93 MiB`、`JS bundle 2.33 MiB`、字体 `3.71 MiB / 19` 文件 | `validated` | `green` |
+| V7-02 | Gradle / npm dependency inventory | 版本分散、重复依赖、catalog/BOM 路线明确 | 已由 `dependency-inventory-and-governance-2026-03-28.md`、npm top-level JSON 与 `releaseRuntimeClasspath` 样本确认：无 version catalog、Kotlin/Hilt/Compose 版本来源分散、npm 侧 `31` 个 ranged 声明 | `validated` | `green` |
 | V7-03 | 第一轮低风险 size shrink | 不改行为前提下取得可证实体积收益 | 待开展 | `in_progress` | `pending` |
 | V7-04 | clean / incremental build baseline | build hot path、config cache 阻塞原因明确 | 待开展 | `in_progress` | `pending` |
 | V7-05 | Phase 7 closeout 与 Phase 8 入口 | Stage 4 后半段进入条件清晰 | 待开展 | `in_progress` | `pending` |

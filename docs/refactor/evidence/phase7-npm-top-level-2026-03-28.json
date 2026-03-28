@@ -1,0 +1,226 @@
+﻿{
+  "version": "1.0.2",
+  "name": "Novel",
+  "dependencies": {
+    "@babel/core": {
+      "version": "7.27.4",
+      "resolved": "https://registry.npmjs.org/@babel/core/-/core-7.27.4.tgz",
+      "overridden": false
+    },
+    "@babel/preset-env": {
+      "version": "7.27.2",
+      "resolved": "https://registry.npmjs.org/@babel/preset-env/-/preset-env-7.27.2.tgz",
+      "overridden": false
+    },
+    "@babel/preset-react": {
+      "version": "7.27.1",
+      "resolved": "https://registry.npmjs.org/@babel/preset-react/-/preset-react-7.27.1.tgz",
+      "overridden": false
+    },
+    "@babel/preset-typescript": {
+      "version": "7.27.1",
+      "resolved": "https://registry.npmjs.org/@babel/preset-typescript/-/preset-typescript-7.27.1.tgz",
+      "overridden": false
+    },
+    "@babel/runtime": {
+      "version": "7.27.6",
+      "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.27.6.tgz",
+      "overridden": false
+    },
+    "@react-native-async-storage/async-storage": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-2.2.0.tgz",
+      "overridden": false
+    },
+    "@react-native-community/cli-platform-android": {
+      "version": "18.0.0",
+      "resolved": "https://registry.npmjs.org/@react-native-community/cli-platform-android/-/cli-platform-android-18.0.0.tgz",
+      "overridden": false
+    },
+    "@react-native-community/cli-platform-ios": {
+      "version": "18.0.0",
+      "resolved": "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-18.0.0.tgz",
+      "overridden": false
+    },
+    "@react-native-community/cli": {
+      "version": "18.0.0",
+      "resolved": "https://registry.npmjs.org/@react-native-community/cli/-/cli-18.0.0.tgz",
+      "overridden": false
+    },
+    "@react-native/babel-preset": {
+      "version": "0.79.2",
+      "resolved": "https://registry.npmjs.org/@react-native/babel-preset/-/babel-preset-0.79.2.tgz",
+      "overridden": false
+    },
+    "@react-native/eslint-config": {
+      "version": "0.79.2",
+      "resolved": "https://registry.npmjs.org/@react-native/eslint-config/-/eslint-config-0.79.2.tgz",
+      "overridden": false
+    },
+    "@react-native/metro-config": {
+      "version": "0.79.2",
+      "resolved": "https://registry.npmjs.org/@react-native/metro-config/-/metro-config-0.79.2.tgz",
+      "overridden": false
+    },
+    "@react-native/typescript-config": {
+      "version": "0.79.2",
+      "resolved": "https://registry.npmjs.org/@react-native/typescript-config/-/typescript-config-0.79.2.tgz",
+      "overridden": false
+    },
+    "@react-navigation/native": {
+      "version": "7.1.17",
+      "resolved": "https://registry.npmjs.org/@react-navigation/native/-/native-7.1.17.tgz",
+      "overridden": false
+    },
+    "@svgr/webpack": {
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@svgr/webpack/-/webpack-8.1.0.tgz",
+      "overridden": false
+    },
+    "@types/jest": {
+      "version": "29.5.14",
+      "resolved": "https://registry.npmjs.org/@types/jest/-/jest-29.5.14.tgz",
+      "overridden": false
+    },
+    "@types/react-native-vector-icons": {
+      "version": "6.4.18",
+      "resolved": "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.18.tgz",
+      "overridden": false
+    },
+    "@types/react-test-renderer": {
+      "version": "19.1.0",
+      "resolved": "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-19.1.0.tgz",
+      "overridden": false
+    },
+    "@types/react": {
+      "version": "19.1.8",
+      "resolved": "https://registry.npmjs.org/@types/react/-/react-19.1.8.tgz",
+      "overridden": false
+    },
+    "babel-loader": {
+      "version": "10.0.0",
+      "resolved": "https://registry.npmjs.org/babel-loader/-/babel-loader-10.0.0.tgz",
+      "overridden": false
+    },
+    "eslint": {
+      "version": "8.57.1",
+      "resolved": "https://registry.npmjs.org/eslint/-/eslint-8.57.1.tgz",
+      "overridden": false
+    },
+    "html-webpack-plugin": {
+      "version": "5.6.3",
+      "resolved": "https://registry.npmjs.org/html-webpack-plugin/-/html-webpack-plugin-5.6.3.tgz",
+      "overridden": false
+    },
+    "immer": {
+      "version": "10.1.1",
+      "resolved": "https://registry.npmjs.org/immer/-/immer-10.1.1.tgz",
+      "overridden": false
+    },
+    "jest": {
+      "version": "29.7.0",
+      "resolved": "https://registry.npmjs.org/jest/-/jest-29.7.0.tgz",
+      "overridden": false
+    },
+    "metro-react-native-babel-preset": {
+      "version": "0.77.0",
+      "resolved": "https://registry.npmjs.org/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.77.0.tgz",
+      "overridden": false
+    },
+    "prettier": {
+      "version": "2.8.8",
+      "resolved": "https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz",
+      "overridden": false
+    },
+    "react-dom": {
+      "version": "19.0.0",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz",
+      "overridden": false
+    },
+    "react-native-linear-gradient": {
+      "version": "2.8.3",
+      "resolved": "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz",
+      "overridden": false
+    },
+    "react-native-markdown-display": {
+      "version": "7.0.2",
+      "resolved": "https://registry.npmjs.org/react-native-markdown-display/-/react-native-markdown-display-7.0.2.tgz",
+      "overridden": false
+    },
+    "react-native-reanimated": {
+      "version": "3.18.0",
+      "resolved": "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.18.0.tgz",
+      "overridden": false
+    },
+    "react-native-super-grid": {
+      "version": "6.0.1",
+      "resolved": "https://registry.npmjs.org/react-native-super-grid/-/react-native-super-grid-6.0.1.tgz",
+      "overridden": false
+    },
+    "react-native-svg-transformer": {
+      "version": "1.5.1",
+      "resolved": "https://registry.npmjs.org/react-native-svg-transformer/-/react-native-svg-transformer-1.5.1.tgz",
+      "overridden": false
+    },
+    "react-native-svg": {
+      "version": "15.12.0",
+      "resolved": "https://registry.npmjs.org/react-native-svg/-/react-native-svg-15.12.0.tgz",
+      "overridden": false
+    },
+    "react-native-vector-icons": {
+      "version": "10.3.0",
+      "resolved": "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-10.3.0.tgz",
+      "overridden": false
+    },
+    "react-native-web": {
+      "version": "0.20.0",
+      "resolved": "https://registry.npmjs.org/react-native-web/-/react-native-web-0.20.0.tgz",
+      "overridden": false
+    },
+    "react-native": {
+      "version": "0.79.2",
+      "resolved": "https://registry.npmjs.org/react-native/-/react-native-0.79.2.tgz",
+      "overridden": false
+    },
+    "react-test-renderer": {
+      "version": "19.0.0",
+      "resolved": "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-19.0.0.tgz",
+      "overridden": false
+    },
+    "react": {
+      "version": "19.0.0",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.0.0.tgz",
+      "overridden": false
+    },
+    "sass-loader": {
+      "version": "16.0.5",
+      "resolved": "https://registry.npmjs.org/sass-loader/-/sass-loader-16.0.5.tgz",
+      "overridden": false
+    },
+    "typescript": {
+      "version": "5.0.4",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.0.4.tgz",
+      "overridden": false
+    },
+    "webpack-cli": {
+      "version": "6.0.1",
+      "resolved": "https://registry.npmjs.org/webpack-cli/-/webpack-cli-6.0.1.tgz",
+      "overridden": false
+    },
+    "webpack-dev-server": {
+      "version": "5.2.2",
+      "resolved": "https://registry.npmjs.org/webpack-dev-server/-/webpack-dev-server-5.2.2.tgz",
+      "overridden": false
+    },
+    "webpack": {
+      "version": "5.99.9",
+      "resolved": "https://registry.npmjs.org/webpack/-/webpack-5.99.9.tgz",
+      "overridden": false
+    },
+    "zustand": {
+      "version": "5.0.5",
+      "resolved": "https://registry.npmjs.org/zustand/-/zustand-5.0.5.tgz",
+      "overridden": false
+    }
+  }
+}

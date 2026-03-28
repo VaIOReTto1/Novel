@@ -1,0 +1,149 @@
+{
+  "generatedAt": "2026-03-28",
+  "outputs": [
+    {
+      "path": "android/app/build/outputs/apk/release/app-release.apk",
+      "size": 103731226
+    },
+    {
+      "path": "android/app/build/outputs/bundle/release/app-release.aab",
+      "size": 76126542
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/mapping.txt",
+      "size": 37717144
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/usage.txt",
+      "size": 5256771
+    },
+    {
+      "path": "android/app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip",
+      "size": 1361171
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/seeds.txt",
+      "size": 1082564
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/resources.txt",
+      "size": 453507
+    },
+    {
+      "path": "android/app/build/outputs/logs/manifest-merger-debug-report.txt",
+      "size": 165477
+    },
+    {
+      "path": "android/app/build/outputs/logs/manifest-merger-release-report.txt",
+      "size": 133508
+    },
+    {
+      "path": "android/app/build/outputs/sdk-dependencies/release/sdkDependencies.txt",
+      "size": 100027
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/configuration.txt",
+      "size": 77203
+    },
+    {
+      "path": "android/app/build/outputs/apk/release/baselineProfiles/0/app-release.dm",
+      "size": 11680
+    },
+    {
+      "path": "android/app/build/outputs/apk/release/baselineProfiles/1/app-release.dm",
+      "size": 11643
+    },
+    {
+      "path": "android/app/build/outputs/apk/release/output-metadata.json",
+      "size": 699
+    }
+  ],
+  "generatedReleaseAssets": [
+    {
+      "path": "android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle",
+      "size": 2446884
+    }
+  ],
+  "mergedReleaseAssets": [
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/index.android.bundle",
+      "size": 2446884
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/MaterialCommunityIcons.ttf",
+      "size": 1147844
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Ionicons.ttf",
+      "size": 442604
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome6_Solid.ttf",
+      "size": 423676
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/MaterialIcons.ttf",
+      "size": 356840
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Fontisto.ttf",
+      "size": 313528
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome6_Brands.ttf",
+      "size": 209376
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome5_Solid.ttf",
+      "size": 202744
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome.ttf",
+      "size": 165548
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome5_Brands.ttf",
+      "size": 134040
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/AntDesign.ttf",
+      "size": 70344
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome6_Regular.ttf",
+      "size": 67976
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Entypo.ttf",
+      "size": 66200
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Foundation.ttf",
+      "size": 56976
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Feather.ttf",
+      "size": 56228
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/SimpleLineIcons.ttf",
+      "size": 54056
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Octicons.ttf",
+      "size": 49404
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/FontAwesome5_Regular.ttf",
+      "size": 33736
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Zocial.ttf",
+      "size": 25788
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/EvilIcons.ttf",
+      "size": 13456
+    }
+  ]
+}

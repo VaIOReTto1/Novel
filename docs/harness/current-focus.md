@@ -13,11 +13,11 @@
 - `2026-03-30` 已完成 `Phase 8` closeout，并关闭 `Stage 4`
 
 ## 默认下一主线
-- 默认下一主线：进入长期维护模式，以现有 Stage 4 治理层为基线持续维护
-- 第一落点：若新增结构性工作流，先判断是否需要 reopen 既有阶段，而不是直接绕开 control-plane
-- 第二落点：若新增指标、flag、rollback 或 reviewer 规则，优先增量更新 `Phase 8` 治理宿主文档
-- 第三落点：若出现新的架构级主题，再单独开新阶段或补充 closeout addendum
-- 当前没有新的 active refactor phase 在执行中
+- 默认下一主线：`Stage 5 = planned`
+- 第一落点：从 `Phase 9` 的 `runtime resilience matrix` 与 continuity contract 开始
+- 第二落点：`Phase 10` 承接无障碍、合规、供应链与双端协作治理宿主
+- 第三落点：`Phase 11` 收掉剩余 mock、fallback、空态、命名与状态模型问题
+- 当前没有新的 active refactor phase 在执行中，但 `Stage 5` 已是默认下一阶段入口
 
 ## Blockers / Known Drift
 - 根 `README.md` 的技术版本和成熟度描述仍可能落后于当前代码与当前 refactor 文档
@@ -30,10 +30,12 @@
 ## Primary Source Refs
 - [docs/refactor/README.md](../refactor/README.md)
 - [docs/refactor/stage-4-closeout-summary.md](../refactor/stage-4-closeout-summary.md)
+- [docs/refactor/stage-5-phase-9-11-plan.md](../refactor/stage-5-phase-9-11-plan.md)
+- [docs/refactor/tracking/phase-9-11-validation-board.md](../refactor/tracking/phase-9-11-validation-board.md)
 - [docs/refactor/phase-7/phase-7-closeout-assessment.md](../refactor/phase-7/phase-7-closeout-assessment.md)
 - [docs/refactor/phase-8/phase-8-closeout-assessment.md](../refactor/phase-8/phase-8-closeout-assessment.md)
 - [docs/refactor/tracking/phase-7-8-validation-board.md](../refactor/tracking/phase-7-8-validation-board.md)
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-30` by Stage 4 closeout
+- `2026-03-30` by Stage 5 control-plane planning

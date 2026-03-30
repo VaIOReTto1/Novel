@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { SafeAreaView } from 'react-native';
 import { useBookshelfStore, useRecommendationStore } from './store/bookshelfStore';
 import { useViewMode } from './hooks/useViewMode';
@@ -10,12 +10,15 @@ import { UnifiedScrollView } from './components/UnifiedScrollView';
 import { createBookshelfPageStyles } from './styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../utils/theme';
 import { BookshelfItem, RecommendationItem } from './types';
+import {
+  bootstrapBookshelfPage,
+  createBookshelfPageHandlers,
+} from './domain/bookshelfPageModel';
 
 export const BookshelfPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
 
-  // Store hooks
   const {
     bookshelfItems,
     isLoading: isBookshelfLoading,
@@ -31,7 +34,6 @@ export const BookshelfPage: React.FC = () => {
     loadRecommendations,
   } = useRecommendationStore();
 
-  // Custom hooks
   const {
     currentView,
     isTransitioning,
@@ -55,61 +57,50 @@ export const BookshelfPage: React.FC = () => {
     onLoadMoreRecommendations,
   } = useRefreshLogic();
 
-  // 初始化数据
   useEffect(() => {
-    loadBookshelfItems();
-    loadRecommendations();
+    bootstrapBookshelfPage({
+      loadBookshelfItems,
+      loadRecommendations,
+    });
   }, [loadBookshelfItems, loadRecommendations]);
 
-  // 处理书籍点击
+  const bookshelfHandlers = useMemo(
+    () =>
+      createBookshelfPageHandlers({
+        isEditMode,
+        enterEditMode,
+        exitEditMode,
+        toggleItemSelection,
+      }),
+    [enterEditMode, exitEditMode, isEditMode, toggleItemSelection],
+  );
+
   const handleBookPress = useCallback((item: BookshelfItem) => {
-    if (isEditMode) {
-      toggleItemSelection(item.id);
-    } else {
-      // 跳转到阅读页面
-      console.log('Open book:', item.title);
-    }
-  }, [isEditMode, toggleItemSelection]);
+    bookshelfHandlers.handleBookPress(item);
+  }, [bookshelfHandlers]);
 
-  // 处理书籍长按
   const handleBookLongPress = useCallback((item: BookshelfItem) => {
-    if (!isEditMode) {
-      enterEditMode();
-      toggleItemSelection(item.id);
-    }
-  }, [isEditMode, enterEditMode, toggleItemSelection]);
+    bookshelfHandlers.handleBookLongPress(item);
+  }, [bookshelfHandlers]);
 
-  // 处理推荐书籍点击
   const handleRecommendationPress = useCallback((item: RecommendationItem) => {
-    // 跳转到书籍详情页面
-    console.log('Open recommendation:', item.title);
-  }, []);
+    bookshelfHandlers.handleRecommendationPress(item);
+  }, [bookshelfHandlers]);
 
-  // 处理菜单按钮点击
   const handleMenuPress = useCallback((item: BookshelfItem) => {
-    console.log('Menu pressed for book:', item.title);
-    // TODO: 实现菜单功能
-  }, []);
+    bookshelfHandlers.handleMenuPress(item);
+  }, [bookshelfHandlers]);
 
-  // 处理筛选按钮点击
   const handleFilterPress = useCallback(() => {
-    console.log('Filter pressed');
-    // TODO: 实现筛选功能
-  }, []);
+    bookshelfHandlers.handleFilterPress();
+  }, [bookshelfHandlers]);
 
-  // 处理编辑按钮点击
   const handleEditPress = useCallback(() => {
-    if (isEditMode) {
-      exitEditMode();
-    } else {
-      enterEditMode();
-    }
-  }, [isEditMode, exitEditMode, enterEditMode]);
-
+    bookshelfHandlers.handleEditPress();
+  }, [bookshelfHandlers]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* TopBar */}
       <TopBar
         currentView={currentView}
         onViewChange={switchView}
@@ -119,7 +110,6 @@ export const BookshelfPage: React.FC = () => {
         isEditMode={isEditMode}
       />
 
-      {/* 编辑工具栏 */}
       {isEditMode && (
         <EditToolbar
           isEditMode={isEditMode}
@@ -132,7 +122,6 @@ export const BookshelfPage: React.FC = () => {
         />
       )}
 
-      {/* 统一滚动视图 */}
       <UnifiedScrollView
         bookshelfData={bookshelfItems}
         recommendations={recommendations}

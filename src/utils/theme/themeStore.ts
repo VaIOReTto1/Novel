@@ -1,12 +1,15 @@
 import { create } from 'zustand';
-import { DeviceEventEmitter, NativeModules, Appearance} from 'react-native';
+import { Appearance } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SettingsBridge from '../bridge/SettingsBridge';
+import { emitThemeChanged, subscribeThemeChanged } from '../runtime/eventHub';
 
 export type ThemeMode = 'light' | 'dark' | 'auto';
 
 interface ThemeState {
   currentTheme: ThemeMode;
   setTheme: (theme: ThemeMode) => void;
+  setDarkMode: (isDarkMode: boolean) => void;
   isDarkMode: boolean;
   isInitialized: boolean;
   initializeFromNative: () => Promise<void>;
@@ -45,11 +48,13 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
       console.warn('[ThemeStore] 保存主题到AsyncStorage失败:', e);
     });
 
-    if (NativeModules.SettingsBridge?.changeTheme) {
-      NativeModules.SettingsBridge.changeTheme(theme).catch((e: any) => {
+    SettingsBridge.changeTheme(theme).catch((e: any) => {
         console.warn('[ThemeStore] 同步主题到Android失败:', e);
-      });
-    }
+    });
+  },
+
+  setDarkMode: (isDarkMode: boolean) => {
+    set({ isDarkMode });
   },
 
   // 🎯 新增：系统主题监听器
@@ -75,7 +80,7 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
           });
 
           // 🎯 发送自定义事件，与原生事件格式对齐
-          DeviceEventEmitter.emit('ThemeChanged', {
+          emitThemeChanged({
             colorScheme: newSystemTheme ? 'dark' : 'light',
             currentThemeMode: 'auto',
             followSystem: true,
@@ -238,7 +243,7 @@ export const initializeTheme = async (): Promise<() => void> => {
     const cleanupSystemListener = useThemeStore.getState().listenToSystemTheme();
 
     // 4. 监听原生主题变更事件（优化版）
-    const nativeThemeSubscription = DeviceEventEmitter.addListener('ThemeChanged', (data: {
+    const cleanupNativeThemeSubscription = subscribeThemeChanged((data: {
       colorScheme: string;
       currentThemeMode?: string;
       followSystem?: boolean;
@@ -278,7 +283,7 @@ export const initializeTheme = async (): Promise<() => void> => {
     // 返回清理函数
     return () => {
       cleanupSystemListener();
-      nativeThemeSubscription?.remove();
+      cleanupNativeThemeSubscription();
       console.log('[ThemeStore] 🧹 主题监听器已清理');
     };
   } catch (e) {
@@ -305,6 +310,7 @@ export const useThemeSelector = () => {
 export const useThemeActions = () => {
   return useThemeStore(state => ({
     setTheme: state.setTheme,
+    setDarkMode: state.setDarkMode,
     initializeFromProps: state.initializeFromProps,
     initializeFromNative: state.initializeFromNative,
   }));

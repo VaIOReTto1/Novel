@@ -2,10 +2,11 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 // 使用 require 兼容 RN 版本类型差异
 const RN: any = require('react-native');
-const {FlatList, BackHandler} = RN;
+const {FlatList} = RN;
 import {useNovelColors} from '../../../utils/theme/colors';
 import {wp} from '../../../utils/theme/dimensions';
 import {NavigationBridge} from '../../../utils/bridge/NavigationBridge';
+import {registerHardwareBackHandler} from '../../../utils/runtime/backNavigation';
 import {createAIStyles} from './styles/aiStyles';
 import {useAIStore} from './store/aiStore';
 import {useAIShortcuts} from './hooks/useAIShortcuts';
@@ -19,11 +20,10 @@ import {IdeaSelector} from './components/IdeaSelector';
 const AIWriteAssistant: React.FC = () => {
   const colors = useNovelColors();
   useEffect(() => {
-    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       NavigationBridge.navigateBack?.('AIWriteAssistantComponent');
       return true;
     });
-    return () => sub.remove();
   }, []);
 
   const styles = createAIStyles(colors);

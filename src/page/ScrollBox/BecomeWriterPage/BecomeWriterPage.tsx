@@ -1,8 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { useBecomeWriterStore } from './store/becomeWriterStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createBecomeWriterPageStyles } from './styles/BecomeWriterPageStyles';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   UserSection,
@@ -14,8 +16,6 @@ import {
   BottomButton,
   WelcomeModal,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const BecomeWriterPage: React.FC = () => {
   // 使用Zustand store
@@ -55,25 +55,13 @@ const BecomeWriterPage: React.FC = () => {
 
   // Android硬件返回按钮处理（使用 require 以规避类型问题）
   useEffect(() => {
-    const RN = require('react-native');
-    const BH = RN && RN.BackHandler;
-    if (!(BH && BH.addEventListener)) {
-      return;
-    }
-    const sub = BH.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[BecomeWriterPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('BecomeWriterPageComponent');
       }
       return true;
     });
-    return () => {
-      try {
-        if (sub && typeof sub.remove === 'function') {
-          sub.remove();
-        }
-      } catch (e) {}
-    };
   }, []);
 
   // 初始化数据
@@ -144,7 +132,7 @@ const BecomeWriterPage: React.FC = () => {
     const fetchAuthorWorks = async () => {
       if (!isAuthor) { return; }
       try {
-        const res = await (require('../../../utils/bridge/NavigationBridge').default).getAuthorBooks(1, 50);
+        const res = await NavigationBridge.getAuthorBooks(1, 50);
         const list = Array.isArray(res?.list) ? res.list : [];
         if (list.length > 0) {
           const worksMapped = list.map((it: any) => ({

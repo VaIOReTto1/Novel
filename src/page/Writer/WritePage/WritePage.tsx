@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 
 const RN: any = require('react-native');
-const { TextInput, BackHandler, Modal, ActivityIndicator, Keyboard } = RN;
+const { TextInput, Modal, ActivityIndicator, Keyboard } = RN;
 import { createWritePageStyles } from './styles/WritePageStyles';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { useWriteStore } from './store/writeStore';
@@ -12,6 +12,8 @@ import { VolumeBar } from './components/VolumeBar';
 import { useWriteActions } from './hooks/useWriteActions';
 import { SelectionToolbar } from './components/SelectionToolbar';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
+import { subscribeWritePageSelectionMenuAction } from '../../../utils/runtime/eventHub';
 
 const WritePage: React.FC = () => {
   const colors = useNovelColors();
@@ -21,8 +23,10 @@ const WritePage: React.FC = () => {
   const writeStore = useWriteStore();
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => { goBack(); return true; });
-    return () => backHandler.remove();
+    return registerHardwareBackHandler(() => {
+      goBack();
+      return true;
+    });
   }, [goBack]);
 
   // 简易选择监听：以最后一次输入焦点为锚点，真实实现需自定义可编辑组件
@@ -65,7 +69,7 @@ const WritePage: React.FC = () => {
     if (node != null) {
       NavigationBridge.attachSelectionMenu?.(node as number);
     }
-    const sub = RN.DeviceEventEmitter?.addListener?.('WritePageSelectionMenuAction', (evt: any) => {
+    const cleanupSelectionSubscription = subscribeWritePageSelectionMenuAction((evt: any) => {
       const action = evt?.action as 'polish' | 'expand' | 'condense' | 'continue' | undefined;
       const selected = evt?.selectedText as string | undefined;
       if (!action || !selected) { return; }
@@ -79,7 +83,7 @@ const WritePage: React.FC = () => {
         if (action === 'continue') { writeStore.showParamModal?.('continue', '请输入续写目标字数，如 200 表示约 200 字'); return; }
       });
     });
-    return () => { try { sub?.remove?.(); } catch (_e) {} };
+    return cleanupSelectionSubscription;
   }, [contentRef, updateSelection, writeStore]);
 
   const replaceSelected = (newText: string) => {
@@ -216,5 +220,4 @@ const WritePage: React.FC = () => {
 };
 
 export default WritePage;
-
 

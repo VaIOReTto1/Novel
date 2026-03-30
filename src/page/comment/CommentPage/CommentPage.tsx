@@ -3,7 +3,6 @@ import {
   View,
   RefreshControl,
   Animated,
-  BackHandler,
 } from 'react-native';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
@@ -13,6 +12,7 @@ import { TopBar } from './components/TopBar';
 import { CommentList } from './components/CommentList';
 import { RatingSection } from './components/RatingSection';
 import { CategorySection } from './components/CategorySection';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 
 // 自定义Hook：刷新逻辑
 const useRefresh = () => {
@@ -83,13 +83,11 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[CommentPage] Android硬件返回按钮被按下');
       NavigationBridge.navigateBack('CommentPageComponent');
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 返回按钮处理

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Animated, Text, RefreshControl, TouchableOpacity, Dimensions, Easing, BackHandler } from 'react-native';
+import { View, ScrollView, Animated, Text, RefreshControl, TouchableOpacity, Dimensions, Easing } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
 import { TopBar } from './components/TopBar';
@@ -9,6 +9,7 @@ import { RepliesSheet } from './components/RepliesSheet';
 import { useReviewDetailStore } from './store/reviewDetailStore';
 import { useReviewDetailPageStyles } from './hooks/useReviewDetailPageStyles';
 import { useRefresh, useAnimations } from './hooks';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 const { height: screenHeight } = Dimensions.get('window');
 const bottomInputOverlayStyle = { zIndex: 30 } as const;
 const actionButtonSpacingStyle = { marginTop: 8 } as const;
@@ -69,13 +70,11 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[ReviewDetailPage] Android硬件返回按钮被按下');
       NavigationBridge.navigateBack('ReviewDetailPageComponent');
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   const handleBack = () => {

@@ -1,6 +1,11 @@
-import { DeviceEventEmitter } from 'react-native';
 import { useUserStore } from '../page/ProfilePage/store/userStore';
 import { useHomeStore } from '../page/ProfilePage/store/BookStore';
+import {
+  emitRecommendBooksReceived,
+  emitUserDataReceived,
+  subscribeRecommendBooksReceived,
+  subscribeUserDataReceived,
+} from './runtime/eventHub';
 
 export interface NativeUserData {
   uid: string;
@@ -39,32 +44,30 @@ class NativeEventListener {
    * 监听用户数据事件
    */
   private setupUserDataListener() {
-    this.userDataSubscription = DeviceEventEmitter.addListener(
-      'onUserDataReceived',
-      (data: NativeUserData) => {
+    this.userDataSubscription = {
+      remove: subscribeUserDataReceived((data: NativeUserData) => {
         console.log('[RN] 📱 收到用户数据:', data);
 
         // 直接调用Zustand store方法
         useUserStore.getState().handleNativeUserData(data);
-      }
-    );
+      }),
+    };
   }
 
   /**
    * 监听推荐书籍数据事件
    */
   private setupBookDataListener() {
-    this.bookDataSubscription = DeviceEventEmitter.addListener(
-      'onRecommendBooksReceived',
-      (data: NativeBookData) => {
+    this.bookDataSubscription = {
+      remove: subscribeRecommendBooksReceived((data: NativeBookData) => {
         console.log('[RN] 📚 收到推荐书籍数据:', data);
 
         // 更新首页推荐书籍
         if (data.books && data.books.length > 0) {
           useHomeStore.getState().setRecommendBooks(data.books);
         }
-      }
-    );
+      }),
+    };
   }
 
   /**
@@ -88,14 +91,14 @@ class NativeEventListener {
    * 手动触发用户数据接收（用于测试）
    */
   static simulateUserData(userData: NativeUserData) {
-    DeviceEventEmitter.emit('onUserDataReceived', userData);
+    emitUserDataReceived(userData);
   }
 
   /**
    * 手动触发书籍数据接收（用于测试）
    */
   static simulateBookData(bookData: NativeBookData) {
-    DeviceEventEmitter.emit('onRecommendBooksReceived', bookData);
+    emitRecommendBooksReceived(bookData);
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { View, ScrollView, NativeModules, BackHandler } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { useMessageStore } from './store/messageStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { wp } from '../../../utils/theme/dimensions';
@@ -8,6 +8,8 @@ import { useMessageAnimations } from './hooks/useMessageAnimations';
 import { createMessagePageStyles } from './styles/MessagePageStyles';
 import { MESSAGE_TABS } from './utils/constants';
 import { MessageItem } from './types';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   MessageItem as MessageItemComponent,
@@ -17,8 +19,6 @@ import {
   LoadMoreIndicator,
   MainMessagesSection,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const MessagePage: React.FC = () => {
   // ScrollView ref和tab位置ref
@@ -82,15 +82,13 @@ const MessagePage: React.FC = () => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[MessagePage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('MessagePageComponent');
       }
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 标记全部已读

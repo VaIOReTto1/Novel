@@ -1,16 +1,16 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, NativeModules, Text, BackHandler } from 'react-native';
+import { View, Text } from 'react-native';
 import { useViewedUsersStore } from './store/viewedUsersStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createViewedUsersPageStyles } from './styles/ViewedUsersPageStyles';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   TabsSection,
   EmptyState,
   UsersList,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const ViewedUsersPage: React.FC = () => {
   // 使用Zustand store
@@ -61,15 +61,13 @@ const ViewedUsersPage: React.FC = () => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[ViewedUsersPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('ViewedUsersPageComponent');
       }
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // Tab切换

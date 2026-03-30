@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, BackHandler } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { useHistoryStore } from './store/historyStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { useRefreshLogic } from './hooks/useRefreshLogic';
@@ -7,14 +7,14 @@ import { useHistoryAnimations } from './hooks/useHistoryAnimations';
 import { createHistoryPageStyles } from './styles/HistoryPageStyles';
 import { HISTORY_TABS } from './utils/constants';
 import { HistoryItem } from './types';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   TabsArea,
   RefreshIndicator,
   ContentArea,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const HistoryPage: React.FC = () => {
   // 使用Zustand store
@@ -77,15 +77,13 @@ const HistoryPage: React.FC = () => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[HistoryPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('HistoryPageComponent');
       }
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 搜索按钮点击

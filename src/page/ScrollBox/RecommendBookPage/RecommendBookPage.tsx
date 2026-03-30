@@ -1,8 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import { Alert, View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
+import { Alert, View, ScrollView, Text } from 'react-native';
 import { useRecommendBookStore } from './store/recommendBookStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createRecommendBookPageStyles } from './styles/RecommendBookPageStyles';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   UserSection,
@@ -10,8 +12,6 @@ import {
   CreativeServiceSection,
   CreativeTaskSection,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const RecommendBookPage: React.FC = () => {
   // 使用Zustand store
@@ -60,15 +60,13 @@ const RecommendBookPage: React.FC = () => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[RecommendBookPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('RecommendBookPageComponent');
       }
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 创作任务 Tab 切换

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, DeviceEventEmitter, NativeModules, TouchableOpacity, BackHandler } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { SettingRow } from '../settingspage/components/SettingRow';
 import { TimePickerModal } from './components/TimePickerModal';
 import { useSettingsStore } from '../settingspage/store/settingsStore';
 import { createTimedSwitchPageStyles } from './styles/TimedSwitchPageStyles';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { SettingItem } from '../settingspage/types/index';
-
-const { NavigationBridge } = NativeModules;
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { subscribeThemeChanged } from '../../../utils/runtime/eventHub';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 
 /**
  * 定时切换页面
@@ -32,24 +33,24 @@ const TimedSwitchPage: React.FC = () => {
   useEffect(() => {
     console.log('[TimedSwitchPage] 📱 TimedSwitchPage组件开始挂载');
 
-    const subscription = DeviceEventEmitter.addListener('ThemeChanged', (data: { colorScheme: string }) => {
+    const cleanupThemeSubscription = subscribeThemeChanged((data: { colorScheme: string }) => {
       console.log('[TimedSwitchPage] 🎨 收到主题变化事件:', data.colorScheme);
     });
 
     return () => {
       console.log('[TimedSwitchPage] 📱 TimedSwitchPage组件即将卸载');
-      subscription.remove();
+      cleanupThemeSubscription();
     };
   }, []);
 
   // 处理Android硬件返回按钮
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    const cleanupBackHandler = registerHardwareBackHandler(() => {
       handleBackPress();
       return true;
     });
 
-    return () => backHandler.remove();
+    return cleanupBackHandler;
   }, []);
 
   // 定时切换开关切换处理
@@ -98,9 +99,7 @@ const TimedSwitchPage: React.FC = () => {
   // 返回按钮处理
   const handleBackPress = () => {
     console.log('[TimedSwitchPage] ⬅️ 用户点击返回按钮');
-    if (NavigationBridge?.navigateBack) {
-      NavigationBridge.navigateBack('TimedSwitchPageComponent');
-    }
+    NavigationBridge.navigateBack('TimedSwitchPageComponent');
   };
 
   const settingItems: SettingItem[] = [

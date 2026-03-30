@@ -1,16 +1,16 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { useMyReservationStore } from './store/myReservationStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createMyReservationPageStyles } from './styles/MyReservationPageStyles';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   SubTabsSection,
   ReservationGrid,
   EmptyState,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const MyReservationPage: React.FC = () => {
   // 使用Zustand store
@@ -60,15 +60,13 @@ const MyReservationPage: React.FC = () => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[MyReservationPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('MyReservationPageComponent');
       }
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 主Tab切换

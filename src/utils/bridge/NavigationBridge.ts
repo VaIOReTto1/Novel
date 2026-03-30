@@ -42,6 +42,9 @@ interface NavigationBridgeInterface {
   getAuthorStatus(): Promise<{ isAuthor: boolean; code?: string; message?: string; ok?: boolean }>;
   getAuthorBooks(pageNum?: number, pageSize?: number): Promise<{ list: Array<{ id: string; bookName: string; wordCount: number }> }>;
   getReadingHistory(): Promise<{ historyItems: Array<{ id: string; title: string; author: string; description: string; coverUrl: string; lastReadTime: number; readProgress: number; type: string; categoryId: string; readCount: number; rating: number }>; success: boolean }>;
+  getBookCategories(workDirection: number): Promise<{ list: Array<{ id: string; name: string }> }>;
+  searchBooks(workDirection: number, categoryId: number, pageNum: number, pageSize: number): Promise<{ list: Array<unknown>; pages?: number }>;
+  navigateToReactNativePage?(componentName: string): void;
   navigateToBecomeWriterWithFlag(isAuthor: boolean): void;
   // Android only: attach/detach custom selection menu to a specific TextInput view
   attachSelectionMenu?(viewTag: number): void;
@@ -253,6 +256,29 @@ export const NavigationBridge: NavigationBridgeInterface = {
   getReadingHistory: (): Promise<{ historyItems: Array<{ id: string; title: string; author: string; description: string; coverUrl: string; lastReadTime: number; readProgress: number; type: string; categoryId: string; readCount: number; rating: number }>; success: boolean }> => {
     console.log('[NavigationBridge] Getting reading history');
     return NativeNavigationBridge?.getReadingHistory() || Promise.resolve({ historyItems: [], success: false });
+  },
+
+  getBookCategories: (workDirection: number): Promise<{ list: Array<{ id: string; name: string }> }> => {
+    if (!NativeNavigationBridge?.getBookCategories) {
+      return Promise.resolve({ list: [] });
+    }
+    return NativeNavigationBridge.getBookCategories(workDirection);
+  },
+
+  searchBooks: (
+    workDirection: number,
+    categoryId: number,
+    pageNum: number,
+    pageSize: number,
+  ): Promise<{ list: Array<unknown>; pages?: number }> => {
+    if (!NativeNavigationBridge?.searchBooks) {
+      return Promise.resolve({ list: [], pages: 0 });
+    }
+    return NativeNavigationBridge.searchBooks(workDirection, categoryId, pageNum, pageSize);
+  },
+
+  navigateToReactNativePage: (componentName: string) => {
+    NativeNavigationBridge?.navigateToReactNativePage?.(componentName);
   },
 
   navigateToBecomeWriterWithFlag: (isAuthor: boolean) => {

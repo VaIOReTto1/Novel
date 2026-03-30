@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, BackHandler } from 'react-native';
+import { View, Text } from 'react-native';
 import { useNovelColors } from '../../../utils/theme';
 import { createFeedbackHelpPageStyles } from './styles/FeedbackHelpPageStyles';
 import { useFeedbackHelpStore } from './store/feedbackHelpStore';
@@ -8,6 +8,7 @@ import {
   QuestionDetail,
 } from './components';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 
 export const QuestionDetailPage: React.FC = React.memo(() => {
   const colors = useNovelColors();
@@ -29,13 +30,11 @@ export const QuestionDetailPage: React.FC = React.memo(() => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[QuestionDetailPage] Android硬件返回按钮被按下');
       NavigationBridge.navigateBack('QuestionDetailPageComponent');
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 处理问题解决状态

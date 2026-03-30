@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, ScrollView, NativeModules } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { useUserStore } from './store/userStore';
 import { useHomeStore } from './store/BookStore';
 import { useNovelColors } from '../../utils/theme/colors';
@@ -19,8 +19,6 @@ import {
   BottomBox,
   WaterfallGrid,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const ProfilePage: React.FC = () => {
 
@@ -120,11 +118,7 @@ const ProfilePage: React.FC = () => {
 
   // 登录函数
   const toLogin = useCallback(() => {
-    if (NavigationBridge?.goToLogin) {
-      NavigationBridge.goToLogin();
-    } else {
-      console.log('NavigationBridge.goToLogin not available');
-    }
+    NavBridge.goToLogin();
   }, []);
 
   // 书籍点击
@@ -135,11 +129,7 @@ const ProfilePage: React.FC = () => {
 
   // 设置按钮点击
   const handleSettingsPress = useCallback(() => {
-    if (NavigationBridge?.navigateToSettings) {
-      NavigationBridge.navigateToSettings();
-    } else {
-      console.log('NavigationBridge.navigateToSettings not available');
-    }
+    NavBridge.navigateToSettings();
   }, []);
 
   // 成为作家/写小说按钮点击（来自第一页图标）

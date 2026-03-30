@@ -1,8 +1,10 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
-import { View, ScrollView, NativeModules, Text, BackHandler } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { useMemberCenterStore } from './store/memberCenterStore';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createMemberCenterPageStyles, getVIPThemeColors } from './styles/MemberCenterPageStyles';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
   TopBar,
   VIPCardCarousel,
@@ -13,8 +15,6 @@ import {
   BottomPurchase,
   TaskCards,
 } from './components';
-
-const { NavigationBridge } = NativeModules;
 
 const MemberCenterPage: React.FC = () => {
   // 使用Zustand store
@@ -76,15 +76,13 @@ const MemberCenterPage: React.FC = () => {
 
   // Android硬件返回按钮处理
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       console.log('[MemberCenterPage] Android硬件返回按钮被按下');
       if (NavigationBridge?.navigateBack) {
         NavigationBridge.navigateBack('MemberCenterPageComponent');
       }
       return true; // 阻止默认行为
     });
-
-    return () => backHandler.remove();
   }, []);
 
   // 卡片切换

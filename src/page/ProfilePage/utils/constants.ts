@@ -1,6 +1,7 @@
 import { wp } from '../../../utils/theme/dimensions';
 import { Dimensions } from 'react-native';
 import { IconData } from '../types';
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 
 export const { width: screenWidth } = Dimensions.get('window');
 
@@ -22,61 +23,26 @@ export const ICONS_DATA: IconData[] = [
   // 第一页的4个图标
   { id: 'email', name: '我的消息', icon: 'email', onPress: () => {
     console.log('导航到我的消息');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToMessage) {
-      NavigationBridge.navigateToMessage();
-    } else {
-      console.log('NavigationBridge.navigateToMessage not available');
-    }
+    NavigationBridge.navigateToMessage();
   }},
   { id: 'be_writer', name: '成为作家', icon: 'be_writer', onPress: () => {
     console.log('导航到成为作家');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToBecomeWriterWithStatus) {
-      NavigationBridge.navigateToBecomeWriterWithStatus();
-    } else {
-      console.log('NavigationBridge.navigateToBecomeWriterWithStatus not available');
-    }
+    NavigationBridge.navigateToBecomeWriterWithStatus();
   }},
   { id: 'history', name: '浏览历史', icon: 'history', onPress: () => {
     console.log('导航到浏览历史');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToHistory) {
-      NavigationBridge.navigateToHistory();
-    } else {
-      console.log('NavigationBridge.navigateToHistory not available');
-    }
+    NavigationBridge.navigateToHistory();
   }},
   { id: 'subscribe', name: '推书中心', icon: 'subscribe', onPress: () => {
     console.log('导航到推书中心');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToRecommendBook) {
-      NavigationBridge.navigateToRecommendBook();
-    } else {
-      console.log('NavigationBridge.navigateToRecommendBook not available');
-    }
+    NavigationBridge.navigateToRecommendBook();
   }},
 
   // 第二页的15个图标
   { id: 'game', name: '我的', icon: 'game', onPress: () => console.log('游戏') },
   { id: 'my_preorder', name: '我的预约', icon: 'member', onPress: () => {
     console.log('导航到我的预约');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToMyReservation) {
-      NavigationBridge.navigateToMyReservation();
-    } else {
-      console.log('NavigationBridge.navigateToMyReservation not available');
-    }
+    NavigationBridge.navigateToMyReservation();
   }},
   { id: 'my_download', name: '我的下载', icon: 'download', onPress: () => console.log('我的下载') },
   { id: 'game_center', name: '游戏中心', icon: 'game', onPress: () => console.log('游戏中心') },
@@ -86,40 +52,19 @@ export const ICONS_DATA: IconData[] = [
   { id: 'my_note', name: '我的笔记', icon: 'note', onPress: () => console.log('我的笔记') },
   { id: 'who_seen', name: '看过的人', icon: 'who_have_seen', onPress: () => {
     console.log('导航到看过的人');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToViewedUsers) {
-      NavigationBridge.navigateToViewedUsers();
-    } else {
-      console.log('NavigationBridge.navigateToViewedUsers not available');
-    }
+    NavigationBridge.navigateToViewedUsers();
   }},
   { id: 'liked_video', name: '赞过的视频', icon: 'vedio_have_favorited', onPress: () => console.log('赞过的视频') },
   { id: 'help_guide', name: '帮助指南', icon: 'guide', onPress: () => console.log('帮助指南') },
   { id: 'my_public_welfare', name: '我的公益', icon: 'public_welfare', onPress: () => console.log('我的公益') },
   { id: 'member_center', name: '会员中心', icon: 'member', onPress: () => {
     console.log('导航到会员中心');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToMemberCenter) {
-      NavigationBridge.navigateToMemberCenter();
-    } else {
-      console.log('NavigationBridge.navigateToMemberCenter not available');
-    }
+    NavigationBridge.navigateToMemberCenter();
   }},
   { id: 'my_wallet2', name: '我的钱包', icon: 'wallet', onPress: () => console.log('我的钱包') },
   { id: 'feedback_help', name: '反馈与帮助', icon: 'feedback', onPress: () => {
     console.log('导航到反馈与帮助');
-    // 调用原生导航方法
-    const { NativeModules } = require('react-native');
-    const { NavigationBridge } = NativeModules;
-    if (NavigationBridge?.navigateToFeedbackHelp) {
-      NavigationBridge.navigateToFeedbackHelp();
-    } else {
-      console.log('NavigationBridge.navigateToFeedbackHelp not available');
-    }
+    NavigationBridge.navigateToFeedbackHelp();
   }},
 
   // 第三页的剩余图标

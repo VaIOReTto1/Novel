@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView, ScrollView, BackHandler } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { createPrivacyPolicyPageStyles } from './styles/PrivacyPolicyPageStyles';
 import { useNovelColors } from '../../../utils/theme/colors';
-import { NativeModules } from 'react-native';
-
-const { NavigationBridge } = NativeModules;
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 
 /**
  * 隐私政策页面
@@ -21,12 +20,10 @@ const PrivacyPolicyPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       handleBackPress();
       return true;
     });
-
-    return () => backHandler.remove();
   }, []);
 
   return (

@@ -1,41 +1,24 @@
 import { create } from 'zustand';
-import { NativeModules } from 'react-native';
 import { SettingsStore, ColorScheme } from '../types';
 import { useThemeStore, ThemeMode } from '../../../../utils/theme/themeStore';
-
-const { SettingsBridge, NavigationBridge } = NativeModules;
+import NavigationBridge from '../../../../utils/bridge/NavigationBridge';
+import SettingsBridge from '../../../../utils/bridge/SettingsBridge';
 
 // Android原生缓存清理调用
 const clearAppCache = async (): Promise<string> => {
   return new Promise((resolve, reject) => {
-    if (SettingsBridge?.clearAllCache) {
-      SettingsBridge.clearAllCache()
-        .then((result: string) => resolve(result))
-        .catch((error: any) => reject(new Error(error)));
-    } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      setTimeout(() => {
-        resolve('已清理 12.5MB 缓存');
-      }, 2000);
-    }
+    SettingsBridge.clearAllCache()
+      .then((result: string) => resolve(result))
+      .catch((error: any) => reject(new Error(error)));
   });
 };
 
 // Android原生计算缓存大小
 const calculateCacheSize = async (): Promise<string> => {
   return new Promise((resolve, reject) => {
-    if (SettingsBridge?.calculateCacheSize) {
-      SettingsBridge.calculateCacheSize()
-        .then((result: string) => resolve(result))
-        .catch((error: any) => reject(new Error(error)));
-    } else {
-      // 模拟数据（当在纯RN环境中运行时）
-      setTimeout(() => {
-        const sizes = ['12.5MB', '25.3MB', '8.7MB', '45.2MB', '67.1MB'];
-        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-        resolve(randomSize);
-      }, 1000);
-    }
+    SettingsBridge.calculateCacheSize()
+      .then((result: string) => resolve(result))
+      .catch((error: any) => reject(new Error(error)));
   });
 };
 
@@ -49,15 +32,13 @@ const changeThemeUnified = async (theme: string): Promise<void> => {
     await setTheme(theme as ThemeMode);
 
     // 🎯 通知原生，不等待回传（单向数据流）
-    if (SettingsBridge?.changeTheme) {
-      SettingsBridge.changeTheme(theme)
-        .then((result: string) => {
-          console.log('[SettingsStore] ✅ 原生主题设置完成:', result);
-        })
-        .catch((error: any) => {
-          console.warn('[SettingsStore] ⚠️ 原生主题设置失败:', error);
-        });
-    }
+    SettingsBridge.changeTheme(theme)
+      .then((result: string) => {
+        console.log('[SettingsStore] ✅ 原生主题设置完成:', result);
+      })
+      .catch((error: any) => {
+        console.warn('[SettingsStore] ⚠️ 原生主题设置失败:', error);
+      });
 
     console.log('[SettingsStore] ✅ 主题切换完成:', theme);
   } catch (error) {
@@ -75,16 +56,16 @@ const syncSettingToNative = async (operation: string, ...args: any[]): Promise<v
 
     switch (operation) {
       case 'setFollowSystemTheme':
-        promise = SettingsBridge?.setFollowSystemTheme?.(args[0]);
+        promise = SettingsBridge.setFollowSystemTheme(args[0]);
         break;
       case 'setAutoNightMode':
-        promise = SettingsBridge?.setAutoNightMode?.(args[0]);
+        promise = SettingsBridge.setAutoNightMode(args[0]);
         break;
       case 'setNightModeTime':
-        promise = SettingsBridge?.setNightModeTime?.(args[0], args[1]);
+        promise = SettingsBridge.setNightModeTime(args[0], args[1]);
         break;
       case 'checkCurrentTimeTheme':
-        promise = SettingsBridge?.checkCurrentTimeTheme?.();
+        promise = SettingsBridge.checkCurrentTimeTheme();
         break;
       default:
         console.warn('[SettingsStore] ⚠️ 未知的设置操作:', operation);
@@ -301,31 +282,19 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       // 🎯 只在必要时从原生获取设置，减少跨桥调用
       const [autoEnabled, startTime, endTime] = await Promise.all([
         new Promise<boolean>((resolve) => {
-          if (SettingsBridge?.isAutoNightModeEnabled) {
-            SettingsBridge.isAutoNightModeEnabled((err: string | null, result: boolean) => {
-              resolve(err ? false : result);
-            });
-          } else {
-            resolve(false);
-          }
+          SettingsBridge.isAutoNightModeEnabled()
+            .then(resolve)
+            .catch(() => resolve(false));
         }),
         new Promise<string>((resolve) => {
-          if (SettingsBridge?.getNightModeStartTime) {
-            SettingsBridge.getNightModeStartTime((err: string | null, result: string) => {
-              resolve(err ? '22:00' : result);
-            });
-          } else {
-            resolve('22:00');
-          }
+          SettingsBridge.getNightModeStartTime()
+            .then(resolve)
+            .catch(() => resolve('22:00'));
         }),
         new Promise<string>((resolve) => {
-          if (SettingsBridge?.getNightModeEndTime) {
-            SettingsBridge.getNightModeEndTime((err: string | null, result: string) => {
-              resolve(err ? '06:00' : result);
-            });
-          } else {
-            resolve('06:00');
-          }
+          SettingsBridge.getNightModeEndTime()
+            .then(resolve)
+            .catch(() => resolve('06:00'));
         }),
       ]);
 
@@ -414,29 +383,12 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
 
   navigateToCustomerService: () => {
     console.log('[SettingsStore] 导航到客服页面');
-    if (NavigationBridge?.navigateToHelpSupport) {
       NavigationBridge.navigateToHelpSupport();
-    } else {
-      // Fallback：直接创建 RN 视图
-      if (NavigationBridge?.navigateToReactNativePage) {
-        NavigationBridge.navigateToReactNativePage('HelpSupportPageComponent');
-      } else {
-        console.warn('[SettingsStore] NavigationBridge.navigateToHelpSupport not available');
-      }
-    }
   },
 
   navigateToPrivacyPolicy: () => {
     console.log('[SettingsStore] 导航到隐私政策页面');
-    if (NavigationBridge?.navigateToPrivacyPolicy) {
       NavigationBridge.navigateToPrivacyPolicy();
-    } else {
-      if (NavigationBridge?.navigateToReactNativePage) {
-        NavigationBridge.navigateToReactNativePage('PrivacyPolicyPageComponent');
-      } else {
-        console.warn('[SettingsStore] NavigationBridge.navigateToPrivacyPolicy not available');
-      }
-    }
   },
 
   navigateToFontSettings: () => {
@@ -450,12 +402,8 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       console.log('[SettingsStore] 开始退出登录');
 
       // 调用Android端清空token - 使用Promise方式
-      if (SettingsBridge?.logout) {
-        await SettingsBridge.logout();
-        console.log('[SettingsStore] ✅ Android端退出登录成功');
-      } else {
-        console.warn('[SettingsStore] SettingsBridge.logout 不可用');
-      }
+      await SettingsBridge.logout();
+      console.log('[SettingsStore] ✅ Android端退出登录成功');
 
       console.log('[SettingsStore] 退出登录完成');
     } catch (error) {

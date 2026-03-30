@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Modal, BackHandler } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
 import { SettingRow } from './components';
 import { useSettingsStore } from './store/settingsStore';
 import { useUserStore } from '../../ProfilePage/store/userStore';
 import { createSettingsPageStyles } from './styles/SettingsPageStyles';
 import { SettingsSection } from './types/index';
 import { useNovelColors } from '../../../utils/theme/colors';
-import { NativeModules } from 'react-native';
-
-const { NavigationBridge } = NativeModules;
+import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 
 /**
  * 设置页面主组件
@@ -77,12 +76,10 @@ const SettingsPage: React.FC = () => {
 
   // 处理Android硬件返回按钮
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    return registerHardwareBackHandler(() => {
       handleBackPress();
       return true;
     });
-
-    return () => backHandler.remove();
   }, []);
 
   /**

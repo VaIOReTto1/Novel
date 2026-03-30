@@ -1,8 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { NativeModules } from 'react-native';
-
-const { NavigationBridge } = NativeModules as any;
+import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
 
 export type SexTab = 'male' | 'female';
 

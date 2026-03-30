@@ -3,10 +3,11 @@
 ## 当前 Stage 4 文档切主线
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |
-| `RB-STAGE4-DOCS-20260328-01` | `提交后生成` | Stage 4 控制面切换与 Phase 7-8 文档骨架建立 | `git revert --no-edit <本提交 SHA>` | `npm run harness:check` |
-| `RB-P7-SHRINK-20260330-01` | `提交后生成` | Phase 7 第一轮 icon font shrink | `git revert --no-edit <本提交 SHA>` | `android/gradlew.bat clean app:assembleRelease app:bundleRelease --no-daemon --console=plain` |
-| `RB-P7-BUILD-20260330-01` | `提交后生成` | Phase 7 build baseline 与 configuration cache canary | `git revert --no-edit <本提交 SHA>` | `android/gradlew.bat app:testDebugUnitTest --configuration-cache --configuration-cache-problems=warn --no-daemon --console=plain` |
-| `RB-P7-CLOSEOUT-20260330-01` | `提交后生成` | Phase 7 closeout 与 Phase 8 入口切换 | `git revert --no-edit <本提交 SHA>` | `npm run harness:check` |
+| `RB-STAGE4-DOCS-20260328-01` | `340bc23` | Stage 4 控制面切换与 Phase 7-8 文档骨架建立 | `git revert --no-edit 340bc23` | `npm run harness:check` |
+| `RB-P7-SHRINK-20260330-01` | `d113f44` | Phase 7 第一轮 icon font shrink | `git revert --no-edit d113f44` | `android/gradlew.bat clean app:assembleRelease app:bundleRelease --no-daemon --console=plain` |
+| `RB-P7-BUILD-20260330-01` | `eca2a36` | Phase 7 build baseline 与 configuration cache canary | `git revert --no-edit eca2a36` | `android/gradlew.bat app:testDebugUnitTest --configuration-cache --configuration-cache-problems=warn --no-daemon --console=plain` |
+| `RB-P7-CLOSEOUT-20260330-01` | `77c4967` | Phase 7 closeout 与 Phase 8 入口切换 | `git revert --no-edit 77c4967` | `npm run harness:check` |
+| `RB-P8-GOVERNANCE-20260330-01` | `提交后生成` | Phase 8 治理工件与 Stage 4 closeout | `git revert --no-edit <本提交 SHA>` | `npm run harness:check` |
 
 ## 当前 reopen 原子提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |

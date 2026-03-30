@@ -3,7 +3,7 @@
 ## 摘要
 - 第四阶段定义为：`Stage 4 = Phase 7 + Phase 8`
 - 当前已关闭前半段：`Phase 7 = validated`
-- 当前排队阶段：`Phase 8 = planned`
+- 当前后半段结果：`Phase 8 = validated`
 - 第四阶段不重开 `Phase 5-6` 的模块化与性能 debt，只承接：
   - 包体积治理
   - 依赖治理
@@ -14,9 +14,9 @@
 ## 当前控制面状态
 - `Stage 3 = validated`
 - `Stage 3 closeout` 继续以 `2026-03-26` 结论为准
-- `Stage 4 = in_progress`
+- `Stage 4 = validated`
 - `Phase 7 = validated`
-- `Phase 8 = planned`
+- `Phase 8 = validated`
 
 ## 阶段定位
 - 第三阶段已经把 Android 模块图稳定为 `app + core-* + feature-* + macrobenchmark`，`app` 保持 thin-app 组合入口。
@@ -55,8 +55,9 @@
 - `docs/refactor/phases/phase-7-size-dependency-build-governance.md`
 - `docs/refactor/phases/phase-8-observability-rollout-governance.md`
 - `docs/refactor/tracking/phase-7-8-validation-board.md`
-- 后续进入 closeout 时再补：
+- 当前 closeout 入口：
   - `docs/refactor/stage-4-closeout-summary.md`
+  - `docs/refactor/phase-7/phase-7-closeout-assessment.md`
   - `docs/refactor/phase-8/phase-8-closeout-assessment.md`
 - 继续复用：
   - `docs/refactor/master-roadmap.md`
@@ -112,6 +113,9 @@
   - 统一 ANR 平台
   - 远程配置平台
   - 完整线上灰度系统
+- 当前关闭事实：
+  - `V8-01 ~ V8-05` 已全部达到当前约定状态
+  - closeout 入口见 `docs/refactor/phase-8/phase-8-closeout-assessment.md`
 
 ## 阶段退出条件
 - `Phase 7` 与 `Phase 8` 的验证项全部达到约定状态
@@ -122,4 +126,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`in_progress`
+- 当前状态：`validated`

@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-30 | Phase 8 closeout | closeout | 在 `Phase 8` 中以 repo-local governance layer 为边界关闭 observability / flag / rollback / ADR 四条线，并同步关闭 `Stage 4` | 当前仓库已经具备局部指标、flag、rollback 与 owner/reviewer 基础，但没有线上平台；继续拖延只会让治理入口继续分散 | `Phase 8` 与 `Stage 4` 进入 `validated`，后续新工作流默认基于现有治理层增量维护 | 后续若出现新的结构性工作流，再以新阶段或 reopen 形式进入 |
 | 2026-03-30 | Phase 7 closeout | closeout | 在 `V7-01 ~ V7-04` 全部完成后关闭 `Phase 7`，并保持 `Phase 8 = planned` 而不是立即标为 `in_progress` | 当前已完成 Stage 4 前半段目标，但还没有开始 Phase 8 的 observability / rollout / ADR 实施 | `Phase 7` 正式进入 `validated`，Stage 4 的默认下一线固定为 `Phase 8` 入口建设 | 后续如要继续 Stage 4，实现应从 `Phase 8` 宿主文档与 validation board 开始 |
 | 2026-03-30 | Phase 7 | build-efficiency | `V7-04` 先固定 `app:testDebugUnitTest` 与 `app:assembleRelease` 的 clean / incremental 基线，并用 `app:testDebugUnitTest` 做 configuration cache canary | 这两个任务已经能代表当前开发验证和 release 打包的主要热路径 | 当前确认 `configuration-cache=false` 不是 sampled task 完全不可用，而是带着 `react-native-reanimated` 的已知问题且尚未做广覆盖验证 | Phase 7 closeout 后把 configuration cache 广覆盖 canary 作为 Phase 8 或后续治理入口 |
 | 2026-03-30 | Phase 7 | size-shrink | 第一轮低风险 shrink 先从 `react-native-vector-icons` 未使用字体裁剪入手，只保留 `MaterialIcons.ttf` 与 `Feather.ttf` | 代码扫描显示当前仓库只直接使用这两个 family，而 release merged fonts 基线却有 `19` 个文件、`3.71 MiB` | 在不改业务语义的前提下，`APK` 与 `AAB` 都获得约 `1.70 MiB` 收益，并把字体资产压到 `2` 个文件 | 下一步继续推进 `V7-04` 的 build efficiency baseline，并考虑是否补自动 guard 检查新增 icon family |

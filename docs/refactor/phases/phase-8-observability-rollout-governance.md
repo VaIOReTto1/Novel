@@ -94,5 +94,12 @@
 - rollout / rollback playbook
 - ADR / review / owner 治理文档
 
+## 当前已落盘工件
+- `docs/refactor/phase-8/observability-metric-catalog-2026-03-30.md`
+- `docs/refactor/phase-8/feature-flag-and-kill-switch-registry-2026-03-30.md`
+- `docs/refactor/phase-8/rollout-and-rollback-playbook-2026-03-30.md`
+- `docs/refactor/phase-8/adr-reviewer-owner-governance-2026-03-30.md`
+- `docs/refactor/phase-8/phase-8-closeout-assessment.md`
+
 ## 当前状态
-- `planned（等待 Phase 7 收口后切入）`
+- `validated（Phase 8 closeout 生效于 2026-03-30）`

@@ -52,6 +52,7 @@
   6. `ScrollBox heavy pages`
 - 当前已开始第一波：`Profile / Settings`
 - 当前已推进到中段：`Bookshelf / History / Watchlist / Comment`
+- 当前已推进到后段：`Writer / AIWriteAssistant / BookManage`
 
 ### Phase 14
 - 主题：RN contract、质量与 maintainability 收口

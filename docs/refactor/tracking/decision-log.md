@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-31 | Phase 13 writer-wave | execution | 在 `Bookshelf / Comment` 之后继续以 `AIWriteAssistant / BookManage / WritePage helper` 推进 Writer 域收口 | Writer 域仍保留明显的页面层 bootstrap、idea modal 和导航编排，是 Phase 13 后段的高收益切口 | `V13-04` 进入 `in_progress / yellow`，Writer 域开始形成 page model 宿主 | 后续继续评估 `WritePage` 深化下沉与剩余 heavy pages |
 | 2026-03-31 | Phase 13 mid-wave | execution | 将 `Bookshelf / History / Watchlist / Comment` 作为 Phase 13 的第二批 page-domain 样本推进，并复用 “page -> domain model -> store/hook” 模式 | 这组页面比 Writer 域更分散，但复杂度仍明显低于 Writer，适合作为中段样本先收口 | `V13-03` 进入 `in_progress / yellow`，Phase 13 的中段域已经开始形成统一结构 | 下一步继续评估 `Community / Writer / AIWriteAssistant / BookManage` |
 | 2026-03-31 | Phase 13 activation | execution | 将 `Phase 13` 从 `planned` 切换为 `in_progress`，并先从 `Profile / Settings` 波次进入 | `Phase 12` 已关闭，最适合先收掉的 page-domain 混杂点正集中在 preload、settings init 与 section builder | 当前 authority 应以 `Phase 13 = in_progress` 为准，`V13-02` 进入执行中状态 | 继续推进 `Bookshelf / Comment / Writer` 等后续页面域 |
 | 2026-03-31 | Phase 12 closeout | closeout | 在 runtime wrapper、bridge gateway、event hub、back navigation 与结构护栏测试全部形成后关闭 `Phase 12` | RN 入口层问题已经从“散点直连”收成统一 wrapper，继续维持 `planned` 会制造 authority 漂移 | `Phase 12 = validated`，`Stage 6 = in_progress`，默认下一主线切到 `Phase 13` | 进入页面域边界重构，优先处理 `Profile / Settings` |

@@ -23,12 +23,13 @@
 | P13.1 | 固定 RN domain guide | 宿主已存在，后续继续作为边界准绳 |
 | P13.2 | 固定 Profile / Settings 第一批域边界 | 已建立 `profileBootstrap` 与 `settingsPageModel`，并将页面委派到域层 helper |
 | P13.3 | 固定 Bookshelf / Comment 中段域边界 | 已建立 `historyPageModel`、`watchlistPageModel`、`bookshelfPageModel` 以及评论域 page model 首轮收口 |
-| P13.4 | 固定 Writer / heavy pages 后段域边界 | 待执行 |
+| P13.4 | 固定 Writer / heavy pages 后段域边界 | 已完成 `AIWriteAssistant / BookManage` 首轮 page model 收口，并补齐 `WritePage` helper 护栏；heavy pages 仍待继续推进 |
 | P13.5 | 输出 Phase 13 closeout 宿主 | 待执行 |
 
 ## 当前证据入口
 - `docs/refactor/phase-13/profile-settings-domain-wave-2026-03-31.md`
 - `docs/refactor/phase-13/bookshelf-comment-domain-wave-2026-03-31.md`
+- `docs/refactor/phase-13/writer-domain-wave-2026-03-31.md`
 - `docs/refactor/phase-13/rn-domain-guide-2026-03-31.md`
 - `__tests__/domains/profileBootstrap.test.ts`
 - `__tests__/domains/settingsPageModel.test.ts`
@@ -38,6 +39,9 @@
 - `__tests__/domains/commentPageModel.test.ts`
 - `__tests__/domains/reviewDetailPageModel.test.ts`
 - `__tests__/domains/writeReviewPageModel.test.ts`
+- `__tests__/domains/aiWriteAssistantPageModel.test.ts`
+- `__tests__/domains/bookManagePageModel.test.ts`
+- `__tests__/domains/writePageModel.test.ts`
 - `__tests__/smoke/SettingsPage.smoke.test.tsx`
 
 ## 当前状态

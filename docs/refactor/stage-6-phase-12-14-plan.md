@@ -74,6 +74,8 @@
 - 当前已推进到中段：
   - `Bookshelf / History / Watchlist`
   - `Comment / ReviewDetail / WriteReview`
+- 当前已继续推进：
+  - `Writer / AIWriteAssistant / BookManage`
 
 ### Phase 14
 - 只处理 RN 长期治理层：

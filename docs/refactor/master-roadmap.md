@@ -42,7 +42,7 @@
 
 ### Phase 13
 - 主题：RN 页面域与 store/hook/component 边界重构
-- 状态：`planned`
+- 状态：`in_progress`
 - 顺序：
   1. `Profile + app root preload`
   2. `Settings + TimeSwitch + privacy/help`
@@ -50,6 +50,7 @@
   4. `Comment / ReviewDetail / WriteReview`
   5. `Writer / AIWriteAssistant / BookManage`
   6. `ScrollBox heavy pages`
+- 当前已开始第一波：`Profile / Settings`
 
 ### Phase 14
 - 主题：RN contract、质量与 maintainability 收口

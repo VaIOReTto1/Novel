@@ -7,9 +7,9 @@
   - `Stage 5 = validated`
   - `Stage 6 = in_progress`
   - `Phase 12 = validated`
-  - `Phase 13 = planned`
+  - `Phase 13 = in_progress`
   - `Phase 14 = planned`
-- 当前默认下一主线切换为：`Phase 13 = RN 页面域重构`
+- 当前默认执行主线为：`Phase 13 = RN 页面域重构`
 
 ## 当前结论
 - `Phase 12` 已完成第一轮关闭，RN 运行时入口、bridge gateway、event hub 与 back navigation 已形成 repo-local 宿主与最小自动化护栏。
@@ -68,6 +68,9 @@
   4. `Comment / ReviewDetail / WriteReview`
   5. `Writer / AIWriteAssistant / BookManage`
   6. `ScrollBox heavy pages`
+- 当前已开始第一波：
+  - `Profile + app root preload`
+  - `Settings + TimeSwitch + privacy/help`
 
 ### Phase 14
 - 只处理 RN 长期治理层：
@@ -83,6 +86,8 @@
 ## 权威入口
 - [Phase 12 宿主文档](./phases/phase-12-rn-runtime-and-bridge-consolidation.md)
 - [Phase 12 closeout assessment](./phase-12/phase-12-closeout-assessment.md)
+- [Phase 13 宿主文档](./phases/phase-13-rn-page-domain-refactor.md)
+- [Phase 13 Wave 1 记录](./phase-13/profile-settings-domain-wave-2026-03-31.md)
 - [Phase 12-14 验证看板](./tracking/phase-12-14-validation-board.md)
 - [Stage 6 closeout summary](./stage-6-closeout-summary.md)
 

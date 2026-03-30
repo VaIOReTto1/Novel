@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-31 | Phase 13 activation | execution | 将 `Phase 13` 从 `planned` 切换为 `in_progress`，并先从 `Profile / Settings` 波次进入 | `Phase 12` 已关闭，最适合先收掉的 page-domain 混杂点正集中在 preload、settings init 与 section builder | 当前 authority 应以 `Phase 13 = in_progress` 为准，`V13-02` 进入执行中状态 | 继续推进 `Bookshelf / Comment / Writer` 等后续页面域 |
 | 2026-03-31 | Phase 12 closeout | closeout | 在 runtime wrapper、bridge gateway、event hub、back navigation 与结构护栏测试全部形成后关闭 `Phase 12` | RN 入口层问题已经从“散点直连”收成统一 wrapper，继续维持 `planned` 会制造 authority 漂移 | `Phase 12 = validated`，`Stage 6 = in_progress`，默认下一主线切到 `Phase 13` | 进入页面域边界重构，优先处理 `Profile / Settings` |
 | 2026-03-31 | Stage 6 activation | control-plane | 将 `Stage 6` 从 `planned` 切换为 `in_progress` | Stage 6 已不再只是文档规划，仓库已经落地运行时与桥接收口代码及验证 | `README`、validation board 与 harness 导航都应以 `Stage 6 = in_progress` 为准 | 同步刷新 harness snapshot 与 rollback 留痕 |
 | 2026-03-31 | Stage 6 planning | control-plane | 新建 `Stage 6 = Phase 12-14`，并固定顺序为 `Phase 12 -> Phase 13 -> Phase 14` | RN 侧已形成独立的大型工程面，继续挂在 Android 线之后会掩盖 `src/**` 的真实结构债 | 控制面以 `Stage 5 validated + Stage 6 planned` 继续演进 | 后续开始执行时，优先从 `Phase 12` 的 runtime / bridge consolidation 入手 |

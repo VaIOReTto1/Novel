@@ -3,7 +3,7 @@
 ## 当前状态
 - `Stage 6`: `in_progress`
 - `Phase 12`: `validated`
-- `Phase 13`: `planned`
+- `Phase 13`: `in_progress`
 - `Phase 14`: `planned`
 - 最新更新：`2026-03-31`
 
@@ -20,7 +20,7 @@
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
 | V13-01 | RN domain guide | 页面域默认边界清晰 | 已有宿主文档，但尚未进入执行 | `planned` | `queued` |
-| V13-02 | 第一批页面域样本 | Profile / Settings 域收口 | 待从页面域边界与 preload 解耦开始 | `planned` | `queued` |
+| V13-02 | 第一批页面域样本 | Profile / Settings 域收口 | 已由 `profile-settings-domain-wave-2026-03-31.md` 落地首批 domain helper，并补齐 Profile / Settings 相关 Jest + smoke 护栏 | `in_progress` | `yellow` |
 | V13-03 | 中段页面域样本 | Bookshelf / Comment 域收口 | 待执行 | `planned` | `queued` |
 | V13-04 | 后段页面域样本 | Writer / heavy pages 域收口 | 待执行 | `planned` | `queued` |
 | V13-05 | Phase 13 closeout | 页面域边界关闭 | 待执行 | `planned` | `queued` |

@@ -9,7 +9,7 @@
 
 ## 当前已完成
 - `Phase 12 = validated`
-- `Phase 13 = planned`
+- `Phase 13 = in_progress`
 - `Phase 14 = planned`
 
 ## 最终关闭前必须完成

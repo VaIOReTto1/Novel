@@ -2,48 +2,42 @@
 
 ## 当前状态
 - 当前分支：`main`
-- 当前权威结论：`Stage 5 = validated`，`Phase 9 = validated`，`Phase 10 = validated`，`Phase 11 = validated`
-- 当前 refactor 控制面板以 `docs/refactor/README.md` 为准
-- 当前 Android 模块图已经稳定为 `app + core-* + feature-* + macrobenchmark`
+- 当前权威结论：`Stage 6 = in_progress`，`Phase 12 = validated`，`Phase 13 = planned`，`Phase 14 = planned`
+- 当前 refactor authority 以 `docs/refactor/README.md` 为准
+- 当前 Android 模块图保持为 `app + core-* + feature-* + macrobenchmark`
 
 ## 最近完成
-- `Stage 3 = validated`，继续以 `2026-03-26` reopen closeout 为最终收口事实
-- `2026-03-28` 已正式完成 `Stage 4` 控制面切主线
-- `2026-03-30` 已完成 `Phase 7` closeout，关闭 Stage 4 前半段的 size / dependency / build efficiency 治理
-- `2026-03-30` 已完成 `Phase 8` closeout，并关闭 `Stage 4`
-- `2026-03-30` 已完成 `Phase 9` closeout，并将 `Stage 5` 切到 `in_progress`
-- `2026-03-30` 已完成 `Phase 10`、`Phase 11` 和 `Stage 5` closeout
+- `2026-03-30` 已完成 `Stage 4` closeout
+- `2026-03-30` 已完成 `Stage 5` closeout
+- `2026-03-31` 已建立 `Stage 6 = Phase 12-14` 的控制面
+- `2026-03-31` 已完成 `Phase 12` closeout，并将 `Stage 6` 切到 `in_progress`
 
 ## 默认下一主线
-- 默认下一主线：`Stage 6 = planned`
-- 第一落点：从 `Phase 12` 的 RN runtime / bridge consolidation 开始
-- 第二落点：`Phase 13` 承接 RN 页面域与 store/hook/组件边界重构
-- 第三落点：`Phase 14` 收掉 RN 契约、mock/fallback、registry 和 maintainability 治理
-- 当前没有新的 active refactor phase 在执行中，但 `Stage 6` 已是默认下一阶段入口
+- 当前执行阶段：`Stage 6 = in_progress`
+- 当前已关闭阶段：`Phase 12 = validated`
+- 默认下一落点：`Phase 13 = RN 页面域与 store/hook/component 边界重构`
+- 后续阶段：`Phase 14 = RN contract / registry / mock-fallback / maintainability`
+
+## 当前已确认的 RN 事实
+- `src/utils/runtime/**` 已成为运行时收口层。
+- `src/utils/bridge/**` 已成为原生桥接包装层。
+- `src/**` 中的 `NativeModules` / `DeviceEventEmitter` / `BackHandler` 已不再散落在页面与 store 中。
+- `rawPrimitivesBoundary` 结构测试已建立，可作为后续 Phase 13 的回归护栏。
 
 ## Blockers / Known Drift
-- 根 `README.md` 的技术版本和成熟度描述仍可能落后于当前代码与当前 refactor 文档
-- `android/gradle/libs.versions.toml` 仍缺失，依赖版本继续分散在多个 Gradle 脚本中
-- `org.gradle.configuration-cache=false` 当前已经有 sampled task canary 结论，但尚未覆盖所有高风险任务
-- 仓库已有本地 `RefactorFeatureFlags` 与局部性能 monitor，但尚无统一 Crash / ANR / 灰度平台
-- `docs/harness/generated/workspace-snapshot.md` 在模块图、验证命令、harness 脚本或 workflow 输入变化后必须重新生成
-- `.trae/rules/project_rules.md` 现在只是 shim，不再承担项目事实说明
+- Root `README.md` 仍可能落后于当前 refactor authority。
+- `android/gradle/libs.versions.toml` 仍缺失，Android 依赖版本继续分散在多个 Gradle 脚本中。
+- `org.gradle.configuration-cache=false` 仍未推进到全仓默认开启。
+- 当前仓库已有本地 `RefactorFeatureFlags` 与局部性能 monitor，但仍无统一 Crash / ANR / 灰度平台。
+- `docs/harness/generated/workspace-snapshot.md` 需要在 authority 更新后重新由脚本生成。
 
 ## Primary Source Refs
 - [docs/refactor/README.md](../refactor/README.md)
-- [docs/refactor/stage-4-closeout-summary.md](../refactor/stage-4-closeout-summary.md)
-- [docs/refactor/stage-5-phase-9-11-plan.md](../refactor/stage-5-phase-9-11-plan.md)
 - [docs/refactor/stage-6-phase-12-14-plan.md](../refactor/stage-6-phase-12-14-plan.md)
+- [docs/refactor/phases/phase-12-rn-runtime-and-bridge-consolidation.md](../refactor/phases/phase-12-rn-runtime-and-bridge-consolidation.md)
+- [docs/refactor/phase-12/phase-12-closeout-assessment.md](../refactor/phase-12/phase-12-closeout-assessment.md)
 - [docs/refactor/tracking/phase-12-14-validation-board.md](../refactor/tracking/phase-12-14-validation-board.md)
-- [docs/refactor/phase-9/phase-9-closeout-assessment.md](../refactor/phase-9/phase-9-closeout-assessment.md)
-- [docs/refactor/phase-10/phase-10-closeout-assessment.md](../refactor/phase-10/phase-10-closeout-assessment.md)
-- [docs/refactor/phase-11/phase-11-closeout-assessment.md](../refactor/phase-11/phase-11-closeout-assessment.md)
-- [docs/refactor/stage-5-closeout-summary.md](../refactor/stage-5-closeout-summary.md)
-- [docs/refactor/tracking/phase-9-11-validation-board.md](../refactor/tracking/phase-9-11-validation-board.md)
-- [docs/refactor/phase-7/phase-7-closeout-assessment.md](../refactor/phase-7/phase-7-closeout-assessment.md)
-- [docs/refactor/phase-8/phase-8-closeout-assessment.md](../refactor/phase-8/phase-8-closeout-assessment.md)
-- [docs/refactor/tracking/phase-7-8-validation-board.md](../refactor/tracking/phase-7-8-validation-board.md)
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-31` by Stage 6 planning
+- `2026-03-31` by Phase 12 closeout

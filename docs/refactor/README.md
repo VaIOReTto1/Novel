@@ -1,94 +1,60 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 11`
+- 当前阶段：`Phase 12`
 - 阶段状态：`validated`
-- 当前 Stage：`Stage 5 = Phase 9-11`
-- 最新生效切换：`2026-03-30 Stage 5 closeout`
-- 历史 checkpoint：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 与 `2026-03-26` 的 `Stage 3 reopen closeout` 继续保留为历史记录；当前权威口径以 Stage 4 控制面为准
+- 当前 Stage：`Stage 6 = Phase 12-14`
+- Stage 状态：`in_progress`
+- 最新生效切换：`2026-03-31 Phase 12 closeout`
 
 ## 当前结论
 - `Stage 3 = validated`，继续以 `2026-03-26` closeout 为收口事实。
 - `Stage 4 = validated`，`Phase 7-8` 已完成当前计划内治理闭环。
 - `Stage 5 = validated`，`Phase 9-11` 已完成当前计划内治理闭环。
-- `Phase 7 = validated`，已完成 size / dependency / build efficiency 的第一轮治理闭环。
-- `Phase 8 = validated`，已完成 observability / flag / rollback / ADR 治理宿主落盘。
-- `Phase 9 = validated`，已完成运行恢复、弱网 / 离线、Token 连续性与导入导出 / 历史恢复宿主的第一轮收口。
-- `Phase 10 = validated`，已完成无障碍、合规、供应链与双端协作治理宿主落盘。
-- `Phase 11 = validated`，已完成数据质量与可维护性治理宿主落盘。
-- 默认下一阶段：`Stage 6 = planned`，下一主线固定为 `Phase 12-14` 的 RN 重构续规划。
+- `Stage 6 = in_progress`，当前执行线已切到 RN 重构续规划。
+- `Phase 12 = validated`，已完成 RN 运行时与桥接入口的第一轮收口。
+- `Phase 13 = planned`，将承接 RN 页面域与 store/hook/component 边界重构。
+- `Phase 14 = planned`，将承接 RN contract、registry、mock/fallback 与 maintainability 治理。
 
-## 当前模块与工程事实
-- Android 模块图已稳定为 `app + core-* + feature-* + macrobenchmark`。
-- `:app`
-  - 仅承载 `Application / Activity / Navigation / RN module / route wrapper / host adapter`
-- `:core-common`
-  - 共享日志、MVI、domain、并发与基础适配
-- `:core-ui`
-  - 共享主题与通用 Compose 组件
-- `:core-bridge`
-  - 共享 bridge facade、state adapter、network gateway
-- `:core-bridge-contract`
-  - 共享 bridge delegate/contract
-- `:core-storage`
-  - 存储抽象与兼容层
-- `:core-network`
-  - 共享网络契约与执行器适配
-- `:feature-home`
-  - 首页根状态机与首页 feature 协调层
-- `:feature-search`
-  - 搜索首页/结果页根状态机与搜索 feature 协调层
-- `:feature-login`
-  - 登录根状态机与登录 feature 协调层
-- `:feature-book`
-  - 书籍详情根状态机与书详情 feature 协调层
-- `:feature-reader`
-  - 阅读器根状态机、Reader 协调层与稳定 gateway contract
-- `:feature-rn-host`
-  - RN host 页面内容、Settings 主状态层与宿主 contract
-- `:feature-welfare`
-  - welfare feature 主状态层与页面内容
-- Stage 4 相关基线：
-  - release 已开启 `minifyEnabled true` 与 `shrinkResources true`
-  - `android/gradle/verification-metadata.xml` 已存在
-  - `android/gradle/libs.versions.toml` 仍缺失
-  - `org.gradle.configuration-cache=false`
-  - 已有本地 `RefactorFeatureFlags`、`StartupPerformanceMonitor`、`WelfarePerformanceMonitor`
-  - 尚无统一的 Crash / ANR / 灰度平台
+## 当前 repo 事实
+- 当前仓库是 `React Native + Android Compose/Kotlin` 的混合工程。
+- Android 模块图稳定为：`app + core-* + feature-* + macrobenchmark`。
+- RN 主代码仍在 `src/**`，并通过 bridge / host glue 与 Android 通信。
+- `Phase 12` 当前已确认：
+  - `src/utils/runtime/**` 为运行时入口层
+  - `src/utils/bridge/**` 为桥接包装层
+  - `src/**` 中的 `NativeModules` / `DeviceEventEmitter` / `BackHandler` 已不再散落在页面与 store 中
 
-## 关键入口
-- [Stage 4 计划](./stage-4-phase-7-8-plan.md)
-- [Stage 4 closeout summary](./stage-4-closeout-summary.md)
-- [Stage 5 计划](./stage-5-phase-9-11-plan.md)
-- [Phase 9 宿主文档](./phases/phase-9-runtime-resilience-and-continuity.md)
-- [Phase 9 closeout assessment](./phase-9/phase-9-closeout-assessment.md)
-- [Phase 10 宿主文档](./phases/phase-10-accessibility-compliance-supply-chain.md)
-- [Phase 10 closeout assessment](./phase-10/phase-10-closeout-assessment.md)
-- [Phase 11 宿主文档](./phases/phase-11-data-quality-and-maintainability.md)
-- [Phase 11 closeout assessment](./phase-11/phase-11-closeout-assessment.md)
-- [Stage 5 closeout summary](./stage-5-closeout-summary.md)
-- [Phase 9-11 验证看板](./tracking/phase-9-11-validation-board.md)
+## 当前主线入口
 - [Stage 6 计划](./stage-6-phase-12-14-plan.md)
+- [Phase 12 宿主文档](./phases/phase-12-rn-runtime-and-bridge-consolidation.md)
+- [Phase 12 closeout assessment](./phase-12/phase-12-closeout-assessment.md)
 - [Phase 12-14 验证看板](./tracking/phase-12-14-validation-board.md)
-- [Phase 7 宿主文档](./phases/phase-7-size-dependency-build-governance.md)
+
+## 已关闭阶段入口
+- [Stage 4 closeout summary](./stage-4-closeout-summary.md)
 - [Phase 7 closeout assessment](./phase-7/phase-7-closeout-assessment.md)
-- [Phase 8 宿主文档](./phases/phase-8-observability-rollout-governance.md)
 - [Phase 8 closeout assessment](./phase-8/phase-8-closeout-assessment.md)
 - [Phase 7-8 验证看板](./tracking/phase-7-8-validation-board.md)
-- [Stage 3 closeout summary](./stage-3-closeout-summary.md)
-- [Phase 5 当前模块图](./phase-5/module-graph-current-state.md)
-- [决策日志](./tracking/decision-log.md)
-- [回滚索引](./tracking/rollback-index.md)
+- [Stage 5 closeout summary](./stage-5-closeout-summary.md)
+- [Phase 9 closeout assessment](./phase-9/phase-9-closeout-assessment.md)
+- [Phase 10 closeout assessment](./phase-10/phase-10-closeout-assessment.md)
+- [Phase 11 closeout assessment](./phase-11/phase-11-closeout-assessment.md)
+- [Phase 9-11 验证看板](./tracking/phase-9-11-validation-board.md)
 
-## 历史文档
-- [Stage 3 计划（已关闭阶段参考）](./stage-3-phase-5-6-plan.md)
-- [Phase 5-6 验证看板](./tracking/phase-5-6-validation-board.md)
-- [Phase 5 closeout 评估](./phase-5/phase-5-closeout-assessment.md)
-- [Phase 5 模块验证矩阵（2026-03-21 checkpoint）](./phase-5/module-verification-matrix-2026-03-21.md)
-- [Phase 5 模块验证矩阵（2026-03-23 reopen 中间态）](./phase-5/module-verification-matrix-2026-03-23.md)
-- [Phase 5 host-compat（2026-03-21 checkpoint）](./phase-5/host-compat-validation-2026-03-21.md)
+## 决策与回滚
+- [master-roadmap.md](./master-roadmap.md)
+- [decision-log.md](./tracking/decision-log.md)
+- [rollback-index.md](./tracking/rollback-index.md)
 
 ## 使用规则
-- 阶段状态更新时，必须同步更新本文件、阶段宿主文档、验证看板、decision log 与 rollback index。
-- 当前主线状态以 `README + 当前 Stage 宿主文档 + 当前 validation board` 三者一致为准。
-- 已关闭阶段继续保留历史追溯价值，但不能覆盖当前 authority 口径。
+- 阶段状态变更时，必须先更新本目录下的 authority 文档。
+- 然后同步：
+  - `docs/harness/current-focus.md`
+  - `docs/harness/session-log.md`
+  - `docs/harness/generated/workspace-snapshot.md`
+- 关闭结论以：
+  - `README`
+  - 当前阶段宿主文档
+  - 当前 validation board
+  三者一致为准。

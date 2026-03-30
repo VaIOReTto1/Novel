@@ -1,9 +1,15 @@
 # Rollback Index
 
-## 当前 Stage 4 文档切主线
+## 当前 Stage 6 原子提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |
-| `RB-STAGE4-DOCS-20260328-01` | `340bc23` | Stage 4 控制面切换与 Phase 7-8 文档骨架建立 | `git revert --no-edit 340bc23` | `npm run harness:check` |
+| `RB-P12-CODE-20260331-01` | `5a0b632` | Phase 12 运行时、bridge gateway、event hub、back navigation 与页面直连入口收口 | `git revert --no-edit 5a0b632` | `npm test -- --runInBand __tests__/runtime/backNavigation.test.ts __tests__/runtime/eventHub.test.ts __tests__/runtime/runtimeCoordinator.test.ts __tests__/runtime/rawPrimitivesBoundary.test.ts __tests__/bridge/NavigationBridge.contract.test.ts __tests__/bridge/UserBridge.contract.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
+| `RB-STAGE6-DOCS-20260331-01` | `4ca01b5` | Stage 6 控制面、Phase 12-14 宿主与 RN 治理宿主建立 | `git revert --no-edit 4ca01b5` | `npm run harness:check` |
+
+## 当前 Stage 4 / Stage 5 关闭记录
+| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
+| --- | --- | --- | --- | --- |
+| `RB-STAGE4-DOCS-20260328-01` | `340bc23` | Stage 4 控制面切主线与 Phase 7-8 文档骨架建立 | `git revert --no-edit 340bc23` | `npm run harness:check` |
 | `RB-P7-SHRINK-20260330-01` | `d113f44` | Phase 7 第一轮 icon font shrink | `git revert --no-edit d113f44` | `android/gradlew.bat clean app:assembleRelease app:bundleRelease --no-daemon --console=plain` |
 | `RB-P7-BUILD-20260330-01` | `eca2a36` | Phase 7 build baseline 与 configuration cache canary | `git revert --no-edit eca2a36` | `android/gradlew.bat app:testDebugUnitTest --configuration-cache --configuration-cache-problems=warn --no-daemon --console=plain` |
 | `RB-P7-CLOSEOUT-20260330-01` | `77c4967` | Phase 7 closeout 与 Phase 8 入口切换 | `git revert --no-edit 77c4967` | `npm run harness:check` |
@@ -11,7 +17,6 @@
 | `RB-STAGE5-DOCS-20260330-01` | `3ed6c6f` | Stage 5 控制面、Phase 9-11 宿主与公共治理宿主建立 | `git revert --no-edit 3ed6c6f` | `npm run harness:check` |
 | `RB-P9-DOCS-20260330-01` | `fa8afa7` | Phase 9 运行可靠性与业务连续性宿主建立及关闭 | `git revert --no-edit fa8afa7` | `npm run harness:check` |
 | `RB-P10-P11-STAGE5-20260330-01` | `945511d` | Phase 10/11 治理工件与 Stage 5 closeout | `git revert --no-edit 945511d` | `npm run harness:check` |
-| `RB-STAGE6-DOCS-20260331-01` | `4ca01b5` | Stage 6 控制面、Phase 12-14 宿主与 RN 治理宿主建立 | `git revert --no-edit 4ca01b5` | `npm run harness:check` |
 
 ## 当前 reopen 原子提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
@@ -23,7 +28,8 @@
 | `RB-P5-R3-20260326-01` | `f8a5d7c` | 迁移 Reader 设置协调件到 `feature-reader` | `git revert --no-edit f8a5d7c` | `android/gradlew.bat :feature-reader:testDebugUnitTest :app:compileDebugKotlin --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
 | `RB-P5-R3-20260326-02` | `ff71292` | 迁移首页根状态机到 `feature-home` | `git revert --no-edit ff71292` | `android/gradlew.bat :feature-home:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
 | `RB-P5-R3-20260326-03` | `5a5c81c` | 迁移阅读器根状态机到 `feature-reader` | `git revert --no-edit 5a5c81c` | `android/gradlew.bat :feature-reader:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R4-20260326-01` | `bb8349e` | 收口 app 宿主薄包装层 | `git revert --no-edit bb8349e` | `android/gradlew.bat :feature-rn-host:testDebugUnitTest :app:compileDebugKotlin :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
+| `RB-P5-R4-20260326-01` | `bb8349e` | 收口 app 宿主各包装层 | `git revert --no-edit bb8349e` | `android/gradlew.bat :feature-rn-host:testDebugUnitTest :app:compileDebugKotlin :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
 
 ## 说明
-- reopen 之前的 Phase 4 / Phase 5 历史 rollback 记录仍可在 git 历史中追溯，但当前 closeout 权威索引以本页为准。
+- 当前 closeout 与 rollback authority 以本页为准。
+- 如后续继续推进 `Phase 13` / `Phase 14`，应继续补充新的 `Rollback ID`。

@@ -1,13 +1,15 @@
 import { Alert, Share } from 'react-native';
-import { useCallback, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useCommunityStore } from '../store/communityStore';
-import { CommunitySortType } from '../types';
 import NavigationBridge from '../../../../../utils/bridge/NavigationBridge';
 import { createCommunityActionHandlers } from './communityHandlers';
+import {
+  bootstrapCommunityPage,
+  createCommunityPageHandlers,
+} from '../domain/communityPageModel';
 
 export const useCommunity = () => {
   const {
-    // State
     tabs,
     categories,
     circles,
@@ -19,8 +21,6 @@ export const useCommunity = () => {
     refreshing,
     hasMore,
     error,
-
-    // Actions
     loadPosts,
     refreshPosts,
     loadMorePosts,
@@ -36,51 +36,44 @@ export const useCommunity = () => {
     getSortedPosts,
   } = useCommunityStore();
 
-  // 获取过滤和排序后的帖子
   const filteredPosts = getFilteredPosts();
   const sortedPosts = getSortedPosts(filteredPosts);
 
-  // 初始化加载
   useEffect(() => {
-    loadPosts();
+    bootstrapCommunityPage({
+      loadPosts,
+    });
   }, [loadPosts]);
 
-  // 切换标签页
-  const handleTabChange = useCallback((tabId: string) => {
-    setActiveTab(tabId);
-  }, [setActiveTab]);
-
-  // 切换分类
-  const handleCategoryChange = useCallback((categoryId: string) => {
-    setSelectedCategory(categoryId);
-  }, [setSelectedCategory]);
-
-  // 切换圈子
-  const handleCircleChange = useCallback((circleId: string) => {
-    setSelectedCircle(circleId);
-  }, [setSelectedCircle]);
-
-  // 切换排序
-  const handleSortChange = useCallback((sort: CommunitySortType) => {
-    setSortType(sort);
-  }, [setSortType]);
-
-  // 刷新
-  const handleRefresh = useCallback(() => {
-    refreshPosts();
-  }, [refreshPosts]);
-
-  // 加载更多
-  const handleLoadMore = useCallback(() => {
-    if (!loading && hasMore) {
-      loadMorePosts();
-    }
-  }, [loading, hasMore, loadMorePosts]);
-
-  // 点赞
-  const handleLike = useCallback((postId: string) => {
-    likePosts(postId);
-  }, [likePosts]);
+  const communityPageHandlers = useMemo(
+    () =>
+      createCommunityPageHandlers({
+        loading,
+        hasMore,
+        setActiveTab,
+        setSelectedCategory,
+        setSelectedCircle,
+        setSortType,
+        refreshPosts,
+        loadMorePosts,
+        likePosts,
+        clearError,
+        loadPosts,
+      }),
+    [
+      clearError,
+      hasMore,
+      likePosts,
+      loadMorePosts,
+      loadPosts,
+      loading,
+      refreshPosts,
+      setActiveTab,
+      setSelectedCategory,
+      setSelectedCircle,
+      setSortType,
+    ],
+  );
 
   const {
     handleComment,
@@ -103,20 +96,11 @@ export const useCommunity = () => {
     alert: (title, message, buttons) => Alert.alert(title, message, buttons),
   });
 
-  // 重试
-  const handleRetry = useCallback(() => {
-    clearError();
-    loadPosts();
-  }, [clearError, loadPosts]);
-
   return {
-    // Data
     posts: sortedPosts,
     tabs,
     categories,
     circles,
-
-    // State
     activeTab,
     selectedCategory,
     selectedCircle,
@@ -125,15 +109,13 @@ export const useCommunity = () => {
     refreshing,
     hasMore,
     error,
-
-    // Handlers
-    handleTabChange,
-    handleCategoryChange,
-    handleCircleChange,
-    handleSortChange,
-    handleRefresh,
-    handleLoadMore,
-    handleLike,
+    handleTabChange: communityPageHandlers.handleTabChange,
+    handleCategoryChange: communityPageHandlers.handleCategoryChange,
+    handleCircleChange: communityPageHandlers.handleCircleChange,
+    handleSortChange: communityPageHandlers.handleSortChange,
+    handleRefresh: communityPageHandlers.handleRefresh,
+    handleLoadMore: communityPageHandlers.handleLoadMore,
+    handleLike: communityPageHandlers.handleLike,
     handleComment,
     handleShare,
     handleMore,
@@ -142,6 +124,6 @@ export const useCommunity = () => {
     handleSearch,
     handleNotification,
     handlePublish,
-    handleRetry,
+    handleRetry: communityPageHandlers.handleRetry,
   };
 };

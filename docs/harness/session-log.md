@@ -15,3 +15,4 @@
 | 2026-03-31 | Phase 12 closeout | `Phase 12` 已完成 RN runtime / bridge consolidation 第一轮收口，`Stage 6` 进入 `in_progress`，默认下一线固定为 `Phase 13` | [phase-12-closeout-assessment.md](../refactor/phase-12/phase-12-closeout-assessment.md) |
 | 2026-03-31 | Phase 13 wave 1 | `Phase 13` 已进入 `in_progress`，并完成 `Profile / Settings` 第一波页面域收口，当前默认执行线固定在 page-domain boundary refactor | [profile-settings-domain-wave-2026-03-31.md](../refactor/phase-13/profile-settings-domain-wave-2026-03-31.md) |
 | 2026-03-31 | Phase 13 wave 2-4 | `Phase 13` 已继续完成 `Bookshelf / History / Watchlist / Comment` 多个页面域波次的首轮收口，当前默认下一落点切到 `Community / Writer` | [bookshelf-comment-domain-wave-2026-03-31.md](../refactor/phase-13/bookshelf-comment-domain-wave-2026-03-31.md) |
+| 2026-03-31 | Phase 13 wave 5 | `Phase 13` 已继续完成 `Writer / AIWriteAssistant / BookManage` 首轮 page model 收口，并为 `WritePage` 建立 helper 护栏 | [writer-domain-wave-2026-03-31.md](../refactor/phase-13/writer-domain-wave-2026-03-31.md) |

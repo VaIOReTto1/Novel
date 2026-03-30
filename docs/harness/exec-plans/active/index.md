@@ -16,5 +16,5 @@
 ## Notes
 - `Stage 5` 已关闭，`Stage 6` 已进入执行中状态。
 - 当前已关闭的 Stage 6 前半段是 `Phase 12 = validated`。
-- 当前活动主线已经进入 `Phase 13`，并已推进到 `Bookshelf / History / Watchlist / Comment` 多波次域收口。
+- 当前活动主线已经进入 `Phase 13`，并已推进到 `Writer / AIWriteAssistant / BookManage` 波次。
 - Harness rollout v2 继续作为 repo-local 控制层脚手架存在，但不再覆盖当前阶段主线。

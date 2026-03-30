@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-31 | Stage 6 planning | control-plane | 新建 `Stage 6 = Phase 12-14`，并固定顺序为 `Phase 12 -> Phase 13 -> Phase 14` | RN 侧已形成独立的大型工程面，继续把问题挂在 Android 线后面会掩盖 `src/**` 的真实结构债 | 控制面将以 `Stage 5 validated + Stage 6 planned` 继续演进，默认下一主线切换到 RN 运行时与桥接收口 | 后续如开始执行，优先从 `Phase 12` 的 runtime/bridge consolidation 入手 |
 | 2026-03-30 | Stage 5 closeout | closeout | 在 `Phase 9-11` 全部形成宿主、验证看板与关闭总结后关闭 `Stage 5` | 当前遗漏优化点已经按 Stage 5 的控制面全部落成治理入口，再继续保持 `in_progress` 只会制造额外漂移 | `Stage 5 = validated`，后续进入长期维护或 reopen 模式 | 若新增新的结构性硬化工作流，再单独开新阶段或 reopen Stage 5 |
 | 2026-03-30 | Phase 11 closeout | closeout | 在 `Phase 11` 以 backlog 分层、fallback/空态目录、命名/目录/状态模型指南为边界关闭数据质量与可维护性治理 | 当前 heavy pages mock 仍在，但 backlog 与治理宿主已经明确，不应把“未接真实接口”伪装成“没有治理入口” | `Phase 11 = validated`，并为 `Stage 5` closeout 提供最终收尾依据 | 后续若继续推进，按 backlog 分层逐步消化，不重建宿主 |
 | 2026-03-30 | Phase 10 closeout | closeout | 在 `Phase 10` 中以 repo-local governance layer 为边界关闭无障碍、合规、供应链与双端协作四条线 | 当前仓库已有这些领域的半成品入口和当前规则，但没有单一宿主；本轮已将其集中落盘 | `Phase 10 = validated`，为 `Phase 11` 与 Stage 5 closeout 提供治理基座 | 后续如需更强自动化，基于当前宿主增量补脚本或平台入口 |

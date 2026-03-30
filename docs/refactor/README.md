@@ -16,6 +16,7 @@
 - `Phase 9 = validated`，已完成运行恢复、弱网 / 离线、Token 连续性与导入导出 / 历史恢复宿主的第一轮收口。
 - `Phase 10 = validated`，已完成无障碍、合规、供应链与双端协作治理宿主落盘。
 - `Phase 11 = validated`，已完成数据质量与可维护性治理宿主落盘。
+- 默认下一阶段：`Stage 6 = planned`，下一主线固定为 `Phase 12-14` 的 RN 重构续规划。
 
 ## 当前模块与工程事实
 - Android 模块图已稳定为 `app + core-* + feature-* + macrobenchmark`。
@@ -67,6 +68,8 @@
 - [Phase 11 closeout assessment](./phase-11/phase-11-closeout-assessment.md)
 - [Stage 5 closeout summary](./stage-5-closeout-summary.md)
 - [Phase 9-11 验证看板](./tracking/phase-9-11-validation-board.md)
+- [Stage 6 计划](./stage-6-phase-12-14-plan.md)
+- [Phase 12-14 验证看板](./tracking/phase-12-14-validation-board.md)
 - [Phase 7 宿主文档](./phases/phase-7-size-dependency-build-governance.md)
 - [Phase 7 closeout assessment](./phase-7/phase-7-closeout-assessment.md)
 - [Phase 8 宿主文档](./phases/phase-8-observability-rollout-governance.md)

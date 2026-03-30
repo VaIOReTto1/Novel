@@ -7,6 +7,7 @@
 - 当前新阶段：`Stage 5 = validated`
 - 当前已关闭前半段：`Phase 9 = validated`
 - 当前后半段：`Phase 10-11 = validated`
+- 默认下一主线：`Stage 6 = planned`
 - `Stage 3 = validated` 继续以 `2026-03-26` closeout 为准
 - 当前 authority 入口：
   - `docs/refactor/README.md`
@@ -112,6 +113,15 @@
 ### Phase 11
 - 数据质量与可维护性：生产 mock 退场、fallback / 空态统一、命名/目录/状态模型、错误文案与用户提示。
 
+### Phase 12
+- RN 运行时与桥接收口：`App.tsx / index.js / appInit / bridge / native event / BackHandler`。
+
+### Phase 13
+- RN 页面域重构：按页面域收口 `store / hooks / components / types / styles`。
+
+### Phase 14
+- RN 契约、数据质量与可维护性：contract tests、component registry、mock/fallback catalog、命名/目录/状态模型。
+
 ## 5.0 当前 Stage 分组
 - `Stage 1 = Phase 0-2`
   - 基线、发布安全、质量护栏
@@ -123,6 +133,8 @@
   - 包体积/依赖/构建效率治理，以及可观测性、灰度和长期机制建设
 - `Stage 5 = Phase 9-11`
   - 运行硬化、合规与供应链、数据质量与可维护性收敛
+- `Stage 6 = Phase 12-14`
+  - RN 运行时收口、页面域重构、RN 契约与长期治理
 
 ### 为什么 Stage 3 不是 `Phase 5-7`
 - `Phase 5` 与 `Phase 6` 强耦合：
@@ -163,6 +175,9 @@
 | Phase 9 | `4` | Runtime resilience、lifecycle recovery、continuity evidence | Reader/Welfare/RN Host/登录与用户态分线 |
 | Phase 10 | `4` | Accessibility、compliance、supply chain、bridge registry | 无障碍、供应链与双端协作并行 |
 | Phase 11 | `3` | Data quality、empty-state catalog、maintainability guide | mock 退场与规范收口并行 |
+| Phase 12 | `4` | RN runtime、bridge gateway、event hub、back navigation | 先收入口层，不直接拆页域 |
+| Phase 13 | `5` | Profile/Settings/Bookshelf/Comment/Writer domains | 按页面域分波次收口 |
+| Phase 14 | `4` | RN contract、registry、mock/fallback、maintainability | 契约和长期治理收尾 |
 
 ## 6. 全局补充优化点
 - 无障碍：语义标签、TalkBack、点击区域、对比度、字体缩放与阅读器极限字号。

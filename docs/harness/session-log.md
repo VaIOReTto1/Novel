@@ -6,3 +6,4 @@
 | 2026-03-26 | Phase 5 reopen closeout draft | 记录过一次 `Phase 5` reopen closeout 口径；后续 authority 已继续演进，因此该条只保留为历史痕迹 | [phase-5-closeout-assessment.md](../refactor/phase-5/phase-5-closeout-assessment.md) |
 | 2026-03-26 | Harness v2 rollout | 新增 `AGENTS.md`、`ARCHITECTURE.md`、`docs/harness/**`、刷新脚本与结构检查，建立 repo-local 控制层 | [2026-03-26-harness-rollout-v2.md](./exec-plans/active/2026-03-26-harness-rollout-v2.md) |
 | 2026-03-28 | Stage 4 cutover | 当前项目级控制面切换到 `Stage 4 = in_progress`，默认主线改为 `Phase 7`，并补齐 `Phase 8` 宿主文档与 `Phase 7-8` 验证看板 | [stage-4-phase-7-8-plan.md](../refactor/stage-4-phase-7-8-plan.md) |
+| 2026-03-30 | Phase 7 closeout | `Phase 7` 已完成关闭，当前项目级控制面保持 `Stage 4 = in_progress`，并把默认下一主线固定为 `Phase 8` 的 observability / rollout / ADR 入口建设 | [phase-7-closeout-assessment.md](../refactor/phase-7/phase-7-closeout-assessment.md) |

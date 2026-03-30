@@ -12,6 +12,7 @@
 | `RB-P13-WAVE5-20260331-02` | `24d49b9` | Phase 13 第五波 Writer 页面接线深化 | `git revert --no-edit 24d49b9` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
 | `RB-P13-AUTH-20260331-01` | `4dd9777` | Phase 13 状态切换、validation board 与 wave 1 记录同步 | `git revert --no-edit 4dd9777` | `npm run harness:check` |
 | `RB-P13-AUTH-20260331-02` | `deb061e` | Phase 13 中段页面域收口进展补记 | `git revert --no-edit deb061e` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-04` | `32f17f3` | Phase 13 第五波 Writer 页面接线进展补记 | `git revert --no-edit 32f17f3` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-01` | `0f4aaef` | Phase 13 中段收口后的 harness 导航同步 | `git revert --no-edit 0f4aaef` | `npm run harness:check` |
 | `RB-P13-AUTH-20260331-03` | `b9af348` | Phase 13 后段 Writer 域收口进展补记 | `git revert --no-edit b9af348` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-02` | `b5b0021` | Phase 13 后段 Writer 收口后的 harness 导航同步 | `git revert --no-edit b5b0021` | `npm run harness:check` |

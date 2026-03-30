@@ -4,17 +4,24 @@
 
 `Novel` is a hybrid `React Native + Android Compose/Kotlin` novel-reading app repository.
 
-This README is now aligned to current repository truth. For the authoritative refactor/control-plane state, use `docs/refactor/**` and current source/config files rather than older project marketing copy.
+This README now follows current repository truth. It focuses on:
+
+- current engineering status
+- repository layout
+- real runnable commands
+- current refactor/control-plane entry points
 
 ## Current Status
 
 - Current package version: `1.0.2`
-- Current refactor control-plane: `Stage 5 = validated`
 - Current Android module graph: `app + core-* + feature-* + macrobenchmark`
+- Current refactor control-plane:
+  - `Stage 4 = validated`
+  - `Stage 5 = validated`
 - Current repository shape:
   - `src/**` contains the main React Native pages, stores, bridges, theme utilities, and app init
   - `android/**` contains Android Compose pages, bridge/runtime code, modularized core/feature code, and benchmarks
-  - `__tests__/**` contains Jest contract and smoke coverage
+  - `__tests__/**` contains Jest bridge contract and smoke coverage
 
 Authoritative entry points:
 
@@ -49,15 +56,15 @@ Authoritative entry points:
 - OkHttp + Retrofit
 - Macrobenchmark / Baseline Profile
 
-### Current Engineering Traits
+### Current Engineering Facts
 
-- Android has been split into stable `core-*` and `feature-*` modules
+- Android has already been stabilized into `core-*` and `feature-*` modules
 - RN and Native still cooperate through the current bridge / host runtime
-- The repo already has:
+- Existing local governance anchors include:
   - `RefactorFeatureFlags`
   - `StartupPerformanceMonitor`
   - `WelfarePerformanceMonitor`
-  - `verification-metadata.xml`
+  - `android/gradle/verification-metadata.xml`
 - Known current gaps:
   - missing `android/gradle/libs.versions.toml`
   - `org.gradle.configuration-cache=false`
@@ -69,9 +76,10 @@ Authoritative entry points:
 
 - `App.tsx`: RN app root
 - `index.js`: RN entry and page registration
-- `src/page/**`: RN pages and page-level state
+- `src/page/**`: RN pages, components, stores, and hooks
 - `src/utils/bridge/**`: JS bridge wrappers
 - `src/utils/theme/**`: theme and style state
+- `src/utils/appInit.ts`: RN initialization and theme/user preload
 
 ### Android
 
@@ -90,6 +98,37 @@ Authoritative entry points:
 - `android/feature-rn-host`
 - `android/feature-welfare`
 - `android/macrobenchmark`
+
+### Tests And Docs
+
+- `__tests__/**`: Jest bridge contract and smoke coverage
+- `docs/refactor/**`: stage plans, closeouts, validation boards, decision log, rollback index
+- `docs/harness/**`: agent entry points, current focus, session log, generated snapshot
+
+## Current Product Surfaces
+
+### Android Native / Compose
+
+- Home, search, login, book detail, reader, and welfare have stable Android-side feature roots
+- The repo currently has:
+  - MVI / reducer / state adapter patterns
+  - Room / DataStore / local cache paths
+  - Reader state and history/progress recovery anchors
+  - Welfare WebView host and performance monitor anchors
+
+### React Native
+
+- `src/**` still carries a large amount of business UI, including:
+  - Profile / Bookshelf / History / Message
+  - Settings / Privacy / Help Support
+  - BecomeWriter / RecommendBook / MemberCenter
+  - Comment / ReviewDetail / WriteReview
+  - WritePage / AIWriteAssistant / BookManage
+- Current RN-side anchors include:
+  - Zustand store patterns
+  - theme store and native theme sync
+  - `NavigationBridge` / `UserBridge` contracts
+  - multi-page `AppRegistry.registerComponent(...)` registration
 
 ## Quick Start
 
@@ -115,6 +154,9 @@ npm run start
 
 # Run Android
 npm run android
+
+# Run iOS (if your environment supports it)
+npm run ios
 
 # Jest
 npm test -- --runInBand
@@ -149,14 +191,21 @@ npm run build:android:bundle
 
 ## Current Architecture Notes
 
-- Stable Android feature roots now live in `feature-home/search/login/book/reader/rn-host/welfare`
-- `app` remains a thin composition root instead of owning stable feature root state
-- RN page registration still goes through `AppRegistry.registerComponent(...)`
-- Stable JS bridge entry points are:
+- Stable Android feature roots now live in:
+  - `feature-home`
+  - `feature-search`
+  - `feature-login`
+  - `feature-book`
+  - `feature-reader`
+  - `feature-rn-host`
+  - `feature-welfare`
+- `app` remains a thin composition root
+- RN pages are still registered through `AppRegistry.registerComponent(...)`
+- Stable JS bridge entry points remain:
   - `src/utils/bridge/NavigationBridge.ts`
   - `src/utils/bridge/UserBridge.ts`
 
-For current phase/governance status, do not rely on old roadmap text in earlier README revisions. Use:
+If you need current phase/governance state, do not rely on older README-era roadmap text. Use:
 
 - [docs/refactor/README.md](./docs/refactor/README.md)
 - [docs/refactor/tracking/phase-7-8-validation-board.md](./docs/refactor/tracking/phase-7-8-validation-board.md)
@@ -171,9 +220,21 @@ For current phase/governance status, do not rely on old roadmap text in earlier 
 - [API surface checklist](./docs/refactor/phase-5/api-surface-review-checklist.md)
 - [Rollback index](./docs/refactor/tracking/rollback-index.md)
 
+## Current Refactor Status
+
+- `Stage 4` is closed:
+  - `Phase 7`: size / dependency / build-efficiency governance
+  - `Phase 8`: observability / rollback / ADR governance hosts
+- `Stage 5` is closed:
+  - `Phase 9`: runtime resilience and continuity
+  - `Phase 10`: accessibility, compliance, supply-chain, and RN/Native collaboration
+  - `Phase 11`: data quality and maintainability
+
+Future structural work should now go through maintenance / reopen / new-stage planning instead of the older README-era “upcoming Phase 1-4” narrative.
+
 ## Documentation Notes
 
-- Older README sections that advertised broad architecture phases and capability claims no longer fully match the current repository.
+- Older README content included broad roadmap and capability claims that no longer fully match the current repository.
 - The current external source of truth is:
   - [docs/refactor/README.md](./docs/refactor/README.md)
   - [docs/refactor/stage-4-closeout-summary.md](./docs/refactor/stage-4-closeout-summary.md)

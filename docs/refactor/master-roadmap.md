@@ -4,6 +4,7 @@
 - 当前控制面已切换到：`Stage 4 = validated`
 - 当前已关闭前半段：`Phase 7 = validated`
 - 当前后半段：`Phase 8 = validated`
+- 默认下一主线：`Stage 5 = planned`
 - `Stage 3 = validated` 继续以 `2026-03-26` closeout 为准
 - 当前 authority 入口：
   - `docs/refactor/README.md`
@@ -100,6 +101,15 @@
 ### Phase 8
 - 建设可观测性、灰度、特性开关、团队治理和长期演进机制。
 
+### Phase 9
+- 运行可靠性与业务连续性：电量/热量、进程恢复、弱网离线、设置导入导出、历史与用户态连续性。
+
+### Phase 10
+- 无障碍、合规、供应链与双端协作治理：accessibility、敏感日志、依赖审计、Bridge schema、RN component registry。
+
+### Phase 11
+- 数据质量与可维护性：生产 mock 退场、fallback / 空态统一、命名/目录/状态模型、错误文案与用户提示。
+
 ## 5.0 当前 Stage 分组
 - `Stage 1 = Phase 0-2`
   - 基线、发布安全、质量护栏
@@ -109,6 +119,8 @@
   - 真正模块化、性能专项与预算治理
 - `Stage 4 = Phase 7-8`
   - 包体积/依赖/构建效率治理，以及可观测性、灰度和长期机制建设
+- `Stage 5 = Phase 9-11`
+  - 运行硬化、合规与供应链、数据质量与可维护性收敛
 
 ### 为什么 Stage 3 不是 `Phase 5-7`
 - `Phase 5` 与 `Phase 6` 强耦合：
@@ -146,6 +158,9 @@
 | Phase 6 | `3` | Startup、Reader/scroll、benchmark/observability | WebView 与 DB 性能专项独立成线 |
 | Phase 7 | `3` | Size shrink、dependency/build、artifact diff | npm 与 Gradle 依赖治理拆线 |
 | Phase 8 | `3` | Observability、governance/ADR、rollout/flag | Crash/ANR 与治理建设并行 |
+| Phase 9 | `4` | Runtime resilience、lifecycle recovery、continuity evidence | Reader/Welfare/RN Host/登录与用户态分线 |
+| Phase 10 | `4` | Accessibility、compliance、supply chain、bridge registry | 无障碍、供应链与双端协作并行 |
+| Phase 11 | `3` | Data quality、empty-state catalog、maintainability guide | mock 退场与规范收口并行 |
 
 ## 6. 全局补充优化点
 - 无障碍：语义标签、TalkBack、点击区域、对比度、字体缩放与阅读器极限字号。

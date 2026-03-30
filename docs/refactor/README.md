@@ -12,6 +12,7 @@
 - `Stage 4 = validated`，`Phase 7-8` 已完成当前计划内治理闭环。
 - `Phase 7 = validated`，已完成 size / dependency / build efficiency 的第一轮治理闭环。
 - `Phase 8 = validated`，已完成 observability / flag / rollback / ADR 治理宿主落盘。
+- 默认下一阶段：`Stage 5 = planned`，下一主线固定为 `Phase 9-11` 的运行硬化与长期一致性计划。
 
 ## 当前模块与工程事实
 - Android 模块图已稳定为 `app + core-* + feature-* + macrobenchmark`。
@@ -58,6 +59,8 @@
 - [Phase 8 宿主文档](./phases/phase-8-observability-rollout-governance.md)
 - [Phase 8 closeout assessment](./phase-8/phase-8-closeout-assessment.md)
 - [Stage 4 closeout summary](./stage-4-closeout-summary.md)
+- [Stage 5 计划](./stage-5-phase-9-11-plan.md)
+- [Phase 9-11 验证看板](./tracking/phase-9-11-validation-board.md)
 - [Phase 7-8 验证看板](./tracking/phase-7-8-validation-board.md)
 - [Stage 3 closeout summary](./stage-3-closeout-summary.md)
 - [Phase 5 当前模块图](./phase-5/module-graph-current-state.md)

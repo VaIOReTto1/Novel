@@ -6,19 +6,20 @@
 - `src/page/Writer/WritePage/**`
 
 ## 本轮落地
-- `AIWriteAssistant` 已建立 `aiWriteAssistantPageModel`：
+- `AIWriteAssistant` 已建立并接入 `aiWriteAssistantPageModel`：
   - rehydrate bootstrap
   - idea selector toggle / close / select
   - input focus scroll
   - back navigation
-- `BookManagePage` 已建立 `bookManagePageModel`：
+- `BookManagePage` 已建立并接入 `bookManagePageModel`：
   - 页面 bootstrap
   - 返回
   - 继续草稿 / 创建章节 / 打开书籍管理动作
-- `WritePage` 已先建立 `writePageModel`：
+- `WritePage` 已建立并接入 `writePageModel`：
   - selection menu 事件分发
   - replace / append selected text
   - 参数弹窗 hint 路由
+  - `WritePage.smoke` 页面渲染护栏
 
 ## 新增文件
 - `src/page/Writer/AIWriteAssistant/domain/aiWriteAssistantPageModel.ts`
@@ -29,10 +30,11 @@
 - `__tests__/domains/aiWriteAssistantPageModel.test.ts`
 - `__tests__/domains/bookManagePageModel.test.ts`
 - `__tests__/domains/writePageModel.test.ts`
+- `__tests__/smoke/WritePage.smoke.test.tsx`
 
 ## 验证
-- `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts`
+- `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx`
 
 ## 当前判断
 - `AIWriteAssistant` 与 `BookManagePage` 已进入 page-domain 委派模式。
-- `WritePage` 当前先完成了 helper 和测试护栏，后续仍可继续把页面中的 selection / modal orchestration 更完整地下沉到 domain model。
+- `WritePage` 已开始接入 page model，但 selection / modal orchestration 仍可继续进一步下沉。

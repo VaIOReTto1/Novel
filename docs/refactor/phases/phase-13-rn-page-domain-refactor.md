@@ -23,7 +23,7 @@
 | P13.1 | 固定 RN domain guide | 宿主已存在，后续继续作为边界准绳 |
 | P13.2 | 固定 Profile / Settings 第一批域边界 | 已建立 `profileBootstrap` 与 `settingsPageModel`，并将页面委派到域层 helper |
 | P13.3 | 固定 Bookshelf / Comment 中段域边界 | 已建立 `historyPageModel`、`watchlistPageModel`、`bookshelfPageModel` 以及评论域 page model 首轮收口 |
-| P13.4 | 固定 Writer / heavy pages 后段域边界 | 已完成 `AIWriteAssistant / BookManage` 首轮 page model 收口，并补齐 `WritePage` helper 护栏；heavy pages 仍待继续推进 |
+| P13.4 | 固定 Writer / heavy pages 后段域边界 | 已完成 `AIWriteAssistant / BookManage` 首轮 page model 收口，并让 `WritePage` 接入 helper + smoke 护栏；heavy pages 仍待继续推进 |
 | P13.5 | 输出 Phase 13 closeout 宿主 | 待执行 |
 
 ## 当前证据入口
@@ -42,6 +42,7 @@
 - `__tests__/domains/aiWriteAssistantPageModel.test.ts`
 - `__tests__/domains/bookManagePageModel.test.ts`
 - `__tests__/domains/writePageModel.test.ts`
+- `__tests__/smoke/WritePage.smoke.test.tsx`
 - `__tests__/smoke/SettingsPage.smoke.test.tsx`
 
 ## 当前状态

@@ -1,10 +1,10 @@
 # Phase 9-11 验证看板
 
 ## 当前状态
-- `Stage 5`: `in_progress`
+- `Stage 5`: `validated`
 - `Phase 9`: `validated`
-- `Phase 10`: `planned`
-- `Phase 11`: `planned`
+- `Phase 10`: `validated`
+- `Phase 11`: `validated`
 - 最新更新：`2026-03-30`
 
 ## Phase 9
@@ -19,20 +19,20 @@
 ## Phase 10
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V10-01 | 无障碍审计矩阵 | semantics / TalkBack / 触控 / 对比度 / 字体缩放可追溯 | 待开展 | `planned` | `queued` |
-| V10-02 | 合规与敏感日志治理 | 权限 / 隐私 / WebView / 日志边界明确 | 待开展 | `planned` | `queued` |
-| V10-03 | 供应链审计 playbook | Gradle / npm / wrapper / lockfile 检查入口明确 | 待开展 | `planned` | `queued` |
-| V10-04 | Bridge schema manifest 与 RN 组件注册表 | 双端兼容窗口与注册名集中化 | 待开展 | `planned` | `queued` |
-| V10-05 | Phase 10 closeout | 合规、供应链和双端协作治理关闭 | 待开展 | `planned` | `queued` |
+| V10-01 | 无障碍审计矩阵 | semantics / TalkBack / 触控 / 对比度 / 字体缩放可追溯 | 已由 `accessibility-audit-matrix-2026-03-30.md` 固定当前页面入口、检查项与默认通过阈值 | `validated` | `green` |
+| V10-02 | 合规与敏感日志治理 | 权限 / 隐私 / WebView / 日志边界明确 | 已由 `compliance-and-sensitive-log-governance-2026-03-30.md` 固定日志入口、WebView 合规入口和敏感日志后续审计方向 | `validated` | `green` |
+| V10-03 | 供应链审计 playbook | Gradle / npm / wrapper / lockfile 检查入口明确 | 已由 `supply-chain-audit-playbook-2026-03-30.md` 固定 Gradle / npm / wrapper / lockfile 的当前入口和审计清单 | `validated` | `green` |
+| V10-04 | Bridge schema manifest 与 RN 组件注册表 | 双端兼容窗口与注册名集中化 | 已由 `bridge-schema-manifest-2026-03-30.md` 与 `rn-component-registry-2026-03-30.md` 固定稳定契约面、组件注册名与兼容窗口规则 | `validated` | `green` |
+| V10-05 | Phase 10 closeout | 合规、供应链和双端协作治理关闭 | 已由 `phase-10-closeout-assessment.md` 固定 Phase 10 关闭结论与 Phase 11 入口 | `validated` | `green` |
 
 ## Phase 11
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V11-01 | 剩余生产 mock 退出 backlog | heavy pages 与 data-source debt 分层明确 | 待开展 | `planned` | `queued` |
-| V11-02 | fallback / error / empty-state catalog | fallback 可观测与空态语义统一 | 待开展 | `planned` | `queued` |
-| V11-03 | naming / directory / state model guide | 命名、目录与状态模型规则固定 | 待开展 | `planned` | `queued` |
-| V11-04 | 错误文案与用户提示目录 | 用户可见文本收口 | 待开展 | `planned` | `queued` |
-| V11-05 | Stage 5 closeout | Stage 5 关闭与长期维护入口清晰 | 待开展 | `planned` | `queued` |
+| V11-01 | 剩余生产 mock 退出 backlog | heavy pages 与 data-source debt 分层明确 | 已由 `production-mock-and-fallback-backlog-2026-03-30.md` 固定剩余生产 mock 与 fallback backlog 分层 | `validated` | `green` |
+| V11-02 | fallback / error / empty-state catalog | fallback 可观测与空态语义统一 | 已由 `error-empty-state-catalog-2026-03-30.md` 固定当前错误态 / 空态 / fallback 宿主与收口目标 | `validated` | `green` |
+| V11-03 | naming / directory / state model guide | 命名、目录与状态模型规则固定 | 已由 `naming-directory-state-model-guide-2026-03-30.md` 固定命名、目录和状态模型治理入口 | `validated` | `green` |
+| V11-04 | 错误文案与用户提示目录 | 用户可见文本收口 | 已由 `error-empty-state-catalog-2026-03-30.md` 与 `naming-directory-state-model-guide-2026-03-30.md` 共同固定用户提示与错误文案收口方向 | `validated` | `green` |
+| V11-05 | Stage 5 closeout | Stage 5 关闭与长期维护入口清晰 | 已由 `phase-11-closeout-assessment.md` 与 `stage-5-closeout-summary.md` 固定当前关闭结论 | `validated` | `green` |
 
 ## 当前权威入口
 - [Stage 5 计划](../stage-5-phase-9-11-plan.md)

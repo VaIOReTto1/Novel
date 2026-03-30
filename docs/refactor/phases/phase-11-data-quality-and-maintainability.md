@@ -48,9 +48,10 @@
 | P11.5 | 输出 Phase 11 与 Stage 5 closeout 宿主 | Stage 5 闭环完成 |
 
 ## 交付物
+- `production-mock-and-fallback-backlog-2026-03-30.md`
 - `error-empty-state-catalog-2026-03-30.md`
 - `naming-directory-state-model-guide-2026-03-30.md`
-- Phase 11 closeout 评估
+- `phase-11-closeout-assessment.md`
 
 ## 当前状态
-- `planned`
+- `validated（Phase 11 closeout 生效于 2026-03-30）`

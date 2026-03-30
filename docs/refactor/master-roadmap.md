@@ -4,9 +4,9 @@
 - 当前控制面已切换到：`Stage 4 = validated`
 - 当前已关闭前半段：`Phase 7 = validated`
 - 当前后半段：`Phase 8 = validated`
-- 当前新阶段：`Stage 5 = in_progress`
+- 当前新阶段：`Stage 5 = validated`
 - 当前已关闭前半段：`Phase 9 = validated`
-- 当前排队阶段：`Phase 10 = planned`
+- 当前后半段：`Phase 10-11 = validated`
 - `Stage 3 = validated` 继续以 `2026-03-26` closeout 为准
 - 当前 authority 入口：
   - `docs/refactor/README.md`

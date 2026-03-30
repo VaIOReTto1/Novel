@@ -2,7 +2,7 @@
 
 ## 摘要
 - 第五阶段定义为：`Stage 5 = Phase 9 + Phase 10 + Phase 11`
-- 当前状态：`planned`
+- 当前状态：`validated`
 - 默认推进顺序固定为：
   - `Phase 9` 运行可靠性与业务连续性
   - `Phase 10` 无障碍、合规、供应链与双端协作治理
@@ -12,10 +12,10 @@
 ## 当前控制面状态
 - `Stage 4 = validated`
 - `Stage 4 closeout` 继续以 `2026-03-30` 结论为准
-- `Stage 5 = in_progress`
+- `Stage 5 = validated`
 - `Phase 9 = validated`
-- `Phase 10 = planned`
-- `Phase 11 = planned`
+- `Phase 10 = validated`
+- `Phase 11 = validated`
 
 ## 阶段定位
 - `Stage 4` 已经把包体积、依赖、构建效率、observability、rollback 和 ADR 治理宿主落盘。
@@ -127,4 +127,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`in_progress`
+- 当前状态：`validated`

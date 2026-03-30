@@ -2,6 +2,9 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-30 | Stage 5 closeout | closeout | 在 `Phase 9-11` 全部形成宿主、验证看板与关闭总结后关闭 `Stage 5` | 当前遗漏优化点已经按 Stage 5 的控制面全部落成治理入口，再继续保持 `in_progress` 只会制造额外漂移 | `Stage 5 = validated`，后续进入长期维护或 reopen 模式 | 若新增新的结构性硬化工作流，再单独开新阶段或 reopen Stage 5 |
+| 2026-03-30 | Phase 11 closeout | closeout | 在 `Phase 11` 以 backlog 分层、fallback/空态目录、命名/目录/状态模型指南为边界关闭数据质量与可维护性治理 | 当前 heavy pages mock 仍在，但 backlog 与治理宿主已经明确，不应把“未接真实接口”伪装成“没有治理入口” | `Phase 11 = validated`，并为 `Stage 5` closeout 提供最终收尾依据 | 后续若继续推进，按 backlog 分层逐步消化，不重建宿主 |
+| 2026-03-30 | Phase 10 closeout | closeout | 在 `Phase 10` 中以 repo-local governance layer 为边界关闭无障碍、合规、供应链与双端协作四条线 | 当前仓库已有这些领域的半成品入口和当前规则，但没有单一宿主；本轮已将其集中落盘 | `Phase 10 = validated`，为 `Phase 11` 与 Stage 5 closeout 提供治理基座 | 后续如需更强自动化，基于当前宿主增量补脚本或平台入口 |
 | 2026-03-30 | Phase 9 closeout | closeout | `Stage 5` 启动后先关闭 `Phase 9`，把运行恢复、弱网 / 离线、Token 连续性与导入导出 / 历史恢复收成统一宿主 | 这些项已有较多代码锚点和旧证据，最适合作为 Stage 5 第一批硬化主题 | `Stage 5` 进入 `in_progress`，`Phase 9 = validated`，默认下一线固定为 `Phase 10` | 后续如继续推进，优先从 accessibility / compliance / supply-chain / bridge registry 进入 |
 | 2026-03-30 | Stage 5 planning | control-plane | 新建 `Stage 5 = Phase 9-11`，并固定顺序为 `Phase 9 -> Phase 10 -> Phase 11` | `Stage 4` 已关闭，而蓝图中的遗漏项仍横跨运行可靠性、治理规范、供应链与数据质量，继续塞回 `Stage 4 addendum` 会让控制面重新混乱 | 控制面将以 `Stage 4 validated + Stage 5 planned` 形式继续演进，默认下一主线切换到 Stage 5 | 后续如开始执行，优先从 `Phase 9` 的 runtime resilience matrix 与 continuity contract 入手 |
 | 2026-03-30 | Phase 8 closeout | closeout | 在 `Phase 8` 中以 repo-local governance layer 为边界关闭 observability / flag / rollback / ADR 四条线，并同步关闭 `Stage 4` | 当前仓库已经具备局部指标、flag、rollback 与 owner/reviewer 基础，但没有线上平台；继续拖延只会让治理入口继续分散 | `Phase 8` 与 `Stage 4` 进入 `validated`，后续新工作流默认基于现有治理层增量维护 | 后续若出现新的结构性工作流，再以新阶段或 reopen 形式进入 |

@@ -61,6 +61,7 @@
 - `rn-component-registry-2026-03-30.md`
 - `compliance-and-sensitive-log-governance-2026-03-30.md`
 - `supply-chain-audit-playbook-2026-03-30.md`
+- `phase-10-closeout-assessment.md`
 
 ## 当前状态
-- `planned`
+- `validated（Phase 10 closeout 生效于 2026-03-30）`

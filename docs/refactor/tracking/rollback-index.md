@@ -10,6 +10,7 @@
 | `RB-P8-GOVERNANCE-20260330-01` | `241989b` | Phase 8 治理工件与 Stage 4 closeout | `git revert --no-edit 241989b` | `npm run harness:check` |
 | `RB-STAGE5-DOCS-20260330-01` | `3ed6c6f` | Stage 5 控制面、Phase 9-11 宿主与公共治理宿主建立 | `git revert --no-edit 3ed6c6f` | `npm run harness:check` |
 | `RB-P9-DOCS-20260330-01` | `fa8afa7` | Phase 9 运行可靠性与业务连续性宿主建立及关闭 | `git revert --no-edit fa8afa7` | `npm run harness:check` |
+| `RB-P10-P11-STAGE5-20260330-01` | `提交后生成` | Phase 10/11 治理工件与 Stage 5 closeout | `git revert --no-edit <本提交 SHA>` | `npm run harness:check` |
 
 ## 当前 reopen 原子提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |

@@ -4,6 +4,7 @@
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |
 | `RB-P12-CODE-20260331-01` | `5a0b632` | Phase 12 运行时、bridge gateway、event hub、back navigation 与页面直连入口收口 | `git revert --no-edit 5a0b632` | `npm test -- --runInBand __tests__/runtime/backNavigation.test.ts __tests__/runtime/eventHub.test.ts __tests__/runtime/runtimeCoordinator.test.ts __tests__/runtime/rawPrimitivesBoundary.test.ts __tests__/bridge/NavigationBridge.contract.test.ts __tests__/bridge/UserBridge.contract.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
+| `RB-P12-AUTH-20260331-01` | `2b750ac` | Phase 12 closeout、Stage 6 状态切换与 harness 导航同步 | `git revert --no-edit 2b750ac` | `npm run harness:check` |
 | `RB-STAGE6-DOCS-20260331-01` | `4ca01b5` | Stage 6 控制面、Phase 12-14 宿主与 RN 治理宿主建立 | `git revert --no-edit 4ca01b5` | `npm run harness:check` |
 
 ## 当前 Stage 4 / Stage 5 关闭记录

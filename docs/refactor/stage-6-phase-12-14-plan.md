@@ -71,6 +71,9 @@
 - 当前已开始第一波：
   - `Profile + app root preload`
   - `Settings + TimeSwitch + privacy/help`
+- 当前已推进到中段：
+  - `Bookshelf / History / Watchlist`
+  - `Comment / ReviewDetail / WriteReview`
 
 ### Phase 14
 - 只处理 RN 长期治理层：

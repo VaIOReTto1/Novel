@@ -13,7 +13,7 @@
 - `Stage 5 = validated`，`Phase 9-11` 已完成当前计划内治理闭环。
 - `Stage 6 = in_progress`，当前执行线已切到 RN 重构续规划。
 - `Phase 12 = validated`，已完成 RN 运行时与桥接入口的第一轮收口。
-- `Phase 13 = in_progress`，当前已进入 `Profile / Settings` 第一波页面域收口。
+- `Phase 13 = in_progress`，当前已完成 `Profile / Settings` 第一波，以及 `Bookshelf / History / Watchlist / Comment` 多个页面域波次的首轮收口。
 - `Phase 14 = planned`，将承接 RN contract、registry、mock/fallback 与 maintainability 治理。
 
 ## 当前 repo 事实
@@ -31,6 +31,7 @@
 - [Phase 12 closeout assessment](./phase-12/phase-12-closeout-assessment.md)
 - [Phase 13 宿主文档](./phases/phase-13-rn-page-domain-refactor.md)
 - [Phase 13 Wave 1 记录](./phase-13/profile-settings-domain-wave-2026-03-31.md)
+- [Phase 13 Wave 2-4 记录](./phase-13/bookshelf-comment-domain-wave-2026-03-31.md)
 - [Phase 12-14 验证看板](./tracking/phase-12-14-validation-board.md)
 
 ## 已关闭阶段入口

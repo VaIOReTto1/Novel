@@ -54,7 +54,10 @@
 
 ## 交付物
 - `runtime-resilience-matrix-2026-03-30.md`
+- `energy-and-background-governance-2026-03-30.md`
+- `weak-network-offline-token-continuity-2026-03-30.md`
+- `import-export-history-recovery-2026-03-30.md`
 - Phase 9 closeout 评估
 
 ## 当前状态
-- `planned`
+- `validated（Phase 9 closeout 生效于 2026-03-30）`

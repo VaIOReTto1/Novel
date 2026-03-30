@@ -1,18 +1,20 @@
 # Novel 重构控制面板
 
 ## 当前状态
-- 当前阶段：`Phase 8`
+- 当前阶段：`Phase 9`
 - 阶段状态：`validated`
-- 当前 Stage：`Stage 4 = Phase 7-8`
-- 最新生效切换：`2026-03-30 Stage 4 closeout`
+- 当前 Stage：`Stage 5 = Phase 9-11`
+- 最新生效切换：`2026-03-30 Phase 9 closeout`
 - 历史 checkpoint：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 与 `2026-03-26` 的 `Stage 3 reopen closeout` 继续保留为历史记录；当前权威口径以 Stage 4 控制面为准
 
 ## 当前结论
 - `Stage 3 = validated`，继续以 `2026-03-26` closeout 为收口事实。
 - `Stage 4 = validated`，`Phase 7-8` 已完成当前计划内治理闭环。
+- `Stage 5 = in_progress`，当前前半段 `Phase 9` 已完成关闭。
 - `Phase 7 = validated`，已完成 size / dependency / build efficiency 的第一轮治理闭环。
 - `Phase 8 = validated`，已完成 observability / flag / rollback / ADR 治理宿主落盘。
-- 默认下一阶段：`Stage 5 = planned`，下一主线固定为 `Phase 9-11` 的运行硬化与长期一致性计划。
+- `Phase 9 = validated`，已完成运行恢复、弱网 / 离线、Token 连续性与导入导出 / 历史恢复宿主的第一轮收口。
+- `Phase 10 = planned`，作为 `Stage 5` 的默认下一主线，承接无障碍、合规、供应链与双端协作治理。
 
 ## 当前模块与工程事实
 - Android 模块图已稳定为 `app + core-* + feature-* + macrobenchmark`。
@@ -54,13 +56,17 @@
 
 ## 关键入口
 - [Stage 4 计划](./stage-4-phase-7-8-plan.md)
+- [Stage 4 closeout summary](./stage-4-closeout-summary.md)
+- [Stage 5 计划](./stage-5-phase-9-11-plan.md)
+- [Phase 9 宿主文档](./phases/phase-9-runtime-resilience-and-continuity.md)
+- [Phase 9 closeout assessment](./phase-9/phase-9-closeout-assessment.md)
+- [Phase 10 宿主文档](./phases/phase-10-accessibility-compliance-supply-chain.md)
+- [Phase 11 宿主文档](./phases/phase-11-data-quality-and-maintainability.md)
+- [Phase 9-11 验证看板](./tracking/phase-9-11-validation-board.md)
 - [Phase 7 宿主文档](./phases/phase-7-size-dependency-build-governance.md)
 - [Phase 7 closeout assessment](./phase-7/phase-7-closeout-assessment.md)
 - [Phase 8 宿主文档](./phases/phase-8-observability-rollout-governance.md)
 - [Phase 8 closeout assessment](./phase-8/phase-8-closeout-assessment.md)
-- [Stage 4 closeout summary](./stage-4-closeout-summary.md)
-- [Stage 5 计划](./stage-5-phase-9-11-plan.md)
-- [Phase 9-11 验证看板](./tracking/phase-9-11-validation-board.md)
 - [Phase 7-8 验证看板](./tracking/phase-7-8-validation-board.md)
 - [Stage 3 closeout summary](./stage-3-closeout-summary.md)
 - [Phase 5 当前模块图](./phase-5/module-graph-current-state.md)

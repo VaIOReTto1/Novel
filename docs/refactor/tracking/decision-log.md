@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-30 | Phase 9 closeout | closeout | `Stage 5` 启动后先关闭 `Phase 9`，把运行恢复、弱网 / 离线、Token 连续性与导入导出 / 历史恢复收成统一宿主 | 这些项已有较多代码锚点和旧证据，最适合作为 Stage 5 第一批硬化主题 | `Stage 5` 进入 `in_progress`，`Phase 9 = validated`，默认下一线固定为 `Phase 10` | 后续如继续推进，优先从 accessibility / compliance / supply-chain / bridge registry 进入 |
 | 2026-03-30 | Stage 5 planning | control-plane | 新建 `Stage 5 = Phase 9-11`，并固定顺序为 `Phase 9 -> Phase 10 -> Phase 11` | `Stage 4` 已关闭，而蓝图中的遗漏项仍横跨运行可靠性、治理规范、供应链与数据质量，继续塞回 `Stage 4 addendum` 会让控制面重新混乱 | 控制面将以 `Stage 4 validated + Stage 5 planned` 形式继续演进，默认下一主线切换到 Stage 5 | 后续如开始执行，优先从 `Phase 9` 的 runtime resilience matrix 与 continuity contract 入手 |
 | 2026-03-30 | Phase 8 closeout | closeout | 在 `Phase 8` 中以 repo-local governance layer 为边界关闭 observability / flag / rollback / ADR 四条线，并同步关闭 `Stage 4` | 当前仓库已经具备局部指标、flag、rollback 与 owner/reviewer 基础，但没有线上平台；继续拖延只会让治理入口继续分散 | `Phase 8` 与 `Stage 4` 进入 `validated`，后续新工作流默认基于现有治理层增量维护 | 后续若出现新的结构性工作流，再以新阶段或 reopen 形式进入 |
 | 2026-03-30 | Phase 7 closeout | closeout | 在 `V7-01 ~ V7-04` 全部完成后关闭 `Phase 7`，并保持 `Phase 8 = planned` 而不是立即标为 `in_progress` | 当前已完成 Stage 4 前半段目标，但还没有开始 Phase 8 的 observability / rollout / ADR 实施 | `Phase 7` 正式进入 `validated`，Stage 4 的默认下一线固定为 `Phase 8` 入口建设 | 后续如要继续 Stage 4，实现应从 `Phase 8` 宿主文档与 validation board 开始 |

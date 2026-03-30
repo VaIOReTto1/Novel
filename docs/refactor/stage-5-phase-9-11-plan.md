@@ -12,8 +12,8 @@
 ## 当前控制面状态
 - `Stage 4 = validated`
 - `Stage 4 closeout` 继续以 `2026-03-30` 结论为准
-- `Stage 5 = planned`
-- `Phase 9 = planned`
+- `Stage 5 = in_progress`
+- `Phase 9 = validated`
 - `Phase 10 = planned`
 - `Phase 11 = planned`
 
@@ -127,4 +127,4 @@
 - Owner：当前重构实施者
 - Reviewer：模块代码评审者
 - Validator：阶段门禁批准者
-- 当前状态：`planned`
+- 当前状态：`in_progress`

@@ -1,8 +1,8 @@
 # Phase 9-11 验证看板
 
 ## 当前状态
-- `Stage 5`: `planned`
-- `Phase 9`: `planned`
+- `Stage 5`: `in_progress`
+- `Phase 9`: `validated`
 - `Phase 10`: `planned`
 - `Phase 11`: `planned`
 - 最新更新：`2026-03-30`
@@ -10,11 +10,11 @@
 ## Phase 9
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V9-01 | Runtime resilience matrix | Reader / Welfare / RN Host / 登录与用户态恢复路径可追溯 | 待开展 | `planned` | `queued` |
-| V9-02 | 进程/配置/低内存/RN context 恢复契约 | 允许降级与禁止伪恢复边界明确 | 待开展 | `planned` | `queued` |
-| V9-03 | 弱网 / 离线 / Token 连续性 | 离线、弱网、过期鉴权语义明确 | 待开展 | `planned` | `queued` |
-| V9-04 | 导入导出 / 历史恢复入口 | 用户连续性与最小验证入口明确 | 待开展 | `planned` | `queued` |
-| V9-05 | Phase 9 closeout | 运行可靠性与连续性边界关闭 | 待开展 | `planned` | `queued` |
+| V9-01 | Runtime resilience matrix | Reader / Welfare / RN Host / 登录与用户态恢复路径可追溯 | 已由 `runtime-resilience-matrix-2026-03-30.md` 集中 Reader、Welfare、RN Host、登录与用户态恢复锚点，并明确当前证据入口 | `validated` | `green` |
+| V9-02 | 进程/配置/低内存/RN context 恢复契约 | 允许降级与禁止伪恢复边界明确 | 已由 `runtime-resilience-matrix-2026-03-30.md` 与 `energy-and-background-governance-2026-03-30.md` 固定配置变化、低内存、RN context 恢复与后台治理边界 | `validated` | `green` |
+| V9-03 | 弱网 / 离线 / Token 连续性 | 离线、弱网、过期鉴权语义明确 | 已由 `weak-network-offline-token-continuity-2026-03-30.md` 固定缓存降级、Token 连续性与禁止伪恢复边界 | `validated` | `green` |
+| V9-04 | 导入导出 / 历史恢复入口 | 用户连续性与最小验证入口明确 | 已由 `import-export-history-recovery-2026-03-30.md` 明确设置导入导出、阅读历史与进度恢复入口及其当前边界 | `validated` | `green` |
+| V9-05 | Phase 9 closeout | 运行可靠性与连续性边界关闭 | 已由 `phase-9-closeout-assessment.md` 固定 Phase 9 关闭结论与 Phase 10 入口 | `validated` | `green` |
 
 ## Phase 10
 | ID | Item | Expected | Actual | Status | Result |

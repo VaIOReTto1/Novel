@@ -2,9 +2,9 @@
 
 ## 当前状态
 - `Stage 4`: `in_progress`
-- `Phase 7`: `in_progress`
+- `Phase 7`: `validated`
 - `Phase 8`: `planned`
-- 最新更新：`2026-03-28`
+- 最新更新：`2026-03-30`
 
 ## Phase 7
 | ID | Item | Expected | Actual | Status | Result |
@@ -13,7 +13,7 @@
 | V7-02 | Gradle / npm dependency inventory | 版本分散、重复依赖、catalog/BOM 路线明确 | 已由 `dependency-inventory-and-governance-2026-03-28.md`、npm top-level JSON 与 `releaseRuntimeClasspath` 样本确认：无 version catalog、Kotlin/Hilt/Compose 版本来源分散、npm 侧 `31` 个 ranged 声明 | `validated` | `green` |
 | V7-03 | 第一轮低风险 size shrink | 不改行为前提下取得可证实体积收益 | 已由 `first-size-shrink-vector-icon-font-prune-2026-03-30.md` 落地，限制 release icon fonts 为 `MaterialIcons + Feather`，使 `APK -1.70 MiB`、`AAB -1.70 MiB`、字体资产 `-3.32 MiB / -17` 文件 | `validated` | `green` |
 | V7-04 | clean / incremental build baseline | build hot path、config cache 阻塞原因明确 | 已由 `build-efficiency-baseline-and-config-cache-2026-03-30.md` 固定基线：`app:testDebugUnitTest 321s -> 48.03s`、`app:assembleRelease 614.65s -> 53.66s`；`configuration-cache` 在 sampled task 上可复用，但仍带 `react-native-reanimated` 已知问题 | `validated` | `green` |
-| V7-05 | Phase 7 closeout 与 Phase 8 入口 | Stage 4 后半段进入条件清晰 | 待开展 | `in_progress` | `pending` |
+| V7-05 | Phase 7 closeout 与 Phase 8 入口 | Stage 4 后半段进入条件清晰 | 已由 `phase-7-closeout-assessment.md` 固定 Phase 7 关闭结论，并把 Phase 8 入口收敛到 observability / flags / rollout / ADR 四条线 | `validated` | `green` |
 
 ## Phase 8
 | ID | Item | Expected | Actual | Status | Result |

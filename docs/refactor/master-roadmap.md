@@ -2,7 +2,7 @@
 
 ## 0. 当前权威状态
 - 当前控制面已切换到：`Stage 4 = in_progress`
-- 当前默认主线：`Phase 7 = in_progress`
+- 当前已关闭前半段：`Phase 7 = validated`
 - 当前排队阶段：`Phase 8 = planned`
 - `Stage 3 = validated` 继续以 `2026-03-26` closeout 为准
 - 当前 authority 入口：

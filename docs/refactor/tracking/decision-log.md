@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-30 | Phase 7 closeout | closeout | 在 `V7-01 ~ V7-04` 全部完成后关闭 `Phase 7`，并保持 `Phase 8 = planned` 而不是立即标为 `in_progress` | 当前已完成 Stage 4 前半段目标，但还没有开始 Phase 8 的 observability / rollout / ADR 实施 | `Phase 7` 正式进入 `validated`，Stage 4 的默认下一线固定为 `Phase 8` 入口建设 | 后续如要继续 Stage 4，实现应从 `Phase 8` 宿主文档与 validation board 开始 |
 | 2026-03-30 | Phase 7 | build-efficiency | `V7-04` 先固定 `app:testDebugUnitTest` 与 `app:assembleRelease` 的 clean / incremental 基线，并用 `app:testDebugUnitTest` 做 configuration cache canary | 这两个任务已经能代表当前开发验证和 release 打包的主要热路径 | 当前确认 `configuration-cache=false` 不是 sampled task 完全不可用，而是带着 `react-native-reanimated` 的已知问题且尚未做广覆盖验证 | Phase 7 closeout 后把 configuration cache 广覆盖 canary 作为 Phase 8 或后续治理入口 |
 | 2026-03-30 | Phase 7 | size-shrink | 第一轮低风险 shrink 先从 `react-native-vector-icons` 未使用字体裁剪入手，只保留 `MaterialIcons.ttf` 与 `Feather.ttf` | 代码扫描显示当前仓库只直接使用这两个 family，而 release merged fonts 基线却有 `19` 个文件、`3.71 MiB` | 在不改业务语义的前提下，`APK` 与 `AAB` 都获得约 `1.70 MiB` 收益，并把字体资产压到 `2` 个文件 | 下一步继续推进 `V7-04` 的 build efficiency baseline，并考虑是否补自动 guard 检查新增 icon family |
 | 2026-03-28 | Phase 7 | baseline | 先固定 `V7-01 / V7-02` 的 size 与 dependency inventory 基线，再进入 `V7-03 / V7-04` 的 shrink 与 build efficiency | 如果先做 shrink 或构建优化，后续很难区分“优化收益”和“基线缺失” | `Phase 7` 的第一批执行工件以 release 产物、JS bundle、icon fonts、npm top-level inventory 与 `releaseRuntimeClasspath` 样本为准 | 下一步进入低风险 shrink 与 build baseline 采样 |

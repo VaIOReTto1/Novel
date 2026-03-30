@@ -2,15 +2,15 @@
 
 ## 当前状态
 - 当前阶段：`Phase 7`
-- 阶段状态：`in_progress`
+- 阶段状态：`validated`
 - 当前 Stage：`Stage 4 = Phase 7-8`
-- 最新生效切换：`2026-03-28 Stage 4 cutover`
+- 最新生效切换：`2026-03-30 Phase 7 closeout`
 - 历史 checkpoint：`2026-03-21` 的 `Phase 5 = validated`、`Phase 6 = validated`、`Stage 3 = validated` 与 `2026-03-26` 的 `Stage 3 reopen closeout` 继续保留为历史记录；当前权威口径以 Stage 4 控制面为准
 
 ## 当前结论
 - `Stage 3 = validated`，继续以 `2026-03-26` closeout 为收口事实。
-- `Stage 4 = in_progress`，当前默认主线切换为 `Phase 7`。
-- `Phase 7 = in_progress`，负责包体积、依赖与构建效率治理。
+- `Stage 4 = in_progress`，当前前半段 `Phase 7` 已完成关闭。
+- `Phase 7 = validated`，已完成 size / dependency / build efficiency 的第一轮治理闭环。
 - `Phase 8 = planned`，作为 Stage 4 后半段 queued phase，承接可观测性、rollout 与长期治理建设。
 
 ## 当前模块与工程事实
@@ -54,6 +54,7 @@
 ## 关键入口
 - [Stage 4 计划](./stage-4-phase-7-8-plan.md)
 - [Phase 7 宿主文档](./phases/phase-7-size-dependency-build-governance.md)
+- [Phase 7 closeout assessment](./phase-7/phase-7-closeout-assessment.md)
 - [Phase 8 宿主文档](./phases/phase-8-observability-rollout-governance.md)
 - [Phase 7-8 验证看板](./tracking/phase-7-8-validation-board.md)
 - [Stage 3 closeout summary](./stage-3-closeout-summary.md)

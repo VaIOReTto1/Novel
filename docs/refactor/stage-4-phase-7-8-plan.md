@@ -2,7 +2,7 @@
 
 ## 摘要
 - 第四阶段定义为：`Stage 4 = Phase 7 + Phase 8`
-- 当前默认主线：`Phase 7 = in_progress`
+- 当前已关闭前半段：`Phase 7 = validated`
 - 当前排队阶段：`Phase 8 = planned`
 - 第四阶段不重开 `Phase 5-6` 的模块化与性能 debt，只承接：
   - 包体积治理
@@ -15,7 +15,7 @@
 - `Stage 3 = validated`
 - `Stage 3 closeout` 继续以 `2026-03-26` 结论为准
 - `Stage 4 = in_progress`
-- `Phase 7 = in_progress`
+- `Phase 7 = validated`
 - `Phase 8 = planned`
 
 ## 阶段定位
@@ -57,7 +57,6 @@
 - `docs/refactor/tracking/phase-7-8-validation-board.md`
 - 后续进入 closeout 时再补：
   - `docs/refactor/stage-4-closeout-summary.md`
-  - `docs/refactor/phase-7/phase-7-closeout-assessment.md`
   - `docs/refactor/phase-8/phase-8-closeout-assessment.md`
 - 继续复用：
   - `docs/refactor/master-roadmap.md`
@@ -97,6 +96,9 @@
   - 模块结构大迁移
   - Reader / Search / Welfare 的更深性能专项
   - UI 或协议语义变更
+- 当前关闭事实：
+  - `V7-01 ~ V7-05` 已全部达到当前约定状态
+  - closeout 入口见 `docs/refactor/phase-7/phase-7-closeout-assessment.md`
 
 ### Phase 8
 - 目标是“把现有局部治理能力升格成长期控制面”

@@ -109,6 +109,7 @@
 - `docs/refactor/phase-7/dependency-inventory-and-governance-2026-03-28.md`
 - `docs/refactor/phase-7/first-size-shrink-vector-icon-font-prune-2026-03-30.md`
 - `docs/refactor/phase-7/build-efficiency-baseline-and-config-cache-2026-03-30.md`
+- `docs/refactor/phase-7/phase-7-closeout-assessment.md`
 - `docs/refactor/evidence/phase7-release-artifact-inventory-2026-03-28.json`
 - `docs/refactor/evidence/phase7-release-artifact-inventory-2026-03-30.json`
 - `docs/refactor/evidence/phase7-npm-top-level-2026-03-28.json`
@@ -118,4 +119,4 @@
 - `docs/refactor/evidence/phase7-config-cache-summary-2026-03-30.json`
 
 ## 当前状态
-- `in_progress（Stage 4 当前默认主线）`
+- `validated（Phase 7 closeout 生效于 2026-03-30）`

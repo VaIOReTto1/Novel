@@ -4,6 +4,31 @@
 
 所有本项目的变更日志都将记录在此文件中。
 
+## 2026-03 当前仓库状态对齐
+
+- 当前 package version：`1.0.2`
+- 当前 refactor control-plane：
+  - `Stage 4 = validated`
+  - `Stage 5 = validated`
+- 当前 Android 模块图已稳定为：
+  - `app + core-common + core-ui + core-bridge + core-bridge-contract + core-storage + core-network + feature-home + feature-book + feature-login + feature-search + feature-reader + feature-rn-host + feature-welfare + macrobenchmark`
+- 当前仓库形态：
+  - `src/**` 为主要 React Native 业务页面与 bridge/theme/store 入口
+  - `android/**` 为 Android Native / Compose / modular runtime 入口
+- 当前主要治理结果：
+  - `Phase 7`：包体积、依赖、构建效率治理已关闭
+  - `Phase 8`：observability / rollback / ADR 治理宿主已关闭
+  - `Phase 9-11`：运行恢复、合规供应链、数据质量与可维护性治理宿主已关闭
+
+说明：
+
+- 下方 `v1.0.0 / v0.x` 条目继续保留为历史版本叙事。
+- 当前架构和重构状态请以：
+  - [docs/refactor/README.md](./docs/refactor/README.md)
+  - [docs/refactor/stage-4-closeout-summary.md](./docs/refactor/stage-4-closeout-summary.md)
+  - [docs/refactor/stage-5-closeout-summary.md](./docs/refactor/stage-5-closeout-summary.md)
+  为准。
+
 ### 🎉 v1.0.0 正式发布
 
 经过数月的持续迭代与优化，我们很高兴地宣布 —— **项目 v1.0.0 正式发布！**

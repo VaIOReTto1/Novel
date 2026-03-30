@@ -4,6 +4,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-03 Repository State Alignment
+
+- Current package version: `1.0.2`
+- Current refactor control-plane:
+  - `Stage 4 = validated`
+  - `Stage 5 = validated`
+- Current Android module graph is stable as:
+  - `app + core-common + core-ui + core-bridge + core-bridge-contract + core-storage + core-network + feature-home + feature-book + feature-login + feature-search + feature-reader + feature-rn-host + feature-welfare + macrobenchmark`
+- Current repository shape:
+  - `src/**` holds the main React Native business pages plus bridge/theme/store code
+  - `android/**` holds the Android Native / Compose / modular runtime code
+- Current major governance outcomes:
+  - `Phase 7`: size, dependency, and build-efficiency governance closed
+  - `Phase 8`: observability / rollback / ADR host docs closed
+  - `Phase 9-11`: runtime resilience, compliance/supply-chain, and data-quality/maintainability host docs closed
+
+Notes:
+
+- The historical `v1.0.0 / v0.x` entries below are preserved as release-era narrative.
+- For the current architecture and refactor state, use:
+  - [docs/refactor/README.md](./docs/refactor/README.md)
+  - [docs/refactor/stage-4-closeout-summary.md](./docs/refactor/stage-4-closeout-summary.md)
+  - [docs/refactor/stage-5-closeout-summary.md](./docs/refactor/stage-5-closeout-summary.md)
+  as the authoritative sources.
+
 ### 🎉 v1.0.0 Official Release
 
 After months of continuous iteration and optimization, we are thrilled to announce that **Project v1.0.0 is officially released!**
@@ -202,4 +227,4 @@ We sincerely thank every user, developer, and contributor for your support!
 - 🎉 **Project Creation**: Initialized the project using `react-native`.
 - 🏗️ **RN/Compose Integration**: Successfully integrated and displayed a React Native page within `ComposeMainActivity`.
 - ⚙️ **Basic Configuration**: Completed basic frontend configuration for `babel`, `typescript`, and `eslint`.
-- 📄 **Documentation Initialization**: Created `README.md` to record basic project information. 
+- 📄 **Documentation Initialization**: Created `README.md` to record basic project information.

@@ -13,8 +13,11 @@ import { CommentList } from './components/CommentList';
 import { RatingSection } from './components/RatingSection';
 import { CategorySection } from './components/CategorySection';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
+import {
+  bootstrapCommentPage,
+  createCommentPageHandlers,
+} from './domain/commentPageModel';
 
-// 自定义Hook：刷新逻辑
 const useRefresh = () => {
   const { refreshComments } = useCommentStore();
 
@@ -25,7 +28,6 @@ const useRefresh = () => {
   return { onRefresh };
 };
 
-// 自定义Hook：动画
 const useAnimations = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -68,55 +70,59 @@ const CommentPage: React.FC<CommentPageProps> = ({ bookId, bookInfo }) => {
   const [, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // 初始化数据加载
-  useEffect(() => {
-    console.log('[CommentPage] 页面初始化，bookId:', bookId);
-    if (bookId) {
-      loadComments(bookId);
-    }
+  const handlers = React.useMemo(
+    () =>
+      createCommentPageHandlers({
+        bookId,
+        navigateBack: () => NavigationBridge.navigateBack('CommentPageComponent'),
+        navigateToWriteReview: (nextBookId) => NavigationBridge.navigateToWriteReview(nextBookId),
+        loadMoreComments,
+        setSearchQuery,
+        setSelectedCategory,
+      }),
+    [bookId, loadMoreComments],
+  );
 
-    // 页面卸载时重置状态
-    return () => {
-      reset();
-    };
+  useEffect(() => {
+    let cleanup = () => undefined;
+
+    bootstrapCommentPage({
+      bookId,
+      loadComments,
+      reset,
+    }).then((nextCleanup) => {
+      cleanup = nextCleanup;
+    });
+
+    return () => cleanup();
   }, [bookId, loadComments, reset]);
 
-  // Android硬件返回按钮处理
   useEffect(() => {
     return registerHardwareBackHandler(() => {
-      console.log('[CommentPage] Android硬件返回按钮被按下');
       NavigationBridge.navigateBack('CommentPageComponent');
-      return true; // 阻止默认行为
+      return true;
     });
   }, []);
 
-  // 返回按钮处理
   const handleBackPress = useCallback(() => {
-    console.log('[CommentPage] 用户点击返回按钮');
-    NavigationBridge.navigateBack('CommentPageComponent');
-  }, []);
+    handlers.handleBackPress();
+  }, [handlers]);
 
-  // 加载更多评论
   const handleLoadMore = useCallback(() => {
-    loadMoreComments();
-  }, [loadMoreComments]);
+    handlers.handleLoadMore();
+  }, [handlers]);
 
   const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
-    // TODO: 实现搜索逻辑
-    console.log('搜索评论:', query);
-  }, []);
+    handlers.handleSearch(query);
+  }, [handlers]);
 
   const handleCategoryChange = useCallback((category: string) => {
-    setSelectedCategory(category);
-    // TODO: 实现分类筛选逻辑
-    console.log('切换分类:', category);
-  }, []);
+    handlers.handleCategoryChange(category);
+  }, [handlers]);
 
   const handleWriteReview = useCallback(() => {
-    // 导航到发表评论页面
-    NavigationBridge.navigateToWriteReview(bookId);
-  }, [bookId]);
+    handlers.handleWriteReview();
+  }, [handlers]);
 
   return (
     <Animated.View style={[

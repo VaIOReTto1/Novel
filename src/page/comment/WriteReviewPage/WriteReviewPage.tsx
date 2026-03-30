@@ -15,6 +15,11 @@ import { useWriteReview } from './hooks/useWriteReview';
 import { WriteReviewPageProps } from './types';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
+  bootstrapWriteReviewPage,
+  createWriteReviewPageHandlers,
+  canSubmitWriteReview,
+} from './domain/writeReviewPageModel';
+import {
   TopBar,
   RatingInput,
   ReviewForm,
@@ -37,50 +42,54 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
     clearErrors,
   } = useWriteReview(initialRating);
 
-  // Android硬件返回按钮处理
+  const handlers = React.useMemo(
+    () =>
+      createWriteReviewPageHandlers({
+        bookId,
+        submitReview,
+        clearErrors,
+        dismissKeyboard: () => Keyboard.dismiss(),
+        navigateBack: NavigationBridge.navigateBack,
+      }),
+    [bookId, submitReview, clearErrors],
+  );
+
   useEffect(() => {
     return registerHardwareBackHandler(() => {
-      console.log('[WriteReviewPage] Android硬件返回按钮被按下');
       NavigationBridge.navigateBack('WriteReviewPageComponent');
-      return true; // 阻止默认行为
+      return true;
     });
   }, []);
 
-  // 页面初始化
   useEffect(() => {
-    if (source) {
-      console.log('[WriteReviewPage] 来源:', source);
-    }
-    if (!bookId) {
-      console.warn('WriteReviewPage: bookId is required');
-      NavigationBridge.navigateBack();
-    }
+    bootstrapWriteReviewPage({
+      bookId,
+      source,
+      navigateBack: () => NavigationBridge.navigateBack(),
+    });
   }, [bookId, source]);
 
-  // 处理返回
   const handleBackPress = () => {
-    NavigationBridge.navigateBack('WriteReviewPageComponent');
+    handlers.handleBackPress();
   };
 
-  // 处理提交
   const handleSubmit = async () => {
-    if (!bookId) {return;}
-
-    await submitReview(bookId);
+    await handlers.handleSubmit();
   };
 
-  // 处理键盘收起
   const handleDismissKeyboard = () => {
-    Keyboard.dismiss();
+    handlers.handleDismissKeyboard();
   };
 
-  // 处理输入框焦点
   const handleInputFocus = () => {
-    clearErrors();
+    handlers.handleInputFocus();
   };
 
-  // 检查是否可以提交
-  const canSubmit = rating > 0 && content.trim().length >= 10 && !isSubmitting;
+  const canSubmit = canSubmitWriteReview({
+    rating,
+    content,
+    isSubmitting,
+  });
 
   if (!bookId) {
     return null;
@@ -94,40 +103,34 @@ const WriteReviewPage: React.FC<WriteReviewPageProps> = ({ bookId, source, initi
     >
       <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
         <View style={styles.container}>
-          {/* 顶部导航栏 */}
           <TopBar
             onBackPress={handleBackPress}
             canSubmit={canSubmit}
             onSubmit={handleSubmit}
           />
 
-          {/* 滚动内容区域 */}
           <ScrollView
             style={styles.scrollContainer}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
             <View style={styles.contentContainer}>
-              {/* 评分区域 */}
               <RatingInput
                 rating={rating}
                 onRatingChange={setRating}
                 starAnimations={starAnimations}
               />
 
-              {/* 表单区域 */}
-            <ReviewForm
-              content={content}
-              contentError={contentError}
-              contentLength={contentLength}
-              onContentChange={setContent}
-              onContentFocus={handleInputFocus}
-              autoFocus={true}
+              <ReviewForm
+                content={content}
+                contentError={contentError}
+                contentLength={contentLength}
+                onContentChange={setContent}
+                onContentFocus={handleInputFocus}
+                autoFocus={true}
               />
             </View>
           </ScrollView>
-
-
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

@@ -10,6 +10,11 @@ import { useReviewDetailStore } from './store/reviewDetailStore';
 import { useReviewDetailPageStyles } from './hooks/useReviewDetailPageStyles';
 import { useRefresh, useAnimations } from './hooks';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
+import {
+  bootstrapReviewDetailPage,
+  createReviewDetailPageHandlers,
+} from './domain/reviewDetailPageModel';
+
 const { height: screenHeight } = Dimensions.get('window');
 const bottomInputOverlayStyle = { zIndex: 30 } as const;
 const actionButtonSpacingStyle = { marginTop: 8 } as const;
@@ -18,7 +23,6 @@ const useRefreshLogic = () => {
   const { refreshReviewDetail } = useReviewDetailStore();
 
   return useRefresh(async () => {
-    console.log('[ReviewDetailPage] 开始刷新评论详情数据');
     await refreshReviewDetail();
   }, [refreshReviewDetail]);
 };
@@ -35,110 +39,57 @@ interface ReviewDetailPageProps {
 
 const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookInfo }) => {
   const { colors, styles } = useReviewDetailPageStyles();
-  const { reviewDetail, comments, loadReviewDetail, loadMoreComments, isRefreshing, isLoading, error, reset, toggleCommentLike, toggleCommentDislike } = useReviewDetailStore();
+  const {
+    reviewDetail,
+    comments,
+    loadReviewDetail,
+    loadMoreComments,
+    isRefreshing,
+    isLoading,
+    error,
+    reset,
+    toggleCommentLike,
+    toggleCommentDislike,
+  } = useReviewDetailStore();
   const { isRefreshing: refreshing, onRefresh } = useRefreshLogic();
   const { fadeAnim, scaleAnim } = useAnimations();
   const [parsedCommentData, setParsedCommentData] = React.useState<any>(null);
-
-  // 添加调试信息
-  console.log('[ReviewDetailPage] 渲染状态:', {
-    reviewDetail: !!reviewDetail,
-    commentsCount: comments.length,
-    isLoading,
-    isRefreshing,
-    error,
-  });
-
-  useEffect(() => {
-    if (commentData) {
-      try {
-        const comment = JSON.parse(commentData);
-        console.log('[ReviewDetailPage] 页面初始化，commentData:', comment);
-        setParsedCommentData(comment);
-        // 调用API加载评论详情和回复数据
-        loadReviewDetail(comment.id);
-      } catch (err) {
-        console.error('[ReviewDetailPage] 解析评论数据失败:', err);
-      }
-    }
-
-    return () => {
-      console.log('[ReviewDetailPage] 页面卸载，清理状态');
-      reset();
-    };
-  }, [commentData, loadReviewDetail, reset]);
-
-  // Android硬件返回按钮处理
-  useEffect(() => {
-    return registerHardwareBackHandler(() => {
-      console.log('[ReviewDetailPage] Android硬件返回按钮被按下');
-      NavigationBridge.navigateBack('ReviewDetailPageComponent');
-      return true; // 阻止默认行为
-    });
-  }, []);
-
-  const handleBack = () => {
-    console.log('[ReviewDetailPage] 用户点击返回按钮');
-    NavigationBridge.navigateBack('ReviewDetailPageComponent');
-  };
-
-  const handleLoadMore = () => {
-    loadMoreComments();
-  };
-
-  const handleLike = (commentId: string) => {
-    toggleCommentLike(commentId);
-  };
-
-  const handleDislike = (commentId: string) => {
-    toggleCommentDislike(commentId);
-  };
-
-  const handleReply = (commentId: string) => {
-    // TODO: 实现回复功能
-    console.log('回复评论:', commentId);
-  };
-
   const [_commentText, _setCommentText] = useState('');
   const [_showCommentModal, setShowCommentModal] = useState(false);
   const [selectedComment, setSelectedComment] = useState<any>(null);
   const [modalAnimation] = useState(new Animated.Value(0));
-
-  // 新的半弹窗状态与动画
   const [inputBarH, setInputBarH] = useState(0);
   const [showRepliesSheet, setShowRepliesSheet] = useState(false);
 
-  const SHEET_TARGET_H = Math.min(screenHeight * 0.82, screenHeight - inputBarH);
-  const sheetTranslateY = React.useRef(new Animated.Value(SHEET_TARGET_H)).current;
+  const sheetTargetHeight = Math.min(screenHeight * 0.82, screenHeight - inputBarH);
+  const sheetTranslateY = React.useRef(new Animated.Value(sheetTargetHeight)).current;
   const backdropOpacity = React.useRef(new Animated.Value(0)).current;
 
-  const handleScroll = (event: any) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const paddingToBottom = 20;
-    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
-      handleLoadMore();
-    }
-  };
+  useEffect(() => {
+    let cleanup = () => undefined;
 
-  const showCommentModalWithAnimation = () => {
-    setShowCommentModal(true);
-    Animated.timing(modalAnimation, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
+    bootstrapReviewDetailPage({
+      commentData,
+      setParsedCommentData,
+      loadReviewDetail,
+      reset,
+    }).then((nextCleanup) => {
+      cleanup = nextCleanup;
+    });
 
+    return () => cleanup();
+  }, [commentData, loadReviewDetail, reset]);
 
-  const handleCommentInputFocus = () => {
-    showCommentModalWithAnimation();
-  };
+  useEffect(() => {
+    return registerHardwareBackHandler(() => {
+      NavigationBridge.navigateBack('ReviewDetailPageComponent');
+      return true;
+    });
+  }, []);
 
-  // 新的半弹窗动画函数
   const openRepliesSheet = () => {
     setShowRepliesSheet(true);
-    // 先把起点重置为收起位置（避免尺寸变化导致的错位）
-    sheetTranslateY.setValue(SHEET_TARGET_H);
+    sheetTranslateY.setValue(sheetTargetHeight);
     Animated.parallel([
       Animated.timing(sheetTranslateY, {
         toValue: 0,
@@ -157,7 +108,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
   const closeRepliesSheet = () => {
     Animated.parallel([
       Animated.timing(sheetTranslateY, {
-        toValue: SHEET_TARGET_H,
+        toValue: sheetTargetHeight,
         duration: 240,
         easing: Easing.in(Easing.cubic),
         useNativeDriver: true,
@@ -170,30 +121,56 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
     ]).start(() => setShowRepliesSheet(false));
   };
 
-  const handleViewMoreReplies = (comment: any) => {
-    setSelectedComment(comment);
-    openRepliesSheet();
+  const handlers = React.useMemo(
+    () =>
+      createReviewDetailPageHandlers({
+        navigateBack: () => NavigationBridge.navigateBack('ReviewDetailPageComponent'),
+        loadMoreComments,
+        toggleCommentLike,
+        toggleCommentDislike,
+        setSelectedComment,
+        openRepliesSheet,
+      }),
+    [loadMoreComments, toggleCommentDislike, toggleCommentLike],
+  );
+
+  const handleScroll = (event: any) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const paddingToBottom = 20;
+    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
+      handlers.handleLoadMore();
+    }
   };
 
-  const renderRepliesSheet = () => {
-    return (
-      <RepliesSheet
-        selectedComment={selectedComment}
-        showRepliesSheet={showRepliesSheet}
-        inputBarHeight={inputBarH}
-        sheetHeight={SHEET_TARGET_H}
-        sheetTranslateY={sheetTranslateY}
-        backdropOpacity={backdropOpacity}
-        onClose={closeRepliesSheet}
-      />
-    );
+  const showCommentModalWithAnimation = () => {
+    setShowCommentModal(true);
+    Animated.timing(modalAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
   };
 
-  // 如果有错误，显示错误信息
+  const handleCommentInputFocus = () => {
+    showCommentModalWithAnimation();
+  };
+
+  const renderRepliesSheet = () => (
+    <RepliesSheet
+      selectedComment={selectedComment}
+      showRepliesSheet={showRepliesSheet}
+      inputBarHeight={inputBarH}
+      sheetHeight={sheetTargetHeight}
+      sheetTranslateY={sheetTranslateY}
+      backdropOpacity={backdropOpacity}
+      onClose={closeRepliesSheet}
+    />
+  );
+
   if (error) {
     return (
       <View style={styles.container}>
-        <TopBar onBack={handleBack} bookInfo={bookInfo} />
+        <TopBar onBack={handlers.handleBack} bookInfo={bookInfo} />
         <View style={styles.loadingContainer}>
           <Text>加载失败: {error}</Text>
         </View>
@@ -211,7 +188,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
         },
       ]}
     >
-      <TopBar onBack={handleBack} bookInfo={bookInfo} />
+      <TopBar onBack={handlers.handleBack} bookInfo={bookInfo} />
 
       <ScrollView
         style={styles.scrollView}
@@ -230,17 +207,18 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
       >
         {parsedCommentData && <ReviewContent commentData={parsedCommentData} />}
         <CommentList
-          onLike={handleLike}
-          onDislike={handleDislike}
-          onReply={handleReply}
-          onViewMoreReplies={handleViewMoreReplies}
+          onLike={handlers.handleLike}
+          onDislike={handlers.handleDislike}
+          onReply={handlers.handleReply}
+          onViewMoreReplies={handlers.handleViewMoreReplies}
         />
       </ScrollView>
 
-      {/* 底部输入框 */}
       <View
         style={[styles.bottomInputContainer, bottomInputOverlayStyle]}
-        onLayout={(e: { nativeEvent: { layout: { height: React.SetStateAction<number>; }; }; }) => setInputBarH(e.nativeEvent.layout.height)}
+        onLayout={(e: { nativeEvent: { layout: { height: React.SetStateAction<number> } } }) =>
+          setInputBarH(e.nativeEvent.layout.height)
+        }
       >
         <TouchableOpacity
           style={styles.commentInputBox}
@@ -253,7 +231,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
         </TouchableOpacity>
 
         <View style={styles.commentInputActions}>
-          <TouchableOpacity style={[styles.commentActionButton, actionButtonSpacingStyle]} onPress={handleLike}>
+          <TouchableOpacity style={[styles.commentActionButton, actionButtonSpacingStyle]} onPress={() => handlers.handleLike('self')}>
             <Icon
               name={'favorite-border'}
               size={24}
@@ -262,7 +240,7 @@ const ReviewDetailPage: React.FC<ReviewDetailPageProps> = ({ commentData, bookIn
             <Text style={styles.commentActionCount}>208</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.commentActionButton, actionButtonSpacingStyle]}>
+          <TouchableOpacity style={[styles.commentActionButton, actionButtonSpacingStyle]} onPress={() => handlers.handleDislike('self')}>
             <Icon
               name="thumb-down"
               size={24}

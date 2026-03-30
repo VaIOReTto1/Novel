@@ -10,3 +10,4 @@
 | 2026-03-30 | Stage 4 closeout | `Phase 8` 已完成关闭，`Stage 4 = validated`，当前 repo 进入以既有治理层为基线的长期维护模式 | [stage-4-closeout-summary.md](../refactor/stage-4-closeout-summary.md) |
 | 2026-03-30 | Stage 5 planning | 已建立 `Stage 5 = Phase 9-11` 的控制面、验证看板与宿主文档，作为 Stage 4 之后的默认下一主线 | [stage-5-phase-9-11-plan.md](../refactor/stage-5-phase-9-11-plan.md) |
 | 2026-03-30 | Phase 9 closeout | `Stage 5` 已进入 `in_progress`，`Phase 9` 已完成运行恢复、弱网 / 离线、Token 连续性与导入导出 / 历史恢复宿主的第一轮收口，默认下一线切换为 `Phase 10` | [phase-9-closeout-assessment.md](../refactor/phase-9/phase-9-closeout-assessment.md) |
+| 2026-03-30 | Stage 5 closeout | `Phase 10` 与 `Phase 11` 已完成关闭，`Stage 5 = validated`，当前 repo 进入以既有 Stage 5 治理层为基线的长期维护模式 | [stage-5-closeout-summary.md](../refactor/stage-5-closeout-summary.md) |

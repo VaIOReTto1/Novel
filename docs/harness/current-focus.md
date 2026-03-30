@@ -2,7 +2,7 @@
 
 ## 当前状态
 - 当前分支：`main`
-- 当前权威结论：`Stage 4 = in_progress`，`Phase 7 = validated`，`Phase 8 = planned`
+- 当前权威结论：`Stage 4 = validated`，`Phase 7 = validated`，`Phase 8 = validated`
 - 当前 refactor 控制面板以 `docs/refactor/README.md` 为准
 - 当前 Android 模块图已经稳定为 `app + core-* + feature-* + macrobenchmark`
 
@@ -10,14 +10,14 @@
 - `Stage 3 = validated`，继续以 `2026-03-26` reopen closeout 为最终收口事实
 - `2026-03-28` 已正式完成 `Stage 4` 控制面切主线
 - `2026-03-30` 已完成 `Phase 7` closeout，关闭 Stage 4 前半段的 size / dependency / build efficiency 治理
-- `Phase 8` 已保留为下一主线，当前保持 `planned`
+- `2026-03-30` 已完成 `Phase 8` closeout，并关闭 `Stage 4`
 
 ## 默认下一主线
-- 默认下一主线：推进 `Phase 8` 的 observability / rollout / ADR 入口建设
-- 第一落点：固定 observability 指标目录，统一启动、Bridge、WebView、缓存、权限等口径
-- 第二落点：固定 feature flag / kill switch registry，收清默认值、owner 与回退用途
-- 第三落点：固定 rollout / rollback playbook 与 ADR / reviewer / owner 机制
-- `Phase 7` 已关闭，不再作为当前执行主线
+- 默认下一主线：进入长期维护模式，以现有 Stage 4 治理层为基线持续维护
+- 第一落点：若新增结构性工作流，先判断是否需要 reopen 既有阶段，而不是直接绕开 control-plane
+- 第二落点：若新增指标、flag、rollback 或 reviewer 规则，优先增量更新 `Phase 8` 治理宿主文档
+- 第三落点：若出现新的架构级主题，再单独开新阶段或补充 closeout addendum
+- 当前没有新的 active refactor phase 在执行中
 
 ## Blockers / Known Drift
 - 根 `README.md` 的技术版本和成熟度描述仍可能落后于当前代码与当前 refactor 文档
@@ -29,11 +29,11 @@
 
 ## Primary Source Refs
 - [docs/refactor/README.md](../refactor/README.md)
-- [docs/refactor/stage-4-phase-7-8-plan.md](../refactor/stage-4-phase-7-8-plan.md)
+- [docs/refactor/stage-4-closeout-summary.md](../refactor/stage-4-closeout-summary.md)
 - [docs/refactor/phase-7/phase-7-closeout-assessment.md](../refactor/phase-7/phase-7-closeout-assessment.md)
-- [docs/refactor/phases/phase-8-observability-rollout-governance.md](../refactor/phases/phase-8-observability-rollout-governance.md)
+- [docs/refactor/phase-8/phase-8-closeout-assessment.md](../refactor/phase-8/phase-8-closeout-assessment.md)
 - [docs/refactor/tracking/phase-7-8-validation-board.md](../refactor/tracking/phase-7-8-validation-board.md)
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-30` by Phase 7 closeout
+- `2026-03-30` by Stage 4 closeout

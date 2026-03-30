@@ -15,10 +15,11 @@
 - `2026-03-30` 已完成 `Phase 10`、`Phase 11` 和 `Stage 5` closeout
 
 ## 默认下一主线
-- 默认下一主线：回到长期维护模式，以现有 `Stage 5` 治理层为基线持续维护
-- 第一落点：若继续推进运行硬化、合规或数据质量主题，优先增量更新 `Stage 5` 宿主文档
-- 第二落点：若出现新的跨阶段结构性主题，再评估是否 reopen `Stage 5` 或新建 `Stage 6`
-- 当前没有新的 active refactor phase 在执行中
+- 默认下一主线：`Stage 6 = planned`
+- 第一落点：从 `Phase 12` 的 RN runtime / bridge consolidation 开始
+- 第二落点：`Phase 13` 承接 RN 页面域与 store/hook/组件边界重构
+- 第三落点：`Phase 14` 收掉 RN 契约、mock/fallback、registry 和 maintainability 治理
+- 当前没有新的 active refactor phase 在执行中，但 `Stage 6` 已是默认下一阶段入口
 
 ## Blockers / Known Drift
 - 根 `README.md` 的技术版本和成熟度描述仍可能落后于当前代码与当前 refactor 文档
@@ -32,6 +33,8 @@
 - [docs/refactor/README.md](../refactor/README.md)
 - [docs/refactor/stage-4-closeout-summary.md](../refactor/stage-4-closeout-summary.md)
 - [docs/refactor/stage-5-phase-9-11-plan.md](../refactor/stage-5-phase-9-11-plan.md)
+- [docs/refactor/stage-6-phase-12-14-plan.md](../refactor/stage-6-phase-12-14-plan.md)
+- [docs/refactor/tracking/phase-12-14-validation-board.md](../refactor/tracking/phase-12-14-validation-board.md)
 - [docs/refactor/phase-9/phase-9-closeout-assessment.md](../refactor/phase-9/phase-9-closeout-assessment.md)
 - [docs/refactor/phase-10/phase-10-closeout-assessment.md](../refactor/phase-10/phase-10-closeout-assessment.md)
 - [docs/refactor/phase-11/phase-11-closeout-assessment.md](../refactor/phase-11/phase-11-closeout-assessment.md)
@@ -43,4 +46,4 @@
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-30` by Stage 5 closeout
+- `2026-03-31` by Stage 6 planning

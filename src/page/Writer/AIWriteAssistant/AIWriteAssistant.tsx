@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
-// 使用 require 兼容 RN 版本类型差异
 const RN: any = require('react-native');
 const {FlatList} = RN;
 import {useNovelColors} from '../../../utils/theme/colors';
@@ -16,9 +15,14 @@ import {Suggestions} from './components/Suggestions';
 import {InputBar} from './components/InputBar';
 import {ChatRow} from './components/ChatRow';
 import {IdeaSelector} from './components/IdeaSelector';
+import {
+  bootstrapAIWriteAssistantPage,
+  createAIWriteAssistantHandlers,
+} from './domain/aiWriteAssistantPageModel';
 
 const AIWriteAssistant: React.FC = () => {
   const colors = useNovelColors();
+
   useEffect(() => {
     return registerHardwareBackHandler(() => {
       NavigationBridge.navigateBack?.('AIWriteAssistantComponent');
@@ -27,7 +31,6 @@ const AIWriteAssistant: React.FC = () => {
   }, []);
 
   const styles = createAIStyles(colors);
-  // 精细化订阅，避免全量状态变更触发整页重渲染
   const messages = useAIStore(s => s.messages);
   const input = useAIStore(s => s.input);
   const setInput = useAIStore(s => s.setInput);
@@ -44,6 +47,23 @@ const AIWriteAssistant: React.FC = () => {
   const [ideaVisible, setIdeaVisible] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
 
+  const handlers = React.useMemo(
+    () =>
+      createAIWriteAssistantHandlers({
+        navigateBack: () =>
+          NavigationBridge.navigateBack?.('AIWriteAssistantComponent'),
+        setIdeaVisible,
+        setIdeaPromptActive,
+        setIdeaCategory,
+        scrollToEnd: () => {
+          try {
+            listRef.current?.scrollToEnd?.({animated: true});
+          } catch {}
+        },
+      }),
+    [setIdeaCategory, setIdeaPromptActive],
+  );
+
   const handleScroll = useCallback((e: any) => {
     try {
       const {layoutMeasurement, contentOffset, contentSize} = e.nativeEvent;
@@ -52,41 +72,54 @@ const AIWriteAssistant: React.FC = () => {
       nearBottomRef.current = distanceFromBottom < wp(80);
     } catch {}
   }, []);
+
   const {toggleDeepThinkMode} = useAIShortcuts();
 
   useEffect(() => {
-    rehydrate().catch(() => {});
+    bootstrapAIWriteAssistantPage({
+      rehydrate,
+    });
   }, [rehydrate]);
 
-  // 初次进入或恢复完成后，自动滚动到底部
   useEffect(() => {
-    if (!hydrated) { return; }
+    if (!hydrated) {
+      return;
+    }
     try {
       setTimeout(() => listRef.current?.scrollToEnd?.({animated: true}), 0);
     } catch {}
   }, [hydrated]);
 
-  // 消息变化时，若仍在底部附近或正在发送，重复尝试滚动到底部（兼容虚拟化逐步渲染）
   useEffect(() => {
-    if (!hydrated) { return; }
-    if (!nearBottomRef.current && !sending) { return; }
+    if (!hydrated) {
+      return;
+    }
+    if (!nearBottomRef.current && !sending) {
+      return;
+    }
     const doScroll = () => {
-      try { listRef.current?.scrollToEnd?.({animated: true}); } catch {}
+      try {
+        listRef.current?.scrollToEnd?.({animated: true});
+      } catch {}
     };
     const t1 = setTimeout(doScroll, 0);
     const t2 = setTimeout(doScroll, 80);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [messages.length, sending, hydrated]);
 
-  const renderItem = useCallback(({item}: {item: any}) => (
-    item.role === 'assistant' && item.id === 'intro' ? (
-      <IntroExample onRefresh={() => {}} />
-    ) : (
-      <ChatRow item={item} />
-    )
-  ), []);
+  const renderItem = useCallback(
+    ({item}: {item: any}) =>
+      item.role === 'assistant' && item.id === 'intro' ? (
+        <IntroExample onRefresh={() => {}} />
+      ) : (
+        <ChatRow item={item} />
+      ),
+    [],
+  );
 
-  // 首屏加载：在未 hydrated 之前只显示 Loading
   if (!hydrated) {
     return (
       <View style={[styles.container, styles.loadingScreen]}>
@@ -106,23 +139,17 @@ const AIWriteAssistant: React.FC = () => {
           setHeaderHeight(e.nativeEvent?.layout?.height || 0)
         }>
         <Header
-          onBack={() =>
-            NavigationBridge.navigateBack?.('AIWriteAssistantComponent')
-          }
+          onBack={handlers.handleBack}
           onMenu={() => {}}
           quotaText={`今日剩余：${dailyRemaining}次`}
         />
       </View>
-      <View
-        style={[styles.headerSpacer, {height: headerHeight || undefined}]}
-      />
+      <View style={[styles.headerSpacer, {height: headerHeight || undefined}]} />
 
-      {/* chat list */}
       <FlatList
         ref={listRef}
         contentContainerStyle={{
           paddingHorizontal: wp(16),
-          // 预留底部 Suggestions + InputBar 空间，避免遮挡
           paddingBottom: wp(10),
         }}
         keyboardShouldPersistTaps="handled"
@@ -154,32 +181,14 @@ const AIWriteAssistant: React.FC = () => {
 
       <Suggestions
         onDeepThink={toggleDeepThinkMode}
-        onIdea={() => {
-          setIdeaVisible(v => {
-            const next = !v;
-            try {
-              setIdeaPromptActive(next);
-            } catch {}
-            return next;
-          });
-        }}
+        onIdea={() => handlers.handleToggleIdea(ideaVisible)}
       />
 
       {ideaVisible ? (
         <IdeaSelector
-          onClose={() => {
-            setIdeaVisible(false);
-            try {
-              setIdeaPromptActive(false);
-            } catch {}
-          }}
+          onClose={handlers.handleCloseIdea}
           selected={ideaCategory}
-          onSelect={c => {
-            try {
-              setIdeaCategory(c);
-              // 选择后保持浮窗开启，方便连续切换
-            } catch {}
-          }}
+          onSelect={handlers.handleSelectIdea}
         />
       ) : null}
 
@@ -188,15 +197,7 @@ const AIWriteAssistant: React.FC = () => {
         onChange={setInput}
         sending={sending}
         onSend={send}
-        onFocusInput={() => {
-          try {
-            // 聚焦输入时，自动滚到最底部
-            setTimeout(
-              () => listRef.current?.scrollToEnd?.({animated: true}),
-              0,
-            );
-          } catch {}
-        }}
+        onFocusInput={handlers.handleInputFocus}
       />
     </View>
   );

@@ -13,28 +13,45 @@ import { DraftBar } from './components/DraftBar';
 import { EmptyChapter } from './components/EmptyChapter';
 import { ChapterSection } from './components/ChapterSection';
 import { Footer } from './components/Footer';
+import {
+  bootstrapBookManagePage,
+  createBookManagePageHandlers,
+} from './domain/bookManagePageModel';
 
 const BookManagePage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createBookManageStyles(colors);
   const { book, draft, chapters, load } = useBookManageStore();
+  const handlers = React.useMemo(
+    () =>
+      createBookManagePageHandlers({
+        navigateBack: () => NavigationBridge.navigateBack?.('BookManagePageComponent'),
+        navigateToWritePage: () => NavigationBridge.navigateToWritePage(),
+        navigateToBookManage: () => NavigationBridge.navigateToBookManage?.(),
+      }),
+    [],
+  );
 
   useEffect(() => {
     const cleanupBackHandler = registerHardwareBackHandler(() => {
-      NavigationBridge.navigateBack?.('BookManagePageComponent');
+      handlers.handleBack();
       return true;
     });
-    load();
+    bootstrapBookManagePage({
+      load,
+    });
     return cleanupBackHandler;
-  }, [load]);
+  }, [handlers, load]);
 
   return (
     <View style={styles.container}>
       <Header />
       <Banner book={book} />
-      <DraftBar draft={draft} onContinue={() => NavigationBridge.navigateToWritePage()} />
+      <DraftBar draft={draft} onContinue={handlers.handleContinueDraft} />
       <ChapterSection chapters={chapters} />
-      <View style={styles.volume}><RN.Text style={styles.volumeText}>第一卷：默认</RN.Text></View>
+      <View style={styles.volume}>
+        <RN.Text style={styles.volumeText}>第一卷：默认</RN.Text>
+      </View>
       <ScrollView contentContainerStyle={styles.emptyWrap}>
         {chapters.length === 0 ? <EmptyChapter /> : null}
       </ScrollView>
@@ -44,4 +61,3 @@ const BookManagePage: React.FC = () => {
 };
 
 export default BookManagePage;
-

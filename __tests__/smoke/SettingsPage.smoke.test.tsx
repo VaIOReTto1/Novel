@@ -37,6 +37,7 @@ jest.mock('../../src/page/SettingsPage/settingspage/store/settingsStore', () => 
   const initializeSettings = jest.fn().mockResolvedValue(undefined);
 
   const state = {
+    isInitialized: true,
     cacheSize: '0MB',
     pushNotificationEnabled: true,
     benefitNotificationEnabled: true,
@@ -46,6 +47,7 @@ jest.mock('../../src/page/SettingsPage/settingspage/store/settingsStore', () => 
     enableFloatingWindow: false,
     youthModeEnabled: false,
     clearCache: jest.fn(),
+    calculateCacheSize: jest.fn().mockResolvedValue(undefined),
     setPushNotification: jest.fn(),
     setBenefitNotification: jest.fn(),
     setFollowSystemTheme: jest.fn(),
@@ -58,6 +60,7 @@ jest.mock('../../src/page/SettingsPage/settingspage/store/settingsStore', () => 
     navigateToPrivacyPolicy: jest.fn(),
     navigateToFontSettings: jest.fn(),
     getCurrentDisplayTheme: jest.fn(() => 'light'),
+    initializeSettings,
     logout: jest.fn().mockResolvedValue(undefined),
   };
 

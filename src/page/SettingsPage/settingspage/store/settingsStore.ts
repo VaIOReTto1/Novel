@@ -413,10 +413,3 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   },
 }));
 
-// 🎯 优化：减少初始化调用频率
-setTimeout(() => {
-  const store = useSettingsStore.getState();
-  // 只计算缓存大小和初始化设置
-  store.calculateCacheSize();
-  store.initializeSettings();
-}, 1000);

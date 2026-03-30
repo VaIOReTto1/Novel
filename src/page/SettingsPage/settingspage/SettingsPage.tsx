@@ -9,33 +9,28 @@ import { SettingsSection } from './types/index';
 import { useNovelColors } from '../../../utils/theme/colors';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
+import {
+  bootstrapSettingsPage,
+  createSettingsSections,
+} from './domain/settingsPageModel';
 
-/**
- * 设置页面主组件
- * 提供应用程序的各项设置功能
- * 包含顶部导航栏和设置内容
- */
 const SettingsPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createSettingsPageStyles(colors);
-
-  // 弹窗状态
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const {
-    // 状态
+    isInitialized,
     cacheSize,
     pushNotificationEnabled,
     benefitNotificationEnabled,
     followSystemTheme,
-
     autoSwitchNightMode,
     useMobileDataWhenWiFiPoor,
     enableFloatingWindow,
     youthModeEnabled,
-
-    // 操作
     clearCache,
+    calculateCacheSize,
     setPushNotification,
     setBenefitNotification,
     setFollowSystemTheme,
@@ -48,33 +43,24 @@ const SettingsPage: React.FC = () => {
     navigateToPrivacyPolicy,
     navigateToFontSettings,
     getCurrentDisplayTheme,
+    initializeSettings,
     logout,
   } = useSettingsStore();
-
   const { isLoggedIn, logout: userLogout } = useUserStore();
 
-  // 🎯 优化：简化初始化流程
-  React.useEffect(() => {
-    console.log('[SettingsPage] 📱 SettingsPage组件开始挂载');
-
-    // 检查是否已经初始化，避免重复加载
-    const { isInitialized } = useSettingsStore.getState();
-    if (!isInitialized) {
-      console.log('[SettingsPage] 🎯 设置未初始化，触发初始化');
-      const { initializeSettings } = useSettingsStore.getState();
-      initializeSettings().catch(error => {
-        console.error('[SettingsPage] ❌ 设置状态初始化失败:', error);
-      });
-    } else {
-      console.log('[SettingsPage] ✅ 设置已初始化，跳过');
-    }
+  useEffect(() => {
+    console.log('[SettingsPage] mount');
+    bootstrapSettingsPage({
+      isInitialized,
+      calculateCacheSize,
+      initializeSettings,
+    });
 
     return () => {
-      console.log('[SettingsPage] 📱 SettingsPage组件即将卸载');
+      console.log('[SettingsPage] 馃摫 SettingsPage缁勪欢鍗冲皢鍗歌浇');
     };
-  }, []);
+  }, [calculateCacheSize, initializeSettings, isInitialized]);
 
-  // 处理Android硬件返回按钮
   useEffect(() => {
     return registerHardwareBackHandler(() => {
       handleBackPress();
@@ -82,9 +68,6 @@ const SettingsPage: React.FC = () => {
     });
   }, []);
 
-  /**
-   * 处理返回按钮点击
-   */
   const handleBackPress = () => {
     if (NavigationBridge?.navigateBack) {
       NavigationBridge.navigateBack('SettingsPageComponent');
@@ -93,245 +76,113 @@ const SettingsPage: React.FC = () => {
     }
   };
 
-  /**
-   * 处理退出登录 - 显示确认弹窗
-   */
   const handleLogout = () => {
     setShowLogoutModal(true);
   };
 
-  /**
-   * 确认退出登录
-   */
   const confirmLogout = async () => {
     try {
-      console.log('[SettingsPage] 开始退出登录流程');
+      console.log('[SettingsPage] begin logout');
       setShowLogoutModal(false);
-      // 先调用Android端清空token
       await logout();
-      // 再清空RN端用户状态
       userLogout();
-      console.log('[SettingsPage] 退出登录成功');
+      console.log('[SettingsPage] logout success');
     } catch (error) {
-      console.error('[SettingsPage] 退出登录失败:', error);
+      console.error('[SettingsPage] logout failed', error);
     }
   };
 
-  /**
-   * 取消退出登录
-   */
   const cancelLogout = () => {
     setShowLogoutModal(false);
   };
 
-  /**
-   * 创建设置项配置
-   */
-  const createSettingsSections = (): SettingsSection[] => {
-    const sections: SettingsSection[] = [
-    {
-      id: 'cache',
-      title: '存储管理',
-      items: [
-        {
-          id: 'clearCache',
-          title: '清理缓存',
-          type: 'action',
-          value: cacheSize,
-          onPress: clearCache,
-        },
-      ],
-    },
-    {
-      id: 'notifications',
-      title: '通知设置',
-      items: [
-        {
-          id: 'pushNotification',
-          title: '推送通知',
-          type: 'switch',
-          value: pushNotificationEnabled,
-          onValueChange: (value) => setPushNotification(value as boolean),
-        },
-        {
-          id: 'benefitNotification',
-          title: '福利领取提示',
-          type: 'switch',
-          value: benefitNotificationEnabled,
-          onValueChange: (value) => setBenefitNotification(value as boolean),
-        },
-      ],
-    },
-    {
-      id: 'reading',
-      title: '阅读设置',
-      items: [
-        {
-          id: 'fontSize',
-          title: '字体大小',
-          type: 'arrow',
-          onPress: navigateToFontSettings,
-        },
-      ],
-    },
-    {
-      id: 'theme',
-      title: '主题设置',
-      items: [
-        {
-          id: 'colorSchemeToggle',
-          title: '主题模式',
-          type: 'toggle',
-          value: getCurrentDisplayTheme(),
-          onPress: () => {
-            console.log('[SettingsPage] 🌙 用户点击主题模式切换按钮');
+  const settingsSections: SettingsSection[] = React.useMemo(
+    () =>
+      createSettingsSections({
+        cacheSize,
+        pushNotificationEnabled,
+        benefitNotificationEnabled,
+        followSystemTheme,
+        autoSwitchNightMode,
+        useMobileDataWhenWiFiPoor,
+        enableFloatingWindow,
+        youthModeEnabled,
+        displayTheme: getCurrentDisplayTheme(),
+        isLoggedIn,
+        handlers: {
+          clearCache,
+          setPushNotification,
+          setBenefitNotification,
+          setFollowSystemTheme: (value) => {
+            console.log('[SettingsPage] 馃攧 鐢ㄦ埛鍒囨崲璺熼殢绯荤粺涓婚:', value);
+            setFollowSystemTheme(value);
+          },
+          toggleColorScheme: () => {
+            console.log('[SettingsPage] 馃寵 鐢ㄦ埛鐐瑰嚮涓婚妯″紡鍒囨崲鎸夐挳');
             toggleColorScheme();
           },
-        },
-        {
-          id: 'followSystemTheme',
-          title: '跟随系统主题',
-          type: 'switch',
-          value: followSystemTheme,
-          onValueChange: (value) => {
-            console.log('[SettingsPage] 🔄 用户切换跟随系统主题:', value);
-            setFollowSystemTheme(value as boolean);
-          },
-        },
-        {
-          id: 'nightModeSwitch',
-          title: '定时切换日夜间模式',
-          type: 'arrow',
-          value: autoSwitchNightMode ? '已开启' : '已关闭',
-          onPress: () => {
-            console.log('[SettingsPage] ⏰ 用户点击定时切换日夜间模式，导航到TimedSwitchPage');
+          navigateToTimedSwitch: () => {
+            console.log('[SettingsPage] 鈴?鐢ㄦ埛鐐瑰嚮瀹氭椂鍒囨崲鏃ュ闂存ā寮忥紝瀵艰埅鍒癟imedSwitchPage');
             if (NavigationBridge?.navigateToTimedSwitch) {
               NavigationBridge.navigateToTimedSwitch();
             } else {
               console.log('NavigationBridge.navigateToTimedSwitch not available');
             }
           },
-          disabled: followSystemTheme, // 跟随系统时禁用定时切换
+          setEnableFloatingWindow,
+          setUseMobileDataWhenWiFiPoor,
+          navigateToPrivacyPolicy,
+          setYouthMode,
+          navigateToCustomerService,
+          navigateToAbout,
+          navigateToFontSettings,
+          showLogoutModal: handleLogout,
         },
-      ],
-    },
-    {
-      id: 'playback',
-      title: '播放设置',
-      items: [
-        {
-          id: 'floatingWindow',
-          title: '退出应用后开启小窗播放',
-          type: 'switch',
-          value: enableFloatingWindow,
-          onValueChange: (value) => setEnableFloatingWindow(value as boolean),
-        },
-      ],
-    },
-    {
-      id: 'network',
-      title: '网络设置',
-      items: [
-        {
-          id: 'mobileData',
-          title: 'WiFi较差时使用移动网络优化体验',
-          type: 'switch',
-          value: useMobileDataWhenWiFiPoor,
-          onValueChange: (value) => setUseMobileDataWhenWiFiPoor(value as boolean),
-        },
-      ],
-    },
-    {
-      id: 'privacy',
-      title: '隐私设置',
-      items: [
-        {
-          id: 'privacyPolicy',
-          title: '第三方信息共享清单',
-          type: 'arrow',
-          onPress: navigateToPrivacyPolicy,
-        },
-      ],
-    },
-    {
-      id: 'youth',
-      title: '青少年模式',
-      items: [
-        {
-          id: 'youthMode',
-          title: '青少年模式',
-          type: 'switch',
-          value: youthModeEnabled,
-          onValueChange: (value) => setYouthMode(value as boolean),
-        },
-      ],
-    },
-    {
-      id: 'support',
-      title: '帮助与支持',
-      items: [
-        {
-          id: 'customerService',
-          title: '客服',
-          type: 'arrow',
-          onPress: navigateToCustomerService,
-        },
-        {
-          id: 'about',
-          title: '关于备份',
-          type: 'arrow',
-          onPress: navigateToAbout,
-        },
-      ],
-    },
-  ];
+      }),
+    [
+      autoSwitchNightMode,
+      benefitNotificationEnabled,
+      cacheSize,
+      clearCache,
+      enableFloatingWindow,
+      followSystemTheme,
+      getCurrentDisplayTheme,
+      isLoggedIn,
+      navigateToAbout,
+      navigateToCustomerService,
+      navigateToFontSettings,
+      navigateToPrivacyPolicy,
+      pushNotificationEnabled,
+      setBenefitNotification,
+      setEnableFloatingWindow,
+      setFollowSystemTheme,
+      setPushNotification,
+      setUseMobileDataWhenWiFiPoor,
+      setYouthMode,
+      toggleColorScheme,
+      useMobileDataWhenWiFiPoor,
+      youthModeEnabled,
+    ],
+  );
 
-    // 如果用户已登录，添加退出登录选项
-  if (isLoggedIn) {
-    sections.push({
-      id: 'account',
-      title: '账户管理',
-      items: [
-        {
-          id: 'logout',
-          title: '退出登录',
-          type: 'arrow',
-          onPress: handleLogout,
-        },
-      ],
-    });
-  }
-
-  return sections;
-};
-
-  /**
-   * 渲染顶部导航栏
-   */
   const renderTopBar = () => (
     <View style={styles.topBar}>
-      {/* 返回按钮 */}
       <TouchableOpacity
         style={styles.backButton}
         onPress={handleBackPress}
         activeOpacity={0.7}
       >
-        <Text style={styles.backArrow}>‹</Text>
+        <Text style={styles.backArrow}>{'<'}</Text>
       </TouchableOpacity>
 
-      {/* 设置标题 */}
       <View style={styles.titleContainer}>
         <Text style={styles.topBarTitle}>设置</Text>
       </View>
 
-      {/* 右侧占位，保持标题居中 */}
       <View style={styles.rightPlaceholder} />
     </View>
   );
 
-  /**
-   * 渲染设置分组
-   */
   const renderSection = (section: SettingsSection) => (
     <View key={section.id}>
       {section.title && (
@@ -345,14 +196,10 @@ const SettingsPage: React.FC = () => {
     </View>
   );
 
-  const settingsSections = createSettingsSections();
-
   return (
     <SafeAreaView style={styles.container}>
-      {/* 顶部导航栏 */}
       {renderTopBar()}
 
-      {/* 设置内容 */}
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -361,7 +208,6 @@ const SettingsPage: React.FC = () => {
         {settingsSections.map(renderSection)}
       </ScrollView>
 
-      {/* 退出登录确认弹窗 */}
       {showLogoutModal && (
         <Modal
           transparent={true}
@@ -373,7 +219,7 @@ const SettingsPage: React.FC = () => {
             <View style={styles.logoutModalContainer}>
               <Text style={styles.logoutModalTitle}>确认退出登录</Text>
               <Text style={styles.logoutModalDescription}>
-                退出登录后，您需要重新登录才能使用相关功能
+                退出登录后，您需要重新登录才能继续使用相关功能。
               </Text>
               <View style={styles.logoutModalButtonContainer}>
                 <TouchableOpacity

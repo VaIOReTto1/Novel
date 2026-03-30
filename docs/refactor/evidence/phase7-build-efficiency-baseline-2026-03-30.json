@@ -1,0 +1,12 @@
+﻿[
+    {
+        "task":  "app:testDebugUnitTest",
+        "cleanSeconds":  321,
+        "incrementalSeconds":  48.03
+    },
+    {
+        "task":  "app:assembleRelease",
+        "cleanSeconds":  614.65,
+        "incrementalSeconds":  53.66
+    }
+]

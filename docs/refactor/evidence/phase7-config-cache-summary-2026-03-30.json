@@ -1,0 +1,14 @@
+﻿{
+    "generatedAt":  "2026-03-30",
+    "run1":  {
+                 "stored":  true,
+                 "reused":  false,
+                 "problem":  true,
+                 "problemSummary":  "Build file \u0027..\\node_modules\\react-native-reanimated\\android\\build.gradle\u0027: line 80: external process started \u0027node --print require.resolve(\u0027react-native/package.json\u0027)\u0027"
+             },
+    "run2":  {
+                 "stored":  false,
+                 "reused":  true,
+                 "problem":  true
+             }
+}

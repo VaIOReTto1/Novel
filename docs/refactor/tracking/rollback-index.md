@@ -11,12 +11,14 @@
 | `RB-P13-WAVE5-20260331-01` | `aaf9069` | Phase 13 第五波 Writer 域收口 | `git revert --no-edit aaf9069` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts` |
 | `RB-P13-WAVE5-20260331-02` | `24d49b9` | Phase 13 第五波 Writer 页面接线深化 | `git revert --no-edit 24d49b9` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
 | `RB-P13-WAVE6-20260331-01` | `fbfc7d9` | Phase 13 第六波 Community 与 heavy pages 收口 | `git revert --no-edit fbfc7d9` | `npm test -- --runInBand __tests__/domains/communityPageModel.test.ts __tests__/community/communityHandlers.test.ts __tests__/domains/recommendBookPageModel.test.ts __tests__/domains/memberCenterPageModel.test.ts __tests__/domains/becomeWriterPageModel.test.ts` |
+| `RB-P13-AUTH-20260331-05` | `deae664` | Phase 13 第六波 heavy pages 进展补记 | `git revert --no-edit deae664` | `npm run harness:check` |
 | `RB-P13-AUTH-20260331-01` | `4dd9777` | Phase 13 状态切换、validation board 与 wave 1 记录同步 | `git revert --no-edit 4dd9777` | `npm run harness:check` |
 | `RB-P13-AUTH-20260331-02` | `deb061e` | Phase 13 中段页面域收口进展补记 | `git revert --no-edit deb061e` | `npm run harness:check` |
 | `RB-P13-AUTH-20260331-04` | `32f17f3` | Phase 13 第五波 Writer 页面接线进展补记 | `git revert --no-edit 32f17f3` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-01` | `0f4aaef` | Phase 13 中段收口后的 harness 导航同步 | `git revert --no-edit 0f4aaef` | `npm run harness:check` |
 | `RB-P13-AUTH-20260331-03` | `b9af348` | Phase 13 后段 Writer 域收口进展补记 | `git revert --no-edit b9af348` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-02` | `b5b0021` | Phase 13 后段 Writer 收口后的 harness 导航同步 | `git revert --no-edit b5b0021` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-03` | `2b6b1dc` | Phase 13 第六波后的 harness 导航同步 | `git revert --no-edit 2b6b1dc` | `npm run harness:check` |
 | `RB-P12-AUTH-20260331-01` | `2b750ac` | Phase 12 closeout、Stage 6 状态切换与 harness 导航同步 | `git revert --no-edit 2b750ac` | `npm run harness:check` |
 | `RB-STAGE6-DOCS-20260331-01` | `4ca01b5` | Stage 6 控制面、Phase 12-14 宿主与 RN 治理宿主建立 | `git revert --no-edit 4ca01b5` | `npm run harness:check` |
 

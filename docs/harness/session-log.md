@@ -13,3 +13,4 @@
 | 2026-03-30 | Stage 5 closeout | `Phase 10` 与 `Phase 11` 已完成关闭，`Stage 5 = validated`，当前 repo 进入以既有 Stage 5 治理层为基线的长期维护模式 | [stage-5-closeout-summary.md](../refactor/stage-5-closeout-summary.md) |
 | 2026-03-31 | Stage 6 planning | 已建立 `Stage 6 = Phase 12-14` 的控制面、验证看板与 RN 治理宿主文档，作为 Stage 5 之后的默认下一主线 | [stage-6-phase-12-14-plan.md](../refactor/stage-6-phase-12-14-plan.md) |
 | 2026-03-31 | Phase 12 closeout | `Phase 12` 已完成 RN runtime / bridge consolidation 第一轮收口，`Stage 6` 进入 `in_progress`，默认下一线固定为 `Phase 13` | [phase-12-closeout-assessment.md](../refactor/phase-12/phase-12-closeout-assessment.md) |
+| 2026-03-31 | Phase 13 wave 1 | `Phase 13` 已进入 `in_progress`，并完成 `Profile / Settings` 第一波页面域收口，当前默认执行线固定在 page-domain boundary refactor | [profile-settings-domain-wave-2026-03-31.md](../refactor/phase-13/profile-settings-domain-wave-2026-03-31.md) |

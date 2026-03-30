@@ -12,12 +12,18 @@
 - `2026-03-31` 已建立 `Stage 6 = Phase 12-14` 的控制面
 - `2026-03-31` 已完成 `Phase 12` closeout，并将 `Stage 6` 切到 `in_progress`
 - `2026-03-31` 已启动 `Phase 13`，并完成 `Profile / Settings` 第一波域收口
+- `2026-03-31` 已继续完成 `Bookshelf / History / Watchlist / Comment` 多个页面域波次的首轮收口
 
 ## 默认下一主线
 - 当前执行阶段：`Stage 6 = in_progress`
 - 当前活动 phase：`Phase 13 = in_progress`
 - 当前已关闭阶段：`Phase 12 = validated`
-- 当前波次：`Profile + app root preload` 与 `Settings` 域
+- 当前已完成波次：
+  - `Profile + app root preload`
+  - `Settings`
+  - `Bookshelf / History / Watchlist`
+  - `Comment / ReviewDetail / WriteReview`
+- 默认下一落点：`Community / Writer / AIWriteAssistant / BookManage`
 - 后续阶段：`Phase 14 = RN contract / registry / mock-fallback / maintainability`
 
 ## 当前已确认的 RN 事实
@@ -40,8 +46,9 @@
 - [docs/refactor/phase-12/phase-12-closeout-assessment.md](../refactor/phase-12/phase-12-closeout-assessment.md)
 - [docs/refactor/phases/phase-13-rn-page-domain-refactor.md](../refactor/phases/phase-13-rn-page-domain-refactor.md)
 - [docs/refactor/phase-13/profile-settings-domain-wave-2026-03-31.md](../refactor/phase-13/profile-settings-domain-wave-2026-03-31.md)
+- [docs/refactor/phase-13/bookshelf-comment-domain-wave-2026-03-31.md](../refactor/phase-13/bookshelf-comment-domain-wave-2026-03-31.md)
 - [docs/refactor/tracking/phase-12-14-validation-board.md](../refactor/tracking/phase-12-14-validation-board.md)
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-31` by Phase 13 wave 1
+- `2026-03-31` by Phase 13 wave 4

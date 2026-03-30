@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { createWatchlistPageStyles } from './styles/WatchlistPageStyles';
 import { useNovelColors } from '../../../../utils/theme';
@@ -8,6 +8,10 @@ import { EmptyState } from './components/EmptyState';
 import { EditToolbar } from './components/EditToolbar';
 import { useWatchlistStore } from './store/watchlistStore';
 import { useEditMode } from './hooks/useEditMode';
+import {
+  bootstrapWatchlistPage,
+  createWatchlistPageHandlers,
+} from './domain/watchlistPageModel';
 
 export const WatchlistPage: React.FC = () => {
   const colors = useNovelColors();
@@ -31,39 +35,35 @@ export const WatchlistPage: React.FC = () => {
   } = useEditMode();
 
   useEffect(() => {
-    loadWatchlistItems();
+    bootstrapWatchlistPage({
+      loadWatchlistItems,
+    });
   }, [loadWatchlistItems]);
 
-  const handleItemPress = (item: any) => {
-    // TODO: 导航到播放页面
-    console.log('Play drama:', item.title);
-  };
-
-  const handleFindDramas = () => {
-    // TODO: 导航到发现页面
-    console.log('Navigate to discover page');
-  };
-
-  const handleEditPress = () => {
-    if (isEditMode) {
-      exitEditMode();
-    } else {
-      enterEditMode();
-    }
-  };
-
-  const handleSelectAll = () => {
-    selectAllItems();
-  };
-
-  const handleDelete = async () => {
-    await deleteSelectedItems();
-  };
+  const watchlistHandlers = useMemo(
+    () =>
+      createWatchlistPageHandlers({
+        isEditMode,
+        enterEditMode,
+        exitEditMode,
+        selectAllItems,
+        deleteSelectedItems,
+        toggleItemSelection,
+      }),
+    [
+      deleteSelectedItems,
+      enterEditMode,
+      exitEditMode,
+      isEditMode,
+      selectAllItems,
+      toggleItemSelection,
+    ],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       <TopBar
-        onEditPress={handleEditPress}
+        onEditPress={watchlistHandlers.handleEditPress}
         isEditMode={isEditMode}
       />
 
@@ -71,22 +71,22 @@ export const WatchlistPage: React.FC = () => {
         <EditToolbar
           selectedCount={selectedItems.size}
           totalCount={watchlistItems.length}
-          onSelectAll={handleSelectAll}
-          onDelete={handleDelete}
+          onSelectAll={watchlistHandlers.handleSelectAll}
+          onDelete={watchlistHandlers.handleDelete}
           isAllSelected={isAllSelected}
         />
       )}
 
       <View style={styles.content}>
         {watchlistItems.length === 0 ? (
-          <EmptyState onFindDramas={handleFindDramas} />
+          <EmptyState onFindDramas={watchlistHandlers.handleFindDramas} />
         ) : (
           <WatchlistGrid
             data={watchlistItems}
             isEditMode={isEditMode}
             selectedItems={selectedItems}
-            onItemPress={handleItemPress}
-            onItemSelect={(item) => toggleItemSelection(item.id)}
+            onItemPress={watchlistHandlers.handleItemPress}
+            onItemSelect={watchlistHandlers.handleItemSelect}
             loading={isLoading}
           />
         )}

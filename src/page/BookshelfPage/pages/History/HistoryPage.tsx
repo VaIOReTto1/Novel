@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo, useRef } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { createHistoryPageStyles } from './styles/HistoryPageStyles';
 import { useHistoryStore, getTabsData } from './store/historyStore';
@@ -13,12 +13,15 @@ import { useNovelColors } from '../../../../utils/theme/colors';
 import { useRefreshLogic } from './hooks/useRefreshLogic';
 import { useHistoryAnimations } from './hooks/useHistoryAnimations';
 import { PULL_THRESHOLD } from './utils/constants';
+import {
+  bootstrapBookshelfHistoryPage,
+  createHistoryPageHandlers,
+} from './domain/historyPageModel';
 
 const HistoryPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createHistoryPageStyles(colors);
 
-  // 使用Zustand store
   const {
     historyItems,
     currentTab,
@@ -42,10 +45,8 @@ const HistoryPage: React.FC = () => {
     toggleShelfStatus,
   } = useHistoryStore();
 
-  // 获取Tab数据
   const tabsData = useMemo(() => getTabsData(), []);
 
-  // 下拉刷新逻辑
   const {
     isPullingDown,
     pullDistance,
@@ -60,106 +61,82 @@ const HistoryPage: React.FC = () => {
     loadMoreHistory,
   });
 
-  // 下拉刷新动画
   const { spinStyle } = useHistoryAnimations(
     isRefreshing,
     isPullingDown,
-    pullDistance
+    pullDistance,
   );
 
-  // 初始化数据
-  useEffect(() => {
-    const initializeData = async () => {
-      try {
-        console.log('[HistoryPage] 开始初始化数据');
-        await loadHistoryItems();
-        console.log('[HistoryPage] 数据初始化完成');
-      } catch (err) {
-        console.error('[HistoryPage] 初始化失败:', err);
-      }
-    };
+  const skipCurrentTabReloadRef = useRef(true);
 
-    initializeData();
+  useEffect(() => {
+    bootstrapBookshelfHistoryPage({
+      loadHistoryItems,
+    });
   }, [loadHistoryItems]);
 
-  // Tab切换
-  const handleTabPress = useCallback((tabId: string) => {
-    console.log('Tab changed to:', tabId);
-    setCurrentTab(tabId as 'all' | 'book' | 'listening' | 'drama');
-    clearSelection();
-    // 重新加载数据
-    loadHistoryItems();
-  }, [setCurrentTab, clearSelection, loadHistoryItems]);
+  const historyHandlers = useMemo(
+    () =>
+      createHistoryPageHandlers({
+        setCurrentTab,
+        clearSelection,
+        setEditing,
+        removeSelectedItems,
+        toggleShelfStatus,
+      }),
+    [clearSelection, removeSelectedItems, setCurrentTab, setEditing, toggleShelfStatus],
+  );
 
-  // 视图类型切换 - 优化性能，避免频繁重新渲染
+  const handleTabPress = useCallback((tabId: string) => {
+    historyHandlers.handleTabPress(tabId as 'all' | 'book' | 'listening' | 'drama');
+  }, [historyHandlers]);
+
   const handleViewTypeChange = useCallback((type: 'grid' | 'list') => {
     console.log('View type changed to:', type);
-    // 使用requestAnimationFrame延迟状态更新，提升切换流畅度
     requestAnimationFrame(() => {
       setViewType(type);
     });
   }, [setViewType]);
 
-  // 排序类型切换
-  // 编辑模式切换
   const handleEditToggle = useCallback(() => {
-    const newEditingState = !isEditing;
-    console.log('Edit mode toggled to:', newEditingState);
-    setEditing(newEditingState);
-    if (newEditingState === false) {
-      clearSelection();
-    }
-  }, [isEditing, setEditing, clearSelection]);
+    historyHandlers.handleEditToggle(isEditing);
+  }, [historyHandlers, isEditing]);
 
-  // 历史项点击
   const handleItemPress = useCallback((item: HistoryItem) => {
     if (isEditing) {
-      // 编辑模式下切换选择状态
       toggleItemSelection(item.id);
-    } else {
-      // 正常模式下跳转到阅读页面
-      console.log('History item pressed:', item.title);
-      // 这里可以导航到阅读器或详情页
-      // 根据item.type判断跳转到不同的页面
+      return;
     }
+    console.log('History item pressed:', item.title);
   }, [isEditing, toggleItemSelection]);
 
-  // 历史项选择（编辑模式）
   const handleItemSelect = useCallback((itemId: string) => {
     toggleItemSelection(itemId);
   }, [toggleItemSelection]);
 
-  // 全选
   const handleSelectAll = useCallback(() => {
     console.log('Select all items');
     selectAllItems();
   }, [selectAllItems]);
 
-  // 删除选中的项目
   const handleRemoveSelected = useCallback(() => {
     console.log('Remove selected items:', selectedItems.length);
-    removeSelectedItems();
-    setEditing(false);
-  }, [removeSelectedItems, setEditing, selectedItems.length]);
+    historyHandlers.handleRemoveSelected();
+  }, [historyHandlers, selectedItems.length]);
 
-  // 加入书架
   const handleAddToShelf = useCallback(async (item: HistoryItem) => {
     console.log('Add to shelf:', item.title);
-    try {
-      await toggleShelfStatus(item);
-    } catch (err) {
-      console.error('Failed to toggle shelf status:', err);
-    }
-  }, [toggleShelfStatus]);
+    await historyHandlers.handleAddToShelf(item);
+  }, [historyHandlers]);
 
-  // 注意：handleRefresh和handleLoadMore现在由useRefreshLogic hook提供
-
-  // 当tab改变时重新加载数据
   useEffect(() => {
+    if (skipCurrentTabReloadRef.current) {
+      skipCurrentTabReloadRef.current = false;
+      return;
+    }
     loadHistoryItems();
   }, [currentTab, loadHistoryItems]);
 
-  // 错误状态
   if (error) {
     return (
       <View style={styles.container}>
@@ -238,5 +215,3 @@ const HistoryPage: React.FC = () => {
 };
 
 export default HistoryPage;
-
-console.log('[HistoryPage] Component loaded');

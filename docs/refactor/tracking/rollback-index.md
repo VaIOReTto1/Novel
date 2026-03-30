@@ -8,7 +8,7 @@
 | `RB-P7-BUILD-20260330-01` | `eca2a36` | Phase 7 build baseline 与 configuration cache canary | `git revert --no-edit eca2a36` | `android/gradlew.bat app:testDebugUnitTest --configuration-cache --configuration-cache-problems=warn --no-daemon --console=plain` |
 | `RB-P7-CLOSEOUT-20260330-01` | `77c4967` | Phase 7 closeout 与 Phase 8 入口切换 | `git revert --no-edit 77c4967` | `npm run harness:check` |
 | `RB-P8-GOVERNANCE-20260330-01` | `241989b` | Phase 8 治理工件与 Stage 4 closeout | `git revert --no-edit 241989b` | `npm run harness:check` |
-| `RB-STAGE5-DOCS-20260330-01` | `提交后生成` | Stage 5 控制面、Phase 9-11 宿主与公共治理宿主建立 | `git revert --no-edit <本提交 SHA>` | `npm run harness:check` |
+| `RB-STAGE5-DOCS-20260330-01` | `3ed6c6f` | Stage 5 控制面、Phase 9-11 宿主与公共治理宿主建立 | `git revert --no-edit 3ed6c6f` | `npm run harness:check` |
 
 ## 当前 reopen 原子提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |

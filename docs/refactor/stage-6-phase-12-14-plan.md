@@ -76,6 +76,8 @@
   - `Comment / ReviewDetail / WriteReview`
 - 当前已继续推进：
   - `Writer / AIWriteAssistant / BookManage`
+- 当前已继续推进：
+  - `Community / RecommendBook / MemberCenter / BecomeWriter`
 
 ### Phase 14
 - 只处理 RN 长期治理层：

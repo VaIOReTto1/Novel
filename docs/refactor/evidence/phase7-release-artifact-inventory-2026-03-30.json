@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-03-30",
+  "outputs": [
+    {
+      "path": "android/app/build/outputs/apk/release/app-release.apk",
+      "size": 101952165
+    },
+    {
+      "path": "android/app/build/outputs/bundle/release/app-release.aab",
+      "size": 74345795
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/mapping.txt",
+      "size": 37717144
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/usage.txt",
+      "size": 5256771
+    },
+    {
+      "path": "android/app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip",
+      "size": 1361171
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/seeds.txt",
+      "size": 1082564
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/resources.txt",
+      "size": 453507
+    },
+    {
+      "path": "android/app/build/outputs/logs/manifest-merger-release-report.txt",
+      "size": 133508
+    },
+    {
+      "path": "android/app/build/outputs/sdk-dependencies/release/sdkDependencies.txt",
+      "size": 100027
+    },
+    {
+      "path": "android/app/build/outputs/mapping/release/configuration.txt",
+      "size": 77203
+    },
+    {
+      "path": "android/app/build/outputs/apk/release/baselineProfiles/0/app-release.dm",
+      "size": 11680
+    },
+    {
+      "path": "android/app/build/outputs/apk/release/baselineProfiles/1/app-release.dm",
+      "size": 11643
+    },
+    {
+      "path": "android/app/build/outputs/apk/release/output-metadata.json",
+      "size": 699
+    }
+  ],
+  "generatedReleaseAssets": [
+    {
+      "path": "android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle",
+      "size": 2446884
+    }
+  ],
+  "mergedReleaseAssets": [
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/index.android.bundle",
+      "size": 2446884
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/MaterialIcons.ttf",
+      "size": 356840
+    },
+    {
+      "path": "android/app/build/intermediates/assets/release/mergeReleaseAssets/fonts/Feather.ttf",
+      "size": 56228
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-03-30",
+  "before": {
+    "apk": 103731226,
+    "aab": 76126542,
+    "jsBundle": 2446884,
+    "mergedFontBytes": 3890364,
+    "mergedFontCount": 19
+  },
+  "after": {
+    "apk": 101952165,
+    "aab": 74345795,
+    "jsBundle": 2446884,
+    "mergedFontBytes": 413068,
+    "mergedFontCount": 2
+  },
+  "diff": {
+    "apk": -1779061,
+    "aab": -1780747,
+    "jsBundle": 0,
+    "mergedFontBytes": -3477296,
+    "mergedFontCount": -17
+  }
+}

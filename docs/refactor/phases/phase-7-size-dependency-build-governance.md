@@ -107,9 +107,12 @@
 ## 当前已落盘工件
 - `docs/refactor/phase-7/size-baseline-and-artifact-entrypoints-2026-03-28.md`
 - `docs/refactor/phase-7/dependency-inventory-and-governance-2026-03-28.md`
+- `docs/refactor/phase-7/first-size-shrink-vector-icon-font-prune-2026-03-30.md`
 - `docs/refactor/evidence/phase7-release-artifact-inventory-2026-03-28.json`
+- `docs/refactor/evidence/phase7-release-artifact-inventory-2026-03-30.json`
 - `docs/refactor/evidence/phase7-npm-top-level-2026-03-28.json`
 - `docs/refactor/evidence/phase7-app-release-runtime-classpath-2026-03-28.txt`
+- `docs/refactor/evidence/phase7-size-shrink-diff-2026-03-30.json`
 
 ## 当前状态
 - `in_progress（Stage 4 当前默认主线）`

@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-30 | Phase 7 | size-shrink | 第一轮低风险 shrink 先从 `react-native-vector-icons` 未使用字体裁剪入手，只保留 `MaterialIcons.ttf` 与 `Feather.ttf` | 代码扫描显示当前仓库只直接使用这两个 family，而 release merged fonts 基线却有 `19` 个文件、`3.71 MiB` | 在不改业务语义的前提下，`APK` 与 `AAB` 都获得约 `1.70 MiB` 收益，并把字体资产压到 `2` 个文件 | 下一步继续推进 `V7-04` 的 build efficiency baseline，并考虑是否补自动 guard 检查新增 icon family |
 | 2026-03-28 | Phase 7 | baseline | 先固定 `V7-01 / V7-02` 的 size 与 dependency inventory 基线，再进入 `V7-03 / V7-04` 的 shrink 与 build efficiency | 如果先做 shrink 或构建优化，后续很难区分“优化收益”和“基线缺失” | `Phase 7` 的第一批执行工件以 release 产物、JS bundle、icon fonts、npm top-level inventory 与 `releaseRuntimeClasspath` 样本为准 | 下一步进入低风险 shrink 与 build baseline 采样 |
 | 2026-03-28 | Stage 4 cutover | control-plane | 正式将项目控制面切换为 `Stage 4 = in_progress`，并固定 `Phase 7 = in_progress`、`Phase 8 = planned` | `Stage 3` 已在 `2026-03-26` closeout 收口，且仓库已具备 size / dependency / build / observability 治理的宿主条件 | `README`、路线图、阶段宿主文档、validation board 与 harness 导航统一切换到 Stage 4 口径 | 继续以 `Phase 7` 为当前默认主线推进，待其收口后再切入 `Phase 8` |
 | 2026-03-28 | CI gate recovery | quality | `android-detekt-observe` 改用 committed `android/app/detekt-baseline.xml` 冻结历史 finding，`android-smoke` 保持 observe | `app:detekt` 当前仍有 `1481` weighted issues，emulator smoke 路径仍需继续观察 | detekt job 可以真实通过且不放松规则，smoke job 继续保留 artifact 与 flake 可观测性 | 后续按月收缩 baseline，并在 smoke emulator 连续稳定后再评估升级为 blocking |

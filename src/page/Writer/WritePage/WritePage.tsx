@@ -3,6 +3,7 @@ import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 
 const RN: any = require('react-native');
 const { TextInput, Modal, ActivityIndicator, Keyboard } = RN;
+
 import { createWritePageStyles } from './styles/WritePageStyles';
 import { useNovelColors } from '../../../utils/theme/colors';
 import { useWriteStore } from './store/writeStore';
@@ -14,6 +15,11 @@ import { SelectionToolbar } from './components/SelectionToolbar';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import { subscribeWritePageSelectionMenuAction } from '../../../utils/runtime/eventHub';
+import {
+  appendToSelectedText,
+  createWritePageHandlers,
+  replaceSelectedText,
+} from './domain/writePageModel';
 
 const WritePage: React.FC = () => {
   const colors = useNovelColors();
@@ -29,10 +35,7 @@ const WritePage: React.FC = () => {
     });
   }, [goBack]);
 
-  // 简易选择监听：以最后一次输入焦点为锚点，真实实现需自定义可编辑组件
   const [anchorY] = React.useState(120);
-
-  // 从全局写作 store 读选区与可见性
   const isToolbarVisible = useWriteStore(s => s.isToolbarVisible);
   const storeSelectedText = useWriteStore(s => s.selectedText);
   const updateSelection = useWriteStore(s => s.updateSelection);
@@ -42,67 +45,71 @@ const WritePage: React.FC = () => {
 
   const contentRef = React.useRef<any>(null);
   const [paramInput, setParamInput] = React.useState('');
+  const handlers = React.useMemo(
+    () =>
+      createWritePageHandlers({
+        updateSelection,
+        dismissKeyboard: () => {
+          try {
+            Keyboard?.dismiss?.();
+          } catch {}
+        },
+        onPolish: () => writeStore.polishSelected(),
+        onShowParamModal: (type, hint) => writeStore.showParamModal?.(type, hint),
+      }),
+    [updateSelection, writeStore],
+  );
 
-  // 无键盘聚焦：让输入框获得焦点以显示选择手柄，同时尽量保持键盘隐藏
   useEffect(() => {
-    // 先聚焦，再立刻尝试关闭键盘（Android + iOS 兜底）
-    try { contentRef.current?.focus?.(); } catch (_e) { }
-    setTimeout(() => { try { Keyboard?.dismiss?.(); } catch (_e) { } }, 0);
+    try {
+      contentRef.current?.focus?.();
+    } catch {}
+    setTimeout(() => {
+      try {
+        Keyboard?.dismiss?.();
+      } catch {}
+    }, 0);
   }, [focusRequestNonce]);
 
   const onSelectionChange = React.useCallback((e: any) => {
-    const sel = e?.nativeEvent?.selection;
-    if (!sel) { return; }
-    const start = Math.min(sel.start, sel.end);
-    const end = Math.max(sel.start, sel.end);
+    const selection = e?.nativeEvent?.selection;
+    if (!selection) {
+      return;
+    }
+    const start = Math.min(selection.start, selection.end);
+    const end = Math.max(selection.start, selection.end);
     const text = content?.slice(start, end) ?? '';
     if (end > start) {
       updateSelection(text, start, end);
     }
-    // 零选区不立即关闭，由工具条的“关闭/操作完成”主动关闭
   }, [content, updateSelection]);
 
-  // Attach native selection menu on Android for this TextInput only
   useEffect(() => {
-    if (RN.Platform?.OS !== 'android') { return; }
+    if (RN.Platform?.OS !== 'android') {
+      return;
+    }
     const node = RN.findNodeHandle?.(contentRef.current);
     if (node != null) {
       NavigationBridge.attachSelectionMenu?.(node as number);
     }
-    const cleanupSelectionSubscription = subscribeWritePageSelectionMenuAction((evt: any) => {
-      const action = evt?.action as 'polish' | 'expand' | 'condense' | 'continue' | undefined;
-      const selected = evt?.selectedText as string | undefined;
-      if (!action || !selected) { return; }
-      // 确保 store 中有选区信息
-      updateSelection(selected, evt?.start ?? 0, evt?.end ?? 0);
-      try { Keyboard?.dismiss?.(); } catch (_e) {}
+    const cleanupSelectionSubscription = subscribeWritePageSelectionMenuAction((event: any) => {
       requestAnimationFrame(() => {
-        if (action === 'polish') { writeStore.polishSelected(); return; }
-        if (action === 'expand') { writeStore.showParamModal?.('expand', '请输入扩写比例（百分比），如 150 表示约 150%'); return; }
-        if (action === 'condense') { writeStore.showParamModal?.('condense', '请输入缩写比例（分母），如 2 表示约 1/2'); return; }
-        if (action === 'continue') { writeStore.showParamModal?.('continue', '请输入续写目标字数，如 200 表示约 200 字'); return; }
+        handlers.handleSelectionMenuAction(event);
       });
     });
     return cleanupSelectionSubscription;
-  }, [contentRef, updateSelection, writeStore]);
+  }, [handlers]);
 
   const replaceSelected = (newText: string) => {
-    // 交给 store：直接 setContent；此函数保留以兼容组件 props
-    const idx = content.indexOf(storeSelectedText);
-    if (idx < 0) { return; }
-    setContent(content.slice(0, idx) + newText + content.slice(idx + storeSelectedText.length));
+    setContent(replaceSelectedText(content, storeSelectedText, newText));
   };
 
   const appendToSelected = (newText: string) => {
-    const idx = content.indexOf(storeSelectedText);
-    if (idx < 0) { return; }
-    setContent(content.slice(0, idx + storeSelectedText.length) + newText + content.slice(idx + storeSelectedText.length));
+    setContent(appendToSelectedText(content, storeSelectedText, newText));
   };
 
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <TopBar onBack={goBack} onUndo={undo} onRedo={redo} onAI={goAI} onPublish={publish} />
 
       <ScrollView
@@ -130,18 +137,14 @@ const WritePage: React.FC = () => {
           onSelectionChange={onSelectionChange}
           selectionColor={colors.novelMain}
           cursorColor={colors.novelMain}
-          // 为了保留系统长按手柄与粘贴菜单，暂不隐藏
           multiline
           textAlignVertical="top"
           ref={contentRef}
           showSoftInputOnFocus={!suppressKeyboard}
-          // 当收到 focus 请求时，让输入框获得焦点，但不强制弹出键盘（iOS/Android 表现略异，避免调用 focus() 时显式唤起键盘）
-          // 这里通过 key 变更触发内部更新后保持 selection，不主动调用 focus()
           key={`content-${focusRequestNonce}`}
         />
       </ScrollView>
 
-      {/* 错误弹窗 */}
       <Modal visible={!!writeStore.errorModal?.visible} transparent animationType="fade" onRequestClose={() => writeStore.hideError()}>
         <View style={styles.overlayMask}>
           <View style={styles.modalContainer}>
@@ -170,7 +173,6 @@ const WritePage: React.FC = () => {
         onRequestClose={() => releaseSelectionHold()}
       />
 
-      {/* 参数输入（用于系统菜单触发的 AI 操作） */}
       <Modal
         visible={!!writeStore.modal?.visible}
         transparent
@@ -193,15 +195,25 @@ const WritePage: React.FC = () => {
                 <Text style={styles.modalCancel}>取消</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                const p = Number(paramInput);
-                if (!p || Number.isNaN(p)) { return; }
+                const param = Number(paramInput);
+                if (!param || Number.isNaN(param)) {
+                  return;
+                }
                 const type = writeStore.modal?.type;
                 writeStore.hideParamModal();
                 setParamInput('');
-                if (!type) { return; }
-                if (type === 'expand') { writeStore.expandSelected(p); }
-                if (type === 'condense') { writeStore.condenseSelected(p); }
-                if (type === 'continue') { writeStore.continueSelected(p); }
+                if (!type) {
+                  return;
+                }
+                if (type === 'expand') {
+                  writeStore.expandSelected(param);
+                }
+                if (type === 'condense') {
+                  writeStore.condenseSelected(param);
+                }
+                if (type === 'continue') {
+                  writeStore.continueSelected(param);
+                }
               }}>
                 <Text style={styles.modalOk}>确定</Text>
               </TouchableOpacity>
@@ -220,4 +232,3 @@ const WritePage: React.FC = () => {
 };
 
 export default WritePage;
-

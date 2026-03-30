@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
+
 const RN: any = require('react-native');
 const {FlatList} = RN;
+
 import {useNovelColors} from '../../../utils/theme/colors';
 import {wp} from '../../../utils/theme/dimensions';
 import {NavigationBridge} from '../../../utils/bridge/NavigationBridge';

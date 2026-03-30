@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 
 const RN: any = require('react-native');
+
 import { useNovelColors } from '../../../utils/theme/colors';
 import { createBookManageStyles } from './styles/bookManageStyles';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';

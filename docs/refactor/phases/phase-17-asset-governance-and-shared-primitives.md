@@ -24,6 +24,7 @@
 - [Stage7Icon.tsx](../../../src/design-system/icons/Stage7Icon.tsx)
 - [PlaceholderImage.tsx](../../../src/design-system/media/PlaceholderImage.tsx)
 - [PexelsCreditOverlay.tsx](../../../src/design-system/media/PexelsCreditOverlay.tsx)
+- [Stage7Showcase.tsx](../../../src/design-system/showcase/Stage7Showcase.tsx)
 - [media-manifest.json](../../../design-system/assets/media-manifest.json)
 - [illustration-manifest.json](../../../design-system/assets/illustration-manifest.json)
 - [copyright-ledger.json](../../../design-system/assets/copyright-ledger.json)

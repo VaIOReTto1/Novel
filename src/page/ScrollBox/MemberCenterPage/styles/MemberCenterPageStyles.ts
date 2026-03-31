@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { resolveStage7Theme } from '../../../../design-system/tokens/resolveStage7Theme';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
@@ -52,12 +53,13 @@ export const getVIPThemeColors = (cardType: string) => {
 };
 
 export const createMemberCenterPageStyles = (colors: NovelColors, currentCardType: string = 'member') => {
+  const stage7 = resolveStage7Theme(colors.novelBackground);
   const themeColors = getVIPThemeColors(currentCardType);
 
   return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: stage7.color.bg.canvas,
   },
 
   // 顶部Bar样式 - 透明背景
@@ -67,7 +69,7 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     justifyContent: 'space-between',
     paddingHorizontal: wp(20),
     paddingVertical: wp(16),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: stage7.color.bg.surface,
     minHeight: wp(56),
     position: 'absolute',
     top: 0,
@@ -116,7 +118,7 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     position: 'absolute',
     top: wp(50),
     right: wp(20),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: stage7.color.bg.surface,
     borderRadius: sp(8),
     paddingVertical: wp(8),
     minWidth: wp(120),
@@ -355,11 +357,11 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     textAlign: 'left',
   },
   comparisonTable: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: stage7.color.bg.surface,
     borderRadius: sp(12),
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: colors.novelDivider,
+    borderColor: stage7.color.border.subtle,
   },
   comparisonHeader: {
     flexDirection: 'row',
@@ -540,9 +542,9 @@ export const createMemberCenterPageStyles = (colors: NovelColors, currentCardTyp
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: stage7.color.bg.surface,
     borderTopWidth: 1,
-    borderTopColor: colors.novelDivider,
+    borderTopColor: stage7.color.border.subtle,
     paddingHorizontal: wp(16),
     paddingTop: wp(16),
     paddingBottom: wp(16),

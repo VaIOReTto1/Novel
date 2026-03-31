@@ -18,6 +18,13 @@
 - `figma-frame-map`
 - `stage-7-surface-audit` 校验脚本
 
+## 当前产物入口
+- [surface-inventory.json](../phase-15/surface-inventory.json)
+- [component-catalog.json](../phase-15/component-catalog.json)
+- [asset-inventory.json](../phase-15/asset-inventory.json)
+- [figma-frame-map.json](../phase-15/figma-frame-map.json)
+- [governance-drift-report.md](../phase-15/governance-drift-report.md)
+
 ## 关键规则
 - `App -> ProfilePage` 必须作为 RN Root 单独盘点，不得只看 `componentRegistry.ts`。
 - `BookshelfPageComponent` 内部的 `History / Bookshelf / Watchlist / Community` 必须拆开盘点。

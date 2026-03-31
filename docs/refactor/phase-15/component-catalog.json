@@ -1,0 +1,1161 @@
+{
+  "summary": {
+    "rn_component_count": 143,
+    "category_counts": {
+      "navigation": 21,
+      "item": 11,
+      "action": 9,
+      "empty": 7,
+      "list": 12,
+      "layout": 74,
+      "form": 5,
+      "loading": 1,
+      "sheet": 1,
+      "dialog": 2
+    }
+  },
+  "entries": [
+    {
+      "path": "src/page/BookshelfPage/components/MainTabBar.tsx",
+      "name": "MainTabBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx",
+      "name": "BookItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/EditToolbar.tsx",
+      "name": "EditToolbar",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx",
+      "name": "EmptyState",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/GridView.tsx",
+      "name": "GridView",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/ListView.tsx",
+      "name": "ListView",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx",
+      "name": "LoadMoreIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx",
+      "name": "RecommendationFlow",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/UnifiedScrollView.tsx",
+      "name": "UnifiedScrollView",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx",
+      "name": "ViewSwitcher",
+      "platform": "react-native",
+      "category": "form",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Bookshelf/components/WaterfallGrid.tsx",
+      "name": "WaterfallGrid",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/EmptyState.tsx",
+      "name": "EmptyState",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/FilterBar.tsx",
+      "name": "FilterBar",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx",
+      "name": "FloatingButton",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx",
+      "name": "LoadingIndicator",
+      "platform": "react-native",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/PostItem.tsx",
+      "name": "PostItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/PostList.tsx",
+      "name": "PostList",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/TabBar.tsx",
+      "name": "TabBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Community/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/BookItem.tsx",
+      "name": "BookItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/ContentArea.tsx",
+      "name": "ContentArea",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/EditToolbar.tsx",
+      "name": "EditToolbar",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/HistoryContent.tsx",
+      "name": "HistoryContent",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/HistoryItem.tsx",
+      "name": "HistoryItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/RefreshIndicator.tsx",
+      "name": "RefreshIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/TabBar.tsx",
+      "name": "TabBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/History/components/TabsArea.tsx",
+      "name": "TabsArea",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Watchlist/components/EditToolbar.tsx",
+      "name": "EditToolbar",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Watchlist/components/EmptyState.tsx",
+      "name": "EmptyState",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Watchlist/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/BookshelfPage/pages/Watchlist/components/WatchlistGrid.tsx",
+      "name": "WatchlistGrid",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/CategoryPage/components/BookGrid.tsx",
+      "name": "BookGrid",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/CategoryPage/components/Sidebar.tsx",
+      "name": "Sidebar",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/CategoryPage/components/TopTabs.tsx",
+      "name": "TopTabs",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/CommentPage/components/CategorySection.tsx",
+      "name": "CategorySection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/CommentPage/components/CommentList.tsx",
+      "name": "CommentList",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/CommentPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/comment/CommentPage/components/RatingSection.tsx",
+      "name": "RatingSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/CommentPage/components/RefreshIndicator.tsx",
+      "name": "RefreshIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/CommentPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/ReviewDetailPage/components/CommentList.tsx",
+      "name": "CommentList",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": [
+        "react-native-vector-icons"
+      ]
+    },
+    {
+      "path": "src/page/comment/ReviewDetailPage/components/RefreshIndicator.tsx",
+      "name": "RefreshIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/comment/ReviewDetailPage/components/RepliesSheet.tsx",
+      "name": "RepliesSheet",
+      "platform": "react-native",
+      "category": "sheet",
+      "asset_sources": [
+        "react-native-vector-icons"
+      ]
+    },
+    {
+      "path": "src/page/comment/ReviewDetailPage/components/ReviewContent.tsx",
+      "name": "ReviewContent",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/ReviewDetailPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "react-native-vector-icons"
+      ]
+    },
+    {
+      "path": "src/page/comment/WriteReviewPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/comment/WriteReviewPage/components/RatingInput.tsx",
+      "name": "RatingInput",
+      "platform": "react-native",
+      "category": "form",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/WriteReviewPage/components/ReviewForm.tsx",
+      "name": "ReviewForm",
+      "platform": "react-native",
+      "category": "form",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/comment/WriteReviewPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/ProfilePage/components/BookItem.tsx",
+      "name": "BookItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ProfilePage/components/BottomBox.tsx",
+      "name": "BottomBox",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ProfilePage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ProfilePage/components/LoadMoreIndicator.tsx",
+      "name": "LoadMoreIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ProfilePage/components/LoginBar.tsx",
+      "name": "LoginBar",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ProfilePage/components/RefreshIndicator.tsx",
+      "name": "RefreshIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ProfilePage/components/ScrollableArea.tsx",
+      "name": "ScrollableArea",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/ProfilePage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/ProfilePage/components/WaterfallGrid.tsx",
+      "name": "WaterfallGrid",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/AuthorExclusiveSection.tsx",
+      "name": "AuthorExclusiveSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/BottomButton.tsx",
+      "name": "BottomButton",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/CopyrightSection.tsx",
+      "name": "CopyrightSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/CreativeActivitySection.tsx",
+      "name": "CreativeActivitySection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/DataStatsSection.tsx",
+      "name": "DataStatsSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/UserSection.tsx",
+      "name": "UserSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/WelcomeModal.tsx",
+      "name": "WelcomeModal",
+      "platform": "react-native",
+      "category": "dialog",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/ScrollBox/BecomeWriterPage/components/WriterClassroomSection.tsx",
+      "name": "WriterClassroomSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/ConsultSection.tsx",
+      "name": "ConsultSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/ContactSection.tsx",
+      "name": "ContactSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/FrequentQuestions.tsx",
+      "name": "FrequentQuestions",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/QuestionDetail.tsx",
+      "name": "QuestionDetail",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/QuestionList.tsx",
+      "name": "QuestionList",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/FeedbackHelpPage/components/UserSection.tsx",
+      "name": "UserSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/ContentArea.tsx",
+      "name": "ContentArea",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/HistoryItem.tsx",
+      "name": "HistoryItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/LoadMoreIndicator.tsx",
+      "name": "LoadMoreIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/RefreshIndicator.tsx",
+      "name": "RefreshIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/TabsArea.tsx",
+      "name": "TabsArea",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/HistoryPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/BenefitComparison.tsx",
+      "name": "BenefitComparison",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/BottomPurchase.tsx",
+      "name": "BottomPurchase",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/MemberBenefits.tsx",
+      "name": "MemberBenefits",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/PricePackages.tsx",
+      "name": "PricePackages",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/TaskCards.tsx",
+      "name": "TaskCards",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/VIPCardCarousel.tsx",
+      "name": "VIPCardCarousel",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/ScrollBox/MemberCenterPage/components/VIPRecommendation.tsx",
+      "name": "VIPRecommendation",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/EmptyState.tsx",
+      "name": "EmptyState",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/LoadMoreIndicator.tsx",
+      "name": "LoadMoreIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/MainMessagesSection.tsx",
+      "name": "MainMessagesSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/MessageItem.tsx",
+      "name": "MessageItem",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/RefreshIndicator.tsx",
+      "name": "RefreshIndicator",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/TabsArea.tsx",
+      "name": "TabsArea",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MessagePage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MyReservationPage/components/EmptyState.tsx",
+      "name": "EmptyState",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MyReservationPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MyReservationPage/components/ReservationGrid.tsx",
+      "name": "ReservationGrid",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MyReservationPage/components/SubTabsSection.tsx",
+      "name": "SubTabsSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/MyReservationPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/RecommendBookPage/components/CreativeServiceSection.tsx",
+      "name": "CreativeServiceSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/RecommendBookPage/components/CreativeTaskSection.tsx",
+      "name": "CreativeTaskSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/RecommendBookPage/components/DataStatsSection.tsx",
+      "name": "DataStatsSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/RecommendBookPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/RecommendBookPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/RecommendBookPage/components/UserSection.tsx",
+      "name": "UserSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/ViewedUsersPage/components/EmptyState.tsx",
+      "name": "EmptyState",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/ViewedUsersPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/ViewedUsersPage/components/TabsSection.tsx",
+      "name": "TabsSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/ViewedUsersPage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/ScrollBox/ViewedUsersPage/components/UsersList.tsx",
+      "name": "UsersList",
+      "platform": "react-native",
+      "category": "list",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/SettingsPage/settingspage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/SettingsPage/settingspage/components/SettingRow.tsx",
+      "name": "SettingRow",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/SettingsPage/settingspage/components/ThemeSwitcher.tsx",
+      "name": "ThemeSwitcher",
+      "platform": "react-native",
+      "category": "form",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/SettingsPage/TimeSwitchPage/components/index.ts",
+      "name": "index",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "src/page/SettingsPage/TimeSwitchPage/components/TimePickerModal.tsx",
+      "name": "TimePickerModal",
+      "platform": "react-native",
+      "category": "dialog",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/ActionBar.tsx",
+      "name": "ActionBar",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/ChatRow.tsx",
+      "name": "ChatRow",
+      "platform": "react-native",
+      "category": "item",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/Header.tsx",
+      "name": "Header",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx",
+      "name": "IdeaSelector",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/InputBar.tsx",
+      "name": "InputBar",
+      "platform": "react-native",
+      "category": "form",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/IntroExample.tsx",
+      "name": "IntroExample",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/MarkdownText.tsx",
+      "name": "MarkdownText",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/Suggestions.tsx",
+      "name": "Suggestions",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/AIWriteAssistant/components/ThinkingBlock.tsx",
+      "name": "ThinkingBlock",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/BookManage/components/Banner.tsx",
+      "name": "Banner",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/BookManage/components/ChapterSection.tsx",
+      "name": "ChapterSection",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/BookManage/components/DraftBar.tsx",
+      "name": "DraftBar",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/BookManage/components/EmptyChapter.tsx",
+      "name": "EmptyChapter",
+      "platform": "react-native",
+      "category": "empty",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/BookManage/components/Footer.tsx",
+      "name": "Footer",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/BookManage/components/Header.tsx",
+      "name": "Header",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/WritePage/components/SelectionToolbar.tsx",
+      "name": "SelectionToolbar",
+      "platform": "react-native",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/WritePage/components/TopBar.tsx",
+      "name": "TopBar",
+      "platform": "react-native",
+      "category": "navigation",
+      "asset_sources": [
+        "react-native-vector-icons",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/WritePage/components/VolumeBar.tsx",
+      "name": "VolumeBar",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "src/page/Writer/WritePage/components/WelcomePanel.tsx",
+      "name": "WelcomePanel",
+      "platform": "react-native",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    }
+  ]
+}

@@ -60,6 +60,7 @@
 | `RB-STAGE7-WAVE1-PROFILE-20260401-01` | `8e02f52` | 启动 Stage 7 首批页面壳层换肤（ProfilePage） | `git revert --no-edit 8e02f52` | `npm test -- --runInBand --runTestsByPath __tests__/App.test.tsx __tests__/design-system/resolveStage7Theme.test.ts __tests__/design-system/ProfilePageStyles.stage7.test.ts __tests__/design-system/ProfileTopBar.stage7.test.tsx` |
 | `RB-STAGE7-AUDIT-ANDROID-20260401-01` | `4de4cd5` | 扩展 Stage 7 组件审计到 Android | `git revert --no-edit 4de4cd5` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AuditScripts.test.js && npm run stage7:audit:check && npm run harness:check` |
 | `RB-STAGE7-WAVE1-SETTINGS-20260401-01` | `89f7327` | 推进 Stage 7 的 SettingsPage 壳层换肤 | `git revert --no-edit 89f7327` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx __tests__/design-system/SettingsPageStyles.stage7.test.ts` |
+| `RB-STAGE7-WAVE1-CATEGORY-20260401-01` | `1f46827` | 推进 Stage 7 的 CategoryPage 壳层换肤 | `git revert --no-edit 1f46827` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CategoryPageStyles.stage7.test.ts` |
 
 ## 说明
 - 当前 closeout 与 rollback authority 以本页为准。

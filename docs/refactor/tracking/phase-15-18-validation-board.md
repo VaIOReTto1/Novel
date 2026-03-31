@@ -12,8 +12,8 @@
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
 | V15-01 | Stage 7 authority cutover | `README / roadmap / stage plan / harness` 一致切到 Stage 7 | 当前已建立 Stage 7 authority 宿主与导航入口 | `in_progress` | `yellow` |
-| V15-02 | surface inventory | RN Root / RN Host / RN Nested / Android Native / Android Shell 全覆盖 | 已由 `scripts/stage7-audit.js` 生成 `surface-inventory.json` 与 `surface-visual-specs.json`，当前统计 `51` 个 surface，且每个 surface 都已记录 current/target look，仍待补 Figma frame id | `in_progress` | `yellow` |
-| V15-03 | component catalog | RN / Android 共享组件按类别收口 | 已生成 `component-catalog.json` 与 `component-visual-specs.json`，当前已收口 `143` 个 RN component 文件，且每个 component 都已记录 current/target look，后续需补 Android 共享基元聚类深化 | `in_progress` | `yellow` |
+| V15-02 | surface inventory | RN Root / RN Host / RN Nested / Android Native / Android Shell 全覆盖 | 已由 `scripts/stage7-audit.js` 生成 `surface-inventory.json` 与 `surface-visual-specs.json`，当前统计 `51` 个 surface，且每个 surface 都已记录 current/target look；Figma `00-现状审计` / `03-页面-亮色` / `04-页面-暗色` 已种入逐项 surface 卡片，仍待回填 frame id | `in_progress` | `yellow` |
+| V15-03 | component catalog | RN / Android 共享组件按类别收口 | 已生成 `component-catalog.json` 与 `component-visual-specs.json`，当前已收口 `143` 个 RN component 文件，且每个 component 都已记录 current/target look；Figma `02-组件规范` 已种入逐项 component 卡片，后续需补 Android 共享基元聚类深化 | `in_progress` | `yellow` |
 | V15-04 | asset inventory | 图标 / 图片 / 插画 / 字体入口可追踪 | 已生成 `asset-inventory.json`，当前已纳入本地 SVG、字体与 `react-native-vector-icons` family 基线 | `in_progress` | `yellow` |
 | V15-05 | governance drift report | catalog / smoke / registry / Figma frame 漂移可发现 | 已生成 `governance-drift-report.md` 与 `visual-planning-summary.md`，当前 registry drift 为 `none`，Figma mapping 仍全部待补 | `in_progress` | `yellow` |
 

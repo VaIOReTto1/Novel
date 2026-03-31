@@ -20,16 +20,16 @@
 ## Phase 16
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V16-01 | Figma foundations | 语义色彩、排版、间距、圆角、阴影、动效建立真源 | 待执行 | `planned` | `gray` |
-| V16-02 | token export chain | `Figma -> JSON -> Style Dictionary -> LESS/RN/Android` 可跑通 | 待执行 | `planned` | `gray` |
-| V16-03 | dark / a11y / RTL rules | 暗黑、无障碍、RTL 规则成文并可映射到 Token | 待执行 | `planned` | `gray` |
+| V16-01 | Figma foundations | 语义色彩、排版、间距、圆角、阴影、动效建立真源 | 已建立 `stage7.tokens.json` 作为 repo 内语义 Token 真源草案，后续需与 Figma Variables 双向对齐 | `in_progress` | `yellow` |
+| V16-02 | token export chain | `Figma -> JSON -> Style Dictionary -> LESS/RN/Android` 可跑通 | 已生成 `style-dictionary.tokens.json`、`tokens.less`、RN/Android token 产物，并接入质量门禁检查 | `in_progress` | `yellow` |
+| V16-03 | dark / a11y / RTL rules | 暗黑、无障碍、RTL 规则成文并可映射到 Token | 当前 Token 已包含 light/dark 主题与 motion/typography 语义层，后续仍需补 RTL 与无障碍细则文档化 | `in_progress` | `yellow` |
 
 ## Phase 17
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V17-01 | Iconify governance | 图标命名、同步脚本、双端映射齐备 | 待执行 | `planned` | `gray` |
-| V17-02 | media governance | Picsum / Pexels / unDraw 资产与版权闭环 | 待执行 | `planned` | `gray` |
-| V17-03 | showcase infrastructure | RN Storybook 与 Android Showcase 可运行 | 待执行 | `planned` | `gray` |
+| V17-01 | Iconify governance | 图标命名、同步脚本、双端映射齐备 | 已生成 `icon-manifest.json`，当前先以 legacy 本地 SVG 与 vector family 基线收口，后续继续替换为 Iconify 语义名 | `in_progress` | `yellow` |
+| V17-02 | media governance | Picsum / Pexels / unDraw 资产与版权闭环 | 已生成 `media-manifest.json`、`illustration-manifest.json` 与 `copyright-ledger.json`，当前为 provider 规则与空账本基线 | `in_progress` | `yellow` |
+| V17-03 | showcase infrastructure | RN Storybook 与 Android Showcase 可运行 | 尚未开始落地展示基建 | `planned` | `gray` |
 
 ## Phase 18
 | ID | Item | Expected | Actual | Status | Result |

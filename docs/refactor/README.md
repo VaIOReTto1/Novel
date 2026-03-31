@@ -14,8 +14,8 @@
 - `Stage 6 = validated`
 - `Stage 7 = in_progress`
 - `Phase 15 = in_progress`
-- `Phase 16 = planned`
-- `Phase 17 = planned`
+- `Phase 16 = in_progress`
+- `Phase 17 = in_progress`
 - `Phase 18 = planned`
 
 ## Stage 7 摘要

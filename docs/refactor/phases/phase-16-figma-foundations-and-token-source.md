@@ -23,5 +23,13 @@
 ## 导出链路
 - `Figma Variables -> versioned JSON -> Style Dictionary -> LESS / RN / Android`
 
+## 当前产物入口
+- [stage7.tokens.json](../../../design-system/source/stage7.tokens.json)
+- [style-dictionary.tokens.json](../../../design-system/generated/style-dictionary.tokens.json)
+- [tokens.less](../../../design-system/generated/tokens.less)
+- [stage7Tokens.ts](../../../src/design-system/tokens/stage7Tokens.ts)
+- [stage7_tokens.xml](../../../android/core-ui/src/main/res/values/stage7_tokens.xml)
+- [Stage7Tokens.kt](../../../android/core-ui/src/main/java/com/novel/ui/theme/Stage7Tokens.kt)
+
 ## 当前状态
-- `planned`
+- `in_progress`

@@ -1,0 +1,45 @@
+{
+  "providers": {
+    "placeholder": {
+      "name": "picsum",
+      "base_url": "https://picsum.photos",
+      "fixed_seed_required": true,
+      "configurable_params": [
+        "width",
+        "height",
+        "seed",
+        "grayscale",
+        "blur",
+        "cachePolicy",
+        "retryCount",
+        "timeoutMs"
+      ]
+    },
+    "photo": {
+      "name": "pexels",
+      "runtime_search_allowed": false,
+      "required_credit_overlay": true,
+      "required_ledger_fields": [
+        "asset_id",
+        "author_name",
+        "source_url",
+        "license_note",
+        "sync_timestamp",
+        "consuming_surfaces"
+      ]
+    }
+  },
+  "component_contract": {
+    "placeholder_props": [
+      "width",
+      "height",
+      "seed",
+      "grayscale",
+      "blur",
+      "cachePolicy",
+      "retryCount",
+      "timeoutMs"
+    ],
+    "credit_overlay_required": true
+  }
+}

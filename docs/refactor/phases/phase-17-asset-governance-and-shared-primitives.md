@@ -17,5 +17,13 @@
 - 视觉回归与展示环境中的 Picsum 必须固定 `seed`。
 - 版权信息必须同时出现在 UI 叠层和 ledger 中。
 
+## 当前产物入口
+- [stage7.asset-providers.json](../../../design-system/source/stage7.asset-providers.json)
+- [icon-manifest.json](../../../design-system/assets/icon-manifest.json)
+- [media-manifest.json](../../../design-system/assets/media-manifest.json)
+- [illustration-manifest.json](../../../design-system/assets/illustration-manifest.json)
+- [copyright-ledger.json](../../../design-system/assets/copyright-ledger.json)
+- [asset-governance-report.md](../phase-17/asset-governance-report.md)
+
 ## 当前状态
-- `planned`
+- `in_progress`

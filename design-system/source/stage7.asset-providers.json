@@ -1,0 +1,20 @@
+{
+  "placeholder": {
+    "name": "picsum",
+    "base_url": "https://picsum.photos",
+    "fixed_seed_required": true,
+    "configurable_params": ["width", "height", "seed", "grayscale", "blur", "cachePolicy", "retryCount", "timeoutMs"]
+  },
+  "photo": {
+    "name": "pexels",
+    "runtime_search_allowed": false,
+    "required_credit_overlay": true,
+    "required_ledger_fields": ["asset_id", "author_name", "source_url", "license_note", "sync_timestamp", "consuming_surfaces"]
+  },
+  "illustration": {
+    "name": "undraw",
+    "runtime_fetch_allowed": false,
+    "theme_sync": "brand-token-driven",
+    "required_outputs": ["figma", "react-native-svg", "android-vector"]
+  }
+}

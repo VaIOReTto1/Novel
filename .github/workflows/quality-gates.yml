@@ -25,6 +25,10 @@ jobs:
         run: npm run harness:refresh
       - name: Run Stage 7 audit check
         run: npm run stage7:audit:check
+      - name: Run Stage 7 token check
+        run: npm run stage7:tokens:check
+      - name: Run Stage 7 asset check
+        run: npm run stage7:assets:check
       - name: Verify generated snapshot is committed
         run: git diff --exit-code -- docs/harness/generated/workspace-snapshot.md
 

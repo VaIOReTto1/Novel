@@ -12,3 +12,4 @@
 | 2026-03-31 | Phase 13 closeout | `Phase 13` 完成 RN page-domain 第一轮收口 | [phase-13-closeout-assessment.md](../refactor/phase-13/phase-13-closeout-assessment.md) |
 | 2026-03-31 | Stage 6 closeout | `Phase 14` 与 `Stage 6` 已完成关闭，repo 进入长期维护 / reopen 模式 | [stage-6-closeout-summary.md](../refactor/stage-6-closeout-summary.md) |
 | 2026-03-31 | Stage 7 activation | 建立新的 `Stage 7 = Phase 15-18` 控制面，并把默认主线切到视觉系统与资产治理 | [stage-7-phase-15-18-plan.md](../refactor/stage-7-phase-15-18-plan.md) |
+| 2026-03-31 | Stage 7 foundations | 落地 `Phase 15` 审计脚本与机器清单，并补上 `Phase 16-17` 的 Token / 资产治理脚手架 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |

@@ -2,7 +2,7 @@
 
 ## 当前状态
 - 当前分支：`feature/stage-7-phase-15-audit`
-- 当前权威结论：`Stage 7 = in_progress`，`Phase 15 = in_progress`，`Phase 16-18 = planned`
+- 当前权威结论：`Stage 7 = in_progress`，`Phase 15-17 = in_progress`，`Phase 18 = planned`
 - 当前 refactor authority 以 `docs/refactor/README.md` 为准
 - 当前 Android 模块图保持为 `app + core-* + feature-* + macrobenchmark`
 
@@ -11,11 +11,12 @@
 - `2026-03-30` 已完成 `Stage 5` closeout
 - `2026-03-31` 已完成 `Stage 6` closeout
 - `2026-03-31` 已启动 `Stage 7`
+- `2026-03-31` 已落地 Stage 7 的审计脚本、Token 基线和资产治理基线
 
 ## 默认下一主线
 - 当前 active refactor 主线为 `Stage 7 / Phase 15`
 - 默认先推进控制面、机器清单、Figma 审计页与事实对账脚本
-- 后续依次进入 Token 真源、资产同步、展示基建与页面重皮肤
+- 当前已并行落地 Token 真源和资产治理脚手架，后续继续进入展示基建与页面重皮肤
 
 ## 当前已确认的 Stage 7 输入
 - `src/utils/runtime/**` 已稳定为 runtime 收口层

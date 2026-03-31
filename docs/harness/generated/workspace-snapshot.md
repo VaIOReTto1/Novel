@@ -55,6 +55,12 @@
 - npm run test -> jest
 - npm run harness:refresh -> node scripts/harness-refresh.js
 - npm run harness:check -> node scripts/harness-check.js
+- npm run stage7:audit -> node scripts/stage7-audit.js generate
+- npm run stage7:audit:check -> node scripts/stage7-audit.js check
+- npm run stage7:tokens -> node scripts/stage7-token-build.js generate
+- npm run stage7:tokens:check -> node scripts/stage7-token-build.js check
+- npm run stage7:assets -> node scripts/stage7-assets.js generate
+- npm run stage7:assets:check -> node scripts/stage7-assets.js check
 - npm run version:show -> node scripts/version-sync.js show
 - npm run version:patch -> node scripts/version-sync.js patch
 - npm run version:minor -> node scripts/version-sync.js minor
@@ -64,6 +70,9 @@
 - npm run build:android:bundle -> npm run version:patch && cd android && ./gradlew bundleRelease
 - npm run harness:check
 - npm run harness:refresh
+- npm run stage7:audit:check
+- npm run stage7:tokens:check
+- npm run stage7:assets:check
 - git diff --exit-code -- docs/harness/generated/workspace-snapshot.md
 - corepack enable
 - yarn install --frozen-lockfile

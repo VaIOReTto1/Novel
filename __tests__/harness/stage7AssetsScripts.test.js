@@ -97,4 +97,26 @@ describe('stage7 asset scripts', () => {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
   });
+
+  test('check fails when asset artifacts are stale', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-assets-check-'));
+
+    try {
+      const outputs = assetScripts.generateAssetArtifacts({
+        repoRoot,
+        outputRoot: tempDir,
+      });
+      fs.writeFileSync(outputs.reportPath, '# stale asset report\n', 'utf8');
+
+      const result = assetScripts.checkAssetArtifacts({
+        repoRoot,
+        outputRoot: tempDir,
+      });
+
+      expect(result.ok).toBe(false);
+      expect(result.message).toContain('stale');
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
 });

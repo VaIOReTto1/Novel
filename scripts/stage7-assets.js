@@ -191,7 +191,21 @@ const checkAssetArtifacts = ({
 
   try {
     const fresh = generateAssetArtifacts({ repoRoot, outputRoot: tempDir });
-    const current = generateAssetArtifacts({ repoRoot, outputRoot: resolvedRoot });
+    const current = {
+      iconManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'icon-manifest.json'),
+      mediaManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'media-manifest.json'),
+      illustrationManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'illustration-manifest.json'),
+      copyrightLedgerPath: path.join(resolvedRoot, 'design-system', 'assets', 'copyright-ledger.json'),
+      reportPath: path.join(resolvedRoot, 'docs', 'refactor', 'phase-17', 'asset-governance-report.md'),
+    };
+
+    const missing = Object.values(current).filter((filePath) => !fs.existsSync(filePath));
+    if (missing.length > 0) {
+      return {
+        ok: false,
+        message: `Missing asset artifact(s): ${missing.join(', ')}`,
+      };
+    }
 
     const mismatched = Object.keys(current).filter((key) => {
       const currentContent = fs.readFileSync(current[key], 'utf8');

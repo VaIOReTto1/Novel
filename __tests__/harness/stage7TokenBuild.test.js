@@ -95,4 +95,26 @@ describe('stage7 token build', () => {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
   });
+
+  test('check fails when token artifacts are stale', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-token-check-'));
+
+    try {
+      const outputs = tokenBuild.generateTokenArtifacts({
+        repoRoot,
+        outputRoot: tempDir,
+      });
+      fs.writeFileSync(outputs.lessPath, '// stale token output\n', 'utf8');
+
+      const result = tokenBuild.checkTokenArtifacts({
+        repoRoot,
+        outputRoot: tempDir,
+      });
+
+      expect(result.ok).toBe(false);
+      expect(result.message).toContain('stale');
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
 });

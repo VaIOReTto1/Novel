@@ -188,50 +188,12 @@ const generateTokenArtifacts = ({
 } = {}) => {
   const tokens = loadSourceTokens({ repoRoot });
   const resolvedRoot = resolveOutputRoot(repoRoot, outputRoot);
-
   const outputs = {
-    styleDictionaryPath: path.join(
-      resolvedRoot,
-      'design-system',
-      'generated',
-      'style-dictionary.tokens.json',
-    ),
-    lessPath: path.join(
-      resolvedRoot,
-      'design-system',
-      'generated',
-      'tokens.less',
-    ),
-    reactNativePath: path.join(
-      resolvedRoot,
-      'src',
-      'design-system',
-      'tokens',
-      'stage7Tokens.ts',
-    ),
-    androidXmlPath: path.join(
-      resolvedRoot,
-      'android',
-      'core-ui',
-      'src',
-      'main',
-      'res',
-      'values',
-      'stage7_tokens.xml',
-    ),
-    androidComposePath: path.join(
-      resolvedRoot,
-      'android',
-      'core-ui',
-      'src',
-      'main',
-      'java',
-      'com',
-      'novel',
-      'ui',
-      'theme',
-      'Stage7Tokens.kt',
-    ),
+    styleDictionaryPath: path.join(resolvedRoot, 'design-system', 'generated', 'style-dictionary.tokens.json'),
+    lessPath: path.join(resolvedRoot, 'design-system', 'generated', 'tokens.less'),
+    reactNativePath: path.join(resolvedRoot, 'src', 'design-system', 'tokens', 'stage7Tokens.ts'),
+    androidXmlPath: path.join(resolvedRoot, 'android', 'core-ui', 'src', 'main', 'res', 'values', 'stage7_tokens.xml'),
+    androidComposePath: path.join(resolvedRoot, 'android', 'core-ui', 'src', 'main', 'java', 'com', 'novel', 'ui', 'theme', 'Stage7Tokens.kt'),
   };
 
   writeJson(outputs.styleDictionaryPath, renderStyleDictionaryJson(tokens));
@@ -252,7 +214,21 @@ const checkTokenArtifacts = ({
 
   try {
     const fresh = generateTokenArtifacts({ repoRoot, outputRoot: tempDir });
-    const expected = generateTokenArtifacts({ repoRoot, outputRoot: resolvedRoot });
+    const expected = {
+      styleDictionaryPath: path.join(resolvedRoot, 'design-system', 'generated', 'style-dictionary.tokens.json'),
+      lessPath: path.join(resolvedRoot, 'design-system', 'generated', 'tokens.less'),
+      reactNativePath: path.join(resolvedRoot, 'src', 'design-system', 'tokens', 'stage7Tokens.ts'),
+      androidXmlPath: path.join(resolvedRoot, 'android', 'core-ui', 'src', 'main', 'res', 'values', 'stage7_tokens.xml'),
+      androidComposePath: path.join(resolvedRoot, 'android', 'core-ui', 'src', 'main', 'java', 'com', 'novel', 'ui', 'theme', 'Stage7Tokens.kt'),
+    };
+
+    const missing = Object.values(expected).filter((filePath) => !fs.existsSync(filePath));
+    if (missing.length > 0) {
+      return {
+        ok: false,
+        message: `Missing token artifact(s): ${missing.join(', ')}`,
+      };
+    }
 
     const mismatched = Object.keys(expected).filter((key) => {
       const currentContent = fs.readFileSync(expected[key], 'utf8');

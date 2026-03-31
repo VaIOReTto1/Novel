@@ -25,6 +25,8 @@
 - [PlaceholderImage.tsx](../../../src/design-system/media/PlaceholderImage.tsx)
 - [PexelsCreditOverlay.tsx](../../../src/design-system/media/PexelsCreditOverlay.tsx)
 - [Stage7Showcase.tsx](../../../src/design-system/showcase/Stage7Showcase.tsx)
+- [Stage7ShowcaseScreen.kt](../../../android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt)
+- [Stage7ShowcaseModel.kt](../../../android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseModel.kt)
 - [media-manifest.json](../../../design-system/assets/media-manifest.json)
 - [illustration-manifest.json](../../../design-system/assets/illustration-manifest.json)
 - [copyright-ledger.json](../../../design-system/assets/copyright-ledger.json)

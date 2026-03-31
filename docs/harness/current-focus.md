@@ -15,6 +15,7 @@
 - `2026-03-31` 已继续完成 `Bookshelf / History / Watchlist / Comment` 多个页面域波次的首轮收口
 - `2026-03-31` 已继续完成 `Writer / AIWriteAssistant / BookManage` 首轮收口，并为 `WritePage` 建立 helper 护栏
 - `2026-03-31` 已继续完成 `Community / RecommendBook / MemberCenter / BecomeWriter` 的首轮 page model 收口
+- `2026-03-31` 已完成 `WritePage deeper extraction` 的当前一轮收口
 
 ## 默认下一主线
 - 当前执行阶段：`Stage 6 = in_progress`
@@ -29,7 +30,9 @@
   - `Writer / AIWriteAssistant / BookManage`
 - 当前已推进到：
   - `Community / RecommendBook / MemberCenter / BecomeWriter`
-- 默认下一落点：`WritePage deeper extraction / remaining long pages`
+- 当前已完成：
+  - `WritePage deeper extraction`
+- 默认下一落点：`remaining long pages / final Phase 13 closeout candidates`
 - 后续阶段：`Phase 14 = RN contract / registry / mock-fallback / maintainability`
 
 ## 当前已确认的 RN 事实
@@ -59,4 +62,4 @@
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-31` by Phase 13 wave 6
+- `2026-03-31` by Phase 13 WritePage deeper extraction

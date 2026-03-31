@@ -1,10 +1,20 @@
 type SelectionMenuAction = 'polish' | 'expand' | 'condense' | 'continue' | undefined;
+type ParamModalType = 'expand' | 'condense' | 'continue' | undefined;
 
 type SelectionMenuPayload = {
   action?: SelectionMenuAction;
   selectedText?: string;
   start?: number;
   end?: number;
+};
+
+type SelectionEvent = {
+  nativeEvent?: {
+    selection?: {
+      start: number;
+      end: number;
+    };
+  };
 };
 
 type CreateWritePageHandlersDeps = {
@@ -15,7 +25,21 @@ type CreateWritePageHandlersDeps = {
     type: 'expand' | 'condense' | 'continue',
     hint: string,
   ) => void;
+  hideParamModal?: () => void;
+  setParamInput?: (value: string) => void;
+  expandSelected?: (ratio: number) => void;
+  condenseSelected?: (ratio: number) => void;
+  continueSelected?: (length: number) => void;
 };
+
+type FocusSyncDeps = {
+  focus: () => void;
+  dismissKeyboard: () => void;
+};
+
+export const EXPAND_HINT = '请输入扩写比例（百分比），如 150 表示约 150%';
+export const CONDENSE_HINT = '请输入缩写比例（分母），如 2 表示约 1/2';
+export const CONTINUE_HINT = '请输入续写目标字数，如 200 表示约 200 字';
 
 export const replaceSelectedText = (
   content: string,
@@ -45,11 +69,59 @@ export const appendToSelectedText = (
   );
 };
 
+export const getWritePageSelection = (
+  content: string,
+  event: SelectionEvent,
+): { selectedText: string; start: number; end: number } | null => {
+  const selection = event?.nativeEvent?.selection;
+  if (!selection) {
+    return null;
+  }
+  const start = Math.min(selection.start, selection.end);
+  const end = Math.max(selection.start, selection.end);
+  if (end <= start) {
+    return null;
+  }
+  return {
+    selectedText: content.slice(start, end),
+    start,
+    end,
+  };
+};
+
+export const getWritePageModalPlaceholder = (type: ParamModalType): string =>
+  type === 'continue' ? '长度(字数)' : '比例';
+
+export const runWritePageFocusSync = ({
+  focus,
+  dismissKeyboard,
+}: FocusSyncDeps): void => {
+  try {
+    focus();
+  } catch {}
+  dismissKeyboard();
+};
+
+const getHintByAction = (action: Exclude<SelectionMenuAction, undefined>): string => {
+  if (action === 'expand') {
+    return EXPAND_HINT;
+  }
+  if (action === 'condense') {
+    return CONDENSE_HINT;
+  }
+  return CONTINUE_HINT;
+};
+
 export const createWritePageHandlers = ({
   updateSelection,
   dismissKeyboard,
   onPolish,
   onShowParamModal,
+  hideParamModal,
+  setParamInput,
+  expandSelected,
+  condenseSelected,
+  continueSelected,
 }: CreateWritePageHandlersDeps) => ({
   handleSelectionMenuAction: (payload: SelectionMenuPayload) => {
     const action = payload.action;
@@ -65,16 +137,29 @@ export const createWritePageHandlers = ({
       onPolish();
       return;
     }
-    if (action === 'expand') {
-      onShowParamModal('expand', '请输入扩写比例（百分比），如 150 表示约 150%');
+
+    onShowParamModal(action, getHintByAction(action));
+  },
+
+  handleConfirmParamModal: (paramInput: string, type: ParamModalType) => {
+    const param = Number(paramInput);
+    if (!param || Number.isNaN(param) || !type) {
       return;
     }
-    if (action === 'condense') {
-      onShowParamModal('condense', '请输入缩写比例（分母），如 2 表示约 1/2');
+
+    hideParamModal?.();
+    setParamInput?.('');
+
+    if (type === 'expand') {
+      expandSelected?.(param);
       return;
     }
-    if (action === 'continue') {
-      onShowParamModal('continue', '请输入续写目标字数，如 200 表示约 200 字');
+    if (type === 'condense') {
+      condenseSelected?.(param);
+      return;
+    }
+    if (type === 'continue') {
+      continueSelected?.(param);
     }
   },
 });

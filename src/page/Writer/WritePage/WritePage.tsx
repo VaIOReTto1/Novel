@@ -18,7 +18,10 @@ import { subscribeWritePageSelectionMenuAction } from '../../../utils/runtime/ev
 import {
   appendToSelectedText,
   createWritePageHandlers,
+  getWritePageModalPlaceholder,
+  getWritePageSelection,
   replaceSelectedText,
+  runWritePageFocusSync,
 } from './domain/writePageModel';
 
 const WritePage: React.FC = () => {
@@ -56,32 +59,38 @@ const WritePage: React.FC = () => {
         },
         onPolish: () => writeStore.polishSelected(),
         onShowParamModal: (type, hint) => writeStore.showParamModal?.(type, hint),
+        hideParamModal: () => writeStore.hideParamModal(),
+        setParamInput,
+        expandSelected: (value) => writeStore.expandSelected(value),
+        condenseSelected: (value) => writeStore.condenseSelected(value),
+        continueSelected: (value) => writeStore.continueSelected(value),
       }),
     [updateSelection, writeStore],
   );
 
   useEffect(() => {
-    try {
-      contentRef.current?.focus?.();
-    } catch {}
-    setTimeout(() => {
-      try {
-        Keyboard?.dismiss?.();
-      } catch {}
-    }, 0);
+    runWritePageFocusSync({
+      focus: () => {
+        try {
+          contentRef.current?.focus?.();
+        } catch {}
+      },
+      dismissKeyboard: () => {
+        setTimeout(() => {
+          try {
+            Keyboard?.dismiss?.();
+          } catch {}
+        }, 0);
+      },
+    });
   }, [focusRequestNonce]);
 
-  const onSelectionChange = React.useCallback((e: any) => {
-    const selection = e?.nativeEvent?.selection;
+  const onSelectionChange = React.useCallback((event: any) => {
+    const selection = getWritePageSelection(content, event);
     if (!selection) {
       return;
     }
-    const start = Math.min(selection.start, selection.end);
-    const end = Math.max(selection.start, selection.end);
-    const text = content?.slice(start, end) ?? '';
-    if (end > start) {
-      updateSelection(text, start, end);
-    }
+    updateSelection(selection.selectedText, selection.start, selection.end);
   }, [content, updateSelection]);
 
   useEffect(() => {
@@ -185,7 +194,7 @@ const WritePage: React.FC = () => {
             <TextInput
               value={paramInput}
               onChangeText={setParamInput}
-              placeholder={writeStore.modal?.type === 'continue' ? '长度(字数)' : '比例'}
+              placeholder={getWritePageModalPlaceholder(writeStore.modal?.type)}
               placeholderTextColor={colors.novelTextGray}
               keyboardType="numeric"
               style={styles.modalInput}
@@ -194,27 +203,7 @@ const WritePage: React.FC = () => {
               <TouchableOpacity onPress={() => { writeStore.hideParamModal(); setParamInput(''); }}>
                 <Text style={styles.modalCancel}>取消</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-                const param = Number(paramInput);
-                if (!param || Number.isNaN(param)) {
-                  return;
-                }
-                const type = writeStore.modal?.type;
-                writeStore.hideParamModal();
-                setParamInput('');
-                if (!type) {
-                  return;
-                }
-                if (type === 'expand') {
-                  writeStore.expandSelected(param);
-                }
-                if (type === 'condense') {
-                  writeStore.condenseSelected(param);
-                }
-                if (type === 'continue') {
-                  writeStore.continueSelected(param);
-                }
-              }}>
+              <TouchableOpacity onPress={() => handlers.handleConfirmParamModal(paramInput, writeStore.modal?.type)}>
                 <Text style={styles.modalOk}>确定</Text>
               </TouchableOpacity>
             </View>

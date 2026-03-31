@@ -14,6 +14,7 @@
 | `RB-P13-WRITE-DEEP-20260331-01` | `0eb4639` | WritePage 更深层收口 | `git revert --no-edit 0eb4639` | `npm test -- --runInBand __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
 | `RB-P13-WAVE7-20260331-01` | `540bde2` | Phase 13 第七波剩余长页收口 | `git revert --no-edit 540bde2` | `npm test -- --runInBand __tests__/domains/messagePageModel.test.ts __tests__/domains/myReservationPageModel.test.ts __tests__/domains/viewedUsersPageModel.test.ts __tests__/domains/scrollboxHistoryPageModel.test.ts __tests__/domains/feedbackHelpPageModel.test.ts` |
 | `RB-P14-REGISTRY-20260331-01` | `e846ae5` | Phase 14 registry consistency 护栏 | `git revert --no-edit e846ae5` | `npm test -- --runInBand __tests__/harness/rnComponentRegistryConsistency.test.ts` |
+| `RB-STAGE6-CLOSEOUT-20260331-01` | `7d31458` | 关闭 Phase 13 与 Phase 14 并完成 Stage 6 收口 | `git revert --no-edit 7d31458` | `npm run harness:check` |
 
 ## Stage 6 authority / harness 提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
@@ -37,6 +38,7 @@
 | `RB-P13-AUTH-20260331-06` | `8de4626` | WritePage 更深层收口进展补记 | `git revert --no-edit 8de4626` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-05` | `889c7ab` | WritePage 更深层收口后的 harness 导航同步 | `git revert --no-edit 889c7ab` | `npm run harness:check` |
 | `RB-P13-ROLLBACK-20260331-06` | `cd0f37b` | WritePage 更深层收口的回滚索引补记 | `git revert --no-edit cd0f37b` | `npm run harness:check` |
+| `RB-STAGE6-HARNESS-20260331-01` | `b1501e2` | Stage 6 closeout 后的 harness 导航同步 | `git revert --no-edit b1501e2` | `npm run harness:check` |
 
 ## 说明
 - 当前 closeout 与 rollback authority 以本页为准。

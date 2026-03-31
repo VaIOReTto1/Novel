@@ -1,20 +1,706 @@
 {
   "summary": {
     "rn_component_count": 143,
+    "android_component_count": 82,
     "category_counts": {
-      "navigation": 21,
-      "item": 11,
-      "action": 9,
-      "empty": 7,
-      "list": 12,
-      "layout": 74,
-      "form": 5,
-      "loading": 1,
-      "sheet": 1,
-      "dialog": 2
+      "layout": 122,
+      "action": 13,
+      "sheet": 3,
+      "navigation": 24,
+      "dialog": 3,
+      "media": 6,
+      "loading": 8,
+      "form": 9,
+      "list": 16,
+      "item": 12,
+      "showcase": 2,
+      "empty": 7
     }
   },
   "entries": [
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/AuthorSection.kt",
+      "name": "AuthorSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookActionSection.kt",
+      "name": "BookActionSection",
+      "platform": "android",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookCoverSection.kt",
+      "name": "BookCoverSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt",
+      "name": "BookDescriptionBottomSheet",
+      "platform": "android",
+      "category": "sheet",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionSection.kt",
+      "name": "BookDescriptionSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookReviewsSection.kt",
+      "name": "BookReviewsSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookStatsSection.kt",
+      "name": "BookStatsSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/book/components/BookTitleSection.kt",
+      "name": "BookTitleSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/BackButton.kt",
+      "name": "BackButton",
+      "platform": "android",
+      "category": "navigation",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/BaseViewModel.kt",
+      "name": "BaseViewModel",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/BitmapPool.kt",
+      "name": "BitmapPool",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/Defaults.kt",
+      "name": "Defaults",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/dialog.kt",
+      "name": "dialog",
+      "platform": "android",
+      "category": "dialog",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/FlipBookAnimation.kt",
+      "name": "FlipBookAnimation",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/ImageCompressor.kt",
+      "name": "ImageCompressor",
+      "platform": "android",
+      "category": "media",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/ImageOptimizationConfig.kt",
+      "name": "ImageOptimizationConfig",
+      "platform": "android",
+      "category": "media",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/ImagePreloadManager.kt",
+      "name": "ImagePreloadManager",
+      "platform": "android",
+      "category": "media",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/LoadingComponent.kt",
+      "name": "LoadingComponent",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/LoadingStateComponent.kt",
+      "name": "LoadingStateComponent",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/MemoryPressureManager.kt",
+      "name": "MemoryPressureManager",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/NovelCachedImageView.kt",
+      "name": "NovelCachedImageView",
+      "platform": "android",
+      "category": "media",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/NovelImagePicker.kt",
+      "name": "NovelImagePicker",
+      "platform": "android",
+      "category": "form",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/NovelImageView.kt",
+      "name": "NovelImageView",
+      "platform": "android",
+      "category": "media",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/config/PageCurlConfig.kt",
+      "name": "PageCurlConfig",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/CurlDraw.kt",
+      "name": "CurlDraw",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragCommonGesture.kt",
+      "name": "DragCommonGesture",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragGesture.kt",
+      "name": "DragGesture",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragStartEnd.kt",
+      "name": "DragStartEnd",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/ExperimentalPageCurlApi.kt",
+      "name": "ExperimentalPageCurlApi",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurl.kt",
+      "name": "PageCurl",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurlState.kt",
+      "name": "PageCurlState",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/TapGesture.kt",
+      "name": "TapGesture",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/MathUtils.kt",
+      "name": "MathUtils",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/Polygon.kt",
+      "name": "Polygon",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/RectUtils.kt",
+      "name": "RectUtils",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/PaperTexture.kt",
+      "name": "PaperTexture",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/ProgressiveImageLoader.kt",
+      "name": "ProgressiveImageLoader",
+      "platform": "android",
+      "category": "media",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/RankingNumber.kt",
+      "name": "RankingNumber",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/ShortSentenceToast.kt",
+      "name": "ShortSentenceToast",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/SolidCircleSlider.kt",
+      "name": "SolidCircleSlider",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/component/StateComponent.kt",
+      "name": "StateComponent",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/home/component/HomeFilterBar.kt",
+      "name": "HomeFilterBar",
+      "platform": "android",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt",
+      "name": "HomeRankPanel",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/home/component/HomeRecommendGrid.kt",
+      "name": "HomeRecommendGrid",
+      "platform": "android",
+      "category": "list",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/home/component/HomeTopBar.kt",
+      "name": "HomeTopBar",
+      "platform": "android",
+      "category": "navigation",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt",
+      "name": "HomePageSkeleton",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/ActionButtons.kt",
+      "name": "ActionButtons",
+      "platform": "android",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/AgreementSection.kt",
+      "name": "AgreementSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/AppBar.kt",
+      "name": "AppBar",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/InputSection.kt",
+      "name": "InputSection",
+      "platform": "android",
+      "category": "form",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/OperatorSection.kt",
+      "name": "OperatorSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/PhoneSection.kt",
+      "name": "PhoneSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/component/TitleSection.kt",
+      "name": "TitleSection",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt",
+      "name": "LoginPageSkeleton",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/BackgroundColorControl.kt",
+      "name": "BackgroundColorControl",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/BrightnessControl.kt",
+      "name": "BrightnessControl",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt",
+      "name": "ChapterListPanel",
+      "platform": "android",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/CoverFlipContainer.kt",
+      "name": "CoverFlipContainer",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/FontSizeControl.kt",
+      "name": "FontSizeControl",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/NoAnimationContainer.kt",
+      "name": "NoAnimationContainer",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/PageContentDisplay.kt",
+      "name": "PageContentDisplay",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/PageCurlFlipContainer.kt",
+      "name": "PageCurlFlipContainer",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/PageFlipEffectControl.kt",
+      "name": "PageFlipEffectControl",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/ReaderPageInfo.kt",
+      "name": "ReaderPageInfo",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt",
+      "name": "ReaderSettingsPanel",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/SlideFlipContainer.kt",
+      "name": "SlideFlipContainer",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/read/components/VerticalScrollContainer.kt",
+      "name": "VerticalScrollContainer",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": []
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/component/HistoryGrid.kt",
+      "name": "HistoryGrid",
+      "platform": "android",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/component/RankingList.kt",
+      "name": "RankingList",
+      "platform": "android",
+      "category": "list",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt",
+      "name": "SearchFilterBottomSheet",
+      "platform": "android",
+      "category": "sheet",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/component/SearchFilterChip.kt",
+      "name": "SearchFilterChip",
+      "platform": "android",
+      "category": "form",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/component/SearchResultItem.kt",
+      "name": "SearchResultItem",
+      "platform": "android",
+      "category": "item",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt",
+      "name": "SearchTopBar",
+      "platform": "android",
+      "category": "navigation",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt",
+      "name": "FullRankingPageSkeleton",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt",
+      "name": "SearchPageSkeleton",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt",
+      "name": "SearchResultPageSkeleton",
+      "platform": "android",
+      "category": "loading",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt",
+      "name": "NovelButton",
+      "platform": "android",
+      "category": "action",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/core-ui/src/main/java/com/novel/page/component/NovelDivider.kt",
+      "name": "NovelDivider",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/core-ui/src/main/java/com/novel/page/component/NovelText.kt",
+      "name": "NovelText",
+      "platform": "android",
+      "category": "layout",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/core-ui/src/main/java/com/novel/page/component/NovelTextField.kt",
+      "name": "NovelTextField",
+      "platform": "android",
+      "category": "form",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    {
+      "path": "android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseModel.kt",
+      "name": "Stage7ShowcaseModel",
+      "platform": "android",
+      "category": "showcase",
+      "asset_sources": []
+    },
+    {
+      "path": "android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt",
+      "name": "Stage7ShowcaseScreen",
+      "platform": "android",
+      "category": "showcase",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
     {
       "path": "src/page/BookshelfPage/components/MainTabBar.tsx",
       "name": "MainTabBar",

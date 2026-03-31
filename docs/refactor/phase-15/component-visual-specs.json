@@ -1,5 +1,2000 @@
 [
   {
+    "path": "android/app/src/main/java/com/novel/page/book/components/AuthorSection.kt",
+    "name": "AuthorSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookActionSection.kt",
+    "name": "BookActionSection",
+    "category": "action",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "button, toolbar and action strips with utilitarian emphasis",
+      "affordance": "high-visibility trigger surface",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-action-control",
+      "style_keywords": [
+        "actions",
+        "pill-controls",
+        "brand-accent"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookCoverSection.kt",
+    "name": "BookCoverSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt",
+    "name": "BookDescriptionBottomSheet",
+    "category": "sheet",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "sheet-based temporary surfaces with drag/close affordances",
+      "affordance": "contextual detail and action overflow",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-bottom-sheet",
+      "style_keywords": [
+        "sheet",
+        "contextual",
+        "soft-elevation"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionSection.kt",
+    "name": "BookDescriptionSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookReviewsSection.kt",
+    "name": "BookReviewsSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookStatsSection.kt",
+    "name": "BookStatsSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/book/components/BookTitleSection.kt",
+    "name": "BookTitleSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/BackButton.kt",
+    "name": "BackButton",
+    "category": "navigation",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "top bars, headers, nav rows and tab controls with direct icon/text actions",
+      "affordance": "utility-first navigation cues with minimal hierarchy depth",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-toolbar",
+      "style_keywords": [
+        "navigation",
+        "quiet-chrome",
+        "refined-actions"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/BaseViewModel.kt",
+    "name": "BaseViewModel",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/BitmapPool.kt",
+    "name": "BitmapPool",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/Defaults.kt",
+    "name": "Defaults",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/dialog.kt",
+    "name": "dialog",
+    "category": "dialog",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "modal cards and overlays with stacked actions",
+      "affordance": "interruptive confirmation and guided prompts",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-dialog",
+      "style_keywords": [
+        "dialog",
+        "paper-surface",
+        "clear-actions"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/FlipBookAnimation.kt",
+    "name": "FlipBookAnimation",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/ImageCompressor.kt",
+    "name": "ImageCompressor",
+    "category": "media",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "icon, avatar and image wrappers using mixed legacy asset sources",
+      "affordance": "visual signposting and cover rendering",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "asset-governed-media",
+      "style_keywords": [
+        "media",
+        "semantic-icons",
+        "credit-aware"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/ImageOptimizationConfig.kt",
+    "name": "ImageOptimizationConfig",
+    "category": "media",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "icon, avatar and image wrappers using mixed legacy asset sources",
+      "affordance": "visual signposting and cover rendering",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "asset-governed-media",
+      "style_keywords": [
+        "media",
+        "semantic-icons",
+        "credit-aware"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/ImagePreloadManager.kt",
+    "name": "ImagePreloadManager",
+    "category": "media",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "icon, avatar and image wrappers using mixed legacy asset sources",
+      "affordance": "visual signposting and cover rendering",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "asset-governed-media",
+      "style_keywords": [
+        "media",
+        "semantic-icons",
+        "credit-aware"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/LoadingComponent.kt",
+    "name": "LoadingComponent",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/LoadingStateComponent.kt",
+    "name": "LoadingStateComponent",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/MemoryPressureManager.kt",
+    "name": "MemoryPressureManager",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/NovelCachedImageView.kt",
+    "name": "NovelCachedImageView",
+    "category": "media",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "icon, avatar and image wrappers using mixed legacy asset sources",
+      "affordance": "visual signposting and cover rendering",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "asset-governed-media",
+      "style_keywords": [
+        "media",
+        "semantic-icons",
+        "credit-aware"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/NovelImagePicker.kt",
+    "name": "NovelImagePicker",
+    "category": "form",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "input, search, picker and switch controls with direct theme styling",
+      "affordance": "task completion and configuration",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-form-control",
+      "style_keywords": [
+        "form",
+        "inset-field",
+        "warm-borders"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/NovelImageView.kt",
+    "name": "NovelImageView",
+    "category": "media",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "icon, avatar and image wrappers using mixed legacy asset sources",
+      "affordance": "visual signposting and cover rendering",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "asset-governed-media",
+      "style_keywords": [
+        "media",
+        "semantic-icons",
+        "credit-aware"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/config/PageCurlConfig.kt",
+    "name": "PageCurlConfig",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/CurlDraw.kt",
+    "name": "CurlDraw",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "image"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragCommonGesture.kt",
+    "name": "DragCommonGesture",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragGesture.kt",
+    "name": "DragGesture",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragStartEnd.kt",
+    "name": "DragStartEnd",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/ExperimentalPageCurlApi.kt",
+    "name": "ExperimentalPageCurlApi",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurl.kt",
+    "name": "PageCurl",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurlState.kt",
+    "name": "PageCurlState",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/TapGesture.kt",
+    "name": "TapGesture",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/MathUtils.kt",
+    "name": "MathUtils",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/Polygon.kt",
+    "name": "Polygon",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/RectUtils.kt",
+    "name": "RectUtils",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/PaperTexture.kt",
+    "name": "PaperTexture",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/ProgressiveImageLoader.kt",
+    "name": "ProgressiveImageLoader",
+    "category": "media",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "icon, avatar and image wrappers using mixed legacy asset sources",
+      "affordance": "visual signposting and cover rendering",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "asset-governed-media",
+      "style_keywords": [
+        "media",
+        "semantic-icons",
+        "credit-aware"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/RankingNumber.kt",
+    "name": "RankingNumber",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/ShortSentenceToast.kt",
+    "name": "ShortSentenceToast",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/SolidCircleSlider.kt",
+    "name": "SolidCircleSlider",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/component/StateComponent.kt",
+    "name": "StateComponent",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/home/component/HomeFilterBar.kt",
+    "name": "HomeFilterBar",
+    "category": "action",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "button, toolbar and action strips with utilitarian emphasis",
+      "affordance": "high-visibility trigger surface",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-action-control",
+      "style_keywords": [
+        "actions",
+        "pill-controls",
+        "brand-accent"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt",
+    "name": "HomeRankPanel",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/home/component/HomeRecommendGrid.kt",
+    "name": "HomeRecommendGrid",
+    "category": "list",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "list, grid and waterfall containers with dense item repetition",
+      "affordance": "content browsing and infinite progression",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-list-shell",
+      "style_keywords": [
+        "list",
+        "modular-cards",
+        "quiet-density"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/home/component/HomeTopBar.kt",
+    "name": "HomeTopBar",
+    "category": "navigation",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "top bars, headers, nav rows and tab controls with direct icon/text actions",
+      "affordance": "utility-first navigation cues with minimal hierarchy depth",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-toolbar",
+      "style_keywords": [
+        "navigation",
+        "quiet-chrome",
+        "refined-actions"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt",
+    "name": "HomePageSkeleton",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/ActionButtons.kt",
+    "name": "ActionButtons",
+    "category": "action",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "button, toolbar and action strips with utilitarian emphasis",
+      "affordance": "high-visibility trigger surface",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-action-control",
+      "style_keywords": [
+        "actions",
+        "pill-controls",
+        "brand-accent"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/AgreementSection.kt",
+    "name": "AgreementSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/AppBar.kt",
+    "name": "AppBar",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/InputSection.kt",
+    "name": "InputSection",
+    "category": "form",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "input, search, picker and switch controls with direct theme styling",
+      "affordance": "task completion and configuration",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-form-control",
+      "style_keywords": [
+        "form",
+        "inset-field",
+        "warm-borders"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/OperatorSection.kt",
+    "name": "OperatorSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/PhoneSection.kt",
+    "name": "PhoneSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/component/TitleSection.kt",
+    "name": "TitleSection",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt",
+    "name": "LoginPageSkeleton",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/BackgroundColorControl.kt",
+    "name": "BackgroundColorControl",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/BrightnessControl.kt",
+    "name": "BrightnessControl",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt",
+    "name": "ChapterListPanel",
+    "category": "list",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "list, grid and waterfall containers with dense item repetition",
+      "affordance": "content browsing and infinite progression",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-list-shell",
+      "style_keywords": [
+        "list",
+        "modular-cards",
+        "quiet-density"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/CoverFlipContainer.kt",
+    "name": "CoverFlipContainer",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/FontSizeControl.kt",
+    "name": "FontSizeControl",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/NoAnimationContainer.kt",
+    "name": "NoAnimationContainer",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/PageContentDisplay.kt",
+    "name": "PageContentDisplay",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/PageCurlFlipContainer.kt",
+    "name": "PageCurlFlipContainer",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/PageFlipEffectControl.kt",
+    "name": "PageFlipEffectControl",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/ReaderPageInfo.kt",
+    "name": "ReaderPageInfo",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt",
+    "name": "ReaderSettingsPanel",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/SlideFlipContainer.kt",
+    "name": "SlideFlipContainer",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/read/components/VerticalScrollContainer.kt",
+    "name": "VerticalScrollContainer",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/component/HistoryGrid.kt",
+    "name": "HistoryGrid",
+    "category": "list",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "list, grid and waterfall containers with dense item repetition",
+      "affordance": "content browsing and infinite progression",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-list-shell",
+      "style_keywords": [
+        "list",
+        "modular-cards",
+        "quiet-density"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/component/RankingList.kt",
+    "name": "RankingList",
+    "category": "list",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "list, grid and waterfall containers with dense item repetition",
+      "affordance": "content browsing and infinite progression",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-list-shell",
+      "style_keywords": [
+        "list",
+        "modular-cards",
+        "quiet-density"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt",
+    "name": "SearchFilterBottomSheet",
+    "category": "sheet",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "sheet-based temporary surfaces with drag/close affordances",
+      "affordance": "contextual detail and action overflow",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-bottom-sheet",
+      "style_keywords": [
+        "sheet",
+        "contextual",
+        "soft-elevation"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/component/SearchFilterChip.kt",
+    "name": "SearchFilterChip",
+    "category": "form",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "input, search, picker and switch controls with direct theme styling",
+      "affordance": "task completion and configuration",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-form-control",
+      "style_keywords": [
+        "form",
+        "inset-field",
+        "warm-borders"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/component/SearchResultItem.kt",
+    "name": "SearchResultItem",
+    "category": "item",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "card, row and tile elements combining cover, text and minor actions",
+      "affordance": "quick metadata scan and selection",
+      "asset_sources": [
+        "image",
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-card",
+      "style_keywords": [
+        "card",
+        "paper",
+        "metadata-hierarchy"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt",
+    "name": "SearchTopBar",
+    "category": "navigation",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "top bars, headers, nav rows and tab controls with direct icon/text actions",
+      "affordance": "utility-first navigation cues with minimal hierarchy depth",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-toolbar",
+      "style_keywords": [
+        "navigation",
+        "quiet-chrome",
+        "refined-actions"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt",
+    "name": "FullRankingPageSkeleton",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt",
+    "name": "SearchPageSkeleton",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt",
+    "name": "SearchResultPageSkeleton",
+    "category": "loading",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "spinner, indicator or skeleton placeholders",
+      "affordance": "state feedback during async work",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-loading",
+      "style_keywords": [
+        "loading",
+        "warm-shimmer",
+        "structured-placeholder"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt",
+    "name": "NovelButton",
+    "category": "action",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "button, toolbar and action strips with utilitarian emphasis",
+      "affordance": "high-visibility trigger surface",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-action-control",
+      "style_keywords": [
+        "actions",
+        "pill-controls",
+        "brand-accent"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/core-ui/src/main/java/com/novel/page/component/NovelDivider.kt",
+    "name": "NovelDivider",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/core-ui/src/main/java/com/novel/page/component/NovelText.kt",
+    "name": "NovelText",
+    "category": "layout",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "wrapper and grouping components with low visual identity",
+      "affordance": "layout scaffolding and spacing control",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-layout-shell",
+      "style_keywords": [
+        "layout",
+        "tokenized-spacing",
+        "grouped-surfaces"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/core-ui/src/main/java/com/novel/page/component/NovelTextField.kt",
+    "name": "NovelTextField",
+    "category": "form",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "input, search, picker and switch controls with direct theme styling",
+      "affordance": "task completion and configuration",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "editorial-form-control",
+      "style_keywords": [
+        "form",
+        "inset-field",
+        "warm-borders"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseModel.kt",
+    "name": "Stage7ShowcaseModel",
+    "category": "showcase",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "showcase or catalog surface presenting foundation and component samples",
+      "affordance": "design-system browsing and review",
+      "asset_sources": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "showcase-gallery",
+      "style_keywords": [
+        "showcase",
+        "catalog",
+        "review-surface"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
+    "path": "android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt",
+    "name": "Stage7ShowcaseScreen",
+    "category": "showcase",
+    "platform": "android",
+    "current_visual_summary": {
+      "structure": "showcase or catalog surface presenting foundation and component samples",
+      "affordance": "design-system browsing and review",
+      "asset_sources": [
+        "theme-aware"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "component_recipe": "showcase-gallery",
+      "style_keywords": [
+        "showcase",
+        "catalog",
+        "review-surface"
+      ],
+      "figma_target_page": "02-组件规范"
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true
+  },
+  {
     "path": "src/page/BookshelfPage/components/MainTabBar.tsx",
     "name": "MainTabBar",
     "category": "navigation",

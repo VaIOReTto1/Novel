@@ -7,7 +7,7 @@
 - Missing smoke catalog entries: 0
 - Unmapped figma frames: 51
 - Surface visual specs coverage: 51/51
-- Component visual specs coverage: 143/143
+- Component visual specs coverage: 225/225
 
 ## Registry drift
 - Missing from registry: none

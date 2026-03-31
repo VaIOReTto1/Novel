@@ -72,7 +72,7 @@ describe('stage7 audit scripts', () => {
     }
   });
 
-  test('component catalog groups RN components by semantic category', () => {
+  test('component catalog groups RN and Android components by semantic category', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-components-'));
 
     try {
@@ -84,9 +84,14 @@ describe('stage7 audit scripts', () => {
       const byPath = new Map(catalog.entries.map((entry) => [entry.path, entry]));
 
       expect(catalog.summary.rn_component_count).toBeGreaterThan(100);
+      expect(catalog.summary.android_component_count).toBeGreaterThan(10);
       expect(byPath.get('src/page/ProfilePage/components/TopBar.tsx').category).toBe('navigation');
       expect(byPath.get('src/page/ScrollBox/BecomeWriterPage/components/WelcomeModal.tsx').category).toBe('dialog');
       expect(byPath.get('src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx').category).toBe('loading');
+      expect(byPath.get('android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt').platform).toBe('android');
+      expect(byPath.get('android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt').category).toBe('action');
+      expect(byPath.get('android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt').category).toBe('sheet');
+      expect(byPath.get('android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt').category).toBe('showcase');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
@@ -154,6 +159,12 @@ describe('stage7 audit scripts', () => {
         }),
       );
       expect(specByPath.get('src/page/ScrollBox/BecomeWriterPage/components/WelcomeModal.tsx').target_visual_plan.component_recipe).toContain('dialog');
+      expect(specByPath.get('android/core-ui/src/main/java/com/novel/page/component/NovelTextField.kt')).toEqual(
+        expect.objectContaining({
+          category: 'form',
+          platform: 'android',
+        }),
+      );
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }

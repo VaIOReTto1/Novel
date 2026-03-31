@@ -85,6 +85,9 @@ const detectAssetSources = (source) => {
 const inferComponentCategory = (relativePath) => {
   const baseName = path.basename(relativePath, path.extname(relativePath));
 
+  if (/Showcase/i.test(baseName)) {
+    return 'showcase';
+  }
   if (/TopBar|Header|Nav|TabBar|BackButton/i.test(baseName)) {
     return 'navigation';
   }
@@ -106,7 +109,7 @@ const inferComponentCategory = (relativePath) => {
   if (/Card|Item|Tile|Row/i.test(baseName)) {
     return 'item';
   }
-  if (/Input|Form|Search|Picker|Switch/i.test(baseName)) {
+  if (/Input|Form|Search|Picker|Switch|TextField/i.test(baseName)) {
     return 'form';
   }
   if (/Button|Toolbar|Action|Filter|Purchase/i.test(baseName)) {
@@ -117,6 +120,42 @@ const inferComponentCategory = (relativePath) => {
   }
 
   return 'layout';
+};
+
+const collectAndroidComponentEntries = (repoRoot) => {
+  const androidRoots = [
+    path.join(repoRoot, 'android', 'core-ui', 'src', 'main', 'java', 'com', 'novel', 'page', 'component'),
+    path.join(repoRoot, 'android', 'app', 'src', 'main', 'java', 'com', 'novel', 'page'),
+    path.join(repoRoot, 'android', 'core-ui', 'src', 'main', 'java', 'com', 'novel', 'ui', 'showcase'),
+  ];
+  const files = [];
+
+  androidRoots.forEach((rootPath) => {
+    walkFiles(
+      rootPath,
+      (filePath) =>
+        filePath.endsWith('.kt') &&
+        (
+          filePath.includes(`${path.sep}component${path.sep}`) ||
+          filePath.includes(`${path.sep}components${path.sep}`) ||
+          filePath.includes(`${path.sep}skeleton${path.sep}`) ||
+          filePath.includes(`${path.sep}showcase${path.sep}`)
+        ),
+      files,
+    );
+  });
+
+  return unique(files).map((filePath) => {
+    const relativePath = relativeRepoPath(repoRoot, filePath);
+    const source = fs.readFileSync(filePath, 'utf8');
+    return {
+      path: relativePath,
+      name: componentNameFromFile(filePath),
+      platform: 'android',
+      category: inferComponentCategory(relativePath),
+      asset_sources: detectAssetSources(source),
+    };
+  });
 };
 
 const sampleNeighborComponents = (repoRoot, absolutePath) => {
@@ -743,14 +782,14 @@ const buildSurfaceVisualSpecs = (surfaces) =>
   });
 
 const buildComponentCatalog = (repoRoot) => {
-  const componentFiles = walkFiles(
+  const rnComponentFiles = walkFiles(
     path.join(repoRoot, 'src', 'page'),
     (filePath) =>
       /\.(ts|tsx)$/.test(filePath) &&
       filePath.includes(`${path.sep}components${path.sep}`),
   );
 
-  const entries = componentFiles
+  const rnEntries = rnComponentFiles
     .map((filePath) => {
       const relativePath = relativeRepoPath(repoRoot, filePath);
       const source = fs.readFileSync(filePath, 'utf8');
@@ -761,16 +800,22 @@ const buildComponentCatalog = (repoRoot) => {
         category: inferComponentCategory(relativePath),
         asset_sources: detectAssetSources(source),
       };
-    })
+    });
+  const androidEntries = collectAndroidComponentEntries(repoRoot);
+  const entries = [...rnEntries, ...androidEntries]
     .sort((left, right) => left.path.localeCompare(right.path));
 
   const summary = entries.reduce(
     (acc, entry) => {
-      acc.rn_component_count += 1;
+      if (entry.platform === 'react-native') {
+        acc.rn_component_count += 1;
+      } else if (entry.platform === 'android') {
+        acc.android_component_count += 1;
+      }
       acc.category_counts[entry.category] = (acc.category_counts[entry.category] || 0) + 1;
       return acc;
     },
-    { rn_component_count: 0, category_counts: {} },
+    { rn_component_count: 0, android_component_count: 0, category_counts: {} },
   );
 
   return { summary, entries };
@@ -875,6 +920,16 @@ const COMPONENT_CATEGORY_PLANS = {
     target: {
       component_recipe: 'asset-governed-media',
       style_keywords: ['media', 'semantic-icons', 'credit-aware'],
+    },
+  },
+  showcase: {
+    current: {
+      structure: 'showcase or catalog surface presenting foundation and component samples',
+      affordance: 'design-system browsing and review',
+    },
+    target: {
+      component_recipe: 'showcase-gallery',
+      style_keywords: ['showcase', 'catalog', 'review-surface'],
     },
   },
   layout: {

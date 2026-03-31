@@ -24,16 +24,18 @@
 - profile-root: 1
 
 ## Component visual specs
-- Current look recorded: 143
-- Target look planned: 143
-- navigation: 21
-- item: 11
-- action: 9
+- Current look recorded: 225
+- Target look planned: 225
+- layout: 122
+- action: 13
+- sheet: 3
+- navigation: 24
+- dialog: 3
+- media: 6
+- loading: 8
+- form: 9
+- list: 16
+- item: 12
+- showcase: 2
 - empty: 7
-- list: 12
-- layout: 74
-- form: 5
-- loading: 1
-- sheet: 1
-- dialog: 2
 

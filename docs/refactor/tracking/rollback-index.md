@@ -57,6 +57,7 @@
 | `RB-STAGE7-WEB-SHOWCASE-20260401-01` | `a16c3c9` | 修通 Stage 7 展示的 web 入口与 shim 链路 | `git revert --no-edit a16c3c9` | `npm test -- --runInBand --runTestsByPath __tests__/web/webEntryConfig.test.ts __tests__/web/webShims.test.ts __tests__/design-system/Stage7Showcase.test.tsx && npx webpack --config webpack.config.js && npm run harness:check` |
 | `RB-STAGE7-VISUAL-BRIEFS-20260401-01` | `ed30a96` | 补全 Stage 7 页面与组件的视觉简报 | `git revert --no-edit ed30a96` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AuditScripts.test.js && npm run stage7:audit:check && npm run harness:check` |
 | `RB-STAGE7-FIGMA-SEED-20260401-01` | `90142be` | 同步 Stage 7 的 Figma 逐项卡片落地 | `git revert --no-edit 90142be` | `npm run harness:check` |
+| `RB-STAGE7-WAVE1-PROFILE-20260401-01` | `8e02f52` | 启动 Stage 7 首批页面壳层换肤（ProfilePage） | `git revert --no-edit 8e02f52` | `npm test -- --runInBand --runTestsByPath __tests__/App.test.tsx __tests__/design-system/resolveStage7Theme.test.ts __tests__/design-system/ProfilePageStyles.stage7.test.ts __tests__/design-system/ProfileTopBar.stage7.test.tsx` |
 
 ## 说明
 - 当前 closeout 与 rollback authority 以本页为准。

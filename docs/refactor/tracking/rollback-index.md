@@ -53,6 +53,7 @@
 | `RB-STAGE7-CHECKS-20260331-01` | `c7690a6` | 修正 Stage 7 token / asset check 为只读校验 | `git revert --no-edit c7690a6` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7TokenBuild.test.js __tests__/harness/stage7AssetsScripts.test.js && npm run stage7:tokens:check && npm run stage7:assets:check && npm run harness:check` |
 | `RB-STAGE7-ASSET-UI-20260401-01` | `09e6221` | 接入 Stage 7 图标注册表与媒体基础组件 | `git revert --no-edit 09e6221` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AssetsScripts.test.js __tests__/design-system/IconComponent.stage7.test.tsx __tests__/design-system/PlaceholderImage.stage7.test.tsx __tests__/design-system/PexelsCreditOverlay.stage7.test.tsx && npm run stage7:assets:check && npm run harness:check` |
 | `RB-STAGE7-SHOWCASE-20260401-01` | `e64186d` | 补充 Stage 7 的 RN 展示基建骨架 | `git revert --no-edit e64186d` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/Stage7Showcase.test.tsx __tests__/design-system/IconComponent.stage7.test.tsx __tests__/design-system/PlaceholderImage.stage7.test.tsx __tests__/design-system/PexelsCreditOverlay.stage7.test.tsx && npm run stage7:assets:check && npm run harness:check` |
+| `RB-STAGE7-ANDROID-SHOWCASE-20260401-01` | `5d5fe2e` | 补上 Stage 7 的 Android 展示基建骨架 | `git revert --no-edit 5d5fe2e` | `cd android && ./gradlew :core-ui:testDebugUnitTest --tests com.novel.ui.showcase.Stage7ShowcaseModelTest --stacktrace --console=plain && npm run harness:check` |
 
 ## 说明
 - 当前 closeout 与 rollback authority 以本页为准。

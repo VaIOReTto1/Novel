@@ -22,7 +22,7 @@
 | V13-01 | RN domain guide | 页面域默认边界清晰 | 已有宿主文档，但尚未进入执行 | `planned` | `queued` |
 | V13-02 | 第一批页面域样本 | Profile / Settings 域收口 | 已由 `profile-settings-domain-wave-2026-03-31.md` 落地首批 domain helper，并补齐 Profile / Settings 相关 Jest + smoke 护栏 | `in_progress` | `yellow` |
 | V13-03 | 中段页面域样本 | Bookshelf / Comment 域收口 | 已由 `bookshelf-comment-domain-wave-2026-03-31.md` 落地 Bookshelf / History / Watchlist 与 Comment 组的首轮 page model 收口；`CommunityPage` 仍待继续评估 | `in_progress` | `yellow` |
-| V13-04 | 后段页面域样本 | Writer / heavy pages 域收口 | 已由 `writer-domain-wave-2026-03-31.md` 与 `community-heavy-domain-wave-2026-03-31.md` 覆盖 `AIWriteAssistant / BookManage / WritePage / Community / RecommendBook / MemberCenter / BecomeWriter` 的首轮 page model 收口；剩余重点收缩到个别更深的长页下沉 | `in_progress` | `yellow` |
+| V13-04 | 后段页面域样本 | Writer / heavy pages 域收口 | 已由 `writer-domain-wave-2026-03-31.md` 与 `community-heavy-domain-wave-2026-03-31.md` 覆盖 `AIWriteAssistant / BookManage / WritePage / Community / RecommendBook / MemberCenter / BecomeWriter` 的首轮 page model 收口，并补完 `WritePage` deeper extraction；剩余重点收缩到个别更深的长页下沉 | `in_progress` | `yellow` |
 | V13-05 | Phase 13 closeout | 页面域边界关闭 | 待执行 | `planned` | `queued` |
 
 ## Phase 14

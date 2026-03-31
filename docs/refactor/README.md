@@ -13,7 +13,7 @@
 - `Stage 5 = validated`，`Phase 9-11` 已完成当前计划内治理闭环。
 - `Stage 6 = in_progress`，当前执行线已切到 RN 重构续规划。
 - `Phase 12 = validated`，已完成 RN 运行时与桥接入口的第一轮收口。
-- `Phase 13 = in_progress`，当前已完成 `Profile / Settings`、`Bookshelf / History / Watchlist / Comment`、`Writer`，并继续推进到 `Community / remaining heavy pages`。
+- `Phase 13 = in_progress`，当前已完成 `Profile / Settings`、`Bookshelf / History / Watchlist / Comment`、`Writer`，并继续推进到 `Community / remaining heavy pages`；`WritePage` 已完成当前这一轮 deeper extraction。
 - `Phase 14 = planned`，将承接 RN contract、registry、mock/fallback 与 maintainability 治理。
 
 ## 当前 repo 事实

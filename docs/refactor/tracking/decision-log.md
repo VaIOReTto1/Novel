@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-03-31 | Phase 13 writepage-deeper | execution | 在 Writer 域首轮收口后继续完成 `WritePage` 的 deeper extraction，把 selection change、param confirm 与 focus sync 下沉到 page model | `WritePage` 仍是 Writer 域里页面编排最密集的入口，继续留在页面层会成为 Phase 13 的残留热点 | `V13-04` 仍保持 `in_progress / yellow`，但 Writer 核心编辑页已不再是下一阶段的主要阻塞点 | 后续将主攻剩余长页和零散 heavy pages |
 | 2026-03-31 | Phase 13 heavy-wave | execution | 将 `Community / RecommendBook / MemberCenter / BecomeWriter` 作为 Phase 13 的下一批 remaining heavy pages 推进 | 这些页面仍保留明显的 bootstrap、返回、tab 与购买/更多动作编排，且复杂度低于彻底继续深挖 `WritePage` | `V13-04` 持续保持 `in_progress / yellow`，heavy pages 已开始进入统一 page-model 边界 | 下一步继续收 `WritePage deeper extraction` 与个别剩余长页 |
 | 2026-03-31 | Phase 13 writer-wave | execution | 在 `Bookshelf / Comment` 之后继续以 `AIWriteAssistant / BookManage / WritePage` 推进 Writer 域收口 | Writer 域仍保留明显的页面层 bootstrap、idea modal 和导航编排，是 Phase 13 后段的高收益切口 | `V13-04` 进入 `in_progress / yellow`，Writer 域开始形成 page model 宿主，`WritePage` 也已进入 helper 接线阶段 | 后续继续评估 `WritePage` 深化下沉与剩余 heavy pages |
 | 2026-03-31 | Phase 13 mid-wave | execution | 将 `Bookshelf / History / Watchlist / Comment` 作为 Phase 13 的第二批 page-domain 样本推进，并复用 “page -> domain model -> store/hook” 模式 | 这组页面比 Writer 域更分散，但复杂度仍明显低于 Writer，适合作为中段样本先收口 | `V13-03` 进入 `in_progress / yellow`，Phase 13 的中段域已经开始形成统一结构 | 下一步继续评估 `Community / Writer / AIWriteAssistant / BookManage` |

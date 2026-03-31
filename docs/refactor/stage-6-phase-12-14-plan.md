@@ -78,6 +78,7 @@
   - `Writer / AIWriteAssistant / BookManage`
 - 当前已继续推进：
   - `Community / RecommendBook / MemberCenter / BecomeWriter`
+- `WritePage deeper extraction` 已完成当前一轮收口
 
 ### Phase 14
 - 只处理 RN 长期治理层：

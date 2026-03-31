@@ -19,6 +19,9 @@
   - selection menu 事件分发
   - replace / append selected text
   - 参数弹窗 hint 路由
+  - selection change 解析
+  - param modal confirm 分发
+  - focus sync
   - `WritePage.smoke` 页面渲染护栏
 
 ## 新增文件
@@ -37,4 +40,5 @@
 
 ## 当前判断
 - `AIWriteAssistant` 与 `BookManagePage` 已进入 page-domain 委派模式。
-- `WritePage` 已开始接入 page model，但 selection / modal orchestration 仍可继续进一步下沉。
+- `WritePage` 已完成当前这一轮 deeper extraction，selection / modal orchestration 已进入 page model。
+- Writer 域当前剩余工作主要转向更零散的长页与后续命名/目录清理，而不是继续把核心流程留在页面层。

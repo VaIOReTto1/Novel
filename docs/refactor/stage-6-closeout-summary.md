@@ -1,19 +1,25 @@
 # Stage 6 Closeout Summary
 
-## 当前状态
-- `Stage 6 = in_progress`
-- 本文件继续作为 Stage 6 最终关闭宿主保留，但当前不代表 Stage 6 已关闭。
+## 关闭结论
+- `Stage 6 = validated`
+- 生效日期：`2026-03-31`
 
-## 阶段定义
-- `Stage 6 = Phase 12-14`
-
-## 当前已完成
+## 阶段组成
 - `Phase 12 = validated`
-- `Phase 13 = in_progress`
-- `Phase 14 = planned`
+- `Phase 13 = validated`
+- `Phase 14 = validated`
 
-## 最终关闭前必须完成
-- `V12-*` 全部为 `green`
-- `V13-*` 全部为 `green`
-- `V14-*` 全部为 `green`
-- `docs/refactor/README.md`、`decision-log.md`、`rollback-index.md` 与 harness 导航同步到最终口径
+## 关闭摘要
+- RN runtime / bridge / event / back-navigation 已从页面层直连收口到 wrapper。
+- RN 页面域已完成首轮大面积 `page -> domain model -> store/hook` 收口。
+- RN contract quality、registry consistency、mock/fallback catalog 与 maintainability guide 已形成 repo-local 治理层。
+
+## 主要证据
+- [Phase 12 closeout assessment](./phase-12/phase-12-closeout-assessment.md)
+- [Phase 13 closeout assessment](./phase-13/phase-13-closeout-assessment.md)
+- [Phase 14 closeout assessment](./phase-14/phase-14-closeout-assessment.md)
+- [Phase 12-14 验证看板](./tracking/phase-12-14-validation-board.md)
+
+## 后续模式
+- 当前没有新的 active refactor phase。
+- 后续如需继续推进 RN 治理，应通过 reopen 或新 Stage 进入。

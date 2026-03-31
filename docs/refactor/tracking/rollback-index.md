@@ -1,6 +1,6 @@
 # Rollback Index
 
-## 当前 Stage 6 原子提交
+## Stage 6 代码提交
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |
 | `RB-P12-CODE-20260331-01` | `5a0b632` | Phase 12 运行时、bridge gateway、event hub、back navigation 与页面直连入口收口 | `git revert --no-edit 5a0b632` | `npm test -- --runInBand __tests__/runtime/backNavigation.test.ts __tests__/runtime/eventHub.test.ts __tests__/runtime/runtimeCoordinator.test.ts __tests__/runtime/rawPrimitivesBoundary.test.ts __tests__/bridge/NavigationBridge.contract.test.ts __tests__/bridge/UserBridge.contract.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
@@ -10,46 +10,33 @@
 | `RB-P13-WAVE4-20260331-01` | `17ac26b` | Phase 13 第四波评论域页面收口 | `git revert --no-edit 17ac26b` | `npm test -- --runInBand __tests__/domains/commentPageModel.test.ts __tests__/domains/reviewDetailPageModel.test.ts __tests__/domains/writeReviewPageModel.test.ts __tests__/stores/commentStore.mock-closure.test.ts` |
 | `RB-P13-WAVE5-20260331-01` | `aaf9069` | Phase 13 第五波 Writer 域收口 | `git revert --no-edit aaf9069` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts` |
 | `RB-P13-WAVE5-20260331-02` | `24d49b9` | Phase 13 第五波 Writer 页面接线深化 | `git revert --no-edit 24d49b9` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
-| `RB-P13-WAVE5-20260331-03` | `0eb4639` | Phase 13 中 WritePage 更深层收口 | `git revert --no-edit 0eb4639` | `npm test -- --runInBand __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
 | `RB-P13-WAVE6-20260331-01` | `fbfc7d9` | Phase 13 第六波 Community 与 heavy pages 收口 | `git revert --no-edit fbfc7d9` | `npm test -- --runInBand __tests__/domains/communityPageModel.test.ts __tests__/community/communityHandlers.test.ts __tests__/domains/recommendBookPageModel.test.ts __tests__/domains/memberCenterPageModel.test.ts __tests__/domains/becomeWriterPageModel.test.ts` |
-| `RB-P13-AUTH-20260331-05` | `deae664` | Phase 13 第六波 heavy pages 进展补记 | `git revert --no-edit deae664` | `npm run harness:check` |
 | `RB-P13-WRITE-DEEP-20260331-01` | `0eb4639` | WritePage 更深层收口 | `git revert --no-edit 0eb4639` | `npm test -- --runInBand __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
-| `RB-P13-AUTH-20260331-06` | `8de4626` | WritePage 更深层收口进展补记 | `git revert --no-edit 8de4626` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-01` | `4dd9777` | Phase 13 状态切换、validation board 与 wave 1 记录同步 | `git revert --no-edit 4dd9777` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-02` | `deb061e` | Phase 13 中段页面域收口进展补记 | `git revert --no-edit deb061e` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-04` | `32f17f3` | Phase 13 第五波 Writer 页面接线进展补记 | `git revert --no-edit 32f17f3` | `npm run harness:check` |
-| `RB-P13-HARNESS-20260331-01` | `0f4aaef` | Phase 13 中段收口后的 harness 导航同步 | `git revert --no-edit 0f4aaef` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-03` | `b9af348` | Phase 13 后段 Writer 域收口进展补记 | `git revert --no-edit b9af348` | `npm run harness:check` |
-| `RB-P13-HARNESS-20260331-02` | `b5b0021` | Phase 13 后段 Writer 收口后的 harness 导航同步 | `git revert --no-edit b5b0021` | `npm run harness:check` |
-| `RB-P13-HARNESS-20260331-03` | `2b6b1dc` | Phase 13 第六波后的 harness 导航同步 | `git revert --no-edit 2b6b1dc` | `npm run harness:check` |
-| `RB-P13-HARNESS-20260331-04` | `889c7ab` | WritePage 更深层收口后的 harness 导航同步 | `git revert --no-edit 889c7ab` | `npm run harness:check` |
+| `RB-P13-WAVE7-20260331-01` | `540bde2` | Phase 13 第七波剩余长页收口 | `git revert --no-edit 540bde2` | `npm test -- --runInBand __tests__/domains/messagePageModel.test.ts __tests__/domains/myReservationPageModel.test.ts __tests__/domains/viewedUsersPageModel.test.ts __tests__/domains/scrollboxHistoryPageModel.test.ts __tests__/domains/feedbackHelpPageModel.test.ts` |
+| `RB-P14-REGISTRY-20260331-01` | `e846ae5` | Phase 14 registry consistency 护栏 | `git revert --no-edit e846ae5` | `npm test -- --runInBand __tests__/harness/rnComponentRegistryConsistency.test.ts` |
+
+## Stage 6 authority / harness 提交
+| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
+| --- | --- | --- | --- | --- |
 | `RB-P12-AUTH-20260331-01` | `2b750ac` | Phase 12 closeout、Stage 6 状态切换与 harness 导航同步 | `git revert --no-edit 2b750ac` | `npm run harness:check` |
-| `RB-STAGE6-DOCS-20260331-01` | `4ca01b5` | Stage 6 控制面、Phase 12-14 宿主与 RN 治理宿主建立 | `git revert --no-edit 4ca01b5` | `npm run harness:check` |
-
-## 当前 Stage 4 / Stage 5 关闭记录
-| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
-| --- | --- | --- | --- | --- |
-| `RB-STAGE4-DOCS-20260328-01` | `340bc23` | Stage 4 控制面切主线与 Phase 7-8 文档骨架建立 | `git revert --no-edit 340bc23` | `npm run harness:check` |
-| `RB-P7-SHRINK-20260330-01` | `d113f44` | Phase 7 第一轮 icon font shrink | `git revert --no-edit d113f44` | `android/gradlew.bat clean app:assembleRelease app:bundleRelease --no-daemon --console=plain` |
-| `RB-P7-BUILD-20260330-01` | `eca2a36` | Phase 7 build baseline 与 configuration cache canary | `git revert --no-edit eca2a36` | `android/gradlew.bat app:testDebugUnitTest --configuration-cache --configuration-cache-problems=warn --no-daemon --console=plain` |
-| `RB-P7-CLOSEOUT-20260330-01` | `77c4967` | Phase 7 closeout 与 Phase 8 入口切换 | `git revert --no-edit 77c4967` | `npm run harness:check` |
-| `RB-P8-GOVERNANCE-20260330-01` | `241989b` | Phase 8 治理工件与 Stage 4 closeout | `git revert --no-edit 241989b` | `npm run harness:check` |
-| `RB-STAGE5-DOCS-20260330-01` | `3ed6c6f` | Stage 5 控制面、Phase 9-11 宿主与公共治理宿主建立 | `git revert --no-edit 3ed6c6f` | `npm run harness:check` |
-| `RB-P9-DOCS-20260330-01` | `fa8afa7` | Phase 9 运行可靠性与业务连续性宿主建立及关闭 | `git revert --no-edit fa8afa7` | `npm run harness:check` |
-| `RB-P10-P11-STAGE5-20260330-01` | `945511d` | Phase 10/11 治理工件与 Stage 5 closeout | `git revert --no-edit 945511d` | `npm run harness:check` |
-
-## 当前 reopen 原子提交
-| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
-| --- | --- | --- | --- | --- |
-| `RB-P5-R1-20260326-01` | `6e39db8` | 收口 RN 宿主根与桥接状态层 | `git revert --no-edit 6e39db8` | `android/gradlew.bat :feature-rn-host:testDebugUnitTest :app:compileDebugKotlin :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R2-20260326-01` | `41a5ba8` | 迁移搜索根状态机到 `feature-search` | `git revert --no-edit 41a5ba8` | `android/gradlew.bat :feature-search:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R2-20260326-02` | `6c0d662` | 迁移登录根状态机到 `feature-login` | `git revert --no-edit 6c0d662` | `android/gradlew.bat :feature-login:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R2-20260326-03` | `6799388` | 迁移书籍详情根状态机到 `feature-book` | `git revert --no-edit 6799388` | `android/gradlew.bat :feature-book:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R3-20260326-01` | `f8a5d7c` | 迁移 Reader 设置协调件到 `feature-reader` | `git revert --no-edit f8a5d7c` | `android/gradlew.bat :feature-reader:testDebugUnitTest :app:compileDebugKotlin --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R3-20260326-02` | `ff71292` | 迁移首页根状态机到 `feature-home` | `git revert --no-edit ff71292` | `android/gradlew.bat :feature-home:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R3-20260326-03` | `5a5c81c` | 迁移阅读器根状态机到 `feature-reader` | `git revert --no-edit 5a5c81c` | `android/gradlew.bat :feature-reader:testDebugUnitTest :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
-| `RB-P5-R4-20260326-01` | `bb8349e` | 收口 app 宿主各包装层 | `git revert --no-edit bb8349e` | `android/gradlew.bat :feature-rn-host:testDebugUnitTest :app:compileDebugKotlin :app:testDebugUnitTest --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"` |
+| `RB-P12-ROLLBACK-20260331-01` | `975c132` | Phase 12 控制面切换的回滚索引补记 | `git revert --no-edit 975c132` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-01` | `4dd9777` | Phase 13 状态切换、validation board 与 wave 1 记录同步 | `git revert --no-edit 4dd9777` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-01` | `4018c6f` | Phase 13 启动后的 harness 导航同步 | `git revert --no-edit 4018c6f` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-01` | `3a687fe` | Phase 13 启动的回滚索引补记 | `git revert --no-edit 3a687fe` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-02` | `deb061e` | Phase 13 中段页面域收口进展补记 | `git revert --no-edit deb061e` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-02` | `0f4aaef` | Phase 13 中段收口后的 harness 导航同步 | `git revert --no-edit 0f4aaef` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-02` | `5c0ee65` | Phase 13 中段推进的回滚索引补记 | `git revert --no-edit 5c0ee65` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-03` | `b9af348` | Phase 13 后段 Writer 域收口进展补记 | `git revert --no-edit b9af348` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-03` | `b5b0021` | Phase 13 后段 Writer 收口后的 harness 导航同步 | `git revert --no-edit b5b0021` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-03` | `727c83a` | Phase 13 后段推进的回滚索引补记 | `git revert --no-edit 727c83a` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-04` | `32f17f3` | Phase 13 第五波 Writer 页面接线进展补记 | `git revert --no-edit 32f17f3` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-04` | `8f175ee` | Phase 13 第五波接线的回滚索引补记 | `git revert --no-edit 8f175ee` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-05` | `deae664` | Phase 13 第六波 heavy pages 进展补记 | `git revert --no-edit deae664` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-04` | `2b6b1dc` | Phase 13 第六波后的 harness 导航同步 | `git revert --no-edit 2b6b1dc` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-05` | `31bcb01` | Phase 13 第六波推进的回滚索引补记 | `git revert --no-edit 31bcb01` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-06` | `8de4626` | WritePage 更深层收口进展补记 | `git revert --no-edit 8de4626` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-05` | `889c7ab` | WritePage 更深层收口后的 harness 导航同步 | `git revert --no-edit 889c7ab` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-06` | `cd0f37b` | WritePage 更深层收口的回滚索引补记 | `git revert --no-edit cd0f37b` | `npm run harness:check` |
 
 ## 说明
 - 当前 closeout 与 rollback authority 以本页为准。
-- 如后续继续推进 `Phase 13` / `Phase 14`，应继续补充新的 `Rollback ID`。

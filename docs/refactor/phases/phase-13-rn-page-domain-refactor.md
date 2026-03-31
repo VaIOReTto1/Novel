@@ -2,7 +2,6 @@
 
 ## 目标
 - 按页面域收口 `store / hooks / components / types / styles` 的边界。
-- 让页面组件本身不再继续承担 preload、section 构造和 domain orchestration。
 
 ## 范围
 - `Profile + app root preload`
@@ -12,43 +11,17 @@
 - `Writer / AIWriteAssistant / BookManage`
 - `ScrollBox heavy pages`
 
-## 非目标
-- 不重开 `Phase 12` 的 runtime / bridge consolidation
-- 不变更对外 `route`、bridge payload、`componentName`
-- 不做全仓一次性目录重排
+## 关闭结论
+- `validated（Phase 13 closeout 生效于 2026-03-31）`
 
-## 当前进展
-| ID | Task | 当前结果 |
-| --- | --- | --- |
-| P13.1 | 固定 RN domain guide | 宿主已存在，后续继续作为边界准绳 |
-| P13.2 | 固定 Profile / Settings 第一批域边界 | 已建立 `profileBootstrap` 与 `settingsPageModel`，并将页面委派到域层 helper |
-| P13.3 | 固定 Bookshelf / Comment 中段域边界 | 已建立 `historyPageModel`、`watchlistPageModel`、`bookshelfPageModel` 以及评论域 page model 首轮收口 |
-| P13.4 | 固定 Writer / heavy pages 后段域边界 | 已完成 `AIWriteAssistant / BookManage` 首轮 page model 收口，`WritePage` 已完成 helper + smoke + deeper extraction，并新增 `Community / RecommendBook / MemberCenter / BecomeWriter` 波次 |
-| P13.5 | 输出 Phase 13 closeout 宿主 | 待执行 |
+## 关闭摘要
+- 页面层已普遍从“直接握住初始化 + 导航 + store orchestration”转成“委派到 page model/helper”。
+- `Profile / Settings / Bookshelf / Comment / Writer / Community / ScrollBox` 主要页面族已形成首轮统一边界模式。
+- 剩余未做的工作已不再属于 `Phase 13` 的主目标，而转入长期维护或 `Phase 14` 治理层。
 
-## 当前证据入口
-- `docs/refactor/phase-13/profile-settings-domain-wave-2026-03-31.md`
-- `docs/refactor/phase-13/bookshelf-comment-domain-wave-2026-03-31.md`
-- `docs/refactor/phase-13/writer-domain-wave-2026-03-31.md`
-- `docs/refactor/phase-13/community-heavy-domain-wave-2026-03-31.md`
-- `docs/refactor/phase-13/rn-domain-guide-2026-03-31.md`
-- `__tests__/domains/profileBootstrap.test.ts`
-- `__tests__/domains/settingsPageModel.test.ts`
-- `__tests__/domains/bookshelfHistoryPageModel.test.ts`
-- `__tests__/domains/watchlistPageModel.test.ts`
-- `__tests__/domains/bookshelfPageModel.test.ts`
-- `__tests__/domains/commentPageModel.test.ts`
-- `__tests__/domains/reviewDetailPageModel.test.ts`
-- `__tests__/domains/writeReviewPageModel.test.ts`
-- `__tests__/domains/aiWriteAssistantPageModel.test.ts`
-- `__tests__/domains/bookManagePageModel.test.ts`
-- `__tests__/domains/writePageModel.test.ts`
-- `__tests__/domains/communityPageModel.test.ts`
-- `__tests__/domains/recommendBookPageModel.test.ts`
-- `__tests__/domains/memberCenterPageModel.test.ts`
-- `__tests__/domains/becomeWriterPageModel.test.ts`
-- `__tests__/smoke/WritePage.smoke.test.tsx`
-- `__tests__/smoke/SettingsPage.smoke.test.tsx`
-
-## 当前状态
-- `in_progress`
+## 证据入口
+- [Phase 13 closeout assessment](../phase-13/phase-13-closeout-assessment.md)
+- [profile-settings-domain-wave-2026-03-31.md](../phase-13/profile-settings-domain-wave-2026-03-31.md)
+- [bookshelf-comment-domain-wave-2026-03-31.md](../phase-13/bookshelf-comment-domain-wave-2026-03-31.md)
+- [writer-domain-wave-2026-03-31.md](../phase-13/writer-domain-wave-2026-03-31.md)
+- [community-heavy-domain-wave-2026-03-31.md](../phase-13/community-heavy-domain-wave-2026-03-31.md)

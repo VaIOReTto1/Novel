@@ -5,15 +5,16 @@
 - `Stage 4 = validated`
 - `Stage 5 = validated`
 - `Stage 6 = validated`
-- `Phase 12 = validated`
-- `Phase 13 = validated`
-- `Phase 14 = validated`
-- 当前没有新的 active refactor stage。
+- `Stage 7 = in_progress`
+- `Phase 15 = in_progress`
+- `Phase 16 = planned`
+- `Phase 17 = planned`
+- `Phase 18 = planned`
 
 ## 项目现状
-- Android 主线重构已经完成到 `Stage 5`。
-- RN 主线重构已在 `Stage 6` 完成第一轮 runtime、page-domain 与治理层闭环。
-- 后续默认进入长期维护 / reopen 模式。
+- Android 主线重构已经完成到 `Stage 5`，当前稳定在 `app + core-* + feature-* + macrobenchmark` 模块图。
+- RN 主线重构已在 `Stage 6` 完成第一轮 runtime、page-domain 与 contract/maintainability 收口。
+- 当前默认主线切换到 `Stage 7`，目标是把视觉系统、资产治理、Token、展示基建和页面重皮肤沉淀为长期治理层。
 
 ## Stage 摘要
 | Stage | Phase | 主题 | 当前状态 |
@@ -24,12 +25,11 @@
 | Stage 4 | Phase 7-8 | 包体积 / 构建效率 / observability | `validated` |
 | Stage 5 | Phase 9-11 | 运行硬化、合规、供应链、维护性 | `validated` |
 | Stage 6 | Phase 12-14 | RN runtime、page-domain、contract/maintainability | `validated` |
+| Stage 7 | Phase 15-18 | 视觉系统、资产治理、Token、展示与回归门禁 | `in_progress` |
 
 ## 当前权威入口
 - [README.md](./README.md)
-- [stage-6-closeout-summary.md](./stage-6-closeout-summary.md)
-- [phase-13-closeout-assessment.md](./phase-13/phase-13-closeout-assessment.md)
-- [phase-14-closeout-assessment.md](./phase-14/phase-14-closeout-assessment.md)
-- [phase-12-14-validation-board.md](./tracking/phase-12-14-validation-board.md)
+- [stage-7-phase-15-18-plan.md](./stage-7-phase-15-18-plan.md)
+- [phase-15-18-validation-board.md](./tracking/phase-15-18-validation-board.md)
 - [decision-log.md](./tracking/decision-log.md)
 - [rollback-index.md](./tracking/rollback-index.md)

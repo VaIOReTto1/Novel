@@ -22,6 +22,7 @@ describe('stage7 asset scripts', () => {
         'iconManifestPath',
         'illustrationManifestPath',
         'mediaManifestPath',
+        'reactNativeIconRegistryPath',
         'reportPath',
       ]);
 
@@ -115,6 +116,25 @@ describe('stage7 asset scripts', () => {
 
       expect(result.ok).toBe(false);
       expect(result.message).toContain('stale');
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  test('generated RN icon registry exposes legacy semantic names and sources', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-icon-registry-'));
+
+    try {
+      const { reactNativeIconRegistryPath } = assetScripts.generateAssetArtifacts({
+        repoRoot,
+        outputRoot: tempDir,
+      });
+      const source = fs.readFileSync(reactNativeIconRegistryPath, 'utf8');
+
+      expect(source).toContain('export const stage7IconRegistry');
+      expect(source).toContain('"legacy.settings"');
+      expect(source).toContain('../../../../assets/image/settings.svg');
+      expect(source).toContain('"legacy.wallet"');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }

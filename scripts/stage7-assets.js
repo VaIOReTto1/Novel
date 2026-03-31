@@ -149,6 +149,26 @@ const buildAssetGovernanceReport = ({ iconManifest, providers, ledger }) => [
   '',
 ].join('\n');
 
+const renderReactNativeIconRegistry = (iconManifest) => {
+  const svgEntries = iconManifest.entries.filter(
+    (entry) => entry.source_type === 'legacy-local-svg',
+  );
+  const importLines = svgEntries.map((entry, index) => {
+    const importName = `Stage7IconAsset${index + 1}`;
+    return {
+      importName,
+      line: `import ${importName} from '${'../../../../' + entry.source}';`,
+      semanticName: entry.semantic_name,
+    };
+  });
+
+  const registryLines = importLines.map(
+    ({ importName, semanticName }) => `  "${semanticName}": ${importName},`,
+  );
+
+  return `import type { ComponentType } from 'react';\nimport type { SvgProps } from 'react-native-svg';\n${importLines.map((item) => item.line).join('\n')}\n\nexport const stage7IconRegistry: Record<string, ComponentType<SvgProps>> = {\n${registryLines.join('\n')}\n};\n`;
+};
+
 const generateAssetArtifacts = ({
   repoRoot = path.resolve(__dirname, '..'),
   outputRoot = repoRoot,
@@ -170,6 +190,14 @@ const generateAssetArtifacts = ({
     mediaManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'media-manifest.json'),
     illustrationManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'illustration-manifest.json'),
     copyrightLedgerPath: path.join(resolvedRoot, 'design-system', 'assets', 'copyright-ledger.json'),
+    reactNativeIconRegistryPath: path.join(
+      resolvedRoot,
+      'src',
+      'design-system',
+      'icons',
+      'generated',
+      'stage7IconRegistry.ts',
+    ),
     reportPath: path.join(resolvedRoot, 'docs', 'refactor', 'phase-17', 'asset-governance-report.md'),
   };
 
@@ -177,6 +205,7 @@ const generateAssetArtifacts = ({
   writeJson(outputs.mediaManifestPath, mediaManifest);
   writeJson(outputs.illustrationManifestPath, illustrationManifest);
   writeJson(outputs.copyrightLedgerPath, copyrightLedger);
+  writeText(outputs.reactNativeIconRegistryPath, renderReactNativeIconRegistry(iconManifest));
   writeText(outputs.reportPath, `${report}\n`);
 
   return outputs;
@@ -196,6 +225,14 @@ const checkAssetArtifacts = ({
       mediaManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'media-manifest.json'),
       illustrationManifestPath: path.join(resolvedRoot, 'design-system', 'assets', 'illustration-manifest.json'),
       copyrightLedgerPath: path.join(resolvedRoot, 'design-system', 'assets', 'copyright-ledger.json'),
+      reactNativeIconRegistryPath: path.join(
+        resolvedRoot,
+        'src',
+        'design-system',
+        'icons',
+        'generated',
+        'stage7IconRegistry.ts',
+      ),
       reportPath: path.join(resolvedRoot, 'docs', 'refactor', 'phase-17', 'asset-governance-report.md'),
     };
 

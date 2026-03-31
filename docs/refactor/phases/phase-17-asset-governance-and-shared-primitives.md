@@ -20,6 +20,10 @@
 ## 当前产物入口
 - [stage7.asset-providers.json](../../../design-system/source/stage7.asset-providers.json)
 - [icon-manifest.json](../../../design-system/assets/icon-manifest.json)
+- [stage7IconRegistry.ts](../../../src/design-system/icons/generated/stage7IconRegistry.ts)
+- [Stage7Icon.tsx](../../../src/design-system/icons/Stage7Icon.tsx)
+- [PlaceholderImage.tsx](../../../src/design-system/media/PlaceholderImage.tsx)
+- [PexelsCreditOverlay.tsx](../../../src/design-system/media/PexelsCreditOverlay.tsx)
 - [media-manifest.json](../../../design-system/assets/media-manifest.json)
 - [illustration-manifest.json](../../../design-system/assets/illustration-manifest.json)
 - [copyright-ledger.json](../../../design-system/assets/copyright-ledger.json)

@@ -51,6 +51,7 @@
 | `RB-STAGE7-P15-20260331-01` | `814fe85` | Phase 15 审计脚本、盘点产物与事实对账门禁 | `git revert --no-edit 814fe85` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AuditScripts.test.js && npm run stage7:audit:check && npm run harness:check` |
 | `RB-STAGE7-P16P17-20260331-01` | `868b861` | Phase 16-17 Token 真源、资产治理脚手架与生成物 | `git revert --no-edit 868b861` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7TokenBuild.test.js __tests__/harness/stage7AssetsScripts.test.js && npm run stage7:tokens:check && npm run stage7:assets:check && npm run harness:check` |
 | `RB-STAGE7-CHECKS-20260331-01` | `c7690a6` | 修正 Stage 7 token / asset check 为只读校验 | `git revert --no-edit c7690a6` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7TokenBuild.test.js __tests__/harness/stage7AssetsScripts.test.js && npm run stage7:tokens:check && npm run stage7:assets:check && npm run harness:check` |
+| `RB-STAGE7-ASSET-UI-20260401-01` | `09e6221` | 接入 Stage 7 图标注册表与媒体基础组件 | `git revert --no-edit 09e6221` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AssetsScripts.test.js __tests__/design-system/IconComponent.stage7.test.tsx __tests__/design-system/PlaceholderImage.stage7.test.tsx __tests__/design-system/PexelsCreditOverlay.stage7.test.tsx && npm run stage7:assets:check && npm run harness:check` |
 
 ## 说明
 - 当前 closeout 与 rollback authority 以本页为准。

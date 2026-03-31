@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useNovelColors } from '../../../utils/theme';
 import { createFeedbackHelpPageStyles } from './styles/FeedbackHelpPageStyles';
@@ -9,6 +9,7 @@ import {
 } from './components';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
+import { createQuestionListPageHandlers } from './domain/feedbackHelpPageModel';
 
 export const QuestionListPage: React.FC = React.memo(() => {
   const colors = useNovelColors();
@@ -23,35 +24,23 @@ export const QuestionListPage: React.FC = React.memo(() => {
     error,
   } = useFeedbackHelpStore();
 
-  // 处理问题点击 - 导航到问题详情页
-  const handleQuestionPress = useCallback((questionId: string) => {
-    console.log('[QuestionListPage] Question selected:', questionId);
-    selectQuestion(questionId);
-    // 导航到问题详情页面
-    NavigationBridge.navigateToQuestionDetail();
-  }, [selectQuestion]);
+  const handlers = useMemo(
+    () =>
+      createQuestionListPageHandlers({
+        selectQuestion,
+        navigateBack: () => NavigationBridge.navigateBack('QuestionListPageComponent'),
+        navigateToQuestionDetail: () => NavigationBridge.navigateToQuestionDetail(),
+      }),
+    [selectQuestion],
+  );
 
-  // 处理返回操作
-  const handleBack = useCallback(() => {
-    NavigationBridge.navigateBack('QuestionListPageComponent');
-  }, []);
-
-  // Android硬件返回按钮处理
   useEffect(() => {
     return registerHardwareBackHandler(() => {
-      console.log('[QuestionListPage] Android硬件返回按钮被按下');
-      NavigationBridge.navigateBack('QuestionListPageComponent');
-      return true; // 阻止默认行为
+      handlers.handleBack();
+      return true;
     });
-  }, []);
+  }, [handlers]);
 
-  // 处理搜索
-  const handleSearch = useCallback(() => {
-    console.log('[QuestionListPage] Search triggered');
-    // TODO: 实现搜索功能
-  }, []);
-
-  // 获取当前页面标题
   const getPageTitle = useCallback(() => {
     if (selectedCategory) {
       const category = consultCategories.find(c => c.id === selectedCategory);
@@ -60,14 +49,13 @@ export const QuestionListPage: React.FC = React.memo(() => {
     return '问题列表';
   }, [selectedCategory, consultCategories]);
 
-  // 加载状态
   if (isLoading) {
     return (
       <View style={styles.container}>
         <TopBar
           styles={styles}
           title={getPageTitle()}
-          onBack={handleBack}
+          onBack={handlers.handleBack}
           pageType="list"
         />
         <View style={styles.loadingContainer}>
@@ -77,17 +65,16 @@ export const QuestionListPage: React.FC = React.memo(() => {
     );
   }
 
-  // 错误状态
   if (error) {
     return (
       <View style={styles.container}>
         <TopBar
           styles={styles}
           title={getPageTitle()}
-          onBack={handleBack}
+          onBack={handlers.handleBack}
         />
         <View style={styles.emptyState}>
-          <Text style={styles.emptyStateIcon}>❌</Text>
+          <Text style={styles.emptyStateIcon}>错误</Text>
           <Text style={styles.emptyStateTitle}>加载失败</Text>
           <Text style={styles.emptyStateDescription}>{error}</Text>
         </View>
@@ -95,18 +82,17 @@ export const QuestionListPage: React.FC = React.memo(() => {
     );
   }
 
-  // 如果没有选中分类，显示空状态
   if (!selectedCategory) {
     return (
       <View style={styles.container}>
         <TopBar
           styles={styles}
           title="问题列表"
-          onBack={handleBack}
+          onBack={handlers.handleBack}
           pageType="list"
         />
         <View style={styles.emptyState}>
-          <Text style={styles.emptyStateIcon}>📋</Text>
+          <Text style={styles.emptyStateIcon}>提示</Text>
           <Text style={styles.emptyStateTitle}>请选择分类</Text>
           <Text style={styles.emptyStateDescription}>
             请先选择一个咨询分类查看相关问题
@@ -123,20 +109,18 @@ export const QuestionListPage: React.FC = React.memo(() => {
       <TopBar
         styles={styles}
         title={getPageTitle()}
-        onBack={handleBack}
+        onBack={handlers.handleBack}
         showSearch={true}
-        onSearch={handleSearch}
+        onSearch={handlers.handleSearch}
         pageType="list"
       />
       <QuestionList
         styles={styles}
         questions={categoryQuestions}
         category={selectedCategory}
-        onQuestionPress={handleQuestionPress}
-        onBack={handleBack}
+        onQuestionPress={handlers.handleQuestionPress}
+        onBack={handlers.handleBack}
       />
     </View>
   );
 });
-
-console.log('[QuestionListPage] Component loaded');

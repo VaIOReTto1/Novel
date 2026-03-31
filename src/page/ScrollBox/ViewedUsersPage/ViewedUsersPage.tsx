@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { View, Text } from 'react-native';
 import { useViewedUsersStore } from './store/viewedUsersStore';
 import { useNovelColors } from '../../../utils/theme/colors';
@@ -11,9 +11,13 @@ import {
   EmptyState,
   UsersList,
 } from './components';
+import {
+  bootstrapViewedUsersPage,
+  createViewedUsersPageHandlers,
+  getViewedUsersCurrentUsers,
+} from './domain/viewedUsersPageModel';
 
 const ViewedUsersPage: React.FC = () => {
-  // 使用Zustand store
   const {
     loading,
     error,
@@ -34,94 +38,47 @@ const ViewedUsersPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createViewedUsersPageStyles(colors);
 
-  // 初始化数据
   useEffect(() => {
-    const initializeData = async () => {
-      try {
-        console.log('[ViewedUsersPage] 开始初始化数据');
-        await loadInitialData();
-        console.log('[ViewedUsersPage] 数据初始化完成');
-      } catch (err) {
-        console.error('[ViewedUsersPage] 初始化失败:', err);
-      }
-    };
-
-    initializeData();
+    bootstrapViewedUsersPage({
+      loadInitialData,
+    });
   }, [loadInitialData]);
 
-  // 返回按钮点击
-  const handleBackPress = useCallback(() => {
-    console.log('ViewedUsers page back pressed');
-    if (NavigationBridge?.navigateBack) {
-      NavigationBridge.navigateBack('ViewedUsersPageComponent');
-    } else {
-      console.log('NavigationBridge.navigateBack not available');
-    }
-  }, []);
+  const handlers = useMemo(
+    () =>
+      createViewedUsersPageHandlers({
+        navigateBack: () => NavigationBridge.navigateBack('ViewedUsersPageComponent'),
+        setSelectedTab,
+        handleFollowUser,
+        handleViewMoreRecommend,
+        handleUserPress,
+      }),
+    [handleFollowUser, handleUserPress, handleViewMoreRecommend, setSelectedTab],
+  );
 
-  // Android硬件返回按钮处理
   useEffect(() => {
     return registerHardwareBackHandler(() => {
-      console.log('[ViewedUsersPage] Android硬件返回按钮被按下');
-      if (NavigationBridge?.navigateBack) {
-        NavigationBridge.navigateBack('ViewedUsersPageComponent');
-      }
-      return true; // 阻止默认行为
+      handlers.handleBackPress();
+      return true;
     });
-  }, []);
+  }, [handlers]);
 
-  // Tab切换
-  const handleTabChange = useCallback((tab: 'viewed' | 'recommend' | 'following' | 'fans') => {
-    console.log('Tab changed to:', tab);
-    setSelectedTab(tab);
-  }, [setSelectedTab]);
+  const currentUsers = getViewedUsersCurrentUsers({
+    selectedTab,
+    viewedUsers,
+    recommendUsers,
+    followingUsers,
+    fansUsers,
+  });
 
-  // 关注用户
-  const handleFollowPress = useCallback((userId: string) => {
-    console.log('Follow user:', userId);
-    handleFollowUser(userId);
-  }, [handleFollowUser]);
-
-  // 用户点击
-  const handleUserItemPress = useCallback((userId: string) => {
-    console.log('User pressed:', userId);
-    handleUserPress(userId);
-  }, [handleUserPress]);
-
-  // 查看更多推荐按钮点击
-  const handleViewMorePress = useCallback(() => {
-    console.log('View more recommend pressed');
-    handleViewMoreRecommend();
-  }, [handleViewMoreRecommend]);
-
-  // 获取当前Tab的用户数据
-  const getCurrentUsers = () => {
-    switch (selectedTab) {
-      case 'viewed':
-        return viewedUsers;
-      case 'recommend':
-        return recommendUsers;
-      case 'following':
-        return followingUsers;
-      case 'fans':
-        return fansUsers;
-      default:
-        return [];
-    }
-  };
-
-  // 渲染内容区域
   const renderContent = () => {
-    const currentUsers = getCurrentUsers();
-    const isEmpty = currentUsers.length === 0;
-
-    if (isEmpty) {
+    if (currentUsers.length === 0) {
       const emptyData = emptyStates[selectedTab];
       return (
         <EmptyState
           styles={styles}
           data={emptyData}
-          onButtonPress={selectedTab === 'viewed' ? handleViewMorePress : undefined}
+          onButtonPress={selectedTab === 'viewed' ? handlers.handleViewMorePress : undefined}
         />
       );
     }
@@ -130,20 +87,19 @@ const ViewedUsersPage: React.FC = () => {
       <UsersList
         styles={styles}
         users={currentUsers}
-        onUserPress={handleUserItemPress}
-        onFollowPress={handleFollowPress}
+        onUserPress={handlers.handleUserItemPress}
+        onFollowPress={handlers.handleFollowPress}
       />
     );
   };
 
-  // 加载状态
   if (loading) {
     return (
       <View style={styles.container}>
         <TopBar
           styles={styles}
           userName={userInfo?.name || ''}
-          onBackPress={handleBackPress}
+          onBackPress={handlers.handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载中...</Text>
@@ -152,14 +108,13 @@ const ViewedUsersPage: React.FC = () => {
     );
   }
 
-  // 错误状态
   if (error) {
     return (
       <View style={styles.container}>
         <TopBar
           styles={styles}
           userName={userInfo?.name || ''}
-          onBackPress={handleBackPress}
+          onBackPress={handlers.handleBackPress}
         />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载失败: {error}</Text>
@@ -170,21 +125,18 @@ const ViewedUsersPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* 顶部导航 */}
       <TopBar
         styles={styles}
-        userName={userInfo?.name || '安国的尹锋'}
-        onBackPress={handleBackPress}
+        userName={userInfo?.name || '用户'}
+        onBackPress={handlers.handleBackPress}
       />
 
-      {/* Tab导航 */}
       <TabsSection
         styles={styles}
         selectedTab={selectedTab}
-        onTabChange={handleTabChange}
+        onTabChange={handlers.handleTabChange}
       />
 
-      {/* 内容区域 */}
       {renderContent()}
     </View>
   );

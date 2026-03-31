@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useHistoryStore } from './store/historyStore';
 import { useNovelColors } from '../../../utils/theme/colors';
@@ -15,9 +15,12 @@ import {
   RefreshIndicator,
   ContentArea,
 } from './components';
+import {
+  bootstrapScrollBoxHistoryPage,
+  createScrollBoxHistoryPageHandlers,
+} from './domain/scrollboxHistoryPageModel';
 
 const HistoryPage: React.FC = () => {
-  // 使用Zustand store
   const {
     historyItems,
     loading,
@@ -35,7 +38,6 @@ const HistoryPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createHistoryPageStyles(colors);
 
-  // 使用自定义hooks
   const refreshLogic = useRefreshLogic({
     isRefreshing,
     loading,
@@ -47,75 +49,40 @@ const HistoryPage: React.FC = () => {
   const animations = useHistoryAnimations(
     isRefreshing,
     refreshLogic.isPullingDown,
-    refreshLogic.pullDistance
+    refreshLogic.pullDistance,
   );
 
-  // 初始化数据
   useEffect(() => {
-    const initializeData = async () => {
-      try {
-        console.log('[HistoryPage] 开始初始化数据');
-        await loadHistoryItems();
-        console.log('[HistoryPage] 数据初始化完成');
-      } catch (error) {
-        console.error('[HistoryPage] 初始化失败:', error);
-      }
-    };
-
-    initializeData();
+    bootstrapScrollBoxHistoryPage({
+      loadHistoryItems,
+    });
   }, [loadHistoryItems]);
 
-  // 返回按钮点击
-  const handleBackPress = useCallback(() => {
-    console.log('History page back pressed');
-    if (NavigationBridge?.navigateBack) {
-      NavigationBridge.navigateBack('HistoryPageComponent');
-    } else {
-      console.log('NavigationBridge.navigateBack not available');
-    }
-  }, []);
+  const handlers = useMemo(
+    () =>
+      createScrollBoxHistoryPageHandlers({
+        navigateBack: () => NavigationBridge.navigateBack('HistoryPageComponent'),
+        setSelectedTab,
+        setViewType,
+      }),
+    [setSelectedTab, setViewType],
+  );
 
-  // Android硬件返回按钮处理
   useEffect(() => {
     return registerHardwareBackHandler(() => {
-      console.log('[HistoryPage] Android硬件返回按钮被按下');
-      if (NavigationBridge?.navigateBack) {
-        NavigationBridge.navigateBack('HistoryPageComponent');
-      }
-      return true; // 阻止默认行为
+      handlers.handleBackPress();
+      return true;
     });
-  }, []);
+  }, [handlers]);
 
-  // 搜索按钮点击
   const handleSearchPress = useCallback(() => {
     console.log('History page search pressed');
-    // 这里可以实现搜索功能
   }, []);
 
-  // Tab切换
-  const handleTabPress = useCallback((tabId: string) => {
-    console.log('Tab changed to:', tabId);
-    const tabType = HISTORY_TABS.find(tab => tab.id === tabId)?.type || 'all';
-    setSelectedTab(tabType);
-  }, [setSelectedTab]);
-
-  // 视图类型切换 - 优化性能，避免频繁重新渲染
-  const handleViewTypeChange = useCallback((type: 'grid' | 'list') => {
-    console.log('View type changed to:', type);
-    // 使用requestAnimationFrame延迟状态更新，提升切换流畅度
-    requestAnimationFrame(() => {
-      setViewType(type);
-    });
-  }, [setViewType]);
-
-  // 历史项点击
   const handleItemPress = useCallback((item: HistoryItem) => {
     console.log('History item pressed:', item.title);
-    // 这里可以导航到阅读器或详情页
-    // 根据item.type判断跳转到不同的页面
   }, []);
 
-  // 当tab改变时重新加载数据
   useEffect(() => {
     loadHistoryItems(true);
   }, [selectedTab, loadHistoryItems]);
@@ -124,7 +91,7 @@ const HistoryPage: React.FC = () => {
     <View style={styles.container}>
       <TopBar
         styles={styles}
-        onBackPress={handleBackPress}
+        onBackPress={handlers.handleBackPress}
         onSearchPress={handleSearchPress}
       />
 
@@ -132,9 +99,12 @@ const HistoryPage: React.FC = () => {
         styles={styles}
         tabs={HISTORY_TABS}
         selectedTab={selectedTab}
-        onTabPress={handleTabPress}
+        onTabPress={(tabId) => {
+          const tabType = HISTORY_TABS.find(tab => tab.id === tabId)?.type || 'all';
+          handlers.handleTabPress(tabType);
+        }}
         viewType={viewType}
-        onViewTypeChange={handleViewTypeChange}
+        onViewTypeChange={handlers.handleViewTypeChange}
       />
 
       <View style={styles.contentContainer}>

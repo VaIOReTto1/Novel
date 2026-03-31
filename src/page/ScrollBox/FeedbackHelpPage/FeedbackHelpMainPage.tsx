@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useNovelColors } from '../../../utils/theme';
 import { createFeedbackHelpPageStyles } from './styles/FeedbackHelpPageStyles';
@@ -12,6 +12,10 @@ import {
 } from './components';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
+import {
+  bootstrapFeedbackHelpMainPage,
+  createFeedbackHelpMainHandlers,
+} from './domain/feedbackHelpPageModel';
 
 export const FeedbackHelpMainPage: React.FC = React.memo(() => {
   const colors = useNovelColors();
@@ -25,61 +29,40 @@ export const FeedbackHelpMainPage: React.FC = React.memo(() => {
     resetToMain,
   } = useFeedbackHelpStore();
 
-  // 处理分类点击 - 导航到问题列表页
-  const handleCategoryPress = useCallback((categoryId: string) => {
-    console.log('[FeedbackHelpMainPage] Category selected:', categoryId);
-    selectCategory(categoryId);
-    // 导航到问题列表页面
-    NavigationBridge.navigateToQuestionList();
-  }, [selectCategory]);
-
-  // 处理问题点击 - 导航到问题详情页
-  const handleQuestionPress = useCallback((questionId: string) => {
-    console.log('[FeedbackHelpMainPage] Question selected:', questionId);
-    selectQuestion(questionId);
-    // 导航到问题详情页面
-    NavigationBridge.navigateToQuestionDetail();
-  }, [selectQuestion]);
-
-  // 处理返回操作
-  const handleBack = useCallback(() => {
-    NavigationBridge.navigateBack('FeedbackHelpMainPageComponent');
-  }, []);
-
-  // 处理搜索
-  const handleSearch = useCallback(() => {
-    console.log('[FeedbackHelpMainPage] Search triggered');
-    // TODO: 实现搜索功能
-  }, []);
-
-  // 处理联系客服
-  const handleContactPress = useCallback(() => {
-    console.log('[FeedbackHelpMainPage] Contact pressed');
-    // TODO: 实现联系客服功能
-  }, []);
-
-  // 初始化时重置状态
   useEffect(() => {
-    resetToMain();
+    bootstrapFeedbackHelpMainPage({
+      resetToMain,
+    });
   }, [resetToMain]);
 
-  // Android硬件返回按钮处理
+  const handlers = useMemo(
+    () =>
+      createFeedbackHelpMainHandlers({
+        selectCategory,
+        selectQuestion,
+        resetToMain,
+        navigateBack: () => NavigationBridge.navigateBack('FeedbackHelpMainPageComponent'),
+        navigateToQuestionList: () => NavigationBridge.navigateToQuestionList(),
+        navigateToQuestionDetail: () => NavigationBridge.navigateToQuestionDetail(),
+      }),
+    [resetToMain, selectCategory, selectQuestion],
+  );
+
   useEffect(() => {
     return registerHardwareBackHandler(() => {
-      console.log('[FeedbackHelpMainPage] Android硬件返回按钮被按下');
-      NavigationBridge.navigateBack('FeedbackHelpMainPageComponent');
-      return true; // 阻止默认行为
+      handlers.handleBack();
+      return true;
     });
-  }, []);
+  }, [handlers]);
 
   return (
     <View style={styles.container}>
       <TopBar
         styles={styles}
         title="客服中心"
-        onBack={handleBack}
+        onBack={handlers.handleBack}
         showSearch={true}
-        onSearch={handleSearch}
+        onSearch={handlers.handleSearch}
         pageType="main"
         searchPlaceholder="听书"
       />
@@ -94,22 +77,20 @@ export const FeedbackHelpMainPage: React.FC = React.memo(() => {
         <ConsultSection
           styles={styles}
           categories={consultCategories}
-          onCategoryPress={handleCategoryPress}
+          onCategoryPress={handlers.handleCategoryPress}
         />
 
         <FrequentQuestions
           styles={styles}
           questions={frequentQuestions}
-          onQuestionPress={handleQuestionPress}
+          onQuestionPress={handlers.handleQuestionPress}
         />
       </ScrollView>
 
-        <ContactSection
-          styles={styles}
-          onContactPress={handleContactPress}
-        />
+      <ContactSection
+        styles={styles}
+        onContactPress={handlers.handleContactPress}
+      />
     </View>
   );
 });
-
-console.log('[FeedbackHelpMainPage] Component loaded');

@@ -744,6 +744,8 @@ const RESKINNED_SURFACES = new Set([
   'rn-host-write-page-component',
   'rn-host-aiwrite-assistant-component',
   'rn-host-book-manage-page-component',
+  'rn-nested-bookshelf-history-page',
+  'rn-nested-bookshelf-watchlist-page',
 ]);
 
 const NOVEL_DESIGN_READY_COMPONENTS = new Set([
@@ -822,6 +824,34 @@ const SURFACE_VISUAL_OVERRIDES = {
       layout_strategy: 'editorial-book-management shell with paper banner card, elevated draft recovery block and tokenized chapter cards',
       component_recipe: 'editorial-book-manager',
       style_keywords: ['writer-management', 'banner-card', 'draft-recovery', 'chapter-cards', 'footer-cta'],
+    },
+  },
+  'rn-nested-bookshelf-history-page': {
+    current_visual_summary: {
+      layout: 'tab-led reading-history page with toggleable grid and list modes inside the bookshelf container',
+      chrome: 'lightweight tabs and view controls above densely packed cover or list rows',
+      content_pattern: 'history tabs, cover grid, reading progress, add-to-shelf pills and list-mode metadata rows',
+      key_states: ['tab-switch', 'grid-view', 'list-view', 'refreshing'],
+      key_components: ['TabBar', 'HistoryContent', 'HistoryItem', 'EditToolbar', 'RefreshIndicator'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-history shelf with paper tabs, elevated cover cards and quieter list rows',
+      component_recipe: 'bookshelf-history-surface',
+      style_keywords: ['history-library', 'cover-grid', 'reading-progress', 'paper-tabs'],
+    },
+  },
+  'rn-nested-bookshelf-watchlist-page': {
+    current_visual_summary: {
+      layout: 'watchlist manager with top bar, edit toolbar and three-column poster grid',
+      chrome: 'compact management chrome around posters, badges and selection state',
+      content_pattern: 'ad banner, edit actions, tracked drama posters, progress bars, update badges and empty-state discovery CTA',
+      key_states: ['default', 'edit-mode', 'selection-state', 'empty-state', 'loading-more'],
+      key_components: ['TopBar', 'EditToolbar', 'WatchlistGrid', 'EmptyState'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-watchlist shelf with quiet top chrome, paper poster cards and elevated edit rail',
+      component_recipe: 'bookshelf-watchlist-surface',
+      style_keywords: ['watchlist-grid', 'poster-cards', 'edit-rail', 'discovery-empty-state'],
     },
   },
 };
@@ -1015,6 +1045,86 @@ const COMPONENT_VISUAL_OVERRIDES = {
     target_visual_plan: {
       component_recipe: 'editor-welcome-panel',
       style_keywords: ['floating-shortcuts', 'editor-onboarding', 'paper-panel'],
+    },
+  },
+  'src/page/BookshelfPage/pages/History/components/HistoryItem.tsx': {
+    current_visual_summary: {
+      structure: 'history card/list row showing cover, title, metadata and reading progress',
+      affordance: 'surfaces recent reading entries with re-entry and add-to-shelf cues',
+    },
+    target_visual_plan: {
+      component_recipe: 'history-book-row',
+      style_keywords: ['reading-history', 'metadata-row', 'progress-chip'],
+    },
+  },
+  'src/page/BookshelfPage/pages/History/components/TabBar.tsx': {
+    current_visual_summary: {
+      structure: 'horizontal tab strip with view toggles embedded on the right edge',
+      affordance: 'switches history categories and view mode without leaving the page',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-history-tabs',
+      style_keywords: ['tab-strip', 'view-toggle', 'bookshelf-chrome'],
+    },
+  },
+  'src/page/BookshelfPage/pages/History/components/EditToolbar.tsx': {
+    current_visual_summary: {
+      structure: 'compact toolbar for batch selection and add-to-shelf actions within history',
+      affordance: 'enables multi-select management of history entries',
+    },
+    target_visual_plan: {
+      component_recipe: 'history-edit-rail',
+      style_keywords: ['batch-actions', 'edit-toolbar', 'selection-mode'],
+    },
+  },
+  'src/page/BookshelfPage/pages/History/components/RefreshIndicator.tsx': {
+    current_visual_summary: {
+      structure: 'lightweight refresh indicator nested inside the history scrolling area',
+      affordance: 'shows pull-to-refresh progress without replacing the list shell',
+    },
+    target_visual_plan: {
+      component_recipe: 'history-refresh-indicator',
+      style_keywords: ['refresh-state', 'inline-feedback', 'bookshelf-loading'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Watchlist/components/TopBar.tsx': {
+    current_visual_summary: {
+      structure: 'top bar with segmented actions and centered banner slot for watchlist promotions',
+      affordance: 'switches watchlist modes and frames the page context',
+    },
+    target_visual_plan: {
+      component_recipe: 'watchlist-top-bar',
+      style_keywords: ['top-bar', 'promo-slot', 'mode-actions'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Watchlist/components/EditToolbar.tsx': {
+    current_visual_summary: {
+      structure: 'edit rail with select-all, delete and selected-count affordances',
+      affordance: 'manages multi-select cleanup flows for tracked items',
+    },
+    target_visual_plan: {
+      component_recipe: 'watchlist-edit-rail',
+      style_keywords: ['edit-toolbar', 'selection-count', 'bulk-actions'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Watchlist/components/EmptyState.tsx': {
+    current_visual_summary: {
+      structure: 'empty-state block encouraging users to discover more dramas when the watchlist is blank',
+      affordance: 'explains zero-state and redirects to acquisition flow',
+    },
+    target_visual_plan: {
+      component_recipe: 'watchlist-empty-state',
+      style_keywords: ['empty-state', 'discover-cta', 'zero-watchlist'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Watchlist/components/WatchlistGrid.tsx': {
+    current_visual_summary: {
+      structure: 'three-column poster grid with selection outline, progress bar and update badge overlays',
+      affordance: 'browses and batch-manages tracked items in poster form',
+    },
+    target_visual_plan: {
+      component_recipe: 'watchlist-poster-grid',
+      style_keywords: ['poster-grid', 'selection-outline', 'progress-overlay'],
     },
   },
 };

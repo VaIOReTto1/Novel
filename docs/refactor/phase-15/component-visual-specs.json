@@ -2882,17 +2882,17 @@
     "category": "action",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "button, toolbar and action strips with utilitarian emphasis",
-      "affordance": "high-visibility trigger surface",
+      "structure": "compact toolbar for batch selection and add-to-shelf actions within history",
+      "affordance": "enables multi-select management of history entries",
       "asset_sources": []
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-action-control",
+      "component_recipe": "history-edit-rail",
       "style_keywords": [
-        "actions",
-        "pill-controls",
-        "brand-accent"
+        "batch-actions",
+        "edit-toolbar",
+        "selection-mode"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2934,17 +2934,17 @@
     "category": "item",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "card, row and tile elements combining cover, text and minor actions",
-      "affordance": "quick metadata scan and selection",
+      "structure": "history card/list row showing cover, title, metadata and reading progress",
+      "affordance": "surfaces recent reading entries with re-entry and add-to-shelf cues",
       "asset_sources": []
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-card",
+      "component_recipe": "history-book-row",
       "style_keywords": [
-        "card",
-        "paper",
-        "metadata-hierarchy"
+        "reading-history",
+        "metadata-row",
+        "progress-chip"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2986,17 +2986,17 @@
     "category": "layout",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "wrapper and grouping components with low visual identity",
-      "affordance": "layout scaffolding and spacing control",
+      "structure": "lightweight refresh indicator nested inside the history scrolling area",
+      "affordance": "shows pull-to-refresh progress without replacing the list shell",
       "asset_sources": []
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-layout-shell",
+      "component_recipe": "history-refresh-indicator",
       "style_keywords": [
-        "layout",
-        "tokenized-spacing",
-        "grouped-surfaces"
+        "refresh-state",
+        "inline-feedback",
+        "bookshelf-loading"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -3012,17 +3012,17 @@
     "category": "navigation",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "top bars, headers, nav rows and tab controls with direct icon/text actions",
-      "affordance": "utility-first navigation cues with minimal hierarchy depth",
+      "structure": "horizontal tab strip with view toggles embedded on the right edge",
+      "affordance": "switches history categories and view mode without leaving the page",
       "asset_sources": []
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-toolbar",
+      "component_recipe": "bookshelf-history-tabs",
       "style_keywords": [
-        "navigation",
-        "quiet-chrome",
-        "refined-actions"
+        "tab-strip",
+        "view-toggle",
+        "bookshelf-chrome"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -3064,19 +3064,19 @@
     "category": "action",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "button, toolbar and action strips with utilitarian emphasis",
-      "affordance": "high-visibility trigger surface",
+      "structure": "edit rail with select-all, delete and selected-count affordances",
+      "affordance": "manages multi-select cleanup flows for tracked items",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-action-control",
+      "component_recipe": "watchlist-edit-rail",
       "style_keywords": [
-        "actions",
-        "pill-controls",
-        "brand-accent"
+        "edit-toolbar",
+        "selection-count",
+        "bulk-actions"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -3092,19 +3092,19 @@
     "category": "empty",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "simple icon plus message empty states",
-      "affordance": "fallback state explanation",
+      "structure": "empty-state block encouraging users to discover more dramas when the watchlist is blank",
+      "affordance": "explains zero-state and redirects to acquisition flow",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-empty-state",
+      "component_recipe": "watchlist-empty-state",
       "style_keywords": [
-        "empty",
-        "supportive-copy",
-        "illustration-slot"
+        "empty-state",
+        "discover-cta",
+        "zero-watchlist"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -3120,19 +3120,19 @@
     "category": "navigation",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "top bars, headers, nav rows and tab controls with direct icon/text actions",
-      "affordance": "utility-first navigation cues with minimal hierarchy depth",
+      "structure": "top bar with segmented actions and centered banner slot for watchlist promotions",
+      "affordance": "switches watchlist modes and frames the page context",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-toolbar",
+      "component_recipe": "watchlist-top-bar",
       "style_keywords": [
-        "navigation",
-        "quiet-chrome",
-        "refined-actions"
+        "top-bar",
+        "promo-slot",
+        "mode-actions"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -3148,19 +3148,19 @@
     "category": "list",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "list, grid and waterfall containers with dense item repetition",
-      "affordance": "content browsing and infinite progression",
+      "structure": "three-column poster grid with selection outline, progress bar and update badge overlays",
+      "affordance": "browses and batch-manages tracked items in poster form",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-list-shell",
+      "component_recipe": "watchlist-poster-grid",
       "style_keywords": [
-        "list",
-        "modular-cards",
-        "quiet-density"
+        "poster-grid",
+        "selection-outline",
+        "progress-overlay"
       ],
       "figma_target_page": "02-组件规范"
     },

@@ -2479,31 +2479,32 @@
       "src/page/BookshelfPage/pages/History/HistoryPage.tsx"
     ],
     "current_visual_summary": {
-      "layout": "content-heavy bookshelf surfaces using grids, lists, top bars and empty/loading states",
-      "chrome": "top-bar-first navigation with dense card/list presentation",
-      "content_pattern": "collection browsing, filtering and feed-style stacking",
+      "layout": "tab-led reading-history page with toggleable grid and list modes inside the bookshelf container",
+      "chrome": "lightweight tabs and view controls above densely packed cover or list rows",
+      "content_pattern": "history tabs, cover grid, reading progress, add-to-shelf pills and list-mode metadata rows",
       "key_states": [
-        "default"
+        "tab-switch",
+        "grid-view",
+        "list-view",
+        "refreshing"
       ],
       "key_components": [
-        "BookItem",
-        "ContentArea",
-        "EditToolbar",
+        "TabBar",
         "HistoryContent",
         "HistoryItem",
-        "RefreshIndicator",
-        "TabBar",
-        "TabsArea"
+        "EditToolbar",
+        "RefreshIndicator"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-library-grid with calmer spacing and modular cards",
-      "component_recipe": "editorial-library-content",
+      "layout_strategy": "editorial-history shelf with paper tabs, elevated cover cards and quieter list rows",
+      "component_recipe": "bookshelf-history-surface",
       "style_keywords": [
-        "collection",
-        "shelf-cards",
-        "quiet-density"
+        "history-library",
+        "cover-grid",
+        "reading-progress",
+        "paper-tabs"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2522,8 +2523,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -2534,27 +2535,32 @@
       "src/page/BookshelfPage/pages/Watchlist/WatchlistPage.tsx"
     ],
     "current_visual_summary": {
-      "layout": "content-heavy bookshelf surfaces using grids, lists, top bars and empty/loading states",
-      "chrome": "top-bar-first navigation with dense card/list presentation",
-      "content_pattern": "collection browsing, filtering and feed-style stacking",
+      "layout": "watchlist manager with top bar, edit toolbar and three-column poster grid",
+      "chrome": "compact management chrome around posters, badges and selection state",
+      "content_pattern": "ad banner, edit actions, tracked drama posters, progress bars, update badges and empty-state discovery CTA",
       "key_states": [
-        "default"
+        "default",
+        "edit-mode",
+        "selection-state",
+        "empty-state",
+        "loading-more"
       ],
       "key_components": [
-        "EditToolbar",
-        "EmptyState",
         "TopBar",
-        "WatchlistGrid"
+        "EditToolbar",
+        "WatchlistGrid",
+        "EmptyState"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-library-grid with calmer spacing and modular cards",
-      "component_recipe": "editorial-library-content",
+      "layout_strategy": "editorial-watchlist shelf with quiet top chrome, paper poster cards and elevated edit rail",
+      "component_recipe": "bookshelf-watchlist-surface",
       "style_keywords": [
-        "collection",
-        "shelf-cards",
-        "quiet-density"
+        "watchlist-grid",
+        "poster-cards",
+        "edit-rail",
+        "discovery-empty-state"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2573,8 +2579,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

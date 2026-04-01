@@ -24,6 +24,11 @@ describe('Bookshelf nested page novelDesign styles', () => {
     expect(styles.gridCover.backgroundColor).toBe('#F3ECE3');
     expect(styles.emptyContainer.backgroundColor ?? '#FAF6F0').toBe('#FAF6F0');
     expect(styles.gridItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.tabsDivider.backgroundColor).toBe('#F3ECE3');
+    expect(styles.activeTab.backgroundColor).toBe('#C96A34');
+    expect(styles.activeTabText.color).toBe('#FFFDFC');
+    expect(styles.gridTitle.color).toBe('#201A17');
+    expect(styles.gridAuthor.color).toBe('#201A17');
     expect(styles.toolbar.backgroundColor).toBe('#FFFDFC');
     expect(styles.toolbarButton.backgroundColor).toBe('#C96A34');
     expect(styles.editToolbar.backgroundColor).toBe('#FFFDFC');
@@ -36,7 +41,14 @@ describe('Bookshelf nested page novelDesign styles', () => {
     expect(styles.listItem.backgroundColor).toBe('#FFFDFC');
     expect(styles.listCover.backgroundColor).toBe('#F3ECE3');
     expect(styles.listProgress.color).toBe('#C96A34');
+    expect(styles.listTitle.color).toBe('#201A17');
+    expect(styles.listAuthor.color).toBe('#201A17');
+    expect(styles.listMeta.color).toBe('#201A17');
+    expect(styles.listStatus.color).toBe('#201A17');
     expect(styles.waterfallBookItem.backgroundColor).toBe('#FFFDFC');
     expect(styles.bookTag.backgroundColor).toBe('#C96A34');
+    expect(styles.bookTagText.color).toBe('#FFFDFC');
+    expect(styles.waterfallDescription.color).toBe('#6F6258');
+    expect(styles.waterfallCurrentChapter.color).toBe('#C96A34');
   });
 });

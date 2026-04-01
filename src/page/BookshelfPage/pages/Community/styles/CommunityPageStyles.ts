@@ -198,25 +198,25 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   userLevel: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
   },
 
   publishTime: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
   },
 
   postTitle: {
     fontSize: fp(16),
     fontWeight: 'bold',
-    color: colors.novelText,
+    color: textPrimary,
     marginBottom: hp(8),
   },
 
   postContent: {
     fontSize: fp(14),
     lineHeight: fp(20),
-    color: colors.novelText,
+    color: textPrimary,
     marginBottom: hp(12),
   },
 
@@ -460,10 +460,10 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   // 圈子相关样式
   circleTabContainer: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: surface,
     paddingVertical: hp(16),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: borderSubtle,
   },
 
   circleTabHeader: {
@@ -474,7 +474,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   circleTabTitle: {
     fontSize: fp(16),
     fontWeight: '600',
-    color: colors.novelText,
+    color: textPrimary,
   },
 
   circleScrollView: {

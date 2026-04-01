@@ -62,7 +62,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeTab: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   tabText: {
@@ -72,7 +72,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeTabText: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '600',
   },
 
@@ -198,14 +198,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   gridTitle: {
     fontSize: fp(14),
     fontWeight: '600',
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     lineHeight: fp(18),
     marginBottom: wp(4),
   },
 
   gridAuthor: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
     lineHeight: fp(16),
   },
@@ -261,14 +261,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   listTitle: {
     fontSize: fp(16),
     fontWeight: '600',
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     lineHeight: fp(20),
     marginBottom: wp(4),
   },
 
   listAuthor: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
     lineHeight: fp(16),
     marginBottom: wp(4),
@@ -276,7 +276,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   listMeta: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.6,
     lineHeight: fp(14),
   },
@@ -296,7 +296,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   listStatus: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.6,
   },
 
@@ -414,7 +414,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   waterfallCurrentChapter: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: novelDesign.color.brand.primary,
     opacity: 0.8,
     paddingTop: wp(8),
     marginBottom: wp(6),
@@ -422,7 +422,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   waterfallDescription: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: novelDesign.color.text.secondary,
     opacity: 0.8,
     lineHeight: fp(16),
     marginBottom: wp(4),

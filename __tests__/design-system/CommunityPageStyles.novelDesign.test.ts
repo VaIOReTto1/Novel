@@ -25,5 +25,16 @@ describe('CommunityPage novelDesign styles', () => {
     expect(styles.postList.backgroundColor).toBe('#FAF6F0');
     expect(styles.postItem.backgroundColor).toBe('#FFFDFC');
     expect(styles.topDivider.backgroundColor).toBe('#F3ECE3');
+    expect(styles.subscribeButton.backgroundColor).toBe('#C96A34');
+    expect(styles.subscribeButtonText.color).toBe('#FFFDFC');
+    expect(styles.bottomDivider.backgroundColor).toBe('#E8DDD1');
+    expect(styles.userAvatar.backgroundColor).toBe('#F3ECE3');
+    expect(styles.actionText.color).toBe('#6F6258');
+    expect(styles.likedText.color).toBe('#C96A34');
+    expect(styles.loadingText.color).toBe('#6F6258');
+    expect(styles.filterItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.activeFilterItem.backgroundColor).toBe('#F3ECE3');
+    expect(styles.filterText.color).toBe('#6F6258');
+    expect(styles.activeFilterText.color).toBe('#C96A34');
   });
 });

@@ -5,21 +5,31 @@ import { wp, hp, fp } from '../../../../../utils/theme';
 
 export const createCommunityPageStyles = (colors: NovelColors) => {
   const novelDesign = createNovelDesignUI(colors);
+  const { color } = novelDesign;
+  const brandPrimary = color.brand.primary;
+  const danger = color.status.danger;
+  const textPrimary = color.text.primary;
+  const textSecondary = color.text.secondary;
+  const surface = color.bg.surface;
+  const canvas = color.bg.canvas;
+  const elevated = color.bg.elevated;
+  const borderSubtle = color.border.subtle;
+  const borderStrong = color.border.strong;
 
   return StyleSheet.create({
   // 主容器
   container: {
     flex: 1,
-    backgroundColor: novelDesign.color.bg.canvas,
+    backgroundColor: canvas,
   },
 
   // 顶部导航栏
   topBar: {
-    backgroundColor: novelDesign.color.bg.surface,
+    backgroundColor: surface,
     paddingHorizontal: wp(16),
     paddingVertical: hp(12),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: borderSubtle,
   },
 
   topBarContent: {
@@ -31,7 +41,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   topBarTitle: {
     fontSize: fp(18),
     fontWeight: '600',
-    color: colors.novelText,
+    color: textPrimary,
   },
 
   topBarActions: {
@@ -46,16 +56,16 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   topBarButtonText: {
     fontSize: fp(14),
-    color: colors.novelMain,
+    color: brandPrimary,
   },
 
   // 标签页
   tabContainer: {
-    backgroundColor: novelDesign.color.bg.surface,
+    backgroundColor: surface,
     paddingHorizontal: wp(16),
     paddingVertical: hp(8),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: borderSubtle,
   },
 
   tabScrollView: {
@@ -147,7 +157,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   subscribeButton: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: brandPrimary,
     paddingHorizontal: wp(12),
     paddingVertical: hp(6),
     borderRadius: wp(12),
@@ -156,14 +166,14 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   subscribeButtonText: {
     fontSize: fp(12),
-    color: colors.novelBackground,
+    color: color.text.inverse,
     fontWeight: '500',
   },
 
   // 底部分割线
   bottomDivider: {
     height: 1,
-    backgroundColor: colors.novelDivider,
+    backgroundColor: borderSubtle,
     marginHorizontal: wp(16),
   },
 
@@ -171,7 +181,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     width: wp(40),
     height: wp(40),
     borderRadius: wp(20),
-    backgroundColor: colors.novelLightGray,
+    backgroundColor: elevated,
     marginRight: wp(12),
   },
 
@@ -249,11 +259,11 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   actionText: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
   },
 
   likedText: {
-    color: colors.novelError,
+    color: brandPrimary,
   },
 
   moreButton: {
@@ -350,7 +360,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   loadingText: {
     fontSize: fp(14),
-    color: colors.novelTextGray,
+    color: textSecondary,
     marginTop: hp(8),
   },
 
@@ -428,23 +438,23 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     paddingVertical: hp(6),
     marginRight: wp(8),
     borderRadius: wp(12),
-    backgroundColor: colors.novelSecondaryBackground,
+    backgroundColor: surface,
     borderWidth: 1,
-    borderColor: colors.novelDivider,
+    borderColor: borderSubtle,
   },
 
   activeFilterItem: {
-    backgroundColor: colors.novelMain,
-    borderColor: colors.novelMain,
+    backgroundColor: elevated,
+    borderColor: brandPrimary,
   },
 
   filterText: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
   },
 
   activeFilterText: {
-    color: colors.novelBackground,
+    color: brandPrimary,
     fontWeight: '500',
   },
 

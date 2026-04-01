@@ -2300,19 +2300,19 @@
     "category": "action",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "button, toolbar and action strips with utilitarian emphasis",
-      "affordance": "high-visibility trigger surface",
+      "structure": "batch-edit toolbar with selection count, select-all, move and delete controls",
+      "affordance": "manages bookshelf entries in edit mode without leaving the current tab",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-action-control",
+      "component_recipe": "bookshelf-edit-toolbar",
       "style_keywords": [
-        "actions",
-        "pill-controls",
-        "brand-accent"
+        "batch-actions",
+        "selection-count",
+        "danger-cta"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2356,19 +2356,19 @@
     "category": "list",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "list, grid and waterfall containers with dense item repetition",
-      "affordance": "content browsing and infinite progression",
+      "structure": "three-column shelf grid with footer loading state and empty-state branch",
+      "affordance": "browses dense shelf content with fixed card rhythm",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-list-shell",
+      "component_recipe": "bookshelf-grid-shell",
       "style_keywords": [
-        "list",
-        "modular-cards",
-        "quiet-density"
+        "three-column-grid",
+        "shelf-footer",
+        "dense-browse"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2384,19 +2384,19 @@
     "category": "list",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "list, grid and waterfall containers with dense item repetition",
-      "affordance": "content browsing and infinite progression",
+      "structure": "single-column shelf list with separators, footer loading block and empty-state branch",
+      "affordance": "shows fuller metadata for each shelf item in list density",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-list-shell",
+      "component_recipe": "bookshelf-list-shell",
       "style_keywords": [
-        "list",
-        "modular-cards",
-        "quiet-density"
+        "list-density",
+        "metadata-rows",
+        "shelf-list"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2497,19 +2497,19 @@
     "category": "layout",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "wrapper and grouping components with low visual identity",
-      "affordance": "layout scaffolding and spacing control",
+      "structure": "composite scroll container that stitches shelf content, refresh control and recommendation section",
+      "affordance": "keeps shelf browsing and discovery in one continuous scroll context",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-layout-shell",
+      "component_recipe": "bookshelf-scroll-shell",
       "style_keywords": [
-        "layout",
-        "tokenized-spacing",
-        "grouped-surfaces"
+        "scroll-shell",
+        "refresh-state",
+        "composite-feed"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2554,19 +2554,19 @@
     "category": "list",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "list, grid and waterfall containers with dense item repetition",
-      "affordance": "content browsing and infinite progression",
+      "structure": "two-column waterfall shelf container with uneven card heights and infinite-load footer",
+      "affordance": "browses shelf items in a more editorial, staggered rhythm",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-list-shell",
+      "component_recipe": "bookshelf-waterfall-shell",
       "style_keywords": [
-        "list",
-        "modular-cards",
-        "quiet-density"
+        "waterfall-grid",
+        "staggered-cards",
+        "editorial-density"
       ],
       "figma_target_page": "02-组件规范"
     },
@@ -2750,19 +2750,19 @@
     "category": "list",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "list, grid and waterfall containers with dense item repetition",
-      "affordance": "content browsing and infinite progression",
+      "structure": "feed list shell responsible for refresh, empty state, loading fallback and infinite paging",
+      "affordance": "orchestrates the community feed states around post cards and tabs",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-list-shell",
+      "component_recipe": "community-feed-shell",
       "style_keywords": [
-        "list",
-        "modular-cards",
-        "quiet-density"
+        "feed-shell",
+        "refresh-state",
+        "infinite-list"
       ],
       "figma_target_page": "02-组件规范"
     },

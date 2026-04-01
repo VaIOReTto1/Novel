@@ -1176,6 +1176,16 @@ const COMPONENT_VISUAL_OVERRIDES = {
       style_keywords: ['cover-card', 'reading-progress', 'shelf-item'],
     },
   },
+  'src/page/BookshelfPage/pages/Bookshelf/components/EditToolbar.tsx': {
+    current_visual_summary: {
+      structure: 'batch-edit toolbar with selection count, select-all, move and delete controls',
+      affordance: 'manages bookshelf entries in edit mode without leaving the current tab',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-edit-toolbar',
+      style_keywords: ['batch-actions', 'selection-count', 'danger-cta'],
+    },
+  },
   'src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx': {
     current_visual_summary: {
       structure: 'bookshelf zero-state block with type-specific iconography and descriptive copy',
@@ -1184,6 +1194,26 @@ const COMPONENT_VISUAL_OVERRIDES = {
     target_visual_plan: {
       component_recipe: 'bookshelf-empty-state',
       style_keywords: ['empty-state', 'discovery-guidance', 'paper-zero-state'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/GridView.tsx': {
+    current_visual_summary: {
+      structure: 'three-column shelf grid with footer loading state and empty-state branch',
+      affordance: 'browses dense shelf content with fixed card rhythm',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-grid-shell',
+      style_keywords: ['three-column-grid', 'shelf-footer', 'dense-browse'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/ListView.tsx': {
+    current_visual_summary: {
+      structure: 'single-column shelf list with separators, footer loading block and empty-state branch',
+      affordance: 'shows fuller metadata for each shelf item in list density',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-list-shell',
+      style_keywords: ['list-density', 'metadata-rows', 'shelf-list'],
     },
   },
   'src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx': {
@@ -1206,6 +1236,16 @@ const COMPONENT_VISUAL_OVERRIDES = {
       style_keywords: ['utility-top-bar', 'layout-toggle', 'shelf-tabs'],
     },
   },
+  'src/page/BookshelfPage/pages/Bookshelf/components/UnifiedScrollView.tsx': {
+    current_visual_summary: {
+      structure: 'composite scroll container that stitches shelf content, refresh control and recommendation section',
+      affordance: 'keeps shelf browsing and discovery in one continuous scroll context',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-scroll-shell',
+      style_keywords: ['scroll-shell', 'refresh-state', 'composite-feed'],
+    },
+  },
   'src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx': {
     current_visual_summary: {
       structure: 'compact set of buttons for grid, list and alternate bookshelf layouts',
@@ -1214,6 +1254,16 @@ const COMPONENT_VISUAL_OVERRIDES = {
     target_visual_plan: {
       component_recipe: 'bookshelf-view-switcher',
       style_keywords: ['layout-toggle', 'density-switch', 'utility-controls'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/WaterfallGrid.tsx': {
+    current_visual_summary: {
+      structure: 'two-column waterfall shelf container with uneven card heights and infinite-load footer',
+      affordance: 'browses shelf items in a more editorial, staggered rhythm',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-waterfall-shell',
+      style_keywords: ['waterfall-grid', 'staggered-cards', 'editorial-density'],
     },
   },
   'src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx': {
@@ -1274,6 +1324,16 @@ const COMPONENT_VISUAL_OVERRIDES = {
     target_visual_plan: {
       component_recipe: 'community-post-card',
       style_keywords: ['post-card', 'author-meta', 'social-reading'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/PostList.tsx': {
+    current_visual_summary: {
+      structure: 'feed list shell responsible for refresh, empty state, loading fallback and infinite paging',
+      affordance: 'orchestrates the community feed states around post cards and tabs',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-feed-shell',
+      style_keywords: ['feed-shell', 'refresh-state', 'infinite-list'],
     },
   },
   'src/page/BookshelfPage/pages/Community/components/TabBar.tsx': {

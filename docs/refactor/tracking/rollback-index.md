@@ -73,5 +73,7 @@
 
 | `RB-STAGE7-BOOKSHELF-NESTED-20260401-01` | `2050e4a` | 推进书架 History / Watchlist 内嵌页的 novelDesign 换肤 | `git revert --no-edit 2050e4a` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/HistoryPageStyles.novelDesign.test.ts __tests__/design-system/WatchlistPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-BOOKSHELF-CORE-20260401-01` | `184a3ce` | 推进书架 Bookshelf / Community 内嵌页的 novelDesign 换肤 | `git revert --no-edit 184a3ce` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

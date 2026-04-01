@@ -751,6 +751,15 @@ const RESKINNED_SURFACES = new Set([
 ]);
 
 const NOVEL_DESIGN_READY_COMPONENTS = new Set([
+  'src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/TopBar.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx',
+  'src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx',
+  'src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx',
+  'src/page/BookshelfPage/pages/Community/components/PostItem.tsx',
+  'src/page/BookshelfPage/pages/Community/components/TopBar.tsx',
   'src/page/Writer/AIWriteAssistant/components/ActionBar.tsx',
   'src/page/Writer/AIWriteAssistant/components/Header.tsx',
   'src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx',
@@ -1205,6 +1214,16 @@ const COMPONENT_VISUAL_OVERRIDES = {
     target_visual_plan: {
       component_recipe: 'bookshelf-view-switcher',
       style_keywords: ['layout-toggle', 'density-switch', 'utility-controls'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx': {
+    current_visual_summary: {
+      structure: 'inline loading and retry feedback block rendered at the tail of shelf and recommendation lists',
+      affordance: 'communicates pagination progress and retry affordance without leaving the current feed',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-load-state',
+      style_keywords: ['load-more', 'retry-state', 'inline-feedback'],
     },
   },
   'src/page/BookshelfPage/pages/Community/components/EmptyState.tsx': {

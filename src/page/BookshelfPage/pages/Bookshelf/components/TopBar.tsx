@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import { ViewType } from '../types';
 import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
@@ -13,6 +15,12 @@ interface TopBarProps {
   isEditMode?: boolean;
 }
 
+const VIEW_OPTIONS = [
+  { type: 'grid' as ViewType, icon: 'grid-view', label: '网格' },
+  { type: 'list' as ViewType, icon: 'view-list', label: '列表' },
+  { type: 'waterfall' as ViewType, icon: 'view-quilt', label: '双列' },
+];
+
 export const TopBar: React.FC<TopBarProps> = ({
   currentView,
   onViewChange,
@@ -23,76 +31,69 @@ export const TopBar: React.FC<TopBarProps> = ({
 }) => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
-
-  const viewOptions = [
-    { type: 'grid' as ViewType, icon: '⊞', label: '网格' },
-    { type: 'list' as ViewType, icon: '☰', label: '列表' },
-    { type: 'waterfall' as ViewType, icon: '⋮', label: '双列' },
-  ];
-
-  const currentViewOption = viewOptions.find(option => option.type === currentView);
+  const currentViewOption = VIEW_OPTIONS.find((option) => option.type === currentView);
 
   const handleViewPress = () => {
-    if (isTransitioning) {return;}
+    if (isTransitioning) {
+      return;
+    }
 
-    const currentIndex = viewOptions.findIndex(option => option.type === currentView);
-    const nextIndex = (currentIndex + 1) % viewOptions.length;
-    onViewChange(viewOptions[nextIndex].type);
+    const currentIndex = VIEW_OPTIONS.findIndex((option) => option.type === currentView);
+    const nextIndex = (currentIndex + 1) % VIEW_OPTIONS.length;
+    onViewChange(VIEW_OPTIONS[nextIndex].type);
   };
 
   return (
     <View style={styles.topBarContainer}>
-      {/* 左侧广告区域 */}
       <View style={styles.topBarLeft}>
         <TouchableOpacity style={styles.adBanner} activeOpacity={0.8}>
           <Text style={styles.adBannerText}>广告位</Text>
         </TouchableOpacity>
       </View>
 
-      {/* 中间空白区域 */}
       <View style={styles.topBarCenter} />
 
-      {/* 右侧功能按钮 */}
       <View style={styles.topBarRight}>
         <View style={styles.topBarActionsRow}>
-          {/* 视图切换按钮 */}
           <TouchableOpacity
             style={styles.topBarActionButton}
             onPress={handleViewPress}
             activeOpacity={0.7}
-            disabled={isTransitioning}
-          >
-            <Text style={[
-              styles.topBarActionLabel,
-              isTransitioning && styles.topBarActionLabelDisabled,
-            ]}>
+            disabled={isTransitioning}>
+            <MaterialIcons
+              name={currentViewOption?.icon || 'grid-view'}
+              size={18}
+              color={isTransitioning ? colors.novelTextGray : colors.novelText}
+            />
+            <Text
+              style={[
+                styles.topBarActionLabel,
+                isTransitioning && styles.topBarActionLabelDisabled,
+              ]}>
               {currentViewOption?.label || '网格'}
             </Text>
           </TouchableOpacity>
 
           <View style={styles.verticalDivider} />
 
-          {/* 筛选按钮 */}
           <TouchableOpacity
             style={styles.topBarActionButton}
             onPress={onFilterPress}
-            activeOpacity={0.7}
-          >
+            activeOpacity={0.7}>
             <Text style={styles.topBarActionLabel}>筛选</Text>
           </TouchableOpacity>
 
           <View style={styles.verticalDivider} />
 
-          {/* 编辑按钮 */}
           <TouchableOpacity
             style={styles.topBarActionButton}
             onPress={onEditPress}
-            activeOpacity={0.7}
-          >
-            <Text style={[
-              styles.topBarActionLabel,
-              isEditMode && styles.activeTopBarActionLabel,
-            ]}>
+            activeOpacity={0.7}>
+            <Text
+              style={[
+                styles.topBarActionLabel,
+                isEditMode && styles.activeTopBarActionLabel,
+              ]}>
               {isEditMode ? '完成' : '编辑'}
             </Text>
           </TouchableOpacity>

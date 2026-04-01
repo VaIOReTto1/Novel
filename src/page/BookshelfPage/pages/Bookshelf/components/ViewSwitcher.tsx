@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import { ViewType } from '../types';
 import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
@@ -10,6 +12,12 @@ interface ViewSwitcherProps {
   isTransitioning?: boolean;
 }
 
+const VIEW_OPTIONS = [
+  { type: 'grid' as ViewType, icon: 'grid-view', label: '网格' },
+  { type: 'list' as ViewType, icon: 'view-list', label: '列表' },
+  { type: 'waterfall' as ViewType, icon: 'view-quilt', label: '瀑布流' },
+];
+
 export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
   currentView,
   onViewChange,
@@ -17,11 +25,6 @@ export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
 }) => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
-  const viewOptions = [
-    { type: 'grid' as ViewType, icon: '⊞', label: '网格' },
-    { type: 'list' as ViewType, icon: '☰', label: '列表' },
-    { type: 'waterfall' as ViewType, icon: '⋮', label: '瀑布流' },
-  ];
 
   const handleViewPress = (viewType: ViewType) => {
     if (viewType !== currentView && !isTransitioning) {
@@ -31,7 +34,7 @@ export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
 
   return (
     <View style={styles.viewSwitcher}>
-      {viewOptions.map((option) => {
+      {VIEW_OPTIONS.map((option) => {
         const isActive = option.type === currentView;
 
         return (
@@ -44,18 +47,17 @@ export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
             ]}
             onPress={() => handleViewPress(option.type)}
             activeOpacity={0.7}
-            disabled={isTransitioning}
-          >
-            <Text style={[
-              styles.viewOptionIcon,
-              isActive && styles.activeViewOptionIcon,
-            ]}>
-              {option.icon}
-            </Text>
-            <Text style={[
-              styles.viewOptionLabel,
-              isActive && styles.activeViewOptionLabel,
-            ]}>
+            disabled={isTransitioning}>
+            <MaterialIcons
+              name={option.icon}
+              size={18}
+              color={isActive ? colors.novelBackground : colors.novelText}
+            />
+            <Text
+              style={[
+                styles.viewOptionLabel,
+                isActive && styles.activeViewOptionLabel,
+              ]}>
               {option.label}
             </Text>
           </TouchableOpacity>

@@ -777,6 +777,7 @@
       "platform": "react-native",
       "category": "navigation",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -795,6 +796,7 @@
       "platform": "react-native",
       "category": "form",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -831,6 +833,7 @@
       "platform": "react-native",
       "category": "action",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -856,6 +859,7 @@
       "platform": "react-native",
       "category": "item",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -883,6 +887,7 @@
       "platform": "react-native",
       "category": "navigation",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },

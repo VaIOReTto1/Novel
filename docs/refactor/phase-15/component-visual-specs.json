@@ -2291,7 +2291,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2412,26 +2412,26 @@
     "category": "layout",
     "platform": "react-native",
     "current_visual_summary": {
-      "structure": "wrapper and grouping components with low visual identity",
-      "affordance": "layout scaffolding and spacing control",
+      "structure": "inline loading and retry feedback block rendered at the tail of shelf and recommendation lists",
+      "affordance": "communicates pagination progress and retry affordance without leaving the current feed",
       "asset_sources": [
         "theme-aware"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "component_recipe": "editorial-layout-shell",
+      "component_recipe": "bookshelf-load-state",
       "style_keywords": [
-        "layout",
-        "tokenized-spacing",
-        "grouped-surfaces"
+        "load-more",
+        "retry-state",
+        "inline-feedback"
       ],
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2459,7 +2459,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2471,6 +2471,7 @@
       "structure": "utility top bar combining tabs, edit entry and layout toggles",
       "affordance": "switches shelf mode, sort and editing state from one shared chrome line",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2487,7 +2488,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2527,6 +2528,7 @@
       "structure": "compact set of buttons for grid, list and alternate bookshelf layouts",
       "affordance": "changes layout density without leaving the current tab",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2543,7 +2545,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2639,6 +2641,7 @@
       "structure": "persistent floating compose button positioned over the lower edge of the community feed",
       "affordance": "creates new community content from any scroll position",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2655,7 +2658,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2709,7 +2712,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2721,6 +2724,7 @@
       "structure": "paper-like post card with author meta, title, body excerpt and action rows",
       "affordance": "reads and interacts with community posts inside the bookshelf context",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2737,7 +2741,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2805,6 +2809,7 @@
       "structure": "top bar with page title and trailing utility actions for the community feed",
       "affordance": "anchors the feed context and exposes global actions",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2821,7 +2826,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {

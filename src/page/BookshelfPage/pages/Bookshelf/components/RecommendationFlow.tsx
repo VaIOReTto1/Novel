@@ -8,17 +8,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { RecommendationItem } from '../types';
 import { LoadMoreIndicator } from './LoadMoreIndicator';
 import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
 
 const recommendationCoverImageStyle = { width: '100%', height: '100%' } as const;
-const recommendationCoverPlaceholderStyle = {
-  width: '100%',
-  height: '100%',
-  backgroundColor: '#f0f0f0',
-} as const;
 
 interface RecommendationFlowProps {
   data: RecommendationItem[];
@@ -39,40 +36,49 @@ const RecommendationItemCard: React.FC<RecommendationItemCardProps> = ({
   item,
   styles,
   onBookPress,
-}) => (
-  <TouchableOpacity
-    style={styles.recommendationItem}
-    onPress={() => onBookPress?.(item)}
-  >
-    <View style={styles.recommendationItemCover}>
-      {(item.cover || item.coverUrl) ? (
-        <Image
-          source={{ uri: item.cover || item.coverUrl }}
-          style={recommendationCoverImageStyle}
-          resizeMode="cover"
-        />
-      ) : (
-        <View style={recommendationCoverPlaceholderStyle} />
-      )}
-    </View>
+}) => {
+  const colors = useNovelColors();
+  const ui = createNovelDesignUI(colors as any);
 
-    <View style={styles.recommendationItemInfo}>
-      <Text style={styles.recommendationItemTitle} numberOfLines={2}>
-        {item.title}
-      </Text>
-      {item.description && (
-        <Text style={styles.recommendationItemDescription} numberOfLines={3}>
-          {item.description}
+  return (
+    <TouchableOpacity
+      style={styles.recommendationItem}
+      onPress={() => onBookPress?.(item)}>
+      <View style={styles.recommendationItemCover}>
+        {(item.cover || item.coverUrl) ? (
+          <Image
+            source={{ uri: item.cover || item.coverUrl }}
+            style={recommendationCoverImageStyle}
+            resizeMode="cover"
+          />
+        ) : (
+          <View
+            style={[
+              recommendationCoverImageStyle,
+              { backgroundColor: ui.color.bg.elevated },
+            ]}
+          />
+        )}
+      </View>
+
+      <View style={styles.recommendationItemInfo}>
+        <Text style={styles.recommendationItemTitle} numberOfLines={2}>
+          {item.title}
         </Text>
-      )}
-      {item.tags && item.tags.length > 0 && (
-        <View style={styles.recommendationItemTag}>
-          <Text style={styles.recommendationItemTagText}>{item.tags[0]}</Text>
-        </View>
-      )}
-    </View>
-  </TouchableOpacity>
-);
+        {item.description ? (
+          <Text style={styles.recommendationItemDescription} numberOfLines={3}>
+            {item.description}
+          </Text>
+        ) : null}
+        {item.tags && item.tags.length > 0 ? (
+          <View style={styles.recommendationItemTag}>
+            <Text style={styles.recommendationItemTagText}>{item.tags[0]}</Text>
+          </View>
+        ) : null}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
   data,
@@ -80,7 +86,7 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
   onLoadMore,
   hasMore = false,
   isLoading = false,
-  title = '鎺ㄨ崘闃呰',
+  title = '猜你喜欢',
 }) => {
   const colors = useNovelColors();
   const styles = createBookshelfPageStyles(colors);
@@ -92,9 +98,7 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
   return (
     <View style={styles.recommendationContainer}>
       <View style={styles.recommendationHeader}>
-        <Text style={styles.recommendationTitle}>
-          -- {title} --
-        </Text>
+        <Text style={styles.recommendationTitle}>-- {title} --</Text>
       </View>
 
       <ScrollView
@@ -113,8 +117,7 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
             }
           }
         }}
-        scrollEventThrottle={400}
-      >
+        scrollEventThrottle={400}>
         <View style={styles.recommendationGrid}>
           <View style={styles.recommendationColumn}>
             {data
@@ -143,12 +146,12 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
           </View>
         </View>
 
-        {(hasMore || isLoading) && (
+        {(hasMore || isLoading) ? (
           <LoadMoreIndicator
             isLoading={isLoading}
             onLoadMore={onLoadMore}
           />
-        )}
+        ) : null}
       </ScrollView>
     </View>
   );

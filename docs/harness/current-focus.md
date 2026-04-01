@@ -2,7 +2,7 @@
 
 ## 当前状态
 - 当前分支：`feature/stage-7-phase-15-audit`
-- 当前权威结论：`Stage 7 = in_progress`，`Phase 15-17 = in_progress`，`Phase 18 = planned`
+- 当前权威结论：`Stage 7 = in_progress`，`Phase 15-18 = in_progress`
 - 当前 refactor authority 以 `docs/refactor/README.md` 为准
 - 当前 Android 模块图保持为 `app + core-* + feature-* + macrobenchmark`
 

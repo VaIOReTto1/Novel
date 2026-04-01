@@ -31,7 +31,7 @@ export const NovelDesignShowcase: React.FC = () => {
       </View>
 
       <PexelsCreditOverlay
-        authorName="Stage 7 Demo Author"
+        authorName="Novel Design Demo Author"
         sourceUrl="https://www.pexels.com/photo/example"
       />
     </ScrollView>

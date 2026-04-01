@@ -253,13 +253,13 @@ const checkAssetArtifacts = ({
     if (mismatched.length > 0) {
       return {
         ok: false,
-        message: `Stage 7 asset artifacts are stale: ${mismatched.join(', ')}`,
+        message: `Novel design asset artifacts are stale: ${mismatched.join(', ')}`,
       };
     }
 
     return {
       ok: true,
-      message: 'Stage 7 asset artifacts are up to date.',
+      message: 'Novel design asset artifacts are up to date.',
     };
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true });
@@ -272,7 +272,7 @@ const main = () => {
 
   if (command === 'generate') {
     const outputs = generateAssetArtifacts({ repoRoot });
-    console.log(`Stage 7 asset artifacts written to ${path.dirname(outputs.iconManifestPath)}`);
+    console.log(`Novel design asset artifacts written to ${path.dirname(outputs.iconManifestPath)}`);
     return;
   }
 

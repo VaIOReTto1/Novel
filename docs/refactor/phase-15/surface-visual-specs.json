@@ -1207,31 +1207,38 @@
       "src/page/Writer/AIWriteAssistant/AIWriteAssistantComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "toolbar-led creation pages with editors, prompts, assistant blocks and modals",
-      "chrome": "utility-first creation chrome with mixed icon families",
-      "content_pattern": "compose, assist, manage drafts and modal parameter flows",
+      "layout": "fixed header plus scrolling chat feed with floating idea panel, suggestion pills and anchored composer",
+      "chrome": "assistant chat shell with back/menu actions, quota caption and bottom composer rail",
+      "content_pattern": "intro prompt cards, assistant and user bubbles, collapsible thinking block, post-response actions and idea categories",
       "key_states": [
-        "default"
+        "loading",
+        "intro",
+        "assistant-response",
+        "thinking-expanded",
+        "idea-selector-open",
+        "sending"
       ],
       "key_components": [
-        "ActionBar",
-        "ChatRow",
         "Header",
-        "IdeaSelector",
-        "InputBar",
         "IntroExample",
-        "MarkdownText",
-        "Suggestions"
+        "ChatRow",
+        "ThinkingBlock",
+        "ActionBar",
+        "Suggestions",
+        "IdeaSelector",
+        "InputBar"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-creation-workbench with paper surfaces and compact action rails",
-      "component_recipe": "editorial-writer-workbench",
+      "layout_strategy": "editorial-ai-assistant shell with paper chat cards, quiet fixed header and floating idea chooser",
+      "component_recipe": "editorial-ai-chat",
       "style_keywords": [
-        "creation",
-        "tooling",
-        "paper-editor"
+        "assistant-chat",
+        "paper-bubbles",
+        "thinking-panel",
+        "floating-idea-panel",
+        "anchored-composer"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1250,8 +1257,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -1317,29 +1324,34 @@
       "src/page/Writer/BookManage/BookManagePageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "toolbar-led creation pages with editors, prompts, assistant blocks and modals",
-      "chrome": "utility-first creation chrome with mixed icon families",
-      "content_pattern": "compose, assist, manage drafts and modal parameter flows",
+      "layout": "single-column management shell with top bar, book banner, draft card, chapter section, volume note and bottom CTA",
+      "chrome": "minimal writer management chrome focused on draft recovery and chapter creation",
+      "content_pattern": "book identity block, continue-draft card, chapter list or empty state, right-aligned volume label and primary footer action",
       "key_states": [
-        "default"
+        "loading",
+        "draft-exists",
+        "chapter-empty",
+        "chapter-list"
       ],
       "key_components": [
+        "Header",
         "Banner",
-        "ChapterSection",
         "DraftBar",
+        "ChapterSection",
         "EmptyChapter",
-        "Footer",
-        "Header"
+        "Footer"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-creation-workbench with paper surfaces and compact action rails",
-      "component_recipe": "editorial-writer-workbench",
+      "layout_strategy": "editorial-book-management shell with paper banner card, elevated draft recovery block and tokenized chapter cards",
+      "component_recipe": "editorial-book-manager",
       "style_keywords": [
-        "creation",
-        "tooling",
-        "paper-editor"
+        "writer-management",
+        "banner-card",
+        "draft-recovery",
+        "chapter-cards",
+        "footer-cta"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1358,8 +1370,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -2250,27 +2262,32 @@
       "src/page/Writer/WritePage/WritePageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "toolbar-led creation pages with editors, prompts, assistant blocks and modals",
-      "chrome": "utility-first creation chrome with mixed icon families",
-      "content_pattern": "compose, assist, manage drafts and modal parameter flows",
+      "layout": "fixed top bar plus full-height editor canvas with welcome panel, selection toolbar and modal overlays",
+      "chrome": "utility-first writing chrome with publish button, text actions and bottom volume rail",
+      "content_pattern": "title input, long-form editor, contextual toolbars, welcome shortcuts and parameter modal",
       "key_states": [
-        "default"
+        "default",
+        "welcome-panel",
+        "selection-toolbar",
+        "parameter-modal",
+        "loading-overlay"
       ],
       "key_components": [
-        "SelectionToolbar",
         "TopBar",
+        "WelcomePanel",
         "VolumeBar",
-        "WelcomePanel"
+        "SelectionToolbar"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-creation-workbench with paper surfaces and compact action rails",
-      "component_recipe": "editorial-writer-workbench",
+      "layout_strategy": "editorial-writer-workbench with quiet top chrome, paper editor and floating assist panels",
+      "component_recipe": "editorial-editor-shell",
       "style_keywords": [
-        "creation",
-        "tooling",
-        "paper-editor"
+        "paper-editor",
+        "floating-toolbars",
+        "editorial-writing",
+        "utility-chrome"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2289,8 +2306,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

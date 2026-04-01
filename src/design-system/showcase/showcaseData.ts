@@ -5,7 +5,7 @@ export const novelDesignShowcaseSections = [
   },
   {
     title: 'Icons',
-    description: 'Legacy assets bridged through the Stage 7 icon registry',
+    description: 'Legacy assets bridged through the novel design icon registry',
   },
   {
     title: 'Media',

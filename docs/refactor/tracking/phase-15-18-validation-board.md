@@ -5,8 +5,8 @@
 - `Phase 15`: `in_progress`
 - `Phase 16`: `planned`
 - `Phase 17`: `planned`
-- `Phase 18`: `planned`
-- 最新更新：`2026-03-31`
+- `Phase 18`: `in_progress`
+- 最新更新：`2026-04-01`
 
 ## Phase 15
 | ID | Item | Expected | Actual | Status | Result |
@@ -34,6 +34,6 @@
 ## Phase 18
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V18-01 | page rollout wave 1 | 壳层与高频入口换肤完成 | 待执行 | `planned` | `gray` |
-| V18-02 | page rollout wave 2-4 | 核心内容页、评论创作线、次级页面完成 | 待执行 | `planned` | `gray` |
+| V18-01 | page rollout wave 1 | 壳层与高频入口换肤完成 | 已落地 `ProfilePage`、`SettingsPage`、`CategoryPage`、`BookshelfPage`、`MemberCenterPage`、`CommentPage`、`ReviewDetailPage`、`WriteReviewPage`、`WritePage`、`AIWriteAssistant`、`BookManagePage`，并切入统一 `NovelDesignUI` 配置层 | `in_progress` | `yellow` |
+| V18-02 | page rollout wave 2-4 | 核心内容页、评论创作线、次级页面完成 | 评论创作线与写作线持续推进中，Bookshelf 四个内嵌子页与剩余次级页面待继续换肤 | `in_progress` | `yellow` |
 | V18-03 | visual regression and gates | 像素、无障碍、版权、性能门禁通过 | 待执行 | `planned` | `gray` |

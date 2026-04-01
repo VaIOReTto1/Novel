@@ -741,9 +741,25 @@ const RESKINNED_SURFACES = new Set([
   'rn-host-comment-page-component',
   'rn-host-review-detail-page-component',
   'rn-host-write-review-page-component',
+  'rn-host-write-page-component',
+  'rn-host-aiwrite-assistant-component',
+  'rn-host-book-manage-page-component',
 ]);
 
 const NOVEL_DESIGN_READY_COMPONENTS = new Set([
+  'src/page/Writer/AIWriteAssistant/components/ActionBar.tsx',
+  'src/page/Writer/AIWriteAssistant/components/Header.tsx',
+  'src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx',
+  'src/page/Writer/AIWriteAssistant/components/InputBar.tsx',
+  'src/page/Writer/AIWriteAssistant/components/IntroExample.tsx',
+  'src/page/Writer/AIWriteAssistant/components/Suggestions.tsx',
+  'src/page/Writer/AIWriteAssistant/components/ThinkingBlock.tsx',
+  'src/page/Writer/BookManage/components/Banner.tsx',
+  'src/page/Writer/BookManage/components/ChapterSection.tsx',
+  'src/page/Writer/BookManage/components/DraftBar.tsx',
+  'src/page/Writer/BookManage/components/EmptyChapter.tsx',
+  'src/page/Writer/BookManage/components/Footer.tsx',
+  'src/page/Writer/BookManage/components/Header.tsx',
   'src/page/ProfilePage/components/TopBar.tsx',
   'src/page/ProfilePage/styles/ProfilePageStyles.ts',
   'src/page/SettingsPage/settingspage/styles/SettingsPageStyles.ts',
@@ -753,6 +769,7 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/comment/CommentPage/styles/CommentPageStyles.ts',
   'src/page/comment/ReviewDetailPage/styles/ReviewDetailPageStyles.ts',
   'src/page/comment/WriteReviewPage/styles/WriteReviewPageStyles.ts',
+  'src/page/Writer/WritePage/styles/WritePageStyles.ts',
   'src/design-system/tokens/novelDesignTokens.ts',
   'src/design-system/tokens/resolveNovelDesignTheme.ts',
   'src/design-system/icons/NovelDesignIcon.tsx',
@@ -764,10 +781,249 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseModel.kt',
 ]);
 
+const SURFACE_VISUAL_OVERRIDES = {
+  'rn-host-write-page-component': {
+    current_visual_summary: {
+      layout: 'fixed top bar plus full-height editor canvas with welcome panel, selection toolbar and modal overlays',
+      chrome: 'utility-first writing chrome with publish button, text actions and bottom volume rail',
+      content_pattern: 'title input, long-form editor, contextual toolbars, welcome shortcuts and parameter modal',
+      key_states: ['default', 'welcome-panel', 'selection-toolbar', 'parameter-modal', 'loading-overlay'],
+      key_components: ['TopBar', 'WelcomePanel', 'VolumeBar', 'SelectionToolbar'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-writer-workbench with quiet top chrome, paper editor and floating assist panels',
+      component_recipe: 'editorial-editor-shell',
+      style_keywords: ['paper-editor', 'floating-toolbars', 'editorial-writing', 'utility-chrome'],
+    },
+  },
+  'rn-host-aiwrite-assistant-component': {
+    current_visual_summary: {
+      layout: 'fixed header plus scrolling chat feed with floating idea panel, suggestion pills and anchored composer',
+      chrome: 'assistant chat shell with back/menu actions, quota caption and bottom composer rail',
+      content_pattern: 'intro prompt cards, assistant and user bubbles, collapsible thinking block, post-response actions and idea categories',
+      key_states: ['loading', 'intro', 'assistant-response', 'thinking-expanded', 'idea-selector-open', 'sending'],
+      key_components: ['Header', 'IntroExample', 'ChatRow', 'ThinkingBlock', 'ActionBar', 'Suggestions', 'IdeaSelector', 'InputBar'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-ai-assistant shell with paper chat cards, quiet fixed header and floating idea chooser',
+      component_recipe: 'editorial-ai-chat',
+      style_keywords: ['assistant-chat', 'paper-bubbles', 'thinking-panel', 'floating-idea-panel', 'anchored-composer'],
+    },
+  },
+  'rn-host-book-manage-page-component': {
+    current_visual_summary: {
+      layout: 'single-column management shell with top bar, book banner, draft card, chapter section, volume note and bottom CTA',
+      chrome: 'minimal writer management chrome focused on draft recovery and chapter creation',
+      content_pattern: 'book identity block, continue-draft card, chapter list or empty state, right-aligned volume label and primary footer action',
+      key_states: ['loading', 'draft-exists', 'chapter-empty', 'chapter-list'],
+      key_components: ['Header', 'Banner', 'DraftBar', 'ChapterSection', 'EmptyChapter', 'Footer'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-book-management shell with paper banner card, elevated draft recovery block and tokenized chapter cards',
+      component_recipe: 'editorial-book-manager',
+      style_keywords: ['writer-management', 'banner-card', 'draft-recovery', 'chapter-cards', 'footer-cta'],
+    },
+  },
+};
+
+const COMPONENT_VISUAL_OVERRIDES = {
+  'src/page/Writer/AIWriteAssistant/components/ActionBar.tsx': {
+    current_visual_summary: {
+      structure: 'feedback bar tucked under an assistant answer with like, dislike, copy and retry icon buttons',
+      affordance: 'post-response evaluation, copy and retry actions for generated content',
+    },
+    target_visual_plan: {
+      component_recipe: 'assistant-response-actions',
+      style_keywords: ['feedback-row', 'quiet-outline-actions', 'assistant-output'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/ChatRow.tsx': {
+    current_visual_summary: {
+      structure: 'assistant and user message bubbles with optional thinking block, markdown body and action bar',
+      affordance: 'two-way conversation stream with expandable assistant reasoning and response follow-ups',
+    },
+    target_visual_plan: {
+      component_recipe: 'editorial-chat-bubble',
+      style_keywords: ['chat-bubbles', 'thinking-stack', 'assistant-thread'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/Header.tsx': {
+    current_visual_summary: {
+      structure: 'fixed top bar with back button, centered title/quota stack and trailing menu action',
+      affordance: 'conversation navigation and assistant usage context',
+    },
+    target_visual_plan: {
+      component_recipe: 'editorial-assistant-header',
+      style_keywords: ['fixed-header', 'quota-caption', 'quiet-chrome'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx': {
+    current_visual_summary: {
+      structure: 'floating category panel with title row, close control and wrapped genre tiles',
+      affordance: 'quick genre selection for prompt injection before sending',
+    },
+    target_visual_plan: {
+      component_recipe: 'floating-idea-picker',
+      style_keywords: ['floating-panel', 'genre-grid', 'assistant-prompting'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/InputBar.tsx': {
+    current_visual_summary: {
+      structure: 'bottom multi-line input field with single send button in a persistent composer bar',
+      affordance: 'compose and submit assistant prompts without leaving the thread',
+    },
+    target_visual_plan: {
+      component_recipe: 'anchored-chat-composer',
+      style_keywords: ['composer-bar', 'anchored-input', 'primary-send'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/IntroExample.tsx': {
+    current_visual_summary: {
+      structure: 'hero intro bubble with assistant greeting, three example prompt cards and refresh action',
+      affordance: 'empty-state onboarding for first prompt selection',
+    },
+    target_visual_plan: {
+      component_recipe: 'assistant-onboarding-card',
+      style_keywords: ['intro-card', 'prompt-samples', 'assistant-onboarding'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/MarkdownText.tsx': {
+    current_visual_summary: {
+      structure: 'markdown body renderer embedded inside assistant message bubbles',
+      affordance: 'formats longer assistant answers with headings, emphasis and lists',
+    },
+    target_visual_plan: {
+      component_recipe: 'assistant-rich-text',
+      style_keywords: ['markdown-body', 'reading-answer', 'rich-text'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/Suggestions.tsx': {
+    current_visual_summary: {
+      structure: 'two horizontally aligned suggestion pills for deep-think and idea modes above the composer',
+      affordance: 'quick mode toggles before sending a prompt',
+    },
+    target_visual_plan: {
+      component_recipe: 'assistant-mode-pills',
+      style_keywords: ['suggestion-pills', 'mode-toggle', 'bottom-utility'],
+    },
+  },
+  'src/page/Writer/AIWriteAssistant/components/ThinkingBlock.tsx': {
+    current_visual_summary: {
+      structure: 'collapsible reasoning block with state label, caret toggle and quoted thinking text',
+      affordance: 'reveals or hides assistant reasoning trace inline with the answer',
+    },
+    target_visual_plan: {
+      component_recipe: 'assistant-thinking-panel',
+      style_keywords: ['reasoning-panel', 'collapsible-quote', 'process-visibility'],
+    },
+  },
+  'src/page/Writer/BookManage/components/Banner.tsx': {
+    current_visual_summary: {
+      structure: 'book identity banner with cover placeholder, title, author and publication status',
+      affordance: 'anchors the management page around one active work',
+    },
+    target_visual_plan: {
+      component_recipe: 'book-management-banner',
+      style_keywords: ['book-banner', 'identity-card', 'writer-surface'],
+    },
+  },
+  'src/page/Writer/BookManage/components/ChapterSection.tsx': {
+    current_visual_summary: {
+      structure: 'chapter section heading followed by either empty placeholder space or stacked chapter cards',
+      affordance: 'organizes existing chapters and signals the next authoring step',
+    },
+    target_visual_plan: {
+      component_recipe: 'writer-chapter-stack',
+      style_keywords: ['chapter-cards', 'writer-list', 'management-stack'],
+    },
+  },
+  'src/page/Writer/BookManage/components/DraftBar.tsx': {
+    current_visual_summary: {
+      structure: 'single-line recovery card with interrupted-draft copy and trailing continue action',
+      affordance: 'resume the last unfinished writing session',
+    },
+    target_visual_plan: {
+      component_recipe: 'draft-recovery-card',
+      style_keywords: ['draft-recovery', 'elevated-card', 'writer-cta'],
+    },
+  },
+  'src/page/Writer/BookManage/components/EmptyChapter.tsx': {
+    current_visual_summary: {
+      structure: 'centered empty-state copy block shown when the book has no chapters yet',
+      affordance: 'explains that chapter creation is the next action',
+    },
+    target_visual_plan: {
+      component_recipe: 'writer-empty-state',
+      style_keywords: ['empty-state', 'paper-card', 'chapter-zero'],
+    },
+  },
+  'src/page/Writer/BookManage/components/Footer.tsx': {
+    current_visual_summary: {
+      structure: 'bottom action area with one primary chapter-creation button and supporting migration tip',
+      affordance: 'starts new chapter creation and explains advanced editing entry point',
+    },
+    target_visual_plan: {
+      component_recipe: 'writer-footer-cta',
+      style_keywords: ['footer-cta', 'primary-button', 'supporting-note'],
+    },
+  },
+  'src/page/Writer/BookManage/components/Header.tsx': {
+    current_visual_summary: {
+      structure: 'simple top bar with back affordance and page title for chapter management',
+      affordance: 'returns to the previous writer surface while keeping context visible',
+    },
+    target_visual_plan: {
+      component_recipe: 'writer-management-header',
+      style_keywords: ['top-bar', 'quiet-chrome', 'writer-context'],
+    },
+  },
+  'src/page/Writer/WritePage/components/SelectionToolbar.tsx': {
+    current_visual_summary: {
+      structure: 'floating editing toolbar with selection actions for rewrite, condense and continue operations',
+      affordance: 'applies inline writing transforms to selected text',
+    },
+    target_visual_plan: {
+      component_recipe: 'editor-selection-toolbar',
+      style_keywords: ['floating-toolbar', 'selection-actions', 'writer-assist'],
+    },
+  },
+  'src/page/Writer/WritePage/components/TopBar.tsx': {
+    current_visual_summary: {
+      structure: 'top editor bar with navigation, utility icons and publish action',
+      affordance: 'global writing actions at the start of the session',
+    },
+    target_visual_plan: {
+      component_recipe: 'editor-header',
+      style_keywords: ['editor-top-bar', 'publish-cta', 'utility-actions'],
+    },
+  },
+  'src/page/Writer/WritePage/components/VolumeBar.tsx': {
+    current_visual_summary: {
+      structure: 'low-chrome volume label rail positioned near the lower edge of the editor',
+      affordance: 'keeps current volume context visible while writing',
+    },
+    target_visual_plan: {
+      component_recipe: 'editor-volume-rail',
+      style_keywords: ['context-rail', 'volume-label', 'editor-footer'],
+    },
+  },
+  'src/page/Writer/WritePage/components/WelcomePanel.tsx': {
+    current_visual_summary: {
+      structure: 'floating shortcut panel with helper entry points and dismiss control shown over the editor',
+      affordance: 'onboards writers to key creation shortcuts before they start editing',
+    },
+    target_visual_plan: {
+      component_recipe: 'editor-welcome-panel',
+      style_keywords: ['floating-shortcuts', 'editor-onboarding', 'paper-panel'],
+    },
+  },
+};
+
 const buildSurfaceVisualSpecs = (surfaces) =>
   surfaces.map((surface) => {
     const cluster = determineSurfaceCluster(surface);
     const plan = SURFACE_CLUSTER_PLANS[cluster] || SURFACE_CLUSTER_PLANS.utility-detail;
+    const override = SURFACE_VISUAL_OVERRIDES[surface.surface_id] || {};
     const figmaAuditPage = surface.host_type === 'rn-root'
       ? '00-现状审计/RN Root'
       : surface.host_type === 'rn-host'
@@ -784,17 +1040,17 @@ const buildSurfaceVisualSpecs = (surfaces) =>
       platform: surface.platform,
       source_paths: surface.source_paths,
       current_visual_summary: {
-        layout: plan.current.layout,
-        chrome: plan.current.chrome,
-        content_pattern: plan.current.content_pattern,
-        key_states: surface.key_states,
-        key_components: surface.key_components,
+        layout: override.current_visual_summary?.layout || plan.current.layout,
+        chrome: override.current_visual_summary?.chrome || plan.current.chrome,
+        content_pattern: override.current_visual_summary?.content_pattern || plan.current.content_pattern,
+        key_states: override.current_visual_summary?.key_states || surface.key_states,
+        key_components: override.current_visual_summary?.key_components || surface.key_components,
       },
       target_visual_plan: {
         direction: 'literary-editorial',
-        layout_strategy: plan.target.layout_strategy,
-        component_recipe: plan.target.component_recipe,
-        style_keywords: plan.target.style_keywords,
+        layout_strategy: override.target_visual_plan?.layout_strategy || plan.target.layout_strategy,
+        component_recipe: override.target_visual_plan?.component_recipe || plan.target.component_recipe,
+        style_keywords: override.target_visual_plan?.style_keywords || plan.target.style_keywords,
         token_priority: [
           'color.bg.canvas',
           'color.text.primary',
@@ -984,6 +1240,7 @@ const COMPONENT_CATEGORY_PLANS = {
 const buildComponentVisualSpecs = (catalog) =>
   catalog.entries.map((entry) => {
     const plan = COMPONENT_CATEGORY_PLANS[entry.category] || COMPONENT_CATEGORY_PLANS.layout;
+    const override = COMPONENT_VISUAL_OVERRIDES[entry.path] || {};
 
     return {
       path: entry.path,
@@ -991,14 +1248,14 @@ const buildComponentVisualSpecs = (catalog) =>
       category: entry.category,
       platform: entry.platform,
       current_visual_summary: {
-        structure: plan.current.structure,
-        affordance: plan.current.affordance,
-        asset_sources: entry.asset_sources,
+        structure: override.current_visual_summary?.structure || plan.current.structure,
+        affordance: override.current_visual_summary?.affordance || plan.current.affordance,
+        asset_sources: override.current_visual_summary?.asset_sources || entry.asset_sources,
       },
       target_visual_plan: {
         direction: 'literary-editorial',
-        component_recipe: plan.target.component_recipe,
-        style_keywords: plan.target.style_keywords,
+        component_recipe: override.target_visual_plan?.component_recipe || plan.target.component_recipe,
+        style_keywords: override.target_visual_plan?.style_keywords || plan.target.style_keywords,
         figma_target_page: '02-组件规范',
       },
       current_look_recorded: true,
@@ -1110,7 +1367,7 @@ const buildGovernanceDriftReport = (repoRoot, surfaces, figmaFrameMap, component
   const missingFromCatalog = rnSmokeTests.filter((name) => !smokeCatalogMentions.includes(name));
 
   return [
-    '# Stage 7 Governance Drift Report',
+    '# Novel Design Governance Drift Report',
     '',
     '## Summary',
     `- Surface count: ${surfaces.length}`,
@@ -1150,7 +1407,7 @@ const buildVisualPlanningSummary = (surfaceVisualSpecs, componentVisualSpecs) =>
   }, {});
 
   return [
-    '# Stage 7 Visual Planning Summary',
+    '# Novel Design Visual Planning Summary',
     '',
     '## Surface visual specs',
     `- Current look recorded: ${surfaceVisualSpecs.filter((entry) => entry.current_look_recorded).length}`,
@@ -1262,7 +1519,7 @@ const checkAuditArtifacts = ({
 
     return {
       ok: true,
-      message: 'Stage 7 audit artifacts are up to date.',
+      message: 'Novel design audit artifacts are up to date.',
     };
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true });
@@ -1275,7 +1532,7 @@ const main = () => {
 
   if (command === 'generate') {
     const outputs = generateAuditArtifacts({ repoRoot });
-    console.log(`Stage 7 audit artifacts written to ${path.dirname(outputs.surfaceInventoryPath)}`);
+    console.log(`Novel design audit artifacts written to ${path.dirname(outputs.surfaceInventoryPath)}`);
     return;
   }
 

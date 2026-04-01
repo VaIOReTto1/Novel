@@ -12,7 +12,7 @@ fun novelDesignShowcaseSections(): List<NovelDesignShowcaseSection> = listOf(
     ),
     NovelDesignShowcaseSection(
         title = "Icons",
-        description = "Legacy assets bridged through the Stage 7 icon registry",
+        description = "Legacy assets bridged through the novel design icon registry",
     ),
     NovelDesignShowcaseSection(
         title = "Media",

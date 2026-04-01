@@ -239,13 +239,13 @@ const checkTokenArtifacts = ({
     if (mismatched.length > 0) {
       return {
         ok: false,
-        message: `Stage 7 token artifacts are stale: ${mismatched.join(', ')}`,
+        message: `Novel design token artifacts are stale: ${mismatched.join(', ')}`,
       };
     }
 
     return {
       ok: true,
-      message: 'Stage 7 token artifacts are up to date.',
+      message: 'Novel design token artifacts are up to date.',
     };
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true });
@@ -258,7 +258,7 @@ const main = () => {
 
   if (command === 'generate') {
     const outputs = generateTokenArtifacts({ repoRoot });
-    console.log(`Stage 7 token artifacts written to ${path.dirname(outputs.styleDictionaryPath)}`);
+    console.log(`Novel design token artifacts written to ${path.dirname(outputs.styleDictionaryPath)}`);
     return;
   }
 

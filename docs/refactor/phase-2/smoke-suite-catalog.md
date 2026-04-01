@@ -2,10 +2,10 @@
 
 ## 目标
 - 为 `V2-05` 建立可执行的核心路径 smoke 套件。
-- 覆盖首页、登录、搜索、阅读器、设置、写作页六条主路径。
+- 覆盖首页、登录、搜索、阅读器、设置、写作页，以及后续新增的 AI 写作助手和作品管理页。
 - 断言只保留“可渲染、可进入、关键结构存在”一级，优先降低 flake。
 
-## 当前 smoke 覆盖
+## 当前 Smoke 覆盖
 | Path | Layer | Test File | Command |
 | --- | --- | --- | --- |
 | 首页 | Android Compose | `android/app/src/androidTest/java/com/novel/page/home/HomeSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest` |
@@ -18,6 +18,8 @@
 | 书评广场 | RN Jest render | `__tests__/smoke/CommentPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/CommentPage.smoke.test.tsx` |
 | 书评详情 | RN Jest render | `__tests__/smoke/ReviewDetailPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/ReviewDetailPage.smoke.test.tsx` |
 | 会员中心 | RN Jest render | `__tests__/smoke/MemberCenterPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/MemberCenterPage.smoke.test.tsx` |
+| AI 写作助手 | RN Jest render | `__tests__/smoke/AIWriteAssistant.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
+| 作品管理 | RN Jest render | `__tests__/smoke/BookManagePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookManagePage.smoke.test.tsx` |
 
 ## 当前稳定入口说明
 - `HomeSmokeTest`
@@ -40,11 +42,15 @@
   - 使用 RN render smoke，验证书评详情页顶栏与评论线程壳层可渲染。
 - `MemberCenterPage.smoke.test.tsx`
   - 使用 RN render smoke，验证会员中心主要卡片区、权益区、价格区和购买条壳层可渲染。
+- `AIWriteAssistant.smoke.test.tsx`
+  - 使用 RN render smoke，验证 AI 写作助手的顶部助手栏、底部模式按钮与输入栏可渲染。
+- `BookManagePage.smoke.test.tsx`
+  - 使用 RN render smoke，验证作品管理页的书籍 banner、草稿通道、章节区与底部 CTA 可渲染。
 
 ## 推荐执行方式
 - RN smoke
 ```bash
-npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx __tests__/smoke/WritePage.smoke.test.tsx
+npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx __tests__/smoke/WritePage.smoke.test.tsx __tests__/smoke/AIWriteAssistant.smoke.test.tsx __tests__/smoke/BookManagePage.smoke.test.tsx
 ```
 
 - 扩展 RN smoke
@@ -63,4 +69,4 @@ cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentat
   - `BookshelfPageComponent`
   - `HistoryPageComponent`
   - `CategoryPageComponent`
-- 为 Android smoke 增加截图/录屏归档模板，支撑 `V2-08` 证据标准化。
+- 为 Android smoke 增加截图/录像归档模板，支撑 `V2-08` 证据标准化。

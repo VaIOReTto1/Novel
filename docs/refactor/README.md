@@ -16,7 +16,7 @@
 - `Phase 15 = in_progress`
 - `Phase 16 = in_progress`
 - `Phase 17 = in_progress`
-- `Phase 18 = planned`
+- `Phase 18 = in_progress`
 
 ## Stage 7 摘要
 - `Phase 15` 负责建立 Stage 7 控制面、页面与组件视觉盘点、机器可对账清单、Figma 审计页和事实对账门禁。

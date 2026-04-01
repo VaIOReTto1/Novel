@@ -1,9 +1,9 @@
-# Stage 7 Visual Planning Summary
+# Novel Design Visual Planning Summary
 
 ## Surface visual specs
 - Current look recorded: 51
 - Target look planned: 51
-- Shell reskinned: 9
+- Shell reskinned: 12
 - android-book-detail: 1
 - android-search-discovery: 4
 - android-home-discovery: 3
@@ -27,7 +27,7 @@
 ## Component visual specs
 - Current look recorded: 225
 - Target look planned: 225
-- Novel design ready: 3
+- Novel design ready: 16
 - layout: 122
 - action: 13
 - sheet: 3

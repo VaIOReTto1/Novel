@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { resolveNovelDesignTheme } from '../../../../design-system/tokens/resolveNovelDesignTheme';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
 export const createCommentPageStyles = (colors: NovelColors) => {
-  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
+  const novelDesign = createNovelDesignUI(colors);
 
   return StyleSheet.create({
   container: {

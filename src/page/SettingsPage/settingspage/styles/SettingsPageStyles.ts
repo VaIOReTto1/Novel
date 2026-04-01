@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { resolveNovelDesignTheme } from '../../../../design-system/tokens/resolveNovelDesignTheme';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
@@ -10,7 +10,7 @@ import { NovelColors } from '../../../../utils/theme/colors';
  * @returns StyleSheet 样式表
  */
 export const createSettingsPageStyles = (colors: NovelColors) => {
-  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
+  const novelDesign = createNovelDesignUI(colors);
   // 已不再需要独立的 isDarkMode 变量，颜色直接从主题中获取
 
   // 动态颜色配置（使用全局主题色）

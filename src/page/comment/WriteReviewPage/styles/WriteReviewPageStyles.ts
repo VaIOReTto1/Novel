@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { resolveNovelDesignTheme } from '../../../../design-system/tokens/resolveNovelDesignTheme';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../utils/theme/colors';
 
 export const createWriteReviewPageStyles = (colors: NovelColors) => {
-  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
+  const novelDesign = createNovelDesignUI(colors);
   return StyleSheet.create({
     // 容器样式
     container: {

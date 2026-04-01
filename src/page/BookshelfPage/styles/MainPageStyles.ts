@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { resolveNovelDesignTheme } from '../../../design-system/tokens/resolveNovelDesignTheme';
+import { createNovelDesignUI } from '../../../design-system/novelDesign';
 import { NovelColors } from '../../../utils/theme/colors';
 import { wp, fp, sp } from '../../../utils/theme/dimensions';
 
 export const createMainPageStyles = (colors: NovelColors) => {
-  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
+  const novelDesign = createNovelDesignUI(colors);
 
   return StyleSheet.create({
     container: {

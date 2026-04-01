@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { resolveNovelDesignTheme } from '../../../design-system/tokens/resolveNovelDesignTheme';
+import { createNovelDesignUI } from '../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../utils/theme/dimensions';
 import { NovelColors } from '../../../utils/theme/colors';
 import { typography } from '../../../utils/theme/typography';
 import { PAGE_WIDTH } from '../utils/constants';
 
 export const createHomePageStyles = (colors: NovelColors) => {
-  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
+  const novelDesign = createNovelDesignUI(colors);
 
   return StyleSheet.create({
     container: {

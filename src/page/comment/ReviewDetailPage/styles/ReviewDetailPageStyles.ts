@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { resolveNovelDesignTheme } from '../../../../design-system/tokens/resolveNovelDesignTheme';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../utils/theme/colors';
 import { wp, hp, sp, fp } from '../../../../utils/theme/dimensions';
 
@@ -8,7 +8,7 @@ import { wp, hp, sp, fp } from '../../../../utils/theme/dimensions';
  * 基于 NovelColors 主题系统，支持明暗模式切换
  */
 export const createReviewDetailPageStyles = (colors: NovelColors) => {
-  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
+  const novelDesign = createNovelDesignUI(colors);
   return StyleSheet.create({
     // 主容器
     container: {

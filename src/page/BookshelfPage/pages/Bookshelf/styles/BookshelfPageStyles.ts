@@ -180,14 +180,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   gridPlaceholderCover: {
     width: '100%',
     height: '100%',
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   gridPlaceholderText: {
     fontSize: fp(10),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     opacity: 0.8,
   },
 
@@ -212,7 +212,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   gridProgress: {
     fontSize: fp(10),
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     marginTop: wp(2),
   },
 
@@ -224,7 +224,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   listItem: {
     flexDirection: 'row',
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(12),
     padding: wp(16),
     marginBottom: wp(12),
@@ -240,7 +240,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     height: wp(80),
     borderRadius: sp(6),
     overflow: 'hidden',
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   listCoverImage: {
@@ -290,7 +290,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   listProgress: {
     fontSize: fp(12),
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     fontWeight: '500',
   },
 
@@ -347,7 +347,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   waterfallBookItem: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(12),
     marginBottom: wp(16),
   },
@@ -571,14 +571,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     right: wp(6),
     paddingHorizontal: wp(6),
     paddingVertical: wp(2),
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
     borderRadius: sp(2),
     zIndex: 1,
   },
 
   bookTagText: {
     fontSize: fp(7),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '500',
   },
 

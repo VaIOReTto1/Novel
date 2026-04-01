@@ -81,17 +81,17 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   activeTabItem: {
-    backgroundColor: colors.novelChipBackground,
+    backgroundColor: elevated,
   },
 
   tabText: {
     fontSize: fp(14),
-    color: colors.novelTextGray,
+    color: textSecondary,
     fontWeight: '500',
   },
 
   activeTabText: {
-    color: colors.novelMain,
+    color: brandPrimary,
     fontWeight: '600',
   },
 
@@ -117,7 +117,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   hotCommentTitle: {
     fontSize: fp(16),
     fontWeight: '600',
-    color: colors.novelText,
+    color: textPrimary,
   },
 
   postItem: {
@@ -146,7 +146,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   sourceText: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
     marginLeft: wp(8),
   },
 
@@ -192,7 +192,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   userName: {
     fontSize: fp(14),
     fontWeight: '600',
-    color: colors.novelText,
+    color: textPrimary,
     marginBottom: hp(2),
   },
 
@@ -228,7 +228,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     width: wp(120),
     height: wp(120),
     borderRadius: wp(8),
-    backgroundColor: colors.novelLightGray,
+    backgroundColor: elevated,
     marginRight: wp(8),
   },
 
@@ -340,7 +340,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   emptyButton: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: brandPrimary,
     paddingHorizontal: wp(24),
     paddingVertical: hp(12),
     borderRadius: wp(8),
@@ -348,7 +348,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   emptyButtonText: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: color.text.inverse,
     fontWeight: '600',
   },
 

@@ -29,6 +29,10 @@ describe('CommunityPage novelDesign styles', () => {
     expect(styles.subscribeButtonText.color).toBe('#FFFDFC');
     expect(styles.bottomDivider.backgroundColor).toBe('#E8DDD1');
     expect(styles.userAvatar.backgroundColor).toBe('#F3ECE3');
+    expect(styles.hotCommentTitle.color).toBe('#201A17');
+    expect(styles.sourceText.color).toBe('#6F6258');
+    expect(styles.userName.color).toBe('#201A17');
+    expect(styles.postImage.backgroundColor).toBe('#F3ECE3');
     expect(styles.actionText.color).toBe('#6F6258');
     expect(styles.likedText.color).toBe('#C96A34');
     expect(styles.loadingText.color).toBe('#6F6258');
@@ -36,5 +40,9 @@ describe('CommunityPage novelDesign styles', () => {
     expect(styles.activeFilterItem.backgroundColor).toBe('#F3ECE3');
     expect(styles.filterText.color).toBe('#6F6258');
     expect(styles.activeFilterText.color).toBe('#C96A34');
+    expect(styles.activeTabItem.backgroundColor).toBe('#F3ECE3');
+    expect(styles.activeTabText.color).toBe('#C96A34');
+    expect(styles.emptyButton.backgroundColor).toBe('#C96A34');
+    expect(styles.emptyButtonText.color).toBe('#FFFDFC');
   });
 });

@@ -33,5 +33,10 @@ describe('Bookshelf nested page novelDesign styles', () => {
     expect(styles.listSeparator.backgroundColor).toBe('#E8DDD1');
     expect(styles.emptyAction.backgroundColor).toBe('#C96A34');
     expect(styles.emptyActionText.color).toBe('#FFFDFC');
+    expect(styles.listItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.listCover.backgroundColor).toBe('#F3ECE3');
+    expect(styles.listProgress.color).toBe('#C96A34');
+    expect(styles.waterfallBookItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.bookTag.backgroundColor).toBe('#C96A34');
   });
 });

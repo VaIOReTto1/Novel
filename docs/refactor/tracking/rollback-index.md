@@ -71,5 +71,7 @@
 
 | `RB-STAGE7-NOVELDESIGN-ENTRY-20260401-01` | `ee556a0` | 将首批已换肤页面统一接入 NovelDesignUI | `git revert --no-edit ee556a0` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/ProfilePageStyles.novelDesign.test.ts __tests__/design-system/SettingsPageStyles.novelDesign.test.ts __tests__/design-system/CategoryPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfMainPageStyles.novelDesign.test.ts __tests__/design-system/MemberCenterPageStyles.novelDesign.test.ts __tests__/design-system/CommentPageStyles.novelDesign.test.ts __tests__/design-system/ReviewDetailPageStyles.novelDesign.test.ts __tests__/design-system/WriteReviewPageStyles.novelDesign.test.ts __tests__/design-system/WritePageStyles.novelDesign.test.ts __tests__/design-system/NovelDesignUI.test.ts` |
 
+| `RB-STAGE7-BOOKSHELF-NESTED-20260401-01` | `2050e4a` | 推进书架 History / Watchlist 内嵌页的 novelDesign 换肤 | `git revert --no-edit 2050e4a` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/HistoryPageStyles.novelDesign.test.ts __tests__/design-system/WatchlistPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

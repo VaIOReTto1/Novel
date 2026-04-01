@@ -1,14 +1,18 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../../utils/theme/dimensions';
 import { NovelColors } from '../../../../../utils/theme/colors';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createBookshelfPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   // 容器样式
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   contentContainer: {
@@ -25,7 +29,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   // 标签页样式
   tabsContainer: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingHorizontal: wp(20),
     paddingVertical: wp(12),
     borderBottomWidth: 1,
@@ -106,7 +110,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   tabsDivider: {
     height: 1,
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   // 内容区域样式
@@ -120,6 +124,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: wp(80),
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   emptyIcon: {
@@ -156,6 +161,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
   },
 
   gridItem: {
+    backgroundColor: novelDesign.color.bg.surface,
     width: (screenWidth - wp(32) - wp(20)) / 3, // 动态计算3列布局
   },
 
@@ -163,7 +169,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
     borderRadius: sp(12),
     width: '100%',
     height: wp(120),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   gridCoverImage: {
@@ -1188,3 +1194,4 @@ export const createBookshelfPageStyles = (colors: NovelColors) => StyleSheet.cre
     fontWeight: '500',
   },
 });
+};

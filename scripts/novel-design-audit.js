@@ -744,6 +744,8 @@ const RESKINNED_SURFACES = new Set([
   'rn-host-write-page-component',
   'rn-host-aiwrite-assistant-component',
   'rn-host-book-manage-page-component',
+  'rn-nested-bookshelf-bookshelf-page',
+  'rn-nested-bookshelf-community-page',
   'rn-nested-bookshelf-history-page',
   'rn-nested-bookshelf-watchlist-page',
 ]);
@@ -852,6 +854,34 @@ const SURFACE_VISUAL_OVERRIDES = {
       layout_strategy: 'editorial-watchlist shelf with quiet top chrome, paper poster cards and elevated edit rail',
       component_recipe: 'bookshelf-watchlist-surface',
       style_keywords: ['watchlist-grid', 'poster-cards', 'edit-rail', 'discovery-empty-state'],
+    },
+  },
+  'rn-nested-bookshelf-bookshelf-page': {
+    current_visual_summary: {
+      layout: 'bookshelf core page with tabs, view switchers, recommendation feed and mixed grid/list/waterfall layouts',
+      chrome: 'bookshelf utility chrome around sorting, editing and layout-mode toggles',
+      content_pattern: 'shelf tabs, recommendation shelves, empty-state guidance and dense book cards with cover-first hierarchy',
+      key_states: ['tab-switch', 'grid-view', 'list-view', 'waterfall-view', 'empty-state', 'recommendation-loading'],
+      key_components: ['TopBar', 'BookItem', 'EmptyState', 'RecommendationFlow', 'ViewSwitcher', 'EditToolbar'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-bookshelf surface with calmer tabs, paper book cards and refined recommendation flow',
+      component_recipe: 'bookshelf-core-surface',
+      style_keywords: ['shelf-grid', 'recommendation-flow', 'paper-cards', 'utility-tabs'],
+    },
+  },
+  'rn-nested-bookshelf-community-page': {
+    current_visual_summary: {
+      layout: 'community feed page with top bar, category tabs, post list and floating write action',
+      chrome: 'social-reading chrome with topic filters, list dividers and utility actions',
+      content_pattern: 'post cards, author metadata, subscribe actions, empty state and loading indicator within the feed',
+      key_states: ['tab-switch', 'feed-loading', 'empty-state', 'floating-action'],
+      key_components: ['TopBar', 'TabBar', 'FilterBar', 'PostList', 'PostItem', 'EmptyState', 'FloatingButton', 'LoadingIndicator'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-community feed with paper post cards, quieter tabs and anchored floating compose affordance',
+      component_recipe: 'bookshelf-community-feed',
+      style_keywords: ['community-feed', 'post-cards', 'filter-tabs', 'floating-compose'],
     },
   },
 };
@@ -1125,6 +1155,126 @@ const COMPONENT_VISUAL_OVERRIDES = {
     target_visual_plan: {
       component_recipe: 'watchlist-poster-grid',
       style_keywords: ['poster-grid', 'selection-outline', 'progress-overlay'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx': {
+    current_visual_summary: {
+      structure: 'cover-first shelf card or row with title, author and progress metadata',
+      affordance: 'opens shelf entries while preserving reading progress context',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-book-card',
+      style_keywords: ['cover-card', 'reading-progress', 'shelf-item'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx': {
+    current_visual_summary: {
+      structure: 'bookshelf zero-state block with type-specific iconography and descriptive copy',
+      affordance: 'guides users when shelf or recommendation content is empty',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-empty-state',
+      style_keywords: ['empty-state', 'discovery-guidance', 'paper-zero-state'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx': {
+    current_visual_summary: {
+      structure: 'continuous recommendation rail embedded below shelf controls with lazy loading and mixed card sizes',
+      affordance: 'extends the shelf into discovery without leaving the tab',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-recommendation-flow',
+      style_keywords: ['recommendation-feed', 'mixed-cards', 'discovery-rail'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/TopBar.tsx': {
+    current_visual_summary: {
+      structure: 'utility top bar combining tabs, edit entry and layout toggles',
+      affordance: 'switches shelf mode, sort and editing state from one shared chrome line',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-top-bar',
+      style_keywords: ['utility-top-bar', 'layout-toggle', 'shelf-tabs'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx': {
+    current_visual_summary: {
+      structure: 'compact set of buttons for grid, list and alternate bookshelf layouts',
+      affordance: 'changes layout density without leaving the current tab',
+    },
+    target_visual_plan: {
+      component_recipe: 'bookshelf-view-switcher',
+      style_keywords: ['layout-toggle', 'density-switch', 'utility-controls'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/EmptyState.tsx': {
+    current_visual_summary: {
+      structure: 'community empty-state block with illustration-like icon, copy and call-to-action',
+      affordance: 'explains why no posts are visible and suggests the next action',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-empty-state',
+      style_keywords: ['empty-state', 'social-zero-state', 'guided-cta'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/FilterBar.tsx': {
+    current_visual_summary: {
+      structure: 'horizontal filter row with selectable topics and lightweight action affordances',
+      affordance: 'narrows the feed by category without leaving the list context',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-filter-row',
+      style_keywords: ['filter-row', 'topic-pills', 'feed-controls'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx': {
+    current_visual_summary: {
+      structure: 'persistent floating compose button positioned over the lower edge of the community feed',
+      affordance: 'creates new community content from any scroll position',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-floating-compose',
+      style_keywords: ['floating-button', 'compose-cta', 'anchored-action'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx': {
+    current_visual_summary: {
+      structure: 'centered loading indicator used inside feed and empty slots',
+      affordance: 'communicates asynchronous fetch progress without leaving the community shell',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-loading-indicator',
+      style_keywords: ['loading-state', 'feed-spinner', 'inline-feedback'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/PostItem.tsx': {
+    current_visual_summary: {
+      structure: 'paper-like post card with author meta, title, body excerpt and action rows',
+      affordance: 'reads and interacts with community posts inside the bookshelf context',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-post-card',
+      style_keywords: ['post-card', 'author-meta', 'social-reading'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/TabBar.tsx': {
+    current_visual_summary: {
+      structure: 'horizontal topic tab strip above the post feed',
+      affordance: 'switches community feed categories in place',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-tab-bar',
+      style_keywords: ['topic-tabs', 'feed-navigation', 'quiet-chrome'],
+    },
+  },
+  'src/page/BookshelfPage/pages/Community/components/TopBar.tsx': {
+    current_visual_summary: {
+      structure: 'top bar with page title and trailing utility actions for the community feed',
+      affordance: 'anchors the feed context and exposes global actions',
+    },
+    target_visual_plan: {
+      component_recipe: 'community-top-bar',
+      style_keywords: ['top-bar', 'feed-title', 'utility-actions'],
     },
   },
 };

@@ -1,17 +1,21 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../../utils/theme';
 import { wp, hp, fp } from '../../../../../utils/theme';
 
-export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createCommunityPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   // 主容器
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   // 顶部导航栏
   topBar: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingHorizontal: wp(16),
     paddingVertical: hp(12),
     borderBottomWidth: 1,
@@ -47,7 +51,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
 
   // 标签页
   tabContainer: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingHorizontal: wp(16),
     paddingVertical: hp(8),
     borderBottomWidth: 1,
@@ -84,20 +88,20 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
   // 帖子列表
   postList: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   // 顶部分割线
   topDivider: {
     height: hp(8),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   // 热门评论标题
   hotCommentHeader: {
     paddingHorizontal: wp(16),
     paddingVertical: hp(12),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
   },
 
   hotCommentTitle: {
@@ -107,7 +111,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
   },
 
   postItem: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingHorizontal: wp(16),
     paddingVertical: hp(16),
   },
@@ -550,3 +554,4 @@ export const createCommunityPageStyles = (colors: NovelColors) => StyleSheet.cre
     fontWeight: '600',
   },
 });
+};

@@ -2369,31 +2369,35 @@
       "src/page/BookshelfPage/pages/Bookshelf/BookshelfPage.tsx"
     ],
     "current_visual_summary": {
-      "layout": "content-heavy bookshelf surfaces using grids, lists, top bars and empty/loading states",
-      "chrome": "top-bar-first navigation with dense card/list presentation",
-      "content_pattern": "collection browsing, filtering and feed-style stacking",
+      "layout": "bookshelf core page with tabs, view switchers, recommendation feed and mixed grid/list/waterfall layouts",
+      "chrome": "bookshelf utility chrome around sorting, editing and layout-mode toggles",
+      "content_pattern": "shelf tabs, recommendation shelves, empty-state guidance and dense book cards with cover-first hierarchy",
       "key_states": [
-        "default"
+        "tab-switch",
+        "grid-view",
+        "list-view",
+        "waterfall-view",
+        "empty-state",
+        "recommendation-loading"
       ],
       "key_components": [
+        "TopBar",
         "BookItem",
-        "EditToolbar",
         "EmptyState",
-        "GridView",
-        "ListView",
-        "LoadMoreIndicator",
         "RecommendationFlow",
-        "TopBar"
+        "ViewSwitcher",
+        "EditToolbar"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-library-grid with calmer spacing and modular cards",
-      "component_recipe": "editorial-library-content",
+      "layout_strategy": "editorial-bookshelf surface with calmer tabs, paper book cards and refined recommendation flow",
+      "component_recipe": "bookshelf-core-surface",
       "style_keywords": [
-        "collection",
-        "shelf-cards",
-        "quiet-density"
+        "shelf-grid",
+        "recommendation-flow",
+        "paper-cards",
+        "utility-tabs"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2412,8 +2416,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -2424,31 +2428,35 @@
       "src/page/BookshelfPage/pages/Community/CommunityPage.tsx"
     ],
     "current_visual_summary": {
-      "layout": "content-heavy bookshelf surfaces using grids, lists, top bars and empty/loading states",
-      "chrome": "top-bar-first navigation with dense card/list presentation",
-      "content_pattern": "collection browsing, filtering and feed-style stacking",
+      "layout": "community feed page with top bar, category tabs, post list and floating write action",
+      "chrome": "social-reading chrome with topic filters, list dividers and utility actions",
+      "content_pattern": "post cards, author metadata, subscribe actions, empty state and loading indicator within the feed",
       "key_states": [
-        "default"
+        "tab-switch",
+        "feed-loading",
+        "empty-state",
+        "floating-action"
       ],
       "key_components": [
-        "EmptyState",
-        "FilterBar",
-        "FloatingButton",
-        "LoadingIndicator",
-        "PostItem",
-        "PostList",
+        "TopBar",
         "TabBar",
-        "TopBar"
+        "FilterBar",
+        "PostList",
+        "PostItem",
+        "EmptyState",
+        "FloatingButton",
+        "LoadingIndicator"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-library-grid with calmer spacing and modular cards",
-      "component_recipe": "editorial-library-content",
+      "layout_strategy": "editorial-community feed with paper post cards, quieter tabs and anchored floating compose affordance",
+      "component_recipe": "bookshelf-community-feed",
       "style_keywords": [
-        "collection",
-        "shelf-cards",
-        "quiet-density"
+        "community-feed",
+        "post-cards",
+        "filter-tabs",
+        "floating-compose"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2467,8 +2475,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

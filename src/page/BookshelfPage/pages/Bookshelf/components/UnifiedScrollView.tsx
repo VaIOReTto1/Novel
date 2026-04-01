@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { BookshelfItem, RecommendationItem, ViewType } from '../types';
 import { GridView } from './GridView';
 import { ListView } from './ListView';
@@ -55,6 +56,7 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
   onRefresh,
 }) => {
   const colors = useNovelColors();
+  const ui = createNovelDesignUI(colors as any);
   const styles = createBookshelfPageStyles(colors);
 
   // 渲染书架内容视图
@@ -105,8 +107,8 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
         <RefreshControl
           refreshing={isRefreshing}
           onRefresh={onRefresh}
-          colors={[colors.primary]}
-          tintColor={colors.primary}
+          colors={[ui.color.brand.primary]}
+          tintColor={ui.color.brand.primary}
         />
       }
     >

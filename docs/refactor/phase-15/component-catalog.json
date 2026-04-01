@@ -732,6 +732,7 @@
       "platform": "react-native",
       "category": "empty",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },

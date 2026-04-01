@@ -752,9 +752,11 @@ const RESKINNED_SURFACES = new Set([
 
 const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/TopBar.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/UnifiedScrollView.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx',
   'src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx',
   'src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx',

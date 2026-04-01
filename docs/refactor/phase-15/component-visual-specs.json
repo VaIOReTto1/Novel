@@ -2331,6 +2331,7 @@
       "structure": "bookshelf zero-state block with type-specific iconography and descriptive copy",
       "affordance": "guides users when shelf or recommendation content is empty",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2347,7 +2348,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2516,7 +2517,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {

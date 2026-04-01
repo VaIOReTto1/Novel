@@ -1,12 +1,14 @@
 import { StyleSheet } from 'react-native';
+import { resolveStage7Theme } from '../../../../design-system/tokens/resolveStage7Theme';
 import { NovelColors } from '../../../../utils/theme/colors';
 
 export const createWriteReviewPageStyles = (colors: NovelColors) => {
+  const stage7 = resolveStage7Theme(colors.novelBackground);
   return StyleSheet.create({
     // 容器样式
     container: {
       flex: 1,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: stage7.color.bg.canvas,
     },
 
     // TopBar样式
@@ -16,7 +18,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       justifyContent: 'space-between',
       paddingHorizontal: 12,
       paddingVertical: 4,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: stage7.color.bg.surface,
     },
 
     closeButton: {
@@ -66,7 +68,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
 
     // 评分区域
     ratingContainer: {
-      backgroundColor: colors.novelBackground,
+      backgroundColor: stage7.color.bg.surface,
       alignItems: 'center',
     },
 
@@ -110,7 +112,7 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
     // 表单区域
     formContainer: {
       flex: 1,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: stage7.color.bg.surface,
       paddingHorizontal: 12,
       paddingVertical: 0,
       marginBottom: 0,
@@ -180,15 +182,15 @@ export const createWriteReviewPageStyles = (colors: NovelColors) => {
       bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: stage7.color.bg.surface,
       borderTopWidth: 1,
-      borderTopColor: colors.novelDivider,
+      borderTopColor: stage7.color.border.subtle,
       padding: 16,
     },
 
     // 提示区域
     tipsContainer: {
-      backgroundColor: colors.novelSecondaryBackground,
+      backgroundColor: stage7.color.bg.elevated,
       borderRadius: 8,
       marginHorizontal: 16,
       marginBottom: 24,

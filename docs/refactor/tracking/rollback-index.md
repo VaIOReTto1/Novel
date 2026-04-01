@@ -85,5 +85,7 @@
 
 | `RB-STAGE7-SHELL-GUARDS-20260402-01` | `758765d` | 细化书架与社区样式核的 novelDesign 护栏 | `git revert --no-edit 758765d` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx __tests__/design-system/CommunityPostList.novelDesign.test.tsx` |
 
+| `RB-STAGE7-TEXT-TOKENS-20260402-01` | `8b57e55` | 补齐书架与社区文本层的 novelDesign 语义色 | `git revert --no-edit 8b57e55` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/CommunityPageStyles.novelDesign.test.ts` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

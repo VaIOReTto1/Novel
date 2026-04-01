@@ -81,5 +81,7 @@
 
 | `RB-STAGE7-BOOKSHELF-SHELL-20260402-01` | `0f71c4f` | 推进 Bookshelf 空态与滚动壳层的 novelDesign 收口 | `git revert --no-edit 0f71c4f` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-COMMUNITY-FEED-20260402-01` | `70d789d` | 推进 Community Feed 与 Bookshelf 工具条的 novelDesign 收口 | `git revert --no-edit 70d789d` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/CommunityFeedComponents.novelDesign.test.tsx __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

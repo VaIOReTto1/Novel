@@ -25,7 +25,7 @@ const walkFiles = (startPath, predicate, acc = []) => {
 const toPosix = (value) => value.split(path.sep).join('/');
 
 describe('novelDesign naming guard', () => {
-  test('code layer and command layer no longer use stage7-prefixed names', () => {
+  test('code layer and command layer no longer use novelDesign-prefixed names', () => {
     const files = [
       ...walkFiles(path.join(repoRoot, 'src'), (filePath) => /\.(ts|tsx)$/.test(filePath)),
       ...walkFiles(

@@ -5,7 +5,7 @@ const path = require('path');
 const repoRoot = path.resolve(__dirname, '..', '..');
 const tokenBuild = require('../../scripts/novel-design-token-build.js');
 
-describe('stage7 token build', () => {
+describe('novelDesign token build', () => {
   test('generates style-dictionary, less, RN and Android token artifacts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-tokens-'));
 

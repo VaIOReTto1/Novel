@@ -3,16 +3,16 @@ const os = require('os');
 const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
-const stage7Audit = require('../../scripts/novel-design-audit.js');
+const novelDesignAudit = require('../../scripts/novel-design-audit.js');
 
 const readJson = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
-describe('stage7 audit scripts', () => {
+describe('novelDesign audit scripts', () => {
   test('generates Phase 15 audit artifacts with expected files', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-audit-'));
 
     try {
-      const outputs = stage7Audit.generateAuditArtifacts({
+      const outputs = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -40,7 +40,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-surface-'));
 
     try {
-      const { surfaceInventoryPath } = stage7Audit.generateAuditArtifacts({
+      const { surfaceInventoryPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -76,7 +76,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-components-'));
 
     try {
-      const { componentCatalogPath } = stage7Audit.generateAuditArtifacts({
+      const { componentCatalogPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -101,7 +101,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-surface-specs-'));
 
     try {
-      const { surfaceInventoryPath, surfaceVisualSpecsPath } = stage7Audit.generateAuditArtifacts({
+      const { surfaceInventoryPath, surfaceVisualSpecsPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -139,7 +139,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-component-specs-'));
 
     try {
-      const { componentCatalogPath, componentVisualSpecsPath } = stage7Audit.generateAuditArtifacts({
+      const { componentCatalogPath, componentVisualSpecsPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -180,7 +180,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-assets-'));
 
     try {
-      const { assetInventoryPath } = stage7Audit.generateAuditArtifacts({
+      const { assetInventoryPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -200,7 +200,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-drift-'));
 
     try {
-      const { governanceDriftReportPath } = stage7Audit.generateAuditArtifacts({
+      const { governanceDriftReportPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });
@@ -223,7 +223,7 @@ describe('stage7 audit scripts', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-visual-summary-'));
 
     try {
-      const { visualPlanningSummaryPath } = stage7Audit.generateAuditArtifacts({
+      const { visualPlanningSummaryPath } = novelDesignAudit.generateAuditArtifacts({
         repoRoot,
         outputDir: tempDir,
       });

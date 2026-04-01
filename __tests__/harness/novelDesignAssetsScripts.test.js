@@ -7,7 +7,7 @@ const assetScripts = require('../../scripts/novel-design-assets.js');
 
 const readJson = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
-describe('stage7 asset scripts', () => {
+describe('novelDesign asset scripts', () => {
   test('generates asset manifests and governance report', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-assets-'));
 

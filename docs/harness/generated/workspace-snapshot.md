@@ -70,9 +70,9 @@
 - npm run build:android:bundle -> npm run version:patch && cd android && ./gradlew bundleRelease
 - npm run harness:check
 - npm run harness:refresh
-- npm run stage7:audit:check
-- npm run stage7:tokens:check
-- npm run stage7:assets:check
+- npm run novel-design:audit:check
+- npm run novel-design:tokens:check
+- npm run novel-design:assets:check
 - git diff --exit-code -- docs/harness/generated/workspace-snapshot.md
 - corepack enable
 - yarn install --frozen-lockfile

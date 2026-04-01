@@ -28,7 +28,7 @@ describe('ProfilePage TopBar Stage 7 bridge', () => {
     mockIconComponent.mockClear();
   });
 
-  it('uses stage7 icon bridge and toggles moon/sun icon by theme', () => {
+  it('uses novelDesign icon bridge and toggles moon/sun icon by theme', () => {
     let renderer!: ReactTestRenderer.ReactTestRenderer;
 
     ReactTestRenderer.act(() => {

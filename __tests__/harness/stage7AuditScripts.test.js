@@ -3,13 +3,13 @@ const os = require('os');
 const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
-const stage7Audit = require('../../scripts/stage7-audit.js');
+const stage7Audit = require('../../scripts/novel-design-audit.js');
 
 const readJson = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 describe('stage7 audit scripts', () => {
   test('generates Phase 15 audit artifacts with expected files', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-audit-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-audit-'));
 
     try {
       const outputs = stage7Audit.generateAuditArtifacts({
@@ -37,7 +37,7 @@ describe('stage7 audit scripts', () => {
   });
 
   test('surface inventory covers RN root, RN nested pages, Android native screens and shells', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-surface-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-surface-'));
 
     try {
       const { surfaceInventoryPath } = stage7Audit.generateAuditArtifacts({
@@ -73,7 +73,7 @@ describe('stage7 audit scripts', () => {
   });
 
   test('component catalog groups RN and Android components by semantic category', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-components-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-components-'));
 
     try {
       const { componentCatalogPath } = stage7Audit.generateAuditArtifacts({
@@ -91,14 +91,14 @@ describe('stage7 audit scripts', () => {
       expect(byPath.get('android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt').platform).toBe('android');
       expect(byPath.get('android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt').category).toBe('action');
       expect(byPath.get('android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt').category).toBe('sheet');
-      expect(byPath.get('android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt').category).toBe('showcase');
+      expect(byPath.get('android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseScreen.kt').category).toBe('showcase');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
   });
 
   test('surface visual specs describe current and target look for every surface', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-surface-specs-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-surface-specs-'));
 
     try {
       const { surfaceInventoryPath, surfaceVisualSpecsPath } = stage7Audit.generateAuditArtifacts({
@@ -133,7 +133,7 @@ describe('stage7 audit scripts', () => {
   });
 
   test('component visual specs describe current and target look for every component', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-component-specs-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-component-specs-'));
 
     try {
       const { componentCatalogPath, componentVisualSpecsPath } = stage7Audit.generateAuditArtifacts({
@@ -171,7 +171,7 @@ describe('stage7 audit scripts', () => {
   });
 
   test('asset inventory captures svg fonts and vector icon families', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-assets-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-assets-'));
 
     try {
       const { assetInventoryPath } = stage7Audit.generateAuditArtifacts({
@@ -191,7 +191,7 @@ describe('stage7 audit scripts', () => {
   });
 
   test('governance drift report captures smoke coverage and registry status', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-drift-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-drift-'));
 
     try {
       const { governanceDriftReportPath } = stage7Audit.generateAuditArtifacts({
@@ -214,7 +214,7 @@ describe('stage7 audit scripts', () => {
   });
 
   test('visual planning summary reports every surface and component as planned entries', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-visual-summary-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-visual-summary-'));
 
     try {
       const { visualPlanningSummaryPath } = stage7Audit.generateAuditArtifacts({

@@ -3,7 +3,7 @@ package com.novel.ui.theme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-object Stage7Tokens {
+object NovelDesignTokens {
     val LightColors = mapOf(
         "color.bg.canvas.light" to Color(0xFFFAF6F0),
         "color.bg.surface.light" to Color(0xFFFFFDFC),

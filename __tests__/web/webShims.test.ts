@@ -6,11 +6,11 @@ import Reanimated, {
 
 describe('web shims', () => {
   it('stores values in async storage shim', async () => {
-    await AsyncStorage.setItem('stage7-test', 'value');
-    expect(await AsyncStorage.getItem('stage7-test')).toBe('value');
+    await AsyncStorage.setItem('novel-design-test', 'value');
+    expect(await AsyncStorage.getItem('novel-design-test')).toBe('value');
 
-    await AsyncStorage.removeItem('stage7-test');
-    expect(await AsyncStorage.getItem('stage7-test')).toBeNull();
+    await AsyncStorage.removeItem('novel-design-test');
+    expect(await AsyncStorage.getItem('novel-design-test')).toBeNull();
   });
 
   it('exposes minimal reanimated-compatible primitives', () => {

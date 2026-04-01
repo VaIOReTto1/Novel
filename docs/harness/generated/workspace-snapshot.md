@@ -55,12 +55,12 @@
 - npm run test -> jest
 - npm run harness:refresh -> node scripts/harness-refresh.js
 - npm run harness:check -> node scripts/harness-check.js
-- npm run stage7:audit -> node scripts/stage7-audit.js generate
-- npm run stage7:audit:check -> node scripts/stage7-audit.js check
-- npm run stage7:tokens -> node scripts/stage7-token-build.js generate
-- npm run stage7:tokens:check -> node scripts/stage7-token-build.js check
-- npm run stage7:assets -> node scripts/stage7-assets.js generate
-- npm run stage7:assets:check -> node scripts/stage7-assets.js check
+- npm run novel-design:audit -> node scripts/novel-design-audit.js generate
+- npm run novel-design:audit:check -> node scripts/novel-design-audit.js check
+- npm run novel-design:tokens -> node scripts/novel-design-token-build.js generate
+- npm run novel-design:tokens:check -> node scripts/novel-design-token-build.js check
+- npm run novel-design:assets -> node scripts/novel-design-assets.js generate
+- npm run novel-design:assets:check -> node scripts/novel-design-assets.js check
 - npm run version:show -> node scripts/version-sync.js show
 - npm run version:patch -> node scripts/version-sync.js patch
 - npm run version:minor -> node scripts/version-sync.js minor

@@ -24,12 +24,12 @@
 - `Figma Variables -> versioned JSON -> Style Dictionary -> LESS / RN / Android`
 
 ## 当前产物入口
-- [stage7.tokens.json](../../../design-system/source/stage7.tokens.json)
+- [novel-design.tokens.json](../../../design-system/source/novel-design.tokens.json)
 - [style-dictionary.tokens.json](../../../design-system/generated/style-dictionary.tokens.json)
 - [tokens.less](../../../design-system/generated/tokens.less)
-- [stage7Tokens.ts](../../../src/design-system/tokens/stage7Tokens.ts)
-- [stage7_tokens.xml](../../../android/core-ui/src/main/res/values/stage7_tokens.xml)
-- [Stage7Tokens.kt](../../../android/core-ui/src/main/java/com/novel/ui/theme/Stage7Tokens.kt)
+- [novelDesignTokens.ts](../../../src/design-system/tokens/novelDesignTokens.ts)
+- [novel_design_tokens.xml](../../../android/core-ui/src/main/res/values/novel_design_tokens.xml)
+- [NovelDesignTokens.kt](../../../android/core-ui/src/main/java/com/novel/ui/theme/NovelDesignTokens.kt)
 
 ## 当前状态
 - `in_progress`

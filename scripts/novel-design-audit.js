@@ -1182,7 +1182,7 @@ const checkAuditArtifacts = ({
   outputDir = DEFAULT_OUTPUT_DIR,
 } = {}) => {
   const resolvedOutputDir = resolveOutputDir(repoRoot, outputDir);
-  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-check-'));
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-check-'));
 
   try {
     const freshOutputs = generateAuditArtifacts({ repoRoot, outputDir: tempDir });

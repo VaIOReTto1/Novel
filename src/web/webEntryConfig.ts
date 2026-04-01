@@ -1,3 +1,3 @@
-export const shouldRenderStage7Showcase = (search: string): boolean => {
-  return new URLSearchParams(search).get('stage7Showcase') === '1';
+export const shouldRenderNovelDesignShowcase = (search: string): boolean => {
+  return new URLSearchParams(search).get('novelDesignShowcase') === '1';
 };

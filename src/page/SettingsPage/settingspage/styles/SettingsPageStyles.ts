@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { resolveStage7Theme } from '../../../../design-system/tokens/resolveStage7Theme';
+import { resolveNovelDesignTheme } from '../../../../design-system/tokens/resolveNovelDesignTheme';
 import { wp, fp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
@@ -10,7 +10,7 @@ import { NovelColors } from '../../../../utils/theme/colors';
  * @returns StyleSheet 样式表
  */
 export const createSettingsPageStyles = (colors: NovelColors) => {
-  const stage7 = resolveStage7Theme(colors.novelBackground);
+  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
   // 已不再需要独立的 isDarkMode 变量，颜色直接从主题中获取
 
   // 动态颜色配置（使用全局主题色）
@@ -26,7 +26,7 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
     // === 容器样式 ===
     container: {
       flex: 1,
-      backgroundColor: stage7.color.bg.canvas,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     scrollView: {
@@ -44,9 +44,9 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
       justifyContent: 'space-between',
       paddingHorizontal: wp(20),
       paddingVertical: wp(16),
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
       borderBottomWidth: 0.5,
-      borderBottomColor: stage7.color.border.subtle,
+      borderBottomColor: novelDesign.color.border.subtle,
       minHeight: wp(56),
     },
 
@@ -73,7 +73,7 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
     topBarTitle: {
       ...typography.bodyMedium,
       fontSize: fp(18),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
       textAlign: 'center',
     },
@@ -90,9 +90,9 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
       justifyContent: 'space-between',
       paddingHorizontal: wp(20),
       paddingVertical: wp(16),
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
       borderBottomWidth: 0.5,
-      borderBottomColor: stage7.color.border.subtle,
+      borderBottomColor: novelDesign.color.border.subtle,
       minHeight: wp(56),
     },
 
@@ -115,7 +115,7 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
     settingTitle: {
       ...typography.bodyMedium,
       fontSize: fp(16),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       flex: 1,
       fontWeight: '400',
     },
@@ -123,7 +123,7 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
     settingSubtitle: {
       ...typography.labelSmall,
       fontSize: fp(14),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       marginTop: wp(2),
     },
 
@@ -136,7 +136,7 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
     settingValue: {
       ...typography.labelLarge,
       fontSize: fp(14),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       marginRight: wp(8),
       textAlign: 'right',
     },
@@ -176,13 +176,13 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
       paddingHorizontal: wp(20),
       paddingTop: wp(20),
       paddingBottom: wp(10),
-      backgroundColor: stage7.color.bg.canvas,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     sectionTitle: {
       ...typography.labelLarge,
       fontSize: fp(14),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       fontWeight: '600',
       textTransform: 'uppercase',
       letterSpacing: 0.5,
@@ -503,7 +503,7 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
       zIndex: 1000,
     },
     logoutModalContainer: {
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
       borderRadius: wp(16),
       marginHorizontal: wp(32),
       paddingTop: wp(24),
@@ -520,13 +520,13 @@ export const createSettingsPageStyles = (colors: NovelColors) => {
       marginTop: wp(8),
       fontSize: fp(18),
       fontWeight: 'bold',
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       textAlign: 'center',
       marginBottom: wp(16),
     },
     logoutModalDescription: {
       fontSize: fp(14),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       textAlign: 'center',
       lineHeight: fp(20),
       marginBottom: wp(25),

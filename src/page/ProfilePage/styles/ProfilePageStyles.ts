@@ -1,19 +1,19 @@
 import { StyleSheet } from 'react-native';
 
-import { resolveStage7Theme } from '../../../design-system/tokens/resolveStage7Theme';
+import { resolveNovelDesignTheme } from '../../../design-system/tokens/resolveNovelDesignTheme';
 import { wp, fp, sp } from '../../../utils/theme/dimensions';
 import { NovelColors } from '../../../utils/theme/colors';
 import { typography } from '../../../utils/theme/typography';
 import { PAGE_WIDTH } from '../utils/constants';
 
 export const createHomePageStyles = (colors: NovelColors) => {
-  const stage7 = resolveStage7Theme(colors.novelBackground);
+  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: stage7.color.bg.canvas,
-      paddingHorizontal: wp(stage7.space['200']),
+      backgroundColor: novelDesign.color.bg.canvas,
+      paddingHorizontal: wp(novelDesign.space['200']),
     },
 
     scrollView: {
@@ -28,17 +28,17 @@ export const createHomePageStyles = (colors: NovelColors) => {
       flexDirection: 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      paddingTop: wp(stage7.space['200']),
-      paddingBottom: wp(stage7.space['100']),
-      gap: wp(stage7.space['150']),
+      paddingTop: wp(novelDesign.space['200']),
+      paddingBottom: wp(novelDesign.space['100']),
+      gap: wp(novelDesign.space['150']),
     },
     topBarButton: {
       width: sp(40),
       height: sp(40),
-      borderRadius: sp(stage7.radius.full),
+      borderRadius: sp(novelDesign.radius.full),
       borderWidth: 1,
-      borderColor: stage7.color.border.subtle,
-      backgroundColor: stage7.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      backgroundColor: novelDesign.color.bg.surface,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -46,13 +46,13 @@ export const createHomePageStyles = (colors: NovelColors) => {
     loginBar: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: stage7.color.bg.surface,
-      borderColor: stage7.color.border.subtle,
-      borderRadius: sp(stage7.radius.xl),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      borderRadius: sp(novelDesign.radius.xl),
       borderWidth: 1,
-      marginTop: wp(stage7.space['100']),
-      paddingHorizontal: wp(stage7.space['200']),
-      paddingVertical: wp(stage7.space['200']),
+      marginTop: wp(novelDesign.space['100']),
+      paddingHorizontal: wp(novelDesign.space['200']),
+      paddingVertical: wp(novelDesign.space['200']),
       gap: wp(15),
     },
     avatar: {
@@ -64,13 +64,13 @@ export const createHomePageStyles = (colors: NovelColors) => {
     avatarImage: {
       width: '100%',
       height: '100%',
-      backgroundColor: stage7.color.bg.elevated,
+      backgroundColor: novelDesign.color.bg.elevated,
       borderRadius: sp(25),
     },
     defaultAvatar: {
       width: '100%',
       height: '100%',
-      backgroundColor: stage7.color.bg.elevated,
+      backgroundColor: novelDesign.color.bg.elevated,
       borderRadius: sp(25),
     },
     loginButton: {
@@ -78,24 +78,24 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     loginText: {
       ...typography.bodyMedium,
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
     },
 
     scrollableContainer: {
       width: PAGE_WIDTH,
       alignItems: 'center',
-      backgroundColor: stage7.color.bg.surface,
-      borderColor: stage7.color.border.subtle,
-      borderRadius: sp(stage7.radius.xl),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      borderRadius: sp(novelDesign.radius.xl),
       borderWidth: 1,
       marginVertical: wp(10),
-      paddingBottom: wp(stage7.space['200']),
+      paddingBottom: wp(novelDesign.space['200']),
     },
     scrollArea: {
       width: PAGE_WIDTH,
-      borderRadius: sp(stage7.radius.xl),
+      borderRadius: sp(novelDesign.radius.xl),
       overflow: 'hidden',
-      paddingTop: wp(stage7.space['200']),
+      paddingTop: wp(novelDesign.space['200']),
     },
     page: {
       paddingHorizontal: wp(20),
@@ -128,7 +128,7 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     iconText: {
       ...typography.labelSmall,
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       textAlign: 'center',
       lineHeight: fp(16),
       marginTop: wp(5),
@@ -143,23 +143,23 @@ export const createHomePageStyles = (colors: NovelColors) => {
       width: sp(3.5),
       height: sp(3.5),
       borderRadius: sp(3.5),
-      backgroundColor: stage7.color.brand.primary,
+      backgroundColor: novelDesign.color.brand.primary,
     },
 
     advertisement: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: stage7.color.bg.elevated,
-      borderColor: stage7.color.border.subtle,
-      borderRadius: sp(stage7.radius.lg),
+      backgroundColor: novelDesign.color.bg.elevated,
+      borderColor: novelDesign.color.border.subtle,
+      borderRadius: sp(novelDesign.radius.lg),
       borderWidth: 1,
-      padding: wp(stage7.space['200']),
+      padding: wp(novelDesign.space['200']),
       gap: wp(10),
     },
     adBookCover: {
       width: wp(30),
       height: wp(20),
-      backgroundColor: stage7.color.brand.primary,
+      backgroundColor: novelDesign.color.brand.primary,
       borderRadius: sp(5),
     },
     adContent: {
@@ -169,12 +169,12 @@ export const createHomePageStyles = (colors: NovelColors) => {
     adTitle: {
       ...typography.labelLarge,
       fontWeight: '600',
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       lineHeight: fp(18),
     },
     adAuthor: {
       ...typography.labelSmall,
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       lineHeight: fp(16),
       marginBottom: wp(5),
     },
@@ -184,18 +184,18 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     continueText: {
       ...typography.labelSmall,
-      color: stage7.color.brand.primary,
+      color: novelDesign.color.brand.primary,
       fontWeight: '500',
     },
 
     bottomBox: {
       width: PAGE_WIDTH,
       height: wp(200),
-      backgroundColor: stage7.color.bg.surface,
-      borderColor: stage7.color.border.subtle,
-      borderRadius: sp(stage7.radius.xl),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      borderRadius: sp(novelDesign.radius.xl),
       borderWidth: 1,
-      padding: wp(stage7.space['200']),
+      padding: wp(novelDesign.space['200']),
       alignSelf: 'center',
       marginVertical: wp(10),
     },
@@ -207,7 +207,7 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     balanceText: {
       ...typography.labelLarge,
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '500',
     },
     withdrawButton: {
@@ -216,7 +216,7 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     withdrawText: {
       ...typography.labelSmall,
-      color: stage7.color.brand.primary,
+      color: novelDesign.color.brand.primary,
       fontWeight: '500',
     },
     bottomAd: {
@@ -232,12 +232,12 @@ export const createHomePageStyles = (colors: NovelColors) => {
       flex: 1,
     },
     waterfallBookItem: {
-      backgroundColor: stage7.color.bg.surface,
-      borderColor: stage7.color.border.subtle,
-      borderRadius: sp(stage7.radius.lg),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      borderRadius: sp(novelDesign.radius.lg),
       borderWidth: 1,
       marginBottom: wp(10),
-      shadowColor: stage7.color.text.primary,
+      shadowColor: novelDesign.color.text.primary,
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.08,
       shadowRadius: 6,
@@ -246,7 +246,7 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     waterfallBookCover: {
       width: '100%',
-      backgroundColor: stage7.color.bg.elevated,
+      backgroundColor: novelDesign.color.bg.elevated,
     },
     waterfallCoverImage: {
       width: '100%',
@@ -255,13 +255,13 @@ export const createHomePageStyles = (colors: NovelColors) => {
     waterfallPlaceholderCover: {
       width: '100%',
       height: '100%',
-      backgroundColor: stage7.color.brand.accent,
+      backgroundColor: novelDesign.color.brand.accent,
       justifyContent: 'center',
       alignItems: 'center',
     },
     waterfallPlaceholderText: {
       fontSize: fp(12),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       opacity: 0.6,
     },
     waterfallBookInfo: {
@@ -270,19 +270,19 @@ export const createHomePageStyles = (colors: NovelColors) => {
     waterfallBookTitle: {
       ...typography.labelLarge,
       fontWeight: '600',
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       lineHeight: fp(18),
       marginBottom: wp(5),
     },
     waterfallBookAuthor: {
       ...typography.labelSmall,
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       lineHeight: fp(16),
       marginBottom: wp(5),
     },
     waterfallBookDescription: {
       ...typography.labelSmall,
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       lineHeight: fp(16),
       marginBottom: wp(5),
     },
@@ -295,7 +295,7 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     emptyText: {
       ...typography.bodyMedium,
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       opacity: 0.6,
     },
 
@@ -308,26 +308,26 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     waterfallLoadingText: {
       ...typography.labelLarge,
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
     },
     waterfallEndLine: {
       width: wp(30),
       height: wp(1),
-      backgroundColor: stage7.color.border.subtle,
+      backgroundColor: novelDesign.color.border.subtle,
     },
     waterfallEndText: {
       ...typography.labelSmall,
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       opacity: 0.7,
       marginHorizontal: wp(10),
     },
 
     refreshIndicator: {
-      backgroundColor: stage7.color.bg.elevated,
+      backgroundColor: novelDesign.color.bg.elevated,
       paddingVertical: wp(15),
       paddingHorizontal: wp(20),
       borderBottomWidth: 1,
-      borderBottomColor: stage7.color.border.subtle,
+      borderBottomColor: novelDesign.color.border.subtle,
       marginBottom: wp(10),
     },
     refreshContent: {
@@ -340,12 +340,12 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     spinnerText: {
       fontSize: fp(14),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '500',
     },
     refreshText: {
       fontSize: fp(14),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '500',
     },
 
@@ -357,7 +357,7 @@ export const createHomePageStyles = (colors: NovelColors) => {
     },
     loadingText: {
       fontSize: fp(14),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       fontWeight: '500',
     },
   });

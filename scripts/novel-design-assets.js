@@ -4,7 +4,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const PROVIDER_SOURCE = path.join('design-system', 'source', 'stage7.asset-providers.json');
+const PROVIDER_SOURCE = path.join('design-system', 'source', 'novel-design.asset-providers.json');
 
 const ensureDir = (dirPath) => {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -154,7 +154,7 @@ const renderReactNativeIconRegistry = (iconManifest) => {
     (entry) => entry.source_type === 'legacy-local-svg',
   );
   const importLines = svgEntries.map((entry, index) => {
-    const importName = `Stage7IconAsset${index + 1}`;
+    const importName = `NovelDesignIconAsset${index + 1}`;
     return {
       importName,
       line: `import ${importName} from '${'../../../../' + entry.source}';`,
@@ -166,7 +166,7 @@ const renderReactNativeIconRegistry = (iconManifest) => {
     ({ importName, semanticName }) => `  "${semanticName}": ${importName},`,
   );
 
-  return `import type { ComponentType } from 'react';\nimport type { SvgProps } from 'react-native-svg';\n${importLines.map((item) => item.line).join('\n')}\n\nexport const stage7IconRegistry: Record<string, ComponentType<SvgProps>> = {\n${registryLines.join('\n')}\n};\n`;
+  return `import type { ComponentType } from 'react';\nimport type { SvgProps } from 'react-native-svg';\n${importLines.map((item) => item.line).join('\n')}\n\nexport const novelDesignIconRegistry: Record<string, ComponentType<SvgProps>> = {\n${registryLines.join('\n')}\n};\n`;
 };
 
 const generateAssetArtifacts = ({
@@ -196,7 +196,7 @@ const generateAssetArtifacts = ({
       'design-system',
       'icons',
       'generated',
-      'stage7IconRegistry.ts',
+      'novelDesignIconRegistry.ts',
     ),
     reportPath: path.join(resolvedRoot, 'docs', 'refactor', 'phase-17', 'asset-governance-report.md'),
   };
@@ -216,7 +216,7 @@ const checkAssetArtifacts = ({
   outputRoot = repoRoot,
 } = {}) => {
   const resolvedRoot = resolveOutputRoot(repoRoot, outputRoot);
-  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-assets-check-'));
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-assets-check-'));
 
   try {
     const fresh = generateAssetArtifacts({ repoRoot, outputRoot: tempDir });
@@ -231,7 +231,7 @@ const checkAssetArtifacts = ({
         'design-system',
         'icons',
         'generated',
-        'stage7IconRegistry.ts',
+        'novelDesignIconRegistry.ts',
       ),
       reportPath: path.join(resolvedRoot, 'docs', 'refactor', 'phase-17', 'asset-governance-report.md'),
     };

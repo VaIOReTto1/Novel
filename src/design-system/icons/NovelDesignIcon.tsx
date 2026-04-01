@@ -1,22 +1,22 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { stage7IconRegistry } from './generated/stage7IconRegistry';
+import { novelDesignIconRegistry } from './generated/novelDesignIconRegistry';
 
-export interface Stage7IconProps {
+export interface NovelDesignIconProps {
   name: string;
   width?: number;
   height?: number;
   color?: string;
 }
 
-export const Stage7Icon: React.FC<Stage7IconProps> = ({
+export const NovelDesignIcon: React.FC<NovelDesignIconProps> = ({
   name,
   width = 24,
   height = 24,
   color = '#333333',
 }) => {
-  const IconAsset = stage7IconRegistry[name];
+  const IconAsset = novelDesignIconRegistry[name];
 
   if (!IconAsset) {
     return <View style={[styles.placeholder, { width, height }]} />;

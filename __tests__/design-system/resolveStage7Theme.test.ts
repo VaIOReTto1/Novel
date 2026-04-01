@@ -1,9 +1,9 @@
-import { stage7DarkTheme, stage7LightTheme } from '../../src/design-system/tokens/stage7Tokens';
-import { resolveStage7Theme } from '../../src/design-system/tokens/resolveStage7Theme';
+import { novelDesignDarkTheme, novelDesignLightTheme } from '../../src/design-system/tokens/novelDesignTokens';
+import { resolveNovelDesignTheme } from '../../src/design-system/tokens/resolveNovelDesignTheme';
 
-describe('resolveStage7Theme', () => {
+describe('resolveNovelDesignTheme', () => {
   it('selects light and dark themes from current Novel colors', () => {
-    expect(resolveStage7Theme('#FFFFFF')).toBe(stage7LightTheme);
-    expect(resolveStage7Theme('#000000')).toBe(stage7DarkTheme);
+    expect(resolveNovelDesignTheme('#FFFFFF')).toBe(novelDesignLightTheme);
+    expect(resolveNovelDesignTheme('#000000')).toBe(novelDesignDarkTheme);
   });
 });

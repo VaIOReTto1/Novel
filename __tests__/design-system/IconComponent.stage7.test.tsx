@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
 
-const mockStage7IconSpy = jest.fn(() => null);
+const mockNovelDesignIconSpy = jest.fn(() => null);
 
-jest.mock('../../src/design-system/icons/Stage7Icon', () => ({
-  Stage7Icon: (props: any) => {
-    mockStage7IconSpy(props);
+jest.mock('../../src/design-system/icons/NovelDesignIcon', () => ({
+  NovelDesignIcon: (props: any) => {
+    mockNovelDesignIconSpy(props);
     return null;
   },
 }));
@@ -14,7 +14,7 @@ import IconComponent from '../../src/component/IconComponent';
 
 describe('IconComponent Stage 7 bridge', () => {
   beforeEach(() => {
-    mockStage7IconSpy.mockClear();
+    mockNovelDesignIconSpy.mockClear();
   });
 
   it('forwards legacy icon names to Stage7 semantic names', () => {
@@ -24,7 +24,7 @@ describe('IconComponent Stage 7 bridge', () => {
       );
     });
 
-    expect(mockStage7IconSpy).toHaveBeenCalledWith(
+    expect(mockNovelDesignIconSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'legacy.settings',
         width: 20,

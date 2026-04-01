@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Stage7Icon } from '../design-system/icons/Stage7Icon';
+import { NovelDesignIcon } from '../design-system/icons/NovelDesignIcon';
 
 interface IconProps {
   name: string;
@@ -16,7 +16,7 @@ const IconComponent: React.FC<IconProps> = ({
   color = '#333333',
 }) => {
   return (
-    <Stage7Icon
+    <NovelDesignIcon
       name={`legacy.${name}`}
       width={width}
       height={height}

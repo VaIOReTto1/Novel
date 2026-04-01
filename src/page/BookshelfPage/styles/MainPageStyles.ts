@@ -1,25 +1,25 @@
 import { StyleSheet } from 'react-native';
 
-import { resolveStage7Theme } from '../../../design-system/tokens/resolveStage7Theme';
+import { resolveNovelDesignTheme } from '../../../design-system/tokens/resolveNovelDesignTheme';
 import { NovelColors } from '../../../utils/theme/colors';
 import { wp, fp, sp } from '../../../utils/theme/dimensions';
 
 export const createMainPageStyles = (colors: NovelColors) => {
-  const stage7 = resolveStage7Theme(colors.novelBackground);
+  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: stage7.color.bg.canvas,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     tabBarContainer: {
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
       borderBottomWidth: 1,
-      borderBottomColor: stage7.color.border.subtle,
+      borderBottomColor: novelDesign.color.border.subtle,
       paddingHorizontal: wp(14),
-      paddingTop: wp(stage7.space['150']),
-      paddingBottom: wp(stage7.space['100']),
+      paddingTop: wp(novelDesign.space['150']),
+      paddingBottom: wp(novelDesign.space['100']),
     },
     tabsContainer: {
       flexDirection: 'row',
@@ -31,12 +31,12 @@ export const createMainPageStyles = (colors: NovelColors) => {
     activeTab: {},
     tabText: {
       fontSize: fp(16),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       fontWeight: '400',
     },
     activeTabText: {
       fontSize: fp(18),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
     },
 
@@ -46,7 +46,7 @@ export const createMainPageStyles = (colors: NovelColors) => {
 
     pageContainer: {
       flex: 1,
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
     },
     pageVisible: {
       display: 'flex',
@@ -59,15 +59,15 @@ export const createMainPageStyles = (colors: NovelColors) => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: stage7.color.bg.surface,
-      borderColor: stage7.color.border.subtle,
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
       borderWidth: 1,
-      borderRadius: sp(stage7.radius.xl),
-      margin: wp(stage7.space['200']),
+      borderRadius: sp(novelDesign.radius.xl),
+      margin: wp(novelDesign.space['200']),
     },
     loadingText: {
       fontSize: fp(16),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       marginTop: wp(16),
     },
 
@@ -76,11 +76,11 @@ export const createMainPageStyles = (colors: NovelColors) => {
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: wp(40),
-      margin: wp(stage7.space['200']),
-      backgroundColor: stage7.color.bg.surface,
-      borderColor: stage7.color.border.subtle,
+      margin: wp(novelDesign.space['200']),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
       borderWidth: 1,
-      borderRadius: sp(stage7.radius.xl),
+      borderRadius: sp(novelDesign.radius.xl),
     },
     errorIcon: {
       fontSize: fp(48),
@@ -88,14 +88,14 @@ export const createMainPageStyles = (colors: NovelColors) => {
     },
     errorText: {
       fontSize: fp(16),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
       marginBottom: wp(8),
       textAlign: 'center',
     },
     errorDescription: {
       fontSize: fp(14),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       textAlign: 'center',
       lineHeight: fp(20),
     },

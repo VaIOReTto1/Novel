@@ -3,13 +3,13 @@ const os = require('os');
 const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
-const assetScripts = require('../../scripts/stage7-assets.js');
+const assetScripts = require('../../scripts/novel-design-assets.js');
 
 const readJson = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 describe('stage7 asset scripts', () => {
   test('generates asset manifests and governance report', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-assets-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-assets-'));
 
     try {
       const outputs = assetScripts.generateAssetArtifacts({
@@ -35,7 +35,7 @@ describe('stage7 asset scripts', () => {
   });
 
   test('icon manifest captures local svg inventory and migration targets', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-icons-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-icons-'));
 
     try {
       const { iconManifestPath } = assetScripts.generateAssetArtifacts({
@@ -60,7 +60,7 @@ describe('stage7 asset scripts', () => {
   });
 
   test('media manifest encodes picsum, pexels and undraw provider rules', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-media-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-media-'));
 
     try {
       const outputs = assetScripts.generateAssetArtifacts({
@@ -82,7 +82,7 @@ describe('stage7 asset scripts', () => {
   });
 
   test('copyright ledger starts with explicit schema and empty entries', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-ledger-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-ledger-'));
 
     try {
       const { copyrightLedgerPath } = assetScripts.generateAssetArtifacts({
@@ -100,7 +100,7 @@ describe('stage7 asset scripts', () => {
   });
 
   test('check fails when asset artifacts are stale', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-assets-check-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-assets-check-'));
 
     try {
       const outputs = assetScripts.generateAssetArtifacts({
@@ -122,7 +122,7 @@ describe('stage7 asset scripts', () => {
   });
 
   test('generated RN icon registry exposes legacy semantic names and sources', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-icon-registry-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-icon-registry-'));
 
     try {
       const { reactNativeIconRegistryPath } = assetScripts.generateAssetArtifacts({
@@ -131,7 +131,7 @@ describe('stage7 asset scripts', () => {
       });
       const source = fs.readFileSync(reactNativeIconRegistryPath, 'utf8');
 
-      expect(source).toContain('export const stage7IconRegistry');
+      expect(source).toContain('export const novelDesignIconRegistry');
       expect(source).toContain('"legacy.settings"');
       expect(source).toContain('../../../../assets/image/settings.svg');
       expect(source).toContain('"legacy.wallet"');

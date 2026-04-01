@@ -3,11 +3,11 @@ const os = require('os');
 const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
-const tokenBuild = require('../../scripts/stage7-token-build.js');
+const tokenBuild = require('../../scripts/novel-design-token-build.js');
 
 describe('stage7 token build', () => {
   test('generates style-dictionary, less, RN and Android token artifacts', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-tokens-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-tokens-'));
 
     try {
       const outputs = tokenBuild.generateTokenArtifacts({
@@ -56,7 +56,7 @@ describe('stage7 token build', () => {
   });
 
   test('generated RN tokens expose typed theme objects and typography roles', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-rn-token-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-rn-token-'));
 
     try {
       const { reactNativePath } = tokenBuild.generateTokenArtifacts({
@@ -65,8 +65,8 @@ describe('stage7 token build', () => {
       });
       const source = fs.readFileSync(reactNativePath, 'utf8');
 
-      expect(source).toContain('export const stage7LightTheme');
-      expect(source).toContain('export const stage7DarkTheme');
+      expect(source).toContain('export const novelDesignLightTheme');
+      expect(source).toContain('export const novelDesignDarkTheme');
       expect(source).toContain('title:');
       expect(source).toContain('reader:');
     } finally {
@@ -75,7 +75,7 @@ describe('stage7 token build', () => {
   });
 
   test('generated Android artifacts expose XML resources and Compose tokens', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-android-token-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-android-token-'));
 
     try {
       const outputs = tokenBuild.generateTokenArtifacts({
@@ -86,9 +86,9 @@ describe('stage7 token build', () => {
       const compose = fs.readFileSync(outputs.androidComposePath, 'utf8');
 
       expect(xml).toContain('<resources>');
-      expect(xml).toContain('stage7_color_bg_canvas_light');
-      expect(xml).toContain('stage7_space_100');
-      expect(compose).toContain('object Stage7Tokens');
+      expect(xml).toContain('novel_design_color_bg_canvas_light');
+      expect(xml).toContain('novel_design_space_100');
+      expect(compose).toContain('object NovelDesignTokens');
       expect(compose).toContain('val LightColors');
       expect(compose).toContain('val DarkColors');
     } finally {
@@ -97,7 +97,7 @@ describe('stage7 token build', () => {
   });
 
   test('check fails when token artifacts are stale', () => {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-stage7-token-check-'));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-token-check-'));
 
     try {
       const outputs = tokenBuild.generateTokenArtifacts({

@@ -1,37 +1,37 @@
 import { StyleSheet } from 'react-native';
 
-import { resolveStage7Theme } from '../../../design-system/tokens/resolveStage7Theme';
+import { resolveNovelDesignTheme } from '../../../design-system/tokens/resolveNovelDesignTheme';
 import { NovelColors } from '../../../utils/theme/colors';
 import { wp, fp, sp } from '../../../utils/theme/dimensions';
 
 export const createCategoryPageStyles = (colors: NovelColors) => {
-  const stage7 = resolveStage7Theme(colors.novelBackground);
+  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: stage7.color.bg.canvas,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     topTabs: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingVertical: wp(stage7.space['150']),
+      paddingVertical: wp(novelDesign.space['150']),
       gap: wp(36),
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
       borderBottomWidth: 1,
-      borderBottomColor: stage7.color.border.subtle,
+      borderBottomColor: novelDesign.color.border.subtle,
     },
 
     topTabText: {
       fontSize: fp(16),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
       fontWeight: '500',
     },
 
     topTabActive: {
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
       fontSize: fp(18),
     },
@@ -45,9 +45,9 @@ export const createCategoryPageStyles = (colors: NovelColors) => {
       width: wp(100),
       flexShrink: 0,
       flexGrow: 0,
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
       borderRightWidth: 1,
-      borderRightColor: stage7.color.border.subtle,
+      borderRightColor: novelDesign.color.border.subtle,
     },
 
     sidebarItem: {
@@ -57,46 +57,46 @@ export const createCategoryPageStyles = (colors: NovelColors) => {
 
     sidebarItemActive: {
       fontWeight: '600',
-      color: stage7.color.brand.primary,
+      color: novelDesign.color.brand.primary,
     },
 
     sidebarText: {
       fontSize: fp(14),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       textAlign: 'center',
     },
 
     list: {
       flex: 1,
-      borderTopLeftRadius: sp(stage7.radius.lg),
-      backgroundColor: stage7.color.bg.surface,
+      borderTopLeftRadius: sp(novelDesign.radius.lg),
+      backgroundColor: novelDesign.color.bg.surface,
     },
 
     gridContainer: {
       paddingHorizontal: wp(12),
       paddingVertical: wp(12),
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
     },
 
     gridItem: {
       flex: 1,
       margin: wp(6),
-      backgroundColor: stage7.color.bg.surface,
+      backgroundColor: novelDesign.color.bg.surface,
     },
 
     card: {
-      borderRadius: sp(stage7.radius.lg),
+      borderRadius: sp(novelDesign.radius.lg),
       borderWidth: 1,
-      borderColor: stage7.color.border.subtle,
-      backgroundColor: stage7.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      backgroundColor: novelDesign.color.bg.surface,
       overflow: 'hidden',
     },
 
     cover: {
       width: '100%',
       aspectRatio: 0.75,
-      backgroundColor: stage7.color.bg.elevated,
-      borderRadius: sp(stage7.radius.lg),
+      backgroundColor: novelDesign.color.bg.elevated,
+      borderRadius: sp(novelDesign.radius.lg),
     },
 
     titleBox: {
@@ -106,7 +106,7 @@ export const createCategoryPageStyles = (colors: NovelColors) => {
 
     title: {
       fontSize: fp(12),
-      color: stage7.color.text.primary,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
       textAlign: 'center',
     },
@@ -152,13 +152,13 @@ export const createCategoryPageStyles = (colors: NovelColors) => {
     endLine: {
       width: wp(30),
       height: wp(1),
-      backgroundColor: stage7.color.border.subtle,
+      backgroundColor: novelDesign.color.border.subtle,
       marginHorizontal: wp(6),
     },
 
     endText: {
       fontSize: fp(12),
-      color: stage7.color.text.secondary,
+      color: novelDesign.color.text.secondary,
     },
   });
 };

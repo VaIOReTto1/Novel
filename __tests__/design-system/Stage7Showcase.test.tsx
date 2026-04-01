@@ -2,8 +2,8 @@ import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
 import { Text } from 'react-native';
 
-jest.mock('../../src/design-system/icons/Stage7Icon', () => ({
-  Stage7Icon: () => null,
+jest.mock('../../src/design-system/icons/NovelDesignIcon', () => ({
+  NovelDesignIcon: () => null,
 }));
 
 jest.mock('../../src/design-system/media/PlaceholderImage', () => ({
@@ -14,14 +14,14 @@ jest.mock('../../src/design-system/media/PexelsCreditOverlay', () => ({
   PexelsCreditOverlay: () => null,
 }));
 
-import { Stage7Showcase } from '../../src/design-system/showcase/Stage7Showcase';
+import { NovelDesignShowcase } from '../../src/design-system/showcase/NovelDesignShowcase';
 
-describe('Stage7Showcase', () => {
+describe('NovelDesignShowcase', () => {
   it('renders foundation, icon and media sections', () => {
     let renderer!: ReactTestRenderer.ReactTestRenderer;
 
     ReactTestRenderer.act(() => {
-      renderer = ReactTestRenderer.create(<Stage7Showcase />);
+      renderer = ReactTestRenderer.create(<NovelDesignShowcase />);
     });
 
     const texts = renderer.root
@@ -34,7 +34,7 @@ describe('Stage7Showcase', () => {
 
     expect(texts).toEqual(
       expect.arrayContaining([
-        'Stage 7 Showcase',
+        'Novel Design Showcase',
         'Foundations',
         'Icons',
         'Media',

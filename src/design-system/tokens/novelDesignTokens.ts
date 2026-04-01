@@ -1,4 +1,4 @@
-export const stage7LightTheme = {
+export const novelDesignLightTheme = {
   color: {
     bg: {
       canvas: "#FAF6F0",
@@ -151,7 +151,7 @@ export const stage7LightTheme = {
   }
 } as const;
 
-export const stage7DarkTheme = {
+export const novelDesignDarkTheme = {
   color: {
     bg: {
       canvas: "#161311",

@@ -686,15 +686,15 @@
       ]
     },
     {
-      "path": "android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseModel.kt",
-      "name": "Stage7ShowcaseModel",
+      "path": "android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseModel.kt",
+      "name": "NovelDesignShowcaseModel",
       "platform": "android",
       "category": "showcase",
       "asset_sources": []
     },
     {
-      "path": "android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt",
-      "name": "Stage7ShowcaseScreen",
+      "path": "android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseScreen.kt",
+      "name": "NovelDesignShowcaseScreen",
       "platform": "android",
       "category": "showcase",
       "asset_sources": [

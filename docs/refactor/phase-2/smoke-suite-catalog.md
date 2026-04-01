@@ -14,6 +14,10 @@
 | 阅读器 | Android Compose | `android/app/src/androidTest/java/com/novel/page/read/viewmodel/ReaderSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.read.viewmodel.ReaderSmokeTest` |
 | 设置 | RN Jest render | `__tests__/smoke/SettingsPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx` |
 | 写作页 | RN Jest render | `__tests__/smoke/WritePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/WritePage.smoke.test.tsx` |
+| 书架壳层 | RN Jest render | `__tests__/smoke/BookshelfPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx` |
+| 书评广场 | RN Jest render | `__tests__/smoke/CommentPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/CommentPage.smoke.test.tsx` |
+| 书评详情 | RN Jest render | `__tests__/smoke/ReviewDetailPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/ReviewDetailPage.smoke.test.tsx` |
+| 会员中心 | RN Jest render | `__tests__/smoke/MemberCenterPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/MemberCenterPage.smoke.test.tsx` |
 
 ## 当前稳定入口说明
 - `HomeSmokeTest`
@@ -28,11 +32,24 @@
   - 使用 RN render smoke，验证设置页主结构、初始化链路与核心 section 文案。
 - `WritePage.smoke.test.tsx`
   - 使用 RN render smoke，验证写作页顶栏和编辑容器可无崩溃渲染。
+- `BookshelfPage.smoke.test.tsx`
+  - 使用 RN render smoke，验证书架宿主 shell 和四个 tab 入口文案可渲染。
+- `CommentPage.smoke.test.tsx`
+  - 使用 RN render smoke，验证评论页顶栏、评分区、分类区与评论列表壳层可渲染。
+- `ReviewDetailPage.smoke.test.tsx`
+  - 使用 RN render smoke，验证书评详情页顶栏与评论线程壳层可渲染。
+- `MemberCenterPage.smoke.test.tsx`
+  - 使用 RN render smoke，验证会员中心主要卡片区、权益区、价格区和购买条壳层可渲染。
 
 ## 推荐执行方式
 - RN smoke
 ```bash
 npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx __tests__/smoke/WritePage.smoke.test.tsx
+```
+
+- 扩展 RN smoke
+```bash
+npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx __tests__/smoke/CommentPage.smoke.test.tsx __tests__/smoke/ReviewDetailPage.smoke.test.tsx __tests__/smoke/MemberCenterPage.smoke.test.tsx
 ```
 
 - Android smoke

@@ -12,13 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.novel.ui.theme.NovelTheme
-import com.novel.ui.theme.Stage7Tokens
+import com.novel.ui.theme.NovelDesignTokens
 
 @Composable
-fun Stage7ShowcaseScreen() {
-    val sections = stage7ShowcaseSections()
-    val lightColors = Stage7Tokens.LightColors
-    val space = Stage7Tokens.Space
+fun NovelDesignShowcaseScreen() {
+    val sections = novelDesignShowcaseSections()
+    val lightColors = NovelDesignTokens.LightColors
+    val space = NovelDesignTokens.Space
 
     Column(
         modifier = Modifier
@@ -28,7 +28,7 @@ fun Stage7ShowcaseScreen() {
         verticalArrangement = Arrangement.spacedBy(space.getValue("200")),
     ) {
         Text(
-            text = "Stage 7 Showcase",
+            text = "Novel Design Showcase",
             color = lightColors.getValue("color.brand.secondary.light"),
         )
         Text(

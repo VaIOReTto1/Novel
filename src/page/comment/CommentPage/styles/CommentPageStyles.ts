@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { resolveStage7Theme } from '../../../../design-system/tokens/resolveStage7Theme';
+import { resolveNovelDesignTheme } from '../../../../design-system/tokens/resolveNovelDesignTheme';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
 export const createCommentPageStyles = (colors: NovelColors) => {
-  const stage7 = resolveStage7Theme(colors.novelBackground);
+  const novelDesign = resolveNovelDesignTheme(colors.novelBackground);
 
   return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: stage7.color.bg.canvas,
+    backgroundColor: novelDesign.color.bg.canvas,
     paddingHorizontal: wp(15),
   },
 
@@ -28,7 +28,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
     alignItems: 'center',
     paddingVertical: wp(10),
     paddingHorizontal: wp(5),
-    backgroundColor: stage7.color.bg.surface,
+    backgroundColor: novelDesign.color.bg.surface,
   },
 
   backButton: {
@@ -50,7 +50,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: stage7.color.bg.elevated,
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(5),
     paddingHorizontal: wp(12),
     height: wp(36),
@@ -68,7 +68,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 评分级别样式
   ratingSection: {
-    backgroundColor: stage7.color.bg.surface,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingVertical: wp(15),
     paddingHorizontal: wp(15),
     marginBottom: wp(10),
@@ -196,7 +196,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
   },
 
   commentItem: {
-    backgroundColor: stage7.color.bg.surface,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(12),
     marginBottom: wp(15),
   },
@@ -489,11 +489,11 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 刷新指示器样式
   refreshIndicator: {
-    backgroundColor: stage7.color.bg.elevated,
+    backgroundColor: novelDesign.color.bg.elevated,
     paddingVertical: wp(15),
     paddingHorizontal: wp(20),
     borderBottomWidth: 1,
-    borderBottomColor: stage7.color.border.subtle,
+    borderBottomColor: novelDesign.color.border.subtle,
     marginBottom: wp(10),
   },
 

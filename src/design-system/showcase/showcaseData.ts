@@ -1,4 +1,4 @@
-export const stage7ShowcaseSections = [
+export const novelDesignShowcaseSections = [
   {
     title: 'Foundations',
     description: 'Warm editorial tokens for RN and Android',

@@ -18,15 +18,15 @@
 - 版权信息必须同时出现在 UI 叠层和 ledger 中。
 
 ## 当前产物入口
-- [stage7.asset-providers.json](../../../design-system/source/stage7.asset-providers.json)
+- [novel-design.asset-providers.json](../../../design-system/source/novel-design.asset-providers.json)
 - [icon-manifest.json](../../../design-system/assets/icon-manifest.json)
-- [stage7IconRegistry.ts](../../../src/design-system/icons/generated/stage7IconRegistry.ts)
-- [Stage7Icon.tsx](../../../src/design-system/icons/Stage7Icon.tsx)
+- [novelDesignIconRegistry.ts](../../../src/design-system/icons/generated/novelDesignIconRegistry.ts)
+- [NovelDesignIcon.tsx](../../../src/design-system/icons/NovelDesignIcon.tsx)
 - [PlaceholderImage.tsx](../../../src/design-system/media/PlaceholderImage.tsx)
 - [PexelsCreditOverlay.tsx](../../../src/design-system/media/PexelsCreditOverlay.tsx)
-- [Stage7Showcase.tsx](../../../src/design-system/showcase/Stage7Showcase.tsx)
-- [Stage7ShowcaseScreen.kt](../../../android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseScreen.kt)
-- [Stage7ShowcaseModel.kt](../../../android/core-ui/src/main/java/com/novel/ui/showcase/Stage7ShowcaseModel.kt)
+- [NovelDesignShowcase.tsx](../../../src/design-system/showcase/NovelDesignShowcase.tsx)
+- [NovelDesignShowcaseScreen.kt](../../../android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseScreen.kt)
+- [NovelDesignShowcaseModel.kt](../../../android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseModel.kt)
 - [webEntryConfig.ts](../../../src/web/webEntryConfig.ts)
 - [reactNativeReanimated.ts](../../../src/web/shims/reactNativeReanimated.ts)
 - [asyncStorage.ts](../../../src/web/shims/asyncStorage.ts)

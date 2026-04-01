@@ -731,6 +731,39 @@ const SURFACE_CLUSTER_PLANS = {
   },
 };
 
+const RESKINNED_SURFACES = new Set([
+  'rn-root-profile-page',
+  'rn-host-settings-page-component',
+  'rn-host-timed-switch-page-component',
+  'rn-host-category-page-component',
+  'rn-host-bookshelf-page-component',
+  'rn-host-member-center-page-component',
+  'rn-host-comment-page-component',
+  'rn-host-review-detail-page-component',
+  'rn-host-write-review-page-component',
+]);
+
+const NOVEL_DESIGN_READY_COMPONENTS = new Set([
+  'src/page/ProfilePage/components/TopBar.tsx',
+  'src/page/ProfilePage/styles/ProfilePageStyles.ts',
+  'src/page/SettingsPage/settingspage/styles/SettingsPageStyles.ts',
+  'src/page/CategoryPage/styles/CategoryPageStyles.ts',
+  'src/page/BookshelfPage/styles/MainPageStyles.ts',
+  'src/page/ScrollBox/MemberCenterPage/styles/MemberCenterPageStyles.ts',
+  'src/page/comment/CommentPage/styles/CommentPageStyles.ts',
+  'src/page/comment/ReviewDetailPage/styles/ReviewDetailPageStyles.ts',
+  'src/page/comment/WriteReviewPage/styles/WriteReviewPageStyles.ts',
+  'src/design-system/tokens/novelDesignTokens.ts',
+  'src/design-system/tokens/resolveNovelDesignTheme.ts',
+  'src/design-system/icons/NovelDesignIcon.tsx',
+  'src/design-system/icons/generated/novelDesignIconRegistry.ts',
+  'src/design-system/showcase/NovelDesignShowcase.tsx',
+  'android/core-ui/src/main/java/com/novel/ui/theme/NovelDesignTokens.kt',
+  'android/core-ui/src/main/res/values/novel_design_tokens.xml',
+  'android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseScreen.kt',
+  'android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseModel.kt',
+]);
+
 const buildSurfaceVisualSpecs = (surfaces) =>
   surfaces.map((surface) => {
     const cluster = determineSurfaceCluster(surface);
@@ -778,6 +811,10 @@ const buildSurfaceVisualSpecs = (surfaces) =>
       },
       current_look_recorded: true,
       target_look_planned: true,
+      implementation_progress: {
+        shell_reskinned: RESKINNED_SURFACES.has(surface.surface_id),
+        novel_design_ready: RESKINNED_SURFACES.has(surface.surface_id),
+      },
     };
   });
 
@@ -966,6 +1003,9 @@ const buildComponentVisualSpecs = (catalog) =>
       },
       current_look_recorded: true,
       target_look_planned: true,
+      implementation_progress: {
+        novel_design_ready: NOVEL_DESIGN_READY_COMPONENTS.has(entry.path),
+      },
     };
   });
 
@@ -1115,11 +1155,13 @@ const buildVisualPlanningSummary = (surfaceVisualSpecs, componentVisualSpecs) =>
     '## Surface visual specs',
     `- Current look recorded: ${surfaceVisualSpecs.filter((entry) => entry.current_look_recorded).length}`,
     `- Target look planned: ${surfaceVisualSpecs.filter((entry) => entry.target_look_planned).length}`,
+    `- Shell reskinned: ${surfaceVisualSpecs.filter((entry) => entry.implementation_progress?.shell_reskinned).length}`,
     ...Object.entries(surfaceClusterCounts).map(([cluster, count]) => `- ${cluster}: ${count}`),
     '',
     '## Component visual specs',
     `- Current look recorded: ${componentVisualSpecs.filter((entry) => entry.current_look_recorded).length}`,
     `- Target look planned: ${componentVisualSpecs.filter((entry) => entry.target_look_planned).length}`,
+    `- Novel design ready: ${componentVisualSpecs.filter((entry) => entry.implementation_progress?.novel_design_ready).length}`,
     ...Object.entries(componentCategoryCounts).map(([category, count]) => `- ${category}: ${count}`),
     '',
   ].join('\n');

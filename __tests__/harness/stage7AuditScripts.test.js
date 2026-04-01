@@ -124,6 +124,9 @@ describe('stage7 audit scripts', () => {
             layout_strategy: expect.any(String),
             style_keywords: expect.any(Array),
           }),
+          implementation_progress: expect.objectContaining({
+            shell_reskinned: true,
+          }),
         }),
       );
       expect(specById.get('android-native-reader-page').target_visual_plan.component_recipe).toContain('immersive-reader');
@@ -155,6 +158,9 @@ describe('stage7 audit scripts', () => {
           target_visual_plan: expect.objectContaining({
             component_recipe: expect.any(String),
             style_keywords: expect.any(Array),
+          }),
+          implementation_progress: expect.objectContaining({
+            novel_design_ready: true,
           }),
         }),
       );
@@ -227,6 +233,7 @@ describe('stage7 audit scripts', () => {
       expect(summary).toContain('Component visual specs');
       expect(summary).toContain('Current look recorded');
       expect(summary).toContain('Target look planned');
+      expect(summary).toContain('Shell reskinned');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }

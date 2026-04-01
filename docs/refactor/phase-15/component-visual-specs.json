@@ -22,7 +22,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookActionSection.kt",
@@ -47,7 +50,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookCoverSection.kt",
@@ -73,7 +79,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt",
@@ -98,7 +107,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionSection.kt",
@@ -123,7 +135,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookReviewsSection.kt",
@@ -148,7 +163,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookStatsSection.kt",
@@ -173,7 +191,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/book/components/BookTitleSection.kt",
@@ -198,7 +219,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/BackButton.kt",
@@ -224,7 +248,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/BaseViewModel.kt",
@@ -247,7 +274,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/BitmapPool.kt",
@@ -270,7 +300,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/Defaults.kt",
@@ -293,7 +326,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/dialog.kt",
@@ -318,7 +354,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/FlipBookAnimation.kt",
@@ -344,7 +383,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/ImageCompressor.kt",
@@ -367,7 +409,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/ImageOptimizationConfig.kt",
@@ -392,7 +437,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/ImagePreloadManager.kt",
@@ -417,7 +465,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/LoadingComponent.kt",
@@ -440,7 +491,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/LoadingStateComponent.kt",
@@ -465,7 +519,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/MemoryPressureManager.kt",
@@ -488,7 +545,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/NovelCachedImageView.kt",
@@ -513,7 +573,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/NovelImagePicker.kt",
@@ -536,7 +599,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/NovelImageView.kt",
@@ -562,7 +628,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/config/PageCurlConfig.kt",
@@ -585,7 +654,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/CurlDraw.kt",
@@ -610,7 +682,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragCommonGesture.kt",
@@ -633,7 +708,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragGesture.kt",
@@ -656,7 +734,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragStartEnd.kt",
@@ -679,7 +760,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/ExperimentalPageCurlApi.kt",
@@ -702,7 +786,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurl.kt",
@@ -725,7 +812,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurlState.kt",
@@ -748,7 +838,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/page/TapGesture.kt",
@@ -771,7 +864,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/MathUtils.kt",
@@ -794,7 +890,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/Polygon.kt",
@@ -817,7 +916,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/RectUtils.kt",
@@ -840,7 +942,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/PaperTexture.kt",
@@ -863,7 +968,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/ProgressiveImageLoader.kt",
@@ -889,7 +997,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/RankingNumber.kt",
@@ -914,7 +1025,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/ShortSentenceToast.kt",
@@ -940,7 +1054,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/SolidCircleSlider.kt",
@@ -963,7 +1080,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/component/StateComponent.kt",
@@ -986,7 +1106,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/home/component/HomeFilterBar.kt",
@@ -1011,7 +1134,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt",
@@ -1037,7 +1163,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/home/component/HomeRecommendGrid.kt",
@@ -1063,7 +1192,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/home/component/HomeTopBar.kt",
@@ -1089,7 +1221,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt",
@@ -1114,7 +1249,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/ActionButtons.kt",
@@ -1139,7 +1277,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/AgreementSection.kt",
@@ -1164,7 +1305,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/AppBar.kt",
@@ -1187,7 +1331,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/InputSection.kt",
@@ -1213,7 +1360,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/OperatorSection.kt",
@@ -1238,7 +1388,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/PhoneSection.kt",
@@ -1261,7 +1414,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/component/TitleSection.kt",
@@ -1284,7 +1440,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt",
@@ -1309,7 +1468,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/BackgroundColorControl.kt",
@@ -1334,7 +1496,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/BrightnessControl.kt",
@@ -1357,7 +1522,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt",
@@ -1382,7 +1550,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/CoverFlipContainer.kt",
@@ -1405,7 +1576,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/FontSizeControl.kt",
@@ -1430,7 +1604,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/NoAnimationContainer.kt",
@@ -1453,7 +1630,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/PageContentDisplay.kt",
@@ -1476,7 +1656,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/PageCurlFlipContainer.kt",
@@ -1499,7 +1682,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/PageFlipEffectControl.kt",
@@ -1524,7 +1710,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/ReaderPageInfo.kt",
@@ -1547,7 +1736,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt",
@@ -1572,7 +1764,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/SlideFlipContainer.kt",
@@ -1595,7 +1790,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/read/components/VerticalScrollContainer.kt",
@@ -1618,7 +1816,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/component/HistoryGrid.kt",
@@ -1643,7 +1844,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/component/RankingList.kt",
@@ -1668,7 +1872,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt",
@@ -1693,7 +1900,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/component/SearchFilterChip.kt",
@@ -1718,7 +1928,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/component/SearchResultItem.kt",
@@ -1744,7 +1957,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt",
@@ -1769,7 +1985,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt",
@@ -1794,7 +2013,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt",
@@ -1819,7 +2041,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt",
@@ -1844,7 +2069,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt",
@@ -1869,7 +2097,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/core-ui/src/main/java/com/novel/page/component/NovelDivider.kt",
@@ -1894,7 +2125,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/core-ui/src/main/java/com/novel/page/component/NovelText.kt",
@@ -1919,7 +2153,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/core-ui/src/main/java/com/novel/page/component/NovelTextField.kt",
@@ -1944,7 +2181,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseModel.kt",
@@ -1967,7 +2207,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": true
+    }
   },
   {
     "path": "android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseScreen.kt",
@@ -1992,7 +2235,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": true
+    }
   },
   {
     "path": "src/page/BookshelfPage/components/MainTabBar.tsx",
@@ -2015,7 +2261,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx",
@@ -2040,7 +2289,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/EditToolbar.tsx",
@@ -2065,7 +2317,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx",
@@ -2090,7 +2345,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/GridView.tsx",
@@ -2115,7 +2373,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/ListView.tsx",
@@ -2140,7 +2401,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx",
@@ -2165,7 +2429,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx",
@@ -2190,7 +2457,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/TopBar.tsx",
@@ -2215,7 +2485,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/UnifiedScrollView.tsx",
@@ -2240,7 +2513,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx",
@@ -2265,7 +2541,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Bookshelf/components/WaterfallGrid.tsx",
@@ -2290,7 +2569,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/EmptyState.tsx",
@@ -2315,7 +2597,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/FilterBar.tsx",
@@ -2340,7 +2625,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx",
@@ -2365,7 +2653,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/index.ts",
@@ -2388,7 +2679,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx",
@@ -2413,7 +2707,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/PostItem.tsx",
@@ -2438,7 +2735,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/PostList.tsx",
@@ -2463,7 +2763,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/TabBar.tsx",
@@ -2488,7 +2791,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Community/components/TopBar.tsx",
@@ -2513,7 +2819,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/BookItem.tsx",
@@ -2536,7 +2845,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/ContentArea.tsx",
@@ -2559,7 +2871,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/EditToolbar.tsx",
@@ -2582,7 +2897,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/HistoryContent.tsx",
@@ -2605,7 +2923,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/HistoryItem.tsx",
@@ -2628,7 +2949,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/index.ts",
@@ -2651,7 +2975,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/RefreshIndicator.tsx",
@@ -2674,7 +3001,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/TabBar.tsx",
@@ -2697,7 +3027,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/History/components/TabsArea.tsx",
@@ -2720,7 +3053,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Watchlist/components/EditToolbar.tsx",
@@ -2745,7 +3081,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Watchlist/components/EmptyState.tsx",
@@ -2770,7 +3109,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Watchlist/components/TopBar.tsx",
@@ -2795,7 +3137,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/BookshelfPage/pages/Watchlist/components/WatchlistGrid.tsx",
@@ -2820,7 +3165,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/CategoryPage/components/BookGrid.tsx",
@@ -2845,7 +3193,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/CategoryPage/components/Sidebar.tsx",
@@ -2870,7 +3221,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/CategoryPage/components/TopTabs.tsx",
@@ -2895,7 +3249,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/CommentPage/components/CategorySection.tsx",
@@ -2920,7 +3277,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/CommentPage/components/CommentList.tsx",
@@ -2946,7 +3306,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/CommentPage/components/index.ts",
@@ -2969,7 +3332,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/CommentPage/components/RatingSection.tsx",
@@ -2995,7 +3361,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/CommentPage/components/RefreshIndicator.tsx",
@@ -3020,7 +3389,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/CommentPage/components/TopBar.tsx",
@@ -3046,7 +3418,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/ReviewDetailPage/components/CommentList.tsx",
@@ -3071,7 +3446,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/ReviewDetailPage/components/RefreshIndicator.tsx",
@@ -3094,7 +3472,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/ReviewDetailPage/components/RepliesSheet.tsx",
@@ -3119,7 +3500,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/ReviewDetailPage/components/ReviewContent.tsx",
@@ -3145,7 +3529,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/ReviewDetailPage/components/TopBar.tsx",
@@ -3170,7 +3557,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/WriteReviewPage/components/index.ts",
@@ -3193,7 +3583,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/WriteReviewPage/components/RatingInput.tsx",
@@ -3218,7 +3611,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/WriteReviewPage/components/ReviewForm.tsx",
@@ -3243,7 +3639,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/comment/WriteReviewPage/components/TopBar.tsx",
@@ -3268,7 +3667,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/BookItem.tsx",
@@ -3291,7 +3693,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/BottomBox.tsx",
@@ -3314,7 +3719,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/index.ts",
@@ -3337,7 +3745,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/LoadMoreIndicator.tsx",
@@ -3360,7 +3771,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/LoginBar.tsx",
@@ -3383,7 +3797,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/RefreshIndicator.tsx",
@@ -3406,7 +3823,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/ScrollableArea.tsx",
@@ -3431,7 +3851,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ProfilePage/components/TopBar.tsx",
@@ -3456,7 +3879,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": true
+    }
   },
   {
     "path": "src/page/ProfilePage/components/WaterfallGrid.tsx",
@@ -3479,7 +3905,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/AuthorExclusiveSection.tsx",
@@ -3502,7 +3931,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/BottomButton.tsx",
@@ -3525,7 +3957,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/CopyrightSection.tsx",
@@ -3548,7 +3983,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/CreativeActivitySection.tsx",
@@ -3571,7 +4009,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/DataStatsSection.tsx",
@@ -3594,7 +4035,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/index.ts",
@@ -3617,7 +4061,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/TopBar.tsx",
@@ -3640,7 +4087,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/UserSection.tsx",
@@ -3663,7 +4113,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/WelcomeModal.tsx",
@@ -3688,7 +4141,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/BecomeWriterPage/components/WriterClassroomSection.tsx",
@@ -3711,7 +4167,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/ConsultSection.tsx",
@@ -3734,7 +4193,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/ContactSection.tsx",
@@ -3757,7 +4219,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/FrequentQuestions.tsx",
@@ -3780,7 +4245,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/index.ts",
@@ -3803,7 +4271,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/QuestionDetail.tsx",
@@ -3826,7 +4297,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/QuestionList.tsx",
@@ -3849,7 +4323,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/TopBar.tsx",
@@ -3872,7 +4349,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/FeedbackHelpPage/components/UserSection.tsx",
@@ -3895,7 +4375,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/ContentArea.tsx",
@@ -3918,7 +4401,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/HistoryItem.tsx",
@@ -3941,7 +4427,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/index.ts",
@@ -3964,7 +4453,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/LoadMoreIndicator.tsx",
@@ -3987,7 +4479,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/RefreshIndicator.tsx",
@@ -4010,7 +4505,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/TabsArea.tsx",
@@ -4033,7 +4531,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/HistoryPage/components/TopBar.tsx",
@@ -4058,7 +4559,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/BenefitComparison.tsx",
@@ -4081,7 +4585,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/BottomPurchase.tsx",
@@ -4104,7 +4611,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/index.ts",
@@ -4127,7 +4637,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/MemberBenefits.tsx",
@@ -4150,7 +4663,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/PricePackages.tsx",
@@ -4173,7 +4689,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/TaskCards.tsx",
@@ -4196,7 +4715,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/TopBar.tsx",
@@ -4219,7 +4741,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/VIPCardCarousel.tsx",
@@ -4244,7 +4769,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MemberCenterPage/components/VIPRecommendation.tsx",
@@ -4267,7 +4795,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/EmptyState.tsx",
@@ -4290,7 +4821,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/index.ts",
@@ -4313,7 +4847,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/LoadMoreIndicator.tsx",
@@ -4336,7 +4873,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/MainMessagesSection.tsx",
@@ -4359,7 +4899,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/MessageItem.tsx",
@@ -4382,7 +4925,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/RefreshIndicator.tsx",
@@ -4405,7 +4951,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/TabsArea.tsx",
@@ -4428,7 +4977,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MessagePage/components/TopBar.tsx",
@@ -4451,7 +5003,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MyReservationPage/components/EmptyState.tsx",
@@ -4474,7 +5029,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MyReservationPage/components/index.ts",
@@ -4497,7 +5055,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MyReservationPage/components/ReservationGrid.tsx",
@@ -4520,7 +5081,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MyReservationPage/components/SubTabsSection.tsx",
@@ -4543,7 +5107,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/MyReservationPage/components/TopBar.tsx",
@@ -4566,7 +5133,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/RecommendBookPage/components/CreativeServiceSection.tsx",
@@ -4589,7 +5159,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/RecommendBookPage/components/CreativeTaskSection.tsx",
@@ -4612,7 +5185,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/RecommendBookPage/components/DataStatsSection.tsx",
@@ -4635,7 +5211,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/RecommendBookPage/components/index.ts",
@@ -4658,7 +5237,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/RecommendBookPage/components/TopBar.tsx",
@@ -4681,7 +5263,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/RecommendBookPage/components/UserSection.tsx",
@@ -4704,7 +5289,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/ViewedUsersPage/components/EmptyState.tsx",
@@ -4727,7 +5315,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/ViewedUsersPage/components/index.ts",
@@ -4750,7 +5341,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/ViewedUsersPage/components/TabsSection.tsx",
@@ -4773,7 +5367,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/ViewedUsersPage/components/TopBar.tsx",
@@ -4796,7 +5393,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/ScrollBox/ViewedUsersPage/components/UsersList.tsx",
@@ -4819,7 +5419,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/SettingsPage/settingspage/components/index.ts",
@@ -4842,7 +5445,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/SettingsPage/settingspage/components/SettingRow.tsx",
@@ -4867,7 +5473,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/SettingsPage/settingspage/components/ThemeSwitcher.tsx",
@@ -4892,7 +5501,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/SettingsPage/TimeSwitchPage/components/index.ts",
@@ -4915,7 +5527,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/SettingsPage/TimeSwitchPage/components/TimePickerModal.tsx",
@@ -4940,7 +5555,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/ActionBar.tsx",
@@ -4966,7 +5584,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/ChatRow.tsx",
@@ -4991,7 +5612,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/Header.tsx",
@@ -5017,7 +5641,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx",
@@ -5042,7 +5669,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/InputBar.tsx",
@@ -5068,7 +5698,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/IntroExample.tsx",
@@ -5094,7 +5727,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/MarkdownText.tsx",
@@ -5119,7 +5755,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/Suggestions.tsx",
@@ -5144,7 +5783,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/AIWriteAssistant/components/ThinkingBlock.tsx",
@@ -5170,7 +5812,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/BookManage/components/Banner.tsx",
@@ -5195,7 +5840,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/BookManage/components/ChapterSection.tsx",
@@ -5220,7 +5868,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/BookManage/components/DraftBar.tsx",
@@ -5245,7 +5896,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/BookManage/components/EmptyChapter.tsx",
@@ -5270,7 +5924,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/BookManage/components/Footer.tsx",
@@ -5295,7 +5952,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/BookManage/components/Header.tsx",
@@ -5321,7 +5981,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/WritePage/components/SelectionToolbar.tsx",
@@ -5346,7 +6009,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/WritePage/components/TopBar.tsx",
@@ -5372,7 +6038,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/WritePage/components/VolumeBar.tsx",
@@ -5397,7 +6066,10 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   },
   {
     "path": "src/page/Writer/WritePage/components/WelcomePanel.tsx",
@@ -5422,6 +6094,9 @@
       "figma_target_page": "02-组件规范"
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "novel_design_ready": false
+    }
   }
 ]

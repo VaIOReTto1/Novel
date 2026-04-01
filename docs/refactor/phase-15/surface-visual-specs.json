@@ -48,7 +48,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-full-ranking-page",
@@ -99,7 +103,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-home-page",
@@ -147,7 +155,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-login-page",
@@ -198,7 +210,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-main-page",
@@ -249,7 +265,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-reader-page",
@@ -300,7 +320,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-search-page",
@@ -351,7 +375,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-search-result-page",
@@ -402,7 +430,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-native-welfare-page",
@@ -444,7 +476,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-book-description-bottom-sheet",
@@ -495,7 +531,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-chapter-list-panel",
@@ -546,7 +586,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-full-ranking-page-skeleton",
@@ -588,7 +632,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-home-page-skeleton",
@@ -630,7 +678,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-home-rank-panel",
@@ -672,7 +724,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-login-page-skeleton",
@@ -714,7 +770,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-reader-settings-panel",
@@ -765,7 +825,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-search-filter-bottom-sheet",
@@ -807,7 +871,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-search-page-skeleton",
@@ -849,7 +917,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-overlay-search-result-page-skeleton",
@@ -891,7 +963,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-shell-compose-main-activity",
@@ -933,7 +1009,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-shell-main-activity",
@@ -975,7 +1055,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-shell-main-page-host-components",
@@ -1017,7 +1101,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-shell-react-native-page",
@@ -1059,7 +1147,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "android-shell-react-native-page-content",
@@ -1101,7 +1193,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-aiwrite-assistant-component",
@@ -1152,7 +1248,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-become-writer-page-component",
@@ -1203,7 +1303,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-book-manage-page-component",
@@ -1252,7 +1356,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-bookshelf-page-component",
@@ -1296,7 +1404,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-category-page-component",
@@ -1342,7 +1454,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-comment-page-component",
@@ -1391,7 +1507,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-feedback-help-main-page-component",
@@ -1442,7 +1562,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-help-support-page-component",
@@ -1484,7 +1608,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-history-page-component",
@@ -1534,7 +1662,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-member-center-page-component",
@@ -1585,7 +1717,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-message-page-component",
@@ -1636,7 +1772,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-my-reservation-page-component",
@@ -1684,7 +1824,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-privacy-policy-page-component",
@@ -1726,7 +1870,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-question-detail-page-component",
@@ -1777,7 +1925,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-question-list-page-component",
@@ -1828,7 +1980,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-recommend-book-page-component",
@@ -1877,7 +2033,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-review-detail-page-component",
@@ -1925,7 +2085,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-settings-page-component",
@@ -1971,7 +2135,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-timed-switch-page-component",
@@ -2016,7 +2184,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-host-viewed-users-page-component",
@@ -2064,7 +2236,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-write-page-component",
@@ -2111,7 +2287,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-host-write-review-page-component",
@@ -2158,7 +2338,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   },
   {
     "surface_id": "rn-nested-bookshelf-bookshelf-page",
@@ -2209,7 +2393,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-nested-bookshelf-community-page",
@@ -2260,7 +2448,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-nested-bookshelf-history-page",
@@ -2311,7 +2503,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-nested-bookshelf-watchlist-page",
@@ -2358,7 +2554,11 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
   },
   {
     "surface_id": "rn-root-profile-page",
@@ -2410,6 +2610,10 @@
       }
     },
     "current_look_recorded": true,
-    "target_look_planned": true
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
   }
 ]

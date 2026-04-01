@@ -2586,6 +2586,7 @@
       "structure": "community empty-state block with illustration-like icon, copy and call-to-action",
       "affordance": "explains why no posts are visible and suggests the next action",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2602,7 +2603,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2770,7 +2771,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -2782,6 +2783,7 @@
       "structure": "horizontal topic tab strip above the post feed",
       "affordance": "switches community feed categories in place",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -2798,7 +2800,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {

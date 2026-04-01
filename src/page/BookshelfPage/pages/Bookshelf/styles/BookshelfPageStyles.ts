@@ -319,7 +319,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   // 列表分隔符
   listSeparator: {
     height: wp(1),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.border.subtle,
     marginHorizontal: wp(16),
     opacity: 0.3,
   },
@@ -336,13 +336,13 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   emptyAction: {
     paddingHorizontal: wp(24),
     paddingVertical: wp(12),
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
     borderRadius: sp(8),
   },
 
   emptyActionText: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '500',
   },
 
@@ -667,9 +667,9 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   // 编辑工具栏样式
   toolbar: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderTopWidth: 1,
-    borderTopColor: colors.novelDivider,
+    borderTopColor: novelDesign.color.border.subtle,
     paddingHorizontal: wp(20),
     paddingVertical: wp(16),
     flexDirection: 'row',
@@ -681,12 +681,12 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     paddingHorizontal: wp(16),
     paddingVertical: wp(8),
     borderRadius: sp(6),
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   toolbarButtonText: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '500',
   },
 
@@ -695,9 +695,9 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderTopWidth: 1,
-    borderTopColor: colors.novelDivider,
+    borderTopColor: novelDesign.color.border.subtle,
     paddingHorizontal: wp(20),
     paddingVertical: wp(16),
     flexDirection: 'row',
@@ -739,7 +739,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   editToolbarButtonText: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
@@ -749,13 +749,13 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   editToolbarSelectedText: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
   selectionCount: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
@@ -763,21 +763,21 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     paddingHorizontal: wp(16),
     paddingVertical: wp(8),
     borderRadius: sp(6),
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   editActionButtonText: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '500',
   },
 
   deleteButton: {
-    backgroundColor: colors.novelError || '#FF4444',
+    backgroundColor: novelDesign.color.status.danger,
   },
 
   deleteButtonText: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
   },
 
   disabledButton: {

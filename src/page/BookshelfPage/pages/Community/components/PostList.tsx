@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, RefreshControl, ListRenderItem, View, Text } from 'react-native';
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { useNovelColors } from '../../../../../utils/theme';
 import { createCommunityPageStyles } from '../styles/CommunityPageStyles';
 import { CommunityPost, CommunityCircle } from '../types';
@@ -44,6 +45,7 @@ export const PostList: React.FC<PostListProps> = ({
   onCircleChange,
 }) => {
   const colors = useNovelColors();
+  const ui = createNovelDesignUI(colors as any);
   const styles = createCommunityPageStyles(colors);
 
   const renderPost: ListRenderItem<CommunityPost> = ({ item }: { item: CommunityPost }) => (
@@ -107,8 +109,8 @@ export const PostList: React.FC<PostListProps> = ({
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          colors={[colors.novelMain]}
-          tintColor={colors.novelMain}
+          colors={[ui.color.brand.primary]}
+          tintColor={ui.color.brand.primary}
         />
       }
       onEndReached={onLoadMore}

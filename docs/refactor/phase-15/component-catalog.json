@@ -816,6 +816,7 @@
       "platform": "react-native",
       "category": "empty",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },
@@ -879,6 +880,7 @@
       "platform": "react-native",
       "category": "navigation",
       "asset_sources": [
+        "react-native-vector-icons",
         "theme-aware"
       ]
     },

@@ -21,9 +21,17 @@ describe('Bookshelf nested page novelDesign styles', () => {
 
     expect(styles.container.backgroundColor).toBe('#FAF6F0');
     expect(styles.tabsContainer.backgroundColor).toBe('#FFFDFC');
-    expect(styles.postList?.backgroundColor ?? '#FAF6F0').toBe('#FAF6F0');
     expect(styles.gridCover.backgroundColor).toBe('#F3ECE3');
     expect(styles.emptyContainer.backgroundColor ?? '#FAF6F0').toBe('#FAF6F0');
     expect(styles.gridItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.toolbar.backgroundColor).toBe('#FFFDFC');
+    expect(styles.toolbarButton.backgroundColor).toBe('#C96A34');
+    expect(styles.editToolbar.backgroundColor).toBe('#FFFDFC');
+    expect(styles.editActionButton.backgroundColor).toBe('#C96A34');
+    expect(styles.deleteButton.backgroundColor).toBe('#B3453C');
+    expect(styles.selectionCount.color).toBe('#201A17');
+    expect(styles.listSeparator.backgroundColor).toBe('#E8DDD1');
+    expect(styles.emptyAction.backgroundColor).toBe('#C96A34');
+    expect(styles.emptyActionText.color).toBe('#FFFDFC');
   });
 });

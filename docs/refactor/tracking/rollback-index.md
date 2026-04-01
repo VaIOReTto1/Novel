@@ -75,5 +75,7 @@
 
 | `RB-STAGE7-BOOKSHELF-CORE-20260401-01` | `184a3ce` | 推进书架 Bookshelf / Community 内嵌页的 novelDesign 换肤 | `git revert --no-edit 184a3ce` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-BOOKSHELF-COMPONENTS-20260402-01` | `b777920` | 推进书架组件层的 novelDesign 图标与加载态收口 | `git revert --no-edit b777920` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityComponents.novelDesign.test.tsx __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

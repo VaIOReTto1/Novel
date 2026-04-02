@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createCommentPageStyles } from '../styles/CommentPageStyles';
 
@@ -44,12 +45,12 @@ export const CategorySection = memo(({
                 isActive && styles.categoryTabActive,
               ]}
               onPress={() => handleCategoryPress(category.id)}
-              activeOpacity={0.8}
-            >
-              <Text style={[
-                styles.categoryTabText,
-                isActive && styles.categoryTabTextActive,
-              ]}>
+              activeOpacity={0.8}>
+              <Text
+                style={[
+                  styles.categoryTabText,
+                  isActive && styles.categoryTabTextActive,
+                ]}>
                 {category.name}
               </Text>
             </TouchableOpacity>

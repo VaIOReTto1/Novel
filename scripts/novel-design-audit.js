@@ -863,6 +863,8 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/ProfilePage/components/LoginBar.tsx',
   'src/page/ProfilePage/components/LoadMoreIndicator.tsx',
   'src/page/ProfilePage/components/RefreshIndicator.tsx',
+  'src/page/ProfilePage/components/ScrollableArea.tsx',
+  'src/page/ProfilePage/components/WaterfallGrid.tsx',
   'src/page/ScrollBox/BecomeWriterPage/styles/BecomeWriterPageStyles.ts',
   'src/page/ScrollBox/RecommendBookPage/styles/RecommendBookPageStyles.ts',
   'src/page/Writer/AIWriteAssistant/components/ActionBar.tsx',

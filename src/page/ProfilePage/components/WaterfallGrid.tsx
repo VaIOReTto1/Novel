@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
+
+import { Book } from '../types';
 import { BookItem } from './BookItem';
 import { LoadMoreIndicator } from './LoadMoreIndicator';
-import { Book } from '../types';
 
 interface WaterfallGridProps {
   styles: any;
@@ -19,10 +20,12 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
   hasMore,
   onBookPress,
 }) => {
-  const handleBookPress = useCallback((book: Book) => {
-    console.log('Book pressed:', book.title);
-    onBookPress(book);
-  }, [onBookPress]);
+  const handleBookPress = useCallback(
+    (book: Book) => {
+      onBookPress(book);
+    },
+    [onBookPress],
+  );
 
   if (books.length === 0 && !loading) {
     return (
@@ -32,14 +35,12 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
     );
   }
 
-  // 将书籍分为两列
   const leftColumnBooks = books.filter((_, index) => index % 2 === 0);
   const rightColumnBooks = books.filter((_, index) => index % 2 === 1);
 
   return (
     <View>
       <View style={styles.waterfallGrid}>
-        {/* 左列 */}
         <View style={styles.waterfallColumn}>
           {leftColumnBooks.map((book, index) => (
             <BookItem
@@ -52,7 +53,6 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
           ))}
         </View>
 
-        {/* 右列 */}
         <View style={styles.waterfallColumn}>
           {rightColumnBooks.map((book, index) => (
             <BookItem
@@ -66,11 +66,7 @@ export const WaterfallGrid: React.FC<WaterfallGridProps> = ({
         </View>
       </View>
 
-      <LoadMoreIndicator
-        loading={loading}
-        hasMore={hasMore}
-        styles={styles}
-      />
+      <LoadMoreIndicator loading={loading} hasMore={hasMore} styles={styles} />
     </View>
   );
 };

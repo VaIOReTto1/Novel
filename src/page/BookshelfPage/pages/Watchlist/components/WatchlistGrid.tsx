@@ -1,7 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, ActivityIndicator } from 'react-native';
-import { createWatchlistPageStyles } from '../styles/WatchlistPageStyles';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
 import { useNovelColors } from '../../../../../utils/theme';
+import { createWatchlistPageStyles } from '../styles/WatchlistPageStyles';
 import { WatchlistItem } from '../types';
 
 interface WatchlistGridProps {
@@ -30,10 +38,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
 
     return (
       <TouchableOpacity
-        style={[
-          styles.gridItem,
-          isSelected && styles.selectedGridItem,
-        ]}
+        style={[styles.gridItem, isSelected && styles.selectedGridItem]}
         onPress={() => {
           if (isEditMode) {
             onItemSelect(item);
@@ -41,8 +46,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
             onItemPress(item);
           }
         }}
-        activeOpacity={0.8}
-      >
+        activeOpacity={0.8}>
         <View style={styles.gridItemImageContainer}>
           <Image
             source={{ uri: coverImage }}
@@ -50,21 +54,17 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
             resizeMode="cover"
           />
 
-          {/* 选择状态 */}
-          {isEditMode && (
+          {isEditMode ? (
             <View style={styles.selectionCheckbox}>
-              <Text style={styles.checkboxIcon}>
-                {isSelected ? '✓' : ''}
-              </Text>
+              <Text style={styles.checkboxIcon}>{isSelected ? '已选' : ''}</Text>
             </View>
-          )}
+          ) : null}
 
-          {/* 更新提示 */}
-          {!item.isFinished && item.lastUpdate && (
+          {!item.isFinished && item.lastUpdate ? (
             <View style={styles.updateBadge}>
-              <Text style={styles.updateBadgeText}>更新</Text>
+              <Text style={styles.updateBadgeText}>更新中</Text>
             </View>
-          )}
+          ) : null}
         </View>
 
         <View style={styles.gridItemContent}>
@@ -72,7 +72,11 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
             {item.title}
           </Text>
           <Text style={styles.gridItemSubtitle} numberOfLines={1}>
-            {item.episodeCount ? `${item.currentEpisode}集/${item.episodeCount}集` : (item.isFinished ? '已完结' : '连载中')}
+            {item.episodeCount
+              ? `${item.currentEpisode}集/${item.episodeCount}集`
+              : item.isFinished
+                ? '已完结'
+                : '连载中'}
           </Text>
         </View>
       </TouchableOpacity>
@@ -80,7 +84,9 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
   };
 
   const renderFooter = () => {
-    if (!loading) {return null;}
+    if (!loading) {
+      return null;
+    }
 
     return (
       <View style={styles.loadingFooter}>
@@ -94,7 +100,7 @@ export const WatchlistGrid: React.FC<WatchlistGridProps> = ({
     <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item: { id: any; }) => item.id}
+      keyExtractor={(item) => item.id}
       numColumns={3}
       columnWrapperStyle={styles.gridColumnWrapper}
       contentContainerStyle={styles.gridContainer}

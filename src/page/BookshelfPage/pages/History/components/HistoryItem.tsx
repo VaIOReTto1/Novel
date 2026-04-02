@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { HistoryItemProps } from '../types';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+
 import NavigationBridge from '../../../../../utils/bridge/NavigationBridge';
+import { HistoryItemProps } from '../types';
 
 export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
   styles,
@@ -15,11 +16,10 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
   const handlePress = () => {
     if (isEditing) {
       onSelect();
-    } else {
-      // 跳转到阅读器页面
-      console.log('[HistoryPage] Book pressed:', item.title);
-      NavigationBridge.navigateToReader(item.id);
+      return;
     }
+
+    NavigationBridge.navigateToReader(item.id);
   };
 
   const getProgressText = (progress: number) => {
@@ -29,28 +29,25 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
     return `${Math.floor(progress * 100)}%`;
   };
 
+  const shelfLabel = item.isInShelf ? '已在书架' : '加入书架';
+
   if (viewType === 'grid') {
     return (
       <TouchableOpacity
-        style={[
-          styles.gridItem,
-          isSelected && styles.selectedItem,
-        ]}
+        style={[styles.gridItem, isSelected && styles.selectedItem]}
         onPress={handlePress}
-        activeOpacity={0.7}
-      >
-        {isEditing && (
+        activeOpacity={0.7}>
+        {isEditing ? (
           <View style={styles.selectOverlay}>
-            <View style={[
-              styles.selectCheckbox,
-              isSelected && styles.selectCheckboxSelected,
-            ]}>
-              {isSelected && (
-                <Text style={styles.selectCheckIcon}>✓</Text>
-              )}
+            <View
+              style={[
+                styles.selectCheckbox,
+                isSelected && styles.selectCheckboxSelected,
+              ]}>
+              {isSelected ? <Text style={styles.selectCheckIcon}>已选</Text> : null}
             </View>
           </View>
-        )}
+        ) : null}
 
         <View style={styles.gridCover}>
           <Image
@@ -59,10 +56,12 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
             resizeMode="cover"
           />
           <View style={styles.gridProgress}>
-            <View style={[
-              styles.gridProgressBar,
-              { width: `${Math.floor(item.progress * 100)}%` },
-            ]} />
+            <View
+              style={[
+                styles.gridProgressBar,
+                { width: `${Math.floor(item.progress * 100)}%` },
+              ]}
+            />
           </View>
         </View>
 
@@ -70,18 +69,16 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
           <Text style={styles.gridTitle} numberOfLines={2}>
             {item.title}
           </Text>
-          <Text style={styles.gridProgress}>
-            {getProgressText(item.progress)}
-          </Text>
+          <Text style={styles.gridProgress}>{getProgressText(item.progress)}</Text>
           <TouchableOpacity
             style={styles.gridAddToShelfButton}
-            onPress={() => onAddToShelf?.(item)}
-          >
-            <Text style={[
-              styles.gridAddToShelfText,
-              item.isInShelf && styles.gridAddedToShelfText,
-            ]}>
-              {item.isInShelf ? '已加入' : '加入书架'}
+            onPress={() => onAddToShelf?.(item)}>
+            <Text
+              style={[
+                styles.gridAddToShelfText,
+                item.isInShelf && styles.gridAddedToShelfText,
+              ]}>
+              {shelfLabel}
             </Text>
           </TouchableOpacity>
         </View>
@@ -91,25 +88,20 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
 
   return (
     <TouchableOpacity
-      style={[
-        styles.listItem,
-        isSelected && styles.selectedItem,
-      ]}
+      style={[styles.listItem, isSelected && styles.selectedItem]}
       onPress={handlePress}
-      activeOpacity={0.7}
-    >
-      {isEditing && (
+      activeOpacity={0.7}>
+      {isEditing ? (
         <View style={styles.listSelectArea}>
-          <View style={[
-            styles.selectCheckbox,
-            isSelected && styles.selectCheckboxSelected,
-          ]}>
-            {isSelected && (
-              <Text style={styles.selectCheckIcon}>✓</Text>
-            )}
+          <View
+            style={[
+              styles.selectCheckbox,
+              isSelected && styles.selectCheckboxSelected,
+            ]}>
+            {isSelected ? <Text style={styles.selectCheckIcon}>已选</Text> : null}
           </View>
         </View>
-      )}
+      ) : null}
 
       <View style={styles.listCover}>
         <Image
@@ -120,9 +112,9 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
       </View>
 
       <View style={styles.listContent}>
-         <Text style={styles.listTitle} numberOfLines={1}>
-            {item.title}
-          </Text>
+        <Text style={styles.listTitle} numberOfLines={1}>
+          {item.title}
+        </Text>
 
         <View style={styles.listFooter}>
           <Text style={styles.listChapter} numberOfLines={1}>
@@ -130,13 +122,13 @@ export const HistoryItem: React.FC<HistoryItemProps> = React.memo(({
           </Text>
           <TouchableOpacity
             style={styles.addToShelfButton}
-            onPress={() => onAddToShelf?.(item)}
-          >
-            <Text style={[
-              styles.addToShelfText,
-              item.isInShelf && styles.addedToShelfText,
-            ]}>
-              {item.isInShelf ? '已加入' : '加入书架'}
+            onPress={() => onAddToShelf?.(item)}>
+            <Text
+              style={[
+                styles.addToShelfText,
+                item.isInShelf && styles.addedToShelfText,
+              ]}>
+              {shelfLabel}
             </Text>
           </TouchableOpacity>
         </View>

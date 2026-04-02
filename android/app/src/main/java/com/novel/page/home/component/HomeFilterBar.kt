@@ -24,7 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.novel.page.component.NovelText
 import com.novel.page.home.viewmodel.CategoryInfo
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 import com.novel.utils.ssp
 import com.novel.utils.animateTextStyleAsState
@@ -106,7 +106,11 @@ private fun FilterChip(
     val big = pressed || isSelected
     val fontSize = if (big) 18.ssp else 16.ssp
     val weight   = if (big) FontWeight.Bold else FontWeight.Normal
-    val color    = if (big) NovelColors.NovelText else NovelColors.NovelTextGray
+    val color    = if (big) {
+        NovelDesignTokens.lightColor("color.text.primary")
+    } else {
+        NovelDesignTokens.lightColor("color.text.secondary")
+    }
 
     // 3️⃣ 极短 Tweed 动画，首帧几乎贴切
     val sizeAnim by animateTextStyleAsState(
@@ -118,6 +122,6 @@ private fun FilterChip(
         text  = filter,
         style = sizeAnim,
         modifier = pressModifier.padding(vertical = 8.wdp),
-        color = NovelColors.NovelText
+        color = NovelDesignTokens.lightColor("color.text.primary")
     )
 }

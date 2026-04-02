@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import com.novel.R
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.wdp
 import com.novel.utils.ssp
@@ -52,7 +52,7 @@ fun HomeTopBar(
                 .width(275.wdp)
                 .height(48.wdp)
                 .clip(RoundedCornerShape(5.wdp))
-                .background(NovelColors.NovelBackground)
+                .background(NovelDesignTokens.lightColor("color.bg.surface"))
                 .debounceClickable(onClick = { onSearchClick() }),
             contentAlignment = Alignment.CenterStart
         ) {
@@ -65,7 +65,7 @@ fun HomeTopBar(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "搜索",
-                    tint = NovelColors.NovelTextGray,
+                    tint = NovelDesignTokens.lightColor("color.text.secondary"),
                     modifier = Modifier.size(20.wdp)
                 )
 
@@ -74,7 +74,7 @@ fun HomeTopBar(
                 NovelText(
                     text = "搜索书名、作者",
                     fontSize = 14.ssp,
-                    color = NovelColors.NovelTextGray
+                    color = NovelDesignTokens.lightColor("color.text.secondary")
                 )
             }
         }
@@ -86,7 +86,7 @@ fun HomeTopBar(
                 .width(65.wdp)
                 .height(48.wdp)
                 .clip(RoundedCornerShape(5.wdp))
-                .background(NovelColors.NovelBackground)
+                .background(NovelDesignTokens.lightColor("color.bg.surface"))
                 .clickable { onCategoryClick() },
             contentAlignment = Alignment.Center
         ) {

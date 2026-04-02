@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
-import { View, TextInput, Text } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Text, TextInput, View } from 'react-native';
+
 import { useNovelColors } from '../../../../utils/theme/colors';
-import { createWriteReviewPageStyles } from '../styles/WriteReviewPageStyles';
 import { REVIEW_CONSTANTS } from '../types';
+import { createWriteReviewPageStyles } from '../styles/WriteReviewPageStyles';
 
 interface ReviewFormProps {
   content: string;
@@ -28,7 +29,6 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
   useEffect(() => {
     if (autoFocus && textInputRef.current) {
-      // 延迟聚焦，确保组件已完全渲染
       setTimeout(() => {
         textInputRef.current?.focus();
       }, 100);
@@ -37,22 +37,17 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
   return (
     <View style={styles.formContainer}>
-      {/* 分割线 */}
       <View style={styles.divider} />
 
-      {/* 内容输入 */}
       <View style={styles.inputSection}>
         <TextInput
           ref={textInputRef}
-          style={[
-            styles.contentInput,
-            contentError && styles.inputError,
-          ]}
+          style={[styles.contentInput, contentError && styles.inputError]}
           value={content}
           onChangeText={onContentChange}
           onFocus={onContentFocus}
           onBlur={onContentBlur}
-          placeholder="真实客观、多维描述、结构清晰、内容充实的书评，可以帮助到更多书友"
+          placeholder="写下真实、清晰、有帮助的书评内容"
           placeholderTextColor={colors.novelTextGray + '80'}
           maxLength={REVIEW_CONSTANTS.CONTENT_MAX_LENGTH}
           multiline
@@ -61,9 +56,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
           autoFocus={autoFocus}
         />
 
-        {contentError ? (
-          <Text style={styles.errorText}>{contentError}</Text>
-        ) : null}
+        {contentError ? <Text style={styles.errorText}>{contentError}</Text> : null}
       </View>
     </View>
   );

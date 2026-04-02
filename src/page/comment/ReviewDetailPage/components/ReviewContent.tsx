@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
+
 import { parseNewsDate } from '../../../../utils/time/timeUtils';
 import { useNovelColors } from '../../../../utils/theme/colors';
+import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
 
 const StarRating = memo(({ rating }: { rating?: number }) => {
   const colors = useNovelColors();
@@ -58,11 +59,8 @@ export const ReviewContent: React.FC<ReviewContentProps> = ({ commentData }) => 
     );
   }
 
-
-
   return (
     <View style={styles.reviewDetailContainer}>
-      {/* 用户信息 */}
       <View style={styles.userInfoContainer}>
         <View style={styles.avatarContainer}>
           {commentData.commentUserPhoto ? (
@@ -85,25 +83,20 @@ export const ReviewContent: React.FC<ReviewContentProps> = ({ commentData }) => 
 
       <View style={styles.userMetaContainer}>
         <StarRating rating={commentData.rating} />
-        <Text style={styles.readingTimeText}>阅读2小时后点评</Text>
+        <Text style={styles.readingTimeText}>阅读 2 小时后点评</Text>
       </View>
 
-      {/* 评论内容 */}
       <Text style={styles.reviewContent}>{commentData.commentContent}</Text>
 
-      {/* 书籍信息框 */}
-      {commentData.bookInfo && (
+      {commentData.bookInfo ? (
         <View style={styles.bookInfoBox}>
-          <Image
-            source={{ uri: commentData.bookInfo.picUrl }}
-            style={styles.bookCover}
-          />
+          <Image source={{ uri: commentData.bookInfo.picUrl }} style={styles.bookCover} />
           <View style={styles.bookDetails}>
             <Text style={styles.bookName}>{commentData.bookInfo.bookName}</Text>
             <Text style={styles.bookAuthor}>{commentData.bookInfo.authorName}</Text>
           </View>
         </View>
-      )}
+      ) : null}
     </View>
   );
 };

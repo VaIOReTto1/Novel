@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createWriteReviewPageStyles } from '../styles/WriteReviewPageStyles';
 
@@ -21,28 +22,23 @@ export const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <View style={styles.topBar}>
-      {/* 关闭按钮 */}
       <TouchableOpacity
         style={styles.closeButton}
         onPress={onBackPress}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.closeIcon}>×</Text>
+        activeOpacity={0.7}>
+        <Text style={styles.closeIcon}>关闭</Text>
       </TouchableOpacity>
 
-      {/* 标题 */}
       <View style={styles.titleContainer}>
         <Text style={styles.topBarTitle}>{title}</Text>
       </View>
 
-      {/* 发表按钮 */}
       <TouchableOpacity
-        style={[styles.submitButton]}
+        style={styles.submitButton}
         onPress={onSubmit}
         activeOpacity={0.7}
-        disabled={!canSubmit}
-      >
-        <Text style={styles.submitButtonText}>发表</Text>
+        disabled={!canSubmit}>
+        <Text style={styles.submitButtonText}>发布</Text>
       </TouchableOpacity>
     </View>
   );

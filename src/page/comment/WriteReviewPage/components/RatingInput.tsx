@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, Animated } from 'react-native';
+import { Animated, Text, TouchableOpacity, View } from 'react-native';
+
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createWriteReviewPageStyles } from '../styles/WriteReviewPageStyles';
 
@@ -11,10 +12,10 @@ interface RatingInputProps {
 
 const RATING_LABELS = {
   1: '太差了',
-  2: '有点差',
-  3: '一般般',
+  2: '有点弱',
+  3: '中规中矩',
   4: '优秀',
-  5: '很优秀',
+  5: '非常推荐',
 };
 
 export const RatingInput: React.FC<RatingInputProps> = ({
@@ -38,9 +39,11 @@ export const RatingInput: React.FC<RatingInputProps> = ({
       styles.starButton,
       isSelected && styles.starButtonSelected,
       animation && {
-        transform: [{
-          scale: animation,
-        }],
+        transform: [
+          {
+            scale: animation,
+          },
+        ],
       },
     ];
 
@@ -49,13 +52,9 @@ export const RatingInput: React.FC<RatingInputProps> = ({
         key={index}
         style={starStyle}
         onPress={() => handleStarPress(starNumber)}
-        activeOpacity={0.7}
-      >
-        <Text style={[
-          styles.starText,
-          isSelected && styles.starTextSelected,
-        ]}>
-          ★
+        activeOpacity={0.7}>
+        <Text style={[styles.starText, isSelected && styles.starTextSelected]}>
+          星
         </Text>
       </TouchableOpacity>
     );
@@ -63,15 +62,13 @@ export const RatingInput: React.FC<RatingInputProps> = ({
 
   return (
     <View style={styles.ratingContainer}>
-      <View style={styles.starContainer}>
-        {[0, 1, 2, 3, 4].map(renderStar)}
-      </View>
+      <View style={styles.starContainer}>{[0, 1, 2, 3, 4].map(renderStar)}</View>
 
-      {rating > 0 && (
+      {rating > 0 ? (
         <Text style={styles.ratingLabel}>
           {RATING_LABELS[rating as keyof typeof RATING_LABELS]}
         </Text>
-      )}
+      ) : null}
     </View>
   );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import { createWatchlistPageStyles } from '../styles/WatchlistPageStyles';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { useNovelColors } from '../../../../../utils/theme';
+import { createWatchlistPageStyles } from '../styles/WatchlistPageStyles';
 
 interface EditToolbarProps {
   selectedCount: number;
@@ -26,8 +27,7 @@ export const EditToolbar: React.FC<EditToolbarProps> = ({
       <TouchableOpacity
         style={styles.editToolbarButton}
         onPress={onSelectAll}
-        activeOpacity={0.7}
-      >
+        activeOpacity={0.7}>
         <Text style={styles.editToolbarButtonText}>
           {isAllSelected ? '取消全选' : '全选'}
         </Text>
@@ -35,7 +35,7 @@ export const EditToolbar: React.FC<EditToolbarProps> = ({
 
       <View style={styles.editToolbarCenter}>
         <Text style={styles.editToolbarSelectedText}>
-          已选择 {selectedCount}/{totalCount} 项
+          {`已选择 ${selectedCount}/${totalCount} 项`}
         </Text>
       </View>
 
@@ -47,13 +47,13 @@ export const EditToolbar: React.FC<EditToolbarProps> = ({
         ]}
         onPress={onDelete}
         disabled={selectedCount === 0}
-        activeOpacity={0.7}
-      >
-        <Text style={[
-          styles.editToolbarButtonText,
-          styles.deleteButtonText,
-          selectedCount === 0 && styles.disabledButtonText,
-        ]}>
+        activeOpacity={0.7}>
+        <Text
+          style={[
+            styles.editToolbarButtonText,
+            styles.deleteButtonText,
+            selectedCount === 0 && styles.disabledButtonText,
+          ]}>
           删除
         </Text>
       </TouchableOpacity>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import { createWatchlistPageStyles } from '../styles/WatchlistPageStyles';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { useNovelColors } from '../../../../../utils/theme';
+import { createWatchlistPageStyles } from '../styles/WatchlistPageStyles';
 
 interface TopBarProps {
   onEditPress: () => void;
@@ -17,27 +18,24 @@ export const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <View style={styles.topBarContainer}>
-      {/* 左侧广告区域 */}
       <View style={styles.topBarLeft}>
         <TouchableOpacity style={styles.adBanner} activeOpacity={0.8}>
-          <Text style={styles.adBannerText}>广告位</Text>
+          <Text style={styles.adBannerText}>编辑精选</Text>
         </TouchableOpacity>
       </View>
 
-      {/* 中间空白区域 */}
       <View style={styles.topBarCenter} />
 
-      {/* 右侧编辑按钮 */}
       <View style={styles.topBarRight}>
         <TouchableOpacity
           style={styles.topBarActionButton}
           onPress={onEditPress}
-          activeOpacity={0.7}
-        >
-          <Text style={[
-            styles.topBarActionLabel,
-            isEditMode && styles.activeTopBarActionLabel,
-          ]}>
+          activeOpacity={0.7}>
+          <Text
+            style={[
+              styles.topBarActionLabel,
+              isEditMode && styles.activeTopBarActionLabel,
+            ]}>
             {isEditMode ? '完成' : '编辑'}
           </Text>
         </TouchableOpacity>

@@ -10,15 +10,25 @@ describe('android novelDesign page adoption', () => {
   test('home and search page surfaces lean on NovelDesignTokens for shell colors', () => {
     const homePage = read('android/app/src/main/java/com/novel/page/home/HomePage.kt');
     const homeTopBar = read('android/app/src/main/java/com/novel/page/home/component/HomeTopBar.kt');
+    const homeFilterBar = read('android/app/src/main/java/com/novel/page/home/component/HomeFilterBar.kt');
+    const homeRankPanel = read('android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt');
+    const homeSkeleton = read('android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt');
     const searchPage = read('android/app/src/main/java/com/novel/page/search/SearchPage.kt');
     const searchTopBar = read('android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt');
     const searchResultPage = read('android/app/src/main/java/com/novel/page/search/SearchResultPage.kt');
+    const fullRankingPage = read('android/app/src/main/java/com/novel/page/search/FullRankingPage.kt');
+    const fullRankingSkeleton = read('android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt');
 
     expect(homePage).toContain('NovelDesignTokens');
     expect(homeTopBar).toContain('NovelDesignTokens');
+    expect(homeFilterBar).toContain('NovelDesignTokens');
+    expect(homeRankPanel).toContain('NovelDesignTokens');
+    expect(homeSkeleton).toContain('NovelDesignTokens');
     expect(searchPage).toContain('NovelDesignTokens');
     expect(searchTopBar).toContain('NovelDesignTokens');
     expect(searchResultPage).toContain('NovelDesignTokens');
+    expect(fullRankingPage).toContain('NovelDesignTokens');
+    expect(fullRankingSkeleton).toContain('NovelDesignTokens');
   });
 
   test('search result chips, items and skeletons stop defaulting to NovelColors shell tokens', () => {

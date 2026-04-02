@@ -43,7 +43,7 @@ import com.novel.page.component.NovelText
 import com.novel.page.component.RankingNumber
 import com.novel.page.search.component.SearchRankingItem
 import com.novel.page.search.skeleton.FullRankingPageSkeleton
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -169,7 +169,7 @@ fun FullRankingPage(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "返回",
-                        tint = NovelColors.NovelText
+                        tint = NovelDesignTokens.lightColor("color.text.primary")
                     )
                 }
 
@@ -178,7 +178,7 @@ fun FullRankingPage(
                     text = rankingType,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = NovelColors.NovelText,
+                        color = NovelDesignTokens.lightColor("color.text.primary"),
                     modifier = Modifier
                         .align(Alignment.Center)
                         .graphicsLayer {
@@ -190,7 +190,7 @@ fun FullRankingPage(
                 NovelText(
                     text = "根据真实搜索更新 ($currentDate)",
                     fontSize = 12.sp,
-                    color = NovelColors.NovelTextGray,
+                        color = NovelDesignTokens.lightColor("color.text.secondary"),
                     modifier = Modifier
                         .align(Alignment.Center)
                         .graphicsLayer {
@@ -215,7 +215,7 @@ fun FullRankingPage(
                 modifier = Modifier
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection) // 让列表把剩余 delta 继续上传
-                    .background(Color.White),
+                        .background(NovelDesignTokens.lightColor("color.bg.surface")),
                 contentPadding = innerPadding,
             ) {
                 items(
@@ -293,14 +293,14 @@ private fun FullRankingItem(
                 text = item.title,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
-                color = NovelColors.NovelText,
+                    color = NovelDesignTokens.lightColor("color.text.primary"),
                 maxLines = 1
             )
             Spacer(Modifier.height(2.dp))
             NovelText(
                 text = item.author,
                 fontSize = 13.sp,
-                color = NovelColors.NovelTextGray,
+                    color = NovelDesignTokens.lightColor("color.text.secondary"),
                 maxLines = 1
             )
         }
@@ -308,7 +308,7 @@ private fun FullRankingItem(
         NovelText(
             text = hotSearchValue,
             fontSize = 12.sp,
-            color = NovelColors.NovelTextGray.copy(alpha = 0.7f)
+                color = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.7f)
         )
     }
 }

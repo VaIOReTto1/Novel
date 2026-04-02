@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.wdp
 import com.valentinilk.shimmer.shimmer
@@ -37,14 +37,14 @@ import com.valentinilk.shimmer.shimmer
  */
 @Composable
 fun FullRankingPageSkeleton() {
-    val skeletonColor = NovelColors.NovelTextGray.copy(alpha = 0.2f)
+    val skeletonColor = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.2f)
     LocalDensity.current
     val expandedHeight = 180.dp
     
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(NovelColors.NovelBackground)
+            .background(NovelDesignTokens.lightColor("color.bg.surface"))
             .shimmer()
     ) {
         // 顶部折叠栏骨架

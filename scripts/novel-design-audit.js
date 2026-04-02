@@ -734,8 +734,12 @@ const SURFACE_CLUSTER_PLANS = {
 const RESKINNED_SURFACES = new Set([
   'rn-root-profile-page',
   'android-native-login-page',
+  'android-native-home-page',
+  'android-native-full-ranking-page',
   'android-native-search-page',
   'android-native-search-result-page',
+  'android-overlay-full-ranking-page-skeleton',
+  'android-overlay-home-page-skeleton',
   'android-overlay-login-page-skeleton',
   'android-overlay-search-page-skeleton',
   'android-overlay-search-result-page-skeleton',
@@ -773,11 +777,17 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'android/app/src/main/java/com/novel/page/login/component/InputSection.kt',
   'android/app/src/main/java/com/novel/page/login/component/OperatorSection.kt',
   'android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt',
+  'android/app/src/main/java/com/novel/page/home/component/HomeFilterBar.kt',
+  'android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt',
+  'android/app/src/main/java/com/novel/page/home/component/HomeTopBar.kt',
+  'android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt',
+  'android/app/src/main/java/com/novel/page/search/FullRankingPage.kt',
   'android/app/src/main/java/com/novel/page/search/component/HistoryGrid.kt',
   'android/app/src/main/java/com/novel/page/search/component/RankingList.kt',
   'android/app/src/main/java/com/novel/page/search/component/SearchFilterChip.kt',
   'android/app/src/main/java/com/novel/page/search/component/SearchResultItem.kt',
   'android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt',
+  'android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt',
   'android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt',
   'android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt',
   'src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx',
@@ -882,6 +892,34 @@ const SURFACE_VISUAL_OVERRIDES = {
       style_keywords: ['auth-panel', 'form-stack', 'paper-surface', 'warm-accent'],
     },
   },
+  'android-native-home-page': {
+    current_visual_summary: {
+      layout: 'discovery home with top search bar, filter rail, ranking shelf and recommendation waterfall feed',
+      chrome: 'reader-home chrome with stacked discovery modules and pull-to-refresh shell',
+      content_pattern: 'search entry, category filters, rank panel, recommendation feed and loading footer',
+      key_states: ['loading', 'recommend-mode', 'rank-switch', 'refreshing', 'load-more'],
+      key_components: ['HomeTopBar', 'HomeFilterBar', 'HomeRankPanel', 'HomeRecommendGrid'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-discovery home with calmer paper modules and clearer section pacing',
+      component_recipe: 'editorial-discovery-home',
+      style_keywords: ['discovery-home', 'rank-shelf', 'recommend-waterfall', 'paper-modules'],
+    },
+  },
+  'android-native-full-ranking-page': {
+    current_visual_summary: {
+      layout: 'collapsing top bar over a single-column ranking list with prominent ranking numerals',
+      chrome: 'utility ranking chrome with animated title/subtitle collapse and stacked list rows',
+      content_pattern: 'ranking rows, author metadata and hot-search hint labels',
+      key_states: ['loading', 'collapsing-header', 'ranking-list'],
+      key_components: ['FullRankingPage', 'RankingNumber', 'FullRankingPageSkeleton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-ranking list with quieter collapsing chrome and paper row rhythm',
+      component_recipe: 'editorial-ranking-surface',
+      style_keywords: ['ranking-list', 'collapsing-header', 'paper-rows', 'metadata-hints'],
+    },
+  },
   'android-native-search-page': {
     current_visual_summary: {
       layout: 'search shell with top bar, history chips and multiple ranking shelves',
@@ -922,6 +960,34 @@ const SURFACE_VISUAL_OVERRIDES = {
       layout_strategy: 'warm auth skeleton with softer shimmer and stable form geometry',
       component_recipe: 'auth-skeleton',
       style_keywords: ['auth-skeleton', 'warm-shimmer', 'form-placeholder'],
+    },
+  },
+  'android-overlay-home-page-skeleton': {
+    current_visual_summary: {
+      layout: 'home skeleton with top bar, filter chips, ranking block and recommendation placeholders',
+      chrome: 'placeholder-only home discovery shell',
+      content_pattern: 'loading approximation of search, ranking and recommendation modules',
+      key_states: ['loading'],
+      key_components: ['HomePageSkeleton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-home skeleton with softer search shell and staggered recommendation placeholders',
+      component_recipe: 'home-skeleton',
+      style_keywords: ['home-skeleton', 'discovery-placeholder', 'warm-shimmer'],
+    },
+  },
+  'android-overlay-full-ranking-page-skeleton': {
+    current_visual_summary: {
+      layout: 'ranking skeleton with stacked row placeholders and header block',
+      chrome: 'placeholder-only ranking shell',
+      content_pattern: 'loading approximation of ranking list rows and header',
+      key_states: ['loading'],
+      key_components: ['FullRankingPageSkeleton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-ranking skeleton with softer row placeholders and paper header block',
+      component_recipe: 'ranking-skeleton',
+      style_keywords: ['ranking-skeleton', 'row-placeholder', 'loading-header'],
     },
   },
   'android-overlay-search-page-skeleton': {

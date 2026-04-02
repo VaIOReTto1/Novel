@@ -62,31 +62,29 @@
       "android/app/src/main/java/com/novel/page/search/FullRankingPage.kt"
     ],
     "current_visual_summary": {
-      "layout": "search top bar with history, ranking and filter affordances",
-      "chrome": "search-led chrome with stacked results modules",
-      "content_pattern": "search discovery and ranking exploration",
+      "layout": "collapsing top bar over a single-column ranking list with prominent ranking numerals",
+      "chrome": "utility ranking chrome with animated title/subtitle collapse and stacked list rows",
+      "content_pattern": "ranking rows, author metadata and hot-search hint labels",
       "key_states": [
-        "default"
+        "loading",
+        "collapsing-header",
+        "ranking-list"
       ],
       "key_components": [
-        "FullRankingPageSkeleton",
-        "HistoryGrid",
-        "RankingList",
-        "SearchFilterBottomSheet",
-        "SearchFilterChip",
-        "SearchPageSkeleton",
-        "SearchResultItem",
-        "SearchResultPageSkeleton"
+        "FullRankingPage",
+        "RankingNumber",
+        "FullRankingPageSkeleton"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-search-discovery with structured prompts and refined ranking blocks",
-      "component_recipe": "editorial-search",
+      "layout_strategy": "editorial-ranking list with quieter collapsing chrome and paper row rhythm",
+      "component_recipe": "editorial-ranking-surface",
       "style_keywords": [
-        "search",
-        "ranking",
-        "structured-discovery"
+        "ranking-list",
+        "collapsing-header",
+        "paper-rows",
+        "metadata-hints"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -105,8 +103,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -117,28 +115,32 @@
       "android/app/src/main/java/com/novel/page/home/HomePage.kt"
     ],
     "current_visual_summary": {
-      "layout": "compose discovery page with top bar, ranking, recommendation and media-heavy grids",
-      "chrome": "top discovery bar and stacked sections",
-      "content_pattern": "home discovery feed with rank and recommendation modules",
+      "layout": "discovery home with top search bar, filter rail, ranking shelf and recommendation waterfall feed",
+      "chrome": "reader-home chrome with stacked discovery modules and pull-to-refresh shell",
+      "content_pattern": "search entry, category filters, rank panel, recommendation feed and loading footer",
       "key_states": [
-        "default"
+        "loading",
+        "recommend-mode",
+        "rank-switch",
+        "refreshing",
+        "load-more"
       ],
       "key_components": [
+        "HomeTopBar",
         "HomeFilterBar",
-        "HomePageSkeleton",
         "HomeRankPanel",
-        "HomeRecommendGrid",
-        "HomeTopBar"
+        "HomeRecommendGrid"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-discovery-home with magazine-like section pacing",
-      "component_recipe": "editorial-discovery",
+      "layout_strategy": "editorial-discovery home with calmer paper modules and clearer section pacing",
+      "component_recipe": "editorial-discovery-home",
       "style_keywords": [
-        "magazine",
-        "discovery",
-        "modular-sections"
+        "discovery-home",
+        "rank-shelf",
+        "recommend-waterfall",
+        "paper-modules"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -157,8 +159,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -600,22 +602,24 @@
       "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt"
     ],
     "current_visual_summary": {
-      "layout": "search top bar with history, ranking and filter affordances",
-      "chrome": "search-led chrome with stacked results modules",
-      "content_pattern": "search discovery and ranking exploration",
+      "layout": "ranking skeleton with stacked row placeholders and header block",
+      "chrome": "placeholder-only ranking shell",
+      "content_pattern": "loading approximation of ranking list rows and header",
       "key_states": [
-        "default"
+        "loading"
       ],
-      "key_components": []
+      "key_components": [
+        "FullRankingPageSkeleton"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-search-discovery with structured prompts and refined ranking blocks",
-      "component_recipe": "editorial-search",
+      "layout_strategy": "editorial-ranking skeleton with softer row placeholders and paper header block",
+      "component_recipe": "ranking-skeleton",
       "style_keywords": [
-        "search",
-        "ranking",
-        "structured-discovery"
+        "ranking-skeleton",
+        "row-placeholder",
+        "loading-header"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -634,8 +638,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -646,22 +650,24 @@
       "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt"
     ],
     "current_visual_summary": {
-      "layout": "compose discovery page with top bar, ranking, recommendation and media-heavy grids",
-      "chrome": "top discovery bar and stacked sections",
-      "content_pattern": "home discovery feed with rank and recommendation modules",
+      "layout": "home skeleton with top bar, filter chips, ranking block and recommendation placeholders",
+      "chrome": "placeholder-only home discovery shell",
+      "content_pattern": "loading approximation of search, ranking and recommendation modules",
       "key_states": [
-        "default"
+        "loading"
       ],
-      "key_components": []
+      "key_components": [
+        "HomePageSkeleton"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-discovery-home with magazine-like section pacing",
-      "component_recipe": "editorial-discovery",
+      "layout_strategy": "editorial-home skeleton with softer search shell and staggered recommendation placeholders",
+      "component_recipe": "home-skeleton",
       "style_keywords": [
-        "magazine",
-        "discovery",
-        "modular-sections"
+        "home-skeleton",
+        "discovery-placeholder",
+        "warm-shimmer"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -680,8 +686,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

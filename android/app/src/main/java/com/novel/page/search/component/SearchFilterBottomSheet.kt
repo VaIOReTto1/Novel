@@ -48,7 +48,7 @@ import com.novel.page.search.viewmodel.SortBy
 import com.novel.page.search.viewmodel.UpdateStatus
 import com.novel.page.search.viewmodel.VipStatus
 import com.novel.page.search.viewmodel.WordCountRange
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import kotlinx.collections.immutable.ImmutableList
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
@@ -152,7 +152,7 @@ fun SearchFilterBottomSheet(
                         }
                         .debounceClickable(onClick = {}),
                     shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                    colors = CardDefaults.cardColors(containerColor = NovelColors.NovelBackground),
+                    colors = CardDefaults.cardColors(containerColor = NovelDesignTokens.color("color.bg.surface")),
                     elevation = CardDefaults.cardElevation(defaultElevation = 12.dp)
                 ) {
                     Column(
@@ -166,14 +166,14 @@ fun SearchFilterBottomSheet(
                                 text = "筛选",
                                 fontSize = 18.ssp,
                                 fontWeight = FontWeight.Bold,
-                                color = NovelColors.NovelText,
+                                    color = NovelDesignTokens.color("color.text.primary"),
                                 modifier = Modifier.align(Alignment.Center)
                             )
 
                             Icon(
                                 Icons.Default.KeyboardArrowDown,
                                 contentDescription = "关闭",
-                                tint = NovelColors.NovelText,
+                                tint = NovelDesignTokens.color("color.text.primary"),
                                 modifier = Modifier
                                     .size(40.wdp)
                                     .debounceClickable(onClick = dismiss)
@@ -251,25 +251,25 @@ fun SearchFilterBottomSheet(
                             OutlinedButton(
                                 onClick = clearAll,
                                 modifier = Modifier.weight(1f),
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = NovelColors.NovelTextGray),
+                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = NovelDesignTokens.color("color.text.secondary")),
                                 border = ButtonDefaults.outlinedButtonBorder.copy(
                                     brush = androidx.compose.foundation.BorderStroke(
                                         1.wdp,
-                                        NovelColors.NovelTextGray.copy(alpha = 0.3f)
+                                            NovelDesignTokens.color("color.text.secondary").copy(alpha = 0.3f)
                                     ).brush
                                 )
                             ) {
                                 NovelText(
                                     "清空",
                                     fontSize = 14.ssp,
-                                    color = NovelColors.NovelTextGray
+                                        color = NovelDesignTokens.color("color.text.secondary")
                                 )
                             }
 
                             Button(
                                 onClick = apply,
                                 modifier = Modifier.weight(2f),
-                                colors = ButtonDefaults.buttonColors(containerColor = NovelColors.NovelMain),
+                                colors = ButtonDefaults.buttonColors(containerColor = NovelDesignTokens.color("color.brand.primary")),
                                 shape = RoundedCornerShape(8.wdp)
                             ) {
                                 NovelText(
@@ -352,7 +352,7 @@ private fun FilterSection(title: String, content: @Composable () -> Unit) {
             text = title,
             fontSize = 15.ssp,
             fontWeight = FontWeight.Medium,
-            color = NovelColors.NovelText,
+            color = NovelDesignTokens.color("color.text.primary"),
             modifier = Modifier.padding(bottom = 8.wdp)
         )
         content()

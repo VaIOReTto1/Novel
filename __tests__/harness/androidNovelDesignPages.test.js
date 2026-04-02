@@ -80,4 +80,14 @@ describe('android novelDesign page adoption', () => {
     expect(chapterListPanel).toContain('NovelDesignTokens');
     expect(chapterListPanel).not.toContain('NovelColors.NovelMain');
   });
+
+  test('search and book detail bottom sheets start using NovelDesignTokens for panel chrome', () => {
+    const searchFilterBottomSheet = read('android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt');
+    const bookDescriptionBottomSheet = read('android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt');
+
+    expect(searchFilterBottomSheet).toContain('NovelDesignTokens');
+    expect(searchFilterBottomSheet).not.toContain('NovelColors.NovelBackground');
+    expect(bookDescriptionBottomSheet).toContain('NovelDesignTokens');
+    expect(bookDescriptionBottomSheet).not.toContain('NovelColors.NovelBookBackground');
+  });
 });

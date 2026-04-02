@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.HtmlTextUtil
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
@@ -118,7 +118,7 @@ fun BookDescriptionBottomSheet(
                         .debounceClickable(onClick = {}), // 防止点击弹窗内容时关闭
                     shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = NovelColors.NovelBookBackground
+                        containerColor = NovelDesignTokens.color("color.bg.elevated")
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 12.dp)
                 ) {
@@ -139,7 +139,7 @@ fun BookDescriptionBottomSheet(
                                 text = "简介",
                                 fontSize = 18.ssp,
                                 fontWeight = FontWeight.Bold,
-                                color = NovelColors.NovelText,
+                                color = NovelDesignTokens.color("color.text.primary"),
                                 modifier = Modifier.align(Alignment.Center)
                             )
                             
@@ -150,7 +150,7 @@ fun BookDescriptionBottomSheet(
                                 Icon(
                                     Icons.Default.KeyboardArrowDown,
                                     contentDescription = "关闭",
-                                    tint = NovelColors.NovelTextGray,
+                                    tint = NovelDesignTokens.color("color.text.secondary"),
                                     modifier = Modifier.size(24.wdp)
                                 )
                             }
@@ -168,7 +168,7 @@ fun BookDescriptionBottomSheet(
                                     text = cleaned,
                                     fontSize = 16.ssp,
                                     lineHeight = 24.ssp,
-                                    color = NovelColors.NovelText.copy(alpha = 0.8f),
+                                    color = NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f),
                                     modifier = Modifier.fillMaxWidth()
                                 )
                             }

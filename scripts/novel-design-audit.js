@@ -744,6 +744,7 @@ const RESKINNED_SURFACES = new Set([
   'android-shell-react-native-page-content',
   'android-overlay-book-description-bottom-sheet',
   'android-overlay-chapter-list-panel',
+  'android-overlay-home-rank-panel',
   'android-overlay-reader-settings-panel',
   'android-overlay-search-filter-bottom-sheet',
   'android-native-login-page',
@@ -786,9 +787,14 @@ const RESKINNED_SURFACES = new Set([
 
 const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'android/app/src/main/java/com/novel/page/MainPageHostComponents.kt',
+  'android/app/src/main/java/com/novel/page/book/components/AuthorSection.kt',
   'android/app/src/main/java/com/novel/page/book/components/BookActionSection.kt',
+  'android/app/src/main/java/com/novel/page/book/components/BookCoverSection.kt',
+  'android/app/src/main/java/com/novel/page/book/components/BookDescriptionSection.kt',
   'android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt',
   'android/app/src/main/java/com/novel/page/book/components/BookReviewsSection.kt',
+  'android/app/src/main/java/com/novel/page/book/components/BookStatsSection.kt',
+  'android/app/src/main/java/com/novel/page/book/components/BookTitleSection.kt',
   'android/app/src/main/java/com/novel/page/login/component/ActionButtons.kt',
   'android/app/src/main/java/com/novel/page/login/component/AgreementSection.kt',
   'android/app/src/main/java/com/novel/page/login/component/InputSection.kt',

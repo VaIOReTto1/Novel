@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelText
 import com.novel.page.component.NovelWeakenButton
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.ssp
 import com.novel.utils.wdp
 
@@ -50,14 +50,14 @@ fun AuthorSection(
     // 根据关注状态确定按钮样式
     val buttonText = if (isAuthorFollowed) "已关注" else "关注"
     val buttonColor = if (isAuthorFollowed) {
-        NovelColors.NovelTextGray.copy(alpha = 0.2f)
+        NovelDesignTokens.color("color.text.secondary").copy(alpha = 0.2f)
     } else {
-        NovelColors.NovelTextGray.copy(alpha = 0.1f)
+        NovelDesignTokens.color("color.text.secondary").copy(alpha = 0.1f)
     }
     val textColor = if (isAuthorFollowed) {
-        NovelColors.NovelText.copy(alpha = 0.6f)
+        NovelDesignTokens.color("color.text.primary").copy(alpha = 0.6f)
     } else {
-        NovelColors.NovelText.copy(alpha = 0.8f)
+        NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f)
     }
 
     // 记忆化关注按钮点击事件
@@ -83,14 +83,14 @@ fun AuthorSection(
         Box(
             modifier = Modifier
                 .size(25.wdp)
-                .background(NovelColors.NovelTextGray, CircleShape)
+                .background(NovelDesignTokens.color("color.border.strong"), CircleShape)
         )
         
         // 作者名字
         NovelText(
             text = bookInfo.authorName,
             fontSize = 14.ssp,
-            color = NovelColors.NovelText.copy(alpha = 0.8f),
+            color = NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f),
             modifier = Modifier.padding(horizontal = 8.wdp)
         )
         

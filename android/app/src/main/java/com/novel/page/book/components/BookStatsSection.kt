@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModel
 import com.novel.page.book.utils.formatWordCount
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.NovelDateFormatter
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -69,7 +69,7 @@ fun BookStatsSection(
             modifier = Modifier
                 .width(0.3.wdp)
                 .height(23.wdp)
-                .background(NovelColors.NovelTextGray)
+                .background(NovelDesignTokens.color("color.text.secondary"))
         )
 
         // 正在阅读
@@ -83,7 +83,7 @@ fun BookStatsSection(
             modifier = Modifier
                 .width(0.3.wdp)
                 .height(23.wdp)
-                .background(NovelColors.NovelTextGray)
+                .background(NovelDesignTokens.color("color.text.secondary"))
         )
 
         // 字数和更新时间 - 使用注入的 NovelDateFormatter
@@ -123,7 +123,7 @@ private fun StatsItem(
                 fontSize = 14.ssp,
                 lineHeight = 16.ssp,
                 fontWeight = FontWeight.Bold,
-                color = NovelColors.NovelText,
+                color = NovelDesignTokens.color("color.text.primary"),
                 modifier = Modifier.padding(end = 2.wdp)
             )
             if (unit.isNotEmpty()) {
@@ -132,7 +132,7 @@ private fun StatsItem(
                     fontSize = 10.ssp,
                     lineHeight = 10.ssp,
                     fontWeight = FontWeight.Bold,
-                    color = NovelColors.NovelText,
+                    color = NovelDesignTokens.color("color.text.primary"),
                     modifier = Modifier.padding(bottom = 1.wdp)
                 )
             }
@@ -142,7 +142,7 @@ private fun StatsItem(
                 text = subtitle,
                 fontSize = 10.ssp,
                 lineHeight = 10.ssp,
-                color = NovelColors.NovelTextGray
+                color = NovelDesignTokens.color("color.text.secondary")
             )
         }
     }

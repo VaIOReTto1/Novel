@@ -22,7 +22,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.PingFangFamily
 import com.novel.utils.HtmlTextUtil
 import com.novel.utils.debounceClickable
@@ -160,7 +160,7 @@ fun BookDescriptionSection(
             text = "简介",
             fontSize = 18.ssp,
             fontWeight = FontWeight.Bold,
-            color = NovelColors.NovelText,
+            color = NovelDesignTokens.color("color.text.primary"),
             modifier = Modifier.padding(bottom = 8.wdp)
         )
 
@@ -170,7 +170,7 @@ fun BookDescriptionSection(
                 text = layoutInfo.firstLine,
                 fontSize = 14.ssp,
                 lineHeight = 14.ssp,
-                color = NovelColors.NovelText.copy(alpha = 0.8f),
+                color = NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -185,7 +185,7 @@ fun BookDescriptionSection(
                             text = layoutInfo.restAll,
                             fontSize = 14.ssp,
                             lineHeight = 14.ssp,
-                            color = NovelColors.NovelText.copy(alpha = 0.8f),
+                            color = NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier
@@ -199,7 +199,7 @@ fun BookDescriptionSection(
                             text = "更多",
                             fontSize = 14.ssp,
                             lineHeight = 14.ssp,
-                            color = NovelColors.NovelMain,
+                            color = NovelDesignTokens.color("color.brand.primary"),
                             modifier = Modifier.debounceClickable(onClick = onMoreClick)
                         )
                     }

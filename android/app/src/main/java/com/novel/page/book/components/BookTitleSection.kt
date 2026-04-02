@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.ssp
 
 /**
@@ -29,7 +29,7 @@ fun BookTitleSection(bookInfo: BookDetailUiState.BookInfo?) {
         text = bookInfo.bookName,
         fontSize = 20.ssp,
         fontWeight = FontWeight.Bold,
-        color = NovelColors.NovelText,
+        color = NovelDesignTokens.color("color.text.primary"),
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth()
     )

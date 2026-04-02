@@ -60,6 +60,11 @@ describe('android novelDesign page adoption', () => {
     const bookDetailPage = read('android/app/src/main/java/com/novel/page/book/BookDetailPage.kt');
     const bookActionSection = read('android/app/src/main/java/com/novel/page/book/components/BookActionSection.kt');
     const bookReviewsSection = read('android/app/src/main/java/com/novel/page/book/components/BookReviewsSection.kt');
+    const authorSection = read('android/app/src/main/java/com/novel/page/book/components/AuthorSection.kt');
+    const bookCoverSection = read('android/app/src/main/java/com/novel/page/book/components/BookCoverSection.kt');
+    const bookStatsSection = read('android/app/src/main/java/com/novel/page/book/components/BookStatsSection.kt');
+    const bookTitleSection = read('android/app/src/main/java/com/novel/page/book/components/BookTitleSection.kt');
+    const bookDescriptionSection = read('android/app/src/main/java/com/novel/page/book/components/BookDescriptionSection.kt');
 
     expect(bookDetailPage).toContain('NovelDesignTokens');
     expect(bookDetailPage).not.toContain('NovelColors.NovelBookBackground');
@@ -67,6 +72,11 @@ describe('android novelDesign page adoption', () => {
     expect(bookActionSection).not.toContain('NovelColors.NovelMain');
     expect(bookReviewsSection).toContain('NovelDesignTokens');
     expect(bookReviewsSection).not.toContain('NovelColors.NovelTextGray');
+    expect(authorSection).toContain('NovelDesignTokens');
+    expect(bookCoverSection).toContain('NovelDesignTokens');
+    expect(bookStatsSection).toContain('NovelDesignTokens');
+    expect(bookTitleSection).toContain('NovelDesignTokens');
+    expect(bookDescriptionSection).toContain('NovelDesignTokens');
   });
 
   test('reader shell and panels start using NovelDesignTokens for shell chrome', () => {

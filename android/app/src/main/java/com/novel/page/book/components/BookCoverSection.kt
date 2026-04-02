@@ -17,7 +17,7 @@ import com.novel.BuildConfig
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelImageView
 import com.novel.page.component.ImageLoadingStrategy
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 
 /**
@@ -48,7 +48,7 @@ fun BookCoverSection(bookInfo: BookDetailUiState.BookInfo?) {
                 .width(125.wdp)
                 .height(190.wdp)
                 .clip(RoundedCornerShape(5.wdp))
-                .background(NovelColors.NovelMainLight),
+                .background(NovelDesignTokens.color("color.brand.secondary")),
         )
         
         if (BuildConfig.DEBUG && bookInfo.picUrl.isNotEmpty()) {

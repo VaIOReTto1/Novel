@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
+
 import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { BookshelfItem, RecommendationItem, ViewType } from '../types';
 import { GridView } from './GridView';
@@ -10,7 +11,6 @@ import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
 
 interface UnifiedScrollViewProps {
-  // 书架数据
   bookshelfData: BookshelfItem[];
   onBookPress: (item: BookshelfItem) => void;
   onBookLongPress: (item: BookshelfItem) => void;
@@ -18,22 +18,17 @@ interface UnifiedScrollViewProps {
   onLoadMore: () => void;
   hasMore: boolean;
   isLoading: boolean;
-
-  // 推荐数据
   recommendations: RecommendationItem[];
   onRecommendationPress: (item: RecommendationItem) => void;
   onLoadMoreRecommendations: () => void;
   hasMoreRecommendations: boolean;
   isRecommendationLoading: boolean;
-
-  // 视图状态
   currentView: ViewType;
   isEditMode: boolean;
   selectedItems: string[];
-
-  // 刷新控制
   isRefreshing: boolean;
   onRefresh: () => void;
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
@@ -54,14 +49,15 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
   selectedItems,
   isRefreshing,
   onRefresh,
+  styles,
 }) => {
   const colors = useNovelColors();
   const ui = createNovelDesignUI(colors as any);
-  const styles = createBookshelfPageStyles(colors);
+  const resolvedStyles = styles ?? createBookshelfPageStyles(colors);
 
-  // 渲染书架内容视图
   const renderBookshelfContent = useCallback(() => {
     const baseProps = {
+      styles: resolvedStyles,
       data: bookshelfData,
       onBookPress,
       onBookLongPress,
@@ -71,7 +67,6 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
       isLoading,
       isEditMode,
       selectedItems,
-      // 禁用内部的刷新控制，由外层统一控制
       isRefreshing: false,
       onRefresh: undefined,
     };
@@ -87,6 +82,7 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
         return <GridView {...baseProps} />;
     }
   }, [
+    resolvedStyles,
     bookshelfData,
     onBookPress,
     onBookLongPress,
@@ -101,7 +97,7 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
 
   return (
     <ScrollView
-      style={styles.unifiedScrollContainer}
+      style={resolvedStyles.unifiedScrollContainer}
       showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
@@ -110,22 +106,20 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
           colors={[ui.color.brand.primary]}
           tintColor={ui.color.brand.primary}
         />
-      }
-    >
-      {/* 书架内容区域 */}
-      <View style={styles.bookshelfContentWrapper}>
+      }>
+      <View style={resolvedStyles.bookshelfContentWrapper}>
         {renderBookshelfContent()}
       </View>
 
-      {/* 推荐流区域 */}
-      <View style={styles.recommendationWrapper}>
+      <View style={resolvedStyles.recommendationWrapper}>
         <RecommendationFlow
+          styles={resolvedStyles}
           data={recommendations}
           onBookPress={onRecommendationPress}
           onLoadMore={onLoadMoreRecommendations}
           hasMore={hasMoreRecommendations}
           isLoading={isRecommendationLoading}
-          title="为你推荐"
+          title="涓轰綘鎺ㄨ崘"
         />
       </View>
     </ScrollView>

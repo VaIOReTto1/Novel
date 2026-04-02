@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
+
 import { BookshelfItem } from '../types';
 import { BookItem } from './BookItem';
 import { LoadMoreIndicator } from './LoadMoreIndicator';
@@ -19,7 +20,7 @@ interface ListViewProps {
   isRefreshing?: boolean;
   isEditMode?: boolean;
   selectedItems?: string[];
-  // 推荐流相关props
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 export const ListView: React.FC<ListViewProps> = ({
@@ -34,9 +35,11 @@ export const ListView: React.FC<ListViewProps> = ({
   isRefreshing = false,
   isEditMode = false,
   selectedItems = [],
+  styles,
 }) => {
   const colors = useNovelColors();
-  const styles = createBookshelfPageStyles(colors);
+  const resolvedStyles = styles ?? createBookshelfPageStyles(colors);
+
   const renderItem = ({ item, index }: { item: BookshelfItem; index: number }) => (
     <>
       <BookItem
@@ -48,33 +51,34 @@ export const ListView: React.FC<ListViewProps> = ({
         isEditMode={isEditMode}
         viewType="list"
       />
-      {index < data.length - 1 && (
-        <View style={styles.listSeparator} />
-      )}
+      {index < data.length - 1 ? (
+        <View style={resolvedStyles.listSeparator} />
+      ) : null}
     </>
   );
 
   const renderFooter = () => {
     return (
       <View>
-        {/* 书架加载更多 */}
-        {(hasMore || isLoading) && (
+        {(hasMore || isLoading) ? (
           <LoadMoreIndicator
             isLoading={isLoading}
             onLoadMore={onLoadMore}
           />
-        )}
+        ) : null}
       </View>
     );
   };
 
   const renderEmpty = () => {
-    if (isLoading || isRefreshing) {return null;}
+    if (isLoading || isRefreshing) {
+      return null;
+    }
     return <EmptyState type="bookshelf" />;
   };
 
   const getItemLayout = (_: any, index: number) => ({
-    length: 120, // 估算的item高度
+    length: 120,
     offset: 120 * index,
     index,
   });
@@ -83,8 +87,8 @@ export const ListView: React.FC<ListViewProps> = ({
     <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item: { id: any; }) => item.id}
-      contentContainerStyle={styles.listContainer}
+      keyExtractor={(item: { id: any }) => item.id}
+      contentContainerStyle={resolvedStyles.listContainer}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       onRefresh={onRefresh}

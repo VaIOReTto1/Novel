@@ -13,6 +13,7 @@ interface TopBarProps {
   onEditPress: () => void;
   isTransitioning?: boolean;
   isEditMode?: boolean;
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 const VIEW_OPTIONS = [

@@ -24,6 +24,7 @@ interface RecommendationFlowProps {
   hasMore?: boolean;
   isLoading?: boolean;
   title?: string;
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 interface RecommendationItemCardProps {
@@ -86,23 +87,24 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
   onLoadMore,
   hasMore = false,
   isLoading = false,
-  title = '猜你喜欢',
+  title = '鐚滀綘鍠滄',
+  styles,
 }) => {
   const colors = useNovelColors();
-  const styles = createBookshelfPageStyles(colors);
+  const resolvedStyles = styles ?? createBookshelfPageStyles(colors);
 
   if (data.length === 0) {
     return null;
   }
 
   return (
-    <View style={styles.recommendationContainer}>
-      <View style={styles.recommendationHeader}>
-        <Text style={styles.recommendationTitle}>-- {title} --</Text>
+    <View style={resolvedStyles.recommendationContainer}>
+      <View style={resolvedStyles.recommendationHeader}>
+        <Text style={resolvedStyles.recommendationTitle}>-- {title} --</Text>
       </View>
 
       <ScrollView
-        style={styles.recommendationContent}
+        style={resolvedStyles.recommendationContent}
         showsVerticalScrollIndicator={false}
         onScroll={(event: NativeSyntheticEvent<NativeScrollEvent>) => {
           const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
@@ -118,28 +120,28 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
           }
         }}
         scrollEventThrottle={400}>
-        <View style={styles.recommendationGrid}>
-          <View style={styles.recommendationColumn}>
+        <View style={resolvedStyles.recommendationGrid}>
+          <View style={resolvedStyles.recommendationColumn}>
             {data
               .filter((_, index) => index % 2 === 0)
               .map((item) => (
                 <RecommendationItemCard
                   key={item.id}
                   item={item}
-                  styles={styles}
+                  styles={resolvedStyles}
                   onBookPress={onBookPress}
                 />
               ))}
           </View>
 
-          <View style={styles.recommendationColumn}>
+          <View style={resolvedStyles.recommendationColumn}>
             {data
               .filter((_, index) => index % 2 === 1)
               .map((item) => (
                 <RecommendationItemCard
                   key={item.id}
                   item={item}
-                  styles={styles}
+                  styles={resolvedStyles}
                   onBookPress={onBookPress}
                 />
               ))}

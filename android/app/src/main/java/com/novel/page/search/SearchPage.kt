@@ -25,7 +25,7 @@ import com.novel.page.search.component.SearchHistorySection
 import com.novel.page.search.component.RankingSection
 import com.novel.page.search.component.SearchTopBar
 import com.novel.page.search.skeleton.SearchPageSkeleton
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.NavViewModel
 import com.novel.utils.wdp
 
@@ -158,7 +158,7 @@ fun SearchPage(
     LoadingStateComponent(
         component = loadingStateComponent,
         modifier = Modifier.fillMaxSize(),
-        backgroundColor = NovelColors.NovelBookBackground.copy(alpha = 0.7f)
+        backgroundColor = NovelDesignTokens.lightColor("color.bg.elevated").copy(alpha = 0.7f)
     ) {
         // 根据加载状态显示骨架屏或正常内容
         if (isLoading) {
@@ -207,7 +207,7 @@ fun SearchPageContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(NovelColors.NovelBackground)
+            .background(NovelDesignTokens.lightColor("color.bg.surface"))
     ) {
         // 性能优化：缓存搜索栏的回调函数
         val onQueryChange = remember(onIntent) { { query: String ->

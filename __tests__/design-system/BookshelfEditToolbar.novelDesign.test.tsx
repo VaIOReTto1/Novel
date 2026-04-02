@@ -41,7 +41,10 @@ describe('Bookshelf EditToolbar novelDesign behavior', () => {
       );
     });
 
-    const texts = renderer.root.findAllByType(Text).map((node) => node.props.children).flat();
+    const texts = renderer.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
     expect(texts).toContain('编辑');
   });
 
@@ -63,7 +66,10 @@ describe('Bookshelf EditToolbar novelDesign behavior', () => {
       );
     });
 
-    const texts = renderer.root.findAllByType(Text).map((node) => node.props.children).flat();
+    const texts = renderer.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
     expect(texts).toEqual(
       expect.arrayContaining(['取消', '全选', '移动', '删除']),
     );
@@ -94,7 +100,10 @@ describe('Bookshelf EditToolbar novelDesign behavior', () => {
       );
     });
 
-    const texts = renderer.root.findAllByType(Text).map((node) => node.props.children).flat();
+    const texts = renderer.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
     expect(texts).toContain('取消全选');
   });
 });

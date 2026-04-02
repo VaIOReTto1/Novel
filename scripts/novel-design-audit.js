@@ -830,6 +830,7 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/BookshelfPage/pages/Bookshelf/components/UnifiedScrollView.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx',
   'src/page/BookshelfPage/components/MainTabBar.tsx',
+  'src/page/BookshelfPage/pages/Bookshelf/components/EditToolbar.tsx',
   'src/page/BookshelfPage/pages/Community/components/FilterBar.tsx',
   'src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx',
   'src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx',

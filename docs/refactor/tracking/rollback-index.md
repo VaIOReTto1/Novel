@@ -97,5 +97,7 @@
 
 | `RB-STAGE7-AI-COPY-20260402-01` | `a4e93fe` | 清理 AI 写作助手操作栏的文案编码 | `git revert --no-edit a4e93fe` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/AIWriteAssistantStyles.novelDesign.test.ts __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
 
+| `RB-STAGE7-HELP-LEGAL-20260402-01` | `aa49949` | 推进帮助与隐私页面的 novelDesign 换肤 | `git revert --no-edit aa49949` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/FeedbackHelpPageStyles.novelDesign.test.ts __tests__/design-system/HelpSupportPageStyles.novelDesign.test.ts __tests__/design-system/PrivacyPolicyPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

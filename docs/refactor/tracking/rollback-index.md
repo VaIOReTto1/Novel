@@ -117,5 +117,7 @@
 
 | `RB-STAGE7-ANDROID-HOME-20260402-01` | `a6b57fe` | 推进 Android 首页主壳接入 NovelDesignTokens | `git revert --no-edit a6b57fe` | `npm test -- --runInBand --runTestsByPath __tests__/harness/androidNovelDesignPages.test.js` |
 
+| `RB-STAGE7-ANDROID-DISCOVERY-20260402-01` | `9482f0a` | 同步 Android 搜索与首页线的 novelDesign 进度 | `git revert --no-edit 9482f0a` | `npm test -- --runInBand --runTestsByPath __tests__/harness/androidNovelDesignPages.test.js __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

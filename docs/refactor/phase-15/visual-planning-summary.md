@@ -29,7 +29,7 @@
 ## Component visual specs
 - Current look recorded: 225
 - Target look planned: 225
-- Novel design ready: 72
+- Novel design ready: 77
 - layout: 122
 - action: 13
 - sheet: 3

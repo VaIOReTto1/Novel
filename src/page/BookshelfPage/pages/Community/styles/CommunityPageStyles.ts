@@ -249,12 +249,12 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   actionIcon: {
     fontSize: fp(16),
-    color: colors.novelTextGray,
+    color: textSecondary,
     marginRight: wp(4),
   },
 
   likedIcon: {
-    color: colors.novelError,
+    color: danger,
   },
 
   actionText: {
@@ -272,7 +272,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   moreIcon: {
     fontSize: fp(16),
-    color: colors.novelTextGray,
+    color: textSecondary,
   },
 
   // 热门标签
@@ -280,7 +280,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     position: 'absolute',
     top: hp(8),
     right: wp(16),
-    backgroundColor: colors.novelError,
+    backgroundColor: danger,
     paddingHorizontal: wp(6),
     paddingVertical: hp(2),
     borderRadius: wp(4),
@@ -288,7 +288,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   hotBadgeText: {
     fontSize: fp(10),
-    color: colors.novelBackground,
+    color: color.text.inverse,
     fontWeight: '500',
   },
 
@@ -297,7 +297,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     position: 'absolute',
     top: hp(8),
     right: wp(16),
-    backgroundColor: colors.novelMain,
+    backgroundColor: brandPrimary,
     paddingHorizontal: wp(6),
     paddingVertical: hp(2),
     borderRadius: wp(4),
@@ -305,7 +305,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   topBadgeText: {
     fontSize: fp(10),
-    color: colors.novelBackground,
+    color: color.text.inverse,
     fontWeight: '500',
   },
 
@@ -319,21 +319,21 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   emptyIcon: {
     fontSize: fp(64),
-    color: colors.novelLightGray,
+    color: borderStrong,
     marginBottom: hp(16),
   },
 
   emptyTitle: {
     fontSize: fp(18),
     fontWeight: '600',
-    color: colors.novelText,
+    color: textPrimary,
     marginBottom: hp(8),
     textAlign: 'center',
   },
 
   emptyDescription: {
     fontSize: fp(14),
-    color: colors.novelTextGray,
+    color: textSecondary,
     textAlign: 'center',
     lineHeight: fp(20),
     marginBottom: hp(24),
@@ -372,7 +372,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   errorText: {
     fontSize: fp(14),
-    color: colors.novelError,
+    color: danger,
     textAlign: 'center',
   },
 
@@ -380,13 +380,13 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     marginTop: hp(8),
     paddingHorizontal: wp(16),
     paddingVertical: hp(8),
-    backgroundColor: colors.novelMain,
+    backgroundColor: brandPrimary,
     borderRadius: wp(4),
   },
 
   retryButtonText: {
     fontSize: fp(12),
-    color: colors.novelBackground,
+    color: color.text.inverse,
     fontWeight: '500',
   },
 
@@ -398,7 +398,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     width: wp(56),
     height: wp(56),
     borderRadius: wp(28),
-    backgroundColor: colors.novelMain,
+    backgroundColor: brandPrimary,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 4,
@@ -413,16 +413,16 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   floatingButtonIcon: {
     fontSize: fp(24),
-    color: colors.novelBackground,
+    color: color.text.inverse,
   },
 
   // 筛选栏
   filterContainer: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: surface,
     paddingHorizontal: wp(16),
     paddingVertical: hp(8),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: borderSubtle,
   },
 
   filterScrollView: {
@@ -491,7 +491,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     width: wp(50),
     height: wp(50),
     borderRadius: wp(25),
-    backgroundColor: colors.novelSecondaryBackground,
+    backgroundColor: elevated,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: hp(8),
@@ -500,8 +500,8 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   activeCircleIconContainer: {
-    borderColor: colors.novelMain,
-    backgroundColor: colors.novelChipBackground,
+    borderColor: brandPrimary,
+    backgroundColor: elevated,
   },
 
   circleIcon: {
@@ -510,13 +510,13 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   circleName: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
     textAlign: 'center',
     fontWeight: '500',
   },
 
   activeCircleName: {
-    color: colors.novelMain,
+    color: brandPrimary,
     fontWeight: '600',
   },
 
@@ -530,7 +530,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     width: wp(50),
     height: wp(50),
     borderRadius: wp(25),
-    backgroundColor: colors.novelLightGray,
+    backgroundColor: elevated,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: hp(8),
@@ -539,28 +539,28 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   activeAllCircleIconContainer: {
-    borderColor: colors.novelMain,
-    backgroundColor: colors.novelMain,
+    borderColor: brandPrimary,
+    backgroundColor: brandPrimary,
   },
 
   allCircleIcon: {
     fontSize: fp(20),
-    color: colors.novelTextGray,
+    color: textSecondary,
   },
 
   activeAllCircleIcon: {
-    color: colors.novelBackground,
+    color: color.text.inverse,
   },
 
   allCircleName: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: textSecondary,
     textAlign: 'center',
     fontWeight: '500',
   },
 
   activeAllCircleName: {
-    color: colors.novelMain,
+    color: brandPrimary,
     fontWeight: '600',
   },
 });

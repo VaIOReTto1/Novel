@@ -33,7 +33,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     paddingHorizontal: wp(20),
     paddingVertical: wp(12),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: novelDesign.color.border.subtle,
   },
 
   tabsRow: {
@@ -67,7 +67,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   tabText: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
@@ -89,7 +89,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeViewTypeButton: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   sortButton: {
@@ -105,7 +105,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeEditButton: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   tabsDivider: {
@@ -134,14 +134,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   emptyText: {
     fontSize: fp(16),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
     marginBottom: wp(8),
   },
 
   emptyDescription: {
     fontSize: fp(16),
-    color: colors.novelText,
+    color: novelDesign.color.text.secondary,
     opacity: 0.6,
     textAlign: 'center',
     lineHeight: fp(20),
@@ -228,7 +228,8 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     borderRadius: sp(12),
     padding: wp(16),
     marginBottom: wp(12),
-    shadowColor: colors.novelText,
+  shadowColor: colors.novelText,
+    
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 4,
@@ -364,7 +365,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     left: wp(24),                // 保持和原来一样的左侧间距
     zIndex: 2,                   // 确保盖在信息卡之上
     borderRadius: sp(8),
-    backgroundColor: colors.novelBookBackground,
+    backgroundColor: novelDesign.color.bg.elevated,
     overflow: 'hidden',
     width: wp(100),              // 保留原来固定宽度
     aspectRatio: 0.65,           // 保留原来高宽比
@@ -372,7 +373,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   waterfallBookInfo: {
     height: fp(250),
-    backgroundColor: colors.novelSecondaryBackground + '80',
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(12),
     padding: wp(12),
     marginHorizontal: wp(3),
@@ -389,14 +390,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   waterfallPlaceholderCover: {
     width: '100%',
     height: '100%',
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   waterfallPlaceholderText: {
     fontSize: fp(12),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     opacity: 0.8,
   },
 
@@ -430,20 +431,20 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   menuButtonText: {
     fontSize: fp(16),
-    color: colors.novelTextGray,
+    color: novelDesign.color.text.secondary,
     opacity: 0.8,
   },
 
   waterfallBookTitle: {
     fontSize: fp(15),
     fontWeight: '600',
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     lineHeight: fp(20),
   },
 
   waterfallBookAuthor: {
     fontSize: fp(13),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
     lineHeight: fp(18),
     marginBottom: wp(6),
@@ -451,7 +452,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   waterfallBookDescription: {
     fontSize: fp(12),
-    color: colors.novelTextGray + '80',
+    color: novelDesign.color.text.secondary,
     opacity: 0.6,
     lineHeight: fp(16),
     marginBottom: wp(5),
@@ -459,7 +460,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   waterfallBookProgress: {
     fontSize: fp(12),
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     fontWeight: '500',
   },
 
@@ -480,14 +481,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     height: wp(95),
     borderRadius: sp(8),
     overflow: 'hidden',
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   gridBookCover: {
     borderRadius: sp(8),
     width: '100%',
     aspectRatio: 0.75,
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   listBookInfo: {
@@ -518,13 +519,13 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   listCurrentChapter: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: novelDesign.color.text.secondary,
     opacity: 0.8,
   },
 
   listLastUpdate: {
     fontSize: fp(11),
-    color: colors.novelTextGray,
+    color: novelDesign.color.text.secondary,
     opacity: 0.8,
   },
 
@@ -551,13 +552,13 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   gridCurrentChapter: {
     fontSize: fp(12),
-    color: colors.novelTextGray,
+    color: novelDesign.color.text.secondary,
     opacity: 0.8,
   },
 
   selectedBookItem: {
     borderWidth: 2,
-    borderColor: colors.novelMain,
+    borderColor: novelDesign.color.brand.primary,
   },
 
   bookCoverContainer: {
@@ -584,7 +585,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   checkboxText: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: 'bold',
   },
 
@@ -599,19 +600,19 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   progressBar: {
     height: '100%',
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   bookTitle: {
     fontSize: fp(12),
     fontWeight: '600',
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     marginBottom: wp(6),
   },
 
   bookAuthor: {
     fontSize: fp(13),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
     lineHeight: fp(18),
     marginBottom: wp(6),
@@ -619,7 +620,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   bookDescription: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.6,
     lineHeight: fp(16),
     marginBottom: wp(4),
@@ -627,7 +628,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   lastReadTime: {
     fontSize: fp(10),
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     fontWeight: '500',
   },
 
@@ -730,11 +731,11 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   editToolbarButtonPrimary: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   editToolbarButtonDanger: {
-    backgroundColor: colors.novelError || '#FF4444',
+    backgroundColor: novelDesign.color.status.danger,
   },
 
   editToolbarButtonText: {
@@ -744,7 +745,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   editToolbarButtonTextPrimary: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
   },
 
   editToolbarSelectedText: {
@@ -781,22 +782,22 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   disabledButton: {
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
     opacity: 0.5,
   },
 
   disabledButtonText: {
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.5,
   },
 
   // 刷新指示器样式
   refreshIndicator: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingVertical: wp(15),
     paddingHorizontal: wp(20),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: novelDesign.color.border.subtle,
     marginBottom: wp(10),
   },
 
@@ -812,25 +813,25 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   spinnerText: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
   refreshText: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
   // 推荐流样式
   recommendationSection: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
     marginTop: wp(16),
     paddingTop: wp(20),
   },
 
   recommendationContainer: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingBottom: wp(20),
   },
 
@@ -845,12 +846,12 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   recommendationTitle: {
     fontSize: fp(16),
     fontWeight: '400',
-    color: colors.novelTextGray + '50',
+    color: novelDesign.color.text.secondary,
   },
 
   recommendationMore: {
     fontSize: fp(14),
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     fontWeight: '500',
   },
 
@@ -869,7 +870,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   // 新的推荐流item样式
   recommendationItem: {
-    backgroundColor: colors.novelSecondaryBackground + '80',
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(12),
     marginBottom: wp(16),
     overflow: 'hidden',
@@ -878,7 +879,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   recommendationItemCover: {
     width: '100%',
     aspectRatio: 0.75,
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   recommendationItemInfo: {
@@ -888,14 +889,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   recommendationItemTitle: {
     fontSize: fp(14),
     fontWeight: '600',
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     lineHeight: fp(18),
     marginBottom: wp(6),
   },
 
   recommendationItemDescription: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
     lineHeight: fp(16),
     marginBottom: wp(8),
@@ -905,20 +906,20 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     alignSelf: 'flex-start',
     paddingHorizontal: wp(8),
     paddingVertical: wp(4),
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
     borderRadius: sp(4),
   },
 
   recommendationItemTagText: {
     fontSize: fp(10),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '500',
   },
 
   // 视图切换器样式
   viewSwitcher: {
     flexDirection: 'row',
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(8),
     padding: wp(4),
     marginHorizontal: wp(16),
@@ -930,7 +931,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     marginHorizontal: wp(4),
     alignSelf: 'center',
     height: wp(10),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.border.subtle,
   },
 
   viewOption: {
@@ -945,7 +946,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeViewOption: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   disabledViewOption: {
@@ -954,23 +955,23 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   viewOptionIcon: {
     fontSize: fp(16),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
   },
 
   activeViewOptionIcon: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     opacity: 1,
   },
 
   viewOptionLabel: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
   },
 
   activeViewOptionLabel: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     opacity: 1,
     fontWeight: '500',
   },
@@ -986,13 +987,13 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   loadMoreText: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.secondary,
     opacity: 0.6,
   },
 
   loadMoreErrorText: {
     fontSize: fp(14),
-    color: colors.novelError || '#FF4444',
+    color: novelDesign.color.status.danger,
     textAlign: 'center',
     marginBottom: wp(12),
   },
@@ -1000,14 +1001,14 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   retryButton: {
     paddingHorizontal: wp(20),
     paddingVertical: wp(10),
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
     borderRadius: sp(6),
     alignSelf: 'center',
   },
 
   retryButtonText: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: '500',
   },
 
@@ -1018,12 +1019,12 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   endLine: {
     width: wp(30),
     height: wp(1),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.border.subtle,
   },
 
   endText: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.secondary,
     opacity: 0.5,
     marginHorizontal: wp(10),
   },
@@ -1031,11 +1032,11 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   // TopBar样式
   topBar: {
     flexDirection: 'row',
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingHorizontal: wp(16),
     paddingVertical: wp(12),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: novelDesign.color.border.subtle,
     justifyContent: 'space-around',
   },
 
@@ -1051,28 +1052,28 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeTopBarButton: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   topBarButtonIcon: {
     fontSize: fp(16),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
   },
 
   activeTopBarButtonIcon: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     opacity: 1,
   },
 
   topBarButtonLabel: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     opacity: 0.7,
   },
 
   activeTopBarButtonLabel: {
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     opacity: 1,
     fontWeight: '500',
   },
@@ -1081,21 +1082,21 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   imagePlaceholder: {
     width: '100%',
     height: wp(240),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   placeholderIcon: {
     fontSize: fp(24),
-    color: colors.novelText,
+    color: novelDesign.color.text.secondary,
     opacity: 0.3,
     marginBottom: wp(4),
   },
 
   placeholderText: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.secondary,
     opacity: 0.5,
     textAlign: 'center',
   },
@@ -1103,15 +1104,15 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   // 统一滚动视图样式
   unifiedScrollContainer: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   bookshelfContentWrapper: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   recommendationWrapper: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     marginTop: wp(20),
     paddingTop: wp(20),
     borderTopLeftRadius: sp(16),
@@ -1121,7 +1122,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   // 优化后的TopBar样式
   topBarContainer: {
     flexDirection: 'row',
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     paddingHorizontal: wp(16),
     paddingVertical: wp(4),
     alignItems: 'center',
@@ -1153,7 +1154,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   adBanner: {
     width: wp(181),
     height: wp(30),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(6),
     justifyContent: 'center',
     alignItems: 'center',
@@ -1161,7 +1162,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
 
   adBannerText: {
     fontSize: fp(12),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '500',
   },
 
@@ -1173,13 +1174,13 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeTopBarActionIcon: {
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     opacity: 1,
   },
 
   topBarActionLabel: {
     fontSize: fp(14),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     fontWeight: '800',
     textAlign: 'center',
   },
@@ -1189,7 +1190,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   },
 
   activeTopBarActionLabel: {
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     opacity: 1,
     fontWeight: '500',
   },

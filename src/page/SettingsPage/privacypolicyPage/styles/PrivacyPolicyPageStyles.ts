@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
@@ -9,11 +10,12 @@ import { NovelColors } from '../../../../utils/theme/colors';
  * @returns StyleSheet 样式表
  */
 export const createPrivacyPolicyPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
   return StyleSheet.create({
     // === 容器样式 ===
     container: {
       flex: 1,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     scrollView: {
@@ -31,9 +33,9 @@ export const createPrivacyPolicyPageStyles = (colors: NovelColors) => {
       justifyContent: 'space-between',
       paddingHorizontal: wp(20),
       paddingVertical: wp(16),
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       borderBottomWidth: 0.5,
-      borderBottomColor: colors.novelDivider,
+      borderBottomColor: novelDesign.color.border.subtle,
       minHeight: wp(56),
     },
 
@@ -46,7 +48,7 @@ export const createPrivacyPolicyPageStyles = (colors: NovelColors) => {
 
     backArrow: {
       fontSize: fp(40),
-      color: colors.novelText,
+      color: novelDesign.color.text.primary,
       fontWeight: '300',
       lineHeight: fp(28),
     },
@@ -60,7 +62,7 @@ export const createPrivacyPolicyPageStyles = (colors: NovelColors) => {
     topBarTitle: {
       ...typography.bodyMedium,
       fontSize: fp(18),
-      color: colors.novelText,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
       textAlign: 'center',
     },
@@ -74,13 +76,13 @@ export const createPrivacyPolicyPageStyles = (colors: NovelColors) => {
     descriptionContainer: {
       paddingHorizontal: wp(20),
       paddingVertical: wp(20),
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
     },
 
     descriptionText: {
       ...typography.labelLarge,
       fontSize: fp(14),
-      color: colors.novelTextGray,
+      color: novelDesign.color.text.secondary,
       lineHeight: fp(20),
     },
     descriptionSectionTitle: {

@@ -109,5 +109,7 @@
 
 | `RB-STAGE7-BOOKSHELF-STYLES-PIPELINE-20260402-01` | `68c236e` | 统一 Bookshelf 页面的样式实例透传 | `git revert --no-edit 68c236e` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfNestedPage.smoke.test.tsx __tests__/design-system/BookshelfUnifiedScrollView.novelDesign.test.tsx` |
 
+| `RB-STAGE7-ANDROID-SEARCH-20260402-01` | `0b28c2e` | 推进 Android 搜索页接入 NovelDesignTokens | `git revert --no-edit 0b28c2e` | `cd android && .\\gradlew.bat --version` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

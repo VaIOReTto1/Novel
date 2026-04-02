@@ -854,6 +854,7 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/comment/CommentPage/components/CommentList.tsx',
   'src/page/comment/CommentPage/components/TopBar.tsx',
   'src/page/comment/ReviewDetailPage/components/TopBar.tsx',
+  'src/page/comment/ReviewDetailPage/components/RepliesSheet.tsx',
   'src/page/comment/ReviewDetailPage/components/ReviewContent.tsx',
   'src/page/comment/WriteReviewPage/components/TopBar.tsx',
   'src/page/comment/WriteReviewPage/components/RatingInput.tsx',

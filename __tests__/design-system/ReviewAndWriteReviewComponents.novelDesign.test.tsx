@@ -40,11 +40,12 @@ jest.mock('../../src/page/comment/WriteReviewPage/styles/WriteReviewPageStyles',
     ),
 }));
 
-import { TopBar as ReviewTopBar } from '../../src/page/comment/ReviewDetailPage/components/TopBar';
+import { RepliesSheet } from '../../src/page/comment/ReviewDetailPage/components/RepliesSheet';
 import { ReviewContent } from '../../src/page/comment/ReviewDetailPage/components/ReviewContent';
-import { TopBar as WriteReviewTopBar } from '../../src/page/comment/WriteReviewPage/components/TopBar';
+import { TopBar as ReviewTopBar } from '../../src/page/comment/ReviewDetailPage/components/TopBar';
 import { RatingInput } from '../../src/page/comment/WriteReviewPage/components/RatingInput';
 import { ReviewForm } from '../../src/page/comment/WriteReviewPage/components/ReviewForm';
+import { TopBar as WriteReviewTopBar } from '../../src/page/comment/WriteReviewPage/components/TopBar';
 
 describe('Review detail and write-review components novelDesign', () => {
   it('renders readable review-detail top-bar title', () => {
@@ -125,7 +126,13 @@ describe('Review detail and write-review components novelDesign', () => {
       .filter((value): value is string => typeof value === 'string');
 
     expect(texts).toEqual(
-      expect.arrayContaining(['测试读者', '+ 关注', '阅读 2 小时后点评', '示例书籍', '示例作者']),
+      expect.arrayContaining([
+        '测试读者',
+        '+ 关注',
+        '阅读 2 小时后点评',
+        '示例书籍',
+        '示例作者',
+      ]),
     );
   });
 
@@ -145,5 +152,59 @@ describe('Review detail and write-review components novelDesign', () => {
 
     const input = renderer.root.findByType(require('react-native').TextInput);
     expect(input.props.placeholder).toBe('写下真实、清晰、有帮助的书评内容');
+  });
+
+  it('renders readable replies-sheet titles and action copy', () => {
+    let renderer!: ReactTestRenderer.ReactTestRenderer;
+
+    ReactTestRenderer.act(() => {
+      renderer = ReactTestRenderer.create(
+        <RepliesSheet
+          selectedComment={{
+            userName: '主评论用户',
+            content: '主评论内容',
+            createTime: '2026-04-03',
+            likeCount: 4,
+            isLiked: false,
+            isDisliked: false,
+            replies: [
+              {
+                id: 'reply-1',
+                userName: '回复用户',
+                content: '回复内容',
+                createTime: '2026-04-03',
+                likeCount: 1,
+                isLiked: false,
+                isDisliked: false,
+              },
+            ],
+          }}
+          showRepliesSheet
+          inputBarHeight={0}
+          sheetHeight={600}
+          sheetTranslateY={{} as any}
+          backdropOpacity={{} as any}
+          onClose={jest.fn()}
+        />,
+      );
+    });
+
+    const texts = renderer.root
+      .findAllByType(Text)
+      .flatMap((node) => {
+        const { children } = node.props;
+        return Array.isArray(children) ? children : [children];
+      })
+      .filter((value): value is string => typeof value === 'string');
+
+    expect(texts).toEqual(
+      expect.arrayContaining([
+        '评论详情',
+        '全部评论',
+        '+ 关注',
+        '主评论用户',
+        '回复用户',
+      ]),
+    );
   });
 });

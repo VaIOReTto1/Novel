@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, ScrollView, Animated, Text, TouchableOpacity, Image } from 'react-native';
+import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { parseNewsDate } from '../../../../utils/time/timeUtils';
 import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
+
 const backdropTouchAreaStyle = { flex: 1 } as const;
 
 interface RepliesSheetProps {
@@ -26,7 +28,22 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
 }) => {
   const { colors, styles } = useReviewDetailPageStyles();
 
-  if (!selectedComment || !showRepliesSheet) {return null;}
+  if (!selectedComment || !showRepliesSheet) {
+    return null;
+  }
+
+  const renderTagText = (tag?: string) => {
+    if (tag === 'first_comment') {
+      return '首评';
+    }
+    if (tag === 'true_fan') {
+      return '真爱粉';
+    }
+    if (tag === 'vip') {
+      return 'VIP';
+    }
+    return '';
+  };
 
   const renderPrimaryComment = () => (
     <View style={styles.replyItem}>
@@ -45,20 +62,23 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
           <View style={styles.commentUserNameRow}>
             <View style={styles.commentUserNameContainer}>
               <Text style={styles.commentUserName}>{selectedComment.userName}</Text>
-              {selectedComment.tag && (
-                <View style={[
-                  styles.commentTag,
-                  selectedComment.tag === 'first_comment' ? styles.commentTag_first_comment :
-                  selectedComment.tag === 'true_fan' ? styles.commentTag_true_fan :
-                  selectedComment.tag === 'vip' ? styles.commentTag_vip : {},
-                ]}>
+              {selectedComment.tag ? (
+                <View
+                  style={[
+                    styles.commentTag,
+                    selectedComment.tag === 'first_comment'
+                      ? styles.commentTag_first_comment
+                      : selectedComment.tag === 'true_fan'
+                        ? styles.commentTag_true_fan
+                        : selectedComment.tag === 'vip'
+                          ? styles.commentTag_vip
+                          : {},
+                  ]}>
                   <Text style={styles.commentTagText}>
-                    {selectedComment.tag === 'first_comment' ? '首评' :
-                     selectedComment.tag === 'true_fan' ? '真爱粉' :
-                     selectedComment.tag === 'vip' ? 'VIP' : ''}
+                    {renderTagText(selectedComment.tag)}
                   </Text>
                 </View>
-              )}
+              ) : null}
             </View>
             <TouchableOpacity style={styles.followButton} activeOpacity={0.7}>
               <Text style={styles.followButtonText}>+ 关注</Text>
@@ -67,7 +87,9 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
           <Text style={styles.commentContent}>{selectedComment.content}</Text>
           <View style={styles.commentActions}>
             <View style={styles.commentLeftActions}>
-              <Text style={styles.commentTime}>{parseNewsDate(selectedComment.createTime)}</Text>
+              <Text style={styles.commentTime}>
+                {parseNewsDate(selectedComment.createTime)}
+              </Text>
             </View>
             <View style={styles.commentRightActions}>
               <TouchableOpacity style={styles.commentActionButton}>
@@ -76,7 +98,11 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
                   size={20}
                   color={selectedComment.isLiked ? colors.novelMain : colors.novelTextGray}
                 />
-                <Text style={[styles.commentActionText, selectedComment.isLiked && { color: colors.novelMain }]}>
+                <Text
+                  style={[
+                    styles.commentActionText,
+                    selectedComment.isLiked && { color: colors.novelMain },
+                  ]}>
                   {selectedComment.likeCount}
                 </Text>
               </TouchableOpacity>
@@ -84,7 +110,9 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
                 <Icon
                   name={selectedComment.isDisliked ? 'thumb-down' : 'thumb-down-off-alt'}
                   size={20}
-                  color={selectedComment.isDisliked ? colors.novelMain : colors.novelTextGray}
+                  color={
+                    selectedComment.isDisliked ? colors.novelMain : colors.novelTextGray
+                  }
                 />
               </TouchableOpacity>
             </View>
@@ -99,23 +127,20 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
       <View style={styles.commentUserInfo}>
         <View style={styles.commentAvatar}>
           {reply.userAvatar ? (
-            <Image
-              source={{ uri: reply.userAvatar }}
-              style={styles.commentAvatarImage}
-            />
+            <Image source={{ uri: reply.userAvatar }} style={styles.commentAvatarImage} />
           ) : (
             <Icon name="person" size={20} color={colors.novelTextGray} />
           )}
         </View>
         <View style={styles.commentUserDetails}>
-                      <View style={styles.commentUserNameRow}>
-              <View style={styles.commentUserNameContainer}>
-                <Text style={styles.commentUserName}>{reply.userName}</Text>
-              </View>
-              <TouchableOpacity style={styles.commentMenuButton} activeOpacity={0.7}>
-                <Icon name="more-vert" size={20} color={colors.novelTextGray} />
-              </TouchableOpacity>
+          <View style={styles.commentUserNameRow}>
+            <View style={styles.commentUserNameContainer}>
+              <Text style={styles.commentUserName}>{reply.userName}</Text>
             </View>
+            <TouchableOpacity style={styles.commentMenuButton} activeOpacity={0.7}>
+              <Icon name="more-vert" size={20} color={colors.novelTextGray} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.commentContent}>{reply.content}</Text>
           <View style={styles.commentActions}>
             <View style={styles.commentLeftActions}>
@@ -128,7 +153,11 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
                   size={20}
                   color={reply.isLiked ? colors.novelMain : colors.novelTextGray}
                 />
-                <Text style={[styles.commentActionText, reply.isLiked && { color: colors.novelMain }]}>
+                <Text
+                  style={[
+                    styles.commentActionText,
+                    reply.isLiked && { color: colors.novelMain },
+                  ]}>
                   {reply.likeCount}
                 </Text>
               </TouchableOpacity>
@@ -148,7 +177,6 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
 
   return (
     <>
-      {/* 只覆盖输入框以上区域的遮罩 */}
       <Animated.View
         pointerEvents="auto"
         style={[
@@ -157,8 +185,7 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
             bottom: inputBarHeight,
             opacity: backdropOpacity,
           },
-        ]}
-      >
+        ]}>
         <TouchableOpacity
           activeOpacity={1}
           onPress={onClose}
@@ -166,7 +193,6 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
         />
       </Animated.View>
 
-      {/* 半弹窗本体：贴着输入框顶边往上升，高度为 90% 屏幕 */}
       <Animated.View
         style={[
           styles.repliesSheetContainer,
@@ -175,9 +201,7 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
             height: sheetHeight,
             transform: [{ translateY: sheetTranslateY }],
           },
-        ]}
-      >
-        {/* 顶部栏 */}
+        ]}>
         <View style={styles.repliesSheetTopBar}>
           <TouchableOpacity onPress={onClose} style={styles.repliesSheetCloseButton}>
             <Icon name="keyboard-arrow-down" size={30} color={colors.novelText} />
@@ -186,16 +210,12 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
           <Icon name="more-vert" size={24} color={colors.novelText} />
         </View>
 
-        {/* 内容区 */}
         <ScrollView
           style={styles.repliesSheetScrollView}
           contentContainerStyle={styles.repliesSheetScrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* 显示一级评论内容 */}
+          showsVerticalScrollIndicator={false}>
           {renderPrimaryComment()}
 
-          {/* 分隔线 */}
           <View style={styles.repliesSheetDivider} />
 
           <View style={styles.commentListHeader}>
@@ -203,7 +223,6 @@ export const RepliesSheet: React.FC<RepliesSheetProps> = ({
             <Text style={styles.commentCount}>{selectedComment.replies?.length}</Text>
           </View>
 
-          {/* 显示所有回复 */}
           {selectedComment.replies?.map((reply: any) => renderReplyItem(reply))}
         </ScrollView>
       </Animated.View>

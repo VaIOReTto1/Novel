@@ -20,6 +20,7 @@
 | 会员中心 | RN Jest render | `__tests__/smoke/MemberCenterPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/MemberCenterPage.smoke.test.tsx` |
 | AI 写作助手 | RN Jest render | `__tests__/smoke/AIWriteAssistant.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
 | 作品管理 | RN Jest render | `__tests__/smoke/BookManagePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookManagePage.smoke.test.tsx` |
+| 书架内页 | RN Jest render | `__tests__/smoke/BookshelfNestedPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfNestedPage.smoke.test.tsx` |
 
 ## 当前稳定入口说明
 - `HomeSmokeTest`
@@ -46,6 +47,8 @@
   - 使用 RN render smoke，验证 AI 写作助手的顶部助手栏、底部模式按钮与输入栏可渲染。
 - `BookManagePage.smoke.test.tsx`
   - 使用 RN render smoke，验证作品管理页的书籍 banner、草稿通道、章节区与底部 CTA 可渲染。
+- `BookshelfNestedPage.smoke.test.tsx`
+  - 使用 RN render smoke，验证 Bookshelf 内嵌页会创建一份共享样式实例并透传给 TopBar、EditToolbar 和 UnifiedScrollView。
 
 ## 推荐执行方式
 - RN smoke
@@ -55,7 +58,7 @@ npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test
 
 - 扩展 RN smoke
 ```bash
-npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx __tests__/smoke/CommentPage.smoke.test.tsx __tests__/smoke/ReviewDetailPage.smoke.test.tsx __tests__/smoke/MemberCenterPage.smoke.test.tsx
+npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx __tests__/smoke/BookshelfNestedPage.smoke.test.tsx __tests__/smoke/CommentPage.smoke.test.tsx __tests__/smoke/ReviewDetailPage.smoke.test.tsx __tests__/smoke/MemberCenterPage.smoke.test.tsx
 ```
 
 - Android smoke

@@ -169,31 +169,32 @@
       "android/app/src/main/java/com/novel/page/login/LoginPage.kt"
     ],
     "current_visual_summary": {
-      "layout": "single-column auth page with hero title, inputs, agreement and actions",
-      "chrome": "minimal auth chrome focused on task completion",
-      "content_pattern": "form-first authentication flow",
+      "layout": "single-column auth screen with title stack, operator copy, inputs, actions and agreement block",
+      "chrome": "minimal auth chrome framed by centered content and low-noise backgrounds",
+      "content_pattern": "login/register dual-mode form with validation, captcha and agreement actions",
       "key_states": [
-        "default"
+        "loading",
+        "login-mode",
+        "register-mode",
+        "validation-error"
       ],
       "key_components": [
-        "ActionButtons",
-        "AgreementSection",
-        "AppBar",
+        "LoginAppBar",
+        "TitleSection",
         "InputSection",
-        "LoginPageSkeleton",
-        "OperatorSection",
-        "PhoneSection",
-        "TitleSection"
+        "ActionButtons",
+        "AgreementSection"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-auth-panel with warmer framing and stronger trust cues",
-      "component_recipe": "editorial-auth",
+      "layout_strategy": "editorial-auth panel with paper background, restrained accent buttons and stronger form grouping",
+      "component_recipe": "editorial-auth-surface",
       "style_keywords": [
-        "auth",
-        "trust",
-        "warm-form"
+        "auth-panel",
+        "form-stack",
+        "paper-surface",
+        "warm-accent"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -212,8 +213,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -334,31 +335,30 @@
       "android/app/src/main/java/com/novel/page/search/SearchPage.kt"
     ],
     "current_visual_summary": {
-      "layout": "search top bar with history, ranking and filter affordances",
-      "chrome": "search-led chrome with stacked results modules",
-      "content_pattern": "search discovery and ranking exploration",
+      "layout": "search shell with top bar, history chips and multiple ranking shelves",
+      "chrome": "search-first chrome with compact top input and stacked discovery modules",
+      "content_pattern": "history list, ranking carousels and search discovery entry points",
       "key_states": [
-        "default"
+        "loading",
+        "history-expanded",
+        "default-discovery"
       ],
       "key_components": [
-        "FullRankingPageSkeleton",
+        "SearchTopBar",
+        "SearchHistorySection",
         "HistoryGrid",
-        "RankingList",
-        "SearchFilterBottomSheet",
-        "SearchFilterChip",
-        "SearchPageSkeleton",
-        "SearchResultItem",
-        "SearchResultPageSkeleton"
+        "RankingSection"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-search-discovery with structured prompts and refined ranking blocks",
-      "component_recipe": "editorial-search",
+      "layout_strategy": "editorial-search discovery with paper search rail, softer history chips and curated ranking cards",
+      "component_recipe": "editorial-search-discovery-surface",
       "style_keywords": [
-        "search",
-        "ranking",
-        "structured-discovery"
+        "search-discovery",
+        "history-chips",
+        "ranking-cards",
+        "paper-shell"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -377,8 +377,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -389,31 +389,31 @@
       "android/app/src/main/java/com/novel/page/search/SearchResultPage.kt"
     ],
     "current_visual_summary": {
-      "layout": "result list with filters and infinite scrolling",
-      "chrome": "search header plus utility filters",
-      "content_pattern": "cover-and-metadata search result cards",
+      "layout": "search top bar plus category filter row and vertically stacked result cards",
+      "chrome": "utility search chrome with inline filters and incremental loading footer",
+      "content_pattern": "result cards with cover, metadata, chips, empty state and pagination feedback",
       "key_states": [
-        "default"
+        "loading",
+        "loading-more",
+        "empty-state",
+        "filter-sheet-open"
       ],
       "key_components": [
-        "FullRankingPageSkeleton",
-        "HistoryGrid",
-        "RankingList",
-        "SearchFilterBottomSheet",
-        "SearchFilterChip",
-        "SearchPageSkeleton",
+        "SearchTopBar",
+        "CategoryFilterChip",
         "SearchResultItem",
-        "SearchResultPageSkeleton"
+        "SearchFilterBottomSheet"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-search-results with denser metadata hierarchy and calmer card rhythm",
-      "component_recipe": "editorial-search-results",
+      "layout_strategy": "editorial-search results with paper cards, softer chips and clearer empty-state hierarchy",
+      "component_recipe": "editorial-search-results-surface",
       "style_keywords": [
-        "results",
-        "metadata",
-        "filter-pills"
+        "result-cards",
+        "filter-chips",
+        "empty-state",
+        "search-shell"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -432,8 +432,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -738,22 +738,24 @@
       "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt"
     ],
     "current_visual_summary": {
-      "layout": "single-column auth page with hero title, inputs, agreement and actions",
-      "chrome": "minimal auth chrome focused on task completion",
-      "content_pattern": "form-first authentication flow",
+      "layout": "login skeleton mirroring auth hierarchy with bars, fields and buttons",
+      "chrome": "placeholder-only auth surface",
+      "content_pattern": "loading approximation of login/register panel",
       "key_states": [
-        "default"
+        "loading"
       ],
-      "key_components": []
+      "key_components": [
+        "LoginPageSkeleton"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-auth-panel with warmer framing and stronger trust cues",
-      "component_recipe": "editorial-auth",
+      "layout_strategy": "warm auth skeleton with softer shimmer and stable form geometry",
+      "component_recipe": "auth-skeleton",
       "style_keywords": [
-        "auth",
-        "trust",
-        "warm-form"
+        "auth-skeleton",
+        "warm-shimmer",
+        "form-placeholder"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -772,8 +774,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -885,22 +887,24 @@
       "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt"
     ],
     "current_visual_summary": {
-      "layout": "search top bar with history, ranking and filter affordances",
-      "chrome": "search-led chrome with stacked results modules",
-      "content_pattern": "search discovery and ranking exploration",
+      "layout": "search discovery skeleton with top bar, history chips and ranking placeholders",
+      "chrome": "placeholder-only discovery shell",
+      "content_pattern": "loading approximation of search discovery modules",
       "key_states": [
-        "default"
+        "loading"
       ],
-      "key_components": []
+      "key_components": [
+        "SearchPageSkeleton"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-search-discovery with structured prompts and refined ranking blocks",
-      "component_recipe": "editorial-search",
+      "layout_strategy": "editorial-search skeleton with softer chips and ranking-card placeholders",
+      "component_recipe": "search-skeleton",
       "style_keywords": [
-        "search",
-        "ranking",
-        "structured-discovery"
+        "search-skeleton",
+        "history-placeholder",
+        "ranking-placeholder"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -919,8 +923,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -931,22 +935,24 @@
       "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt"
     ],
     "current_visual_summary": {
-      "layout": "result list with filters and infinite scrolling",
-      "chrome": "search header plus utility filters",
-      "content_pattern": "cover-and-metadata search result cards",
+      "layout": "search results skeleton with stacked card placeholders",
+      "chrome": "placeholder-only results shell",
+      "content_pattern": "loading approximation of result card list",
       "key_states": [
-        "default"
+        "loading"
       ],
-      "key_components": []
+      "key_components": [
+        "SearchResultPageSkeleton"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-search-results with denser metadata hierarchy and calmer card rhythm",
-      "component_recipe": "editorial-search-results",
+      "layout_strategy": "editorial-results skeleton with paper-card placeholders and softer separators",
+      "component_recipe": "search-results-skeleton",
       "style_keywords": [
-        "results",
-        "metadata",
-        "filter-pills"
+        "results-skeleton",
+        "card-placeholder",
+        "loading-list"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -965,8 +971,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

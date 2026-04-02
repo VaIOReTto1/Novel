@@ -733,6 +733,12 @@ const SURFACE_CLUSTER_PLANS = {
 
 const RESKINNED_SURFACES = new Set([
   'rn-root-profile-page',
+  'android-native-login-page',
+  'android-native-search-page',
+  'android-native-search-result-page',
+  'android-overlay-login-page-skeleton',
+  'android-overlay-search-page-skeleton',
+  'android-overlay-search-result-page-skeleton',
   'rn-host-become-writer-page-component',
   'rn-host-settings-page-component',
   'rn-host-timed-switch-page-component',
@@ -762,6 +768,18 @@ const RESKINNED_SURFACES = new Set([
 ]);
 
 const NOVEL_DESIGN_READY_COMPONENTS = new Set([
+  'android/app/src/main/java/com/novel/page/login/component/ActionButtons.kt',
+  'android/app/src/main/java/com/novel/page/login/component/AgreementSection.kt',
+  'android/app/src/main/java/com/novel/page/login/component/InputSection.kt',
+  'android/app/src/main/java/com/novel/page/login/component/OperatorSection.kt',
+  'android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt',
+  'android/app/src/main/java/com/novel/page/search/component/HistoryGrid.kt',
+  'android/app/src/main/java/com/novel/page/search/component/RankingList.kt',
+  'android/app/src/main/java/com/novel/page/search/component/SearchFilterChip.kt',
+  'android/app/src/main/java/com/novel/page/search/component/SearchResultItem.kt',
+  'android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt',
+  'android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt',
+  'android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt',
   'src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx',
   'src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx',
@@ -848,6 +866,90 @@ const SURFACE_VISUAL_OVERRIDES = {
       layout_strategy: 'editorial-writer-workbench with quiet top chrome, paper editor and floating assist panels',
       component_recipe: 'editorial-editor-shell',
       style_keywords: ['paper-editor', 'floating-toolbars', 'editorial-writing', 'utility-chrome'],
+    },
+  },
+  'android-native-login-page': {
+    current_visual_summary: {
+      layout: 'single-column auth screen with title stack, operator copy, inputs, actions and agreement block',
+      chrome: 'minimal auth chrome framed by centered content and low-noise backgrounds',
+      content_pattern: 'login/register dual-mode form with validation, captcha and agreement actions',
+      key_states: ['loading', 'login-mode', 'register-mode', 'validation-error'],
+      key_components: ['LoginAppBar', 'TitleSection', 'InputSection', 'ActionButtons', 'AgreementSection'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-auth panel with paper background, restrained accent buttons and stronger form grouping',
+      component_recipe: 'editorial-auth-surface',
+      style_keywords: ['auth-panel', 'form-stack', 'paper-surface', 'warm-accent'],
+    },
+  },
+  'android-native-search-page': {
+    current_visual_summary: {
+      layout: 'search shell with top bar, history chips and multiple ranking shelves',
+      chrome: 'search-first chrome with compact top input and stacked discovery modules',
+      content_pattern: 'history list, ranking carousels and search discovery entry points',
+      key_states: ['loading', 'history-expanded', 'default-discovery'],
+      key_components: ['SearchTopBar', 'SearchHistorySection', 'HistoryGrid', 'RankingSection'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-search discovery with paper search rail, softer history chips and curated ranking cards',
+      component_recipe: 'editorial-search-discovery-surface',
+      style_keywords: ['search-discovery', 'history-chips', 'ranking-cards', 'paper-shell'],
+    },
+  },
+  'android-native-search-result-page': {
+    current_visual_summary: {
+      layout: 'search top bar plus category filter row and vertically stacked result cards',
+      chrome: 'utility search chrome with inline filters and incremental loading footer',
+      content_pattern: 'result cards with cover, metadata, chips, empty state and pagination feedback',
+      key_states: ['loading', 'loading-more', 'empty-state', 'filter-sheet-open'],
+      key_components: ['SearchTopBar', 'CategoryFilterChip', 'SearchResultItem', 'SearchFilterBottomSheet'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-search results with paper cards, softer chips and clearer empty-state hierarchy',
+      component_recipe: 'editorial-search-results-surface',
+      style_keywords: ['result-cards', 'filter-chips', 'empty-state', 'search-shell'],
+    },
+  },
+  'android-overlay-login-page-skeleton': {
+    current_visual_summary: {
+      layout: 'login skeleton mirroring auth hierarchy with bars, fields and buttons',
+      chrome: 'placeholder-only auth surface',
+      content_pattern: 'loading approximation of login/register panel',
+      key_states: ['loading'],
+      key_components: ['LoginPageSkeleton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'warm auth skeleton with softer shimmer and stable form geometry',
+      component_recipe: 'auth-skeleton',
+      style_keywords: ['auth-skeleton', 'warm-shimmer', 'form-placeholder'],
+    },
+  },
+  'android-overlay-search-page-skeleton': {
+    current_visual_summary: {
+      layout: 'search discovery skeleton with top bar, history chips and ranking placeholders',
+      chrome: 'placeholder-only discovery shell',
+      content_pattern: 'loading approximation of search discovery modules',
+      key_states: ['loading'],
+      key_components: ['SearchPageSkeleton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-search skeleton with softer chips and ranking-card placeholders',
+      component_recipe: 'search-skeleton',
+      style_keywords: ['search-skeleton', 'history-placeholder', 'ranking-placeholder'],
+    },
+  },
+  'android-overlay-search-result-page-skeleton': {
+    current_visual_summary: {
+      layout: 'search results skeleton with stacked card placeholders',
+      chrome: 'placeholder-only results shell',
+      content_pattern: 'loading approximation of result card list',
+      key_states: ['loading'],
+      key_components: ['SearchResultPageSkeleton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-results skeleton with paper-card placeholders and softer separators',
+      component_recipe: 'search-results-skeleton',
+      style_keywords: ['results-skeleton', 'card-placeholder', 'loading-list'],
     },
   },
   'rn-host-history-page-component': {

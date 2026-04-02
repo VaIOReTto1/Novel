@@ -3,7 +3,7 @@
 ## Surface visual specs
 - Current look recorded: 51
 - Target look planned: 51
-- Shell reskinned: 27
+- Shell reskinned: 33
 - android-book-detail: 1
 - android-search-discovery: 4
 - android-home-discovery: 3
@@ -27,7 +27,7 @@
 ## Component visual specs
 - Current look recorded: 225
 - Target look planned: 225
-- Novel design ready: 30
+- Novel design ready: 42
 - layout: 122
 - action: 13
 - sheet: 3

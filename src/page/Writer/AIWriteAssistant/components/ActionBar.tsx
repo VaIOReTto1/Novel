@@ -18,7 +18,7 @@ export const ActionBar: React.FC<Props> = ({ onLike, onDislike, onCopy, onRetry 
 
   return (
     <View style={styles.actionBarWrap}>
-      <Text style={styles.aiDisclaimer}>鍐呭鐢?AI 鐢熸垚锛屼粎渚涘弬鑰?/Text>
+      <Text style={styles.aiDisclaimer}>内容由 AI 生成，仅供参考</Text>
       <View style={styles.actionBar}>
         <TouchableOpacity onPress={onLike} style={styles.actionBtn}>
           <Icon name="heart" size={16} color={colors.novelTextGray} />

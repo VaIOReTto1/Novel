@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
-import { View, TouchableOpacity, TextInput } from 'react-native';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createCommentPageStyles } from '../styles/CommentPageStyles';
 
@@ -10,44 +11,42 @@ interface TopBarProps {
   onSearch?: (query: string) => void;
 }
 
-export const TopBar = memo(({ title: _title = '书评详情', onBackPress, onSearch }: TopBarProps) => {
-  const colors = useNovelColors();
-  const styles = createCommentPageStyles(colors);
-  const [searchQuery, setSearchQuery] = useState('');
-  Icon.loadFont();
+export const TopBar = memo(
+  ({ title: _title = '书评详情', onBackPress, onSearch }: TopBarProps) => {
+    const colors = useNovelColors();
+    const styles = createCommentPageStyles(colors);
+    const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = () => {
-    if (onSearch) {
-      onSearch(searchQuery);
-    }
-  };
+    const handleSearch = () => {
+      onSearch?.(searchQuery);
+    };
 
-  return (
-    <View style={styles.topBar}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={onBackPress}
-        activeOpacity={0.7}
-      >
-        <Icon name="arrow-back-ios" size={24} color={colors.novelText} />
-      </TouchableOpacity>
-
-      <View style={styles.searchContainer}>
-        <Icon name="search" size={20} color={colors.novelTextGray} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="搜索 分身分身闯上嗨，...的书评"
-          placeholderTextColor={colors.novelTextGray}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          onSubmitEditing={handleSearch}
-        />
+    return (
+      <View style={styles.topBar}>
         <TouchableOpacity
-          style={styles.searchButton}
-          onPress={handleSearch}
-          activeOpacity={0.7}
-         />
+          style={styles.backButton}
+          onPress={onBackPress}
+          activeOpacity={0.7}>
+          <Icon name="arrow-back-ios" size={24} color={colors.novelText} />
+        </TouchableOpacity>
+
+        <View style={styles.searchContainer}>
+          <Icon name="search" size={20} color={colors.novelTextGray} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="搜索书评关键词"
+            placeholderTextColor={colors.novelTextGray}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onSubmitEditing={handleSearch}
+          />
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={handleSearch}
+            activeOpacity={0.7}
+          />
+        </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);

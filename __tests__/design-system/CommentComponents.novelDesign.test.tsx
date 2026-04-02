@@ -24,6 +24,7 @@ jest.mock('../../src/page/comment/CommentPage/styles/CommentPageStyles', () => (
 
 jest.mock('../../src/utils/bridge/NavigationBridge', () => ({
   NavigationBridge: {
+    navigateBack: jest.fn(),
     navigateToReviewDetail: jest.fn(),
   },
 }));
@@ -43,6 +44,7 @@ jest.mock('../../src/utils/time/timeUtils', () => ({
 
 import { CategorySection } from '../../src/page/comment/CommentPage/components/CategorySection';
 import { CommentList } from '../../src/page/comment/CommentPage/components/CommentList';
+import { TopBar } from '../../src/page/comment/CommentPage/components/TopBar';
 
 describe('Comment components novelDesign', () => {
   it('renders readable category labels', () => {
@@ -83,5 +85,16 @@ describe('Comment components novelDesign', () => {
     expect(texts).toEqual(
       expect.arrayContaining(['暂无评论', '快来发表第一条评论吧']),
     );
+  });
+
+  it('renders readable top-bar search placeholder', () => {
+    let renderer!: ReactTestRenderer.ReactTestRenderer;
+
+    ReactTestRenderer.act(() => {
+      renderer = ReactTestRenderer.create(<TopBar onBackPress={jest.fn()} />);
+    });
+
+    const input = renderer.root.findByProps({ value: '' });
+    expect(input.props.placeholder).toBe('搜索书评关键词');
   });
 });

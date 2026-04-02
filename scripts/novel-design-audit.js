@@ -852,6 +852,7 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/CategoryPage/components/TopTabs.tsx',
   'src/page/comment/CommentPage/components/CategorySection.tsx',
   'src/page/comment/CommentPage/components/CommentList.tsx',
+  'src/page/comment/CommentPage/components/TopBar.tsx',
   'src/page/ScrollBox/BecomeWriterPage/styles/BecomeWriterPageStyles.ts',
   'src/page/ScrollBox/RecommendBookPage/styles/RecommendBookPageStyles.ts',
   'src/page/Writer/AIWriteAssistant/components/ActionBar.tsx',

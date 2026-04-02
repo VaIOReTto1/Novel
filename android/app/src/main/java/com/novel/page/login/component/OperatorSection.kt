@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.ssp
 import com.novel.utils.wdp
 
@@ -29,7 +29,7 @@ fun OperatorSection(name: String) {
         text = name,
         fontSize = 12.ssp,
         lineHeight = 15.ssp,
-        color = NovelColors.NovelTextGray,
+        color = NovelDesignTokens.lightColor("color.text.secondary"),
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 22.5.wdp, top = 25.wdp)

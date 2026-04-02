@@ -42,7 +42,7 @@ import com.novel.page.login.skeleton.LoginPageSkeleton
 import com.novel.page.login.viewmodel.LoginEffect
 import com.novel.page.login.viewmodel.LoginIntent
 import com.novel.page.login.viewmodel.LoginViewModel
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.NavViewModel
 import com.novel.utils.wdp
 import kotlinx.coroutines.flow.collectLatest
@@ -125,7 +125,7 @@ fun LoginPage() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = NovelColors.NovelBackground),
+                .background(color = NovelDesignTokens.lightColor("color.bg.surface")),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LoginAppBar()
@@ -134,7 +134,7 @@ fun LoginPage() {
                     .fillMaxSize()
                     .animateContentSize(animationSpec = tween(durationMillis = 300))
                     .padding(top = 60.wdp)
-                    .background(color = NovelColors.NovelBackground),
+                    .background(color = NovelDesignTokens.lightColor("color.bg.surface")),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // 标题

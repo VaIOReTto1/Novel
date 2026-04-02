@@ -25,7 +25,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.PingFangFamily
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.remember
@@ -59,12 +59,12 @@ fun AgreementSection(
 ) {
     val TAG = "AgreementSection"
     // 预取主题色，避免在Canvas DrawScope内重复调用@Composable Getter
-    val checkedColor = NovelColors.NovelMainLight
-    val uncheckedColor = NovelColors.NovelTextGray
+    val checkedColor = NovelDesignTokens.lightColor("color.brand.secondary")
+    val uncheckedColor = NovelDesignTokens.lightColor("color.text.secondary")
 
     // 统一文本样式
     val textStyle = androidx.compose.ui.text.TextStyle(
-        color = NovelColors.NovelTextGray,
+        color = NovelDesignTokens.lightColor("color.text.secondary"),
         fontSize = 12.ssp,
         lineHeight = 15.ssp,
         fontWeight = FontWeight.Thin,
@@ -128,7 +128,7 @@ fun AgreementSection(
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = "已选中",
-                        tint = NovelColors.NovelSecondaryBackground,
+                        tint = NovelDesignTokens.lightColor("color.text.inverse"),
                         modifier = Modifier.size(10.wdp)
                     )
                 }

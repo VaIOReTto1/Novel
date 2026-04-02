@@ -105,5 +105,7 @@
 
 | `RB-STAGE7-ANDROID-PRIMITIVES-20260402-01` | `d901fed` | 收口 Android 共享基元到 NovelDesignTokens | `git revert --no-edit d901fed` | `cd android && .\\gradlew.bat --version` |
 
+| `RB-STAGE7-ANDROID-LOGIN-20260402-01` | `31aa89d` | 推进 Android 登录页接入 NovelDesignTokens | `git revert --no-edit 31aa89d` | `cd android && .\\gradlew.bat --version` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

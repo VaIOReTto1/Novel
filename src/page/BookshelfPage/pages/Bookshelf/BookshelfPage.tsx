@@ -102,6 +102,7 @@ export const BookshelfPage: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <TopBar
+        styles={styles}
         currentView={currentView}
         onViewChange={switchView}
         onFilterPress={handleFilterPress}
@@ -112,6 +113,7 @@ export const BookshelfPage: React.FC = () => {
 
       {isEditMode && (
         <EditToolbar
+          styles={styles}
           isEditMode={isEditMode}
           selectedCount={selectedCount}
           totalCount={bookshelfItems.length}
@@ -123,6 +125,7 @@ export const BookshelfPage: React.FC = () => {
       )}
 
       <UnifiedScrollView
+        styles={styles}
         bookshelfData={bookshelfItems}
         recommendations={recommendations}
         currentView={currentView}

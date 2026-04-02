@@ -20,6 +20,7 @@ interface GridViewProps {
   isRefreshing?: boolean;
   isEditMode?: boolean;
   selectedItems?: string[];
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 export const GridView: React.FC<GridViewProps> = ({

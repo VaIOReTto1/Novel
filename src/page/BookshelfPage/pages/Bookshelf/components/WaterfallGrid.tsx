@@ -20,6 +20,7 @@ interface WaterfallGridProps {
   isRefreshing?: boolean;
   isEditMode?: boolean;
   selectedItems?: string[];
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 export const WaterfallGrid: React.FC<WaterfallGridProps> = ({

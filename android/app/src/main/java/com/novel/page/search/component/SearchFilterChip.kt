@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -26,15 +26,15 @@ fun SearchFilterChip(
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     val backgroundColor = if (selected) {
-        NovelColors.NovelMain.copy(alpha = 0.1f)
+        NovelDesignTokens.lightColor("color.brand.primary").copy(alpha = 0.1f)
     } else {
-        NovelColors.NovelTextGray.copy(alpha = 0.1f)
+        NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.1f)
     }
 
     val textColor = if (selected) {
-        NovelColors.NovelMain
+        NovelDesignTokens.lightColor("color.brand.primary")
     } else {
-        NovelColors.NovelText
+        NovelDesignTokens.lightColor("color.text.primary")
     }
 
     Box(
@@ -68,9 +68,9 @@ fun CategoryFilterChip(
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     val textColor = if (selected) {
-        NovelColors.NovelMain
+        NovelDesignTokens.lightColor("color.brand.primary")
     } else {
-        NovelColors.NovelTextGray
+        NovelDesignTokens.lightColor("color.text.secondary")
     }
 
     NovelText(

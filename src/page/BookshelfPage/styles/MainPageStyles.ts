@@ -1,19 +1,25 @@
 import { StyleSheet } from 'react-native';
-import { wp, fp } from '../../../utils/theme/dimensions';
+
+import { createNovelDesignUI } from '../../../design-system/novelDesign';
 import { NovelColors } from '../../../utils/theme/colors';
+import { wp, fp, sp } from '../../../utils/theme/dimensions';
 
 export const createMainPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
-    // TabBar样式
     tabBarContainer: {
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: novelDesign.color.border.subtle,
       paddingHorizontal: wp(14),
-      paddingVertical: wp(8),
+      paddingTop: wp(novelDesign.space['150']),
+      paddingBottom: wp(novelDesign.space['100']),
     },
     tabsContainer: {
       flexDirection: 'row',
@@ -22,27 +28,25 @@ export const createMainPageStyles = (colors: NovelColors) => {
     tab: {
       marginRight: wp(18),
     },
-    activeTab: {
-    },
+    activeTab: {},
     tabText: {
       fontSize: fp(16),
-      color: colors.novelTextGray,
+      color: novelDesign.color.text.secondary,
       fontWeight: '400',
     },
     activeTabText: {
       fontSize: fp(18),
-      color: colors.novelText,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
     },
 
-    // 内容区域
     contentContainer: {
       flex: 1,
     },
 
-    // 页面容器 - 用于避免组件重新挂载
     pageContainer: {
       flex: 1,
+      backgroundColor: novelDesign.color.bg.surface,
     },
     pageVisible: {
       display: 'flex',
@@ -51,24 +55,32 @@ export const createMainPageStyles = (colors: NovelColors) => {
       display: 'none',
     },
 
-    // 加载状态
     loadingContainer: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      borderWidth: 1,
+      borderRadius: sp(novelDesign.radius.xl),
+      margin: wp(novelDesign.space['200']),
     },
     loadingText: {
       fontSize: fp(16),
-      color: colors.novelTextGray,
+      color: novelDesign.color.text.secondary,
       marginTop: wp(16),
     },
 
-    // 错误状态
     errorContainer: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: wp(40),
+      margin: wp(novelDesign.space['200']),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderColor: novelDesign.color.border.subtle,
+      borderWidth: 1,
+      borderRadius: sp(novelDesign.radius.xl),
     },
     errorIcon: {
       fontSize: fp(48),
@@ -76,14 +88,14 @@ export const createMainPageStyles = (colors: NovelColors) => {
     },
     errorText: {
       fontSize: fp(16),
-      color: colors.novelText,
+      color: novelDesign.color.text.primary,
       fontWeight: '600',
       marginBottom: wp(8),
       textAlign: 'center',
     },
     errorDescription: {
       fontSize: fp(14),
-      color: colors.novelTextGray,
+      color: novelDesign.color.text.secondary,
       textAlign: 'center',
       lineHeight: fp(20),
     },

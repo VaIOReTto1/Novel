@@ -12,6 +12,7 @@ interface EditToolbarProps {
   onSelectAll: () => void;
   onDelete: () => void;
   onMove?: () => void;
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 export const EditToolbar: React.FC<EditToolbarProps> = ({

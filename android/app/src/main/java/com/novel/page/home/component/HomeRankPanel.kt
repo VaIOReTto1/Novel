@@ -45,7 +45,7 @@ import com.novel.page.component.FlipBookAnimationController
 import com.novel.page.home.dao.HomeRepository
 import com.novel.page.home.viewmodel.CategoryInfo
 import com.novel.page.home.viewmodel.HomeRankBook
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.wdp
 import com.novel.utils.ssp
@@ -82,7 +82,7 @@ fun HomeRankPanel(
             .height(370.wdp),
         shape = RoundedCornerShape(8.wdp),
         colors = CardDefaults.cardColors(
-            containerColor = NovelColors.NovelBackground
+            containerColor = NovelDesignTokens.lightColor("color.bg.surface")
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.wdp)
     ) {
@@ -263,7 +263,11 @@ private fun RankFilterChip(
             .debounceClickable(onClick = onClick)
             .padding(vertical = 8.wdp, horizontal = 12.wdp),
         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-        color = if (isSelected) NovelColors.NovelText else NovelColors.NovelTextGray
+        color = if (isSelected) {
+            NovelDesignTokens.lightColor("color.text.primary")
+        } else {
+            NovelDesignTokens.lightColor("color.text.secondary")
+        }
     )
 }
 
@@ -354,7 +358,7 @@ private fun RankBookGridItem(
                 text = book.bookName,
                 fontSize = 14.ssp,
                 fontWeight = FontWeight.Medium,
-                color = NovelColors.NovelText,
+                color = NovelDesignTokens.lightColor("color.text.primary"),
                 lineHeight = 15.ssp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
@@ -367,7 +371,7 @@ private fun RankBookGridItem(
                 text = book.categoryName,
                 fontSize = 12.ssp,
                 lineHeight = 13.ssp,
-                color = NovelColors.NovelMain,
+                color = NovelDesignTokens.lightColor("color.brand.primary"),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -399,7 +403,13 @@ private fun BookCoverImage(
             .width(50.wdp)
             .height(65.wdp)
             .clip(RoundedCornerShape(4.wdp))
-            .background(if (isCurrentBookAnimating) Color.Transparent else NovelColors.NovelMain)
+            .background(
+                if (isCurrentBookAnimating) {
+                    Color.Transparent
+                } else {
+                    NovelDesignTokens.lightColor("color.brand.primary")
+                }
+            )
     ) {
         if (!isCurrentBookAnimating) {
             // 正常状态：显示图片 - 榜单高性能模式
@@ -413,7 +423,7 @@ private fun BookCoverImage(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(NovelColors.NovelMain),
+                            .background(NovelDesignTokens.lightColor("color.brand.primary")),
                         contentAlignment = Alignment.Center
                     ) {
                         NovelText(

@@ -5,7 +5,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 
 /**
@@ -27,6 +27,6 @@ fun NovelDivider(
     HorizontalDivider(
         modifier = modifier.fillMaxWidth(),
         thickness = thickness,
-        color = NovelColors.NovelDivider
+        color = NovelDesignTokens.lightColor("color.border.subtle")
     )
 }

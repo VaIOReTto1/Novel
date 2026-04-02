@@ -36,7 +36,7 @@ import com.novel.page.login.viewmodel.CaptchaState
 import com.novel.page.login.viewmodel.LoginForm
 import com.novel.page.login.viewmodel.RegisterForm
 import com.novel.page.login.viewmodel.ValidationResults
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -126,7 +126,7 @@ fun InputSection(
             if (phoneError != null) {
                 NovelText(
                     text = phoneError,
-                    color = NovelColors.NovelError,
+                    color = NovelDesignTokens.lightColor("color.status.danger"),
                     fontSize = 10.ssp,
                     lineHeight = 10.ssp,
                     modifier = Modifier
@@ -157,7 +157,7 @@ fun InputSection(
             if (passwordError != null) {
                 NovelText(
                     text = passwordError,
-                    color = NovelColors.NovelError,
+                    color = NovelDesignTokens.lightColor("color.status.danger"),
                     fontSize = 10.ssp,
                     lineHeight = 10.ssp,
                     modifier = Modifier
@@ -226,7 +226,7 @@ fun InputSection(
                         if (passwordConfirmError != null) {
                             NovelText(
                                 text = passwordConfirmError,
-                                color = NovelColors.NovelError,
+                                color = NovelDesignTokens.lightColor("color.status.danger"),
                                 fontSize = 10.ssp,
                                 lineHeight = 10.ssp,
                                 modifier = Modifier
@@ -274,7 +274,7 @@ fun InputSection(
                         if (verifyCodeError != null) {
                             NovelText(
                                 text = verifyCodeError,
-                                color = NovelColors.NovelError,
+                                color = NovelDesignTokens.lightColor("color.status.danger"),
                                 fontSize = 10.ssp,
                                 lineHeight = 10.ssp,
                                 modifier = Modifier

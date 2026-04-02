@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
 export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.novelSecondaryBackground,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     // 顶部Bar样式
@@ -17,7 +19,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
       justifyContent: 'space-between',
       paddingHorizontal: wp(20),
       paddingVertical: wp(16),
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       minHeight: wp(56),
     },
     backButton: {
@@ -62,7 +64,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
     searchInputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: '#F5F5F5', // 写死的搜索框背景色
+      backgroundColor: novelDesign.color.bg.elevated,
       borderRadius: wp(20),
       paddingHorizontal: wp(12),
       paddingVertical: wp(0),
@@ -104,7 +106,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
     userSection: {
       paddingHorizontal: wp(20),
       paddingVertical: wp(24),
-      backgroundColor: colors.novelSecondaryBackground,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
     userGreeting: {
       fontSize: fp(24),
@@ -120,7 +122,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
 
     // 咨询场景区域
     consultSection: {
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       marginHorizontal: wp(14),
       borderRadius: wp(12),
       padding: wp(12),
@@ -203,7 +205,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
 
     // 大家都在问区域
     frequentSection: {
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       marginHorizontal: wp(14),
       borderRadius: wp(12),
       padding: wp(12),
@@ -213,7 +215,7 @@ export const createFeedbackHelpPageStyles = (colors: NovelColors) => {
     },
     frequentTitle: {
       fontSize: fp(16),
-      color: colors.novelMain,
+      color: novelDesign.color.brand.primary,
       fontWeight: '600',
       marginBottom: wp(6),
     },

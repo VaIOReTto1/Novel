@@ -1,0 +1,1402 @@
+[
+  {
+    "surface_id": "android-native-book-detail-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "AuthorSection",
+      "BookActionSection",
+      "BookCoverSection",
+      "BookDescriptionBottomSheet",
+      "BookDescriptionSection",
+      "BookReviewsSection",
+      "BookStatsSection",
+      "BookTitleSection"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-book-detail-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/book/BookDetailPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-full-ranking-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "FullRankingPageSkeleton",
+      "HistoryGrid",
+      "RankingList",
+      "SearchFilterBottomSheet",
+      "SearchFilterChip",
+      "SearchPageSkeleton",
+      "SearchResultItem",
+      "SearchResultPageSkeleton"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-full-ranking-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/FullRankingPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-home-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "HomeFilterBar",
+      "HomePageSkeleton",
+      "HomeRankPanel",
+      "HomeRecommendGrid",
+      "HomeTopBar"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-home-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/home/HomePage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-login-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "ActionButtons",
+      "AgreementSection",
+      "AppBar",
+      "InputSection",
+      "LoginPageSkeleton",
+      "OperatorSection",
+      "PhoneSection",
+      "TitleSection"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-login-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/login/LoginPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-main-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BackButton",
+      "BaseViewModel",
+      "BitmapPool",
+      "CurlDraw",
+      "Defaults",
+      "DragCommonGesture",
+      "DragGesture",
+      "DragStartEnd"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-main-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/MainPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-reader-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BackgroundColorControl",
+      "BrightnessControl",
+      "ChapterListPanel",
+      "CoverFlipContainer",
+      "FontSizeControl",
+      "NoAnimationContainer",
+      "PageContentDisplay",
+      "PageCurlFlipContainer"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-reader-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/read/ReaderPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-search-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "FullRankingPageSkeleton",
+      "HistoryGrid",
+      "RankingList",
+      "SearchFilterBottomSheet",
+      "SearchFilterChip",
+      "SearchPageSkeleton",
+      "SearchResultItem",
+      "SearchResultPageSkeleton"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-search-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/SearchPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-search-result-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "FullRankingPageSkeleton",
+      "HistoryGrid",
+      "RankingList",
+      "SearchFilterBottomSheet",
+      "SearchFilterChip",
+      "SearchPageSkeleton",
+      "SearchResultItem",
+      "SearchResultPageSkeleton"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-search-result-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/SearchResultPage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-native-welfare-page",
+    "platform": "android",
+    "entry_type": "native-screen",
+    "host_type": "android-native",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-native-welfare-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/welfare/WelfarePage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-book-description-bottom-sheet",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "AuthorSection",
+      "BookActionSection",
+      "BookCoverSection",
+      "BookDescriptionBottomSheet",
+      "BookDescriptionSection",
+      "BookReviewsSection",
+      "BookStatsSection",
+      "BookTitleSection"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-book-description-bottom-sheet-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-chapter-list-panel",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BackgroundColorControl",
+      "BrightnessControl",
+      "ChapterListPanel",
+      "CoverFlipContainer",
+      "FontSizeControl",
+      "NoAnimationContainer",
+      "PageContentDisplay",
+      "PageCurlFlipContainer"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-chapter-list-panel-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-full-ranking-page-skeleton",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-full-ranking-page-skeleton-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-home-page-skeleton",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-home-page-skeleton-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-home-rank-panel",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "image",
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-home-rank-panel-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-login-page-skeleton",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-login-page-skeleton-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-reader-settings-panel",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BackgroundColorControl",
+      "BrightnessControl",
+      "ChapterListPanel",
+      "CoverFlipContainer",
+      "FontSizeControl",
+      "NoAnimationContainer",
+      "PageContentDisplay",
+      "PageCurlFlipContainer"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-reader-settings-panel-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-search-filter-bottom-sheet",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-search-filter-bottom-sheet-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-search-page-skeleton",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-search-page-skeleton-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt"
+    ]
+  },
+  {
+    "surface_id": "android-overlay-search-result-page-skeleton",
+    "platform": "android",
+    "entry_type": "overlay",
+    "host_type": "android-overlay",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-overlay-search-result-page-skeleton-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt"
+    ]
+  },
+  {
+    "surface_id": "android-shell-compose-main-activity",
+    "platform": "android",
+    "entry_type": "shell",
+    "host_type": "android-shell",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-shell-compose-main-activity-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/ComposeMainActivity.kt"
+    ]
+  },
+  {
+    "surface_id": "android-shell-main-activity",
+    "platform": "android",
+    "entry_type": "shell",
+    "host_type": "android-shell",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-shell-main-activity-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/MainActivity.kt"
+    ]
+  },
+  {
+    "surface_id": "android-shell-main-page-host-components",
+    "platform": "android",
+    "entry_type": "shell",
+    "host_type": "android-shell",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "image",
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-shell-main-page-host-components-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/MainPageHostComponents.kt"
+    ]
+  },
+  {
+    "surface_id": "android-shell-react-native-page",
+    "platform": "android",
+    "entry_type": "shell",
+    "host_type": "android-shell",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-shell-react-native-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/rn/ReactNativePage.kt"
+    ]
+  },
+  {
+    "surface_id": "android-shell-react-native-page-content",
+    "platform": "android",
+    "entry_type": "shell",
+    "host_type": "android-shell",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "android-shell-react-native-page-content-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "android/feature-rn-host/src/main/java/com/novel/rn/ReactNativePageContent.kt"
+    ]
+  },
+  {
+    "surface_id": "rn-host-aiwrite-assistant-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "ActionBar",
+      "ChatRow",
+      "Header",
+      "IdeaSelector",
+      "InputBar",
+      "IntroExample",
+      "MarkdownText",
+      "Suggestions"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-aiwrite-assistant-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/Writer/AIWriteAssistant/AIWriteAssistantComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-become-writer-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "AuthorExclusiveSection",
+      "BottomButton",
+      "CopyrightSection",
+      "CreativeActivitySection",
+      "DataStatsSection",
+      "TopBar",
+      "UserSection",
+      "WelcomeModal"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-become-writer-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-book-manage-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "Banner",
+      "ChapterSection",
+      "DraftBar",
+      "EmptyChapter",
+      "Footer",
+      "Header"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-book-manage-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/Writer/BookManage/BookManagePageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-bookshelf-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "MainTabBar"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-bookshelf-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/BookshelfPage/BookshelfPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-category-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BookGrid",
+      "Sidebar",
+      "TopTabs"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-category-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/CategoryPage/CategoryPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-comment-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "CategorySection",
+      "CommentList",
+      "RatingSection",
+      "RefreshIndicator",
+      "TopBar",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-comment-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/comment/CommentPage/CommentPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-feedback-help-main-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "ConsultSection",
+      "ContactSection",
+      "FrequentQuestions",
+      "QuestionDetail",
+      "QuestionList",
+      "TopBar",
+      "UserSection",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-feedback-help-main-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/FeedbackHelpPage/FeedbackHelpMainPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-help-support-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-help-support-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/SettingsPage/helpsupportPage/HelpSupportPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-history-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "ContentArea",
+      "HistoryItem",
+      "LoadMoreIndicator",
+      "RefreshIndicator",
+      "TabsArea",
+      "TopBar",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-history-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/HistoryPage/HistoryPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-member-center-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BenefitComparison",
+      "BottomPurchase",
+      "MemberBenefits",
+      "PricePackages",
+      "TaskCards",
+      "TopBar",
+      "VIPCardCarousel",
+      "VIPRecommendation"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-member-center-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/MemberCenterPage/MemberCenterPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-message-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "EmptyState",
+      "LoadMoreIndicator",
+      "MainMessagesSection",
+      "MessageItem",
+      "RefreshIndicator",
+      "TabsArea",
+      "TopBar",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-message-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/MessagePage/MessagePageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-my-reservation-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "EmptyState",
+      "ReservationGrid",
+      "SubTabsSection",
+      "TopBar",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-my-reservation-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/MyReservationPage/MyReservationPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-privacy-policy-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-privacy-policy-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/SettingsPage/privacypolicyPage/PrivacyPolicyPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-question-detail-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "ConsultSection",
+      "ContactSection",
+      "FrequentQuestions",
+      "QuestionDetail",
+      "QuestionList",
+      "TopBar",
+      "UserSection",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-question-detail-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/FeedbackHelpPage/QuestionDetailPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-question-list-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "ConsultSection",
+      "ContactSection",
+      "FrequentQuestions",
+      "QuestionDetail",
+      "QuestionList",
+      "TopBar",
+      "UserSection",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-question-list-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/FeedbackHelpPage/QuestionListPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-recommend-book-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "CreativeServiceSection",
+      "CreativeTaskSection",
+      "DataStatsSection",
+      "TopBar",
+      "UserSection",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-recommend-book-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/RecommendBookPage/RecommendBookPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-review-detail-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "CommentList",
+      "RefreshIndicator",
+      "RepliesSheet",
+      "ReviewContent",
+      "TopBar"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-review-detail-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/comment/ReviewDetailPage/ReviewDetailPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-settings-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "SettingRow",
+      "ThemeSwitcher",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-settings-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/SettingsPage/settingspage/SettingsPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-timed-switch-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "TimePickerModal",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-timed-switch-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/SettingsPage/TimeSwitchPage/TimedSwitchPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-viewed-users-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "EmptyState",
+      "TabsSection",
+      "TopBar",
+      "UsersList",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-viewed-users-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/ScrollBox/ViewedUsersPage/ViewedUsersPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-write-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "SelectionToolbar",
+      "TopBar",
+      "VolumeBar",
+      "WelcomePanel"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-write-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/Writer/WritePage/WritePageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-host-write-review-page-component",
+    "platform": "react-native",
+    "entry_type": "component-registration",
+    "host_type": "rn-host",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "RatingInput",
+      "ReviewForm",
+      "TopBar",
+      "index"
+    ],
+    "asset_sources": [],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-host-write-review-page-component-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/comment/WriteReviewPage/WriteReviewPageComponent.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-bookshelf-page",
+    "platform": "react-native",
+    "entry_type": "nested-page",
+    "host_type": "rn-nested",
+    "parent_surface": "rn-host-bookshelf-page-component",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BookItem",
+      "EditToolbar",
+      "EmptyState",
+      "GridView",
+      "ListView",
+      "LoadMoreIndicator",
+      "RecommendationFlow",
+      "TopBar"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-nested-bookshelf-bookshelf-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/Bookshelf/BookshelfPage.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-community-page",
+    "platform": "react-native",
+    "entry_type": "nested-page",
+    "host_type": "rn-nested",
+    "parent_surface": "rn-host-bookshelf-page-component",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "EmptyState",
+      "FilterBar",
+      "FloatingButton",
+      "LoadingIndicator",
+      "PostItem",
+      "PostList",
+      "TabBar",
+      "TopBar"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-nested-bookshelf-community-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/Community/CommunityPage.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-history-page",
+    "platform": "react-native",
+    "entry_type": "nested-page",
+    "host_type": "rn-nested",
+    "parent_surface": "rn-host-bookshelf-page-component",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BookItem",
+      "ContentArea",
+      "EditToolbar",
+      "HistoryContent",
+      "HistoryItem",
+      "RefreshIndicator",
+      "TabBar",
+      "TabsArea"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-nested-bookshelf-history-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/History/HistoryPage.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-watchlist-page",
+    "platform": "react-native",
+    "entry_type": "nested-page",
+    "host_type": "rn-nested",
+    "parent_surface": "rn-host-bookshelf-page-component",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "EditToolbar",
+      "EmptyState",
+      "TopBar",
+      "WatchlistGrid"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-nested-bookshelf-watchlist-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/Watchlist/WatchlistPage.tsx"
+    ]
+  },
+  {
+    "surface_id": "rn-root-profile-page",
+    "platform": "react-native",
+    "entry_type": "app-root",
+    "host_type": "rn-root",
+    "parent_surface": "",
+    "key_states": [
+      "default"
+    ],
+    "key_components": [
+      "BookItem",
+      "BottomBox",
+      "LoadMoreIndicator",
+      "LoginBar",
+      "RefreshIndicator",
+      "ScrollableArea",
+      "TopBar",
+      "WaterfallGrid"
+    ],
+    "asset_sources": [
+      "theme-aware"
+    ],
+    "a11y_status": "pending-audit",
+    "rtl_status": "pending-audit",
+    "dark_mode_status": "pending-audit",
+    "figma_frame_id": "",
+    "visual_regression_case_id": "rn-root-profile-page-vr",
+    "implementation_status": "active",
+    "source_paths": [
+      "App.tsx",
+      "src/page/ProfilePage/ProfilePage.tsx"
+    ]
+  }
+]

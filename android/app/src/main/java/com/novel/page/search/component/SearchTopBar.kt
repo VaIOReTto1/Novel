@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.novel.page.component.NovelTextField
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 
 private const val TAG = "SearchTopBar"
@@ -63,7 +63,7 @@ fun SearchTopBar(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "返回",
-                tint = NovelColors.NovelText
+                tint = NovelDesignTokens.lightColor("color.text.primary")
             )
         }
 
@@ -95,7 +95,7 @@ fun SearchTopBar(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "搜索",
-                tint = NovelColors.NovelMain
+                tint = NovelDesignTokens.lightColor("color.brand.primary")
             )
         }
     }

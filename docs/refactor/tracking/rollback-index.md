@@ -3,42 +3,119 @@
 ## Stage 6 ä»£ç æäº¤
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |
-| `RB-P12-CODE-20260331-01` | `5a0b632` | Phase 12 è¿è¡Œæ—¶ã€bridge gatewayã€event hubã€back navigation ä¸é¡µé¢ç›´è¿å…¥å£æ”¶å£ | `git revert --no-edit 5a0b632` | `npm test -- --runInBand __tests__/runtime/backNavigation.test.ts __tests__/runtime/eventHub.test.ts __tests__/runtime/runtimeCoordinator.test.ts __tests__/runtime/rawPrimitivesBoundary.test.ts __tests__/bridge/NavigationBridge.contract.test.ts __tests__/bridge/UserBridge.contract.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
-| `RB-P13-WAVE1-20260331-01` | `20b02c4` | Phase 13 é¦–æ³¢ Profile / Settings åŸŸæ”¶å£ | `git revert --no-edit 20b02c4` | `npm test -- --runInBand __tests__/domains/profileBootstrap.test.ts __tests__/domains/settingsPageModel.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
-| `RB-P13-WAVE2-20260331-01` | `852f175` | Phase 13 ç¬¬äºŒæ³¢ History / Watchlist åŸŸæ”¶å£ | `git revert --no-edit 852f175` | `npm test -- --runInBand __tests__/domains/bookshelfHistoryPageModel.test.ts __tests__/domains/watchlistPageModel.test.ts __tests__/stores/historyStores.mock-closure.test.ts` |
-| `RB-P13-WAVE3-20260331-01` | `8ffa9cd` | Phase 13 ç¬¬ä¸‰æ³¢ Bookshelf åŸŸæ”¶å£ | `git revert --no-edit 8ffa9cd` | `npm test -- --runInBand __tests__/domains/bookshelfPageModel.test.ts __tests__/domains/bookshelfHistoryPageModel.test.ts __tests__/domains/watchlistPageModel.test.ts __tests__/stores/historyStores.mock-closure.test.ts` |
+| `RB-P12-CODE-20260331-01` | `5a0b632` | Phase 12 è¿è¡Œæ—¶ã€bridge gatewayã€event hub ä¸?back navigation æ”¶å£ | `git revert --no-edit 5a0b632` | `npm test -- --runInBand __tests__/runtime/backNavigation.test.ts __tests__/runtime/eventHub.test.ts __tests__/runtime/runtimeCoordinator.test.ts __tests__/runtime/rawPrimitivesBoundary.test.ts __tests__/bridge/NavigationBridge.contract.test.ts __tests__/bridge/UserBridge.contract.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
+| `RB-P13-WAVE1-20260331-01` | `20b02c4` | Phase 13 ç¬¬ä¸€æ³?Profile / Settings åŸŸæ”¶å?| `git revert --no-edit 20b02c4` | `npm test -- --runInBand __tests__/domains/profileBootstrap.test.ts __tests__/domains/settingsPageModel.test.ts __tests__/smoke/SettingsPage.smoke.test.tsx` |
+| `RB-P13-WAVE2-20260331-01` | `852f175` | Phase 13 ç¬¬äºŒæ³?History / Watchlist åŸŸæ”¶å?| `git revert --no-edit 852f175` | `npm test -- --runInBand __tests__/domains/bookshelfHistoryPageModel.test.ts __tests__/domains/watchlistPageModel.test.ts __tests__/stores/historyStores.mock-closure.test.ts` |
+| `RB-P13-WAVE3-20260331-01` | `8ffa9cd` | Phase 13 ç¬¬ä¸‰æ³?Bookshelf åŸŸæ”¶å?| `git revert --no-edit 8ffa9cd` | `npm test -- --runInBand __tests__/domains/bookshelfPageModel.test.ts __tests__/domains/bookshelfHistoryPageModel.test.ts __tests__/domains/watchlistPageModel.test.ts __tests__/stores/historyStores.mock-closure.test.ts` |
 | `RB-P13-WAVE4-20260331-01` | `17ac26b` | Phase 13 ç¬¬å››æ³¢è¯„è®ºåŸŸé¡µé¢æ”¶å£ | `git revert --no-edit 17ac26b` | `npm test -- --runInBand __tests__/domains/commentPageModel.test.ts __tests__/domains/reviewDetailPageModel.test.ts __tests__/domains/writeReviewPageModel.test.ts __tests__/stores/commentStore.mock-closure.test.ts` |
-| `RB-P13-WAVE5-20260331-01` | `aaf9069` | Phase 13 ç¬¬äº”æ³¢ Writer åŸŸæ”¶å£ | `git revert --no-edit aaf9069` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts` |
-| `RB-P13-WAVE5-20260331-02` | `24d49b9` | Phase 13 ç¬¬äº”æ³¢ Writer é¡µé¢æ¥çº¿æ·±åŒ– | `git revert --no-edit 24d49b9` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
-| `RB-P13-WAVE6-20260331-01` | `fbfc7d9` | Phase 13 ç¬¬å…­æ³¢ Community ä¸ heavy pages æ”¶å£ | `git revert --no-edit fbfc7d9` | `npm test -- --runInBand __tests__/domains/communityPageModel.test.ts __tests__/community/communityHandlers.test.ts __tests__/domains/recommendBookPageModel.test.ts __tests__/domains/memberCenterPageModel.test.ts __tests__/domains/becomeWriterPageModel.test.ts` |
-| `RB-P13-WRITE-DEEP-20260331-01` | `0eb4639` | WritePage æ›´æ·±å±‚æ”¶å£ | `git revert --no-edit 0eb4639` | `npm test -- --runInBand __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
-| `RB-P13-WAVE7-20260331-01` | `540bde2` | Phase 13 ç¬¬ä¸ƒæ³¢å‰©ä½™é•¿é¡µæ”¶å£ | `git revert --no-edit 540bde2` | `npm test -- --runInBand __tests__/domains/messagePageModel.test.ts __tests__/domains/myReservationPageModel.test.ts __tests__/domains/viewedUsersPageModel.test.ts __tests__/domains/scrollboxHistoryPageModel.test.ts __tests__/domains/feedbackHelpPageModel.test.ts` |
+| `RB-P13-WAVE5-20260331-01` | `aaf9069` | Phase 13 ç¬¬äº”æ³?Writer åŸŸæ”¶å?| `git revert --no-edit aaf9069` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts` |
+| `RB-P13-WAVE5-20260331-02` | `24d49b9` | Phase 13 ç¬¬äº”æ³?Writer é¡µé¢æ¥çº¿æ·±åŒ– | `git revert --no-edit 24d49b9` | `npm test -- --runInBand __tests__/domains/aiWriteAssistantPageModel.test.ts __tests__/domains/bookManagePageModel.test.ts __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
+| `RB-P13-WAVE6-20260331-01` | `fbfc7d9` | Phase 13 ç¬¬å…­æ³?Community ä¸?heavy pages æ”¶å£ | `git revert --no-edit fbfc7d9` | `npm test -- --runInBand __tests__/domains/communityPageModel.test.ts __tests__/community/communityHandlers.test.ts __tests__/domains/recommendBookPageModel.test.ts __tests__/domains/memberCenterPageModel.test.ts __tests__/domains/becomeWriterPageModel.test.ts` |
+| `RB-P13-WRITE-DEEP-20260331-01` | `0eb4639` | WritePage æ›´æ·±å±‚æ”¶å?| `git revert --no-edit 0eb4639` | `npm test -- --runInBand __tests__/domains/writePageModel.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
+| `RB-P13-WAVE7-20260331-01` | `540bde2` | Phase 13 ç¬¬ä¸ƒæ³¢å‰©ä½™é•¿é¡µæ”¶å?| `git revert --no-edit 540bde2` | `npm test -- --runInBand __tests__/domains/messagePageModel.test.ts __tests__/domains/myReservationPageModel.test.ts __tests__/domains/viewedUsersPageModel.test.ts __tests__/domains/scrollboxHistoryPageModel.test.ts __tests__/domains/feedbackHelpPageModel.test.ts` |
 | `RB-P14-REGISTRY-20260331-01` | `e846ae5` | Phase 14 registry consistency æŠ¤æ  | `git revert --no-edit e846ae5` | `npm test -- --runInBand __tests__/harness/rnComponentRegistryConsistency.test.ts` |
-| `RB-STAGE6-CLOSEOUT-20260331-01` | `7d31458` | å…³é—­ Phase 13 ä¸ Phase 14 å¹¶å®Œæˆ Stage 6 æ”¶å£ | `git revert --no-edit 7d31458` | `npm run harness:check` |
+| `RB-STAGE6-CLOSEOUT-20260331-01` | `7d31458` | å…³é—­ Phase 13 / Phase 14 å¹¶å®Œæˆ?Stage 6 æ”¶å£ | `git revert --no-edit 7d31458` | `npm run harness:check` |
 
 ## Stage 6 authority / harness æäº¤
 | Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
 | --- | --- | --- | --- | --- |
 | `RB-P12-AUTH-20260331-01` | `2b750ac` | Phase 12 closeoutã€Stage 6 çŠ¶æ€åˆ‡æ¢ä¸ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 2b750ac` | `npm run harness:check` |
 | `RB-P12-ROLLBACK-20260331-01` | `975c132` | Phase 12 æ§åˆ¶é¢åˆ‡æ¢çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit 975c132` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-01` | `4dd9777` | Phase 13 çŠ¶æ€åˆ‡æ¢ã€validation board ä¸ wave 1 è®°å½•åŒæ­¥ | `git revert --no-edit 4dd9777` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-01` | `4dd9777` | Phase 13 çŠ¶æ€åˆ‡æ¢ã€validation board ä¸?wave 1 è®°å½•åŒæ­¥ | `git revert --no-edit 4dd9777` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-01` | `4018c6f` | Phase 13 å¯åŠ¨åçš„ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 4018c6f` | `npm run harness:check` |
-| `RB-P13-ROLLBACK-20260331-01` | `3a687fe` | Phase 13 å¯åŠ¨çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit 3a687fe` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-02` | `deb061e` | Phase 13 ä¸­æ®µé¡µé¢åŸŸæ”¶å£è¿›å±•è¡¥è®° | `git revert --no-edit deb061e` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-01` | `3a687fe` | Phase 13 å¯åŠ¨çš„å›æ»šç´¢å¼•è¡¥è®?| `git revert --no-edit 3a687fe` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-02` | `deb061e` | Phase 13 ä¸­æ®µé¡µé¢åŸŸæ”¶å£è¿›å±•è¡¥è®?| `git revert --no-edit deb061e` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-02` | `0f4aaef` | Phase 13 ä¸­æ®µæ”¶å£åçš„ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 0f4aaef` | `npm run harness:check` |
-| `RB-P13-ROLLBACK-20260331-02` | `5c0ee65` | Phase 13 ä¸­æ®µæ¨è¿›çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit 5c0ee65` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-03` | `b9af348` | Phase 13 åæ®µ Writer åŸŸæ”¶å£è¿›å±•è¡¥è®° | `git revert --no-edit b9af348` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-02` | `5c0ee65` | Phase 13 ä¸­æ®µæ¨è¿›çš„å›æ»šç´¢å¼•è¡¥è®?| `git revert --no-edit 5c0ee65` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-03` | `b9af348` | Phase 13 åæ®µ Writer åŸŸæ”¶å£è¿›å±•è¡¥è®?| `git revert --no-edit b9af348` | `npm run harness:check` |
 | `RB-P13-HARNESS-20260331-03` | `b5b0021` | Phase 13 åæ®µ Writer æ”¶å£åçš„ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit b5b0021` | `npm run harness:check` |
-| `RB-P13-ROLLBACK-20260331-03` | `727c83a` | Phase 13 åæ®µæ¨è¿›çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit 727c83a` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-04` | `32f17f3` | Phase 13 ç¬¬äº”æ³¢ Writer é¡µé¢æ¥çº¿è¿›å±•è¡¥è®° | `git revert --no-edit 32f17f3` | `npm run harness:check` |
+| `RB-P13-ROLLBACK-20260331-03` | `727c83a` | Phase 13 åæ®µæ¨è¿›çš„å›æ»šç´¢å¼•è¡¥è®?| `git revert --no-edit 727c83a` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-04` | `32f17f3` | Phase 13 ç¬¬äº”æ³?Writer é¡µé¢æ¥çº¿è¿›å±•è¡¥è®° | `git revert --no-edit 32f17f3` | `npm run harness:check` |
 | `RB-P13-ROLLBACK-20260331-04` | `8f175ee` | Phase 13 ç¬¬äº”æ³¢æ¥çº¿çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit 8f175ee` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-05` | `deae664` | Phase 13 ç¬¬å…­æ³¢ heavy pages è¿›å±•è¡¥è®° | `git revert --no-edit deae664` | `npm run harness:check` |
-| `RB-P13-HARNESS-20260331-04` | `2b6b1dc` | Phase 13 ç¬¬å…­æ³¢åçš„ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 2b6b1dc` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-05` | `deae664` | Phase 13 ç¬¬å…­æ³?heavy pages è¿›å±•è¡¥è®° | `git revert --no-edit deae664` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-04` | `2b6b1dc` | Phase 13 ç¬¬å…­æ³¢åçš?harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 2b6b1dc` | `npm run harness:check` |
 | `RB-P13-ROLLBACK-20260331-05` | `31bcb01` | Phase 13 ç¬¬å…­æ³¢æ¨è¿›çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit 31bcb01` | `npm run harness:check` |
-| `RB-P13-AUTH-20260331-06` | `8de4626` | WritePage æ›´æ·±å±‚æ”¶å£è¿›å±•è¡¥è®° | `git revert --no-edit 8de4626` | `npm run harness:check` |
-| `RB-P13-HARNESS-20260331-05` | `889c7ab` | WritePage æ›´æ·±å±‚æ”¶å£åçš„ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 889c7ab` | `npm run harness:check` |
+| `RB-P13-AUTH-20260331-06` | `8de4626` | WritePage æ›´æ·±å±‚æ”¶å£è¿›å±•è¡¥è®?| `git revert --no-edit 8de4626` | `npm run harness:check` |
+| `RB-P13-HARNESS-20260331-05` | `889c7ab` | WritePage æ›´æ·±å±‚æ”¶å£åçš?harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit 889c7ab` | `npm run harness:check` |
 | `RB-P13-ROLLBACK-20260331-06` | `cd0f37b` | WritePage æ›´æ·±å±‚æ”¶å£çš„å›æ»šç´¢å¼•è¡¥è®° | `git revert --no-edit cd0f37b` | `npm run harness:check` |
 | `RB-STAGE6-HARNESS-20260331-01` | `b1501e2` | Stage 6 closeout åçš„ harness å¯¼èˆªåŒæ­¥ | `git revert --no-edit b1501e2` | `npm run harness:check` |
 
+## Stage 7 authority / harness æäº¤
+| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
+| --- | --- | --- | --- | --- |
+| `RB-STAGE7-AUTH-20260331-01` | `534407b` | å¯åŠ¨ Stage 7 æ§åˆ¶é¢ä¸ harness å¯¼èˆª | `git revert --no-edit 534407b` | `npm run harness:check` |
+
+## Stage 7 code / artifact æäº¤
+| Rollback ID | Commit SHA | Atomic Theme | One-Click Command | Postcheck |
+| --- | --- | --- | --- | --- |
+| `RB-STAGE7-P15-20260331-01` | `814fe85` | Phase 15 å®¡è®¡è„šæœ¬ã€ç›˜ç‚¹äº§ç‰©ä¸äº‹å®å¯¹è´¦é—¨ç¦ | `git revert --no-edit 814fe85` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AuditScripts.test.js && npm run novel-design:audit:check && npm run harness:check` |
+| `RB-STAGE7-P16P17-20260331-01` | `868b861` | Phase 16-17 Token çœŸæºã€èµ„äº§æ²»ç†è„šæ‰‹æ¶ä¸ç”Ÿæˆç‰© | `git revert --no-edit 868b861` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7TokenBuild.test.js __tests__/harness/stage7AssetsScripts.test.js && npm run novel-design:tokens:check && npm run novel-design:assets:check && npm run harness:check` |
+| `RB-STAGE7-CHECKS-20260331-01` | `c7690a6` | ä¿®æ­£ Stage 7 token / asset check ä¸ºåªè¯»æ ¡éª?| `git revert --no-edit c7690a6` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7TokenBuild.test.js __tests__/harness/stage7AssetsScripts.test.js && npm run novel-design:tokens:check && npm run novel-design:assets:check && npm run harness:check` |
+| `RB-STAGE7-ASSET-UI-20260401-01` | `09e6221` | æ¥å…¥ Stage 7 å›¾æ ‡æ³¨å†Œè¡¨ä¸åª’ä½“åŸºç¡€ç»„ä»¶ | `git revert --no-edit 09e6221` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AssetsScripts.test.js __tests__/design-system/IconComponent.stage7.test.tsx __tests__/design-system/PlaceholderImage.stage7.test.tsx __tests__/design-system/PexelsCreditOverlay.stage7.test.tsx && npm run novel-design:assets:check && npm run harness:check` |
+| `RB-STAGE7-SHOWCASE-20260401-01` | `e64186d` | è¡¥å…… Stage 7 çš?RN å±•ç¤ºåŸºå»ºéª¨æ¶ | `git revert --no-edit e64186d` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/Stage7Showcase.test.tsx __tests__/design-system/IconComponent.stage7.test.tsx __tests__/design-system/PlaceholderImage.stage7.test.tsx __tests__/design-system/PexelsCreditOverlay.stage7.test.tsx && npm run novel-design:assets:check && npm run harness:check` |
+| `RB-STAGE7-ANDROID-SHOWCASE-20260401-01` | `5d5fe2e` | è¡¥ä¸Š Stage 7 çš?Android å±•ç¤ºåŸºå»ºéª¨æ¶ | `git revert --no-edit 5d5fe2e` | `cd android && ./gradlew :core-ui:testDebugUnitTest --tests com.novel.ui.showcase.Stage7ShowcaseModelTest --stacktrace --console=plain && npm run harness:check` |
+| `RB-STAGE7-WEB-SHOWCASE-20260401-01` | `a16c3c9` | ä¿®é€?Stage 7 å±•ç¤ºçš?web å…¥å£ä¸?shim é“¾è·¯ | `git revert --no-edit a16c3c9` | `npm test -- --runInBand --runTestsByPath __tests__/web/webEntryConfig.test.ts __tests__/web/webShims.test.ts __tests__/design-system/Stage7Showcase.test.tsx && npx webpack --config webpack.config.js && npm run harness:check` |
+| `RB-STAGE7-VISUAL-BRIEFS-20260401-01` | `ed30a96` | è¡¥å…¨ Stage 7 é¡µé¢ä¸ç»„ä»¶çš„è§†è§‰ç®€æŠ?| `git revert --no-edit ed30a96` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AuditScripts.test.js && npm run novel-design:audit:check && npm run harness:check` |
+| `RB-STAGE7-FIGMA-SEED-20260401-01` | `90142be` | åŒæ­¥ Stage 7 çš?Figma é€é¡¹å¡ç‰‡è½åœ° | `git revert --no-edit 90142be` | `npm run harness:check` |
+| `RB-STAGE7-WAVE1-PROFILE-20260401-01` | `8e02f52` | å¯åŠ¨ Stage 7 é¦–æ‰¹é¡µé¢å£³å±‚æ¢è‚¤ï¼ˆProfilePageï¼?| `git revert --no-edit 8e02f52` | `npm test -- --runInBand --runTestsByPath __tests__/App.test.tsx __tests__/design-system/resolveNovelDesignTheme.test.ts __tests__/design-system/ProfilePageStyles.stage7.test.ts __tests__/design-system/ProfileTopBar.stage7.test.tsx` |
+| `RB-STAGE7-AUDIT-ANDROID-20260401-01` | `4de4cd5` | æ‰©å±• Stage 7 ç»„ä»¶å®¡è®¡åˆ?Android | `git revert --no-edit 4de4cd5` | `npm test -- --runInBand --runTestsByPath __tests__/harness/stage7AuditScripts.test.js && npm run novel-design:audit:check && npm run harness:check` |
+| `RB-STAGE7-WAVE1-SETTINGS-20260401-01` | `89f7327` | æ¨è¿› Stage 7 çš?SettingsPage å£³å±‚æ¢è‚¤ | `git revert --no-edit 89f7327` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx __tests__/design-system/SettingsPageStyles.stage7.test.ts` |
+| `RB-STAGE7-WAVE1-CATEGORY-20260401-01` | `1f46827` | æ¨è¿› Stage 7 çš?CategoryPage å£³å±‚æ¢è‚¤ | `git revert --no-edit 1f46827` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CategoryPageStyles.stage7.test.ts` |
+| `RB-STAGE7-WAVE1-BOOKSHELF-20260401-01` | `018cea7` | æ¨è¿› Stage 7 çš?BookshelfPage å£³å±‚æ¢è‚¤ | `git revert --no-edit 018cea7` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfMainPageStyles.stage7.test.ts __tests__/smoke/BookshelfPage.smoke.test.tsx` |
+| `RB-STAGE7-WAVE1-MEMBERCENTER-20260401-01` | `2b2d2d7` | æ¨è¿› Stage 7 çš?MemberCenterPage å£³å±‚æ¢è‚¤ | `git revert --no-edit 2b2d2d7` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/MemberCenterPageStyles.stage7.test.ts __tests__/smoke/MemberCenterPage.smoke.test.tsx` |
+| `RB-STAGE7-WAVE1-WRITEPAGE-20260401-01` | `6ef5171` | æ¨è¿› Stage 7 çš?WritePage å£³å±‚æ¢è‚¤ | `git revert --no-edit 6ef5171` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/WritePageStyles.novelDesign.test.ts __tests__/smoke/WritePage.smoke.test.tsx` |
+| `RB-STAGE7-NOVELDESIGN-20260401-01` | `402ead4` | å°†ä»£ç å±‚ Stage 7 å‘½åç»Ÿä¸€è¿ç§»ä¸?novelDesign | `git revert --no-edit 402ead4` | `npm test -- --runInBand --runTestsByPath __tests__/harness/novelDesignNaming.test.js __tests__/harness/novelDesignAuditScripts.test.js __tests__/harness/novelDesignTokenBuild.test.js __tests__/harness/novelDesignAssetsScripts.test.js && npm run novel-design:audit:check && npm run novel-design:tokens:check && npm run novel-design:assets:check && npm run harness:check && npx webpack --config webpack.config.js` |
+| `RB-STAGE7-NOVELDESIGN-20260401-02` | `7e7b66f` | æ¸…ç† Stage 7 é—ç•™æµ‹è¯•å‘½åå¹¶åŒæ­¥å¿«ç…?| `git revert --no-edit 7e7b66f` | `npm test -- --runInBand --runTestsByPath __tests__/harness/novelDesignNaming.test.js __tests__/harness/novelDesignAuditScripts.test.js __tests__/harness/novelDesignTokenBuild.test.js __tests__/harness/novelDesignAssetsScripts.test.js && npm run harness:check` |
+
+| `RB-STAGE7-WRITER-NOVELDESIGN-20260401-01` | `b8aeaea` | Í³Ò» novelDesign È«¾ÖÅäÖÃ²¢ÍÆ½ø WritePage / AIWriteAssistant / BookManagePage Ğ´×÷Ïß»»·ô | `git revert --no-edit b8aeaea` | `npm test -- --runInBand --runTestsByPath __tests__/harness/novelDesignAuditScripts.test.js __tests__/harness/novelDesignNaming.test.js __tests__/harness/novelDesignTokenBuild.test.js __tests__/harness/novelDesignAssetsScripts.test.js __tests__/design-system/NovelDesignUI.test.ts __tests__/design-system/WritePageStyles.novelDesign.test.ts __tests__/design-system/AIWriteAssistantStyles.novelDesign.test.ts __tests__/design-system/BookManageStyles.novelDesign.test.ts __tests__/smoke/WritePage.smoke.test.tsx __tests__/smoke/AIWriteAssistant.smoke.test.tsx __tests__/smoke/BookManagePage.smoke.test.tsx && npm run novel-design:audit:check && npm run novel-design:tokens:check && npm run novel-design:assets:check && npm run harness:check && npx webpack --config webpack.config.js` |
+
+| `RB-STAGE7-NOVELDESIGN-ENTRY-20260401-01` | `ee556a0` | ½«Ê×ÅúÒÑ»»·ôÒ³ÃæÍ³Ò»½ÓÈë NovelDesignUI | `git revert --no-edit ee556a0` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/ProfilePageStyles.novelDesign.test.ts __tests__/design-system/SettingsPageStyles.novelDesign.test.ts __tests__/design-system/CategoryPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfMainPageStyles.novelDesign.test.ts __tests__/design-system/MemberCenterPageStyles.novelDesign.test.ts __tests__/design-system/CommentPageStyles.novelDesign.test.ts __tests__/design-system/ReviewDetailPageStyles.novelDesign.test.ts __tests__/design-system/WriteReviewPageStyles.novelDesign.test.ts __tests__/design-system/WritePageStyles.novelDesign.test.ts __tests__/design-system/NovelDesignUI.test.ts` |
+
+| `RB-STAGE7-BOOKSHELF-NESTED-20260401-01` | `2050e4a` | ÍÆ½øÊé¼Ü History / Watchlist ÄÚÇ¶Ò³µÄ novelDesign »»·ô | `git revert --no-edit 2050e4a` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/HistoryPageStyles.novelDesign.test.ts __tests__/design-system/WatchlistPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-BOOKSHELF-CORE-20260401-01` | `184a3ce` | ÍÆ½øÊé¼Ü Bookshelf / Community ÄÚÇ¶Ò³µÄ novelDesign »»·ô | `git revert --no-edit 184a3ce` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-BOOKSHELF-COMPONENTS-20260402-01` | `b777920` | ÍÆ½øÊé¼Ü×é¼ş²ãµÄ novelDesign Í¼±êÓë¼ÓÔØÌ¬ÊÕ¿Ú | `git revert --no-edit b777920` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityComponents.novelDesign.test.tsx __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-COMMUNITY-STYLE-20260402-01` | `dee099c` | ²¹Æë Community ÑùÊ½ÄÚºËµÄ novelDesign ÊÕ¿Ú | `git revert --no-edit dee099c` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/CommunityComponents.novelDesign.test.tsx __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-BOOKSHELF-SHELL-20260402-01` | `0f71c4f` | ÍÆ½ø Bookshelf ¿ÕÌ¬Óë¹ö¶¯¿Ç²ãµÄ novelDesign ÊÕ¿Ú | `git revert --no-edit 0f71c4f` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-COMMUNITY-FEED-20260402-01` | `70d789d` | ÍÆ½ø Community Feed Óë Bookshelf ¹¤¾ßÌõµÄ novelDesign ÊÕ¿Ú | `git revert --no-edit 70d789d` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/CommunityFeedComponents.novelDesign.test.tsx __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-SHELL-GUARDS-20260402-01` | `758765d` | Ï¸»¯Êé¼ÜÓëÉçÇøÑùÊ½ºËµÄ novelDesign »¤À¸ | `git revert --no-edit 758765d` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx __tests__/design-system/CommunityPostList.novelDesign.test.tsx` |
+
+| `RB-STAGE7-TEXT-TOKENS-20260402-01` | `8b57e55` | ²¹ÆëÊé¼ÜÓëÉçÇøÎÄ±¾²ãµÄ novelDesign ÓïÒåÉ« | `git revert --no-edit 8b57e55` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/CommunityPageStyles.novelDesign.test.ts` |
+
+| `RB-STAGE7-STYLE-CORE-20260402-01` | `ff18b71` | ¼ÌĞøÑ¹Æ½Êé¼ÜÓëÉçÇøÑùÊ½ºËµÄ¾ÉÖ÷ÌâÉ«Öµ | `git revert --no-edit ff18b71` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/CommunityComponents.novelDesign.test.tsx __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx __tests__/design-system/CommunityPostList.novelDesign.test.tsx __tests__/design-system/CommunityFeedComponents.novelDesign.test.tsx` |
+
+| `RB-STAGE7-BOOKSHELF-STYLE-20260402-01` | `e163300` | Çå¿Õ Bookshelf ÑùÊ½ºËµÄ¾ÉÖ÷ÌâÖ±Á¬ | `git revert --no-edit e163300` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx` |
+
+| `RB-STAGE7-HISTORY-MESSAGE-20260402-01` | `2161b88` | ÍÆ½ø History Óë Message Ò³ÃæµÄ novelDesign »»·ô | `git revert --no-edit 2161b88` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/ScrollBoxHistoryPageStyles.novelDesign.test.ts __tests__/design-system/MessagePageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-VIEWED-RESERVATION-20260402-01` | `2592101` | ÍÆ½ø ViewedUsers Óë MyReservation Ò³ÃæµÄ novelDesign »»·ô | `git revert --no-edit 2592101` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/ViewedUsersPageStyles.novelDesign.test.ts __tests__/design-system/MyReservationPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-AI-COPY-20260402-01` | `a4e93fe` | ÇåÀí AI Ğ´×÷ÖúÊÖ²Ù×÷À¸µÄÎÄ°¸±àÂë | `git revert --no-edit a4e93fe` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/AIWriteAssistantStyles.novelDesign.test.ts __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
+
+| `RB-STAGE7-HELP-LEGAL-20260402-01` | `aa49949` | ÍÆ½ø°ïÖúÓëÒşË½Ò³ÃæµÄ novelDesign »»·ô | `git revert --no-edit aa49949` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/FeedbackHelpPageStyles.novelDesign.test.ts __tests__/design-system/HelpSupportPageStyles.novelDesign.test.ts __tests__/design-system/PrivacyPolicyPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-HELP-LINE-20260402-02` | `4ab20a1` | Í¬²½°ïÖúÏßÒ³Ãæ½øÈë novelDesign Ö÷Ïß | `git revert --no-edit 4ab20a1` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/FeedbackHelpPageStyles.novelDesign.test.ts __tests__/design-system/HelpSupportPageStyles.novelDesign.test.ts __tests__/design-system/PrivacyPolicyPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-CREATOR-AUX-20260402-01` | `e424a20` | ÍÆ½ø BecomeWriter Óë RecommendBook Ò³ÃæµÄ novelDesign »»·ô | `git revert --no-edit e424a20` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BecomeWriterPageStyles.novelDesign.test.ts __tests__/design-system/RecommendBookPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
+| `RB-STAGE7-ANDROID-PRIMITIVES-20260402-01` | `d901fed` | ÊÕ¿Ú Android ¹²Ïí»ùÔªµ½ NovelDesignTokens | `git revert --no-edit d901fed` | `cd android && .\\gradlew.bat --version` |
+
+| `RB-STAGE7-ANDROID-LOGIN-20260402-01` | `31aa89d` | ÍÆ½ø Android µÇÂ¼Ò³½ÓÈë NovelDesignTokens | `git revert --no-edit 31aa89d` | `cd android && .\\gradlew.bat --version` |
+
+| `RB-STAGE7-BOOKSHELF-STYLES-PIPELINE-20260402-01` | `68c236e` | Í³Ò» Bookshelf Ò³ÃæµÄÑùÊ½ÊµÀıÍ¸´« | `git revert --no-edit 68c236e` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfNestedPage.smoke.test.tsx __tests__/design-system/BookshelfUnifiedScrollView.novelDesign.test.tsx` |
+
+| `RB-STAGE7-ANDROID-SEARCH-20260402-01` | `0b28c2e` | ÍÆ½ø Android ËÑË÷Ò³½ÓÈë NovelDesignTokens | `git revert --no-edit 0b28c2e` | `cd android && .\\gradlew.bat --version` |
+
+| `RB-STAGE7-ANDROID-SEARCHRESULT-20260402-01` | `ce24ad5` | ÍÆ½ø Android ËÑË÷½á¹ûÒ³½ÓÈë NovelDesignTokens | `git revert --no-edit ce24ad5` | `cd android && .\\gradlew.bat --version` |
+
+| `RB-STAGE7-GOVERNANCE-20260402-01` | `7304a98` | Í¬²½ Stage 7 ×îĞÂÖÎÀí²úÎïÓë smoke Ä¿Â¼ | `git revert --no-edit 7304a98` | `npm test -- --runInBand --runTestsByPath __tests__/harness/novelDesignAuditScripts.test.js && npm run novel-design:audit:check` |
+
+| `RB-STAGE7-ANDROID-HOME-20260402-01` | `a6b57fe` | ÍÆ½ø Android Ê×Ò³Ö÷¿Ç½ÓÈë NovelDesignTokens | `git revert --no-edit a6b57fe` | `npm test -- --runInBand --runTestsByPath __tests__/harness/androidNovelDesignPages.test.js` |
+
 ## è¯´æ˜
-- å½“å‰ closeout ä¸ rollback authority ä»¥æœ¬é¡µä¸ºå‡†ã€‚
+- å½“å‰ closeout ä¸?rollback authority ä»¥æœ¬é¡µä¸ºå‡†ã€?

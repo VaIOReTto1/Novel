@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
-export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createCommentPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
     paddingHorizontal: wp(15),
   },
 
@@ -24,6 +28,7 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
     alignItems: 'center',
     paddingVertical: wp(10),
     paddingHorizontal: wp(5),
+    backgroundColor: novelDesign.color.bg.surface,
   },
 
   backButton: {
@@ -45,7 +50,7 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.novelSecondaryBackground + '80',
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(5),
     paddingHorizontal: wp(12),
     height: wp(36),
@@ -63,7 +68,7 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
 
   // 评分级别样式
   ratingSection: {
-    backgroundColor: colors.novelSecondaryBackground + '80',
+    backgroundColor: novelDesign.color.bg.surface,
     paddingVertical: wp(15),
     paddingHorizontal: wp(15),
     marginBottom: wp(10),
@@ -191,7 +196,7 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
   },
 
   commentItem: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(12),
     marginBottom: wp(15),
   },
@@ -484,11 +489,11 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
 
   // 刷新指示器样式
   refreshIndicator: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.elevated,
     paddingVertical: wp(15),
     paddingHorizontal: wp(20),
     borderBottomWidth: 1,
-    borderBottomColor: colors.novelDivider,
+    borderBottomColor: novelDesign.color.border.subtle,
     marginBottom: wp(10),
   },
 
@@ -1015,3 +1020,4 @@ export const createCommentPageStyles = (colors: NovelColors) => StyleSheet.creat
     fontWeight: 'bold',
   },
 });
+};

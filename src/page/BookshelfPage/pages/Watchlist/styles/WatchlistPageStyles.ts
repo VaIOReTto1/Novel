@@ -1,13 +1,17 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { wp, hp, fp, sp } from '../../../../../utils/theme/dimensions';
 import { NovelColors } from '../../../../../utils/theme';
 import { screenWidth } from '../../../../../page/ProfilePage/utils/constants';
 
-export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createWatchlistPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   // 容器样式
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   content: {
@@ -20,7 +24,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
     alignItems: 'center',
     paddingVertical: wp(2),
     paddingHorizontal: wp(16),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
   },
 
   topBarLeft: {
@@ -39,7 +43,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
   adBanner: {
     width: wp(181),
     height: wp(30),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(6),
     justifyContent: 'center',
     alignItems: 'center',
@@ -72,7 +76,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
     justifyContent: 'space-between',
     paddingHorizontal: wp(16),
     paddingVertical: hp(12),
-    backgroundColor: colors.novelSecondaryBackground,
+    backgroundColor: novelDesign.color.bg.elevated,
     borderBottomWidth: 1,
     borderBottomColor: colors.novelDivider,
   },
@@ -153,7 +157,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
   },
 
   gridItem: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: wp(8),
     width: (screenWidth - wp(32) - wp(20)) / 3,
   },
@@ -171,7 +175,7 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
     width: '100%',
     aspectRatio: 3 / 4,
     borderRadius: wp(8),
-    backgroundColor: colors.novelLightGray,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
 
   gridItemContent: {
@@ -534,3 +538,4 @@ export const createWatchlistPageStyles = (colors: NovelColors) => StyleSheet.cre
     color: colors.novelMain,
   },
 });
+};

@@ -1,29 +1,34 @@
-// webpack.config.js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',  // 或 'production'
+  mode: 'development',
   entry: path.resolve(__dirname, 'index.web.ts'),
   output: {
     path: path.resolve(__dirname, 'web-build'),
     filename: 'bundle.js',
   },
   resolve: {
-    // 支持 .web.js 优先，然后常规后缀
-    extensions: ['.web.ts', '.js', '.ts', '.tsx', '.json'],
+    extensions: ['.web.ts', '.web.tsx', '.js', '.ts', '.tsx', '.json'],
     alias: {
-      // 把 react-native 全部指向 react-native-web
       'react-native$': 'react-native-web',
+      'react-native-reanimated$': path.resolve(
+        __dirname,
+        'src/web/shims/reactNativeReanimated.ts',
+      ),
+      '@react-native-async-storage/async-storage$': path.resolve(
+        __dirname,
+        'src/web/shims/asyncStorage.ts',
+      ),
     },
   },
   module: {
     rules: [
-        {
-            test: /\.svg$/,
-            issuer: /\.[jt]sx?$/,           // 仅当从 JS/TS 导入时生效
-            use: ['@svgr/webpack'],         // 把 SVG 转成 React 组件
-          },
+      {
+        test: /\.svg$/,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
+      },
       {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
@@ -32,14 +37,10 @@ module.exports = {
           options: {
             babelrc: false,
             configFile: false,
-            // 保留 RN 的 preset 并加上 Web 编译
             presets: [
-              '@babel/preset-env',                    // ES 特性降级
-              ['@babel/preset-react', { runtime: 'automatic' }], // React 自动 jsx
-              '@babel/preset-typescript',             // TS 支持
-            ],
-            plugins: [
-              // 如有需要，可加上其他插件
+              '@babel/preset-env',
+              ['@babel/preset-react', { runtime: 'automatic' }],
+              '@babel/preset-typescript',
             ],
           },
         },

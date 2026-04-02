@@ -1,0 +1,43 @@
+{
+  "summary": {
+    "local_svg_count": 22,
+    "font_asset_count": 7
+  },
+  "local_svg_assets": [
+    "assets/image/be_writer.svg",
+    "assets/image/download.svg",
+    "assets/image/email.svg",
+    "assets/image/feedback.svg",
+    "assets/image/game.svg",
+    "assets/image/guide.svg",
+    "assets/image/history.svg",
+    "assets/image/member.svg",
+    "assets/image/moon_mode.svg",
+    "assets/image/note.svg",
+    "assets/image/order.svg",
+    "assets/image/public_welfare.svg",
+    "assets/image/qrscan.svg",
+    "assets/image/reading_preference.svg",
+    "assets/image/recommend_book.svg",
+    "assets/image/settings.svg",
+    "assets/image/subscribe.svg",
+    "assets/image/sun_mode.svg",
+    "assets/image/vedio_creation.svg",
+    "assets/image/vedio_have_favorited.svg",
+    "assets/image/wallet.svg",
+    "assets/image/who_have_seen.svg"
+  ],
+  "font_assets": [
+    "assets/fonts/pingfang_bold.ttf",
+    "assets/fonts/pingfang_extra_light.ttf",
+    "assets/fonts/pingfang_heavy.ttf",
+    "assets/fonts/pingfang_light.ttf",
+    "assets/fonts/pingfang_medium.ttf",
+    "assets/fonts/pingfang_regular.ttf",
+    "assets/fonts/pingfang_semibold.ttf"
+  ],
+  "react_native_vector_icon_families": [
+    "Feather",
+    "MaterialIcons"
+  ]
+}

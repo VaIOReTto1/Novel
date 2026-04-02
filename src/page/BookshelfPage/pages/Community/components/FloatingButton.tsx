@@ -1,5 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import { useNovelColors } from '../../../../../utils/theme';
 import { createCommunityPageStyles } from '../styles/CommunityPageStyles';
 
@@ -10,7 +12,7 @@ interface FloatingButtonProps {
 
 export const FloatingButton: React.FC<FloatingButtonProps> = ({
   onPress,
-  icon = '✏️',
+  icon = 'edit',
 }) => {
   const colors = useNovelColors();
   const styles = createCommunityPageStyles(colors);
@@ -19,9 +21,8 @@ export const FloatingButton: React.FC<FloatingButtonProps> = ({
     <TouchableOpacity
       style={styles.floatingButton}
       onPress={onPress}
-      activeOpacity={0.8}
-    >
-      <Text style={styles.floatingButtonIcon}>{icon}</Text>
+      activeOpacity={0.8}>
+      <MaterialIcons name={icon} size={22} color={colors.novelBackground} />
     </TouchableOpacity>
   );
 };

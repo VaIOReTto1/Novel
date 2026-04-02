@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../utils/theme/colors';
 import { wp, hp, sp, fp } from '../../../../utils/theme/dimensions';
 
@@ -7,11 +8,12 @@ import { wp, hp, sp, fp } from '../../../../utils/theme/dimensions';
  * 基于 NovelColors 主题系统，支持明暗模式切换
  */
 export const createReviewDetailPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
   return StyleSheet.create({
     // 主容器
     container: {
       flex: 1,
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.canvas,
     },
 
     // 滚动视图
@@ -31,9 +33,9 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
       justifyContent: 'space-between',
       paddingHorizontal: wp(16),
       paddingVertical: hp(12),
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       borderBottomWidth: sp(1),
-      borderBottomColor: colors.novelDivider,
+      borderBottomColor: novelDesign.color.border.subtle,
     },
 
     backButton: {
@@ -108,7 +110,7 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
 
     // 评论详情容器
     reviewDetailContainer: {
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       marginHorizontal: wp(12),
       marginTop: hp(16),
       borderRadius: sp(12),
@@ -233,7 +235,7 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
     },
 
     commentItem: {
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       marginHorizontal: wp(12),
       marginBottom: hp(8),
       borderRadius: sp(8),
@@ -473,7 +475,7 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
     // 评论输入框
     commentInputContainer: {
       flexDirection: 'row',
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       paddingHorizontal: wp(12),
       paddingVertical: hp(12),
       alignItems: 'flex-start',
@@ -567,12 +569,12 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
     // 底部输入框容器
     bottomInputContainer: {
       flexDirection: 'row',
-      backgroundColor: colors.novelBackground,
+      backgroundColor: novelDesign.color.bg.surface,
       paddingHorizontal: wp(16),
       paddingVertical: hp(12),
       alignItems: 'flex-start',
       borderTopWidth: 1,
-      borderTopColor: colors.novelDivider,
+      borderTopColor: novelDesign.color.border.subtle,
     },
 
     // 查看更多回复按钮

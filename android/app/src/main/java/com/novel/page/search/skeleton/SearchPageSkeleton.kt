@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.wdp
 import com.valentinilk.shimmer.shimmer
@@ -33,12 +33,12 @@ import com.valentinilk.shimmer.shimmer
  */
 @Composable
 fun SearchPageSkeleton() {
-    val skeletonColor = NovelColors.NovelTextGray.copy(alpha = 0.2f)
+    val skeletonColor = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.2f)
     
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(NovelColors.NovelBackground)
+            .background(NovelDesignTokens.lightColor("color.bg.surface"))
             .shimmer(),
         contentPadding = PaddingValues(vertical = 10.wdp),
         verticalArrangement = Arrangement.spacedBy(16.wdp)
@@ -72,7 +72,7 @@ private fun SearchTopBarSkeleton(skeletonColor: Color) {
         modifier = Modifier
             .fillMaxWidth()
             .height(56.wdp)
-            .background(Color.White)
+            .background(NovelDesignTokens.lightColor("color.bg.surface"))
             .padding(horizontal = 16.wdp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.wdp)

@@ -1,0 +1,54 @@
+import { createBookshelfPageStyles } from '../../src/page/BookshelfPage/pages/Bookshelf/styles/BookshelfPageStyles';
+
+const lightColors = {
+  novelMain: '#FF995D',
+  novelMainLight: '#F86827',
+  novelBookBackground: '#E8E3CF',
+  novelBackground: '#FFFFFF',
+  novelDivider: '#F7F7F8',
+  novelSecondaryBackground: '#F7F7F8',
+  novelText: '#000000',
+  novelTextGray: '#7F7F7F',
+  novelLightGray: '#DDDDDD',
+  novelChipBackground: '#EBEDF0',
+  novelError: '#FF995D',
+  outline: '#E0E0E0',
+};
+
+describe('Bookshelf nested page novelDesign styles', () => {
+  it('uses novelDesign shell surfaces for tabs, empty state and shelf grid', () => {
+    const styles = createBookshelfPageStyles(lightColors as any);
+
+    expect(styles.container.backgroundColor).toBe('#FAF6F0');
+    expect(styles.tabsContainer.backgroundColor).toBe('#FFFDFC');
+    expect(styles.gridCover.backgroundColor).toBe('#F3ECE3');
+    expect(styles.emptyContainer.backgroundColor ?? '#FAF6F0').toBe('#FAF6F0');
+    expect(styles.gridItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.tabsDivider.backgroundColor).toBe('#F3ECE3');
+    expect(styles.activeTab.backgroundColor).toBe('#C96A34');
+    expect(styles.activeTabText.color).toBe('#FFFDFC');
+    expect(styles.gridTitle.color).toBe('#201A17');
+    expect(styles.gridAuthor.color).toBe('#201A17');
+    expect(styles.toolbar.backgroundColor).toBe('#FFFDFC');
+    expect(styles.toolbarButton.backgroundColor).toBe('#C96A34');
+    expect(styles.editToolbar.backgroundColor).toBe('#FFFDFC');
+    expect(styles.editActionButton.backgroundColor).toBe('#C96A34');
+    expect(styles.deleteButton.backgroundColor).toBe('#B3453C');
+    expect(styles.selectionCount.color).toBe('#201A17');
+    expect(styles.listSeparator.backgroundColor).toBe('#E8DDD1');
+    expect(styles.emptyAction.backgroundColor).toBe('#C96A34');
+    expect(styles.emptyActionText.color).toBe('#FFFDFC');
+    expect(styles.listItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.listCover.backgroundColor).toBe('#F3ECE3');
+    expect(styles.listProgress.color).toBe('#C96A34');
+    expect(styles.listTitle.color).toBe('#201A17');
+    expect(styles.listAuthor.color).toBe('#201A17');
+    expect(styles.listMeta.color).toBe('#201A17');
+    expect(styles.listStatus.color).toBe('#201A17');
+    expect(styles.waterfallBookItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.bookTag.backgroundColor).toBe('#C96A34');
+    expect(styles.bookTagText.color).toBe('#FFFDFC');
+    expect(styles.waterfallDescription.color).toBe('#6F6258');
+    expect(styles.waterfallCurrentChapter.color).toBe('#C96A34');
+  });
+});

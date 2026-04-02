@@ -1,0 +1,13 @@
+{
+  "provider": {
+    "name": "undraw",
+    "runtime_fetch_allowed": false,
+    "theme_sync": "brand-token-driven",
+    "required_outputs": [
+      "figma",
+      "react-native-svg",
+      "android-vector"
+    ]
+  },
+  "entries": []
+}

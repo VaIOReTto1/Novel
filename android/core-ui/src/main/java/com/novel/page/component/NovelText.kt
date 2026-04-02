@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.PingFangFamily
 
 /**
@@ -45,7 +46,7 @@ import com.novel.ui.theme.PingFangFamily
 fun NovelText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.onPrimary,
+    color: Color = NovelDesignTokens.lightColor("color.text.primary"),
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,

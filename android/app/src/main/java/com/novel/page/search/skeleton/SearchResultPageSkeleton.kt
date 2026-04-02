@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.wdp
 import com.valentinilk.shimmer.shimmer
@@ -32,12 +32,12 @@ import com.valentinilk.shimmer.shimmer
  */
 @Composable
 fun SearchResultPageSkeleton() {
-    val skeletonColor = NovelColors.NovelTextGray.copy(alpha = 0.2f)
+    val skeletonColor = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.2f)
     
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(NovelColors.NovelBackground)
+            .background(NovelDesignTokens.lightColor("color.bg.surface"))
             .shimmer()
     ) {
         // 搜索结果列表骨架

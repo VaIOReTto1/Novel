@@ -23,6 +23,12 @@ jobs:
         run: npm run harness:check
       - name: Run harness refresh
         run: npm run harness:refresh
+      - name: Run Novel Design audit check
+        run: npm run novel-design:audit:check
+      - name: Run Novel Design token check
+        run: npm run novel-design:tokens:check
+      - name: Run Novel Design asset check
+        run: npm run novel-design:assets:check
       - name: Verify generated snapshot is committed
         run: git diff --exit-code -- docs/harness/generated/workspace-snapshot.md
 

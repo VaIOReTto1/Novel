@@ -2,7 +2,7 @@
 # Workspace Snapshot
 
 ## Git State
-- Branch: `main`
+- Branch: `feature/stage-7-phase-15-audit`
 
 ## Android Modules
 - :app
@@ -55,6 +55,12 @@
 - npm run test -> jest
 - npm run harness:refresh -> node scripts/harness-refresh.js
 - npm run harness:check -> node scripts/harness-check.js
+- npm run novel-design:audit -> node scripts/novel-design-audit.js generate
+- npm run novel-design:audit:check -> node scripts/novel-design-audit.js check
+- npm run novel-design:tokens -> node scripts/novel-design-token-build.js generate
+- npm run novel-design:tokens:check -> node scripts/novel-design-token-build.js check
+- npm run novel-design:assets -> node scripts/novel-design-assets.js generate
+- npm run novel-design:assets:check -> node scripts/novel-design-assets.js check
 - npm run version:show -> node scripts/version-sync.js show
 - npm run version:patch -> node scripts/version-sync.js patch
 - npm run version:minor -> node scripts/version-sync.js minor
@@ -64,6 +70,9 @@
 - npm run build:android:bundle -> npm run version:patch && cd android && ./gradlew bundleRelease
 - npm run harness:check
 - npm run harness:refresh
+- npm run novel-design:audit:check
+- npm run novel-design:tokens:check
+- npm run novel-design:assets:check
 - git diff --exit-code -- docs/harness/generated/workspace-snapshot.md
 - corepack enable
 - yarn install --frozen-lockfile
@@ -81,8 +90,8 @@
 - ./gradlew app:detekt
 
 ## Refactor Summary
-- Current phase: Phase 14
-- Phase status: validated
+- Current phase: Phase 15
+- Phase status: in_progress
 - Latest closeout: see-control-panel
-- Stage summary: Stage 6 = validated
-- Effective date: 2026-03-31 Stage 6 closeout
+- Stage summary: Stage 7 = in_progress
+- Effective date: 2026-03-31 Stage 7 activation

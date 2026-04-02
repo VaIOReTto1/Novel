@@ -18,7 +18,7 @@ import com.novel.page.component.NovelMainButton
 import androidx.compose.ui.Alignment
 import com.novel.page.component.NovelText
 import com.novel.page.component.NovelWeakenButton
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.ssp
 import com.novel.utils.wdp
 import java.util.UUID
@@ -103,7 +103,7 @@ fun ActionButtons(
                     firstText,
                     fontSize = 16.ssp,
                     fontWeight = FontWeight.Bold,
-                    color = NovelColors.NovelSecondaryBackground
+                    color = NovelDesignTokens.lightColor("color.text.inverse")
                 )
             },
             modifier = Modifier
@@ -124,7 +124,7 @@ fun ActionButtons(
                     secondText,
                     fontSize = 16.ssp,
                     fontWeight = FontWeight.Bold,
-                    color = NovelColors.NovelText
+                    color = NovelDesignTokens.lightColor("color.text.primary")
                 )
             },
             modifier = Modifier

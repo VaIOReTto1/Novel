@@ -1,152 +1,164 @@
 import { StyleSheet } from 'react-native';
-import { wp, fp, sp } from '../../../utils/theme/dimensions';
+
+import { createNovelDesignUI } from '../../../design-system/novelDesign';
 import { NovelColors } from '../../../utils/theme/colors';
+import { wp, fp, sp } from '../../../utils/theme/dimensions';
 
-export const createCategoryPageStyles = (colors: NovelColors) =>
-    StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: colors.novelSecondaryBackground,
-        },
+export const createCategoryPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
 
-        topTabs: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingVertical: wp(14),
-            gap: wp(50),
-        },
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: novelDesign.color.bg.canvas,
+    },
 
-        topTabText: {
-            fontSize: fp(16),
-            color: colors.novelTextGray,
-            fontWeight: '500',
-        },
+    topTabs: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: wp(novelDesign.space['150']),
+      gap: wp(36),
+      backgroundColor: novelDesign.color.bg.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: novelDesign.color.border.subtle,
+    },
 
-        topTabActive: {
-            color: colors.novelText,
-            fontWeight: '600',
-            fontSize: fp(18),
-        },
+    topTabText: {
+      fontSize: fp(16),
+      color: novelDesign.color.text.secondary,
+      fontWeight: '500',
+    },
 
-        body: {
-            flex: 1,
-            flexDirection: 'row',
-        },
+    topTabActive: {
+      color: novelDesign.color.text.primary,
+      fontWeight: '600',
+      fontSize: fp(18),
+    },
 
-        sidebar: {
-            width: wp(100),
-            flexShrink: 0,
-            flexGrow: 0,
-            backgroundColor: colors.novelSecondaryBackground,
-            borderRightColor: colors.novelDivider,
-        },
+    body: {
+      flex: 1,
+      flexDirection: 'row',
+    },
 
-        sidebarItem: {
-            paddingVertical: wp(18),
-            paddingHorizontal: wp(12),
-        },
+    sidebar: {
+      width: wp(100),
+      flexShrink: 0,
+      flexGrow: 0,
+      backgroundColor: novelDesign.color.bg.surface,
+      borderRightWidth: 1,
+      borderRightColor: novelDesign.color.border.subtle,
+    },
 
-        sidebarItemActive: {
-            fontWeight: '600',
-            color: colors.novelMain,
-        },
+    sidebarItem: {
+      paddingVertical: wp(18),
+      paddingHorizontal: wp(12),
+    },
 
-        sidebarText: {
-            fontSize: fp(14),
-            color: colors.novelText,
-            textAlign: 'center',
-        },
+    sidebarItemActive: {
+      fontWeight: '600',
+      color: novelDesign.color.brand.primary,
+    },
 
-        list: {
-            flex: 1,
-            borderTopLeftRadius: sp(12),
-            backgroundColor: colors.novelBackground,
-        },
+    sidebarText: {
+      fontSize: fp(14),
+      color: novelDesign.color.text.primary,
+      textAlign: 'center',
+    },
 
-        gridContainer: {
-            paddingHorizontal: wp(12),
-            paddingVertical: wp(12),
-            backgroundColor: colors.novelBackground,
-        },
+    list: {
+      flex: 1,
+      borderTopLeftRadius: sp(novelDesign.radius.lg),
+      backgroundColor: novelDesign.color.bg.surface,
+    },
 
-        gridItem: {
-            flex: 1,
-            margin: wp(6),
-            backgroundColor: colors.novelBackground,
-        },
+    gridContainer: {
+      paddingHorizontal: wp(12),
+      paddingVertical: wp(12),
+      backgroundColor: novelDesign.color.bg.surface,
+    },
 
-        card: {
-            borderRadius: sp(8),
-            overflow: 'hidden',
-        },
+    gridItem: {
+      flex: 1,
+      margin: wp(6),
+      backgroundColor: novelDesign.color.bg.surface,
+    },
 
-        cover: {
-            width: '100%',
-            aspectRatio: 0.75,
-            backgroundColor: colors.novelDivider,
-            borderRadius: sp(8),
-        },
+    card: {
+      borderRadius: sp(novelDesign.radius.lg),
+      borderWidth: 1,
+      borderColor: novelDesign.color.border.subtle,
+      backgroundColor: novelDesign.color.bg.surface,
+      overflow: 'hidden',
+    },
 
-        titleBox: {
-            paddingVertical: wp(6),
-        },
+    cover: {
+      width: '100%',
+      aspectRatio: 0.75,
+      backgroundColor: novelDesign.color.bg.elevated,
+      borderRadius: sp(novelDesign.radius.lg),
+    },
 
-        title: {
-            fontSize: fp(12),
-            color: colors.novelText,
-            fontWeight: '600',
-            textAlign: 'center',
-        },
+    titleBox: {
+      paddingVertical: wp(6),
+      paddingHorizontal: wp(6),
+    },
 
-        // BookGrid inline styles moved here
-        gridItemWrapper: {
-            padding: wp(8),
-        },
+    title: {
+      fontSize: fp(12),
+      color: novelDesign.color.text.primary,
+      fontWeight: '600',
+      textAlign: 'center',
+    },
 
-        loadingBox: {
-            paddingVertical: wp(24),
-        },
+    gridItemWrapper: {
+      padding: wp(8),
+    },
 
-        loadingContainer: {
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
+    loadingBox: {
+      paddingVertical: wp(24),
+    },
 
-        loadingText: {
-            textAlign: 'center',
-            opacity: 0.6,
-        },
+    loadingContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 
-        columnWrapperStart: {
-            justifyContent: 'flex-start',
-            flexWrap: 'wrap',
-        },
+    loadingText: {
+      textAlign: 'center',
+      opacity: 0.6,
+    },
 
-        listFooterSpacer: {
-            paddingBottom: wp(12),
-        },
+    columnWrapperStart: {
+      justifyContent: 'flex-start',
+      flexWrap: 'wrap',
+    },
 
-        footerCenter: {
-            alignItems: 'center',
-        },
+    listFooterSpacer: {
+      paddingBottom: wp(12),
+    },
 
-        footerRow: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
+    footerCenter: {
+      alignItems: 'center',
+    },
 
-        endLine: {
-            width: wp(30),
-            height: wp(1),
-            backgroundColor: colors.novelDivider,
-            marginHorizontal: wp(6),
-        },
+    footerRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
 
-        endText: {
-            fontSize: fp(12),
-            color: colors.novelTextGray,
-        },
-    });
+    endLine: {
+      width: wp(30),
+      height: wp(1),
+      backgroundColor: novelDesign.color.border.subtle,
+      marginHorizontal: wp(6),
+    },
+
+    endText: {
+      fontSize: fp(12),
+      color: novelDesign.color.text.secondary,
+    },
+  });
+};

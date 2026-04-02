@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.wdp
 import com.valentinilk.shimmer.shimmer
@@ -34,12 +34,12 @@ import com.valentinilk.shimmer.shimmer
  */
 @Composable
 fun HomePageSkeleton() {
-    val skeletonColor = NovelColors.NovelTextGray.copy(alpha = 0.2f)
+    val skeletonColor = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.2f)
     
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(NovelColors.NovelBackground)
+            .background(NovelDesignTokens.lightColor("color.bg.surface"))
             .shimmer(),
         contentPadding = PaddingValues(vertical = 10.wdp),
         verticalArrangement = Arrangement.spacedBy(10.wdp),
@@ -127,7 +127,7 @@ private fun HomeRankPanelSkeleton(skeletonColor: Color) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.wdp))
-                .background(NovelColors.NovelBookBackground)
+                .background(NovelDesignTokens.lightColor("color.bg.elevated"))
                 .padding(16.wdp)
         ) {
             // 榜单标题骨架
@@ -214,7 +214,7 @@ private fun HomeRecommendGridSkeleton(skeletonColor: Color) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(NovelColors.NovelBookBackground)
+            .background(NovelDesignTokens.lightColor("color.bg.elevated"))
             .padding(16.wdp)
     ) {
         // 网格布局骨架 - 2列

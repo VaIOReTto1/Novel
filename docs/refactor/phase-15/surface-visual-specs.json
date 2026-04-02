@@ -1,0 +1,2670 @@
+[
+  {
+    "surface_id": "android-native-book-detail-page",
+    "cluster": "android-book-detail",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/book/BookDetailPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "detail screen with cover, stats, actions, reviews and expandable description",
+      "chrome": "book-first hero and stacked supporting sections",
+      "content_pattern": "book presentation with actions and community proof",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "AuthorSection",
+        "BookActionSection",
+        "BookCoverSection",
+        "BookDescriptionBottomSheet",
+        "BookDescriptionSection",
+        "BookReviewsSection",
+        "BookStatsSection",
+        "BookTitleSection"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-book-detail with hero cover stage and annotated metadata bands",
+      "component_recipe": "editorial-book-detail",
+      "style_keywords": [
+        "detail-hero",
+        "metadata",
+        "review-proof"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-native-full-ranking-page",
+    "cluster": "android-search-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/FullRankingPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "search top bar with history, ranking and filter affordances",
+      "chrome": "search-led chrome with stacked results modules",
+      "content_pattern": "search discovery and ranking exploration",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "FullRankingPageSkeleton",
+        "HistoryGrid",
+        "RankingList",
+        "SearchFilterBottomSheet",
+        "SearchFilterChip",
+        "SearchPageSkeleton",
+        "SearchResultItem",
+        "SearchResultPageSkeleton"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-search-discovery with structured prompts and refined ranking blocks",
+      "component_recipe": "editorial-search",
+      "style_keywords": [
+        "search",
+        "ranking",
+        "structured-discovery"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-native-home-page",
+    "cluster": "android-home-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/home/HomePage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "compose discovery page with top bar, ranking, recommendation and media-heavy grids",
+      "chrome": "top discovery bar and stacked sections",
+      "content_pattern": "home discovery feed with rank and recommendation modules",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "HomeFilterBar",
+        "HomePageSkeleton",
+        "HomeRankPanel",
+        "HomeRecommendGrid",
+        "HomeTopBar"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-discovery-home with magazine-like section pacing",
+      "component_recipe": "editorial-discovery",
+      "style_keywords": [
+        "magazine",
+        "discovery",
+        "modular-sections"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-native-login-page",
+    "cluster": "auth-single-column",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/login/LoginPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "single-column auth screen with title stack, operator copy, inputs, actions and agreement block",
+      "chrome": "minimal auth chrome framed by centered content and low-noise backgrounds",
+      "content_pattern": "login/register dual-mode form with validation, captcha and agreement actions",
+      "key_states": [
+        "loading",
+        "login-mode",
+        "register-mode",
+        "validation-error"
+      ],
+      "key_components": [
+        "LoginAppBar",
+        "TitleSection",
+        "InputSection",
+        "ActionButtons",
+        "AgreementSection"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-auth panel with paper background, restrained accent buttons and stronger form grouping",
+      "component_recipe": "editorial-auth-surface",
+      "style_keywords": [
+        "auth-panel",
+        "form-stack",
+        "paper-surface",
+        "warm-accent"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "android-native-main-page",
+    "cluster": "android-main-shell",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/MainPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "pager-based native shell with bottom navigation and overlay stack",
+      "chrome": "bottom-app-bar navigation and full-screen pager",
+      "content_pattern": "tab shell mixing native pages and RN hosts",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BackButton",
+        "BaseViewModel",
+        "BitmapPool",
+        "CurlDraw",
+        "Defaults",
+        "DragCommonGesture",
+        "DragGesture",
+        "DragStartEnd"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-main-shell with calmer bottom chrome and stronger page transitions",
+      "component_recipe": "editorial-main-shell",
+      "style_keywords": [
+        "bottom-nav",
+        "host-shell",
+        "reader-brand"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-native-reader-page",
+    "cluster": "immersive-reader",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/read/ReaderPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "immersive reader with reading canvas, page-flip modes and settings/chapters overlays",
+      "chrome": "minimal reader chrome revealed through overlays",
+      "content_pattern": "text-first reading flow with contextual panels",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BackgroundColorControl",
+        "BrightnessControl",
+        "ChapterListPanel",
+        "CoverFlipContainer",
+        "FontSizeControl",
+        "NoAnimationContainer",
+        "PageContentDisplay",
+        "PageCurlFlipContainer"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "immersive-reader with paper-toned canvas and quieter controls",
+      "component_recipe": "immersive-reader",
+      "style_keywords": [
+        "reader",
+        "paper-canvas",
+        "immersive"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-native-search-page",
+    "cluster": "android-search-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/SearchPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "search shell with top bar, history chips and multiple ranking shelves",
+      "chrome": "search-first chrome with compact top input and stacked discovery modules",
+      "content_pattern": "history list, ranking carousels and search discovery entry points",
+      "key_states": [
+        "loading",
+        "history-expanded",
+        "default-discovery"
+      ],
+      "key_components": [
+        "SearchTopBar",
+        "SearchHistorySection",
+        "HistoryGrid",
+        "RankingSection"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-search discovery with paper search rail, softer history chips and curated ranking cards",
+      "component_recipe": "editorial-search-discovery-surface",
+      "style_keywords": [
+        "search-discovery",
+        "history-chips",
+        "ranking-cards",
+        "paper-shell"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "android-native-search-result-page",
+    "cluster": "android-search-results",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/SearchResultPage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "search top bar plus category filter row and vertically stacked result cards",
+      "chrome": "utility search chrome with inline filters and incremental loading footer",
+      "content_pattern": "result cards with cover, metadata, chips, empty state and pagination feedback",
+      "key_states": [
+        "loading",
+        "loading-more",
+        "empty-state",
+        "filter-sheet-open"
+      ],
+      "key_components": [
+        "SearchTopBar",
+        "CategoryFilterChip",
+        "SearchResultItem",
+        "SearchFilterBottomSheet"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-search results with paper cards, softer chips and clearer empty-state hierarchy",
+      "component_recipe": "editorial-search-results-surface",
+      "style_keywords": [
+        "result-cards",
+        "filter-chips",
+        "empty-state",
+        "search-shell"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "android-native-welfare-page",
+    "cluster": "welfare-webview",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/welfare/WelfarePage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "native wrapper around welfare/webview content with accessibility helpers",
+      "chrome": "hosted browser-like shell",
+      "content_pattern": "web content framed inside native surface",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-webview-shell that better frames external content without stealing focus",
+      "component_recipe": "webview-shell",
+      "style_keywords": [
+        "webview",
+        "framed-content",
+        "minimal-host"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Native Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-book-description-bottom-sheet",
+    "cluster": "overlay-bottom-sheet",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "bottom-sheet action and metadata surfaces",
+      "chrome": "utility sheet chrome with close affordance",
+      "content_pattern": "temporary contextual detail and actions",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "AuthorSection",
+        "BookActionSection",
+        "BookCoverSection",
+        "BookDescriptionBottomSheet",
+        "BookDescriptionSection",
+        "BookReviewsSection",
+        "BookStatsSection",
+        "BookTitleSection"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-bottom-sheet with paper panel hierarchy and quieter controls",
+      "component_recipe": "dialog-sheet",
+      "style_keywords": [
+        "bottom-sheet",
+        "paper-panel",
+        "contextual"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-chapter-list-panel",
+    "cluster": "overlay-panel",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "floating side or settings panels tied to reader/search flows",
+      "chrome": "control-heavy panel chrome",
+      "content_pattern": "temporary controls and selection lists",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BackgroundColorControl",
+        "BrightnessControl",
+        "ChapterListPanel",
+        "CoverFlipContainer",
+        "FontSizeControl",
+        "NoAnimationContainer",
+        "PageContentDisplay",
+        "PageCurlFlipContainer"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-control-panel with grouped toggles and soft elevation",
+      "component_recipe": "control-panel",
+      "style_keywords": [
+        "panel",
+        "controls",
+        "soft-elevation"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-full-ranking-page-skeleton",
+    "cluster": "android-search-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "search top bar with history, ranking and filter affordances",
+      "chrome": "search-led chrome with stacked results modules",
+      "content_pattern": "search discovery and ranking exploration",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-search-discovery with structured prompts and refined ranking blocks",
+      "component_recipe": "editorial-search",
+      "style_keywords": [
+        "search",
+        "ranking",
+        "structured-discovery"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-home-page-skeleton",
+    "cluster": "android-home-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "compose discovery page with top bar, ranking, recommendation and media-heavy grids",
+      "chrome": "top discovery bar and stacked sections",
+      "content_pattern": "home discovery feed with rank and recommendation modules",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-discovery-home with magazine-like section pacing",
+      "component_recipe": "editorial-discovery",
+      "style_keywords": [
+        "magazine",
+        "discovery",
+        "modular-sections"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-home-rank-panel",
+    "cluster": "android-home-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "compose discovery page with top bar, ranking, recommendation and media-heavy grids",
+      "chrome": "top discovery bar and stacked sections",
+      "content_pattern": "home discovery feed with rank and recommendation modules",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-discovery-home with magazine-like section pacing",
+      "component_recipe": "editorial-discovery",
+      "style_keywords": [
+        "magazine",
+        "discovery",
+        "modular-sections"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-login-page-skeleton",
+    "cluster": "auth-single-column",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "login skeleton mirroring auth hierarchy with bars, fields and buttons",
+      "chrome": "placeholder-only auth surface",
+      "content_pattern": "loading approximation of login/register panel",
+      "key_states": [
+        "loading"
+      ],
+      "key_components": [
+        "LoginPageSkeleton"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "warm auth skeleton with softer shimmer and stable form geometry",
+      "component_recipe": "auth-skeleton",
+      "style_keywords": [
+        "auth-skeleton",
+        "warm-shimmer",
+        "form-placeholder"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "android-overlay-reader-settings-panel",
+    "cluster": "settings-stack",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "stacked grouped settings rows with modals and hardware-back glue",
+      "chrome": "plain top bar and utility sections with switches and rows",
+      "content_pattern": "settings groups, policy/help routes and switch-heavy controls",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BackgroundColorControl",
+        "BrightnessControl",
+        "ChapterListPanel",
+        "CoverFlipContainer",
+        "FontSizeControl",
+        "NoAnimationContainer",
+        "PageContentDisplay",
+        "PageCurlFlipContainer"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-settings-groups with panelized sections and explicit sublabels",
+      "component_recipe": "editorial-settings-panel",
+      "style_keywords": [
+        "grouped-panels",
+        "utility",
+        "warm-controls"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-search-filter-bottom-sheet",
+    "cluster": "overlay-bottom-sheet",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "bottom-sheet action and metadata surfaces",
+      "chrome": "utility sheet chrome with close affordance",
+      "content_pattern": "temporary contextual detail and actions",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-bottom-sheet with paper panel hierarchy and quieter controls",
+      "component_recipe": "dialog-sheet",
+      "style_keywords": [
+        "bottom-sheet",
+        "paper-panel",
+        "contextual"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-overlay-search-page-skeleton",
+    "cluster": "android-search-discovery",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "search discovery skeleton with top bar, history chips and ranking placeholders",
+      "chrome": "placeholder-only discovery shell",
+      "content_pattern": "loading approximation of search discovery modules",
+      "key_states": [
+        "loading"
+      ],
+      "key_components": [
+        "SearchPageSkeleton"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-search skeleton with softer chips and ranking-card placeholders",
+      "component_recipe": "search-skeleton",
+      "style_keywords": [
+        "search-skeleton",
+        "history-placeholder",
+        "ranking-placeholder"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "android-overlay-search-result-page-skeleton",
+    "cluster": "android-search-results",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "search results skeleton with stacked card placeholders",
+      "chrome": "placeholder-only results shell",
+      "content_pattern": "loading approximation of result card list",
+      "key_states": [
+        "loading"
+      ],
+      "key_components": [
+        "SearchResultPageSkeleton"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-results skeleton with paper-card placeholders and softer separators",
+      "component_recipe": "search-results-skeleton",
+      "style_keywords": [
+        "results-skeleton",
+        "card-placeholder",
+        "loading-list"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "android-shell-compose-main-activity",
+    "cluster": "utility-detail",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/ComposeMainActivity.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "single-purpose page with top bar and one dominant content block",
+      "chrome": "utility navigation with straightforward content stack",
+      "content_pattern": "detail/help/message/history style utility surface",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
+      "component_recipe": "utility-detail",
+      "style_keywords": [
+        "utility",
+        "single-purpose",
+        "grouped-detail"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-shell-main-activity",
+    "cluster": "utility-detail",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/MainActivity.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "single-purpose page with top bar and one dominant content block",
+      "chrome": "utility navigation with straightforward content stack",
+      "content_pattern": "detail/help/message/history style utility surface",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
+      "component_recipe": "utility-detail",
+      "style_keywords": [
+        "utility",
+        "single-purpose",
+        "grouped-detail"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-shell-main-page-host-components",
+    "cluster": "android-host-shell",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/page/MainPageHostComponents.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "native shell around React Native surfaces with loading bridge and cached root views",
+      "chrome": "host-level background and navigation orchestration",
+      "content_pattern": "container-only host for embedded RN screens",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "quiet-host-shell that minimizes chrome and frames embedded content cleanly",
+      "component_recipe": "host-shell",
+      "style_keywords": [
+        "embedded",
+        "minimal-chrome",
+        "bridge-safe"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-shell-react-native-page",
+    "cluster": "android-host-shell",
+    "platform": "android",
+    "source_paths": [
+      "android/app/src/main/java/com/novel/rn/ReactNativePage.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "native shell around React Native surfaces with loading bridge and cached root views",
+      "chrome": "host-level background and navigation orchestration",
+      "content_pattern": "container-only host for embedded RN screens",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "quiet-host-shell that minimizes chrome and frames embedded content cleanly",
+      "component_recipe": "host-shell",
+      "style_keywords": [
+        "embedded",
+        "minimal-chrome",
+        "bridge-safe"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "android-shell-react-native-page-content",
+    "cluster": "android-host-shell",
+    "platform": "android",
+    "source_paths": [
+      "android/feature-rn-host/src/main/java/com/novel/rn/ReactNativePageContent.kt"
+    ],
+    "current_visual_summary": {
+      "layout": "native shell around React Native surfaces with loading bridge and cached root views",
+      "chrome": "host-level background and navigation orchestration",
+      "content_pattern": "container-only host for embedded RN screens",
+      "key_states": [
+        "default"
+      ],
+      "key_components": []
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "quiet-host-shell that minimizes chrome and frames embedded content cleanly",
+      "component_recipe": "host-shell",
+      "style_keywords": [
+        "embedded",
+        "minimal-chrome",
+        "bridge-safe"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/Android Shell & Overlays",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": false,
+      "novel_design_ready": false
+    }
+  },
+  {
+    "surface_id": "rn-host-aiwrite-assistant-component",
+    "cluster": "writer-tooling",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/Writer/AIWriteAssistant/AIWriteAssistantComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "fixed header plus scrolling chat feed with floating idea panel, suggestion pills and anchored composer",
+      "chrome": "assistant chat shell with back/menu actions, quota caption and bottom composer rail",
+      "content_pattern": "intro prompt cards, assistant and user bubbles, collapsible thinking block, post-response actions and idea categories",
+      "key_states": [
+        "loading",
+        "intro",
+        "assistant-response",
+        "thinking-expanded",
+        "idea-selector-open",
+        "sending"
+      ],
+      "key_components": [
+        "Header",
+        "IntroExample",
+        "ChatRow",
+        "ThinkingBlock",
+        "ActionBar",
+        "Suggestions",
+        "IdeaSelector",
+        "InputBar"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-ai-assistant shell with paper chat cards, quiet fixed header and floating idea chooser",
+      "component_recipe": "editorial-ai-chat",
+      "style_keywords": [
+        "assistant-chat",
+        "paper-bubbles",
+        "thinking-panel",
+        "floating-idea-panel",
+        "anchored-composer"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-become-writer-page-component",
+    "cluster": "writer-tooling",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "editorial creator-growth page with profile strip, announcement rail, benefit modules and fixed bottom CTA",
+      "chrome": "creator onboarding chrome balancing utility top bar, segmented tabs and modal registration flow",
+      "content_pattern": "benefit rows, timeline, platform logos, activities, courses and registration prompt",
+      "key_states": [
+        "default",
+        "tab-switch",
+        "modal-open",
+        "loading"
+      ],
+      "key_components": [
+        "TopBar",
+        "WelcomeModal",
+        "BenefitsList",
+        "Timeline",
+        "BottomButton"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial creator-growth surface with paper cards, elevated support modules and stronger CTA framing",
+      "component_recipe": "creator-growth-surface",
+      "style_keywords": [
+        "creator-growth",
+        "benefit-cards",
+        "timeline",
+        "bottom-cta"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-book-manage-page-component",
+    "cluster": "writer-tooling",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/Writer/BookManage/BookManagePageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "single-column management shell with top bar, book banner, draft card, chapter section, volume note and bottom CTA",
+      "chrome": "minimal writer management chrome focused on draft recovery and chapter creation",
+      "content_pattern": "book identity block, continue-draft card, chapter list or empty state, right-aligned volume label and primary footer action",
+      "key_states": [
+        "loading",
+        "draft-exists",
+        "chapter-empty",
+        "chapter-list"
+      ],
+      "key_components": [
+        "Header",
+        "Banner",
+        "DraftBar",
+        "ChapterSection",
+        "EmptyChapter",
+        "Footer"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-book-management shell with paper banner card, elevated draft recovery block and tokenized chapter cards",
+      "component_recipe": "editorial-book-manager",
+      "style_keywords": [
+        "writer-management",
+        "banner-card",
+        "draft-recovery",
+        "chapter-cards",
+        "footer-cta"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-bookshelf-page-component",
+    "cluster": "bookshelf-shell",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/BookshelfPage/BookshelfPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "host shell with top tab bar and nested pages toggled in place",
+      "chrome": "utilitarian tab strip and full-width content region",
+      "content_pattern": "multi-tab content container for bookshelf, history, watchlist and community",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "MainTabBar"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-tab-shell with inset navigation rail and sectioned content body",
+      "component_recipe": "editorial-tab-shell",
+      "style_keywords": [
+        "library",
+        "modular",
+        "paper-tabs"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-category-page-component",
+    "cluster": "category-browser",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/CategoryPage/CategoryPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "sidebar plus top tabs plus book grid",
+      "chrome": "category navigation prioritized over immersive content",
+      "content_pattern": "taxonomy navigation and cover-driven result grid",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BookGrid",
+        "Sidebar",
+        "TopTabs"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-catalog-browser with stronger hierarchy between taxonomy and content",
+      "component_recipe": "editorial-catalog-grid",
+      "style_keywords": [
+        "catalog",
+        "taxonomy",
+        "cover-grid"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-comment-page-component",
+    "cluster": "comment-review",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/comment/CommentPage/CommentPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "review and comment pages with top bars, rating blocks, lists and reply sheets",
+      "chrome": "action icons and dense comment rows",
+      "content_pattern": "threaded community content with detail, reply and compose states",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "CategorySection",
+        "CommentList",
+        "RatingSection",
+        "RefreshIndicator",
+        "TopBar",
+        "index"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-review-thread with calmer cards and stronger reading hierarchy",
+      "component_recipe": "editorial-review-stack",
+      "style_keywords": [
+        "review-cards",
+        "threaded",
+        "community-reading"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-feedback-help-main-page-component",
+    "cluster": "android-main-shell",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/FeedbackHelpPage/FeedbackHelpMainPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "top bar plus search field, user greeting, consult scenario cards and FAQ list",
+      "chrome": "help-center chrome balancing search, cards and frequently asked question rows",
+      "content_pattern": "search entry, consult cards, highlighted FAQ titles and bottom contact section",
+      "key_states": [
+        "default",
+        "searching",
+        "faq-list"
+      ],
+      "key_components": [
+        "TopBar",
+        "SearchInput",
+        "ConsultCards",
+        "FrequentList"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-help hub with paper cards, elevated search field and clearer support hierarchy",
+      "component_recipe": "help-hub-surface",
+      "style_keywords": [
+        "help-hub",
+        "search-entry",
+        "consult-cards",
+        "faq-rows"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-help-support-page-component",
+    "cluster": "settings-stack",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/SettingsPage/helpsupportPage/HelpSupportPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "document-style page with top bar and long-form help/support body copy",
+      "chrome": "minimal legal-document chrome with a single reading column",
+      "content_pattern": "section titles, descriptive paragraphs and closing notes",
+      "key_states": [
+        "default",
+        "long-document"
+      ],
+      "key_components": [
+        "TopBar",
+        "DocumentBody"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-help document with calmer chrome and paper reading canvas",
+      "component_recipe": "help-document-surface",
+      "style_keywords": [
+        "document-page",
+        "reading-column",
+        "paper-body"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-history-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/HistoryPage/HistoryPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "top bar plus tab strip with history content toggled between grid and list views",
+      "chrome": "lightweight utility chrome around tabs, view switch and pull-to-refresh indicator",
+      "content_pattern": "reading-history cards with cover, author and progress metadata in two densities",
+      "key_states": [
+        "default",
+        "grid-view",
+        "list-view",
+        "refreshing"
+      ],
+      "key_components": [
+        "TopBar",
+        "TabsArea",
+        "RefreshIndicator",
+        "ContentArea"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-history ledger with paper tabs, softer list rows and clearer reading progress accents",
+      "component_recipe": "history-ledger-surface",
+      "style_keywords": [
+        "history-ledger",
+        "paper-tabs",
+        "reading-progress",
+        "dual-density"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-member-center-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/MemberCenterPage/MemberCenterPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "single-purpose page with top bar and one dominant content block",
+      "chrome": "utility navigation with straightforward content stack",
+      "content_pattern": "detail/help/message/history style utility surface",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BenefitComparison",
+        "BottomPurchase",
+        "MemberBenefits",
+        "PricePackages",
+        "TaskCards",
+        "TopBar",
+        "VIPCardCarousel",
+        "VIPRecommendation"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
+      "component_recipe": "utility-detail",
+      "style_keywords": [
+        "utility",
+        "single-purpose",
+        "grouped-detail"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-message-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/MessagePage/MessagePageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "top bar plus primary message blocks, secondary tabs and sticky threaded message list",
+      "chrome": "utility inbox chrome with mark-all action, sticky tabs and pull-to-refresh shell",
+      "content_pattern": "system message rows, tabbed secondary notifications, empty state and incremental loading footer",
+      "key_states": [
+        "default",
+        "sticky-tabs",
+        "empty-state",
+        "refreshing",
+        "loading-more"
+      ],
+      "key_components": [
+        "TopBar",
+        "MainMessagesSection",
+        "TabsArea",
+        "RefreshIndicator",
+        "EmptyState",
+        "LoadMoreIndicator"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-notification inbox with quieter chrome, paper message rows and clearer unread hierarchy",
+      "component_recipe": "notification-inbox-surface",
+      "style_keywords": [
+        "notification-inbox",
+        "sticky-tabs",
+        "paper-rows",
+        "unread-dot"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-my-reservation-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/MyReservationPage/MyReservationPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "top bar with main tabs, optional sub-tabs and reservation card grid inside a scroll shell",
+      "chrome": "reservation utility chrome with two-level tab hierarchy and image-led cards",
+      "content_pattern": "upcoming reservation cards, online/offline sub-filters, empty-state fallback and reservation CTA buttons",
+      "key_states": [
+        "new-tab",
+        "mine-tab",
+        "sub-tab-switch",
+        "empty-state",
+        "loading"
+      ],
+      "key_components": [
+        "TopBar",
+        "SubTabsSection",
+        "ReservationGrid",
+        "EmptyState"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-reservation gallery with paper tabs, elevated booking cards and clearer CTA layering",
+      "component_recipe": "reservation-gallery-surface",
+      "style_keywords": [
+        "reservation-cards",
+        "two-level-tabs",
+        "cta-gallery",
+        "editorial-booking"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-privacy-policy-page-component",
+    "cluster": "settings-stack",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/SettingsPage/privacypolicyPage/PrivacyPolicyPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "document-style page with top bar and long-form privacy policy copy",
+      "chrome": "minimal policy chrome around a single reading column",
+      "content_pattern": "section titles, paragraphs and legal closing copy",
+      "key_states": [
+        "default",
+        "long-document"
+      ],
+      "key_components": [
+        "TopBar",
+        "DocumentBody"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-policy document with quieter chrome and paper reading surface",
+      "component_recipe": "policy-document-surface",
+      "style_keywords": [
+        "policy-document",
+        "reading-column",
+        "legal-copy"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-question-detail-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/FeedbackHelpPage/QuestionDetailPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "single-column support detail page with one dominant answer body and simple top chrome",
+      "chrome": "focused help-detail chrome with minimal distraction",
+      "content_pattern": "question heading, answer body and support follow-up hints",
+      "key_states": [
+        "default",
+        "long-answer"
+      ],
+      "key_components": [
+        "TopBar",
+        "AnswerBody"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-support detail with stronger reading hierarchy and paper document body",
+      "component_recipe": "support-detail-surface",
+      "style_keywords": [
+        "support-detail",
+        "reading-body",
+        "paper-document"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-question-list-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/FeedbackHelpPage/QuestionListPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "utility detail page showing searchable FAQ entries in a stacked question list",
+      "chrome": "light support chrome with search shell and grouped rows",
+      "content_pattern": "question rows, section headings and support navigation hints",
+      "key_states": [
+        "default",
+        "searching",
+        "empty-result"
+      ],
+      "key_components": [
+        "TopBar",
+        "SearchInput",
+        "QuestionRows"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-faq list with quieter chrome and stronger row grouping",
+      "component_recipe": "faq-list-surface",
+      "style_keywords": [
+        "faq-list",
+        "grouped-rows",
+        "search-shell"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-recommend-book-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/RecommendBookPage/RecommendBookPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "creator utility page with profile row, stat cards, service cards and task-based earning modules",
+      "chrome": "growth utility chrome with section headers, sub-tabs and two-column educational or task cards",
+      "content_pattern": "stat modules, service entries, task cards, activities, courses and creator action CTA",
+      "key_states": [
+        "default",
+        "subtab-switch",
+        "loading"
+      ],
+      "key_components": [
+        "TopBar",
+        "ProfileSection",
+        "StatsCards",
+        "ServiceCards",
+        "TaskCards"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial creator-utility surface with elevated cards, softer service rows and clearer earning hierarchy",
+      "component_recipe": "creator-utility-surface",
+      "style_keywords": [
+        "creator-utility",
+        "earning-cards",
+        "service-rows",
+        "task-grid"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-review-detail-page-component",
+    "cluster": "comment-review",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/comment/ReviewDetailPage/ReviewDetailPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "review and comment pages with top bars, rating blocks, lists and reply sheets",
+      "chrome": "action icons and dense comment rows",
+      "content_pattern": "threaded community content with detail, reply and compose states",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "CommentList",
+        "RefreshIndicator",
+        "RepliesSheet",
+        "ReviewContent",
+        "TopBar"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-review-thread with calmer cards and stronger reading hierarchy",
+      "component_recipe": "editorial-review-stack",
+      "style_keywords": [
+        "review-cards",
+        "threaded",
+        "community-reading"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-settings-page-component",
+    "cluster": "settings-stack",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/SettingsPage/settingspage/SettingsPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "stacked grouped settings rows with modals and hardware-back glue",
+      "chrome": "plain top bar and utility sections with switches and rows",
+      "content_pattern": "settings groups, policy/help routes and switch-heavy controls",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "SettingRow",
+        "ThemeSwitcher",
+        "index"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-settings-groups with panelized sections and explicit sublabels",
+      "component_recipe": "editorial-settings-panel",
+      "style_keywords": [
+        "grouped-panels",
+        "utility",
+        "warm-controls"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-timed-switch-page-component",
+    "cluster": "settings-stack",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/SettingsPage/TimeSwitchPage/TimedSwitchPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "stacked grouped settings rows with modals and hardware-back glue",
+      "chrome": "plain top bar and utility sections with switches and rows",
+      "content_pattern": "settings groups, policy/help routes and switch-heavy controls",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "TimePickerModal",
+        "index"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-settings-groups with panelized sections and explicit sublabels",
+      "component_recipe": "editorial-settings-panel",
+      "style_keywords": [
+        "grouped-panels",
+        "utility",
+        "warm-controls"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-viewed-users-page-component",
+    "cluster": "utility-detail",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/ScrollBox/ViewedUsersPage/ViewedUsersPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "top bar plus tab strip over a viewed-users relationship list with empty-state branch",
+      "chrome": "quiet social utility chrome with relationship tabs and follow buttons",
+      "content_pattern": "avatar rows, user tags, descriptions, follow pills and viewed/following/fans states",
+      "key_states": [
+        "viewed-tab",
+        "following-tab",
+        "fans-tab",
+        "empty-state",
+        "loading"
+      ],
+      "key_components": [
+        "TopBar",
+        "TabsSection",
+        "UsersList",
+        "EmptyState"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-relationship list with softer rows, paper follow pills and clearer social hierarchy",
+      "component_recipe": "relationship-list-surface",
+      "style_keywords": [
+        "social-list",
+        "follow-pill",
+        "avatar-rows",
+        "utility-tabs"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-write-page-component",
+    "cluster": "writer-tooling",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/Writer/WritePage/WritePageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "fixed top bar plus full-height editor canvas with welcome panel, selection toolbar and modal overlays",
+      "chrome": "utility-first writing chrome with publish button, text actions and bottom volume rail",
+      "content_pattern": "title input, long-form editor, contextual toolbars, welcome shortcuts and parameter modal",
+      "key_states": [
+        "default",
+        "welcome-panel",
+        "selection-toolbar",
+        "parameter-modal",
+        "loading-overlay"
+      ],
+      "key_components": [
+        "TopBar",
+        "WelcomePanel",
+        "VolumeBar",
+        "SelectionToolbar"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-writer-workbench with quiet top chrome, paper editor and floating assist panels",
+      "component_recipe": "editorial-editor-shell",
+      "style_keywords": [
+        "paper-editor",
+        "floating-toolbars",
+        "editorial-writing",
+        "utility-chrome"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-host-write-review-page-component",
+    "cluster": "comment-review",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/comment/WriteReviewPage/WriteReviewPageComponent.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "review and comment pages with top bars, rating blocks, lists and reply sheets",
+      "chrome": "action icons and dense comment rows",
+      "content_pattern": "threaded community content with detail, reply and compose states",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "RatingInput",
+        "ReviewForm",
+        "TopBar",
+        "index"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-review-thread with calmer cards and stronger reading hierarchy",
+      "component_recipe": "editorial-review-stack",
+      "style_keywords": [
+        "review-cards",
+        "threaded",
+        "community-reading"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Host Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-bookshelf-page",
+    "cluster": "bookshelf-content",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/Bookshelf/BookshelfPage.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "bookshelf core page with tabs, view switchers, recommendation feed and mixed grid/list/waterfall layouts",
+      "chrome": "bookshelf utility chrome around sorting, editing and layout-mode toggles",
+      "content_pattern": "shelf tabs, recommendation shelves, empty-state guidance and dense book cards with cover-first hierarchy",
+      "key_states": [
+        "tab-switch",
+        "grid-view",
+        "list-view",
+        "waterfall-view",
+        "empty-state",
+        "recommendation-loading"
+      ],
+      "key_components": [
+        "TopBar",
+        "BookItem",
+        "EmptyState",
+        "RecommendationFlow",
+        "ViewSwitcher",
+        "EditToolbar"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-bookshelf surface with calmer tabs, paper book cards and refined recommendation flow",
+      "component_recipe": "bookshelf-core-surface",
+      "style_keywords": [
+        "shelf-grid",
+        "recommendation-flow",
+        "paper-cards",
+        "utility-tabs"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Nested Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-community-page",
+    "cluster": "bookshelf-content",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/Community/CommunityPage.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "community feed page with top bar, category tabs, post list and floating write action",
+      "chrome": "social-reading chrome with topic filters, list dividers and utility actions",
+      "content_pattern": "post cards, author metadata, subscribe actions, empty state and loading indicator within the feed",
+      "key_states": [
+        "tab-switch",
+        "feed-loading",
+        "empty-state",
+        "floating-action"
+      ],
+      "key_components": [
+        "TopBar",
+        "TabBar",
+        "FilterBar",
+        "PostList",
+        "PostItem",
+        "EmptyState",
+        "FloatingButton",
+        "LoadingIndicator"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-community feed with paper post cards, quieter tabs and anchored floating compose affordance",
+      "component_recipe": "bookshelf-community-feed",
+      "style_keywords": [
+        "community-feed",
+        "post-cards",
+        "filter-tabs",
+        "floating-compose"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Nested Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-history-page",
+    "cluster": "bookshelf-content",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/History/HistoryPage.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "tab-led reading-history page with toggleable grid and list modes inside the bookshelf container",
+      "chrome": "lightweight tabs and view controls above densely packed cover or list rows",
+      "content_pattern": "history tabs, cover grid, reading progress, add-to-shelf pills and list-mode metadata rows",
+      "key_states": [
+        "tab-switch",
+        "grid-view",
+        "list-view",
+        "refreshing"
+      ],
+      "key_components": [
+        "TabBar",
+        "HistoryContent",
+        "HistoryItem",
+        "EditToolbar",
+        "RefreshIndicator"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-history shelf with paper tabs, elevated cover cards and quieter list rows",
+      "component_recipe": "bookshelf-history-surface",
+      "style_keywords": [
+        "history-library",
+        "cover-grid",
+        "reading-progress",
+        "paper-tabs"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Nested Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-nested-bookshelf-watchlist-page",
+    "cluster": "bookshelf-content",
+    "platform": "react-native",
+    "source_paths": [
+      "src/page/BookshelfPage/pages/Watchlist/WatchlistPage.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "watchlist manager with top bar, edit toolbar and three-column poster grid",
+      "chrome": "compact management chrome around posters, badges and selection state",
+      "content_pattern": "ad banner, edit actions, tracked drama posters, progress bars, update badges and empty-state discovery CTA",
+      "key_states": [
+        "default",
+        "edit-mode",
+        "selection-state",
+        "empty-state",
+        "loading-more"
+      ],
+      "key_components": [
+        "TopBar",
+        "EditToolbar",
+        "WatchlistGrid",
+        "EmptyState"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-watchlist shelf with quiet top chrome, paper poster cards and elevated edit rail",
+      "component_recipe": "bookshelf-watchlist-surface",
+      "style_keywords": [
+        "watchlist-grid",
+        "poster-cards",
+        "edit-rail",
+        "discovery-empty-state"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Nested Pages",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  },
+  {
+    "surface_id": "rn-root-profile-page",
+    "cluster": "profile-root",
+    "platform": "react-native",
+    "source_paths": [
+      "App.tsx",
+      "src/page/ProfilePage/ProfilePage.tsx"
+    ],
+    "current_visual_summary": {
+      "layout": "scrollable profile shell with top bar, identity header, icon rail, balances and waterfall feed",
+      "chrome": "icon-led utility chrome with direct theme toggles and lightweight section separation",
+      "content_pattern": "dashboard-like profile summary followed by card/list content",
+      "key_states": [
+        "default"
+      ],
+      "key_components": [
+        "BookItem",
+        "BottomBox",
+        "LoadMoreIndicator",
+        "LoginBar",
+        "RefreshIndicator",
+        "ScrollableArea",
+        "TopBar",
+        "WaterfallGrid"
+      ]
+    },
+    "target_visual_plan": {
+      "direction": "literary-editorial",
+      "layout_strategy": "editorial-profile-dashboard with stronger vertical rhythm and inset group cards",
+      "component_recipe": "editorial-profile-shell",
+      "style_keywords": [
+        "literary",
+        "warm-neutral",
+        "editorial-dashboard"
+      ],
+      "token_priority": [
+        "color.bg.canvas",
+        "color.text.primary",
+        "color.brand.primary",
+        "space.200",
+        "radius.lg",
+        "typography.title.section"
+      ],
+      "figma_targets": {
+        "audit_page": "00-现状审计/RN Root",
+        "design_page_light": "03-页面-亮色",
+        "design_page_dark": "04-页面-暗色"
+      }
+    },
+    "current_look_recorded": true,
+    "target_look_planned": true,
+    "implementation_progress": {
+      "shell_reskinned": true,
+      "novel_design_ready": true
+    }
+  }
+]

@@ -8,17 +8,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { RecommendationItem } from '../types';
 import { LoadMoreIndicator } from './LoadMoreIndicator';
 import { createBookshelfPageStyles } from '../styles/BookshelfPageStyles';
 import { useNovelColors } from '../../../../../utils/theme';
 
 const recommendationCoverImageStyle = { width: '100%', height: '100%' } as const;
-const recommendationCoverPlaceholderStyle = {
-  width: '100%',
-  height: '100%',
-  backgroundColor: '#f0f0f0',
-} as const;
 
 interface RecommendationFlowProps {
   data: RecommendationItem[];
@@ -27,6 +24,7 @@ interface RecommendationFlowProps {
   hasMore?: boolean;
   isLoading?: boolean;
   title?: string;
+  styles?: ReturnType<typeof createBookshelfPageStyles>;
 }
 
 interface RecommendationItemCardProps {
@@ -39,40 +37,49 @@ const RecommendationItemCard: React.FC<RecommendationItemCardProps> = ({
   item,
   styles,
   onBookPress,
-}) => (
-  <TouchableOpacity
-    style={styles.recommendationItem}
-    onPress={() => onBookPress?.(item)}
-  >
-    <View style={styles.recommendationItemCover}>
-      {(item.cover || item.coverUrl) ? (
-        <Image
-          source={{ uri: item.cover || item.coverUrl }}
-          style={recommendationCoverImageStyle}
-          resizeMode="cover"
-        />
-      ) : (
-        <View style={recommendationCoverPlaceholderStyle} />
-      )}
-    </View>
+}) => {
+  const colors = useNovelColors();
+  const ui = createNovelDesignUI(colors as any);
 
-    <View style={styles.recommendationItemInfo}>
-      <Text style={styles.recommendationItemTitle} numberOfLines={2}>
-        {item.title}
-      </Text>
-      {item.description && (
-        <Text style={styles.recommendationItemDescription} numberOfLines={3}>
-          {item.description}
+  return (
+    <TouchableOpacity
+      style={styles.recommendationItem}
+      onPress={() => onBookPress?.(item)}>
+      <View style={styles.recommendationItemCover}>
+        {(item.cover || item.coverUrl) ? (
+          <Image
+            source={{ uri: item.cover || item.coverUrl }}
+            style={recommendationCoverImageStyle}
+            resizeMode="cover"
+          />
+        ) : (
+          <View
+            style={[
+              recommendationCoverImageStyle,
+              { backgroundColor: ui.color.bg.elevated },
+            ]}
+          />
+        )}
+      </View>
+
+      <View style={styles.recommendationItemInfo}>
+        <Text style={styles.recommendationItemTitle} numberOfLines={2}>
+          {item.title}
         </Text>
-      )}
-      {item.tags && item.tags.length > 0 && (
-        <View style={styles.recommendationItemTag}>
-          <Text style={styles.recommendationItemTagText}>{item.tags[0]}</Text>
-        </View>
-      )}
-    </View>
-  </TouchableOpacity>
-);
+        {item.description ? (
+          <Text style={styles.recommendationItemDescription} numberOfLines={3}>
+            {item.description}
+          </Text>
+        ) : null}
+        {item.tags && item.tags.length > 0 ? (
+          <View style={styles.recommendationItemTag}>
+            <Text style={styles.recommendationItemTagText}>{item.tags[0]}</Text>
+          </View>
+        ) : null}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
   data,
@@ -80,25 +87,24 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
   onLoadMore,
   hasMore = false,
   isLoading = false,
-  title = '鎺ㄨ崘闃呰',
+  title = '鐚滀綘鍠滄',
+  styles,
 }) => {
   const colors = useNovelColors();
-  const styles = createBookshelfPageStyles(colors);
+  const resolvedStyles = styles ?? createBookshelfPageStyles(colors);
 
   if (data.length === 0) {
     return null;
   }
 
   return (
-    <View style={styles.recommendationContainer}>
-      <View style={styles.recommendationHeader}>
-        <Text style={styles.recommendationTitle}>
-          -- {title} --
-        </Text>
+    <View style={resolvedStyles.recommendationContainer}>
+      <View style={resolvedStyles.recommendationHeader}>
+        <Text style={resolvedStyles.recommendationTitle}>-- {title} --</Text>
       </View>
 
       <ScrollView
-        style={styles.recommendationContent}
+        style={resolvedStyles.recommendationContent}
         showsVerticalScrollIndicator={false}
         onScroll={(event: NativeSyntheticEvent<NativeScrollEvent>) => {
           const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
@@ -113,42 +119,41 @@ export const RecommendationFlow: React.FC<RecommendationFlowProps> = ({
             }
           }
         }}
-        scrollEventThrottle={400}
-      >
-        <View style={styles.recommendationGrid}>
-          <View style={styles.recommendationColumn}>
+        scrollEventThrottle={400}>
+        <View style={resolvedStyles.recommendationGrid}>
+          <View style={resolvedStyles.recommendationColumn}>
             {data
               .filter((_, index) => index % 2 === 0)
               .map((item) => (
                 <RecommendationItemCard
                   key={item.id}
                   item={item}
-                  styles={styles}
+                  styles={resolvedStyles}
                   onBookPress={onBookPress}
                 />
               ))}
           </View>
 
-          <View style={styles.recommendationColumn}>
+          <View style={resolvedStyles.recommendationColumn}>
             {data
               .filter((_, index) => index % 2 === 1)
               .map((item) => (
                 <RecommendationItemCard
                   key={item.id}
                   item={item}
-                  styles={styles}
+                  styles={resolvedStyles}
                   onBookPress={onBookPress}
                 />
               ))}
           </View>
         </View>
 
-        {(hasMore || isLoading) && (
+        {(hasMore || isLoading) ? (
           <LoadMoreIndicator
             isLoading={isLoading}
             onLoadMore={onLoadMore}
           />
-        )}
+        ) : null}
       </ScrollView>
     </View>
   );

@@ -46,7 +46,7 @@ import com.novel.page.home.viewmodel.HomeEffect
 import com.novel.page.home.viewmodel.HomeViewModel
 import com.novel.page.home.skeleton.HomePageSkeleton
 import com.novel.page.component.rememberFlipBookAnimationController
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 import com.novel.utils.NavViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -255,7 +255,7 @@ fun HomePage(
             state = listState,
             modifier = Modifier
                 .fillMaxSize()
-                .background(NovelColors.NovelDivider),
+                .background(NovelDesignTokens.lightColor("color.bg.canvas")),
             contentPadding = PaddingValues(vertical = 10.wdp),
             verticalArrangement = Arrangement.spacedBy(10.wdp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -365,7 +365,7 @@ fun HomePage(
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
-                            color = NovelColors.NovelMain
+                            color = NovelDesignTokens.lightColor("color.brand.primary")
                         )
                     }
                 }
@@ -379,7 +379,7 @@ fun HomePage(
                             .fillMaxWidth()
                             .padding(15.wdp),
                         colors = CardDefaults.cardColors(
-                            containerColor = NovelColors.NovelError.copy(alpha = 0.9f)
+                            containerColor = NovelDesignTokens.lightColor("color.status.danger").copy(alpha = 0.9f)
                         )
                     ) {
                         Row(

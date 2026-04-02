@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -78,7 +78,7 @@ fun SearchHistorySection(
                 text = "搜索历史",
                 fontSize = 16.ssp,
                 fontWeight = FontWeight.Bold,
-                color = NovelColors.NovelText
+                color = NovelDesignTokens.lightColor("color.text.primary")
             )
 
             Row(
@@ -91,12 +91,12 @@ fun SearchHistorySection(
                         ),
                         text = if (isExpanded) "收起" else "展开",
                         fontSize = 14.ssp,
-                        color = NovelColors.NovelMain
+                        color = NovelDesignTokens.lightColor("color.brand.primary")
                     )
                 }
                 Icon(
                     Icons.Rounded.Delete,
-                    tint = NovelColors.NovelText,
+                    tint = NovelDesignTokens.lightColor("color.text.primary"),
                     modifier = Modifier
                         .debounceClickable(
                             onClick = clearAll
@@ -208,7 +208,7 @@ private fun HistoryItem(
             text = text,
             fontSize = 14.ssp,
             fontWeight = FontWeight.Normal,
-            color = NovelColors.NovelText,
+            color = NovelDesignTokens.lightColor("color.text.primary"),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = modifier

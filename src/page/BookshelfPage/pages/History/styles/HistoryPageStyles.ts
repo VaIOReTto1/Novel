@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../../utils/theme/dimensions';
 import { typography } from '../../../../../utils/theme/typography';
 import { NovelColors } from '../../../../../utils/theme/colors';
 
-export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createHistoryPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.canvas,
   },
   // Tabs样式
   tabsContainer: {
@@ -14,7 +18,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     alignItems: 'center',
     paddingHorizontal: wp(12),
     paddingVertical: wp(6),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
   },
   tabsScrollArea: {
     flex: 1,
@@ -28,7 +32,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     paddingVertical: wp(5),
     borderRadius: sp(4),
     marginRight: wp(12),
-    backgroundColor: colors.novelDivider + 'a0',
+    backgroundColor: novelDesign.color.bg.elevated,
     alignItems: 'center',
   },
   activeTab: {
@@ -64,7 +68,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     marginHorizontal: wp(4),
     alignSelf: 'center',
     height: wp(10),
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
   staticButton: {
     paddingRight: wp(12),
@@ -124,7 +128,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     height: wp(135),
     borderRadius: sp(8),
     overflow: 'hidden',
-    backgroundColor: colors.novelDivider,
+    backgroundColor: novelDesign.color.bg.elevated,
   },
   gridCoverImage: {
     width: '100%',
@@ -159,7 +163,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     paddingHorizontal: wp(12),
     paddingVertical: wp(4),
     borderRadius: sp(20),
-    backgroundColor:colors.novelDivider + 'a0',
+    backgroundColor: novelDesign.color.bg.elevated,
     alignItems: 'center',
   },
   gridAddToShelfText: {
@@ -178,6 +182,7 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
   listItem: {
     flexDirection: 'row',
     padding: wp(12),
+    backgroundColor: novelDesign.color.bg.surface,
   },
   listCover: {
     width: wp(65),
@@ -402,3 +407,4 @@ export const createHistoryPageStyles = (colors: NovelColors) => StyleSheet.creat
     opacity: 0.5,
   },
 });
+};

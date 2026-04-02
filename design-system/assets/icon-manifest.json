@@ -1,0 +1,203 @@
+{
+  "summary": {
+    "local_svg_count": 22,
+    "vector_icon_families": [
+      "Feather",
+      "MaterialIcons"
+    ]
+  },
+  "entries": [
+    {
+      "semantic_name": "legacy.be_writer",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/be_writer.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.download",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/download.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.email",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/email.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.feather",
+      "source_type": "react-native-vector-icons-family",
+      "source": "Feather",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.feedback",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/feedback.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.game",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/game.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.guide",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/guide.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.history",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/history.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.materialicons",
+      "source_type": "react-native-vector-icons-family",
+      "source": "MaterialIcons",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.member",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/member.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.moon_mode",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/moon_mode.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.note",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/note.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.order",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/order.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.public_welfare",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/public_welfare.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.qrscan",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/qrscan.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.reading_preference",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/reading_preference.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.recommend_book",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/recommend_book.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.settings",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/settings.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.subscribe",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/subscribe.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.sun_mode",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/sun_mode.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.vedio_creation",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/vedio_creation.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.vedio_have_favorited",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/vedio_have_favorited.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.wallet",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/wallet.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    },
+    {
+      "semantic_name": "legacy.who_have_seen",
+      "source_type": "legacy-local-svg",
+      "source": "assets/image/who_have_seen.svg",
+      "migration_target": "iconify",
+      "rtl_mirror": false,
+      "tint_mode": "dynamic"
+    }
+  ]
+}

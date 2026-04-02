@@ -32,7 +32,7 @@ import com.novel.page.component.NovelImageView
 import com.novel.page.component.NovelText
 import com.novel.page.search.utils.SearchUtils
 import com.novel.page.search.viewmodel.BookInfoRespDto
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -76,7 +76,7 @@ fun SearchResultItem(
                 modifier = Modifier
                     .size(80.wdp, 100.wdp)
                     .clip(RoundedCornerShape(6.wdp))
-                    .background(NovelColors.NovelTextGray.copy(alpha = 0.1f))
+                    .background(NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.1f))
                     .onGloballyPositioned { coordinates ->
                         val windowRect = coordinates.boundsInWindow()
                         positionInfo = androidx.compose.ui.geometry.Offset(windowRect.left, windowRect.top) to androidx.compose.ui.geometry.Size(
@@ -89,13 +89,13 @@ fun SearchResultItem(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(NovelColors.NovelTextGray.copy(alpha = 0.1f)),
+                            .background(NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.1f)),
                         contentAlignment = Alignment.Center
                     ) {
                         NovelText(
                             text = "📖",
                             fontSize = 16.ssp,
-                            color = NovelColors.NovelTextGray
+                            color = NovelDesignTokens.lightColor("color.text.secondary")
                         )
                     }
                 }
@@ -112,7 +112,7 @@ fun SearchResultItem(
                     text = book.bookName ?: "未知书名",
                     fontSize = 16.ssp,
                     fontWeight = FontWeight.Bold,
-                    color = NovelColors.NovelText,
+                    color = NovelDesignTokens.lightColor("color.text.primary"),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -123,7 +123,7 @@ fun SearchResultItem(
                 NovelText(
                     text = "作者：${book.authorName ?: "未知作者"}",
                     fontSize = 13.ssp,
-                    color = NovelColors.NovelTextGray,
+                    color = NovelDesignTokens.lightColor("color.text.secondary"),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -135,7 +135,7 @@ fun SearchResultItem(
                     text = book.bookDesc ?: "暂无简介",
                     fontSize = 13.ssp,
                     lineHeight = 18.ssp,
-                    color = NovelColors.NovelText.copy(alpha = 0.7f),
+                    color = NovelDesignTokens.lightColor("color.text.primary").copy(alpha = 0.7f),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -150,28 +150,28 @@ fun SearchResultItem(
                     // 读者数标签
                     SearchInfoChip(
                         text = "${SearchUtils.formatSearchResultCount(book.visitCount.toInt())}人在读",
-                        backgroundColor = NovelColors.NovelMain.copy(alpha = 0.1f),
-                        textColor = NovelColors.NovelMain
+                        backgroundColor = NovelDesignTokens.lightColor("color.brand.primary").copy(alpha = 0.1f),
+                        textColor = NovelDesignTokens.lightColor("color.brand.primary")
                     )
                     
                     // 字数标签
                     SearchInfoChip(
                         text = SearchUtils.formatSearchResultCount(book.wordCount),
-                        backgroundColor = NovelColors.NovelTextGray.copy(alpha = 0.1f),
-                        textColor = NovelColors.NovelTextGray
+                        backgroundColor = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.1f),
+                        textColor = NovelDesignTokens.lightColor("color.text.secondary")
                     )
                     
                     // 状态标签
                     SearchInfoChip(
                         text = if (book.bookStatus == 1) "已完结" else "连载中",
                         backgroundColor = if (book.bookStatus == 1) 
-                            NovelColors.NovelTextGray.copy(alpha = 0.1f) 
+                            NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.1f) 
                         else 
-                            NovelColors.NovelMain.copy(alpha = 0.1f),
+                            NovelDesignTokens.lightColor("color.brand.primary").copy(alpha = 0.1f),
                         textColor = if (book.bookStatus == 1) 
-                            NovelColors.NovelTextGray 
+                            NovelDesignTokens.lightColor("color.text.secondary") 
                         else 
-                            NovelColors.NovelMain
+                            NovelDesignTokens.lightColor("color.brand.primary")
                     )
                 }
             }
@@ -180,7 +180,7 @@ fun SearchResultItem(
         // 分隔线
         Spacer(modifier = Modifier.height(12.wdp))
         HorizontalDivider(
-            color = NovelColors.NovelTextGray.copy(alpha = 0.1f),
+            color = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.1f),
             thickness = 0.5.wdp
         )
     }

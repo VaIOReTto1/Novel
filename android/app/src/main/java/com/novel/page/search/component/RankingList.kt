@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.novel.page.component.RankingNumber
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -135,7 +135,7 @@ private fun RankingSectionItem(
         modifier = Modifier
             .width(225.wdp)
             .background(
-                color = NovelColors.NovelBookBackground,
+                color = NovelDesignTokens.lightColor("color.bg.elevated"),
                 shape = RoundedCornerShape(8.wdp)
             )
             .padding(vertical = 20.wdp, horizontal = 12.wdp)
@@ -145,7 +145,7 @@ private fun RankingSectionItem(
             text = title,
             fontSize = 16.ssp,
             fontWeight = FontWeight.Bold,
-            color = NovelColors.NovelText,
+            color = NovelDesignTokens.lightColor("color.text.primary"),
             modifier = Modifier.padding(bottom = 12.wdp)
         )
 
@@ -205,7 +205,7 @@ fun RankingList(
                 text = "查看完整榜单 >",
                 fontSize = 13.ssp,
                 fontWeight = FontWeight.Medium,
-                color = NovelColors.NovelMain,
+                color = NovelDesignTokens.lightColor("color.brand.primary"),
                 modifier = Modifier
                     .fillMaxWidth()
                     .debounceClickable(onClick = {
@@ -254,7 +254,7 @@ private fun RankingListItem(
                 fontSize = 13.ssp,
                 lineHeight = 13.ssp,
                 fontWeight = FontWeight.Medium,
-                color = NovelColors.NovelText,
+                color = NovelDesignTokens.lightColor("color.text.primary"),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -264,7 +264,7 @@ private fun RankingListItem(
                 text = item.author,
                 fontSize = 12.ssp,
                 fontWeight = FontWeight.Normal,
-                color = NovelColors.NovelTextGray,
+                color = NovelDesignTokens.lightColor("color.text.secondary"),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

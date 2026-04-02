@@ -95,5 +95,7 @@
 
 | `RB-STAGE7-VIEWED-RESERVATION-20260402-01` | `2592101` | 推进 ViewedUsers 与 MyReservation 页面的 novelDesign 换肤 | `git revert --no-edit 2592101` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/ViewedUsersPageStyles.novelDesign.test.ts __tests__/design-system/MyReservationPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-AI-COPY-20260402-01` | `a4e93fe` | 清理 AI 写作助手操作栏的文案编码 | `git revert --no-edit a4e93fe` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/AIWriteAssistantStyles.novelDesign.test.ts __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

@@ -1,5 +1,6 @@
 package com.novel.page.welfare
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import com.novel.page.component.WelfareRedPacketDialog
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.page.welfare.viewmodel.WelfareViewModel
 import com.novel.utils.DialogLaunchManager
 
@@ -37,7 +39,11 @@ fun WelfarePage(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(NovelDesignTokens.color("color.bg.canvas"))
+    ) {
         WelfarePageContent(
             onNavigateBack = onNavigateBack,
             viewModel = viewModel,

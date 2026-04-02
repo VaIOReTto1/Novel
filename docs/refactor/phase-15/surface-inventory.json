@@ -262,7 +262,9 @@
       "default"
     ],
     "key_components": [],
-    "asset_sources": [],
+    "asset_sources": [
+      "theme-aware"
+    ],
     "a11y_status": "pending-audit",
     "rtl_status": "pending-audit",
     "dark_mode_status": "pending-audit",

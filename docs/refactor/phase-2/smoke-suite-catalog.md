@@ -1,62 +1,46 @@
-# Phase 2 Smoke Suite Catalog
+﻿# Phase 2 Smoke Suite Catalog
 
-## 目标
-- 为 `V2-05` 建立可执行的核心路径 smoke 套件。
-- 覆盖首页、登录、搜索、阅读器、设置、写作页，以及后续新增的 AI 写作助手和作品管理页。
-- 断言只保留“可渲染、可进入、关键结构存在”一级，优先降低 flake。
-
-## 当前 Smoke 覆盖
+## 鐩爣
+- 涓?`V2-05` 寤虹珛鍙墽琛岀殑鏍稿績璺緞 smoke 濂椾欢銆?- 瑕嗙洊棣栭〉銆佺櫥褰曘€佹悳绱€侀槄璇诲櫒銆佽缃€佸啓浣滈〉锛屼互鍙婂悗缁柊澧炵殑 AI 鍐欎綔鍔╂墜鍜屼綔鍝佺鐞嗛〉銆?- 鏂█鍙繚鐣欌€滃彲娓叉煋銆佸彲杩涘叆銆佸叧閿粨鏋勫瓨鍦ㄢ€濅竴绾э紝浼樺厛闄嶄綆 flake銆?
+## 褰撳墠 Smoke 瑕嗙洊
 | Path | Layer | Test File | Command |
 | --- | --- | --- | --- |
-| 首页 | Android Compose | `android/app/src/androidTest/java/com/novel/page/home/HomeSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest` |
-| 登录 | Android Compose | `android/app/src/androidTest/java/com/novel/page/login/LoginSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.login.LoginSmokeTest` |
-| 搜索 | Android Compose | `android/app/src/androidTest/java/com/novel/page/search/SearchSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.search.SearchSmokeTest` |
-| 阅读器 | Android Compose | `android/app/src/androidTest/java/com/novel/page/read/viewmodel/ReaderSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.read.viewmodel.ReaderSmokeTest` |
-| 设置 | RN Jest render | `__tests__/smoke/SettingsPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx` |
-| 写作页 | RN Jest render | `__tests__/smoke/WritePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/WritePage.smoke.test.tsx` |
-| 书架壳层 | RN Jest render | `__tests__/smoke/BookshelfPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx` |
-| 书评广场 | RN Jest render | `__tests__/smoke/CommentPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/CommentPage.smoke.test.tsx` |
-| 书评详情 | RN Jest render | `__tests__/smoke/ReviewDetailPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/ReviewDetailPage.smoke.test.tsx` |
-| 会员中心 | RN Jest render | `__tests__/smoke/MemberCenterPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/MemberCenterPage.smoke.test.tsx` |
-| AI 写作助手 | RN Jest render | `__tests__/smoke/AIWriteAssistant.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
-| 作品管理 | RN Jest render | `__tests__/smoke/BookManagePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookManagePage.smoke.test.tsx` |
-| 书架内页 | RN Jest render | `__tests__/smoke/BookshelfNestedPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfNestedPage.smoke.test.tsx` |
+| 棣栭〉 | Android Compose | `android/app/src/androidTest/java/com/novel/page/home/HomeSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest` |
+| 鐧诲綍 | Android Compose | `android/app/src/androidTest/java/com/novel/page/login/LoginSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.login.LoginSmokeTest` |
+| 鎼滅储 | Android Compose | `android/app/src/androidTest/java/com/novel/page/search/SearchSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.search.SearchSmokeTest` |
+| 闃呰鍣?| Android Compose | `android/app/src/androidTest/java/com/novel/page/read/viewmodel/ReaderSmokeTest.kt` | `cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.read.viewmodel.ReaderSmokeTest` |
+| 璁剧疆 | RN Jest render | `__tests__/smoke/SettingsPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx` |
+| 鍐欎綔椤?| RN Jest render | `__tests__/smoke/WritePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/WritePage.smoke.test.tsx` |
+| 涔︽灦澹冲眰 | RN Jest render | `__tests__/smoke/BookshelfPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx` |
+| 涔﹁瘎骞垮満 | RN Jest render | `__tests__/smoke/CommentPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/CommentPage.smoke.test.tsx` |
+| 涔﹁瘎璇︽儏 | RN Jest render | `__tests__/smoke/ReviewDetailPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/ReviewDetailPage.smoke.test.tsx` |
+| 浼氬憳涓績 | RN Jest render | `__tests__/smoke/MemberCenterPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/MemberCenterPage.smoke.test.tsx` |
+| AI 鍐欎綔鍔╂墜 | RN Jest render | `__tests__/smoke/AIWriteAssistant.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/AIWriteAssistant.smoke.test.tsx` |
+| 浣滃搧绠＄悊 | RN Jest render | `__tests__/smoke/BookManagePage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookManagePage.smoke.test.tsx` |
+| 涔︽灦鍐呴〉 | RN Jest render | `__tests__/smoke/BookshelfNestedPage.smoke.test.tsx` | `npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfNestedPage.smoke.test.tsx` |
 
-## 当前稳定入口说明
+## 褰撳墠绋冲畾鍏ュ彛璇存槑
 - `HomeSmokeTest`
-  - 使用 `HomePageSkeleton()` 作为稳定 smoke 入口，避免直接依赖 Hilt Activity 容器。
-- `LoginSmokeTest`
-  - 使用 `LoginPageSkeleton()` 作为稳定 smoke 入口，优先验证登录页主结构可渲染。
-- `ReaderSmokeTest`
-  - 使用 `NoAnimationContainer()` 作为无 Hilt 依赖的阅读器内容容器入口。
-- `SearchSmokeTest`
-  - 使用 `SearchPageContent()` 作为搜索页面核心 Compose 内容 smoke。
-- `SettingsPage.smoke.test.tsx`
-  - 使用 RN render smoke，验证设置页主结构、初始化链路与核心 section 文案。
-- `WritePage.smoke.test.tsx`
-  - 使用 RN render smoke，验证写作页顶栏和编辑容器可无崩溃渲染。
-- `BookshelfPage.smoke.test.tsx`
-  - 使用 RN render smoke，验证书架宿主 shell 和四个 tab 入口文案可渲染。
-- `CommentPage.smoke.test.tsx`
-  - 使用 RN render smoke，验证评论页顶栏、评分区、分类区与评论列表壳层可渲染。
-- `ReviewDetailPage.smoke.test.tsx`
-  - 使用 RN render smoke，验证书评详情页顶栏与评论线程壳层可渲染。
-- `MemberCenterPage.smoke.test.tsx`
-  - 使用 RN render smoke，验证会员中心主要卡片区、权益区、价格区和购买条壳层可渲染。
-- `AIWriteAssistant.smoke.test.tsx`
-  - 使用 RN render smoke，验证 AI 写作助手的顶部助手栏、底部模式按钮与输入栏可渲染。
-- `BookManagePage.smoke.test.tsx`
-  - 使用 RN render smoke，验证作品管理页的书籍 banner、草稿通道、章节区与底部 CTA 可渲染。
-- `BookshelfNestedPage.smoke.test.tsx`
-  - 使用 RN render smoke，验证 Bookshelf 内嵌页会创建一份共享样式实例并透传给 TopBar、EditToolbar 和 UnifiedScrollView。
-
-## 推荐执行方式
+  - 浣跨敤 `HomePageSkeleton()` 浣滀负绋冲畾 smoke 鍏ュ彛锛岄伩鍏嶇洿鎺ヤ緷璧?Hilt Activity 瀹瑰櫒銆?- `LoginSmokeTest`
+  - 浣跨敤 `LoginPageSkeleton()` 浣滀负绋冲畾 smoke 鍏ュ彛锛屼紭鍏堥獙璇佺櫥褰曢〉涓荤粨鏋勫彲娓叉煋銆?- `ReaderSmokeTest`
+  - 浣跨敤 `NoAnimationContainer()` 浣滀负鏃?Hilt 渚濊禆鐨勯槄璇诲櫒鍐呭瀹瑰櫒鍏ュ彛銆?- `SearchSmokeTest`
+  - 浣跨敤 `SearchPageContent()` 浣滀负鎼滅储椤甸潰鏍稿績 Compose 鍐呭 smoke銆?- `SettingsPage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佽缃〉涓荤粨鏋勩€佸垵濮嬪寲閾捐矾涓庢牳蹇?section 鏂囨銆?- `WritePage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佸啓浣滈〉椤舵爮鍜岀紪杈戝鍣ㄥ彲鏃犲穿婧冩覆鏌撱€?- `BookshelfPage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佷功鏋跺涓?shell 鍜屽洓涓?tab 鍏ュ彛鏂囨鍙覆鏌撱€?- `CommentPage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佽瘎璁洪〉椤舵爮銆佽瘎鍒嗗尯銆佸垎绫诲尯涓庤瘎璁哄垪琛ㄥ３灞傚彲娓叉煋銆?- `ReviewDetailPage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佷功璇勮鎯呴〉椤舵爮涓庤瘎璁虹嚎绋嬪３灞傚彲娓叉煋銆?- `MemberCenterPage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佷細鍛樹腑蹇冧富瑕佸崱鐗囧尯銆佹潈鐩婂尯銆佷环鏍煎尯鍜岃喘涔版潯澹冲眰鍙覆鏌撱€?- `AIWriteAssistant.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇?AI 鍐欎綔鍔╂墜鐨勯《閮ㄥ姪鎵嬫爮銆佸簳閮ㄦā寮忔寜閽笌杈撳叆鏍忓彲娓叉煋銆?- `BookManagePage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇佷綔鍝佺鐞嗛〉鐨勪功绫?banner銆佽崏绋块€氶亾銆佺珷鑺傚尯涓庡簳閮?CTA 鍙覆鏌撱€?- `BookshelfNestedPage.smoke.test.tsx`
+  - 浣跨敤 RN render smoke锛岄獙璇?Bookshelf 鍐呭祵椤典細鍒涘缓涓€浠藉叡浜牱寮忓疄渚嬪苟閫忎紶缁?TopBar銆丒ditToolbar 鍜?UnifiedScrollView銆?
+## 鎺ㄨ崘鎵ц鏂瑰紡
 - RN smoke
 ```bash
 npm test -- --runInBand --runTestsByPath __tests__/smoke/SettingsPage.smoke.test.tsx __tests__/smoke/WritePage.smoke.test.tsx __tests__/smoke/AIWriteAssistant.smoke.test.tsx __tests__/smoke/BookManagePage.smoke.test.tsx
 ```
 
-- 扩展 RN smoke
+- 鎵╁睍 RN smoke
 ```bash
 npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.test.tsx __tests__/smoke/BookshelfNestedPage.smoke.test.tsx __tests__/smoke/CommentPage.smoke.test.tsx __tests__/smoke/ReviewDetailPage.smoke.test.tsx __tests__/smoke/MemberCenterPage.smoke.test.tsx
 ```
@@ -66,10 +50,11 @@ npm test -- --runInBand --runTestsByPath __tests__/smoke/BookshelfPage.smoke.tes
 cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.novel.page.home.HomeSmokeTest,com.novel.page.login.LoginSmokeTest,com.novel.page.search.SearchSmokeTest,com.novel.page.read.viewmodel.ReaderSmokeTest
 ```
 
-## 后续扩展
-- 将 smoke 命令接入 `.github/workflows/`，作为 `V2-06` 的 Android smoke job。
-- 为 RN 页面继续补充：
-  - `BookshelfPageComponent`
+## 鍚庣画鎵╁睍
+- 灏?smoke 鍛戒护鎺ュ叆 `.github/workflows/`锛屼綔涓?`V2-06` 鐨?Android smoke job銆?- 涓?RN 椤甸潰缁х画琛ュ厖锛?  - `BookshelfPageComponent`
   - `HistoryPageComponent`
   - `CategoryPageComponent`
-- 为 Android smoke 增加截图/录像归档模板，支撑 `V2-08` 证据标准化。
+- 涓?Android smoke 澧炲姞鎴浘/褰曞儚褰掓。妯℃澘锛屾敮鎾?`V2-08` 璇佹嵁鏍囧噯鍖栥€?
+
+- WriteReviewPage.smoke.test.tsx`r
+  - 浣跨敤 RN render smoke锛岄獙璇佸啓涔﹁瘎椤甸《閮ㄦ爮銆佽瘎鍒嗗尯鍜屽啓璇勮〃鍗曞３灞傚彲娓叉煋銆?

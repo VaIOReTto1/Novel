@@ -90,4 +90,16 @@ describe('android novelDesign page adoption', () => {
     expect(bookDescriptionBottomSheet).toContain('NovelDesignTokens');
     expect(bookDescriptionBottomSheet).not.toContain('NovelColors.NovelBookBackground');
   });
+
+  test('welfare shell and compose root shell start using NovelDesignTokens for app surfaces', () => {
+    const welfarePage = read('android/app/src/main/java/com/novel/page/welfare/WelfarePage.kt');
+    const welfarePageContent = read('android/feature-welfare/src/main/java/com/novel/page/welfare/WelfarePageContent.kt');
+    const composeMainActivityContent = read('android/app/src/main/java/com/novel/ComposeMainActivityContent.kt');
+
+    expect(welfarePage).toContain('NovelDesignTokens');
+    expect(welfarePageContent).toContain('NovelDesignTokens');
+    expect(welfarePageContent).not.toContain('MaterialTheme.colorScheme.surface');
+    expect(composeMainActivityContent).toContain('NovelDesignTokens');
+    expect(composeMainActivityContent).not.toContain('MaterialTheme.colorScheme.background');
+  });
 });

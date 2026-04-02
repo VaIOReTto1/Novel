@@ -43,6 +43,7 @@ import com.novel.page.welfare.viewmodel.WelfareEffect
 import com.novel.page.welfare.viewmodel.WelfareIntent
 import com.novel.page.welfare.viewmodel.WelfarePageBootstrapCoordinator
 import com.novel.page.welfare.viewmodel.WelfareViewModel
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.NovelTheme
 import com.novel.ui.theme.ThemeManager
 
@@ -212,7 +213,7 @@ fun WelfarePageContent(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.surface),
+                            .background(NovelDesignTokens.color("color.bg.surface")),
                     ) {
                         WebViewComponent(
                             url = currentUrl,

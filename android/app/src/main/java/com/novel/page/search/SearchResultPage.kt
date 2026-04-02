@@ -41,7 +41,7 @@ import com.novel.page.search.component.SearchFilterBottomSheet
 import com.novel.page.search.component.SearchResultItem
 import com.novel.page.search.component.SearchTopBar
 import com.novel.page.search.skeleton.SearchResultPageSkeleton
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 import com.novel.utils.ssp
 import com.novel.utils.NavViewModel
@@ -246,7 +246,7 @@ fun SearchResultPage(
                                 ) {
                                     if (isLoadingMore) {
                                         CircularProgressIndicator(
-                                            color = NovelColors.NovelMain,
+                                            color = NovelDesignTokens.lightColor("color.brand.primary"),
                                             modifier = Modifier.size(24.wdp)
                                         )
                                     } else {
@@ -258,7 +258,7 @@ fun SearchResultPage(
                                         NovelText(
                                             text = "点击加载更多...",
                                             fontSize = 14.ssp,
-                                            color = NovelColors.NovelTextGray,
+                                            color = NovelDesignTokens.lightColor("color.text.secondary"),
                                             modifier = Modifier.clickable { onLoadMore() }
                                         )
                                     }
@@ -278,19 +278,19 @@ fun SearchResultPage(
                             NovelText(
                                 text = "🔍",
                                 fontSize = 48.ssp,
-                                color = NovelColors.NovelTextGray
+                                color = NovelDesignTokens.lightColor("color.text.secondary")
                             )
                             Spacer(modifier = Modifier.height(16.wdp))
                             NovelText(
                                 text = "没有找到相关结果",
                                 fontSize = 16.ssp,
-                                color = NovelColors.NovelTextGray
+                                color = NovelDesignTokens.lightColor("color.text.secondary")
                             )
                             Spacer(modifier = Modifier.height(8.wdp))
                             NovelText(
                                 text = "试试其他关键词或调整筛选条件",
                                 fontSize = 14.ssp,
-                                color = NovelColors.NovelTextGray.copy(alpha = 0.7f)
+                                color = NovelDesignTokens.lightColor("color.text.secondary").copy(alpha = 0.7f)
                             )
                         }
                     }
@@ -371,7 +371,7 @@ private fun CategoryFilterRow(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .background(NovelColors.NovelBackground)
+                .background(NovelDesignTokens.lightColor("color.bg.surface"))
                 .size(40.wdp)
                 .align(Alignment.CenterEnd)
                 .debounceClickable(
@@ -381,7 +381,7 @@ private fun CategoryFilterRow(
             Icon(
                 Icons.Default.MoreVert,
                 contentDescription = "筛选",
-                tint = NovelColors.NovelMain,
+                    tint = NovelDesignTokens.lightColor("color.brand.primary"),
                 modifier = Modifier.size(20.wdp)
             )
         }

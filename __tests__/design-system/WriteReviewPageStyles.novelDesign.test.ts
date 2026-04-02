@@ -21,9 +21,12 @@ describe('WriteReviewPage Stage 7 styles', () => {
 
     expect(styles.container.backgroundColor).toBe('#FAF6F0');
     expect(styles.topBar.backgroundColor).toBe('#FFFDFC');
+    expect(styles.topBar.borderBottomColor).toBe('#E8DDD1');
     expect(styles.ratingContainer.backgroundColor).toBe('#FFFDFC');
     expect(styles.formContainer.backgroundColor).toBe('#FFFDFC');
     expect(styles.tipsContainer.backgroundColor).toBe('#F3ECE3');
+    expect(styles.tipsHeader.backgroundColor).toBe('#FFFDFC');
+    expect(styles.contentInput.backgroundColor).toBe('#FFFDFC');
     expect(styles.submitContainer.backgroundColor).toBe('#FFFDFC');
   });
 });

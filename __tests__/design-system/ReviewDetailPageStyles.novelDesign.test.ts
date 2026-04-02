@@ -24,6 +24,9 @@ describe('ReviewDetailPage Stage 7 styles', () => {
     expect(styles.topBar.borderBottomColor).toBe('#E8DDD1');
     expect(styles.reviewDetailContainer.backgroundColor).toBe('#FFFDFC');
     expect(styles.commentItem.backgroundColor).toBe('#FFFDFC');
+    expect(styles.actionButton.backgroundColor).toBe('#FFFDFC');
+    expect(styles.commentInputBox.backgroundColor).toBe('#F3ECE3');
+    expect(styles.modalTopBar.borderBottomColor).toBe('#E8DDD1');
     expect(styles.bottomInputContainer.backgroundColor).toBe('#FFFDFC');
   });
 });

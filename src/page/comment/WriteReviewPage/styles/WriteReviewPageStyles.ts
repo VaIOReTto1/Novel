@@ -1,250 +1,204 @@
 import { StyleSheet } from 'react-native';
-import { createNovelDesignUI } from '../../../../design-system/novelDesign';
+
+import {
+  createNovelDesignComponentRecipes,
+  createNovelDesignLayoutRecipes,
+  createNovelDesignSurfaceSpec,
+  createNovelDesignUI,
+} from '../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../utils/theme/colors';
+import { fp, sp, wp } from '../../../../utils/theme/dimensions';
 
 export const createWriteReviewPageStyles = (colors: NovelColors) => {
-  const novelDesign = createNovelDesignUI(colors);
-  return StyleSheet.create({
-    // 容器样式
-    container: {
-      flex: 1,
-      backgroundColor: novelDesign.color.bg.canvas,
-    },
+  const ui = createNovelDesignUI(colors);
+  const layout = createNovelDesignLayoutRecipes(ui);
+  const components = createNovelDesignComponentRecipes(ui);
+  const surfaceRecipe = createNovelDesignSurfaceSpec(
+    'rn-host-write-review-page-component',
+    ui,
+  );
 
-    // TopBar样式
+  return StyleSheet.create({
+    container: {
+      ...layout.screenShell,
+    },
     topBar: {
+      ...layout.topBar,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingHorizontal: 12,
-      paddingVertical: 4,
-      backgroundColor: novelDesign.color.bg.surface,
+      borderBottomColor: ui.color.border.subtle,
     },
-
     closeButton: {
-      width: 40,
-      height: 40,
-      alignItems: 'center',
-      justifyContent: 'center',
+      ...components.quietIconButton,
     },
-
     closeIcon: {
-      fontSize: 30,
-      color: colors.novelText,
-      fontWeight: '400',
+      fontSize: fp(18),
+      color: ui.color.text.primary,
+      fontWeight: '600',
     },
-
     titleContainer: {
       flex: 1,
       alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: ui.spacePx('100'),
     },
-
     topBarTitle: {
-      fontSize: 18,
-      fontWeight: '500',
-      color: colors.novelText,
+      color: ui.color.text.primary,
+      fontSize: fp(17),
+      fontWeight: '700',
     },
-
     submitButton: {
-      paddingHorizontal: 16,
-      paddingVertical: 4,
-      backgroundColor: colors.novelMain,
-      borderRadius: 16,
-      alignItems: 'center',
+      ...components.primaryActionPill,
+      minWidth: wp(72),
+      minHeight: ui.metrics.buttonHeightMd,
     },
-
     submitButtonText: {
-      fontSize: 10,
-      fontWeight: '600',
-      color: colors.novelBackground,
+      fontSize: fp(12),
+      fontWeight: '700',
+      color: ui.color.text.inverse,
     },
-
     scrollContainer: {
       flex: 1,
     },
-
     contentContainer: {
+      paddingHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+      paddingTop: surfaceRecipe.spacingRhythm.sectionGap,
+      paddingBottom: ui.spacePx('500'),
+      gap: surfaceRecipe.spacingRhythm.sectionGap,
     },
-
-    // 评分区域
     ratingContainer: {
-      backgroundColor: novelDesign.color.bg.surface,
+      ...layout.paperCard,
       alignItems: 'center',
+      gap: ui.spacePx('100'),
     },
-
     sectionTitle: {
-      fontSize: 16,
-      fontWeight: '500',
-      color: colors.novelText,
-      marginBottom: 16,
+      ...components.sectionTitleText,
       textAlign: 'center',
     },
-
     starContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
+      gap: ui.spacePx('050'),
     },
-
     starButton: {
-      marginHorizontal: 2,
+      ...components.quietIconButton,
+      width: wp(44),
+      height: wp(44),
+      backgroundColor: ui.alpha(ui.color.brand.primary, 0.08),
+      borderColor: ui.alpha(ui.color.brand.primary, 0.12),
     },
-
     starButtonSelected: {
-      transform: [{ scale: 1.1 }],
+      backgroundColor: ui.color.interaction.selected,
+      borderColor: ui.color.border.focus,
+      transform: [{ scale: 1.05 }],
     },
-
     starText: {
-      fontSize: 32,
-      color: colors.novelLightGray,
+      fontSize: fp(24),
+      color: ui.color.text.secondary,
     },
-
     starTextSelected: {
-      color: colors.novelMain,
+      color: ui.color.brand.primary,
     },
-
     ratingLabel: {
-      fontSize: 14,
-      color: colors.novelMain,
-      marginTop: 2,
-      fontWeight: '500',
+      color: ui.color.brand.primary,
+      fontSize: fp(13),
+      fontWeight: '700',
     },
-
-    // 表单区域
     formContainer: {
-      flex: 1,
-      backgroundColor: novelDesign.color.bg.surface,
-      paddingHorizontal: 12,
-      paddingVertical: 0,
-      marginBottom: 0,
+      ...layout.paperCard,
+      gap: ui.spacePx('150'),
     },
-
     divider: {
       height: 1,
-      backgroundColor: colors.novelDivider,
-      marginVertical: 16,
+      backgroundColor: ui.color.border.subtle,
     },
-
     inputSection: {
-      flex: 1,
+      gap: ui.spacePx('100'),
     },
-
     inputHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 8,
     },
-
     charCount: {
-      fontSize: 12,
-      color: colors.novelTextGray,
+      color: ui.color.text.secondary,
+      fontSize: fp(12),
     },
-
     charCountError: {
-      color: colors.novelError,
+      color: ui.color.status.danger,
     },
-
     titleInput: {
-      borderWidth: 0,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.novelDivider,
-      borderRadius: 0,
-      paddingHorizontal: 0,
-      paddingVertical: 12,
-      fontSize: 16,
-      color: colors.novelText,
-      backgroundColor: 'transparent',
-      minHeight: 44,
+      ...components.composerInput,
+      minHeight: wp(48),
+      backgroundColor: ui.color.bg.surface,
     },
-
     contentInput: {
-      flex: 1,
-      borderWidth: 0,
-      fontSize: 16,
-      color: colors.novelText,
-      backgroundColor: colors.novelBackground,
+      ...components.composerInput,
+      minHeight: wp(180),
+      maxHeight: wp(260),
+      backgroundColor: ui.color.bg.surface,
       textAlignVertical: 'top',
     },
-
     inputError: {
-      borderColor: colors.novelError,
+      borderColor: ui.color.status.danger,
     },
-
     errorText: {
-      fontSize: 12,
-      color: colors.novelError,
-      marginTop: 4,
+      color: ui.color.status.danger,
+      fontSize: fp(12),
     },
-
-    // 提交按钮区域
     submitContainer: {
+      ...layout.anchoredComposer,
       position: 'absolute',
-      bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: novelDesign.color.bg.surface,
-      borderTopWidth: 1,
-      borderTopColor: novelDesign.color.border.subtle,
-      padding: 16,
+      bottom: 0,
     },
-
-    // 提示区域
     tipsContainer: {
-      backgroundColor: novelDesign.color.bg.elevated,
-      borderRadius: 8,
-      marginHorizontal: 16,
-      marginBottom: 24,
+      ...layout.raisedCard,
       overflow: 'hidden',
+      borderRadius: ui.radiusPx('lg'),
     },
-
     tipsHeader: {
+      ...layout.paperCard,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: 16,
-      backgroundColor: colors.novelSecondaryBackground,
+      paddingVertical: ui.spacePx('150'),
     },
-
     tipsTitle: {
-      fontSize: 14,
-      fontWeight: '500',
-      color: colors.novelText,
+      color: ui.color.text.primary,
+      fontSize: fp(14),
+      fontWeight: '700',
     },
-
     tipsToggle: {
-      fontSize: 12,
-      color: colors.novelTextGray,
-      transform: [{ rotate: '0deg' }],
+      color: ui.color.text.secondary,
+      fontSize: fp(12),
     },
-
     tipsToggleExpanded: {
       transform: [{ rotate: '180deg' }],
     },
-
     tipsContent: {
-      padding: 16,
-      paddingTop: 0,
-      backgroundColor: colors.novelSecondaryBackground,
+      paddingHorizontal: ui.metrics.cardPadding,
+      paddingBottom: ui.metrics.cardPadding,
+      backgroundColor: ui.color.bg.elevated,
     },
-
     tipItem: {
       flexDirection: 'row',
       alignItems: 'flex-start',
-      marginBottom: 8,
+      marginBottom: ui.spacePx('100'),
     },
-
     tipBullet: {
-      fontSize: 14,
-      color: colors.novelMain,
-      marginRight: 8,
+      color: ui.color.brand.primary,
+      fontSize: fp(14),
+      marginRight: ui.spacePx('100'),
       marginTop: 2,
     },
-
     tipText: {
       flex: 1,
-      fontSize: 14,
-      color: colors.novelTextGray,
-      lineHeight: 20,
+      color: ui.color.text.secondary,
+      fontSize: fp(13),
+      lineHeight: fp(20),
     },
   });
 };

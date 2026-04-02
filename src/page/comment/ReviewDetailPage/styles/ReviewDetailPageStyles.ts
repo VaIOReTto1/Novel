@@ -421,7 +421,9 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
       paddingVertical: hp(8),
       paddingHorizontal: wp(12),
       borderRadius: sp(20),
-      backgroundColor: colors.novelSecondaryBackground,
+      backgroundColor: novelDesign.color.bg.surface,
+      borderWidth: 1,
+      borderColor: novelDesign.color.border.subtle,
       marginRight: wp(12),
     },
 
@@ -495,8 +497,10 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.novelSecondaryBackground,
-      borderRadius: sp(4),
+      backgroundColor: novelDesign.color.bg.elevated,
+      borderRadius: sp(12),
+      borderWidth: 1,
+      borderColor: novelDesign.color.border.subtle,
       paddingHorizontal: wp(12),
       marginRight: hp(8),
       minHeight: sp(30),
@@ -650,7 +654,7 @@ export const createReviewDetailPageStyles = (colors: NovelColors) => {
       paddingHorizontal: wp(16),
       paddingVertical: hp(12),
       borderBottomWidth: 1,
-      borderBottomColor: colors.novelDivider,
+      borderBottomColor: novelDesign.color.border.subtle,
     },
 
     modalTopBarLeft: {

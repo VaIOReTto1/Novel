@@ -228,7 +228,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     borderRadius: sp(12),
     padding: wp(16),
     marginBottom: wp(12),
-  shadowColor: colors.novelText,
+    shadowColor: novelDesign.color.text.primary,
     
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
@@ -328,7 +328,7 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
   // 空状态增强样式
   emptyTitle: {
     fontSize: fp(16),
-    color: colors.novelText,
+    color: novelDesign.color.text.primary,
     textAlign: 'center',
     marginBottom: wp(8),
     opacity: 0.7,
@@ -649,20 +649,20 @@ export const createBookshelfPageStyles = (colors: NovelColors) => {
     width: sp(24),
     height: sp(24),
     borderRadius: sp(12),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderWidth: 2,
-    borderColor: colors.novelMain,
+    borderColor: novelDesign.color.brand.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   selectedCheckbox: {
-    backgroundColor: colors.novelMain,
+    backgroundColor: novelDesign.color.brand.primary,
   },
 
   checkboxIcon: {
     fontSize: fp(14),
-    color: colors.novelBackground,
+    color: novelDesign.color.text.inverse,
     fontWeight: 'bold',
   },
 

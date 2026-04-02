@@ -68,4 +68,16 @@ describe('android novelDesign page adoption', () => {
     expect(bookReviewsSection).toContain('NovelDesignTokens');
     expect(bookReviewsSection).not.toContain('NovelColors.NovelTextGray');
   });
+
+  test('reader shell and panels start using NovelDesignTokens for shell chrome', () => {
+    const readerPage = read('android/app/src/main/java/com/novel/page/read/ReaderPage.kt');
+    const readerSettingsPanel = read('android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt');
+    const chapterListPanel = read('android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt');
+
+    expect(readerPage).toContain('NovelDesignTokens');
+    expect(readerPage).not.toContain('NovelColors.NovelBookBackground');
+    expect(readerSettingsPanel).toContain('NovelDesignTokens');
+    expect(chapterListPanel).toContain('NovelDesignTokens');
+    expect(chapterListPanel).not.toContain('NovelColors.NovelMain');
+  });
 });

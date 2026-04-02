@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 import kotlin.math.roundToInt
 import com.novel.utils.TimberLogger
@@ -51,10 +52,10 @@ fun ReaderSettingsPanel(
     // 预定义的背景主题列表，经过护眼性和可读性优化
     val backgroundThemes = persistentListOf(
         BackgroundTheme("护眼绿", Color(0xFFCCE8CC), Color(0xFF2E2E2E)),  // 护眼绿色，减缓视觉疲劳
-        BackgroundTheme("经典白", Color(0xFFFFFFFF), Color(0xFF2E2E2E)),  // 经典白色，适合明亮环境
+        BackgroundTheme("经典白", NovelDesignTokens.color("color.bg.surface"), NovelDesignTokens.color("color.text.primary")),  // 经典白色，适合明亮环境
         BackgroundTheme("温暖黄", Color(0xFFF5F5DC), Color(0xFF2E2E2E)),  // 温暖米黄，最佳护眼效果
-        BackgroundTheme("夜间黑", Color(0xFF1E1E1E), Color(0xFFE0E0E0)),  // 夜间模式，适合暗光环境
-        BackgroundTheme("羊皮纸", Color(0xFFF4ECD8), Color(0xFF5D4E37))   // 复古羊皮纸，仿古书籍质感
+        BackgroundTheme("夜间黑", NovelDesignTokens.darkColor("color.bg.surface"), NovelDesignTokens.darkColor("color.text.primary")),  // 夜间模式，适合暗光环境
+        BackgroundTheme("羊皮纸", NovelDesignTokens.color("color.reader.emphasis"), NovelDesignTokens.color("color.text.primary"))   // 复古羊皮纸，仿古书籍质感
     )
 
     // 1. 把外层的 brightness 存成一个 State，仍然是 0f..1f 之间离散档位

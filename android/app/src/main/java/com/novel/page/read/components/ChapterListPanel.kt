@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.novel.page.read.viewmodel.Chapter
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 import kotlinx.collections.immutable.ImmutableList
 
@@ -101,7 +101,7 @@ fun ChapterListPanel(
                     text = "目录",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = NovelColors.NovelText
+                    color = NovelDesignTokens.color("color.text.primary")
                 )
                 
                 // 性能优化：缓存关闭回调，避免每次重组都创建新 Lambda
@@ -167,15 +167,15 @@ private fun ChapterItem(
     onClick: () -> Unit
 ) {
     val backgroundColor = if (isSelected) {
-        NovelColors.NovelMain.copy(alpha = 0.1f)
+        NovelDesignTokens.color("color.interaction.selected").copy(alpha = 0.8f)
     } else {
         Color.Transparent
     }
     
     val textColor = if (isSelected) {
-        NovelColors.NovelMain
+        NovelDesignTokens.color("color.brand.primary")
     } else {
-        NovelColors.NovelText
+        NovelDesignTokens.color("color.text.primary")
     }
     
     Row(
@@ -226,7 +226,7 @@ private fun ChapterItem(
                 modifier = Modifier
                     .size(8.wdp)
                     .background(
-                        NovelColors.NovelMain,
+                        NovelDesignTokens.color("color.brand.primary"),
                         RoundedCornerShape(4.wdp)
                     )
             )

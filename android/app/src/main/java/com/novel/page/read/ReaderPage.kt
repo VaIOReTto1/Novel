@@ -85,7 +85,7 @@ import com.novel.page.read.viewmodel.ReaderIntent
 import com.novel.page.read.viewmodel.ReaderViewModel
 import com.novel.page.read.viewmodel.ReaderState
 import com.novel.page.read.viewmodel.ReaderDebugScenarioCoordinator
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.wdp
 import com.novel.utils.ssp
@@ -352,7 +352,7 @@ fun ReaderPage(
         LoadingStateComponent(
             component = loadingStateComponent,
             modifier = Modifier.fillMaxSize(),
-            backgroundColor = NovelColors.NovelBookBackground,
+            backgroundColor = NovelDesignTokens.color("color.bg.canvas"),
             flipBookController = activeController,
             onLeftSwipeToReader = handleLeftSwipeToReader
         ) {
@@ -501,7 +501,7 @@ fun ReaderPage(
                             ) {
                                 Card(
                                     colors = CardDefaults.cardColors(
-                                        containerColor = NovelColors.NovelMain.copy(alpha = 0.9f)
+                                        containerColor = NovelDesignTokens.color("color.brand.primary").copy(alpha = 0.9f)
                                     ),
                                     shape = RoundedCornerShape(8.wdp)
                                 ) {
@@ -910,7 +910,7 @@ private fun LoadingIndicator() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = NovelColors.NovelMain)
+            CircularProgressIndicator(color = NovelDesignTokens.color("color.brand.primary"))
     }
 }
 
@@ -929,13 +929,13 @@ private fun ErrorContent(
     ) {
         Text(
             text = error,
-            color = NovelColors.NovelError,
+            color = NovelDesignTokens.color("color.status.danger"),
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(16.wdp))
         Button(
             onClick = onRetry,
-            colors = ButtonDefaults.buttonColors(containerColor = NovelColors.NovelMain)
+                colors = ButtonDefaults.buttonColors(containerColor = NovelDesignTokens.color("color.brand.primary"))
         ) {
             Text("重试")
         }

@@ -111,5 +111,7 @@
 
 | `RB-STAGE7-ANDROID-SEARCH-20260402-01` | `0b28c2e` | 推进 Android 搜索页接入 NovelDesignTokens | `git revert --no-edit 0b28c2e` | `cd android && .\\gradlew.bat --version` |
 
+| `RB-STAGE7-ANDROID-SEARCHRESULT-20260402-01` | `ce24ad5` | 推进 Android 搜索结果页接入 NovelDesignTokens | `git revert --no-edit ce24ad5` | `cd android && .\\gradlew.bat --version` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

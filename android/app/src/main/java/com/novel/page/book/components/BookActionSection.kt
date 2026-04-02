@@ -18,7 +18,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.TimberLogger
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
@@ -86,7 +86,7 @@ fun BookActionSection(
                 .semantics { contentDescription = "开始阅读按钮" }
                 .height(48.wdp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = NovelColors.NovelMain
+                containerColor = NovelDesignTokens.color("color.brand.primary")
             ),
             shape = RoundedCornerShape(8.wdp)
         ) {
@@ -94,7 +94,7 @@ fun BookActionSection(
                 text = "开始阅读",
                 fontSize = 16.ssp,
                 fontWeight = FontWeight.Bold,
-                color = NovelColors.NovelBookBackground
+                color = NovelDesignTokens.color("color.text.inverse")
             )
         }
         
@@ -110,14 +110,14 @@ fun BookActionSection(
                     .weight(1f)
                     .height(40.wdp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = NovelColors.NovelText
+                    contentColor = NovelDesignTokens.color("color.text.primary")
                 ),
                 shape = RoundedCornerShape(8.wdp)
             ) {
                 NovelText(
                     text = if (isInBookshelf) "移出书架" else "加入书架",
                     fontSize = 14.ssp,
-                    color = NovelColors.NovelText
+                    color = NovelDesignTokens.color("color.text.primary")
                 )
             }
             
@@ -128,14 +128,14 @@ fun BookActionSection(
                     .weight(1f)
                     .height(40.wdp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = NovelColors.NovelText
+                    contentColor = NovelDesignTokens.color("color.text.primary")
                 ),
                 shape = RoundedCornerShape(8.wdp)
             ) {
                 NovelText(
                     text = "分享",
                     fontSize = 14.ssp,
-                    color = NovelColors.NovelText
+                    color = NovelDesignTokens.color("color.text.primary")
                 )
             }
         }

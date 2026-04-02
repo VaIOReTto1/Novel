@@ -29,7 +29,7 @@ import com.novel.page.book.viewmodel.BookDetailEffect
 import com.novel.page.component.FlipBookAnimationController
 import com.novel.page.component.LoadingStateComponent
 import com.novel.page.component.ViewState
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.wdp
 import com.novel.utils.NavViewModel
 import com.novel.utils.TimberLogger
@@ -216,7 +216,7 @@ fun BookDetailPage(
     LoadingStateComponent(
         component = loadingStateComponent,
         modifier = Modifier.fillMaxSize(),
-        backgroundColor = NovelColors.NovelBookBackground,
+            backgroundColor = NovelDesignTokens.color("color.bg.canvas"),
         flipBookController = flipBookController,
         onLeftSwipeToReader = handleLeftSwipeToReader
     ) {
@@ -224,7 +224,7 @@ fun BookDetailPage(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(NovelColors.NovelBookBackground)
+                    .background(NovelDesignTokens.color("color.bg.canvas"))
         ) {
             // 性能优化：只在成功状态下渲染内容，避免不必要的组合
             if (isSuccess) {

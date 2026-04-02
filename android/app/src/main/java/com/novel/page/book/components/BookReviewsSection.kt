@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.novel.page.book.viewmodel.BookDetailUiState
 import com.novel.page.component.NovelText
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -55,7 +55,7 @@ fun BookReviewsSection(
                 text = "热门书评",
                 fontSize = 18.ssp,
                 fontWeight = FontWeight.Bold,
-                color = NovelColors.NovelText
+                color = NovelDesignTokens.color("color.text.primary")
             )
 
             // 更多书评按钮
@@ -74,7 +74,7 @@ fun BookReviewsSection(
                 NovelText(
                     text = "更多书评",
                     fontSize = 14.ssp,
-                    color = NovelColors.NovelMain
+                    color = NovelDesignTokens.color("color.brand.primary")
                 )
             }
         }
@@ -102,7 +102,7 @@ private fun BookReviewItem(review: BookDetailUiState.BookReview) {
             modifier = Modifier
                 .padding(top = 2.wdp)
                 .size(30.wdp)
-                .background(NovelColors.NovelTextGray, CircleShape)
+                .background(NovelDesignTokens.color("color.border.strong"), CircleShape)
         )
 
         // 评论内容
@@ -114,7 +114,7 @@ private fun BookReviewItem(review: BookDetailUiState.BookReview) {
             NovelText(
                 text = review.content,
                 fontSize = 12.ssp,
-                color = NovelColors.NovelText.copy(alpha = 0.8f),
+                color = NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -129,7 +129,11 @@ private fun BookReviewItem(review: BookDetailUiState.BookReview) {
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = null,
-                        tint = if (index < review.rating) NovelColors.NovelText.copy(alpha = 0.8f) else NovelColors.NovelTextGray,
+                        tint = if (index < review.rating) {
+                            NovelDesignTokens.color("color.text.primary").copy(alpha = 0.8f)
+                        } else {
+                            NovelDesignTokens.color("color.text.secondary")
+                        },
                         modifier = Modifier.size(12.wdp)
                     )
                 }
@@ -137,7 +141,7 @@ private fun BookReviewItem(review: BookDetailUiState.BookReview) {
                 NovelText(
                     text = review.readTime,
                     fontSize = 12.ssp,
-                    color = NovelColors.NovelTextGray,
+                    color = NovelDesignTokens.color("color.text.secondary"),
                     modifier = Modifier.padding(start = 4.wdp)
                 )
             }

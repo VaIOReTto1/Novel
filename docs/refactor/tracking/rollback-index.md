@@ -89,5 +89,7 @@
 
 | `RB-STAGE7-STYLE-CORE-20260402-01` | `ff18b71` | 继续压平书架与社区样式核的旧主题色值 | `git revert --no-edit ff18b71` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/CommunityPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/CommunityComponents.novelDesign.test.tsx __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx __tests__/design-system/CommunityPostList.novelDesign.test.tsx __tests__/design-system/CommunityFeedComponents.novelDesign.test.tsx` |
 
+| `RB-STAGE7-BOOKSHELF-STYLE-20260402-01` | `e163300` | 清空 Bookshelf 样式核的旧主题直连 | `git revert --no-edit e163300` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

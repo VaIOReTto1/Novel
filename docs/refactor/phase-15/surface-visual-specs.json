@@ -1533,31 +1533,30 @@
       "src/page/ScrollBox/FeedbackHelpPage/FeedbackHelpMainPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "pager-based native shell with bottom navigation and overlay stack",
-      "chrome": "bottom-app-bar navigation and full-screen pager",
-      "content_pattern": "tab shell mixing native pages and RN hosts",
+      "layout": "top bar plus search field, user greeting, consult scenario cards and FAQ list",
+      "chrome": "help-center chrome balancing search, cards and frequently asked question rows",
+      "content_pattern": "search entry, consult cards, highlighted FAQ titles and bottom contact section",
       "key_states": [
-        "default"
+        "default",
+        "searching",
+        "faq-list"
       ],
       "key_components": [
-        "ConsultSection",
-        "ContactSection",
-        "FrequentQuestions",
-        "QuestionDetail",
-        "QuestionList",
         "TopBar",
-        "UserSection",
-        "index"
+        "SearchInput",
+        "ConsultCards",
+        "FrequentList"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-main-shell with calmer bottom chrome and stronger page transitions",
-      "component_recipe": "editorial-main-shell",
+      "layout_strategy": "editorial-help hub with paper cards, elevated search field and clearer support hierarchy",
+      "component_recipe": "help-hub-surface",
       "style_keywords": [
-        "bottom-nav",
-        "host-shell",
-        "reader-brand"
+        "help-hub",
+        "search-entry",
+        "consult-cards",
+        "faq-rows"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1576,8 +1575,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -1588,22 +1587,26 @@
       "src/page/SettingsPage/helpsupportPage/HelpSupportPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "stacked grouped settings rows with modals and hardware-back glue",
-      "chrome": "plain top bar and utility sections with switches and rows",
-      "content_pattern": "settings groups, policy/help routes and switch-heavy controls",
+      "layout": "document-style page with top bar and long-form help/support body copy",
+      "chrome": "minimal legal-document chrome with a single reading column",
+      "content_pattern": "section titles, descriptive paragraphs and closing notes",
       "key_states": [
-        "default"
+        "default",
+        "long-document"
       ],
-      "key_components": []
+      "key_components": [
+        "TopBar",
+        "DocumentBody"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-settings-groups with panelized sections and explicit sublabels",
-      "component_recipe": "editorial-settings-panel",
+      "layout_strategy": "editorial-help document with calmer chrome and paper reading canvas",
+      "component_recipe": "help-document-surface",
       "style_keywords": [
-        "grouped-panels",
-        "utility",
-        "warm-controls"
+        "document-page",
+        "reading-column",
+        "paper-body"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1622,8 +1625,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -1858,22 +1861,26 @@
       "src/page/SettingsPage/privacypolicyPage/PrivacyPolicyPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "stacked grouped settings rows with modals and hardware-back glue",
-      "chrome": "plain top bar and utility sections with switches and rows",
-      "content_pattern": "settings groups, policy/help routes and switch-heavy controls",
+      "layout": "document-style page with top bar and long-form privacy policy copy",
+      "chrome": "minimal policy chrome around a single reading column",
+      "content_pattern": "section titles, paragraphs and legal closing copy",
       "key_states": [
-        "default"
+        "default",
+        "long-document"
       ],
-      "key_components": []
+      "key_components": [
+        "TopBar",
+        "DocumentBody"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-settings-groups with panelized sections and explicit sublabels",
-      "component_recipe": "editorial-settings-panel",
+      "layout_strategy": "editorial-policy document with quieter chrome and paper reading surface",
+      "component_recipe": "policy-document-surface",
       "style_keywords": [
-        "grouped-panels",
-        "utility",
-        "warm-controls"
+        "policy-document",
+        "reading-column",
+        "legal-copy"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1892,8 +1899,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -1904,31 +1911,26 @@
       "src/page/ScrollBox/FeedbackHelpPage/QuestionDetailPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "single-purpose page with top bar and one dominant content block",
-      "chrome": "utility navigation with straightforward content stack",
-      "content_pattern": "detail/help/message/history style utility surface",
+      "layout": "single-column support detail page with one dominant answer body and simple top chrome",
+      "chrome": "focused help-detail chrome with minimal distraction",
+      "content_pattern": "question heading, answer body and support follow-up hints",
       "key_states": [
-        "default"
+        "default",
+        "long-answer"
       ],
       "key_components": [
-        "ConsultSection",
-        "ContactSection",
-        "FrequentQuestions",
-        "QuestionDetail",
-        "QuestionList",
         "TopBar",
-        "UserSection",
-        "index"
+        "AnswerBody"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
-      "component_recipe": "utility-detail",
+      "layout_strategy": "editorial-support detail with stronger reading hierarchy and paper document body",
+      "component_recipe": "support-detail-surface",
       "style_keywords": [
-        "utility",
-        "single-purpose",
-        "grouped-detail"
+        "support-detail",
+        "reading-body",
+        "paper-document"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1947,8 +1949,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -1959,31 +1961,28 @@
       "src/page/ScrollBox/FeedbackHelpPage/QuestionListPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "single-purpose page with top bar and one dominant content block",
-      "chrome": "utility navigation with straightforward content stack",
-      "content_pattern": "detail/help/message/history style utility surface",
+      "layout": "utility detail page showing searchable FAQ entries in a stacked question list",
+      "chrome": "light support chrome with search shell and grouped rows",
+      "content_pattern": "question rows, section headings and support navigation hints",
       "key_states": [
-        "default"
+        "default",
+        "searching",
+        "empty-result"
       ],
       "key_components": [
-        "ConsultSection",
-        "ContactSection",
-        "FrequentQuestions",
-        "QuestionDetail",
-        "QuestionList",
         "TopBar",
-        "UserSection",
-        "index"
+        "SearchInput",
+        "QuestionRows"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
-      "component_recipe": "utility-detail",
+      "layout_strategy": "editorial-faq list with quieter chrome and stronger row grouping",
+      "component_recipe": "faq-list-surface",
       "style_keywords": [
-        "utility",
-        "single-purpose",
-        "grouped-detail"
+        "faq-list",
+        "grouped-rows",
+        "search-shell"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2002,8 +2001,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

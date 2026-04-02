@@ -91,5 +91,7 @@
 
 | `RB-STAGE7-BOOKSHELF-STYLE-20260402-01` | `e163300` | 清空 Bookshelf 样式核的旧主题直连 | `git revert --no-edit e163300` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BookshelfNestedPageStyles.novelDesign.test.ts __tests__/design-system/BookshelfComponents.novelDesign.test.tsx __tests__/design-system/BookshelfEditToolbar.novelDesign.test.tsx` |
 
+| `RB-STAGE7-HISTORY-MESSAGE-20260402-01` | `2161b88` | 推进 History 与 Message 页面的 novelDesign 换肤 | `git revert --no-edit 2161b88` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/ScrollBoxHistoryPageStyles.novelDesign.test.ts __tests__/design-system/MessagePageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

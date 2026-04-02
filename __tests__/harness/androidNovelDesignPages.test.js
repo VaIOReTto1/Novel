@@ -116,8 +116,10 @@ describe('android novelDesign page adoption', () => {
   test('main activity and ReactNativePage host bridge start using NovelDesignTokens for root shell handoff', () => {
     const mainActivity = read('android/app/src/main/java/com/novel/MainActivity.kt');
     const reactNativePage = read('android/app/src/main/java/com/novel/rn/ReactNativePage.kt');
+    const backButton = read('android/app/src/main/java/com/novel/page/component/BackButton.kt');
 
     expect(mainActivity).toContain('NovelDesignTokens');
     expect(reactNativePage).toContain('NovelDesignTokens');
+    expect(backButton).toContain('NovelDesignTokens');
   });
 });

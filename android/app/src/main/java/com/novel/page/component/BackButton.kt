@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import com.novel.R
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.NavViewModel
 import com.novel.utils.debounceClickable
 import com.novel.utils.wdp
@@ -30,6 +30,6 @@ fun BackButton() {
         modifier = Modifier
             .size(23.wdp, 23.wdp)
             .debounceClickable(onClick = { NavViewModel.navigateBack() }),
-        colorFilter = ColorFilter.tint(NovelColors.NovelText)
+        colorFilter = ColorFilter.tint(NovelDesignTokens.color("color.text.primary"))
     )
 }

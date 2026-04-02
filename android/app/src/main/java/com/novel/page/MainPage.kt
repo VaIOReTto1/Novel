@@ -1,5 +1,6 @@
 package com.novel.page
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.novel.page.component.LaunchDialogType
 import com.novel.page.component.ShortDramaToastData
 import com.novel.page.component.rememberFlipBookAnimationController
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.NovelTheme
 import com.novel.utils.DialogLaunchManager
 import kotlinx.coroutines.launch
@@ -71,7 +73,11 @@ fun MainPage() {
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(NovelDesignTokens.color("color.bg.canvas"))
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
             MainPagePager(
                 pagerState = pagerState,

@@ -15,7 +15,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.facebook.react.ReactInstanceManager
 import com.facebook.react.bridge.ReactApplicationContext
 import com.novel.core.logging.CoreLogger
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 
 enum class MviModuleType {
     SETTINGS,
@@ -78,7 +78,7 @@ fun ReactNativePageContent(
         },
         modifier = Modifier
             .fillMaxSize()
-            .background(NovelColors.NovelBackground),
+            .background(NovelDesignTokens.color("color.bg.canvas")),
     )
 
     if (!isContextReady) {
@@ -87,7 +87,7 @@ fun ReactNativePageContent(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(color = NovelDesignTokens.color("color.brand.primary"))
         }
     }
 }

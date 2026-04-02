@@ -43,4 +43,16 @@ describe('android novelDesign page adoption', () => {
     expect(resultSkeleton).toContain('NovelDesignTokens');
     expect(resultSkeleton).not.toContain('NovelColors.NovelBackground');
   });
+
+  test('main shell host and RN host content start using NovelDesignTokens instead of raw NovelColors shell fills', () => {
+    const mainPage = read('android/app/src/main/java/com/novel/page/MainPage.kt');
+    const mainPageHost = read('android/app/src/main/java/com/novel/page/MainPageHostComponents.kt');
+    const rnHostContent = read('android/feature-rn-host/src/main/java/com/novel/rn/ReactNativePageContent.kt');
+
+    expect(mainPage).toContain('NovelDesignTokens');
+    expect(mainPageHost).toContain('NovelDesignTokens');
+    expect(mainPageHost).not.toContain('NovelColors.NovelBackground');
+    expect(rnHostContent).toContain('NovelDesignTokens');
+    expect(rnHostContent).not.toContain('NovelColors.NovelBackground');
+  });
 });

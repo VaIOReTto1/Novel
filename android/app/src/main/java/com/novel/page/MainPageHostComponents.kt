@@ -38,7 +38,7 @@ import com.novel.page.home.HomePage
 import com.novel.page.welfare.WelfarePage
 import com.novel.rn.MviModuleType
 import com.novel.rn.ReactNativePage
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -58,7 +58,7 @@ internal fun ColumnScope.MainPagePager(
         state = pagerState,
         modifier = Modifier
             .weight(1f)
-            .background(color = Color(0xFFF6F6F6)),
+            .background(color = NovelDesignTokens.color("color.bg.canvas")),
         userScrollEnabled = false,
     ) { pageIndex ->
         when (pageIndex) {
@@ -85,10 +85,10 @@ internal fun ColumnScope.MainPagePager(
             else -> Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(NovelColors.NovelBackground),
+                    .background(NovelDesignTokens.color("color.bg.surface")),
                 contentAlignment = Alignment.Center,
             ) {
-                NovelText("Page Not Found", color = NovelColors.NovelText)
+                NovelText("Page Not Found", color = NovelDesignTokens.color("color.text.primary"))
             }
         }
     }
@@ -104,7 +104,7 @@ internal fun MainPageBottomBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(54.wdp),
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = NovelDesignTokens.color("color.bg.surface"),
         contentPadding = PaddingValues(0.wdp),
     ) {
         Row(
@@ -169,7 +169,11 @@ internal fun NavButton(
     text: String,
     @DrawableRes iconResId: Int,
 ) {
-    val color = if (isSelected) NovelColors.NovelText else NovelColors.NovelTextGray
+    val color = if (isSelected) {
+        NovelDesignTokens.color("color.text.primary")
+    } else {
+        NovelDesignTokens.color("color.text.secondary")
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

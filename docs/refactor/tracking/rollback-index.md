@@ -101,5 +101,7 @@
 
 | `RB-STAGE7-HELP-LINE-20260402-02` | `4ab20a1` | 同步帮助线页面进入 novelDesign 主线 | `git revert --no-edit 4ab20a1` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/FeedbackHelpPageStyles.novelDesign.test.ts __tests__/design-system/HelpSupportPageStyles.novelDesign.test.ts __tests__/design-system/PrivacyPolicyPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-CREATOR-AUX-20260402-01` | `e424a20` | 推进 BecomeWriter 与 RecommendBook 页面的 novelDesign 换肤 | `git revert --no-edit e424a20` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BecomeWriterPageStyles.novelDesign.test.ts __tests__/design-system/RecommendBookPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

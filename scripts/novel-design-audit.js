@@ -860,6 +860,7 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/comment/WriteReviewPage/components/RatingInput.tsx',
   'src/page/comment/WriteReviewPage/components/ReviewForm.tsx',
   'src/page/ProfilePage/components/BottomBox.tsx',
+  'src/page/ProfilePage/components/BookItem.tsx',
   'src/page/ProfilePage/components/LoginBar.tsx',
   'src/page/ProfilePage/components/LoadMoreIndicator.tsx',
   'src/page/ProfilePage/components/RefreshIndicator.tsx',

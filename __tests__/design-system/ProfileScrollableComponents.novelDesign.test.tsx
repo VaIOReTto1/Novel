@@ -7,6 +7,10 @@ jest.mock('../../src/component/IconComponent', () => ({
   default: () => null,
 }));
 
+jest.mock('../../src/utils/bridge/NavigationBridge', () => ({
+  navigateToReader: jest.fn(),
+}));
+
 jest.mock('../../src/page/ProfilePage/utils/constants', () => ({
   PAGE_WIDTH: 320,
 }));
@@ -16,6 +20,7 @@ jest.mock('../../src/page/ProfilePage/utils/constants', () => ({
   PAGE_WIDTH: 320,
 }));
 
+import { BookItem } from '../../src/page/ProfilePage/components/BookItem';
 import { ScrollableArea } from '../../src/page/ProfilePage/components/ScrollableArea';
 import { WaterfallGrid } from '../../src/page/ProfilePage/components/WaterfallGrid';
 
@@ -77,5 +82,37 @@ describe('Profile scrollable components novelDesign', () => {
       .filter((value): value is string => typeof value === 'string');
 
     expect(texts).toContain('暂无推荐书籍');
+  });
+
+  it('renders readable profile waterfall placeholder copy', () => {
+    let renderer!: ReactTestRenderer.ReactTestRenderer;
+
+    ReactTestRenderer.act(() => {
+      renderer = ReactTestRenderer.create(
+        <BookItem
+          styles={new Proxy({}, { get: () => ({}) })}
+          book={{
+            id: 1,
+            title: '示例书籍',
+            author: '示例作者',
+            description: '描述',
+            coverUrl: '',
+          }}
+          index={0}
+        />,
+      );
+    });
+
+    const texts = renderer.root
+      .findAllByType(Text)
+      .flatMap((node) => {
+        const { children } = node.props;
+        return Array.isArray(children) ? children : [children];
+      })
+      .filter((value): value is string => typeof value === 'string');
+
+    expect(texts).toEqual(
+      expect.arrayContaining(['暂无封面', '示例书籍', '示例作者']),
+    );
   });
 });

@@ -102,4 +102,12 @@ describe('android novelDesign page adoption', () => {
     expect(composeMainActivityContent).toContain('NovelDesignTokens');
     expect(composeMainActivityContent).not.toContain('MaterialTheme.colorScheme.background');
   });
+
+  test('main activity and ReactNativePage host bridge start using NovelDesignTokens for root shell handoff', () => {
+    const mainActivity = read('android/app/src/main/java/com/novel/MainActivity.kt');
+    const reactNativePage = read('android/app/src/main/java/com/novel/rn/ReactNativePage.kt');
+
+    expect(mainActivity).toContain('NovelDesignTokens');
+    expect(reactNativePage).toContain('NovelDesignTokens');
+  });
 });

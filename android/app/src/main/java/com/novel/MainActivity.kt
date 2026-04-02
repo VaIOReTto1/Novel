@@ -2,10 +2,12 @@ package com.novel
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import androidx.compose.ui.graphics.toArgb
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.ThemeManager
 import com.novel.utils.TimberLogger
 import kotlinx.coroutines.launch
@@ -31,6 +33,9 @@ class MainActivity : ReactActivity() {
         TimberLogger.d(TAG, "MainActivity onCreate 开始")
         
         super.onCreate(savedInstanceState)
+        window?.decorView?.setBackgroundColor(
+            NovelDesignTokens.color("color.bg.canvas").toArgb()
+        )
         
         TimberLogger.d(TAG, "MainActivity onCreate 完成")
         

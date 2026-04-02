@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelStoreOwner
@@ -15,6 +16,7 @@ import com.novel.rn.bridge.BridgeIntent
 import com.novel.rn.bridge.BridgeViewModel
 import com.novel.rn.host.hostGatewayEntryPoint
 import com.novel.rn.settings.SettingsViewModel
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.TimberLogger
 
 @SuppressLint("VisibleForTests")
@@ -109,7 +111,9 @@ fun ReactNativePage(
             putBoolean("initialIsDarkMode", isDarkMode)
         }
 
-        reactRootViewRegistryGateway.getOrCreateReactRootView(componentName, bundle)
+        reactRootViewRegistryGateway.getOrCreateReactRootView(componentName, bundle).also { rootView ->
+            rootView.setBackgroundColor(NovelDesignTokens.color("color.bg.canvas").toArgb())
+        }
     }
 
     ReactNativePageContent(

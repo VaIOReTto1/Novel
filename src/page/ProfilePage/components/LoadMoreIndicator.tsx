@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { LoadMoreIndicatorProps } from '../types';
 
 interface LoadMoreIndicatorComponentProps extends LoadMoreIndicatorProps {
@@ -16,7 +15,7 @@ export const LoadMoreIndicator: React.FC<LoadMoreIndicatorComponentProps> = Reac
     return (
       <View style={styles.waterfallLoadingContainer}>
         <View style={styles.loadingSpinner}>
-          <Animated.Text style={[styles.spinnerText]}>⟳</Animated.Text>
+          <ActivityIndicator size="small" color="#C96A34" />
         </View>
         <Text style={styles.waterfallLoadingText}>加载中...</Text>
       </View>

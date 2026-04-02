@@ -99,5 +99,7 @@
 
 | `RB-STAGE7-HELP-LEGAL-20260402-01` | `aa49949` | 推进帮助与隐私页面的 novelDesign 换肤 | `git revert --no-edit aa49949` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/FeedbackHelpPageStyles.novelDesign.test.ts __tests__/design-system/HelpSupportPageStyles.novelDesign.test.ts __tests__/design-system/PrivacyPolicyPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-HELP-LINE-20260402-02` | `4ab20a1` | 同步帮助线页面进入 novelDesign 主线 | `git revert --no-edit 4ab20a1` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/FeedbackHelpPageStyles.novelDesign.test.ts __tests__/design-system/HelpSupportPageStyles.novelDesign.test.ts __tests__/design-system/PrivacyPolicyPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

@@ -103,5 +103,7 @@
 
 | `RB-STAGE7-CREATOR-AUX-20260402-01` | `e424a20` | 推进 BecomeWriter 与 RecommendBook 页面的 novelDesign 换肤 | `git revert --no-edit e424a20` | `npm test -- --runInBand --runTestsByPath __tests__/design-system/BecomeWriterPageStyles.novelDesign.test.ts __tests__/design-system/RecommendBookPageStyles.novelDesign.test.ts __tests__/harness/novelDesignAuditScripts.test.js` |
 
+| `RB-STAGE7-ANDROID-PRIMITIVES-20260402-01` | `d901fed` | 收口 Android 共享基元到 NovelDesignTokens | `git revert --no-edit d901fed` | `cd android && .\\gradlew.bat --version` |
+
 ## 璇存槑
 - 褰撳墠 closeout 涓?rollback authority 浠ユ湰椤典负鍑嗐�?

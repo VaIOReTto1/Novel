@@ -28,7 +28,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.ui.theme.PingFangFamily
 import com.novel.utils.ssp
 import com.novel.utils.wdp
@@ -62,6 +62,10 @@ fun NovelTextField(
     isError: Boolean = false,
     errorMessage: String? = null
 ) {
+    val textPrimary = NovelDesignTokens.lightColor("color.text.primary")
+    val textSecondary = NovelDesignTokens.lightColor("color.text.secondary")
+    val surface = NovelDesignTokens.lightColor("color.bg.surface")
+    val danger = NovelDesignTokens.lightColor("color.status.danger")
     val focusRequester = remember { FocusRequester() }
     var hasFocus by remember { mutableStateOf(false) }
     // 密码可见状态
@@ -70,7 +74,7 @@ fun NovelTextField(
     Box(
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.surface,
+                color = surface,
                 shape = RoundedCornerShape(round)
             ),
         contentAlignment = Alignment.Center
@@ -83,8 +87,8 @@ fun NovelTextField(
                     fontWeight = FontWeight.W500,
                     fontSize = 16.ssp,
                     textAlign = TextAlign.Center
-                ),
-                color = NovelColors.NovelTextGray,
+                    ),
+                    color = textSecondary,
             )
         }
         
@@ -95,7 +99,7 @@ fun NovelTextField(
             textStyle = TextStyle(
                 fontWeight = FontWeight.W500,
                 fontSize = 16.ssp,
-                color = NovelColors.NovelTextGray,
+                color = textPrimary,
                 textAlign = TextAlign.Center,
                 fontFamily = PingFangFamily,
             ),
@@ -120,7 +124,7 @@ fun NovelTextField(
                         fontSize = 12.ssp,
                         fontWeight = FontWeight.W400
                     ),
-                    color = NovelColors.NovelError,
+                    color = danger,
                     modifier = Modifier.padding(start = 16.wdp, top = 4.wdp)
                 )
             }

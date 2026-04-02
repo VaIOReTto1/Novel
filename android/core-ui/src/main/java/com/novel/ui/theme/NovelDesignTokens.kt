@@ -47,4 +47,13 @@ object NovelDesignTokens {
         "500" to 40.dp,
         "050" to 4.dp
     )
+
+    fun lightColor(token: String): Color = LightColors.getValue("$token.light")
+
+    fun darkColor(token: String): Color = DarkColors.getValue("$token.dark")
+
+    fun color(token: String, darkTheme: Boolean = false): Color =
+        if (darkTheme) darkColor(token) else lightColor(token)
+
+    fun space(token: String) = Space.getValue(token)
 }

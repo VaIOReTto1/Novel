@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import com.novel.ui.theme.NovelColors
+import com.novel.ui.theme.NovelDesignTokens
 import com.novel.utils.debounceClickable
 import com.novel.utils.wdp
 import kotlinx.collections.immutable.ImmutableList
@@ -37,7 +37,10 @@ fun NovelMainButton(
     onClick: () -> Unit,
     round: Dp = 24.wdp,
     enabldeClicke: Boolean = true,
-    colors: ImmutableList<Color> = persistentListOf(NovelColors.NovelMain, NovelColors.NovelMainLight)
+    colors: ImmutableList<Color> = persistentListOf(
+        NovelDesignTokens.lightColor("color.brand.primary"),
+        NovelDesignTokens.lightColor("color.brand.secondary")
+    )
 ) {
     Box(
         modifier = modifier
@@ -74,7 +77,7 @@ fun NovelWeakenButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     round: Dp = 24.wdp,
-    color: Color = NovelColors.NovelSecondaryBackground
+    color: Color = NovelDesignTokens.lightColor("color.bg.elevated")
 ) {
     Box(
         modifier = modifier

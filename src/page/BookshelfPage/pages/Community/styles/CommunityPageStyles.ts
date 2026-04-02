@@ -1,10 +1,21 @@
 import { StyleSheet } from 'react-native';
-import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
+import {
+  createNovelDesignComponentRecipes,
+  createNovelDesignLayoutRecipes,
+  createNovelDesignSurfaceSpec,
+  createNovelDesignUI,
+} from '../../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../../utils/theme';
 import { wp, hp, fp } from '../../../../../utils/theme';
 
 export const createCommunityPageStyles = (colors: NovelColors) => {
   const novelDesign = createNovelDesignUI(colors);
+  const layout = createNovelDesignLayoutRecipes(novelDesign);
+  const components = createNovelDesignComponentRecipes(novelDesign);
+  const surfaceRecipe = createNovelDesignSurfaceSpec(
+    'rn-nested-bookshelf-community-page',
+    novelDesign,
+  );
   const { color } = novelDesign;
   const brandPrimary = color.brand.primary;
   const danger = color.status.danger;
@@ -19,17 +30,12 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   return StyleSheet.create({
   // 主容器
   container: {
-    flex: 1,
-    backgroundColor: canvas,
+    ...layout.screenShell,
   },
 
   // 顶部导航栏
   topBar: {
-    backgroundColor: surface,
-    paddingHorizontal: wp(16),
-    paddingVertical: hp(12),
-    borderBottomWidth: 1,
-    borderBottomColor: borderSubtle,
+    ...layout.topBar,
   },
 
   topBarContent: {
@@ -39,9 +45,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   topBarTitle: {
-    fontSize: fp(18),
-    fontWeight: '600',
-    color: textPrimary,
+    ...components.sectionTitleText,
   },
 
   topBarActions: {
@@ -101,29 +105,45 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     backgroundColor: novelDesign.color.bg.canvas,
   },
 
+  postListContent: {
+    paddingBottom: novelDesign.spacePx('400'),
+  },
+
+  postListHeader: {
+    gap: surfaceRecipe.spacingRhythm.compactGap,
+  },
+
   // 顶部分割线
   topDivider: {
-    height: hp(8),
-    backgroundColor: novelDesign.color.bg.elevated,
+    height: hp(6),
+    marginHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+    borderRadius: novelDesign.radiusPx('full'),
+    backgroundColor: novelDesign.alpha(color.border.subtle, 0.8),
   },
 
   // 热门评论标题
   hotCommentHeader: {
-    paddingHorizontal: wp(16),
-    paddingVertical: hp(12),
-    backgroundColor: novelDesign.color.bg.surface,
+    ...layout.paperCard,
+    marginHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+    gap: novelDesign.spacePx('050'),
+  },
+
+  hotCommentEyebrow: {
+    ...components.eyebrowText,
   },
 
   hotCommentTitle: {
-    fontSize: fp(16),
-    fontWeight: '600',
-    color: textPrimary,
+    ...components.sectionTitleText,
+  },
+
+  hotCommentSubtitle: {
+    ...components.metaText,
   },
 
   postItem: {
-    backgroundColor: novelDesign.color.bg.surface,
-    paddingHorizontal: wp(16),
-    paddingVertical: hp(16),
+    ...components.feedCard,
+    marginHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+    marginBottom: surfaceRecipe.spacingRhythm.compactGap,
   },
 
   postHeader: {
@@ -157,10 +177,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   subscribeButton: {
-    backgroundColor: brandPrimary,
-    paddingHorizontal: wp(12),
-    paddingVertical: hp(6),
-    borderRadius: wp(12),
+    ...components.primaryActionPill,
     marginRight: wp(8),
   },
 
@@ -174,7 +191,8 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   bottomDivider: {
     height: 1,
     backgroundColor: borderSubtle,
-    marginHorizontal: wp(16),
+    marginHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+    marginBottom: surfaceRecipe.spacingRhythm.compactGap,
   },
 
   userAvatar: {
@@ -236,15 +254,16 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   postActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     paddingTop: hp(12),
+    borderTopWidth: 1,
+    borderTopColor: borderSubtle,
   },
 
   actionButton: {
+    ...components.secondaryActionPill,
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: hp(4),
-    paddingHorizontal: wp(8),
+    minHeight: novelDesign.metrics.buttonHeightMd,
   },
 
   actionIcon: {
@@ -395,20 +414,7 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
     position: 'absolute',
     bottom: hp(24),
     right: wp(24),
-    width: wp(56),
-    height: wp(56),
-    borderRadius: wp(28),
-    backgroundColor: brandPrimary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    ...layout.floatingPrimaryAction,
   },
 
   floatingButtonIcon: {
@@ -434,13 +440,9 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
   },
 
   filterItem: {
-    paddingHorizontal: wp(12),
-    paddingVertical: hp(6),
+    ...components.secondaryActionPill,
     marginRight: wp(8),
-    borderRadius: wp(12),
-    backgroundColor: surface,
-    borderWidth: 1,
-    borderColor: borderSubtle,
+    minHeight: novelDesign.metrics.buttonHeightMd,
   },
 
   activeFilterItem: {
@@ -460,10 +462,10 @@ export const createCommunityPageStyles = (colors: NovelColors) => {
 
   // 圈子相关样式
   circleTabContainer: {
-    backgroundColor: surface,
+    ...layout.paperCard,
+    marginHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+    marginTop: surfaceRecipe.spacingRhythm.sectionGap,
     paddingVertical: hp(16),
-    borderBottomWidth: 1,
-    borderBottomColor: borderSubtle,
   },
 
   circleTabHeader: {

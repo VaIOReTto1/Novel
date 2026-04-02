@@ -1,95 +1,164 @@
 import { StyleSheet } from 'react-native';
 
-import { createNovelDesignUI } from '../../../../design-system/novelDesign';
+import {
+  createNovelDesignComponentRecipes,
+  createNovelDesignLayoutRecipes,
+  createNovelDesignSurfaceSpec,
+  createNovelDesignUI,
+} from '../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../utils/theme/colors';
-import { fp, sp, wp, hp } from '../../../../utils/theme/dimensions';
+import { fp, sp, wp } from '../../../../utils/theme/dimensions';
 
 export const createWritePageStyles = (colors: NovelColors) => {
   const ui = createNovelDesignUI(colors);
+  const layout = createNovelDesignLayoutRecipes(ui);
+  const components = createNovelDesignComponentRecipes(ui);
+  const surfaceRecipe = createNovelDesignSurfaceSpec(
+    'rn-host-write-page-component',
+    ui,
+  );
 
   return StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: ui.color.bg.canvas,
+      ...layout.screenShell,
     },
     topBar: {
+      ...layout.topBar,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: ui.metrics.pageGutter,
-      paddingVertical: ui.spacePx('150'),
-      backgroundColor: ui.color.bg.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: ui.color.border.subtle,
     },
     navBtn: {
-      minWidth: wp(32),
-      minHeight: wp(32),
+      ...components.quietIconButton,
+    },
+    navIcon: {
+      fontSize: fp(22),
+      color: ui.color.text.primary,
+    },
+    toolbar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: ui.spacePx('100'),
+    },
+    toolBtn: {
+      ...components.quietIconButton,
+    },
+    toolIcon: {
+      fontSize: fp(16),
+      color: ui.color.text.primary,
+    },
+    publishBtn: {
+      ...components.primaryActionPill,
+    },
+    publishText: {
+      color: ui.color.text.inverse,
+      fontWeight: '700',
+      fontSize: fp(13),
+    },
+    editor: {
+      flex: 1,
+    },
+    editorScrollContent: {
+      paddingHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+      paddingTop: surfaceRecipe.spacingRhythm.sectionGap,
+      paddingBottom: ui.spacePx('500'),
+      gap: surfaceRecipe.spacingRhythm.sectionGap,
+    },
+    editorSheet: {
+      ...layout.paperCard,
+      minHeight: wp(560),
+      gap: surfaceRecipe.spacingRhythm.blockGap,
+    },
+    titleInput: {
+      fontSize: fp(22),
+      lineHeight: fp(30),
+      color: ui.color.text.primary,
+      fontWeight: '700',
+      paddingVertical: 0,
+    },
+    contentInput: {
+      minHeight: wp(460),
+      fontSize: fp(15),
+      lineHeight: fp(28),
+      color: ui.color.text.primary,
+      textAlignVertical: 'top',
+      paddingVertical: 0,
+    },
+    welcomePanel: {
+      ...layout.raisedCard,
+      gap: ui.spacePx('150'),
+    },
+    welcomeHeader: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: ui.spacePx('100'),
+    },
+    welcomeTitle: {
+      color: ui.color.text.primary,
+      fontSize: fp(18),
+      lineHeight: fp(24),
+      fontWeight: '700',
+      flex: 1,
+    },
+    welcomeRow: {
+      flexDirection: 'row',
+      gap: ui.spacePx('100'),
+    },
+    welcomeItem: {
+      flex: 1,
+      ...layout.paperCard,
+      paddingHorizontal: ui.metrics.compactCardPadding,
+      paddingVertical: ui.metrics.compactCardPadding,
+      gap: ui.spacePx('050'),
+    },
+    welcomeBadge: {
+      width: wp(28),
+      height: wp(28),
+      borderRadius: wp(14),
+      backgroundColor: ui.alpha(ui.color.brand.primary, 0.14),
       alignItems: 'center',
       justifyContent: 'center',
     },
-    navIcon: { fontSize: fp(28), color: colors.novelText },
-    toolbar: { flexDirection: 'row', alignItems: 'center', gap: wp(12) },
-    toolBtn: {},
-    toolIcon: { fontSize: fp(18), color: colors.novelText },
-    publishBtn: {
-      backgroundColor: ui.color.brand.primary,
-      paddingHorizontal: wp(14),
-      paddingVertical: wp(8),
-      borderRadius: sp(16),
+    welcomeBadgeText: {
+      color: ui.color.brand.primary,
+      fontSize: fp(11),
+      fontWeight: '700',
     },
-    publishText: { color: ui.color.text.inverse, fontWeight: '600' },
-    editor: {
-      flex: 1,
-      paddingHorizontal: wp(16),
-      backgroundColor: ui.color.bg.surface,
-    },
-    titleInput: {
-      fontSize: fp(18),
+    welcomeItemTitle: {
       color: ui.color.text.primary,
-      marginBottom: wp(12),
-      fontWeight: '600',
-    },
-    contentInput: {
-      minHeight: hp(500),
-      fontSize: fp(14),
-      color: ui.color.text.primary,
-    },
-
-    welcomePanel: {
-      position: 'absolute',
-      left: wp(16),
-      right: wp(16),
-      bottom: wp(70),
-      backgroundColor: ui.color.bg.elevated,
-      borderRadius: sp(12),
-      padding: wp(16),
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
-    },
-    welcomeRow: { flexDirection: 'row', justifyContent: 'space-between' },
-    welcomeItem: { alignItems: 'center' },
-    welcomeTitle: {
-      color: ui.color.text.primary,
-      fontWeight: '600',
-      marginBottom: wp(10),
+      fontSize: fp(13),
+      fontWeight: '700',
     },
     welcomeSub: {
       color: ui.color.text.secondary,
-      fontSize: fp(10),
-      marginTop: wp(4),
+      fontSize: fp(11),
+      lineHeight: fp(16),
     },
-    closeBtn: { position: 'absolute', right: wp(8), top: wp(8) },
-    closeText: { color: ui.color.text.secondary },
-
+    closeBtn: {
+      ...components.quietIconButton,
+      width: wp(30),
+      height: wp(30),
+    },
+    closeText: {
+      color: ui.color.text.secondary,
+      fontSize: fp(12),
+      fontWeight: '700',
+    },
     volumeBar: {
-      position: 'absolute',
-      left: wp(16),
-      right: wp(16),
-      bottom: wp(20),
+      alignSelf: 'flex-start',
+      paddingHorizontal: wp(12),
+      paddingVertical: wp(6),
+      borderRadius: ui.metrics.chipRadius,
+      backgroundColor: ui.alpha(ui.color.brand.primary, 0.12),
+      borderWidth: 1,
+      borderColor: ui.alpha(ui.color.brand.primary, 0.18),
     },
-    volumeText: { color: ui.color.text.secondary },
-
+    volumeText: {
+      color: ui.color.brand.secondary,
+      fontSize: fp(12),
+      fontWeight: '700',
+    },
     selectionToolbarBackdrop: {
       position: 'absolute',
       left: 0,
@@ -98,55 +167,64 @@ export const createWritePageStyles = (colors: NovelColors) => {
       bottom: 0,
     },
     selectionToolbarContainer: {
-      position: 'absolute',
-      left: wp(16),
-      right: wp(16),
-      top: wp(72),
-      backgroundColor: ui.color.bg.surface,
-      borderRadius: sp(8),
-      padding: wp(8),
+      ...layout.floatingPanel,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
+      paddingHorizontal: ui.spacePx('100'),
+      paddingVertical: ui.spacePx('100'),
       elevation: 8,
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      shadowRadius: 6,
+      shadowColor: ui.alpha(ui.color.text.primary, 0.18),
+      shadowOpacity: 0.18,
+      shadowRadius: 10,
     },
-    toolbarBtnText: { fontSize: fp(12), color: ui.color.text.primary },
-    toolbarBtnTextSecondary: { fontSize: fp(12), color: ui.color.text.secondary },
-
+    toolbarBtnText: {
+      fontSize: fp(12),
+      color: ui.color.text.primary,
+      fontWeight: '700',
+    },
+    toolbarBtnTextSecondary: {
+      fontSize: fp(12),
+      color: ui.color.text.secondary,
+      fontWeight: '600',
+    },
     overlayMask: {
       position: 'absolute',
       left: 0,
       right: 0,
       top: 0,
       bottom: 0,
-      backgroundColor: '#0006',
+      backgroundColor: ui.alpha(ui.color.text.primary, 0.32),
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 1000,
     },
     modalContainer: {
-      backgroundColor: ui.color.bg.surface,
-      padding: wp(16),
-      borderRadius: sp(10),
-      width: '80%',
-      borderWidth: 1,
+      ...layout.paperCard,
+      width: '84%',
+      gap: ui.spacePx('100'),
+    },
+    modalHint: {
+      color: ui.color.text.primary,
+      fontSize: fp(14),
+      lineHeight: fp(20),
+    },
+    modalInput: {
+      ...components.composerInput,
       borderColor: ui.color.border.subtle,
     },
-    modalHint: { color: ui.color.text.primary, marginBottom: wp(8) },
-    modalInput: {
-      borderWidth: 1,
-      borderColor: colors.outline,
-      color: ui.color.text.primary,
-      padding: wp(8),
-      borderRadius: sp(6),
-      marginBottom: wp(12),
+    modalActions: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      gap: ui.spacePx('100'),
     },
-    modalActions: { flexDirection: 'row', justifyContent: 'flex-end' },
-    modalCancel: { color: ui.color.text.secondary, marginRight: wp(16) },
-    modalOk: { color: ui.color.brand.primary },
+    modalCancel: {
+      color: ui.color.text.secondary,
+      fontWeight: '600',
+    },
+    modalOk: {
+      color: ui.color.brand.primary,
+      fontWeight: '700',
+    },
   });
 };

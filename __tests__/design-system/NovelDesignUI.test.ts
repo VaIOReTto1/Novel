@@ -44,4 +44,15 @@ describe('NovelDesignUI', () => {
     expect(ui.presets.topBar.borderColor).toBe('#3A302B');
     expect(ui.color.text.primary).toBe('#F5EEE7');
   });
+
+  it('honors explicit theme mode instead of inferring only from the background color', () => {
+    const ui = createNovelDesignUI({
+      ...darkColors,
+      novelBackground: '#FFFFFF',
+      novelThemeMode: 'dark',
+    } as any);
+
+    expect(ui.mode).toBe('dark');
+    expect(ui.color.bg.canvas).toBe('#161311');
+  });
 });

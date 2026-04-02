@@ -1,7 +1,10 @@
 import { fp, sp, wp } from '../../utils/theme/dimensions';
 import { NovelColors } from '../../utils/theme/colors';
-import { resolveNovelDesignTheme } from '../tokens/resolveNovelDesignTheme';
-import { novelDesignDarkTheme, novelDesignLightTheme } from '../tokens/novelDesignTokens';
+import {
+  resolveNovelDesignMode,
+  resolveNovelDesignTheme,
+} from '../tokens/resolveNovelDesignTheme';
+import { novelDesignLightTheme } from '../tokens/novelDesignTokens';
 
 export type NovelDesignTheme = typeof novelDesignLightTheme;
 export type NovelDesignMode = 'light' | 'dark';
@@ -153,9 +156,14 @@ export class NovelDesignUI {
 }
 
 export const createNovelDesignUI = (colors: NovelColors) => {
-  const tokens = resolveNovelDesignTheme(colors.novelBackground);
-  const mode: NovelDesignMode =
-    tokens === novelDesignDarkTheme ? 'dark' : 'light';
+  const mode = resolveNovelDesignMode({
+    novelBackground: colors.novelBackground,
+    novelThemeMode: colors.novelThemeMode,
+  });
+  const tokens = resolveNovelDesignTheme({
+    novelBackground: colors.novelBackground,
+    novelThemeMode: colors.novelThemeMode,
+  });
 
   return new NovelDesignUI(tokens, mode);
 };

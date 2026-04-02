@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 const RN: any = require('react-native');
 
-import { useNovelColors } from '../../../utils/theme/colors';
-import { createBookManageStyles } from './styles/bookManageStyles';
 import { NavigationBridge } from '../../../utils/bridge/NavigationBridge';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
-import { useBookManageStore } from './store/bookManageStore';
-import { Header } from './components/Header';
-import { Banner } from './components/Banner';
-import { DraftBar } from './components/DraftBar';
-import { EmptyChapter } from './components/EmptyChapter';
-import { ChapterSection } from './components/ChapterSection';
-import { Footer } from './components/Footer';
+import { useNovelColors } from '../../../utils/theme/colors';
 import {
   bootstrapBookManagePage,
   createBookManagePageHandlers,
 } from './domain/bookManagePageModel';
+import { Banner } from './components/Banner';
+import { ChapterSection } from './components/ChapterSection';
+import { DraftBar } from './components/DraftBar';
+import { EmptyChapter } from './components/EmptyChapter';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { useBookManageStore } from './store/bookManageStore';
+import { createBookManageStyles } from './styles/bookManageStyles';
 
 const BookManagePage: React.FC = () => {
   const colors = useNovelColors();
@@ -47,14 +47,18 @@ const BookManagePage: React.FC = () => {
   return (
     <View style={styles.container}>
       <Header />
-      <Banner book={book} />
-      <DraftBar draft={draft} onContinue={handlers.handleContinueDraft} />
-      <ChapterSection chapters={chapters} />
-      <View style={styles.volume}>
-        <RN.Text style={styles.volumeText}>第一卷：默认</RN.Text>
-      </View>
-      <ScrollView contentContainerStyle={styles.emptyWrap}>
-        {chapters.length === 0 ? <EmptyChapter /> : null}
+      <ScrollView contentContainerStyle={styles.contentScroll}>
+        <Banner book={book} />
+        <DraftBar draft={draft} onContinue={handlers.handleContinueDraft} />
+        <ChapterSection chapters={chapters} />
+        <View style={styles.volume}>
+          <RN.Text style={styles.volumeText}>第一卷：默认卷</RN.Text>
+        </View>
+        {chapters.length === 0 ? (
+          <View style={styles.emptyWrap}>
+            <EmptyChapter />
+          </View>
+        ) : null}
       </ScrollView>
       <Footer />
     </View>

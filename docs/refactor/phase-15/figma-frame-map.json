@@ -4,356 +4,713 @@
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-book-detail-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-book-detail-page",
+    "target_frame_name_light": "android-native-book-detail-page/light",
+    "target_frame_name_dark": "android-native-book-detail-page/dark",
+    "annotation_frame_name": "android-native-book-detail-page/annotation"
   },
   {
     "surface_id": "android-native-full-ranking-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-full-ranking-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-full-ranking-page",
+    "target_frame_name_light": "android-native-full-ranking-page/light",
+    "target_frame_name_dark": "android-native-full-ranking-page/dark",
+    "annotation_frame_name": "android-native-full-ranking-page/annotation"
   },
   {
     "surface_id": "android-native-home-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-home-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-home-page",
+    "target_frame_name_light": "android-native-home-page/light",
+    "target_frame_name_dark": "android-native-home-page/dark",
+    "annotation_frame_name": "android-native-home-page/annotation"
   },
   {
     "surface_id": "android-native-login-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-login-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-login-page",
+    "target_frame_name_light": "android-native-login-page/light",
+    "target_frame_name_dark": "android-native-login-page/dark",
+    "annotation_frame_name": "android-native-login-page/annotation"
   },
   {
     "surface_id": "android-native-main-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-main-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-main-page",
+    "target_frame_name_light": "android-native-main-page/light",
+    "target_frame_name_dark": "android-native-main-page/dark",
+    "annotation_frame_name": "android-native-main-page/annotation"
   },
   {
     "surface_id": "android-native-reader-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-reader-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-reader-page",
+    "target_frame_name_light": "android-native-reader-page/light",
+    "target_frame_name_dark": "android-native-reader-page/dark",
+    "annotation_frame_name": "android-native-reader-page/annotation"
   },
   {
     "surface_id": "android-native-search-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-search-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-search-page",
+    "target_frame_name_light": "android-native-search-page/light",
+    "target_frame_name_dark": "android-native-search-page/dark",
+    "annotation_frame_name": "android-native-search-page/annotation"
   },
   {
     "surface_id": "android-native-search-result-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-search-result-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-search-result-page",
+    "target_frame_name_light": "android-native-search-result-page/light",
+    "target_frame_name_dark": "android-native-search-result-page/dark",
+    "annotation_frame_name": "android-native-search-result-page/annotation"
   },
   {
     "surface_id": "android-native-welfare-page",
     "figma_page": "00-现状审计/Android Native Pages",
     "figma_frame_name": "android-native-welfare-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-native-welfare-page",
+    "target_frame_name_light": "android-native-welfare-page/light",
+    "target_frame_name_dark": "android-native-welfare-page/dark",
+    "annotation_frame_name": "android-native-welfare-page/annotation"
   },
   {
     "surface_id": "android-overlay-book-description-bottom-sheet",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-book-description-bottom-sheet",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-book-description-bottom-sheet",
+    "target_frame_name_light": "android-overlay-book-description-bottom-sheet/light",
+    "target_frame_name_dark": "android-overlay-book-description-bottom-sheet/dark",
+    "annotation_frame_name": "android-overlay-book-description-bottom-sheet/annotation"
   },
   {
     "surface_id": "android-overlay-chapter-list-panel",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-chapter-list-panel",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-chapter-list-panel",
+    "target_frame_name_light": "android-overlay-chapter-list-panel/light",
+    "target_frame_name_dark": "android-overlay-chapter-list-panel/dark",
+    "annotation_frame_name": "android-overlay-chapter-list-panel/annotation"
   },
   {
     "surface_id": "android-overlay-full-ranking-page-skeleton",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-full-ranking-page-skeleton",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-full-ranking-page-skeleton",
+    "target_frame_name_light": "android-overlay-full-ranking-page-skeleton/light",
+    "target_frame_name_dark": "android-overlay-full-ranking-page-skeleton/dark",
+    "annotation_frame_name": "android-overlay-full-ranking-page-skeleton/annotation"
   },
   {
     "surface_id": "android-overlay-home-page-skeleton",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-home-page-skeleton",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-home-page-skeleton",
+    "target_frame_name_light": "android-overlay-home-page-skeleton/light",
+    "target_frame_name_dark": "android-overlay-home-page-skeleton/dark",
+    "annotation_frame_name": "android-overlay-home-page-skeleton/annotation"
   },
   {
     "surface_id": "android-overlay-home-rank-panel",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-home-rank-panel",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-home-rank-panel",
+    "target_frame_name_light": "android-overlay-home-rank-panel/light",
+    "target_frame_name_dark": "android-overlay-home-rank-panel/dark",
+    "annotation_frame_name": "android-overlay-home-rank-panel/annotation"
   },
   {
     "surface_id": "android-overlay-login-page-skeleton",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-login-page-skeleton",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-login-page-skeleton",
+    "target_frame_name_light": "android-overlay-login-page-skeleton/light",
+    "target_frame_name_dark": "android-overlay-login-page-skeleton/dark",
+    "annotation_frame_name": "android-overlay-login-page-skeleton/annotation"
   },
   {
     "surface_id": "android-overlay-reader-settings-panel",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-reader-settings-panel",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-reader-settings-panel",
+    "target_frame_name_light": "android-overlay-reader-settings-panel/light",
+    "target_frame_name_dark": "android-overlay-reader-settings-panel/dark",
+    "annotation_frame_name": "android-overlay-reader-settings-panel/annotation"
   },
   {
     "surface_id": "android-overlay-search-filter-bottom-sheet",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-search-filter-bottom-sheet",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-search-filter-bottom-sheet",
+    "target_frame_name_light": "android-overlay-search-filter-bottom-sheet/light",
+    "target_frame_name_dark": "android-overlay-search-filter-bottom-sheet/dark",
+    "annotation_frame_name": "android-overlay-search-filter-bottom-sheet/annotation"
   },
   {
     "surface_id": "android-overlay-search-page-skeleton",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-search-page-skeleton",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-search-page-skeleton",
+    "target_frame_name_light": "android-overlay-search-page-skeleton/light",
+    "target_frame_name_dark": "android-overlay-search-page-skeleton/dark",
+    "annotation_frame_name": "android-overlay-search-page-skeleton/annotation"
   },
   {
     "surface_id": "android-overlay-search-result-page-skeleton",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-overlay-search-result-page-skeleton",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "overlay-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-overlay-search-result-page-skeleton",
+    "target_frame_name_light": "android-overlay-search-result-page-skeleton/light",
+    "target_frame_name_dark": "android-overlay-search-result-page-skeleton/dark",
+    "annotation_frame_name": "android-overlay-search-result-page-skeleton/annotation"
   },
   {
     "surface_id": "android-shell-compose-main-activity",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-shell-compose-main-activity",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-shell-compose-main-activity",
+    "target_frame_name_light": "android-shell-compose-main-activity/light",
+    "target_frame_name_dark": "android-shell-compose-main-activity/dark",
+    "annotation_frame_name": "android-shell-compose-main-activity/annotation"
   },
   {
     "surface_id": "android-shell-main-activity",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-shell-main-activity",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-shell-main-activity",
+    "target_frame_name_light": "android-shell-main-activity/light",
+    "target_frame_name_dark": "android-shell-main-activity/dark",
+    "annotation_frame_name": "android-shell-main-activity/annotation"
   },
   {
     "surface_id": "android-shell-main-page-host-components",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-shell-main-page-host-components",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-shell-main-page-host-components",
+    "target_frame_name_light": "android-shell-main-page-host-components/light",
+    "target_frame_name_dark": "android-shell-main-page-host-components/dark",
+    "annotation_frame_name": "android-shell-main-page-host-components/annotation"
   },
   {
     "surface_id": "android-shell-react-native-page",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-shell-react-native-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-shell-react-native-page",
+    "target_frame_name_light": "android-shell-react-native-page/light",
+    "target_frame_name_dark": "android-shell-react-native-page/dark",
+    "annotation_frame_name": "android-shell-react-native-page/annotation"
   },
   {
     "surface_id": "android-shell-react-native-page-content",
     "figma_page": "00-现状审计/Android Shell & Overlays",
     "figma_frame_name": "android-shell-react-native-page-content",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "android-shell-react-native-page-content",
+    "target_frame_name_light": "android-shell-react-native-page-content/light",
+    "target_frame_name_dark": "android-shell-react-native-page-content/dark",
+    "annotation_frame_name": "android-shell-react-native-page-content/annotation"
   },
   {
     "surface_id": "rn-host-aiwrite-assistant-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-aiwrite-assistant-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-aiwrite-assistant-component",
+    "target_frame_name_light": "rn-host-aiwrite-assistant-component/light",
+    "target_frame_name_dark": "rn-host-aiwrite-assistant-component/dark",
+    "annotation_frame_name": "rn-host-aiwrite-assistant-component/annotation"
   },
   {
     "surface_id": "rn-host-become-writer-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-become-writer-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-become-writer-page-component",
+    "target_frame_name_light": "rn-host-become-writer-page-component/light",
+    "target_frame_name_dark": "rn-host-become-writer-page-component/dark",
+    "annotation_frame_name": "rn-host-become-writer-page-component/annotation"
   },
   {
     "surface_id": "rn-host-book-manage-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-book-manage-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-book-manage-page-component",
+    "target_frame_name_light": "rn-host-book-manage-page-component/light",
+    "target_frame_name_dark": "rn-host-book-manage-page-component/dark",
+    "annotation_frame_name": "rn-host-book-manage-page-component/annotation"
   },
   {
     "surface_id": "rn-host-bookshelf-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-bookshelf-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-bookshelf-page-component",
+    "target_frame_name_light": "rn-host-bookshelf-page-component/light",
+    "target_frame_name_dark": "rn-host-bookshelf-page-component/dark",
+    "annotation_frame_name": "rn-host-bookshelf-page-component/annotation"
   },
   {
     "surface_id": "rn-host-category-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-category-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-category-page-component",
+    "target_frame_name_light": "rn-host-category-page-component/light",
+    "target_frame_name_dark": "rn-host-category-page-component/dark",
+    "annotation_frame_name": "rn-host-category-page-component/annotation"
   },
   {
     "surface_id": "rn-host-comment-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-comment-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-comment-page-component",
+    "target_frame_name_light": "rn-host-comment-page-component/light",
+    "target_frame_name_dark": "rn-host-comment-page-component/dark",
+    "annotation_frame_name": "rn-host-comment-page-component/annotation"
   },
   {
     "surface_id": "rn-host-feedback-help-main-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-feedback-help-main-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-feedback-help-main-page-component",
+    "target_frame_name_light": "rn-host-feedback-help-main-page-component/light",
+    "target_frame_name_dark": "rn-host-feedback-help-main-page-component/dark",
+    "annotation_frame_name": "rn-host-feedback-help-main-page-component/annotation"
   },
   {
     "surface_id": "rn-host-help-support-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-help-support-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-help-support-page-component",
+    "target_frame_name_light": "rn-host-help-support-page-component/light",
+    "target_frame_name_dark": "rn-host-help-support-page-component/dark",
+    "annotation_frame_name": "rn-host-help-support-page-component/annotation"
   },
   {
     "surface_id": "rn-host-history-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-history-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-history-page-component",
+    "target_frame_name_light": "rn-host-history-page-component/light",
+    "target_frame_name_dark": "rn-host-history-page-component/dark",
+    "annotation_frame_name": "rn-host-history-page-component/annotation"
   },
   {
     "surface_id": "rn-host-member-center-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-member-center-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-member-center-page-component",
+    "target_frame_name_light": "rn-host-member-center-page-component/light",
+    "target_frame_name_dark": "rn-host-member-center-page-component/dark",
+    "annotation_frame_name": "rn-host-member-center-page-component/annotation"
   },
   {
     "surface_id": "rn-host-message-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-message-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-message-page-component",
+    "target_frame_name_light": "rn-host-message-page-component/light",
+    "target_frame_name_dark": "rn-host-message-page-component/dark",
+    "annotation_frame_name": "rn-host-message-page-component/annotation"
   },
   {
     "surface_id": "rn-host-my-reservation-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-my-reservation-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-my-reservation-page-component",
+    "target_frame_name_light": "rn-host-my-reservation-page-component/light",
+    "target_frame_name_dark": "rn-host-my-reservation-page-component/dark",
+    "annotation_frame_name": "rn-host-my-reservation-page-component/annotation"
   },
   {
     "surface_id": "rn-host-privacy-policy-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-privacy-policy-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-privacy-policy-page-component",
+    "target_frame_name_light": "rn-host-privacy-policy-page-component/light",
+    "target_frame_name_dark": "rn-host-privacy-policy-page-component/dark",
+    "annotation_frame_name": "rn-host-privacy-policy-page-component/annotation"
   },
   {
     "surface_id": "rn-host-question-detail-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-question-detail-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-question-detail-page-component",
+    "target_frame_name_light": "rn-host-question-detail-page-component/light",
+    "target_frame_name_dark": "rn-host-question-detail-page-component/dark",
+    "annotation_frame_name": "rn-host-question-detail-page-component/annotation"
   },
   {
     "surface_id": "rn-host-question-list-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-question-list-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-question-list-page-component",
+    "target_frame_name_light": "rn-host-question-list-page-component/light",
+    "target_frame_name_dark": "rn-host-question-list-page-component/dark",
+    "annotation_frame_name": "rn-host-question-list-page-component/annotation"
   },
   {
     "surface_id": "rn-host-recommend-book-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-recommend-book-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-recommend-book-page-component",
+    "target_frame_name_light": "rn-host-recommend-book-page-component/light",
+    "target_frame_name_dark": "rn-host-recommend-book-page-component/dark",
+    "annotation_frame_name": "rn-host-recommend-book-page-component/annotation"
   },
   {
     "surface_id": "rn-host-review-detail-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-review-detail-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-review-detail-page-component",
+    "target_frame_name_light": "rn-host-review-detail-page-component/light",
+    "target_frame_name_dark": "rn-host-review-detail-page-component/dark",
+    "annotation_frame_name": "rn-host-review-detail-page-component/annotation"
   },
   {
     "surface_id": "rn-host-settings-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-settings-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-settings-page-component",
+    "target_frame_name_light": "rn-host-settings-page-component/light",
+    "target_frame_name_dark": "rn-host-settings-page-component/dark",
+    "annotation_frame_name": "rn-host-settings-page-component/annotation"
   },
   {
     "surface_id": "rn-host-timed-switch-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-timed-switch-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-timed-switch-page-component",
+    "target_frame_name_light": "rn-host-timed-switch-page-component/light",
+    "target_frame_name_dark": "rn-host-timed-switch-page-component/dark",
+    "annotation_frame_name": "rn-host-timed-switch-page-component/annotation"
   },
   {
     "surface_id": "rn-host-viewed-users-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-viewed-users-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-viewed-users-page-component",
+    "target_frame_name_light": "rn-host-viewed-users-page-component/light",
+    "target_frame_name_dark": "rn-host-viewed-users-page-component/dark",
+    "annotation_frame_name": "rn-host-viewed-users-page-component/annotation"
   },
   {
     "surface_id": "rn-host-write-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-write-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-write-page-component",
+    "target_frame_name_light": "rn-host-write-page-component/light",
+    "target_frame_name_dark": "rn-host-write-page-component/dark",
+    "annotation_frame_name": "rn-host-write-page-component/annotation"
   },
   {
     "surface_id": "rn-host-write-review-page-component",
     "figma_page": "00-现状审计/RN Host Pages",
     "figma_frame_name": "rn-host-write-review-page-component",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-host-write-review-page-component",
+    "target_frame_name_light": "rn-host-write-review-page-component/light",
+    "target_frame_name_dark": "rn-host-write-review-page-component/dark",
+    "annotation_frame_name": "rn-host-write-review-page-component/annotation"
   },
   {
     "surface_id": "rn-nested-bookshelf-bookshelf-page",
     "figma_page": "00-现状审计/RN Nested Pages",
     "figma_frame_name": "rn-nested-bookshelf-bookshelf-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-nested-bookshelf-bookshelf-page",
+    "target_frame_name_light": "rn-nested-bookshelf-bookshelf-page/light",
+    "target_frame_name_dark": "rn-nested-bookshelf-bookshelf-page/dark",
+    "annotation_frame_name": "rn-nested-bookshelf-bookshelf-page/annotation"
   },
   {
     "surface_id": "rn-nested-bookshelf-community-page",
     "figma_page": "00-现状审计/RN Nested Pages",
     "figma_frame_name": "rn-nested-bookshelf-community-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-nested-bookshelf-community-page",
+    "target_frame_name_light": "rn-nested-bookshelf-community-page/light",
+    "target_frame_name_dark": "rn-nested-bookshelf-community-page/dark",
+    "annotation_frame_name": "rn-nested-bookshelf-community-page/annotation"
   },
   {
     "surface_id": "rn-nested-bookshelf-history-page",
     "figma_page": "00-现状审计/RN Nested Pages",
     "figma_frame_name": "rn-nested-bookshelf-history-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-nested-bookshelf-history-page",
+    "target_frame_name_light": "rn-nested-bookshelf-history-page/light",
+    "target_frame_name_dark": "rn-nested-bookshelf-history-page/dark",
+    "annotation_frame_name": "rn-nested-bookshelf-history-page/annotation"
   },
   {
     "surface_id": "rn-nested-bookshelf-watchlist-page",
     "figma_page": "00-现状审计/RN Nested Pages",
     "figma_frame_name": "rn-nested-bookshelf-watchlist-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "surface-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-nested-bookshelf-watchlist-page",
+    "target_frame_name_light": "rn-nested-bookshelf-watchlist-page/light",
+    "target_frame_name_dark": "rn-nested-bookshelf-watchlist-page/dark",
+    "annotation_frame_name": "rn-nested-bookshelf-watchlist-page/annotation"
   },
   {
     "surface_id": "rn-root-profile-page",
     "figma_page": "00-现状审计/RN Root",
     "figma_frame_name": "rn-root-profile-page",
     "figma_frame_id": "",
-    "mapping_status": "unmapped"
+    "mapping_status": "unmapped",
+    "source_kind": "surface",
+    "frame_type": "root-audit-frame",
+    "sync_status": "pending-figma-sync",
+    "audit_frame_name": "rn-root-profile-page",
+    "target_frame_name_light": "rn-root-profile-page/light",
+    "target_frame_name_dark": "rn-root-profile-page/dark",
+    "annotation_frame_name": "rn-root-profile-page/annotation"
   }
 ]

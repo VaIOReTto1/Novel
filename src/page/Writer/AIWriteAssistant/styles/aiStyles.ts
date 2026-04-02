@@ -1,14 +1,22 @@
 import {StyleSheet} from 'react-native';
 
-import { createNovelDesignUI } from '../../../../design-system/novelDesign';
+import {
+  createNovelDesignComponentRecipes,
+  createNovelDesignLayoutRecipes,
+  createNovelDesignSurfaceSpec,
+  createNovelDesignUI,
+} from '../../../../design-system/novelDesign';
 import {NovelColors} from '../../../../utils/theme/colors';
 import {fp, sp, wp} from '../../../../utils/theme/dimensions';
 
 export const createAIStyles = (colors: NovelColors) => {
   const ui = createNovelDesignUI(colors);
+  const layout = createNovelDesignLayoutRecipes(ui);
+  const components = createNovelDesignComponentRecipes(ui);
+  const surface = createNovelDesignSurfaceSpec('rn-host-ai-write-assistant-component', ui);
 
   return StyleSheet.create({
-    container: {flex: 1, backgroundColor: ui.color.bg.canvas},
+    container: layout.screenShell,
 
     // 棣栧睆鍔犺浇
     loadingScreen: {
@@ -18,14 +26,10 @@ export const createAIStyles = (colors: NovelColors) => {
     },
 
     header: {
+      ...layout.topBar,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingHorizontal: ui.metrics.pageGutter,
-      paddingVertical: ui.spacePx('150'),
-      backgroundColor: ui.color.bg.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: ui.color.border.subtle,
     },
     headerFixed: {
       position: 'absolute',
@@ -41,28 +45,25 @@ export const createAIStyles = (colors: NovelColors) => {
     },
     headerSpacer: {height: wp(56)},
     headerAction: {
-      width: wp(36),
-      height: wp(36),
-      borderRadius: sp(18),
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: ui.color.bg.elevated,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
+      ...components.quietIconButton,
     },
     headTitleRow: {alignItems: 'center', gap: ui.spacePx('050')},
-    headTitle: {fontSize: fp(16), color: ui.color.text.primary, fontWeight: '600'},
+    headTitle: components.titleText,
     headBack: {fontSize: fp(28), color: ui.color.text.primary},
     headEllipsis: {width: wp(28)},
     quota: {color: ui.color.text.secondary, fontSize: fp(10)},
 
-    list: {flex: 1, paddingHorizontal: wp(16)},
+    list: {flex: 1},
+    listContent: {
+      paddingHorizontal: surface.spacingRhythm.pageGutter,
+      paddingBottom: ui.spacePx('200'),
+    },
     bubble: {
+      ...components.contentCard,
       borderRadius: ui.metrics.cardRadius,
       padding: ui.metrics.compactCardPadding,
       marginVertical: wp(8),
       maxWidth: '86%',
-      borderWidth: 1,
     },
     bubbleAssistant: {
       backgroundColor: ui.color.bg.surface,
@@ -80,12 +81,10 @@ export const createAIStyles = (colors: NovelColors) => {
 
     // 鍒濆寮曞澶ф皵娉?+ 鍗＄墖
     introBubble: {
-      backgroundColor: ui.color.bg.elevated,
+      ...layout.raisedCard,
       borderRadius: ui.metrics.cardRadius,
       padding: ui.metrics.compactCardPadding,
       marginVertical: wp(8),
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
     },
     introTitle: {
       color: ui.color.text.primary,
@@ -95,12 +94,10 @@ export const createAIStyles = (colors: NovelColors) => {
     },
     introCards: {gap: wp(10)},
     introCard: {
-      backgroundColor: ui.color.bg.surface,
+      ...layout.paperCard,
       borderRadius: ui.metrics.cardRadius,
       paddingHorizontal: wp(12),
       paddingVertical: wp(10),
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
     },
     introRefresh: {
       marginTop: wp(10),
@@ -116,34 +113,23 @@ export const createAIStyles = (colors: NovelColors) => {
 
     // 搴曢儴杈撳叆鏍?
     inputBar: {
-      paddingHorizontal: wp(12),
-      paddingVertical: wp(10),
+      ...layout.anchoredComposer,
       flexDirection: 'row',
       alignItems: 'center',
       gap: wp(10),
-      backgroundColor: ui.color.bg.surface,
       zIndex: 10,
       elevation: 6,
-      borderTopWidth: 1,
-      borderTopColor: ui.color.border.subtle,
     },
     input: {
+      ...components.composerInput,
       flex: 1,
-      minHeight: ui.metrics.inputMinHeight,
-      maxHeight: ui.metrics.inputMaxHeight,
-      paddingHorizontal: wp(12),
-      paddingVertical: wp(8),
-      borderRadius: ui.radiusPx('md'),
-      backgroundColor: ui.color.bg.elevated,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
-      color: ui.color.text.primary,
     },
     sendBtn: {
-      width: wp(36),
-      height: wp(36),
-      borderRadius: wp(18),
-      backgroundColor: ui.color.brand.primary,
+      ...components.primaryActionPill,
+      width: wp(44),
+      height: wp(44),
+      paddingHorizontal: 0,
+      paddingVertical: 0,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -155,20 +141,13 @@ export const createAIStyles = (colors: NovelColors) => {
       backgroundColor: 'transparent',
       flexDirection: 'row',
       gap: wp(12),
-      paddingHorizontal: wp(16),
+      paddingHorizontal: surface.spacingRhythm.pageGutter,
       paddingBottom: ui.spacePx('150'),
       zIndex: 5,
     },
     suggestBtn: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      ...components.secondaryActionPill,
       gap: wp(6),
-      borderRadius: ui.metrics.chipRadius,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
-      paddingHorizontal: wp(12),
-      paddingVertical: wp(5),
-      backgroundColor: ui.color.bg.surface,
     },
     suggestText: {color: ui.color.text.primary, fontSize: sp(12)},
 
@@ -183,12 +162,8 @@ export const createAIStyles = (colors: NovelColors) => {
       elevation: 8,
     },
     ideaFloatPanel: {
-      backgroundColor: ui.color.bg.surface,
+      ...layout.floatingPanel,
       borderRadius: ui.metrics.panelRadius,
-      paddingHorizontal: wp(12),
-      paddingVertical: wp(12),
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
     },
     ideaSelectorHeader: {
       flexDirection: 'row',
@@ -228,12 +203,10 @@ export const createAIStyles = (colors: NovelColors) => {
 
     // 鎺ㄧ悊灞曠ず
     thinkingContainer: {
-      backgroundColor: ui.color.bg.elevated,
+      ...layout.raisedCard,
       borderRadius: ui.radiusPx('md'),
       padding: wp(10),
       marginBottom: wp(8),
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
     },
     thinkingHeaderRow: {
       flexDirection: 'row',
@@ -254,26 +227,31 @@ export const createAIStyles = (colors: NovelColors) => {
     },
 
     // 姘旀场涓嬫柟鍔ㄤ綔鏉?
-    actionBarWrap: {marginTop: wp(8)},
+    actionBarWrap: {
+      marginTop: ui.spacePx('100'),
+      paddingTop: ui.spacePx('100'),
+      borderTopWidth: 1,
+      borderTopColor: ui.color.border.subtle,
+      gap: ui.spacePx('100'),
+    },
     aiDisclaimer: {
       color: ui.color.text.secondary,
       fontSize: fp(10),
-      marginBottom: wp(6),
     },
     actionBar: {
-      flexDirection: 'row',
+      ...components.actionStrip,
       alignItems: 'center',
-      gap: wp(8),
     },
     actionBtn: {
-      paddingHorizontal: wp(10),
-      paddingVertical: wp(6),
-      borderRadius: ui.metrics.chipRadius,
-      backgroundColor: ui.color.bg.surface,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
+      ...components.secondaryActionPill,
+      minHeight: ui.metrics.buttonHeightMd,
     },
-    actionText: {color: ui.color.text.primary},
+    actionBtnContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: ui.spacePx('050'),
+    },
+    actionText: {color: ui.color.text.primary, fontSize: fp(12), fontWeight: '600'},
 
     // 鍔犺浇涓?
     loadingRow: {

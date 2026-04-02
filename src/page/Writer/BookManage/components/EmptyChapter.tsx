@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { useNovelColors } from '../../../../utils/theme/colors';
 import { createBookManageStyles } from '../styles/bookManageStyles';
@@ -10,7 +10,7 @@ export const EmptyChapter: React.FC = () => {
 
   return (
     <View style={styles.emptyCard}>
-      <Text style={styles.emptyText}>鏆傛棤绔犺妭</Text>
+      <Text style={styles.emptyText}>还没有章节，先从第一章开始搭建作品结构。</Text>
     </View>
   );
 };

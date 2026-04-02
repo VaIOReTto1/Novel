@@ -1,20 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 const RN: any = require('react-native');
-const { TextInput, Modal, ActivityIndicator, Keyboard } = RN;
+const { ActivityIndicator, Keyboard, Modal, TextInput } = RN;
 
-import { createWritePageStyles } from './styles/WritePageStyles';
-import { useNovelColors } from '../../../utils/theme/colors';
-import { useWriteStore } from './store/writeStore';
-import { TopBar } from './components/TopBar';
-import { WelcomePanel } from './components/WelcomePanel';
-import { VolumeBar } from './components/VolumeBar';
-import { useWriteActions } from './hooks/useWriteActions';
-import { SelectionToolbar } from './components/SelectionToolbar';
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import { subscribeWritePageSelectionMenuAction } from '../../../utils/runtime/eventHub';
+import { useNovelColors } from '../../../utils/theme/colors';
 import {
   appendToSelectedText,
   createWritePageHandlers,
@@ -23,12 +16,19 @@ import {
   replaceSelectedText,
   runWritePageFocusSync,
 } from './domain/writePageModel';
+import { useWriteActions } from './hooks/useWriteActions';
+import { useWriteStore } from './store/writeStore';
+import { createWritePageStyles } from './styles/WritePageStyles';
+import { SelectionToolbar } from './components/SelectionToolbar';
+import { TopBar } from './components/TopBar';
+import { VolumeBar } from './components/VolumeBar';
+import { WelcomePanel } from './components/WelcomePanel';
 
 const WritePage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createWritePageStyles(colors);
-
-  const { title, content, setTitle, setContent, publish, undo, redo, goAI, goBack } = useWriteActions();
+  const { title, content, setTitle, setContent, publish, undo, redo, goAI, goBack } =
+    useWriteActions();
   const writeStore = useWriteStore();
 
   useEffect(() => {
@@ -39,12 +39,12 @@ const WritePage: React.FC = () => {
   }, [goBack]);
 
   const [anchorY] = React.useState(120);
-  const isToolbarVisible = useWriteStore(s => s.isToolbarVisible);
-  const storeSelectedText = useWriteStore(s => s.selectedText);
-  const updateSelection = useWriteStore(s => s.updateSelection);
-  const releaseSelectionHold = useWriteStore(s => s.releaseSelectionHold);
-  const focusRequestNonce = useWriteStore(s => s.focusRequestNonce);
-  const suppressKeyboard = useWriteStore(s => s.suppressKeyboard);
+  const isToolbarVisible = useWriteStore((s) => s.isToolbarVisible);
+  const storeSelectedText = useWriteStore((s) => s.selectedText);
+  const updateSelection = useWriteStore((s) => s.updateSelection);
+  const releaseSelectionHold = useWriteStore((s) => s.releaseSelectionHold);
+  const focusRequestNonce = useWriteStore((s) => s.focusRequestNonce);
+  const suppressKeyboard = useWriteStore((s) => s.suppressKeyboard);
 
   const contentRef = React.useRef<any>(null);
   const [paramInput, setParamInput] = React.useState('');
@@ -85,13 +85,16 @@ const WritePage: React.FC = () => {
     });
   }, [focusRequestNonce]);
 
-  const onSelectionChange = React.useCallback((event: any) => {
-    const selection = getWritePageSelection(content, event);
-    if (!selection) {
-      return;
-    }
-    updateSelection(selection.selectedText, selection.start, selection.end);
-  }, [content, updateSelection]);
+  const onSelectionChange = React.useCallback(
+    (event: any) => {
+      const selection = getWritePageSelection(content, event);
+      if (!selection) {
+        return;
+      }
+      updateSelection(selection.selectedText, selection.start, selection.end);
+    },
+    [content, updateSelection],
+  );
 
   useEffect(() => {
     if (RN.Platform?.OS !== 'android') {
@@ -101,11 +104,13 @@ const WritePage: React.FC = () => {
     if (node != null) {
       NavigationBridge.attachSelectionMenu?.(node as number);
     }
-    const cleanupSelectionSubscription = subscribeWritePageSelectionMenuAction((event: any) => {
-      requestAnimationFrame(() => {
-        handlers.handleSelectionMenuAction(event);
-      });
-    });
+    const cleanupSelectionSubscription = subscribeWritePageSelectionMenuAction(
+      (event: any) => {
+        requestAnimationFrame(() => {
+          handlers.handleSelectionMenuAction(event);
+        });
+      },
+    );
     return cleanupSelectionSubscription;
   }, [handlers]);
 
@@ -119,42 +124,57 @@ const WritePage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar onBack={goBack} onUndo={undo} onRedo={redo} onAI={goAI} onPublish={publish} />
+      <TopBar
+        onBack={goBack}
+        onUndo={undo}
+        onRedo={redo}
+        onAI={goAI}
+        onPublish={publish}
+      />
 
       <ScrollView
         style={styles.editor}
+        contentContainerStyle={styles.editorScrollContent}
         keyboardShouldPersistTaps="handled"
         automaticallyAdjustKeyboardInsets={false}
         scrollEnabled={!isToolbarVisible}
-        scrollEventThrottle={16}
-      >
-        <TextInput
-          style={styles.titleInput}
-          placeholder="请输入标题"
-          placeholderTextColor={colors.novelTextGray}
-          value={title}
-          onChangeText={setTitle}
-          selectionColor={colors.novelMain}
-          cursorColor={colors.novelMain}
-        />
-        <TextInput
-          style={styles.contentInput}
-          placeholder="请输入正文"
-          placeholderTextColor={colors.novelTextGray}
-          value={content}
-          onChangeText={setContent}
-          onSelectionChange={onSelectionChange}
-          selectionColor={colors.novelMain}
-          cursorColor={colors.novelMain}
-          multiline
-          textAlignVertical="top"
-          ref={contentRef}
-          showSoftInputOnFocus={!suppressKeyboard}
-          key={`content-${focusRequestNonce}`}
-        />
+        scrollEventThrottle={16}>
+        <WelcomePanel />
+
+        <View style={styles.editorSheet}>
+          <VolumeBar />
+          <TextInput
+            style={styles.titleInput}
+            placeholder="请输入标题"
+            placeholderTextColor={colors.novelTextGray}
+            value={title}
+            onChangeText={setTitle}
+            selectionColor={colors.novelMain}
+            cursorColor={colors.novelMain}
+          />
+          <TextInput
+            style={styles.contentInput}
+            placeholder="开始整理这一章的内容..."
+            placeholderTextColor={colors.novelTextGray}
+            value={content}
+            onChangeText={setContent}
+            onSelectionChange={onSelectionChange}
+            selectionColor={colors.novelMain}
+            cursorColor={colors.novelMain}
+            multiline
+            textAlignVertical="top"
+            ref={contentRef}
+            showSoftInputOnFocus={!suppressKeyboard}
+            key={`content-${focusRequestNonce}`}
+          />
+        </View>
       </ScrollView>
 
-      <Modal visible={!!writeStore.errorModal?.visible} transparent animationType="fade" onRequestClose={() => writeStore.hideError()}>
+      <Modal
+        visible={!!writeStore.errorModal?.visible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => writeStore.hideError()}>
         <View style={styles.overlayMask}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalHint}>{writeStore.errorModal?.message}</Text>
@@ -162,16 +182,17 @@ const WritePage: React.FC = () => {
               <TouchableOpacity onPress={() => writeStore.hideError()}>
                 <Text style={styles.modalCancel}>取消</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { writeStore.hideError(); writeStore.retryLastOperation(); }}>
+              <TouchableOpacity
+                onPress={() => {
+                  writeStore.hideError();
+                  writeStore.retryLastOperation();
+                }}>
                 <Text style={styles.modalOk}>重试</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
-
-      <WelcomePanel />
-      <VolumeBar />
 
       <SelectionToolbar
         visible={RN.Platform?.OS !== 'android' && isToolbarVisible}
@@ -186,8 +207,10 @@ const WritePage: React.FC = () => {
         visible={!!writeStore.modal?.visible}
         transparent
         animationType="fade"
-        onRequestClose={() => { writeStore.hideParamModal(); setParamInput(''); }}
-      >
+        onRequestClose={() => {
+          writeStore.hideParamModal();
+          setParamInput('');
+        }}>
         <View style={styles.overlayMask}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalHint}>{writeStore.modal?.hint}</Text>
@@ -200,10 +223,20 @@ const WritePage: React.FC = () => {
               style={styles.modalInput}
             />
             <View style={styles.modalActions}>
-              <TouchableOpacity onPress={() => { writeStore.hideParamModal(); setParamInput(''); }}>
+              <TouchableOpacity
+                onPress={() => {
+                  writeStore.hideParamModal();
+                  setParamInput('');
+                }}>
                 <Text style={styles.modalCancel}>取消</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handlers.handleConfirmParamModal(paramInput, writeStore.modal?.type)}>
+              <TouchableOpacity
+                onPress={() =>
+                  handlers.handleConfirmParamModal(
+                    paramInput,
+                    writeStore.modal?.type,
+                  )
+                }>
                 <Text style={styles.modalOk}>确定</Text>
               </TouchableOpacity>
             </View>

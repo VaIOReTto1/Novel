@@ -1707,6 +1707,147 @@ const COMPONENT_VISUAL_OVERRIDES = {
   },
 };
 
+const buildSurfaceViewport = (surface) => ({
+  device_frame: surface.platform === 'android' ? 'android-phone' : 'rn-phone',
+  scroll_direction: surface.surface_id.includes('reader') ? 'mixed' : 'vertical',
+  immersive: surface.surface_id.includes('reader'),
+  fixed_header: !surface.surface_id.includes('overlay'),
+  fixed_footer: /write|assistant|book-manage|main-page|reader/.test(surface.surface_id),
+});
+
+const buildSurfaceFrameAnatomy = (surface) => {
+  const anatomy = [];
+
+  if (!surface.surface_id.includes('overlay')) {
+    anatomy.push('top-bar');
+  }
+  anatomy.push('primary-content-rail');
+  if (/comment|review|community|bookshelf/.test(surface.surface_id)) {
+    anatomy.push('secondary-filter-rail');
+  }
+  if (/assistant|write|book-manage/.test(surface.surface_id)) {
+    anatomy.push('anchored-action-rail');
+  }
+  if (surface.surface_id.includes('overlay')) {
+    anatomy.push('overlay-container');
+  }
+  if (/main-page|reader|react-native-page/.test(surface.surface_id)) {
+    anatomy.push('host-or-overlay-layer');
+  }
+
+  return anatomy;
+};
+
+const buildSurfacePrimaryBlocks = (surface, summary) => {
+  const leadBlock = /assistant|write/.test(surface.surface_id)
+    ? 'editorial-workbench'
+    : /comment|review/.test(surface.surface_id)
+      ? 'review-thread'
+      : /community/.test(surface.surface_id)
+        ? 'community-feed'
+        : /bookshelf|history|watchlist/.test(surface.surface_id)
+          ? 'library-content'
+          : /reader/.test(surface.surface_id)
+            ? 'immersive-canvas'
+            : 'stacked-content';
+
+  return [
+    {
+      order: 1,
+      block: leadBlock,
+      width_model: 'single-column',
+      cardization: /assistant|community|comment|review|book/.test(surface.surface_id)
+        ? 'paper-cards'
+        : 'mixed',
+    },
+    {
+      order: 2,
+      block: summary.content_pattern,
+      width_model: /main-page|home|search/.test(surface.surface_id) ? 'modular-sections' : 'single-column',
+      cardization: 'supporting-sections',
+    },
+  ];
+};
+
+const buildSurfaceStatePanels = (surface, keyStates) =>
+  keyStates.map((state) => ({
+    state,
+    placement:
+      /loading|empty|error/.test(state)
+        ? 'inline-content'
+        : /modal|sheet|panel/.test(state)
+          ? 'overlay'
+          : 'primary-flow',
+    treatment:
+      state === 'loading'
+        ? 'structured-feedback'
+        : state === 'empty'
+          ? 'guided-zero-state'
+          : /edit|selection/.test(state)
+            ? 'selection-rail'
+            : 'state-aware-section',
+  }));
+
+const buildSurfaceAssetProfile = (surface) => {
+  const iconSources = surface.asset_sources.filter((source) =>
+    /icon|svg|vector/i.test(source),
+  );
+  const imageSources = surface.asset_sources.filter((source) =>
+    /image/i.test(source),
+  );
+
+  return {
+    icon_sources: iconSources.length ? iconSources : ['theme-aware'],
+    image_sources: imageSources,
+    illustration_sources: surface.surface_id.includes('empty') ? ['undraw-sync-target'] : [],
+    credit_overlay: /community|bookshelf|comment|review/.test(surface.surface_id)
+      ? 'required-when-pexels'
+      : 'not-primary',
+  };
+};
+
+const buildSurfaceInteractionChrome = (surface) => {
+  const entries = [];
+
+  if (/bookshelf|community|history|watchlist|comment/.test(surface.surface_id)) {
+    entries.push('tabs-or-filter-rail');
+  }
+  if (/assistant|write|book-manage/.test(surface.surface_id)) {
+    entries.push('primary-action-toolbar');
+  }
+  if (/overlay|panel|sheet/.test(surface.surface_id)) {
+    entries.push('sheet-handle-or-panel-header');
+  }
+  if (/main-page/.test(surface.surface_id)) {
+    entries.push('bottom-navigation');
+  }
+  if (/reader/.test(surface.surface_id)) {
+    entries.push('immersive-controls');
+  }
+
+  return entries.length ? entries : ['quiet-page-chrome'];
+};
+
+const buildSurfaceLayoutBlueprint = (surface, plan) => ({
+  primary_flow: plan.target.component_recipe,
+  entry_chrome: surface.host_type,
+  content_axis: surface.surface_id.includes('reader') ? 'immersive-canvas' : 'stacked-sections',
+  supporting_flow:
+    /assistant|write/.test(surface.surface_id)
+      ? 'composer-and-tooling'
+      : /community|comment|review/.test(surface.surface_id)
+        ? 'thread-and-filter'
+        : 'supporting-metadata',
+});
+
+const buildSurfaceSectionRecipes = (surface, plan) =>
+  unique([
+    'page-shell',
+    surface.host_type,
+    plan.target.component_recipe,
+    ...surface.key_components.slice(0, 4).map((component) => slugify(component)),
+  ]);
+
 const buildSurfaceVisualSpecs = (surfaces) =>
   surfaces.map((surface) => {
     const cluster = determineSurfaceCluster(surface);
@@ -1733,6 +1874,22 @@ const buildSurfaceVisualSpecs = (surfaces) =>
         content_pattern: override.current_visual_summary?.content_pattern || plan.current.content_pattern,
         key_states: override.current_visual_summary?.key_states || surface.key_states,
         key_components: override.current_visual_summary?.key_components || surface.key_components,
+        viewport: buildSurfaceViewport(surface),
+        frame_anatomy: buildSurfaceFrameAnatomy(surface),
+        primary_blocks: buildSurfacePrimaryBlocks(surface, {
+          content_pattern: override.current_visual_summary?.content_pattern || plan.current.content_pattern,
+        }),
+        visual_density: {
+          density: /reader|comment|review|community/.test(surface.surface_id) ? 'dense-reading' : 'balanced',
+          whitespace: /assistant|write|book-manage/.test(surface.surface_id) ? 'expanded' : 'moderate',
+          crowded_points: (override.current_visual_summary?.key_components || surface.key_components).slice(0, 3),
+        },
+        state_panels: buildSurfaceStatePanels(
+          surface,
+          override.current_visual_summary?.key_states || surface.key_states,
+        ),
+        asset_profile: buildSurfaceAssetProfile(surface),
+        interaction_chrome: buildSurfaceInteractionChrome(surface),
       },
       target_visual_plan: {
         direction: 'literary-editorial',
@@ -1747,6 +1904,37 @@ const buildSurfaceVisualSpecs = (surfaces) =>
           'radius.lg',
           'typography.title.section',
         ],
+        layout_blueprint: buildSurfaceLayoutBlueprint(surface, plan),
+        section_recipes: buildSurfaceSectionRecipes(surface, plan),
+        spacing_rhythm: {
+          page_gutter: 'space.200',
+          section_gap: /assistant|write|book-manage/.test(surface.surface_id) ? 'space.300' : 'space.200',
+          card_padding: 'space.200',
+        },
+        shape_language: {
+          cards: /reader/.test(surface.surface_id) ? 'immersive-panels' : 'paper-cards',
+          actions: 'rounded-pill-actions',
+          overlays: /overlay|panel|sheet/.test(surface.surface_id) ? 'raised-panels' : 'integrated-overlays',
+        },
+        typography_roles: {
+          title: 'typography.title.section',
+          body: /reader/.test(surface.surface_id) ? 'typography.reader.content' : 'typography.body.md',
+          meta: 'typography.meta.sm',
+          eyebrow: 'typography.eyebrow.md',
+        },
+        motion_notes: {
+          page_enter: 'motion.duration.page + motion.curve.standard',
+          section_shift: 'motion.duration.fast + motion.curve.decelerate',
+          overlay: 'motion.duration.sheet + motion.curve.entrance',
+        },
+        dark_a11y_rtl: {
+          dark_mode: 'independent-token-pairing',
+          contrast: '>=4.5:1 on key text',
+          a11y: 'semantic-roles-and-min-44px-targets',
+          rtl: /reader|comment|review/.test(surface.surface_id)
+            ? 'mirror-chrome-keep-content-flow'
+            : 'mirror-navigation-and-trailing-icons',
+        },
         figma_targets: {
           audit_page: figmaAuditPage,
           design_page_light: '03-页面-亮色',
@@ -1925,6 +2113,45 @@ const COMPONENT_CATEGORY_PLANS = {
   },
 };
 
+const buildComponentAnatomy = (entry) => {
+  if (entry.category === 'navigation') {
+    return ['leading-action', 'title-slot', 'trailing-actions'];
+  }
+  if (entry.category === 'action') {
+    return ['icon-slot', 'label-slot', 'interaction-container'];
+  }
+  if (entry.category === 'form') {
+    return ['field-shell', 'input-slot', 'supporting-meta'];
+  }
+  if (entry.category === 'item') {
+    return ['media-slot', 'text-stack', 'meta-row', 'action-row'];
+  }
+  if (entry.category === 'list') {
+    return ['list-shell', 'state-slot', 'item-stack'];
+  }
+  return ['container', 'content-slot'];
+};
+
+const buildComponentSizeRules = (entry) => ({
+  min_touch_target: entry.category === 'layout' ? 'contextual' : '44x44',
+  default_height:
+    entry.category === 'navigation'
+      ? '56'
+      : entry.category === 'action'
+        ? '36-44'
+        : entry.category === 'form'
+          ? '44-52'
+          : 'content-driven',
+  icon_size: /media|navigation|action/.test(entry.category) ? '16-24' : 'contextual',
+  media_ratio: entry.category === 'item' ? 'cover-first-adaptive' : 'n/a',
+});
+
+const buildComponentTargetSlots = (entry) =>
+  unique([
+    ...buildComponentAnatomy(entry),
+    entry.category === 'action' ? 'action-pill' : 'surface-shell',
+  ]);
+
 const buildComponentVisualSpecs = (catalog) =>
   catalog.entries.map((entry) => {
     const plan = COMPONENT_CATEGORY_PLANS[entry.category] || COMPONENT_CATEGORY_PLANS.layout;
@@ -1939,6 +2166,26 @@ const buildComponentVisualSpecs = (catalog) =>
         structure: override.current_visual_summary?.structure || plan.current.structure,
         affordance: override.current_visual_summary?.affordance || plan.current.affordance,
         asset_sources: override.current_visual_summary?.asset_sources || entry.asset_sources,
+        anatomy: buildComponentAnatomy(entry),
+        size_rules: buildComponentSizeRules(entry),
+        text_hierarchy: {
+          title: /navigation|item|list/.test(entry.category) ? 'title + supporting-meta' : 'label-only',
+          truncation: entry.category === 'item' ? 'two-line-primary' : 'single-line-where-needed',
+          line_height: entry.category === 'form' ? 'comfortable-input' : 'reading-first',
+        },
+        container_style: {
+          background: entry.category === 'loading' ? 'transparent-or-elevated' : 'paper-surface',
+          border: /action|form|item|navigation/.test(entry.category) ? 'subtle-outline' : 'contextual',
+          radius: /sheet|dialog/.test(entry.category) ? 'radius.xl' : 'radius.md',
+          elevation: /dialog|sheet|showcase/.test(entry.category) ? 'elevation.200' : 'surface-dependent',
+          divider: entry.category === 'list' ? 'quiet-divider' : 'optional',
+        },
+        interaction_states: [
+          'default',
+          'pressed',
+          ...(entry.category === 'action' || entry.category === 'form' ? ['disabled', 'focused'] : []),
+          ...(entry.category === 'item' ? ['selected'] : []),
+        ],
       },
       target_visual_plan: {
         direction: 'literary-editorial',
@@ -1950,6 +2197,40 @@ const buildComponentVisualSpecs = (catalog) =>
       target_look_planned: true,
       implementation_progress: {
         novel_design_ready: NOVEL_DESIGN_READY_COMPONENTS.has(entry.path),
+      },
+    };
+  });
+
+const enrichComponentVisualSpecs = (componentVisualSpecs) =>
+  componentVisualSpecs.map((entry) => {
+    const category = entry.category;
+    return {
+      ...entry,
+      target_visual_plan: {
+        ...entry.target_visual_plan,
+        slot_structure: buildComponentTargetSlots(entry),
+        recipe_binding: entry.target_visual_plan.component_recipe,
+        state_matrix: [
+          'default',
+          ...(category === 'action' ? ['pressed', 'disabled'] : []),
+          ...(category === 'item' ? ['selected', 'loading'] : []),
+          ...(category === 'form' ? ['focused', 'error'] : []),
+        ],
+        token_binding: [
+          'color.bg.surface',
+          'color.text.primary',
+          'color.text.secondary',
+          'color.border.subtle',
+          'space.100',
+          'space.150',
+          'space.200',
+          'radius.md',
+          ...(category === 'action' ? ['color.brand.primary', 'color.interaction.selected'] : []),
+        ],
+        platform_adaptation: [
+          entry.platform === 'react-native' ? 'rn-flex-layout + style-sheet' : 'compose/xml-mapping',
+          category === 'navigation' ? 'rtl-mirror-trailing-actions' : 'shared-slot-order',
+        ],
       },
     };
   });
@@ -2027,6 +2308,42 @@ const buildFigmaFrameMap = (surfaces) =>
     };
   });
 
+const enrichFigmaFrameMap = (figmaFrameMap) =>
+  figmaFrameMap.map((entry) => ({
+    ...entry,
+    source_kind: 'surface',
+    frame_type: entry.surface_id.includes('overlay')
+      ? 'overlay-audit-frame'
+      : entry.surface_id.includes('root')
+        ? 'root-audit-frame'
+        : 'surface-audit-frame',
+    sync_status: 'pending-figma-sync',
+    audit_frame_name: entry.surface_id,
+    target_frame_name_light: `${entry.surface_id}/light`,
+    target_frame_name_dark: `${entry.surface_id}/dark`,
+    annotation_frame_name: `${entry.surface_id}/annotation`,
+  }));
+
+const buildFigmaSyncQueue = (surfaceVisualSpecs, componentVisualSpecs) => [
+  ...surfaceVisualSpecs.map((entry) => ({
+    source_id: entry.surface_id,
+    source_kind: 'surface',
+    sync_status: 'pending-figma-sync',
+    target_pages: [
+      entry.target_visual_plan.figma_targets.audit_page,
+      entry.target_visual_plan.figma_targets.design_page_light,
+      entry.target_visual_plan.figma_targets.design_page_dark,
+      '05-标注与交付',
+    ],
+  })),
+  ...componentVisualSpecs.map((entry) => ({
+    source_id: entry.path,
+    source_kind: 'component',
+    sync_status: 'pending-figma-sync',
+    target_pages: [entry.target_visual_plan.figma_target_page, '05-标注与交付'],
+  })),
+];
+
 const parseRNSmokeTests = (repoRoot) =>
   walkFiles(
     path.join(repoRoot, '__tests__', 'smoke'),
@@ -2065,6 +2382,8 @@ const buildGovernanceDriftReport = (repoRoot, surfaces, figmaFrameMap, component
     `- Unmapped figma frames: ${figmaFrameMap.filter((item) => !item.figma_frame_id).length}`,
     `- Surface visual specs coverage: ${surfaces.length}/${surfaces.length}`,
     `- Component visual specs coverage: ${componentVisualSpecs.length}/${componentVisualSpecs.length}`,
+    '- Detailed surface fields: viewport, frame_anatomy, primary_blocks, visual_density, state_panels, asset_profile, interaction_chrome',
+    '- Detailed component fields: anatomy, size_rules, text_hierarchy, container_style, interaction_states, slot_structure, token_binding, platform_adaptation',
     '',
     '## Registry drift',
     `- Missing from registry: ${missingFromRegistry.length ? missingFromRegistry.join(', ') : 'none'}`,
@@ -2101,6 +2420,8 @@ const buildVisualPlanningSummary = (surfaceVisualSpecs, componentVisualSpecs) =>
     `- Current look recorded: ${surfaceVisualSpecs.filter((entry) => entry.current_look_recorded).length}`,
     `- Target look planned: ${surfaceVisualSpecs.filter((entry) => entry.target_look_planned).length}`,
     `- Shell reskinned: ${surfaceVisualSpecs.filter((entry) => entry.implementation_progress?.shell_reskinned).length}`,
+    '- Detailed current fields: viewport/frame_anatomy/primary_blocks/visual_density/state_panels/asset_profile/interaction_chrome',
+    '- Detailed target fields: layout_blueprint/section_recipes/spacing_rhythm/shape_language/typography_roles/motion_notes/dark_a11y_rtl',
     ...Object.entries(surfaceClusterCounts).map(([cluster, count]) => `- ${cluster}: ${count}`),
     '',
     '## Component visual specs',
@@ -2127,9 +2448,10 @@ const generateAuditArtifacts = ({
   const surfaceInventory = buildSurfaceInventory(repoRoot);
   const componentCatalog = buildComponentCatalog(repoRoot);
   const assetInventory = buildAssetInventory(repoRoot);
-  const figmaFrameMap = buildFigmaFrameMap(surfaceInventory);
+  const figmaFrameMap = enrichFigmaFrameMap(buildFigmaFrameMap(surfaceInventory));
   const surfaceVisualSpecs = buildSurfaceVisualSpecs(surfaceInventory);
-  const componentVisualSpecs = buildComponentVisualSpecs(componentCatalog);
+  const componentVisualSpecs = enrichComponentVisualSpecs(buildComponentVisualSpecs(componentCatalog));
+  const figmaSyncQueue = buildFigmaSyncQueue(surfaceVisualSpecs, componentVisualSpecs);
   const governanceDriftReport = buildGovernanceDriftReport(
     repoRoot,
     surfaceInventory,
@@ -2148,6 +2470,7 @@ const generateAuditArtifacts = ({
     componentVisualSpecsPath: path.join(resolvedOutputDir, 'component-visual-specs.json'),
     assetInventoryPath: path.join(resolvedOutputDir, 'asset-inventory.json'),
     figmaFrameMapPath: path.join(resolvedOutputDir, 'figma-frame-map.json'),
+    figmaSyncQueuePath: path.join(resolvedOutputDir, 'figma-sync-queue.json'),
     governanceDriftReportPath: path.join(resolvedOutputDir, 'governance-drift-report.md'),
     visualPlanningSummaryPath: path.join(resolvedOutputDir, 'visual-planning-summary.md'),
   };
@@ -2158,6 +2481,7 @@ const generateAuditArtifacts = ({
   writeJson(outputs.componentVisualSpecsPath, componentVisualSpecs);
   writeJson(outputs.assetInventoryPath, assetInventory);
   writeJson(outputs.figmaFrameMapPath, figmaFrameMap);
+  writeJson(outputs.figmaSyncQueuePath, figmaSyncQueue);
   writeText(outputs.governanceDriftReportPath, `${governanceDriftReport}\n`);
   writeText(outputs.visualPlanningSummaryPath, `${visualPlanningSummary}\n`);
 
@@ -2180,6 +2504,7 @@ const checkAuditArtifacts = ({
       componentVisualSpecsPath: path.join(resolvedOutputDir, 'component-visual-specs.json'),
       assetInventoryPath: path.join(resolvedOutputDir, 'asset-inventory.json'),
       figmaFrameMapPath: path.join(resolvedOutputDir, 'figma-frame-map.json'),
+      figmaSyncQueuePath: path.join(resolvedOutputDir, 'figma-sync-queue.json'),
       governanceDriftReportPath: path.join(resolvedOutputDir, 'governance-drift-report.md'),
       visualPlanningSummaryPath: path.join(resolvedOutputDir, 'visual-planning-summary.md'),
     };

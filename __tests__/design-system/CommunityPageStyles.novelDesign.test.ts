@@ -24,10 +24,12 @@ describe('CommunityPage novelDesign styles', () => {
     expect(styles.tabContainer.backgroundColor).toBe('#FFFDFC');
     expect(styles.postList.backgroundColor).toBe('#FAF6F0');
     expect(styles.postItem.backgroundColor).toBe('#FFFDFC');
-    expect(styles.topDivider.backgroundColor).toBe('#F3ECE3');
+    expect(styles.topDivider.backgroundColor).toBe('#E8DDD1cc');
     expect(styles.subscribeButton.backgroundColor).toBe('#C96A34');
     expect(styles.subscribeButtonText.color).toBe('#FFFDFC');
     expect(styles.bottomDivider.backgroundColor).toBe('#E8DDD1');
+    expect(styles.hotCommentEyebrow.color).toBe('#8B4A2C');
+    expect(styles.hotCommentSubtitle.color).toBe('#6F6258');
     expect(styles.userAvatar.backgroundColor).toBe('#F3ECE3');
     expect(styles.hotCommentTitle.color).toBe('#201A17');
     expect(styles.sourceText.color).toBe('#6F6258');

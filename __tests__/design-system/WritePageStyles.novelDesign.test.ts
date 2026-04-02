@@ -21,9 +21,9 @@ describe('WritePage novelDesign styles', () => {
 
     expect(styles.container.backgroundColor).toBe('#FAF6F0');
     expect(styles.topBar.backgroundColor).toBe('#FFFDFC');
-    expect(styles.editor.backgroundColor).toBe('#FFFDFC');
+    expect(styles.editorSheet.backgroundColor).toBe('#FFFDFC');
     expect(styles.welcomePanel.backgroundColor).toBe('#F3ECE3');
-    expect(styles.selectionToolbarContainer.backgroundColor).toBe('#FFFDFC');
+    expect(styles.selectionToolbarContainer.backgroundColor).toBe('#F3ECE3');
     expect(styles.modalContainer.backgroundColor).toBe('#FFFDFC');
   });
 });

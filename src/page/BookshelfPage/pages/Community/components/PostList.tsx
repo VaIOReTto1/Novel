@@ -1,12 +1,19 @@
 import React from 'react';
-import { FlatList, RefreshControl, ListRenderItem, View, Text } from 'react-native';
+import {
+  FlatList,
+  ListRenderItem,
+  RefreshControl,
+  Text,
+  View,
+} from 'react-native';
+
 import { createNovelDesignUI } from '../../../../../design-system/novelDesign';
 import { useNovelColors } from '../../../../../utils/theme';
 import { createCommunityPageStyles } from '../styles/CommunityPageStyles';
-import { CommunityPost, CommunityCircle } from '../types';
-import { PostItem } from './PostItem';
+import { CommunityCircle, CommunityPost } from '../types';
 import { EmptyState } from './EmptyState';
 import { LoadingIndicator } from './LoadingIndicator';
+import { PostItem } from './PostItem';
 import { TabBar } from './TabBar';
 
 interface PostListProps {
@@ -48,7 +55,7 @@ export const PostList: React.FC<PostListProps> = ({
   const ui = createNovelDesignUI(colors as any);
   const styles = createCommunityPageStyles(colors);
 
-  const renderPost: ListRenderItem<CommunityPost> = ({ item }: { item: CommunityPost }) => (
+  const renderPost: ListRenderItem<CommunityPost> = ({ item }) => (
     <PostItem
       post={item}
       onLike={onLike}
@@ -60,38 +67,43 @@ export const PostList: React.FC<PostListProps> = ({
     />
   );
 
-  const renderHeader = () => {
-    return (
-      <View>
-        {/* TabBar */}
-        <TabBar
-          circles={circles}
-          selectedCircle={selectedCircle}
-          onCircleChange={onCircleChange}
-        />
+  const renderHeader = () => (
+    <View style={styles.postListHeader}>
+      <TabBar
+        circles={circles}
+        selectedCircle={selectedCircle}
+        onCircleChange={onCircleChange}
+      />
 
-        {/* 与TabBar的间距 */}
-        <View style={styles.topDivider} />
+      <View style={styles.topDivider} />
 
-        {/* 最热评论标题 */}
-        <View style={styles.hotCommentHeader}>
-          <Text style={styles.hotCommentTitle}>最热评论</Text>
-        </View>
+      <View style={styles.hotCommentHeader}>
+        <Text style={styles.hotCommentEyebrow}>EDITOR&apos;S PICK</Text>
+        <Text style={styles.hotCommentTitle}>热门讨论</Text>
+        <Text style={styles.hotCommentSubtitle}>
+          关注此时此刻最受讨论的阅读话题
+        </Text>
       </View>
-    );
-  };
+    </View>
+  );
 
   const renderFooter = () => {
-    if (!hasMore) {return null;}
+    if (!hasMore) {
+      return null;
+    }
+
     return <LoadingIndicator />;
   };
 
   const renderEmpty = () => {
-    if (loading) {return <LoadingIndicator />;}
+    if (loading) {
+      return <LoadingIndicator />;
+    }
+
     return (
       <EmptyState
         title="暂无帖子"
-        description="这里还没有任何帖子，快来发布第一个吧！"
+        description="这里还没有新的讨论，先去发起第一条分享吧。"
         buttonText="发布帖子"
         onButtonPress={() => {}}
       />
@@ -101,9 +113,10 @@ export const PostList: React.FC<PostListProps> = ({
   return (
     <FlatList
       style={styles.postList}
+      contentContainerStyle={styles.postListContent}
       data={posts}
       renderItem={renderPost}
-      keyExtractor={(item: { id: any; }) => item.id}
+      keyExtractor={(item) => item.id}
       ListHeaderComponent={renderHeader}
       refreshControl={
         <RefreshControl
@@ -118,7 +131,7 @@ export const PostList: React.FC<PostListProps> = ({
       ListFooterComponent={renderFooter}
       ListEmptyComponent={renderEmpty}
       showsVerticalScrollIndicator={false}
-      removeClippedSubviews={true}
+      removeClippedSubviews
       maxToRenderPerBatch={10}
       windowSize={10}
       initialNumToRender={10}

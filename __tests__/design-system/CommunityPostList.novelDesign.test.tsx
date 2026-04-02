@@ -9,6 +9,7 @@ jest.mock('../../src/utils/theme', () => ({
     novelTextGray: '#6F6258',
     novelBackground: '#FFFDFC',
     novelChipBackground: '#EBEDF0',
+    novelThemeMode: 'light',
   }),
 }));
 
@@ -59,7 +60,7 @@ describe('Community PostList novelDesign behavior', () => {
     onCircleChange: jest.fn(),
   };
 
-  it('uses brand refresh colors and renders empty-state branch', () => {
+  it('uses brand refresh colors and renders the editorial feed heading', () => {
     let renderer!: ReactTestRenderer.ReactTestRenderer;
 
     ReactTestRenderer.act(() => {
@@ -70,8 +71,13 @@ describe('Community PostList novelDesign behavior', () => {
     expect(refreshControl.props.colors).toEqual(['#C96A34']);
     expect(refreshControl.props.tintColor).toBe('#C96A34');
 
-    const texts = renderer.root.findAllByType(Text).map((node) => node.props.children).flat();
-    expect(texts).toEqual(expect.arrayContaining(['最热评论', '暂无帖子', '发布帖子']));
+    const texts = renderer.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
+    expect(texts).toEqual(
+      expect.arrayContaining(['热门讨论', '暂无帖子', '发布帖子']),
+    );
   });
 
   it('renders loading branch instead of empty state while fetching', () => {
@@ -81,7 +87,10 @@ describe('Community PostList novelDesign behavior', () => {
       renderer = ReactTestRenderer.create(<PostList {...baseProps} loading />);
     });
 
-    const texts = renderer.root.findAllByType(Text).map((node) => node.props.children).flat();
+    const texts = renderer.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
     expect(texts).toContain('LoadingIndicator');
     expect(texts).not.toContain('暂无帖子');
   });

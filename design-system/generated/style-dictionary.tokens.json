@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "name": "Novel Design",
+    "version": "0.1.0",
+    "direction": "literary-editorial"
+  },
   "color": {
     "bg": {
       "canvas": {
@@ -12,6 +17,10 @@
       "elevated": {
         "light": "#F3ECE3",
         "dark": "#2B2521"
+      },
+      "surfaceMuted": {
+        "light": "#F8F1E7",
+        "dark": "#26201C"
       }
     },
     "text": {
@@ -36,6 +45,10 @@
       "strong": {
         "light": "#C7B39F",
         "dark": "#8D7865"
+      },
+      "focus": {
+        "light": "#B85F2E",
+        "dark": "#F0A06F"
       }
     },
     "brand": {
@@ -65,6 +78,30 @@
         "light": "#B3453C",
         "dark": "#E0756C"
       }
+    },
+    "interaction": {
+      "selected": {
+        "light": "#F7E1D2",
+        "dark": "#56382B"
+      },
+      "disabled": {
+        "light": "#D6CCC2",
+        "dark": "#51453D"
+      },
+      "focus": {
+        "light": "#B85F2E",
+        "dark": "#F0A06F"
+      }
+    },
+    "reader": {
+      "emphasis": {
+        "light": "#F0E1CF",
+        "dark": "#3B2F2A"
+      },
+      "chrome": {
+        "light": "#EAD8C7",
+        "dark": "#312824"
+      }
     }
   },
   "space": {
@@ -86,6 +123,12 @@
     "500": {
       "value": 40
     },
+    "600": {
+      "value": 48
+    },
+    "700": {
+      "value": 64
+    },
     "050": {
       "value": 4
     }
@@ -103,20 +146,49 @@
     "xl": {
       "value": 24
     },
+    "xxl": {
+      "value": 32
+    },
     "full": {
       "value": 999
+    }
+  },
+  "elevation": {
+    "100": {
+      "x": 0,
+      "y": 2,
+      "blur": 8,
+      "spread": 0,
+      "alpha": 0.08
+    },
+    "200": {
+      "x": 0,
+      "y": 6,
+      "blur": 16,
+      "spread": 0,
+      "alpha": 0.12
+    },
+    "300": {
+      "x": 0,
+      "y": 12,
+      "blur": 28,
+      "spread": 0,
+      "alpha": 0.18
     }
   },
   "motion": {
     "duration": {
       "fast": 120,
       "normal": 200,
-      "slow": 320
+      "slow": 320,
+      "page": 240,
+      "sheet": 280
     },
     "curve": {
       "standard": "cubic-bezier(0.2, 0, 0, 1)",
       "decelerate": "cubic-bezier(0, 0, 0, 1)",
-      "accelerate": "cubic-bezier(0.3, 0, 1, 1)"
+      "accelerate": "cubic-bezier(0.3, 0, 1, 1)",
+      "entrance": "cubic-bezier(0.16, 1, 0.3, 1)"
     }
   },
   "typography": {
@@ -173,6 +245,58 @@
         "lineHeight": 16,
         "weight": 500,
         "letterSpacing": 0.2
+      }
+    },
+    "nav": {
+      "md": {
+        "fontFamily": "PingFangSC-Medium",
+        "size": 14,
+        "lineHeight": 18,
+        "weight": 600,
+        "letterSpacing": 0.1
+      }
+    },
+    "meta": {
+      "md": {
+        "fontFamily": "PingFangSC-Medium",
+        "size": 12,
+        "lineHeight": 18,
+        "weight": 500,
+        "letterSpacing": 0.2
+      },
+      "sm": {
+        "fontFamily": "PingFangSC-Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "weight": 500,
+        "letterSpacing": 0.2
+      }
+    },
+    "eyebrow": {
+      "md": {
+        "fontFamily": "PingFangSC-Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "weight": 700,
+        "letterSpacing": 0.6
+      }
+    },
+    "quote": {
+      "md": {
+        "fontFamily": "PingFangSC-Medium",
+        "size": 15,
+        "lineHeight": 24,
+        "weight": 500,
+        "letterSpacing": 0.1
+      }
+    },
+    "numeric": {
+      "lg": {
+        "fontFamily": "PingFangSC-Semibold",
+        "size": 24,
+        "lineHeight": 28,
+        "weight": 700,
+        "letterSpacing": -0.3
       }
     },
     "reader": {

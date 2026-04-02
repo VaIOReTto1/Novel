@@ -1,109 +1,184 @@
 import { StyleSheet } from 'react-native';
 
-import { createNovelDesignUI } from '../../../../design-system/novelDesign';
+import {
+  createNovelDesignComponentRecipes,
+  createNovelDesignLayoutRecipes,
+  createNovelDesignSurfaceSpec,
+  createNovelDesignUI,
+} from '../../../../design-system/novelDesign';
 import { NovelColors } from '../../../../utils/theme/colors';
 import { fp, sp, wp } from '../../../../utils/theme/dimensions';
 
 export const createBookManageStyles = (colors: NovelColors) => {
   const ui = createNovelDesignUI(colors);
+  const layout = createNovelDesignLayoutRecipes(ui);
+  const components = createNovelDesignComponentRecipes(ui);
+  const surfaceRecipe = createNovelDesignSurfaceSpec(
+    'rn-host-book-manage-page-component',
+    ui,
+  );
 
   return StyleSheet.create({
-    container: { flex: 1, backgroundColor: ui.color.bg.canvas },
-
+    container: {
+      ...layout.screenShell,
+    },
     header: {
+      ...layout.topBar,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: ui.metrics.pageGutter,
-      paddingVertical: ui.spacePx('150'),
-      backgroundColor: ui.color.bg.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: ui.color.border.subtle,
     },
     headerAction: {
-      width: wp(36),
-      height: wp(36),
-      borderRadius: sp(18),
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: ui.color.bg.elevated,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
+      ...components.quietIconButton,
     },
-    back: { fontSize: fp(28), color: ui.color.text.primary },
-    title: { marginLeft: wp(12), fontSize: fp(16), color: ui.color.text.primary, fontWeight: '600' },
-
-    banner: { paddingHorizontal: wp(16), paddingBottom: wp(12) },
+    back: {
+      fontSize: fp(20),
+      color: ui.color.text.primary,
+    },
+    title: {
+      marginLeft: wp(12),
+      color: ui.color.text.primary,
+      fontSize: fp(17),
+      fontWeight: '700',
+    },
+    contentScroll: {
+      paddingHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
+      paddingTop: surfaceRecipe.spacingRhythm.sectionGap,
+      paddingBottom: ui.spacePx('500'),
+      gap: surfaceRecipe.spacingRhythm.sectionGap,
+    },
+    banner: {
+      paddingBottom: surfaceRecipe.spacingRhythm.compactGap,
+    },
     bannerCard: {
+      ...layout.paperCard,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: ui.color.bg.surface,
-      borderRadius: ui.metrics.cardRadius,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
-      padding: ui.metrics.cardPadding,
-      marginTop: ui.metrics.blockGap,
+      gap: surfaceRecipe.spacingRhythm.blockGap,
     },
     cover: {
       width: ui.metrics.writerCover.width,
       height: ui.metrics.writerCover.height,
-      borderRadius: sp(8),
+      borderRadius: sp(12),
       backgroundColor: ui.color.bg.elevated,
       borderWidth: 1,
       borderColor: ui.color.border.subtle,
     },
-    bannerInfo: { marginLeft: wp(12), flex: 1 },
-    bookTitle: { fontSize: fp(18), color: ui.color.text.primary, fontWeight: '600' },
-    author: { marginTop: wp(6), color: ui.color.text.secondary },
-    status: { marginTop: wp(6), color: ui.color.brand.primary },
-
+    bannerInfo: {
+      flex: 1,
+      gap: ui.spacePx('050'),
+    },
+    bookTitle: {
+      color: ui.color.text.primary,
+      fontSize: fp(20),
+      lineHeight: fp(28),
+      fontWeight: '700',
+    },
+    author: {
+      color: ui.color.text.secondary,
+      fontSize: fp(13),
+    },
+    status: {
+      color: ui.color.brand.primary,
+      fontSize: fp(12),
+      fontWeight: '700',
+    },
     draft: {
-      marginHorizontal: wp(16),
-      backgroundColor: ui.color.bg.elevated,
-      padding: wp(12),
-      borderRadius: ui.metrics.cardRadius,
+      ...layout.raisedCard,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
+      gap: surfaceRecipe.spacingRhythm.blockGap,
     },
-    draftText: { color: ui.color.text.primary },
-    draftAction: { color: ui.color.brand.primary, fontWeight: '600' },
-
-    sectionHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: wp(16), paddingTop: wp(16) },
-    sectionTitle: { color: ui.color.text.primary, fontWeight: '600', fontSize: fp(16) },
-    chapterList: { paddingHorizontal: wp(16), gap: wp(10) },
+    draftText: {
+      flex: 1,
+      color: ui.color.text.primary,
+      fontSize: fp(13),
+      lineHeight: fp(20),
+    },
+    draftAction: {
+      color: ui.color.brand.primary,
+      fontWeight: '700',
+      fontSize: fp(13),
+    },
+    sectionHeaderRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: surfaceRecipe.spacingRhythm.compactGap,
+      marginBottom: ui.spacePx('100'),
+    },
+    sectionTitle: {
+      color: ui.color.text.primary,
+      fontWeight: '700',
+      fontSize: fp(16),
+    },
+    chapterList: {
+      gap: ui.spacePx('100'),
+    },
     chapterCard: {
-      backgroundColor: ui.color.bg.surface,
-      borderRadius: ui.metrics.cardRadius,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
-      padding: ui.metrics.compactCardPadding,
+      ...layout.paperCard,
+      gap: ui.spacePx('050'),
     },
-    chapterTitle: { color: ui.color.text.primary, fontSize: fp(15), fontWeight: '600' },
-    chapterMeta: { color: ui.color.text.secondary, marginTop: wp(4) },
-    volume: { paddingHorizontal: wp(16), paddingVertical: wp(12), alignItems: 'flex-end' },
-    volumeText: { color: ui.color.text.secondary },
-
-    emptyWrap: { flexGrow: 1, justifyContent: 'center', alignItems: 'center' },
+    chapterTitle: {
+      color: ui.color.text.primary,
+      fontSize: fp(15),
+      fontWeight: '700',
+    },
+    chapterMeta: {
+      color: ui.color.text.secondary,
+      marginTop: wp(2),
+      fontSize: fp(12),
+    },
+    volume: {
+      alignSelf: 'flex-start',
+      paddingHorizontal: wp(12),
+      paddingVertical: wp(6),
+      borderRadius: ui.metrics.chipRadius,
+      backgroundColor: ui.alpha(ui.color.brand.primary, 0.12),
+      borderWidth: 1,
+      borderColor: ui.alpha(ui.color.brand.primary, 0.18),
+    },
+    volumeText: {
+      color: ui.color.brand.secondary,
+      fontSize: fp(12),
+      fontWeight: '700',
+    },
+    emptyWrap: {
+      ...layout.raisedCard,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: ui.spacePx('400'),
+    },
     emptyCard: {
-      backgroundColor: ui.color.bg.surface,
-      borderRadius: ui.metrics.cardRadius,
-      borderWidth: 1,
-      borderColor: ui.color.border.subtle,
-      paddingHorizontal: ui.metrics.cardPadding,
-      paddingVertical: ui.metrics.compactCardPadding,
+      alignItems: 'center',
+      gap: ui.spacePx('050'),
     },
-    emptyText: { color: ui.color.text.secondary, marginTop: wp(8) },
-
+    emptyText: {
+      color: ui.color.text.secondary,
+      marginTop: wp(8),
+      fontSize: fp(13),
+      textAlign: 'center',
+    },
     footer: {
-      padding: wp(16),
-      backgroundColor: ui.color.bg.surface,
+      ...layout.anchoredComposer,
       borderTopWidth: 1,
       borderTopColor: ui.color.border.subtle,
     },
-    createBtn: { backgroundColor: ui.color.brand.primary, borderRadius: sp(24), alignItems: 'center', paddingVertical: wp(12) },
-    createText: { color: ui.color.text.inverse, fontWeight: '600' },
-    tip: { textAlign: 'center', marginTop: wp(8), color: ui.color.text.secondary },
+    createBtn: {
+      ...components.primaryActionPill,
+      minHeight: ui.metrics.buttonHeightLg,
+    },
+    createText: {
+      color: ui.color.text.inverse,
+      fontWeight: '700',
+      fontSize: fp(14),
+    },
+    tip: {
+      textAlign: 'center',
+      marginTop: wp(8),
+      color: ui.color.text.secondary,
+      fontSize: fp(11),
+      lineHeight: fp(16),
+    },
   });
 };

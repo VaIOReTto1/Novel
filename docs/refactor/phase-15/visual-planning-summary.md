@@ -4,6 +4,8 @@
 - Current look recorded: 51
 - Target look planned: 51
 - Shell reskinned: 37
+- Detailed current fields: viewport/frame_anatomy/primary_blocks/visual_density/state_panels/asset_profile/interaction_chrome
+- Detailed target fields: layout_blueprint/section_recipes/spacing_rhythm/shape_language/typography_roles/motion_notes/dark_a11y_rtl
 - android-book-detail: 1
 - android-search-discovery: 4
 - android-home-discovery: 3

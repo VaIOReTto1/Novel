@@ -42,6 +42,8 @@ describe('novelDesign token build', () => {
           bg: expect.any(Object),
           text: expect.any(Object),
           brand: expect.any(Object),
+          interaction: expect.any(Object),
+          reader: expect.any(Object),
         }),
         space: expect.any(Object),
         radius: expect.any(Object),
@@ -52,7 +54,12 @@ describe('novelDesign token build', () => {
 
     expect(tokens.color.bg.canvas.light).toMatch(/^#/);
     expect(tokens.color.bg.canvas.dark).toMatch(/^#/);
+    expect(tokens.color.interaction.selected.light).toMatch(/^#/);
+    expect(tokens.space['700']).toBeGreaterThan(tokens.space['500']);
+    expect(tokens.radius.xxl).toBeGreaterThan(tokens.radius.xl);
     expect(tokens.typography.title.hero.size).toBeGreaterThan(20);
+    expect(tokens.typography.meta.sm.size).toBeLessThan(tokens.typography.body.sm.size);
+    expect(tokens.typography.eyebrow.md.weight).toBeGreaterThanOrEqual(600);
   });
 
   test('generated RN tokens expose typed theme objects and typography roles', () => {
@@ -68,6 +75,8 @@ describe('novelDesign token build', () => {
       expect(source).toContain('export const novelDesignLightTheme');
       expect(source).toContain('export const novelDesignDarkTheme');
       expect(source).toContain('title:');
+      expect(source).toContain('interaction:');
+      expect(source).toContain('meta:');
       expect(source).toContain('reader:');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
@@ -87,10 +96,14 @@ describe('novelDesign token build', () => {
 
       expect(xml).toContain('<resources>');
       expect(xml).toContain('novel_design_color_bg_canvas_light');
+      expect(xml).toContain('novel_design_color_interaction_selected_light');
       expect(xml).toContain('novel_design_space_100');
       expect(compose).toContain('object NovelDesignTokens');
       expect(compose).toContain('val LightColors');
       expect(compose).toContain('val DarkColors');
+      expect(compose).toContain('val Radius');
+      expect(compose).toContain('fun color(');
+      expect(compose).toContain('fun radius(');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }

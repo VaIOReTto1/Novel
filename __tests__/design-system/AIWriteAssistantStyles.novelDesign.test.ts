@@ -26,6 +26,6 @@ describe('AIWriteAssistant novelDesign styles', () => {
     expect(styles.thinkingContainer.backgroundColor).toBe('#F3ECE3');
     expect(styles.inputBar.backgroundColor).toBe('#FFFDFC');
     expect(styles.input.backgroundColor).toBe('#F3ECE3');
-    expect(styles.ideaFloatPanel.backgroundColor).toBe('#FFFDFC');
+    expect(styles.ideaFloatPanel.backgroundColor).toBe('#F3ECE3');
   });
 });

@@ -22,6 +22,58 @@
         "BookReviewsSection",
         "BookStatsSection",
         "BookTitleSection"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "book presentation with actions and community proof",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "AuthorSection",
+          "BookActionSection",
+          "BookCoverSection"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -41,6 +93,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-book-detail",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-book-detail",
+        "author-section",
+        "book-action-section",
+        "book-cover-section",
+        "book-description-bottom-sheet"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -74,6 +168,68 @@
         "FullRankingPage",
         "RankingNumber",
         "FullRankingPageSkeleton"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "ranking rows, author metadata and hot-search hint labels",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "FullRankingPage",
+          "RankingNumber",
+          "FullRankingPageSkeleton"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "collapsing-header",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "ranking-list",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -94,6 +250,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-search",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-search",
+        "full-ranking-page-skeleton",
+        "history-grid",
+        "ranking-list",
+        "search-filter-bottom-sheet"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -130,6 +328,78 @@
         "HomeFilterBar",
         "HomeRankPanel",
         "HomeRecommendGrid"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "search entry, category filters, rank panel, recommendation feed and loading footer",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "HomeTopBar",
+          "HomeFilterBar",
+          "HomeRankPanel"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "recommend-mode",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "rank-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "refreshing",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "load-more",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -150,6 +420,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-discovery",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-discovery",
+        "home-filter-bar",
+        "home-page-skeleton",
+        "home-rank-panel",
+        "home-recommend-grid"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -186,6 +498,73 @@
         "InputSection",
         "ActionButtons",
         "AgreementSection"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "login/register dual-mode form with validation, captcha and agreement actions",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "LoginAppBar",
+          "TitleSection",
+          "InputSection"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "login-mode",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "register-mode",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "validation-error",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -206,6 +585,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-auth",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-auth",
+        "action-buttons",
+        "agreement-section",
+        "app-bar",
+        "input-section"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -242,6 +663,59 @@
         "DragCommonGesture",
         "DragGesture",
         "DragStartEnd"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "tab shell mixing native pages and RN hosts",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BackButton",
+          "BaseViewModel",
+          "BitmapPool"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "bottom-navigation"
       ]
     },
     "target_visual_plan": {
@@ -261,6 +735,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-main-shell",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-main-shell",
+        "back-button",
+        "base-view-model",
+        "bitmap-pool",
+        "curl-draw"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -297,6 +813,59 @@
         "NoAnimationContainer",
         "PageContentDisplay",
         "PageCurlFlipContainer"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "mixed",
+        "immersive": true,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "immersive-canvas",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "text-first reading flow with contextual panels",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "dense-reading",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BackgroundColorControl",
+          "BrightnessControl",
+          "ChapterListPanel"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "immersive-controls"
       ]
     },
     "target_visual_plan": {
@@ -316,6 +885,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "immersive-reader",
+        "entry_chrome": "android-native",
+        "content_axis": "immersive-canvas",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "immersive-reader",
+        "background-color-control",
+        "brightness-control",
+        "chapter-list-panel",
+        "cover-flip-container"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "immersive-panels",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.reader.content",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-chrome-keep-content-flow"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -350,6 +961,68 @@
         "SearchHistorySection",
         "HistoryGrid",
         "RankingSection"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "history list, ranking carousels and search discovery entry points",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "SearchTopBar",
+          "SearchHistorySection",
+          "HistoryGrid"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "history-expanded",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "default-discovery",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -370,6 +1043,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-search",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-search",
+        "full-ranking-page-skeleton",
+        "history-grid",
+        "ranking-list",
+        "search-filter-bottom-sheet"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -405,6 +1120,73 @@
         "CategoryFilterChip",
         "SearchResultItem",
         "SearchFilterBottomSheet"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "result cards with cover, metadata, chips, empty state and pagination feedback",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "SearchTopBar",
+          "CategoryFilterChip",
+          "SearchResultItem"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "loading-more",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "filter-sheet-open",
+          "placement": "overlay",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -425,6 +1207,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-search-results",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "editorial-search-results",
+        "full-ranking-page-skeleton",
+        "history-grid",
+        "ranking-list",
+        "search-filter-bottom-sheet"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -452,7 +1276,55 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "web content framed inside native surface",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -471,6 +1343,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "webview-shell",
+        "entry_chrome": "android-native",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-native",
+        "webview-shell"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Native Pages",
         "design_page_light": "03-页面-亮色",
@@ -507,6 +1417,58 @@
         "BookReviewsSection",
         "BookStatsSection",
         "BookTitleSection"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "temporary contextual detail and actions",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "AuthorSection",
+          "BookActionSection",
+          "BookCoverSection"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -526,6 +1488,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "dialog-sheet",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "dialog-sheet",
+        "author-section",
+        "book-action-section",
+        "book-cover-section",
+        "book-description-bottom-sheet"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -562,6 +1566,58 @@
         "NoAnimationContainer",
         "PageContentDisplay",
         "PageCurlFlipContainer"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "temporary controls and selection lists",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BackgroundColorControl",
+          "BrightnessControl",
+          "ChapterListPanel"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -581,6 +1637,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "control-panel",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "control-panel",
+        "background-color-control",
+        "brightness-control",
+        "chapter-list-panel",
+        "cover-flip-container"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -610,6 +1708,56 @@
       ],
       "key_components": [
         "FullRankingPageSkeleton"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "loading approximation of ranking list rows and header",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "FullRankingPageSkeleton"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -629,6 +1777,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-search",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-search"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -658,6 +1844,56 @@
       ],
       "key_components": [
         "HomePageSkeleton"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "loading approximation of search, ranking and recommendation modules",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "HomePageSkeleton"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -677,6 +1913,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-discovery",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-discovery"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -704,7 +1978,57 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "home discovery feed with rank and recommendation modules",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [
+          "image"
+        ],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -723,6 +2047,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-discovery",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-discovery"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -752,6 +2114,56 @@
       ],
       "key_components": [
         "LoginPageSkeleton"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "loading approximation of login/register panel",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "LoginPageSkeleton"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -771,6 +2183,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-auth",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-auth"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -807,6 +2257,60 @@
         "NoAnimationContainer",
         "PageContentDisplay",
         "PageCurlFlipContainer"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "mixed",
+        "immersive": true,
+        "fixed_header": false,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "immersive-canvas",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "settings groups, policy/help routes and switch-heavy controls",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "dense-reading",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BackgroundColorControl",
+          "BrightnessControl",
+          "ChapterListPanel"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header",
+        "immersive-controls"
       ]
     },
     "target_visual_plan": {
@@ -826,6 +2330,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-settings-panel",
+        "entry_chrome": "android-overlay",
+        "content_axis": "immersive-canvas",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-settings-panel",
+        "background-color-control",
+        "brightness-control",
+        "chapter-list-panel",
+        "cover-flip-container"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "immersive-panels",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.reader.content",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-chrome-keep-content-flow"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -853,7 +2399,55 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "temporary contextual detail and actions",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -872,6 +2466,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "dialog-sheet",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "dialog-sheet"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -901,6 +2533,56 @@
       ],
       "key_components": [
         "SearchPageSkeleton"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "loading approximation of search discovery modules",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "SearchPageSkeleton"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -920,6 +2602,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-search",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-search"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -949,6 +2669,56 @@
       ],
       "key_components": [
         "SearchResultPageSkeleton"
+      ],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": false,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "primary-content-rail",
+        "overlay-container"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "loading approximation of result card list",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "SearchResultPageSkeleton"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "sheet-handle-or-panel-header"
       ]
     },
     "target_visual_plan": {
@@ -968,6 +2738,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-search-results",
+        "entry_chrome": "android-overlay",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-overlay",
+        "editorial-search-results"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "raised-panels"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -995,7 +2803,55 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "detail/help/message/history style utility surface",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -1014,6 +2870,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "android-shell",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-shell",
+        "utility-detail"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -1041,7 +2935,55 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "detail/help/message/history style utility surface",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -1060,6 +3002,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "android-shell",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-shell",
+        "utility-detail"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -1087,7 +3067,58 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "container-only host for embedded RN screens",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [
+          "image"
+        ],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "bottom-navigation"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -1106,6 +3137,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "host-shell",
+        "entry_chrome": "android-shell",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-shell",
+        "host-shell"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -1133,7 +3202,56 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "container-only host for embedded RN screens",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -1152,6 +3270,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "host-shell",
+        "entry_chrome": "android-shell",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-shell",
+        "host-shell"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -1179,7 +3335,56 @@
       "key_states": [
         "default"
       ],
-      "key_components": []
+      "key_components": [],
+      "viewport": {
+        "device_frame": "android-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "container-only host for embedded RN screens",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": []
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
+      ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
@@ -1198,6 +3403,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "host-shell",
+        "entry_chrome": "android-shell",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "android-shell",
+        "host-shell"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/Android Shell & Overlays",
         "design_page_light": "03-页面-亮色",
@@ -1239,6 +3482,84 @@
         "Suggestions",
         "IdeaSelector",
         "InputBar"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "anchored-action-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "editorial-workbench",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "intro prompt cards, assistant and user bubbles, collapsible thinking block, post-response actions and idea categories",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "expanded",
+        "crowded_points": [
+          "Header",
+          "IntroExample",
+          "ChatRow"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "intro",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "assistant-response",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "thinking-expanded",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "idea-selector-open",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "sending",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "primary-action-toolbar"
       ]
     },
     "target_visual_plan": {
@@ -1260,6 +3581,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-writer-workbench",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "composer-and-tooling"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-writer-workbench",
+        "action-bar",
+        "chat-row",
+        "header",
+        "idea-selector"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.300",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1296,6 +3659,74 @@
         "BenefitsList",
         "Timeline",
         "BottomButton"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "anchored-action-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "editorial-workbench",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "benefit rows, timeline, platform logos, activities, courses and registration prompt",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "expanded",
+        "crowded_points": [
+          "TopBar",
+          "WelcomeModal",
+          "BenefitsList"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "tab-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "modal-open",
+          "placement": "overlay",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "primary-action-toolbar"
       ]
     },
     "target_visual_plan": {
@@ -1316,6 +3747,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-writer-workbench",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "composer-and-tooling"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-writer-workbench",
+        "author-exclusive-section",
+        "bottom-button",
+        "copyright-section",
+        "creative-activity-section"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.300",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1353,6 +3826,74 @@
         "ChapterSection",
         "EmptyChapter",
         "Footer"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "anchored-action-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "book identity block, continue-draft card, chapter list or empty state, right-aligned volume label and primary footer action",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "expanded",
+        "crowded_points": [
+          "Header",
+          "Banner",
+          "DraftBar"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        },
+        {
+          "state": "draft-exists",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "chapter-empty",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "chapter-list",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "primary-action-toolbar"
       ]
     },
     "target_visual_plan": {
@@ -1374,6 +3915,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-writer-workbench",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-writer-workbench",
+        "banner",
+        "chapter-section",
+        "draft-bar",
+        "empty-chapter"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.300",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1403,6 +3986,57 @@
       ],
       "key_components": [
         "MainTabBar"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "library-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "multi-tab content container for bookshelf, history, watchlist and community",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "MainTabBar"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -1422,6 +4056,45 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-tab-shell",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-tab-shell",
+        "main-tab-bar"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1453,6 +4126,58 @@
         "BookGrid",
         "Sidebar",
         "TopTabs"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "taxonomy navigation and cover-driven result grid",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BookGrid",
+          "Sidebar",
+          "TopTabs"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1472,6 +4197,47 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-catalog-grid",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-catalog-grid",
+        "book-grid",
+        "sidebar",
+        "top-tabs"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1506,6 +4272,59 @@
         "RefreshIndicator",
         "TopBar",
         "index"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "review-thread",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "threaded community content with detail, reply and compose states",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "dense-reading",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "CategorySection",
+          "CommentList",
+          "RatingSection"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -1525,6 +4344,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-review-stack",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "thread-and-filter"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-review-stack",
+        "category-section",
+        "comment-list",
+        "rating-section",
+        "refresh-indicator"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-chrome-keep-content-flow"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1559,6 +4420,69 @@
         "SearchInput",
         "ConsultCards",
         "FrequentList"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "host-or-overlay-layer"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "search entry, consult cards, highlighted FAQ titles and bottom contact section",
+          "width_model": "modular-sections",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "SearchInput",
+          "ConsultCards"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "searching",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "faq-list",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "bottom-navigation"
       ]
     },
     "target_visual_plan": {
@@ -1579,6 +4503,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-main-shell",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-main-shell",
+        "consult-section",
+        "contact-section",
+        "frequent-questions",
+        "question-detail"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1610,6 +4576,62 @@
       "key_components": [
         "TopBar",
         "DocumentBody"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "section titles, descriptive paragraphs and closing notes",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "DocumentBody"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "long-document",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1629,6 +4651,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-settings-panel",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-settings-panel"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1664,6 +4724,73 @@
         "TabsArea",
         "RefreshIndicator",
         "ContentArea"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "library-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "reading-history cards with cover, author and progress metadata in two densities",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "TabsArea",
+          "RefreshIndicator"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "grid-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "list-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "refreshing",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -1684,6 +4811,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "content-area",
+        "history-item",
+        "load-more-indicator",
+        "refresh-indicator"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1720,6 +4889,58 @@
         "TopBar",
         "VIPCardCarousel",
         "VIPRecommendation"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "detail/help/message/history style utility surface",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BenefitComparison",
+          "BottomPurchase",
+          "MemberBenefits"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1739,6 +4960,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "benefit-comparison",
+        "bottom-purchase",
+        "member-benefits",
+        "price-packages"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1777,6 +5040,78 @@
         "RefreshIndicator",
         "EmptyState",
         "LoadMoreIndicator"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "system message rows, tabbed secondary notifications, empty state and incremental loading footer",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "MainMessagesSection",
+          "TabsArea"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "sticky-tabs",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "refreshing",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading-more",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1797,6 +5132,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "empty-state",
+        "load-more-indicator",
+        "main-messages-section",
+        "message-item"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1833,6 +5210,78 @@
         "SubTabsSection",
         "ReservationGrid",
         "EmptyState"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "upcoming reservation cards, online/offline sub-filters, empty-state fallback and reservation CTA buttons",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "SubTabsSection",
+          "ReservationGrid"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "new-tab",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "mine-tab",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "sub-tab-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1853,6 +5302,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "empty-state",
+        "reservation-grid",
+        "sub-tabs-section",
+        "top-bar"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1884,6 +5375,62 @@
       "key_components": [
         "TopBar",
         "DocumentBody"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "section titles, paragraphs and legal closing copy",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "DocumentBody"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "long-document",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1903,6 +5450,44 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-settings-panel",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-settings-panel"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1934,6 +5519,62 @@
       "key_components": [
         "TopBar",
         "AnswerBody"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "question heading, answer body and support follow-up hints",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "AnswerBody"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "long-answer",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -1953,6 +5594,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "consult-section",
+        "contact-section",
+        "frequent-questions",
+        "question-detail"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -1986,6 +5669,68 @@
         "TopBar",
         "SearchInput",
         "QuestionRows"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "question rows, section headings and support navigation hints",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "SearchInput",
+          "QuestionRows"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "searching",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-result",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2005,6 +5750,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "consult-section",
+        "contact-section",
+        "frequent-questions",
+        "question-detail"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2040,6 +5827,68 @@
         "StatsCards",
         "ServiceCards",
         "TaskCards"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "stat modules, service entries, task cards, activities, courses and creator action CTA",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "ProfileSection",
+          "StatsCards"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "subtab-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2060,6 +5909,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "creative-service-section",
+        "creative-task-section",
+        "data-stats-section",
+        "top-bar"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2093,6 +5984,59 @@
         "RepliesSheet",
         "ReviewContent",
         "TopBar"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "review-thread",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "threaded community content with detail, reply and compose states",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "dense-reading",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "CommentList",
+          "RefreshIndicator",
+          "RepliesSheet"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2112,6 +6056,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-review-stack",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "thread-and-filter"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-review-stack",
+        "comment-list",
+        "refresh-indicator",
+        "replies-sheet",
+        "review-content"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-chrome-keep-content-flow"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2143,6 +6129,58 @@
         "SettingRow",
         "ThemeSwitcher",
         "index"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "settings groups, policy/help routes and switch-heavy controls",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "SettingRow",
+          "ThemeSwitcher",
+          "index"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2162,6 +6200,47 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-settings-panel",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-settings-panel",
+        "setting-row",
+        "theme-switcher",
+        "index"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2192,6 +6271,57 @@
       "key_components": [
         "TimePickerModal",
         "index"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "settings groups, policy/help routes and switch-heavy controls",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TimePickerModal",
+          "index"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2211,6 +6341,46 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-settings-panel",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-settings-panel",
+        "time-picker-modal",
+        "index"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2247,6 +6417,78 @@
         "TabsSection",
         "UsersList",
         "EmptyState"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "avatar rows, user tags, descriptions, follow pills and viewed/following/fans states",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "TabsSection",
+          "UsersList"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "viewed-tab",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "following-tab",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "fans-tab",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading",
+          "placement": "inline-content",
+          "treatment": "structured-feedback"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2267,6 +6509,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "utility-detail",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "utility-detail",
+        "empty-state",
+        "tabs-section",
+        "top-bar",
+        "users-list"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2303,6 +6587,79 @@
         "WelcomePanel",
         "VolumeBar",
         "SelectionToolbar"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "anchored-action-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "editorial-workbench",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "title input, long-form editor, contextual toolbars, welcome shortcuts and parameter modal",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "expanded",
+        "crowded_points": [
+          "TopBar",
+          "WelcomePanel",
+          "VolumeBar"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "welcome-panel",
+          "placement": "overlay",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "selection-toolbar",
+          "placement": "primary-flow",
+          "treatment": "selection-rail"
+        },
+        {
+          "state": "parameter-modal",
+          "placement": "overlay",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading-overlay",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "primary-action-toolbar"
       ]
     },
     "target_visual_plan": {
@@ -2323,6 +6680,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-writer-workbench",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "composer-and-tooling"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-writer-workbench",
+        "selection-toolbar",
+        "top-bar",
+        "volume-bar",
+        "welcome-panel"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.300",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2355,6 +6754,60 @@
         "ReviewForm",
         "TopBar",
         "index"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": true
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail",
+        "anchored-action-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "editorial-workbench",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "threaded community content with detail, reply and compose states",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "dense-reading",
+        "whitespace": "expanded",
+        "crowded_points": [
+          "RatingInput",
+          "ReviewForm",
+          "TopBar"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "primary-action-toolbar"
       ]
     },
     "target_visual_plan": {
@@ -2374,6 +6827,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-review-stack",
+        "entry_chrome": "rn-host",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "composer-and-tooling"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-host",
+        "editorial-review-stack",
+        "rating-input",
+        "review-form",
+        "top-bar",
+        "index"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.300",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-chrome-keep-content-flow"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Host Pages",
         "design_page_light": "03-页面-亮色",
@@ -2413,6 +6908,84 @@
         "RecommendationFlow",
         "ViewSwitcher",
         "EditToolbar"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "library-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "shelf tabs, recommendation shelves, empty-state guidance and dense book cards with cover-first hierarchy",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "BookItem",
+          "EmptyState"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "tab-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "grid-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "list-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "waterfall-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "recommendation-loading",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -2433,6 +7006,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-library-content",
+        "entry_chrome": "rn-nested",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-nested",
+        "editorial-library-content",
+        "book-item",
+        "edit-toolbar",
+        "empty-state",
+        "grid-view"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Nested Pages",
         "design_page_light": "03-页面-亮色",
@@ -2472,6 +7087,74 @@
         "EmptyState",
         "FloatingButton",
         "LoadingIndicator"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "community-feed",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "post cards, author metadata, subscribe actions, empty state and loading indicator within the feed",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "dense-reading",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "TabBar",
+          "FilterBar"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "tab-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "feed-loading",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "floating-action",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -2492,6 +7175,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-library-content",
+        "entry_chrome": "rn-nested",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "thread-and-filter"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-nested",
+        "editorial-library-content",
+        "empty-state",
+        "filter-bar",
+        "floating-button",
+        "loading-indicator"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Nested Pages",
         "design_page_light": "03-页面-亮色",
@@ -2528,6 +7253,74 @@
         "HistoryItem",
         "EditToolbar",
         "RefreshIndicator"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "library-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "history tabs, cover grid, reading progress, add-to-shelf pills and list-mode metadata rows",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TabBar",
+          "HistoryContent",
+          "HistoryItem"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "tab-switch",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "grid-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "list-view",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "refreshing",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -2548,6 +7341,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-library-content",
+        "entry_chrome": "rn-nested",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-nested",
+        "editorial-library-content",
+        "book-item",
+        "content-area",
+        "edit-toolbar",
+        "history-content"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Nested Pages",
         "design_page_light": "03-页面-亮色",
@@ -2584,6 +7419,79 @@
         "EditToolbar",
         "WatchlistGrid",
         "EmptyState"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail",
+        "secondary-filter-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "library-content",
+          "width_model": "single-column",
+          "cardization": "paper-cards"
+        },
+        {
+          "order": 2,
+          "block": "ad banner, edit actions, tracked drama posters, progress bars, update badges and empty-state discovery CTA",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "TopBar",
+          "EditToolbar",
+          "WatchlistGrid"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "edit-mode",
+          "placement": "primary-flow",
+          "treatment": "selection-rail"
+        },
+        {
+          "state": "selection-state",
+          "placement": "primary-flow",
+          "treatment": "selection-rail"
+        },
+        {
+          "state": "empty-state",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        },
+        {
+          "state": "loading-more",
+          "placement": "inline-content",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "required-when-pexels"
+      },
+      "interaction_chrome": [
+        "tabs-or-filter-rail"
       ]
     },
     "target_visual_plan": {
@@ -2604,6 +7512,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-library-content",
+        "entry_chrome": "rn-nested",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-nested",
+        "editorial-library-content",
+        "edit-toolbar",
+        "empty-state",
+        "top-bar",
+        "watchlist-grid"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Nested Pages",
         "design_page_light": "03-页面-亮色",
@@ -2641,6 +7591,58 @@
         "ScrollableArea",
         "TopBar",
         "WaterfallGrid"
+      ],
+      "viewport": {
+        "device_frame": "rn-phone",
+        "scroll_direction": "vertical",
+        "immersive": false,
+        "fixed_header": true,
+        "fixed_footer": false
+      },
+      "frame_anatomy": [
+        "top-bar",
+        "primary-content-rail"
+      ],
+      "primary_blocks": [
+        {
+          "order": 1,
+          "block": "stacked-content",
+          "width_model": "single-column",
+          "cardization": "mixed"
+        },
+        {
+          "order": 2,
+          "block": "dashboard-like profile summary followed by card/list content",
+          "width_model": "single-column",
+          "cardization": "supporting-sections"
+        }
+      ],
+      "visual_density": {
+        "density": "balanced",
+        "whitespace": "moderate",
+        "crowded_points": [
+          "BookItem",
+          "BottomBox",
+          "LoadMoreIndicator"
+        ]
+      },
+      "state_panels": [
+        {
+          "state": "default",
+          "placement": "primary-flow",
+          "treatment": "state-aware-section"
+        }
+      ],
+      "asset_profile": {
+        "icon_sources": [
+          "theme-aware"
+        ],
+        "image_sources": [],
+        "illustration_sources": [],
+        "credit_overlay": "not-primary"
+      },
+      "interaction_chrome": [
+        "quiet-page-chrome"
       ]
     },
     "target_visual_plan": {
@@ -2660,6 +7662,48 @@
         "radius.lg",
         "typography.title.section"
       ],
+      "layout_blueprint": {
+        "primary_flow": "editorial-profile-shell",
+        "entry_chrome": "rn-root",
+        "content_axis": "stacked-sections",
+        "supporting_flow": "supporting-metadata"
+      },
+      "section_recipes": [
+        "page-shell",
+        "rn-root",
+        "editorial-profile-shell",
+        "book-item",
+        "bottom-box",
+        "load-more-indicator",
+        "login-bar"
+      ],
+      "spacing_rhythm": {
+        "page_gutter": "space.200",
+        "section_gap": "space.200",
+        "card_padding": "space.200"
+      },
+      "shape_language": {
+        "cards": "paper-cards",
+        "actions": "rounded-pill-actions",
+        "overlays": "integrated-overlays"
+      },
+      "typography_roles": {
+        "title": "typography.title.section",
+        "body": "typography.body.md",
+        "meta": "typography.meta.sm",
+        "eyebrow": "typography.eyebrow.md"
+      },
+      "motion_notes": {
+        "page_enter": "motion.duration.page + motion.curve.standard",
+        "section_shift": "motion.duration.fast + motion.curve.decelerate",
+        "overlay": "motion.duration.sheet + motion.curve.entrance"
+      },
+      "dark_a11y_rtl": {
+        "dark_mode": "independent-token-pairing",
+        "contrast": ">=4.5:1 on key text",
+        "a11y": "semantic-roles-and-min-44px-targets",
+        "rtl": "mirror-navigation-and-trailing-icons"
+      },
       "figma_targets": {
         "audit_page": "00-现状审计/RN Root",
         "design_page_light": "03-页面-亮色",

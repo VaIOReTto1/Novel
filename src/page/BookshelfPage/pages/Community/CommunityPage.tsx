@@ -1,15 +1,16 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+
 import { useNovelColors } from '../../../../utils/theme';
-import { createCommunityPageStyles } from './styles/CommunityPageStyles';
-import { useCommunity } from './hooks/useCommunity';
-import { PostList } from './components/PostList';
 import { FloatingButton } from './components/FloatingButton';
+import { PostList } from './components/PostList';
+import { TopBar } from './components/TopBar';
+import { useCommunity } from './hooks/useCommunity';
+import { createCommunityPageStyles } from './styles/CommunityPageStyles';
 
 const CommunityPage: React.FC = () => {
   const colors = useNovelColors();
   const styles = createCommunityPageStyles(colors);
-
   const {
     posts,
     circles,
@@ -31,7 +32,7 @@ const CommunityPage: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* 帖子列表 - 包含TabBar在滑动轴内 */}
+      <TopBar />
       <PostList
         posts={posts}
         loading={loading}
@@ -49,8 +50,6 @@ const CommunityPage: React.FC = () => {
         selectedCircle={selectedCircle}
         onCircleChange={handleCircleChange}
       />
-
-      {/* 浮动发布按钮 */}
       <FloatingButton onPress={handlePublish} />
     </SafeAreaView>
   );

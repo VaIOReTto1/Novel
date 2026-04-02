@@ -1,0 +1,2588 @@
+[
+  {
+    "source_id": "android-native-book-detail-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-full-ranking-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-home-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-login-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-main-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-reader-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-search-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-search-result-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-native-welfare-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Native Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-book-description-bottom-sheet",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-chapter-list-panel",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-full-ranking-page-skeleton",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-home-page-skeleton",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-home-rank-panel",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-login-page-skeleton",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-reader-settings-panel",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-search-filter-bottom-sheet",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-search-page-skeleton",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-overlay-search-result-page-skeleton",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-shell-compose-main-activity",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-shell-main-activity",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-shell-main-page-host-components",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-shell-react-native-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android-shell-react-native-page-content",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/Android Shell & Overlays",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-aiwrite-assistant-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-become-writer-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-book-manage-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-bookshelf-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-category-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-comment-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-feedback-help-main-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-help-support-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-history-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-member-center-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-message-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-my-reservation-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-privacy-policy-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-question-detail-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-question-list-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-recommend-book-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-review-detail-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-settings-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-timed-switch-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-viewed-users-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-write-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-host-write-review-page-component",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Host Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-nested-bookshelf-bookshelf-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Nested Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-nested-bookshelf-community-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Nested Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-nested-bookshelf-history-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Nested Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-nested-bookshelf-watchlist-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Nested Pages",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "rn-root-profile-page",
+    "source_kind": "surface",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "00-现状审计/RN Root",
+      "03-页面-亮色",
+      "04-页面-暗色",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/AuthorSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookActionSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookCoverSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionBottomSheet.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookDescriptionSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookReviewsSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookStatsSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/book/components/BookTitleSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/BackButton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/BaseViewModel.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/BitmapPool.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/Defaults.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/dialog.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/FlipBookAnimation.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/ImageCompressor.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/ImageOptimizationConfig.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/ImagePreloadManager.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/LoadingComponent.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/LoadingStateComponent.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/MemoryPressureManager.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/NovelCachedImageView.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/NovelImagePicker.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/NovelImageView.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/config/PageCurlConfig.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/CurlDraw.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragCommonGesture.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragGesture.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/DragStartEnd.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/ExperimentalPageCurlApi.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurl.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/PageCurlState.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/page/TapGesture.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/MathUtils.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/Polygon.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/pagecurl/utils/RectUtils.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/PaperTexture.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/ProgressiveImageLoader.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/RankingNumber.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/ShortSentenceToast.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/SolidCircleSlider.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/component/StateComponent.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/home/component/HomeFilterBar.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/home/component/HomeRankPanel.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/home/component/HomeRecommendGrid.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/home/component/HomeTopBar.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/home/skeleton/HomePageSkeleton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/ActionButtons.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/AgreementSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/AppBar.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/InputSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/OperatorSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/PhoneSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/component/TitleSection.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/login/skeleton/LoginPageSkeleton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/BackgroundColorControl.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/BrightnessControl.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/ChapterListPanel.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/CoverFlipContainer.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/FontSizeControl.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/NoAnimationContainer.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/PageContentDisplay.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/PageCurlFlipContainer.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/PageFlipEffectControl.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/ReaderPageInfo.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/ReaderSettingsPanel.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/SlideFlipContainer.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/read/components/VerticalScrollContainer.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/component/HistoryGrid.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/component/RankingList.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/component/SearchFilterBottomSheet.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/component/SearchFilterChip.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/component/SearchResultItem.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/component/SearchTopBar.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/skeleton/FullRankingPageSkeleton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/skeleton/SearchPageSkeleton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/app/src/main/java/com/novel/page/search/skeleton/SearchResultPageSkeleton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/core-ui/src/main/java/com/novel/page/component/NovelDivider.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/core-ui/src/main/java/com/novel/page/component/NovelText.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/core-ui/src/main/java/com/novel/page/component/NovelTextField.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseModel.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "android/core-ui/src/main/java/com/novel/ui/showcase/NovelDesignShowcaseScreen.kt",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/components/MainTabBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/BookItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/EditToolbar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/EmptyState.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/GridView.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/ListView.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/LoadMoreIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/RecommendationFlow.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/UnifiedScrollView.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/ViewSwitcher.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Bookshelf/components/WaterfallGrid.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/EmptyState.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/FilterBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/FloatingButton.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/LoadingIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/PostItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/PostList.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/TabBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Community/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/BookItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/ContentArea.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/EditToolbar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/HistoryContent.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/HistoryItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/RefreshIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/TabBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/History/components/TabsArea.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Watchlist/components/EditToolbar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Watchlist/components/EmptyState.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Watchlist/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/BookshelfPage/pages/Watchlist/components/WatchlistGrid.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/CategoryPage/components/BookGrid.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/CategoryPage/components/Sidebar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/CategoryPage/components/TopTabs.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/CommentPage/components/CategorySection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/CommentPage/components/CommentList.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/CommentPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/CommentPage/components/RatingSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/CommentPage/components/RefreshIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/CommentPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/ReviewDetailPage/components/CommentList.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/ReviewDetailPage/components/RefreshIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/ReviewDetailPage/components/RepliesSheet.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/ReviewDetailPage/components/ReviewContent.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/ReviewDetailPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/WriteReviewPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/WriteReviewPage/components/RatingInput.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/WriteReviewPage/components/ReviewForm.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/comment/WriteReviewPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/BookItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/BottomBox.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/LoadMoreIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/LoginBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/RefreshIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/ScrollableArea.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ProfilePage/components/WaterfallGrid.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/AuthorExclusiveSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/BottomButton.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/CopyrightSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/CreativeActivitySection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/DataStatsSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/UserSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/WelcomeModal.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/BecomeWriterPage/components/WriterClassroomSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/ConsultSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/ContactSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/FrequentQuestions.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/QuestionDetail.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/QuestionList.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/FeedbackHelpPage/components/UserSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/ContentArea.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/HistoryItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/LoadMoreIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/RefreshIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/TabsArea.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/HistoryPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/BenefitComparison.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/BottomPurchase.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/MemberBenefits.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/PricePackages.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/TaskCards.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/VIPCardCarousel.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MemberCenterPage/components/VIPRecommendation.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/EmptyState.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/LoadMoreIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/MainMessagesSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/MessageItem.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/RefreshIndicator.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/TabsArea.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MessagePage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MyReservationPage/components/EmptyState.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MyReservationPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MyReservationPage/components/ReservationGrid.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MyReservationPage/components/SubTabsSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/MyReservationPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/RecommendBookPage/components/CreativeServiceSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/RecommendBookPage/components/CreativeTaskSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/RecommendBookPage/components/DataStatsSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/RecommendBookPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/RecommendBookPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/RecommendBookPage/components/UserSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/ViewedUsersPage/components/EmptyState.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/ViewedUsersPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/ViewedUsersPage/components/TabsSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/ViewedUsersPage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/ScrollBox/ViewedUsersPage/components/UsersList.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/SettingsPage/settingspage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/SettingsPage/settingspage/components/SettingRow.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/SettingsPage/settingspage/components/ThemeSwitcher.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/SettingsPage/TimeSwitchPage/components/index.ts",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/SettingsPage/TimeSwitchPage/components/TimePickerModal.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/ActionBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/ChatRow.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/Header.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/InputBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/IntroExample.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/MarkdownText.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/Suggestions.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/AIWriteAssistant/components/ThinkingBlock.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/BookManage/components/Banner.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/BookManage/components/ChapterSection.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/BookManage/components/DraftBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/BookManage/components/EmptyChapter.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/BookManage/components/Footer.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/BookManage/components/Header.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/WritePage/components/SelectionToolbar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/WritePage/components/TopBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/WritePage/components/VolumeBar.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  },
+  {
+    "source_id": "src/page/Writer/WritePage/components/WelcomePanel.tsx",
+    "source_kind": "component",
+    "sync_status": "pending-figma-sync",
+    "target_pages": [
+      "02-组件规范",
+      "05-标注与交付"
+    ]
+  }
+]

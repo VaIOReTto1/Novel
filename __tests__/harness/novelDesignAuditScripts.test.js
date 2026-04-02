@@ -22,6 +22,7 @@ describe('novelDesign audit scripts', () => {
         'componentCatalogPath',
         'componentVisualSpecsPath',
         'figmaFrameMapPath',
+        'figmaSyncQueuePath',
         'governanceDriftReportPath',
         'surfaceInventoryPath',
         'surfaceVisualSpecsPath',
@@ -118,10 +119,43 @@ describe('novelDesign audit scripts', () => {
             layout: expect.any(String),
             chrome: expect.any(String),
             content_pattern: expect.any(String),
+            viewport: expect.objectContaining({
+              device_frame: expect.any(String),
+              scroll_direction: expect.any(String),
+            }),
+            frame_anatomy: expect.any(Array),
+            primary_blocks: expect.any(Array),
+            visual_density: expect.objectContaining({
+              density: expect.any(String),
+            }),
+            state_panels: expect.any(Array),
+            asset_profile: expect.objectContaining({
+              icon_sources: expect.any(Array),
+            }),
+            interaction_chrome: expect.any(Array),
           }),
           target_visual_plan: expect.objectContaining({
             direction: 'literary-editorial',
             layout_strategy: expect.any(String),
+            layout_blueprint: expect.objectContaining({
+              primary_flow: expect.any(String),
+            }),
+            section_recipes: expect.any(Array),
+            spacing_rhythm: expect.objectContaining({
+              page_gutter: expect.any(String),
+            }),
+            shape_language: expect.objectContaining({
+              cards: expect.any(String),
+            }),
+            typography_roles: expect.objectContaining({
+              title: expect.any(String),
+            }),
+            motion_notes: expect.objectContaining({
+              page_enter: expect.any(String),
+            }),
+            dark_a11y_rtl: expect.objectContaining({
+              dark_mode: expect.any(String),
+            }),
             style_keywords: expect.any(Array),
           }),
           implementation_progress: expect.objectContaining({
@@ -154,9 +188,25 @@ describe('novelDesign audit scripts', () => {
           current_visual_summary: expect.objectContaining({
             structure: expect.any(String),
             affordance: expect.any(String),
+            anatomy: expect.any(Array),
+            size_rules: expect.objectContaining({
+              min_touch_target: expect.any(String),
+            }),
+            text_hierarchy: expect.objectContaining({
+              title: expect.any(String),
+            }),
+            container_style: expect.objectContaining({
+              background: expect.any(String),
+            }),
+            interaction_states: expect.any(Array),
           }),
           target_visual_plan: expect.objectContaining({
             component_recipe: expect.any(String),
+            slot_structure: expect.any(Array),
+            recipe_binding: expect.any(String),
+            state_matrix: expect.any(Array),
+            token_binding: expect.any(Array),
+            platform_adaptation: expect.any(Array),
             style_keywords: expect.any(Array),
           }),
           implementation_progress: expect.objectContaining({
@@ -214,6 +264,40 @@ describe('novelDesign audit scripts', () => {
       expect(report).toContain('Missing from catalog: none');
       expect(report).toContain('Surface visual specs coverage');
       expect(report).toContain('Component visual specs coverage');
+      expect(report).toContain('Detailed surface fields');
+      expect(report).toContain('Detailed component fields');
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  test('figma frame mapping emits sync metadata and queue entries for deferred Figma writeback', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-figma-map-'));
+
+    try {
+      const { figmaFrameMapPath, figmaSyncQueuePath } = novelDesignAudit.generateAuditArtifacts({
+        repoRoot,
+        outputDir: tempDir,
+      });
+      const frameMap = readJson(figmaFrameMapPath);
+      const syncQueue = readJson(figmaSyncQueuePath);
+
+      expect(frameMap[0]).toEqual(
+        expect.objectContaining({
+          frame_type: expect.any(String),
+          source_kind: expect.any(String),
+          sync_status: expect.any(String),
+          target_frame_name_light: expect.any(String),
+          target_frame_name_dark: expect.any(String),
+        }),
+      );
+      expect(syncQueue[0]).toEqual(
+        expect.objectContaining({
+          source_id: expect.any(String),
+          source_kind: expect.any(String),
+          sync_status: expect.any(String),
+        }),
+      );
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
@@ -234,6 +318,8 @@ describe('novelDesign audit scripts', () => {
       expect(summary).toContain('Current look recorded');
       expect(summary).toContain('Target look planned');
       expect(summary).toContain('Shell reskinned');
+      expect(summary).toContain('Detailed current fields');
+      expect(summary).toContain('Detailed target fields');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }

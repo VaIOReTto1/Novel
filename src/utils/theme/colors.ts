@@ -35,6 +35,7 @@ export interface NovelColors {
   novelChipBackground: string;
   novelError: string;
   outline: string;
+  novelThemeMode?: 'light' | 'dark';
 }
 
 const lightColors: NovelColors = {
@@ -50,6 +51,7 @@ const lightColors: NovelColors = {
   novelChipBackground: '#EBEDF0',
   novelError: '#FF995D',
   outline: '#E0E0E0',
+  novelThemeMode: 'light',
 };
 
 const darkColors: NovelColors = {
@@ -65,6 +67,7 @@ const darkColors: NovelColors = {
   novelChipBackground: '#23242B',
   novelError: '#FF0000',
   outline: '#3C3C3E',
+  novelThemeMode: 'dark',
 };
 
 

@@ -40,6 +40,7 @@ const flattenColorTokens = (tokens, mode) => {
 
 const renderStyleDictionaryJson = (tokens) => {
   const dictionary = {
+    meta: tokens.meta,
     color: tokens.color,
     space: Object.fromEntries(
       Object.entries(tokens.space).map(([key, value]) => [key, { value }]),
@@ -47,6 +48,7 @@ const renderStyleDictionaryJson = (tokens) => {
     radius: Object.fromEntries(
       Object.entries(tokens.radius).map(([key, value]) => [key, { value }]),
     ),
+    elevation: tokens.elevation,
     motion: tokens.motion,
     typography: tokens.typography,
   };
@@ -160,6 +162,9 @@ const renderAndroidCompose = (tokens) => {
   const space = Object.entries(tokens.space)
     .map(([key, value]) => `        "${key}" to ${value}.dp`)
     .join(',\n');
+  const radius = Object.entries(tokens.radius)
+    .map(([key, value]) => `        "${key}" to ${value}.dp`)
+    .join(',\n');
 
   return `package com.novel.ui.theme
 
@@ -178,6 +183,21 @@ ${darkColors}
     val Space = mapOf(
 ${space}
     )
+
+    val Radius = mapOf(
+${radius}
+    )
+
+    fun lightColor(token: String): Color = LightColors.getValue("${'$'}token.light")
+
+    fun darkColor(token: String): Color = DarkColors.getValue("${'$'}token.dark")
+
+    fun color(token: String, darkTheme: Boolean = false): Color =
+        if (darkTheme) darkColor(token) else lightColor(token)
+
+    fun space(token: String) = Space.getValue(token)
+
+    fun radius(token: String) = Radius.getValue(token)
 }
 `;
 };

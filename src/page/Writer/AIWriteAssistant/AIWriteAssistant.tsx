@@ -150,10 +150,7 @@ const AIWriteAssistant: React.FC = () => {
 
       <FlatList
         ref={listRef}
-        contentContainerStyle={{
-          paddingHorizontal: wp(16),
-          paddingBottom: wp(10),
-        }}
+        contentContainerStyle={styles.listContent}
         keyboardShouldPersistTaps="handled"
         removeClippedSubviews
         initialNumToRender={6}

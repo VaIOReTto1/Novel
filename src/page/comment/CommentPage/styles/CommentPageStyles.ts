@@ -1,17 +1,27 @@
 import { StyleSheet } from 'react-native';
-import { createNovelDesignUI } from '../../../../design-system/novelDesign';
+import {
+  createNovelDesignComponentRecipes,
+  createNovelDesignLayoutRecipes,
+  createNovelDesignSurfaceSpec,
+  createNovelDesignUI,
+} from '../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
 export const createCommentPageStyles = (colors: NovelColors) => {
   const novelDesign = createNovelDesignUI(colors);
+  const layout = createNovelDesignLayoutRecipes(novelDesign);
+  const components = createNovelDesignComponentRecipes(novelDesign);
+  const surfaceRecipe = createNovelDesignSurfaceSpec(
+    'rn-host-comment-page-component',
+    novelDesign,
+  );
 
   return StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: novelDesign.color.bg.canvas,
-    paddingHorizontal: wp(15),
+    ...layout.screenShell,
+    paddingHorizontal: surfaceRecipe.spacingRhythm.pageGutter,
   },
 
   scrollView: {
@@ -23,12 +33,12 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 顶部Bar样式
   topBar: {
+    ...layout.topBar,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: wp(10),
-    paddingHorizontal: wp(5),
-    backgroundColor: novelDesign.color.bg.surface,
+    borderRadius: novelDesign.radiusPx('lg'),
+    marginTop: surfaceRecipe.spacingRhythm.compactGap,
   },
 
   backButton: {
@@ -51,7 +61,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: novelDesign.color.bg.elevated,
-    borderRadius: sp(5),
+    borderRadius: novelDesign.radiusPx('full'),
     paddingHorizontal: wp(12),
     height: wp(36),
   },
@@ -68,11 +78,10 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 评分级别样式
   ratingSection: {
-    backgroundColor: novelDesign.color.bg.surface,
+    ...layout.paperCard,
     paddingVertical: wp(15),
     paddingHorizontal: wp(15),
     marginBottom: wp(10),
-    borderRadius: sp(12),
   },
 
   ratingTopRow: {
@@ -138,10 +147,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
   },
 
   writeReviewButton: {
-    backgroundColor: colors.novelMain,
-    paddingHorizontal: wp(15),
-    paddingVertical: wp(8),
-    borderRadius: sp(16),
+    ...components.primaryActionPill,
   },
 
   writeReviewText: {
@@ -152,9 +158,9 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 分类标签样式
   categorySection: {
+    ...layout.paperCard,
     paddingVertical: wp(15),
     marginBottom: wp(10),
-    borderRadius: sp(12),
   },
 
   categoryTitle: {
@@ -171,14 +177,12 @@ export const createCommentPageStyles = (colors: NovelColors) => {
   },
 
   categoryTab: {
-    paddingHorizontal: wp(12),
-    paddingVertical: wp(6),
-    borderRadius: sp(4),
-    backgroundColor: colors.novelSecondaryBackground + '80',
+    ...components.secondaryActionPill,
   },
 
   categoryTabActive: {
-    backgroundColor: colors.novelMain + '20',
+    backgroundColor: novelDesign.color.interaction.selected,
+    borderColor: novelDesign.color.border.focus,
   },
 
   categoryTabText: {
@@ -193,10 +197,11 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 评论列表样式
   commentList: {
+    paddingBottom: novelDesign.spacePx('400'),
   },
 
   commentItem: {
-    backgroundColor: novelDesign.color.bg.surface,
+    ...layout.paperCard,
     borderRadius: sp(12),
     marginBottom: wp(15),
   },
@@ -265,10 +270,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
   },
 
   followButton: {
-     paddingHorizontal: wp(12),
-     paddingVertical: wp(4),
-     backgroundColor: colors.novelSecondaryBackground + '80',
-     borderRadius: wp(12),
+     ...components.secondaryActionPill,
    },
 
    followButtonText: {
@@ -370,7 +372,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
   },
 
   viewCommentButton: {
-    backgroundColor: colors.novelSecondaryBackground + '80',
+    ...components.secondaryActionPill,
      padding: wp(8),
      marginBottom: wp(12),
    },
@@ -489,7 +491,7 @@ export const createCommentPageStyles = (colors: NovelColors) => {
 
   // 刷新指示器样式
   refreshIndicator: {
-    backgroundColor: novelDesign.color.bg.elevated,
+    ...layout.raisedCard,
     paddingVertical: wp(15),
     paddingHorizontal: wp(20),
     borderBottomWidth: 1,

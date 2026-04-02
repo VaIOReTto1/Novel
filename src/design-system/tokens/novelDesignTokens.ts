@@ -3,7 +3,8 @@ export const novelDesignLightTheme = {
     bg: {
       canvas: "#FAF6F0",
       surface: "#FFFDFC",
-      elevated: "#F3ECE3"
+      elevated: "#F3ECE3",
+      surfaceMuted: "#F8F1E7"
     },
     text: {
       primary: "#201A17",
@@ -12,7 +13,8 @@ export const novelDesignLightTheme = {
     },
     border: {
       subtle: "#E8DDD1",
-      strong: "#C7B39F"
+      strong: "#C7B39F",
+      focus: "#B85F2E"
     },
     brand: {
       primary: "#C96A34",
@@ -23,6 +25,15 @@ export const novelDesignLightTheme = {
       success: "#4D7A52",
       warning: "#A16A1F",
       danger: "#B3453C"
+    },
+    interaction: {
+      selected: "#F7E1D2",
+      disabled: "#D6CCC2",
+      focus: "#B85F2E"
+    },
+    reader: {
+      emphasis: "#F0E1CF",
+      chrome: "#EAD8C7"
     }
   },
   space: {
@@ -32,6 +43,8 @@ export const novelDesignLightTheme = {
     "300": 24,
     "400": 32,
     "500": 40,
+    "600": 48,
+    "700": 64,
     "050": 4
   },
   radius: {
@@ -39,6 +52,7 @@ export const novelDesignLightTheme = {
     md: 12,
     lg: 18,
     xl: 24,
+    xxl: 32,
     full: 999
   },
   elevation: {
@@ -68,12 +82,15 @@ export const novelDesignLightTheme = {
     duration: {
       fast: 120,
       normal: 200,
-      slow: 320
+      slow: 320,
+      page: 240,
+      sheet: 280
     },
     curve: {
       standard: "cubic-bezier(0.2, 0, 0, 1)",
       decelerate: "cubic-bezier(0, 0, 0, 1)",
-      accelerate: "cubic-bezier(0.3, 0, 1, 1)"
+      accelerate: "cubic-bezier(0.3, 0, 1, 1)",
+      entrance: "cubic-bezier(0.16, 1, 0.3, 1)"
     }
   },
   typography: {
@@ -130,6 +147,58 @@ export const novelDesignLightTheme = {
         lineHeight: 16,
         weight: 500,
         letterSpacing: 0.2
+      }
+    },
+    nav: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 14,
+        lineHeight: 18,
+        weight: 600,
+        letterSpacing: 0.1
+      }
+    },
+    meta: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 12,
+        lineHeight: 18,
+        weight: 500,
+        letterSpacing: 0.2
+      },
+      sm: {
+        fontFamily: "PingFangSC-Medium",
+        size: 11,
+        lineHeight: 16,
+        weight: 500,
+        letterSpacing: 0.2
+      }
+    },
+    eyebrow: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 11,
+        lineHeight: 16,
+        weight: 700,
+        letterSpacing: 0.6
+      }
+    },
+    quote: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 15,
+        lineHeight: 24,
+        weight: 500,
+        letterSpacing: 0.1
+      }
+    },
+    numeric: {
+      lg: {
+        fontFamily: "PingFangSC-Semibold",
+        size: 24,
+        lineHeight: 28,
+        weight: 700,
+        letterSpacing: -0.3
       }
     },
     reader: {
@@ -156,7 +225,8 @@ export const novelDesignDarkTheme = {
     bg: {
       canvas: "#161311",
       surface: "#211C19",
-      elevated: "#2B2521"
+      elevated: "#2B2521",
+      surfaceMuted: "#26201C"
     },
     text: {
       primary: "#F5EEE7",
@@ -165,7 +235,8 @@ export const novelDesignDarkTheme = {
     },
     border: {
       subtle: "#3A302B",
-      strong: "#8D7865"
+      strong: "#8D7865",
+      focus: "#F0A06F"
     },
     brand: {
       primary: "#E08B56",
@@ -176,6 +247,15 @@ export const novelDesignDarkTheme = {
       success: "#80B887",
       warning: "#D9A94B",
       danger: "#E0756C"
+    },
+    interaction: {
+      selected: "#56382B",
+      disabled: "#51453D",
+      focus: "#F0A06F"
+    },
+    reader: {
+      emphasis: "#3B2F2A",
+      chrome: "#312824"
     }
   },
   space: {
@@ -185,6 +265,8 @@ export const novelDesignDarkTheme = {
     "300": 24,
     "400": 32,
     "500": 40,
+    "600": 48,
+    "700": 64,
     "050": 4
   },
   radius: {
@@ -192,6 +274,7 @@ export const novelDesignDarkTheme = {
     md: 12,
     lg: 18,
     xl: 24,
+    xxl: 32,
     full: 999
   },
   elevation: {
@@ -221,12 +304,15 @@ export const novelDesignDarkTheme = {
     duration: {
       fast: 120,
       normal: 200,
-      slow: 320
+      slow: 320,
+      page: 240,
+      sheet: 280
     },
     curve: {
       standard: "cubic-bezier(0.2, 0, 0, 1)",
       decelerate: "cubic-bezier(0, 0, 0, 1)",
-      accelerate: "cubic-bezier(0.3, 0, 1, 1)"
+      accelerate: "cubic-bezier(0.3, 0, 1, 1)",
+      entrance: "cubic-bezier(0.16, 1, 0.3, 1)"
     }
   },
   typography: {
@@ -283,6 +369,58 @@ export const novelDesignDarkTheme = {
         lineHeight: 16,
         weight: 500,
         letterSpacing: 0.2
+      }
+    },
+    nav: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 14,
+        lineHeight: 18,
+        weight: 600,
+        letterSpacing: 0.1
+      }
+    },
+    meta: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 12,
+        lineHeight: 18,
+        weight: 500,
+        letterSpacing: 0.2
+      },
+      sm: {
+        fontFamily: "PingFangSC-Medium",
+        size: 11,
+        lineHeight: 16,
+        weight: 500,
+        letterSpacing: 0.2
+      }
+    },
+    eyebrow: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 11,
+        lineHeight: 16,
+        weight: 700,
+        letterSpacing: 0.6
+      }
+    },
+    quote: {
+      md: {
+        fontFamily: "PingFangSC-Medium",
+        size: 15,
+        lineHeight: 24,
+        weight: 500,
+        letterSpacing: 0.1
+      }
+    },
+    numeric: {
+      lg: {
+        fontFamily: "PingFangSC-Semibold",
+        size: 24,
+        lineHeight: 28,
+        weight: 700,
+        letterSpacing: -0.3
       }
     },
     reader: {

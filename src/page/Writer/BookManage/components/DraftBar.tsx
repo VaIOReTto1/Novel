@@ -1,21 +1,27 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useNovelColors } from '../../../../utils/theme/colors';
-import { createBookManageStyles } from '../styles/bookManageStyles';
-import { DraftInfo } from '../types';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-export const DraftBar: React.FC<{ draft: DraftInfo; onContinue: () => void }> = ({ draft, onContinue }) => {
+import { useNovelColors } from '../../../../utils/theme/colors';
+import { DraftInfo } from '../types';
+import { createBookManageStyles } from '../styles/bookManageStyles';
+
+export const DraftBar: React.FC<{ draft: DraftInfo; onContinue: () => void }> = ({
+  draft,
+  onContinue,
+}) => {
   const colors = useNovelColors();
   const styles = createBookManageStyles(colors);
-  if (!draft.exists) {return null;}
+
+  if (!draft.exists) {
+    return null;
+  }
+
   return (
     <View style={styles.draft}>
-      <Text style={styles.draftText}>存在上一次未编辑完的内容</Text>
+      <Text style={styles.draftText}>检测到上一次未完成的编辑内容，可以直接续写。</Text>
       <TouchableOpacity onPress={onContinue}>
         <Text style={styles.draftAction}>继续编辑</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-

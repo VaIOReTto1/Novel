@@ -739,6 +739,8 @@ const RESKINNED_SURFACES = new Set([
   'rn-host-bookshelf-page-component',
   'rn-host-member-center-page-component',
   'rn-host-comment-page-component',
+  'rn-host-history-page-component',
+  'rn-host-message-page-component',
   'rn-host-review-detail-page-component',
   'rn-host-write-review-page-component',
   'rn-host-write-page-component',
@@ -780,6 +782,8 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/Writer/BookManage/components/Header.tsx',
   'src/page/ProfilePage/components/TopBar.tsx',
   'src/page/ProfilePage/styles/ProfilePageStyles.ts',
+  'src/page/ScrollBox/HistoryPage/styles/HistoryPageStyles.ts',
+  'src/page/ScrollBox/MessagePage/styles/MessagePageStyles.ts',
   'src/page/SettingsPage/settingspage/styles/SettingsPageStyles.ts',
   'src/page/CategoryPage/styles/CategoryPageStyles.ts',
   'src/page/BookshelfPage/styles/MainPageStyles.ts',
@@ -812,6 +816,34 @@ const SURFACE_VISUAL_OVERRIDES = {
       layout_strategy: 'editorial-writer-workbench with quiet top chrome, paper editor and floating assist panels',
       component_recipe: 'editorial-editor-shell',
       style_keywords: ['paper-editor', 'floating-toolbars', 'editorial-writing', 'utility-chrome'],
+    },
+  },
+  'rn-host-history-page-component': {
+    current_visual_summary: {
+      layout: 'top bar plus tab strip with history content toggled between grid and list views',
+      chrome: 'lightweight utility chrome around tabs, view switch and pull-to-refresh indicator',
+      content_pattern: 'reading-history cards with cover, author and progress metadata in two densities',
+      key_states: ['default', 'grid-view', 'list-view', 'refreshing'],
+      key_components: ['TopBar', 'TabsArea', 'RefreshIndicator', 'ContentArea'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-history ledger with paper tabs, softer list rows and clearer reading progress accents',
+      component_recipe: 'history-ledger-surface',
+      style_keywords: ['history-ledger', 'paper-tabs', 'reading-progress', 'dual-density'],
+    },
+  },
+  'rn-host-message-page-component': {
+    current_visual_summary: {
+      layout: 'top bar plus primary message blocks, secondary tabs and sticky threaded message list',
+      chrome: 'utility inbox chrome with mark-all action, sticky tabs and pull-to-refresh shell',
+      content_pattern: 'system message rows, tabbed secondary notifications, empty state and incremental loading footer',
+      key_states: ['default', 'sticky-tabs', 'empty-state', 'refreshing', 'loading-more'],
+      key_components: ['TopBar', 'MainMessagesSection', 'TabsArea', 'RefreshIndicator', 'EmptyState', 'LoadMoreIndicator'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial-notification inbox with quieter chrome, paper message rows and clearer unread hierarchy',
+      component_recipe: 'notification-inbox-surface',
+      style_keywords: ['notification-inbox', 'sticky-tabs', 'paper-rows', 'unread-dot'],
     },
   },
   'rn-host-aiwrite-assistant-component': {

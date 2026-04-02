@@ -3,7 +3,7 @@
 ## Surface visual specs
 - Current look recorded: 51
 - Target look planned: 51
-- Shell reskinned: 16
+- Shell reskinned: 18
 - android-book-detail: 1
 - android-search-discovery: 4
 - android-home-discovery: 3

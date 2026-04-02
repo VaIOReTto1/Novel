@@ -1634,30 +1634,31 @@
       "src/page/ScrollBox/HistoryPage/HistoryPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "single-purpose page with top bar and one dominant content block",
-      "chrome": "utility navigation with straightforward content stack",
-      "content_pattern": "detail/help/message/history style utility surface",
+      "layout": "top bar plus tab strip with history content toggled between grid and list views",
+      "chrome": "lightweight utility chrome around tabs, view switch and pull-to-refresh indicator",
+      "content_pattern": "reading-history cards with cover, author and progress metadata in two densities",
       "key_states": [
-        "default"
+        "default",
+        "grid-view",
+        "list-view",
+        "refreshing"
       ],
       "key_components": [
-        "ContentArea",
-        "HistoryItem",
-        "LoadMoreIndicator",
-        "RefreshIndicator",
-        "TabsArea",
         "TopBar",
-        "index"
+        "TabsArea",
+        "RefreshIndicator",
+        "ContentArea"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
-      "component_recipe": "utility-detail",
+      "layout_strategy": "editorial-history ledger with paper tabs, softer list rows and clearer reading progress accents",
+      "component_recipe": "history-ledger-surface",
       "style_keywords": [
-        "utility",
-        "single-purpose",
-        "grouped-detail"
+        "history-ledger",
+        "paper-tabs",
+        "reading-progress",
+        "dual-density"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1676,8 +1677,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -1743,31 +1744,34 @@
       "src/page/ScrollBox/MessagePage/MessagePageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "single-purpose page with top bar and one dominant content block",
-      "chrome": "utility navigation with straightforward content stack",
-      "content_pattern": "detail/help/message/history style utility surface",
+      "layout": "top bar plus primary message blocks, secondary tabs and sticky threaded message list",
+      "chrome": "utility inbox chrome with mark-all action, sticky tabs and pull-to-refresh shell",
+      "content_pattern": "system message rows, tabbed secondary notifications, empty state and incremental loading footer",
       "key_states": [
-        "default"
+        "default",
+        "sticky-tabs",
+        "empty-state",
+        "refreshing",
+        "loading-more"
       ],
       "key_components": [
-        "EmptyState",
-        "LoadMoreIndicator",
-        "MainMessagesSection",
-        "MessageItem",
-        "RefreshIndicator",
-        "TabsArea",
         "TopBar",
-        "index"
+        "MainMessagesSection",
+        "TabsArea",
+        "RefreshIndicator",
+        "EmptyState",
+        "LoadMoreIndicator"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
-      "component_recipe": "utility-detail",
+      "layout_strategy": "editorial-notification inbox with quieter chrome, paper message rows and clearer unread hierarchy",
+      "component_recipe": "notification-inbox-surface",
       "style_keywords": [
-        "utility",
-        "single-purpose",
-        "grouped-detail"
+        "notification-inbox",
+        "sticky-tabs",
+        "paper-rows",
+        "unread-dot"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1786,8 +1790,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
-export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createBecomeWriterPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f6fb', // 使用 ui.html 中的背景色
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   // 顶部Bar样式 - 透明背景
@@ -16,7 +20,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     justifyContent: 'space-between',
     paddingHorizontal: wp(20),
     paddingVertical: wp(16),
-    backgroundColor: 'transparent', // 透明背景
+    backgroundColor: novelDesign.color.bg.surface,
     minHeight: wp(56),
   },
   backButton: {
@@ -59,7 +63,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
 
   // 通用卡片样式
   section: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(8),
     padding: wp(16),
     marginHorizontal: wp(16),
@@ -102,7 +106,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
   announcementSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(8),
     paddingHorizontal: wp(12),
     paddingVertical: wp(12),
@@ -167,10 +171,10 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
   tabsContainer: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: colors.novelDivider,
+    borderColor: novelDesign.color.border.subtle,
     borderRadius: sp(8),
     padding: wp(1),
-    backgroundColor: '#f5f5f5',
+    backgroundColor: novelDesign.color.bg.elevated,
     marginBottom: wp(12),
   },
   tab: {
@@ -181,7 +185,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     alignItems: 'center',
   },
   activeTab: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
   },
   tabText: {
     ...typography.labelLarge,
@@ -202,7 +206,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     paddingHorizontal: wp(14),
     paddingVertical: wp(6),
     borderRadius: sp(4),
-    backgroundColor: colors.novelSecondaryBackground + '99',
+    backgroundColor: novelDesign.color.bg.elevated,
     alignItems: 'center',
   },
   activeSubtab: {
@@ -262,7 +266,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     width: wp(48),
     height: wp(48),
     borderRadius: wp(24),               // 宽高一半，正好是圆
-    backgroundColor: 'rgb(241,248,254)',// 目标背景色
+    backgroundColor: novelDesign.color.bg.elevated,
     justifyContent: 'center',           // 让 icon 居中
     alignItems: 'center',
     marginRight: wp(8),
@@ -398,7 +402,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
   activityItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(8),
     marginVertical: wp(6),
   },
@@ -527,7 +531,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     width: wp(60),
     height: wp(80),
     borderRadius: wp(8),
-    backgroundColor: '#f5f5f5',
+    backgroundColor: novelDesign.color.bg.elevated,
     marginRight: wp(12),          // 图标和文字之间留空
   },
   emptyStateTextGroup: {
@@ -567,7 +571,7 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     zIndex: 1000,
   },
   modalContainer: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(16),
     marginHorizontal: wp(32),
     paddingTop: wp(24),
@@ -660,3 +664,4 @@ export const createBecomeWriterPageStyles = (colors: NovelColors) => StyleSheet.
     textDecorationLine: 'underline',
   },
 });
+};

@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
+import { createNovelDesignUI } from '../../../../design-system/novelDesign';
 import { wp, fp, sp } from '../../../../utils/theme/dimensions';
 import { typography } from '../../../../utils/theme/typography';
 import { NovelColors } from '../../../../utils/theme/colors';
 
-export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet.create({
+export const createRecommendBookPageStyles = (colors: NovelColors) => {
+  const novelDesign = createNovelDesignUI(colors);
+
+  return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f6fb', // 使用与 BecomeWriterPage 相同的背景色
+    backgroundColor: novelDesign.color.bg.canvas,
   },
 
   // 顶部Bar样式 - 非透明背景
@@ -53,7 +57,7 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
 
   // 通用卡片样式
   section: {
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     borderRadius: sp(8),
     padding: wp(16),
     marginHorizontal: wp(16),
@@ -114,7 +118,7 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
     paddingHorizontal: wp(14),
     paddingVertical: wp(6),
     borderRadius: sp(4),
-    backgroundColor: colors.novelSecondaryBackground + '99',
+    backgroundColor: novelDesign.color.bg.elevated,
     alignItems: 'center',
   },
   activeSubtab: {
@@ -125,7 +129,7 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
     color: colors.novelTextGray,
   },
   activeSubtabText: {
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
     fontWeight: 'bold',
   },
 
@@ -162,7 +166,7 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
   withdrawButtonText: {
     fontSize: fp(10),
     fontWeight: '600',
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
   },
 
   // 创作服务样式
@@ -174,14 +178,14 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
     alignItems: 'center',
     paddingVertical: wp(12),
     paddingHorizontal: wp(16),
-    backgroundColor: '#f8f9fa',
+    backgroundColor: novelDesign.color.bg.elevated,
     borderRadius: sp(8),
   },
   serviceIconWrapper: {
     width: wp(40),
     height: wp(40),
     borderRadius: wp(20),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: wp(12),
@@ -253,7 +257,7 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
   taskEarningsAmount: {
     marginLeft: wp(4),
     fontSize: fp(14),
-    color: colors.novelMain,
+    color: novelDesign.color.brand.primary,
   },
   taskFooter: {
     flexDirection: 'row',
@@ -297,7 +301,7 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
   viewAllTasksButton: {
     flexDirection: 'row',
     paddingTop: wp(12),
-    backgroundColor: colors.novelBackground,
+    backgroundColor: novelDesign.color.bg.surface,
   },
   viewAllTasksText: {
     fontSize: fp(14),
@@ -322,3 +326,4 @@ export const createRecommendBookPageStyles = (colors: NovelColors) => StyleSheet
     marginTop: wp(8),
   },
 });
+};

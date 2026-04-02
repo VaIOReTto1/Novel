@@ -1269,31 +1269,32 @@
       "src/page/ScrollBox/BecomeWriterPage/BecomeWriterPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "toolbar-led creation pages with editors, prompts, assistant blocks and modals",
-      "chrome": "utility-first creation chrome with mixed icon families",
-      "content_pattern": "compose, assist, manage drafts and modal parameter flows",
+      "layout": "editorial creator-growth page with profile strip, announcement rail, benefit modules and fixed bottom CTA",
+      "chrome": "creator onboarding chrome balancing utility top bar, segmented tabs and modal registration flow",
+      "content_pattern": "benefit rows, timeline, platform logos, activities, courses and registration prompt",
       "key_states": [
-        "default"
+        "default",
+        "tab-switch",
+        "modal-open",
+        "loading"
       ],
       "key_components": [
-        "AuthorExclusiveSection",
-        "BottomButton",
-        "CopyrightSection",
-        "CreativeActivitySection",
-        "DataStatsSection",
         "TopBar",
-        "UserSection",
-        "WelcomeModal"
+        "WelcomeModal",
+        "BenefitsList",
+        "Timeline",
+        "BottomButton"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-creation-workbench with paper surfaces and compact action rails",
-      "component_recipe": "editorial-writer-workbench",
+      "layout_strategy": "editorial creator-growth surface with paper cards, elevated support modules and stronger CTA framing",
+      "component_recipe": "creator-growth-surface",
       "style_keywords": [
-        "creation",
-        "tooling",
-        "paper-editor"
+        "creator-growth",
+        "benefit-cards",
+        "timeline",
+        "bottom-cta"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -1312,8 +1313,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {
@@ -2013,29 +2014,31 @@
       "src/page/ScrollBox/RecommendBookPage/RecommendBookPageComponent.tsx"
     ],
     "current_visual_summary": {
-      "layout": "single-purpose page with top bar and one dominant content block",
-      "chrome": "utility navigation with straightforward content stack",
-      "content_pattern": "detail/help/message/history style utility surface",
+      "layout": "creator utility page with profile row, stat cards, service cards and task-based earning modules",
+      "chrome": "growth utility chrome with section headers, sub-tabs and two-column educational or task cards",
+      "content_pattern": "stat modules, service entries, task cards, activities, courses and creator action CTA",
       "key_states": [
-        "default"
+        "default",
+        "subtab-switch",
+        "loading"
       ],
       "key_components": [
-        "CreativeServiceSection",
-        "CreativeTaskSection",
-        "DataStatsSection",
         "TopBar",
-        "UserSection",
-        "index"
+        "ProfileSection",
+        "StatsCards",
+        "ServiceCards",
+        "TaskCards"
       ]
     },
     "target_visual_plan": {
       "direction": "literary-editorial",
-      "layout_strategy": "editorial-utility-detail with stronger section grouping and quieter chrome",
-      "component_recipe": "utility-detail",
+      "layout_strategy": "editorial creator-utility surface with elevated cards, softer service rows and clearer earning hierarchy",
+      "component_recipe": "creator-utility-surface",
       "style_keywords": [
-        "utility",
-        "single-purpose",
-        "grouped-detail"
+        "creator-utility",
+        "earning-cards",
+        "service-rows",
+        "task-grid"
       ],
       "token_priority": [
         "color.bg.canvas",
@@ -2054,8 +2057,8 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "shell_reskinned": false,
-      "novel_design_ready": false
+      "shell_reskinned": true,
+      "novel_design_ready": true
     }
   },
   {

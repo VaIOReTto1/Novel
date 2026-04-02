@@ -733,6 +733,7 @@ const SURFACE_CLUSTER_PLANS = {
 
 const RESKINNED_SURFACES = new Set([
   'rn-root-profile-page',
+  'rn-host-become-writer-page-component',
   'rn-host-settings-page-component',
   'rn-host-timed-switch-page-component',
   'rn-host-category-page-component',
@@ -747,6 +748,7 @@ const RESKINNED_SURFACES = new Set([
   'rn-host-privacy-policy-page-component',
   'rn-host-question-detail-page-component',
   'rn-host-question-list-page-component',
+  'rn-host-recommend-book-page-component',
   'rn-host-review-detail-page-component',
   'rn-host-write-review-page-component',
   'rn-host-write-page-component',
@@ -774,6 +776,8 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
   'src/page/BookshelfPage/pages/Community/components/PostList.tsx',
   'src/page/BookshelfPage/pages/Community/components/TabBar.tsx',
   'src/page/BookshelfPage/pages/Community/components/TopBar.tsx',
+  'src/page/ScrollBox/BecomeWriterPage/styles/BecomeWriterPageStyles.ts',
+  'src/page/ScrollBox/RecommendBookPage/styles/RecommendBookPageStyles.ts',
   'src/page/Writer/AIWriteAssistant/components/ActionBar.tsx',
   'src/page/Writer/AIWriteAssistant/components/Header.tsx',
   'src/page/Writer/AIWriteAssistant/components/IdeaSelector.tsx',
@@ -818,6 +822,20 @@ const NOVEL_DESIGN_READY_COMPONENTS = new Set([
 ]);
 
 const SURFACE_VISUAL_OVERRIDES = {
+  'rn-host-become-writer-page-component': {
+    current_visual_summary: {
+      layout: 'editorial creator-growth page with profile strip, announcement rail, benefit modules and fixed bottom CTA',
+      chrome: 'creator onboarding chrome balancing utility top bar, segmented tabs and modal registration flow',
+      content_pattern: 'benefit rows, timeline, platform logos, activities, courses and registration prompt',
+      key_states: ['default', 'tab-switch', 'modal-open', 'loading'],
+      key_components: ['TopBar', 'WelcomeModal', 'BenefitsList', 'Timeline', 'BottomButton'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial creator-growth surface with paper cards, elevated support modules and stronger CTA framing',
+      component_recipe: 'creator-growth-surface',
+      style_keywords: ['creator-growth', 'benefit-cards', 'timeline', 'bottom-cta'],
+    },
+  },
   'rn-host-write-page-component': {
     current_visual_summary: {
       layout: 'fixed top bar plus full-height editor canvas with welcome panel, selection toolbar and modal overlays',
@@ -928,6 +946,20 @@ const SURFACE_VISUAL_OVERRIDES = {
       layout_strategy: 'editorial-support detail with stronger reading hierarchy and paper document body',
       component_recipe: 'support-detail-surface',
       style_keywords: ['support-detail', 'reading-body', 'paper-document'],
+    },
+  },
+  'rn-host-recommend-book-page-component': {
+    current_visual_summary: {
+      layout: 'creator utility page with profile row, stat cards, service cards and task-based earning modules',
+      chrome: 'growth utility chrome with section headers, sub-tabs and two-column educational or task cards',
+      content_pattern: 'stat modules, service entries, task cards, activities, courses and creator action CTA',
+      key_states: ['default', 'subtab-switch', 'loading'],
+      key_components: ['TopBar', 'ProfileSection', 'StatsCards', 'ServiceCards', 'TaskCards'],
+    },
+    target_visual_plan: {
+      layout_strategy: 'editorial creator-utility surface with elevated cards, softer service rows and clearer earning hierarchy',
+      component_recipe: 'creator-utility-surface',
+      style_keywords: ['creator-utility', 'earning-cards', 'service-rows', 'task-grid'],
     },
   },
   'rn-host-help-support-page-component': {

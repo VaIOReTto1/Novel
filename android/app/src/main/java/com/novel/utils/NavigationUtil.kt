@@ -20,6 +20,7 @@ import com.novel.page.search.SearchPage
 import com.novel.page.search.SearchResultPage
 import com.novel.rn.MviModuleType
 import com.novel.rn.ReactNativePage
+import com.novel.ui.showcase.NovelDesignShowcaseScreen
 
 @Composable
 fun NavigationSetup(debugRoute: String? = null) {
@@ -111,6 +112,9 @@ private fun NavGraphBuilder.registerHostRoutes() {
             bookId = backStackEntry.arguments?.getString("bookId") ?: "",
             chapterId = backStackEntry.arguments?.getString("chapterId"),
         )
+    }
+    composable("novel_design_showcase") {
+        NovelDesignShowcaseScreen()
     }
 
     reactNativeRoute(

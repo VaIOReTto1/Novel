@@ -134,4 +134,11 @@ describe('android novelDesign page adoption', () => {
     expect(novelText).toContain('NovelDesignTokens');
     expect(novelTextField).toContain('NovelDesignTokens');
   });
+
+  test('android navigation exposes a dedicated novel design showcase route', () => {
+    const navigationUtil = read('android/app/src/main/java/com/novel/utils/NavigationUtil.kt');
+
+    expect(navigationUtil).toContain('NovelDesignShowcaseScreen');
+    expect(navigationUtil).toContain('composable("novel_design_showcase")');
+  });
 });

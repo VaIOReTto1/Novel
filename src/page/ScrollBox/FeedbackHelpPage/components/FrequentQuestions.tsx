@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { FrequentQuestionsProps } from '../types';
 
 export const FrequentQuestions: React.FC<FrequentQuestionsProps> = React.memo(({
@@ -7,7 +8,6 @@ export const FrequentQuestions: React.FC<FrequentQuestionsProps> = React.memo(({
   questions,
   onQuestionPress,
 }) => {
-  // 定义不同的编号颜色
   const numberColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'];
 
   return (
@@ -23,14 +23,13 @@ export const FrequentQuestions: React.FC<FrequentQuestionsProps> = React.memo(({
             key={question.id}
             style={styles.frequentItem}
             onPress={() => onQuestionPress(question.id)}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.frequentNumberText, { color: numberColors[index] }]}>{index + 1}</Text>
+            activeOpacity={0.7}>
+            <Text style={[styles.frequentNumberText, { color: numberColors[index] }]}>
+              {index + 1}
+            </Text>
 
             <View style={styles.frequentContent}>
-              <Text style={styles.frequentQuestionTitle}>
-                {question.title}
-              </Text>
+              <Text style={styles.frequentQuestionTitle}>{question.title}</Text>
             </View>
           </TouchableOpacity>
         ))}

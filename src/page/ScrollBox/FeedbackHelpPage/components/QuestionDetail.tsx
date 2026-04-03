@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+
 import { QuestionDetailProps } from '../types';
 
 export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
@@ -29,23 +30,22 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
       <ScrollView style={styles.detailContent} showsVerticalScrollIndicator={false}>
         <Text style={styles.detailText}>{detail.content}</Text>
 
-        {detail.relatedQuestions && detail.relatedQuestions.length > 0 && (
+        {detail.relatedQuestions && detail.relatedQuestions.length > 0 ? (
           <View style={styles.relatedSection}>
             <Text style={styles.relatedTitle}>相关问题</Text>
             {detail.relatedQuestions.map((questionId) => (
               <TouchableOpacity
                 key={questionId}
                 style={styles.relatedItem}
-                onPress={() => onRelatedQuestionPress(questionId)}
-              >
+                onPress={() => onRelatedQuestionPress(questionId)}>
                 <Text style={styles.relatedItemText}>
-                  查看相关问题 #{questionId}
+                  {`查看相关问题 #${questionId}`}
                 </Text>
-                <Text style={styles.relatedItemArrow}>›</Text>
+                <Text style={styles.relatedItemArrow}>{'>'}</Text>
               </TouchableOpacity>
             ))}
           </View>
-        )}
+        ) : null}
       </ScrollView>
 
       <View style={styles.resolutionSection}>
@@ -53,12 +53,12 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
           <TouchableOpacity
             style={[styles.resolutionButton, styles.resolvedButton]}
             onPress={() => handleResolve(true)}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.resolutionButtonIcon, styles.resolvedButtonIcon]}>
-              👍
-            </Text>
-            <Text style={[styles.resolutionButtonText, styles.resolvedButtonText]}>
+            activeOpacity={0.7}>
+            <Text
+              style={[
+                styles.resolutionButtonText,
+                styles.resolvedButtonText,
+              ]}>
               已解决
             </Text>
           </TouchableOpacity>
@@ -66,12 +66,12 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = React.memo(({
           <TouchableOpacity
             style={[styles.resolutionButton, styles.unresolvedButton]}
             onPress={() => handleResolve(false)}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.resolutionButtonIcon, styles.unresolvedButtonIcon]}>
-              👎
-            </Text>
-            <Text style={[styles.resolutionButtonText, styles.unresolvedButtonText]}>
+            activeOpacity={0.7}>
+            <Text
+              style={[
+                styles.resolutionButtonText,
+                styles.unresolvedButtonText,
+              ]}>
               未解决
             </Text>
           </TouchableOpacity>

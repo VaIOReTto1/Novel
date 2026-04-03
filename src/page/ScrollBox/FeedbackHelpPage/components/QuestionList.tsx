@@ -1,48 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { QuestionListProps } from '../types';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+
 import { useFeedbackHelpStore } from '../store/feedbackHelpStore';
+import { QuestionListProps } from '../types';
 
 export const QuestionList: React.FC<QuestionListProps> = React.memo(({
   styles,
   questions,
   category,
   onQuestionPress,
-  onBack: _onBack,
 }) => {
   const { consultCategories, getCategoryQuestions } = useFeedbackHelpStore();
   const [selectedFilter, setSelectedFilter] = useState<string>(category);
 
   const getCategoryIcon = (categoryId: string) => {
     const categoryIcons: { [key: string]: string } = {
-      'member': '👑',
-      'account': '👤',
-      'subscription': '💳',
-      'benefits': '🎁',
-      'reading': '📖',
-      'listening': '🎧',
-      'other': 'ℹ️',
+      member: '会员',
+      account: '账号',
+      subscription: '订阅',
+      benefits: '权益',
+      reading: '阅读',
+      listening: '听书',
+      other: '其他',
     };
-    return categoryIcons[categoryId] || 'ℹ️';
+    return categoryIcons[categoryId] || '其他';
   };
 
   const handleCategoryFilter = (categoryId: string) => {
     setSelectedFilter(categoryId);
   };
 
-  const getFilteredQuestions = () => {
-    if (selectedFilter === 'all') {
-      return questions;
-    }
-    return getCategoryQuestions(selectedFilter);
-  };
-
-  const filteredQuestions = getFilteredQuestions();
+  const filteredQuestions =
+    selectedFilter === 'all' ? questions : getCategoryQuestions(selectedFilter);
 
   return (
     <View style={styles.questionListContainer}>
       <View style={styles.questionListContent}>
-        {/* 左侧分类筛选 */}
         <View style={styles.categoryFilterContainer}>
           <ScrollView style={styles.categoryFilterList} showsVerticalScrollIndicator={false}>
             <TouchableOpacity
@@ -51,16 +44,21 @@ export const QuestionList: React.FC<QuestionListProps> = React.memo(({
                 selectedFilter === 'all' && styles.categoryFilterItemActive,
               ]}
               onPress={() => handleCategoryFilter('all')}
-              activeOpacity={0.7}
-            >
-              <Text style={[
-                styles.categoryFilterIcon,
-                selectedFilter === 'all' && styles.categoryFilterIconActive,
-              ]}>📋</Text>
-              <Text style={[
-                styles.categoryFilterText,
-                selectedFilter === 'all' && styles.categoryFilterTextActive,
-              ]}>全部问题</Text>
+              activeOpacity={0.7}>
+              <Text
+                style={[
+                  styles.categoryFilterIcon,
+                  selectedFilter === 'all' && styles.categoryFilterIconActive,
+                ]}>
+                全部
+              </Text>
+              <Text
+                style={[
+                  styles.categoryFilterText,
+                  selectedFilter === 'all' && styles.categoryFilterTextActive,
+                ]}>
+                全部问题
+              </Text>
             </TouchableOpacity>
 
             {consultCategories.map((cat) => (
@@ -71,22 +69,26 @@ export const QuestionList: React.FC<QuestionListProps> = React.memo(({
                   selectedFilter === cat.id && styles.categoryFilterItemActive,
                 ]}
                 onPress={() => handleCategoryFilter(cat.id)}
-                activeOpacity={0.7}
-              >
-                <Text style={[
-                  styles.categoryFilterIcon,
-                  selectedFilter === cat.id && styles.categoryFilterIconActive,
-                ]}>{cat.icon}</Text>
-                <Text style={[
-                  styles.categoryFilterText,
-                  selectedFilter === cat.id && styles.categoryFilterTextActive,
-                ]}>{cat.title}</Text>
+                activeOpacity={0.7}>
+                <Text
+                  style={[
+                    styles.categoryFilterIcon,
+                    selectedFilter === cat.id && styles.categoryFilterIconActive,
+                  ]}>
+                  {cat.icon}
+                </Text>
+                <Text
+                  style={[
+                    styles.categoryFilterText,
+                    selectedFilter === cat.id && styles.categoryFilterTextActive,
+                  ]}>
+                  {cat.title}
+                </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
 
-        {/* 右侧问题列表 */}
         <View style={styles.questionListRight}>
           <ScrollView style={styles.questionsList} showsVerticalScrollIndicator={false}>
             {filteredQuestions.map((question) => (
@@ -94,8 +96,7 @@ export const QuestionList: React.FC<QuestionListProps> = React.memo(({
                 key={question.id}
                 style={styles.questionItem}
                 onPress={() => onQuestionPress(question.id)}
-                activeOpacity={0.7}
-              >
+                activeOpacity={0.7}>
                 <View style={styles.questionItemContent}>
                   <View style={styles.questionItemIcon}>
                     <Text style={styles.questionItemIconText}>
@@ -104,25 +105,23 @@ export const QuestionList: React.FC<QuestionListProps> = React.memo(({
                   </View>
 
                   <View style={styles.questionItemLeft}>
-                    <Text style={styles.questionItemTitle}>
-                      {question.title}
-                    </Text>
+                    <Text style={styles.questionItemTitle}>{question.title}</Text>
                   </View>
 
-                  <Text style={styles.questionItemArrow}>›</Text>
+                  <Text style={styles.questionItemArrow}>{'>'}</Text>
                 </View>
               </TouchableOpacity>
             ))}
 
-            {filteredQuestions.length === 0 && (
+            {filteredQuestions.length === 0 ? (
               <View style={styles.emptyState}>
-                <Text style={styles.emptyStateIcon}>🤔</Text>
+                <Text style={styles.emptyStateIcon}>问题</Text>
                 <Text style={styles.emptyStateTitle}>暂无相关问题</Text>
                 <Text style={styles.emptyStateDescription}>
-                  没有找到相关问题，请尝试其他咨询分类或联系客服
+                  再试试其他咨询分类或联系客服
                 </Text>
               </View>
-            )}
+            ) : null}
           </ScrollView>
         </View>
       </View>

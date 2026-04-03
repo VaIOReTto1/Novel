@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+
 import { TopBarProps } from '../types';
 
 export const TopBar: React.FC<TopBarProps> = React.memo(({
@@ -9,42 +10,40 @@ export const TopBar: React.FC<TopBarProps> = React.memo(({
   onSearch,
   showSearch = false,
   pageType = 'main',
-  searchPlaceholder = '听书',
+  searchPlaceholder = '搜索帮助内容',
 }) => {
-  // 主页面显示搜索框
   if (pageType === 'main') {
     return (
       <View style={styles.topBar}>
         <TouchableOpacity style={styles.backButton} onPress={onBack}>
-          <Text style={styles.backArrow}>‹</Text>
+          <Text style={styles.backArrow}>{'<'}</Text>
         </TouchableOpacity>
 
-         <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
 
         <View style={styles.searchContainer}>
           <View style={styles.searchInputContainer}>
-            <Text style={styles.searchIcon}>🔍</Text>
+            <Text style={styles.searchIcon}>搜索</Text>
             <TextInput
               style={styles.searchInput}
               placeholder={searchPlaceholder}
               placeholderTextColor={styles.searchPlaceholder?.color}
-              editable={false} // 写死搜索框，不可编辑
+              editable={false}
             />
           </View>
         </View>
 
         <TouchableOpacity style={styles.historyButton}>
-          <Text style={styles.historyIcon}>📖</Text>
+          <Text style={styles.historyIcon}>历史</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  // 其他页面显示标题
   return (
     <View style={styles.topBar}>
       <TouchableOpacity style={styles.backButton} onPress={onBack}>
-        <Text style={styles.backArrow}>‹</Text>
+        <Text style={styles.backArrow}>{'<'}</Text>
       </TouchableOpacity>
 
       <View style={styles.titleContainer}>
@@ -53,7 +52,7 @@ export const TopBar: React.FC<TopBarProps> = React.memo(({
 
       {showSearch ? (
         <TouchableOpacity style={styles.searchButton} onPress={onSearch}>
-          <Text style={styles.searchIcon}>🔍</Text>
+          <Text style={styles.searchIcon}>搜索</Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.searchButton} />

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 import { ConsultSectionProps } from '../types';
 
 export const ConsultSection: React.FC<ConsultSectionProps> = React.memo(({
@@ -14,7 +15,7 @@ export const ConsultSection: React.FC<ConsultSectionProps> = React.memo(({
         <Text style={styles.consultTitle}>咨询场景</Text>
         <TouchableOpacity style={styles.moreButton}>
           <Text style={styles.moreText}>更多</Text>
-          <Text style={styles.moreIcon}>›</Text>
+          <Text style={styles.moreIcon}>{'>'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -24,17 +25,15 @@ export const ConsultSection: React.FC<ConsultSectionProps> = React.memo(({
             key={category.id}
             style={styles.consultItem}
             onPress={() => onCategoryPress(category.id)}
-            activeOpacity={0.8}
-          >
+            activeOpacity={0.8}>
             <LinearGradient
               colors={category.bgGradient}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
-              style={styles.consultGradient}
-            >
+              style={styles.consultGradient}>
               <View style={styles.consultItemHeader}>
                 <Text style={styles.consultItemTitle}>{category.title}</Text>
-                <Text style={styles.consultArrow}>›</Text>
+                <Text style={styles.consultArrow}>{'>'}</Text>
               </View>
 
               <View style={styles.consultItemContent}>

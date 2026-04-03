@@ -63,3 +63,6 @@ cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentat
 - `__tests__/smoke/RecommendBookPage.smoke.test.tsx`
 - `__tests__/smoke/ViewedUsersPage.smoke.test.tsx`
 - `__tests__/smoke/MyReservationPage.smoke.test.tsx`
+- `__tests__/smoke/BecomeWriterPage.smoke.test.tsx`
+- `__tests__/smoke/MessagePage.smoke.test.tsx`
+- `__tests__/smoke/FeedbackHelpMainPage.smoke.test.tsx`

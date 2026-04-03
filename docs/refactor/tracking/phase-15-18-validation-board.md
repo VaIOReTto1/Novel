@@ -20,9 +20,9 @@
 ## Phase 16
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V16-01 | Figma foundations | 语义色彩、排版、间距、圆角、阴影、动效建立真源 | 已建立 `novel-design.tokens.json` 作为 repo 内语义 Token 真源草案，后续需与 Figma Variables 双向对齐 | `in_progress` | `yellow` |
+| V16-01 | Figma foundations | 语义色彩、排版、间距、圆角、阴影、动效建立真源 | 已建立 `novel-design.tokens.json` 作为 repo 内语义 Token 真源草案，并已在官方 Figma 宿主回读到 `Novel Rebuild Tokens` 本地变量集合（`2` 个 mode / `9` 个最小语义变量） | `in_progress` | `yellow` |
 | V16-02 | token export chain | `Figma -> JSON -> Style Dictionary -> LESS/RN/Android` 可跑通 | 已生成 `style-dictionary.tokens.json`、`tokens.less`、RN/Android token 产物，并接入质量门禁检查 | `in_progress` | `yellow` |
-| V16-03 | dark / a11y / RTL rules | 暗黑、无障碍、RTL 规则成文并可映射到 Token | 当前 Token 已包含 light/dark 主题与 motion/typography 语义层，并已新增 `phase-16-token-platform-rules.md` 作为集中规则宿主；后续仍需补 Figma Variables 与平台证据的逐项对齐 | `in_progress` | `yellow` |
+| V16-03 | dark / a11y / RTL rules | 暗黑、无障碍、RTL 规则成文并可映射到 Token | 当前 Token 已包含 light/dark 主题与 motion/typography 语义层，并已新增 `phase-16-token-platform-rules.md` 作为集中规则宿主；官方宿主中的本地 variables 已覆盖 closeout 所需最小 token 基线，后续仅需在签核前确认是否继续扩展全量覆盖 | `in_progress` | `yellow` |
 
 ## Phase 17
 | ID | Item | Expected | Actual | Status | Result |

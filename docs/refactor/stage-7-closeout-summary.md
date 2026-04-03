@@ -16,10 +16,10 @@
 - 因此当前最准确状态不是“待补 Figma 证据”，而是“closeout 宿主、证据包与技术基线已闭环，待人工签核完成最终切换”。
 
 ## 阶段组成状态
-- `Phase 15 = in_progress`
-- `Phase 16 = in_progress`
-- `Phase 17 = in_progress`
-- `Phase 18 = in_progress`
+- `Phase 15 = validated`
+- `Phase 16 = validated`
+- `Phase 17 = validated`
+- `Phase 18 = validated`
 
 ## 主要证据
 - [Phase 15 closeout assessment](./phase-15/phase-15-closeout-assessment.md)

@@ -14,10 +14,10 @@
 - `Stage 5 = validated`
 - `Stage 6 = validated`
 - `Stage 7 = in_progress`
-- `Phase 15 = in_progress`
-- `Phase 16 = in_progress`
-- `Phase 17 = in_progress`
-- `Phase 18 = in_progress`
+- `Phase 15 = validated`
+- `Phase 16 = validated`
+- `Phase 17 = validated`
+- `Phase 18 = validated`
 
 ## Stage 7 摘要
 - `Phase 15` 负责建立 Stage 7 控制面、页面与组件视觉盘点、机器可对账清单、Figma 审计页和事实对账门禁。

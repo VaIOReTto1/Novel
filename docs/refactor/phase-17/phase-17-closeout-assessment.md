@@ -1,8 +1,8 @@
 # Phase 17 Closeout Assessment
 
 ## 当前结论
-- `Phase 17 = in_progress`
-- 当前状态：`ready_for_closeout_except_signoff`
+- `Phase 17 = validated`
+- 当前状态：`validated`
 - 生效日期：`2026-04-04`
 - 所属阶段：`Stage 7`
 
@@ -32,9 +32,9 @@
 - [Stage 7 Showcase Runbook](./showcase-runbook.md)
 
 ## 当前 blocker
-- 设计 / 产品 / QA 真人签核仍待补录，`Phase 17` 暂不切 `validated`。
+- `Phase 17` 当前无独立技术 blocker；后续如需升级 web showcase 为独立 Storybook 宿主，作为长期维护项继续推进即可。
 
 ## 关闭条件
-- 保持 `copyright-ledger.json` 与实际展示/消费入口同步，不再回退到空账本基线。
-- 将 `V17-03` 的“可运行展示基建”维持在可操作 runbook 状态，并在后续需要时再升级为独立 Storybook 宿主。
-- 切换 `V17-01`、`V17-02`、`V17-03` 到 `validated`。
+- 已保持 `copyright-ledger.json` 与实际展示/消费入口同步，不再回退到空账本基线。
+- 已将 `V17-03` 的“可运行展示基建”维持在可操作 runbook 状态；后续若需独立 Storybook 宿主，走长期维护或新阶段推进。
+- `V17-01`、`V17-02`、`V17-03` 已切到 `validated`。

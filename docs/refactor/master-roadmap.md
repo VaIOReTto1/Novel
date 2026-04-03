@@ -6,10 +6,10 @@
 - `Stage 5 = validated`
 - `Stage 6 = validated`
 - `Stage 7 = in_progress`
-- `Phase 15 = in_progress`
-- `Phase 16 = in_progress`
-- `Phase 17 = in_progress`
-- `Phase 18 = in_progress`
+- `Phase 15 = validated`
+- `Phase 16 = validated`
+- `Phase 17 = validated`
+- `Phase 18 = validated`
 - `Stage 7 technical status = ready_for_closeout_except_signoff`
 
 ## 项目现状

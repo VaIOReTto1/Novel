@@ -1,8 +1,8 @@
 # Phase 15 Closeout Assessment
 
 ## 当前结论
-- `Phase 15 = in_progress`
-- 当前状态：`ready_for_closeout_except_signoff`
+- `Phase 15 = validated`
+- 当前状态：`validated`
 - 生效日期：`2026-04-04`
 - 所属阶段：`Stage 7`
 
@@ -22,9 +22,9 @@
 - `npm test -- --runInBand __tests__/harness/novelDesignAuditScripts.test.js`
 
 ## 当前 blocker
-- 设计 / 产品 / QA 的签核包已准备，真人签核记录仍待补录。
+- `Phase 15` 当前无独立技术 blocker；后续如需继续深化 Android 共享基元聚类，可作为长期维护项增量推进。
 
 ## 关闭条件
-- 维持 `figma-frame-map.json`、`surface-inventory.json`、`governance-drift-report.md` 三者一致，且自动校验持续对 `frame_id` 完整性失败即报错。
-- 正式宿主中的页面级亮 / 暗 / 标注证据维持与 repo surface 事实双向追踪，不再回退为 placeholder 或未映射状态。
-- 完成 Stage 7 最终验证后，切换 `Phase 15 = validated`。
+- 已维持 `figma-frame-map.json`、`surface-inventory.json`、`governance-drift-report.md` 三者一致，且自动校验持续对 `frame_id` 完整性失败即报错。
+- 已确保正式宿主中的页面级亮 / 暗 / 标注证据与 repo surface 事实双向追踪，不再回退为 placeholder 或未映射状态。
+- `Phase 15` 已切换 `validated`，后续继续以脚本与 closeout 宿主保持一致性。

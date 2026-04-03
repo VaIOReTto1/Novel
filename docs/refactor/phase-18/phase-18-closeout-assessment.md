@@ -1,8 +1,8 @@
 # Phase 18 Closeout Assessment
 
 ## 当前结论
-- `Phase 18 = in_progress`
-- 当前状态：`ready_for_closeout_except_signoff`
+- `Phase 18 = validated`
+- 当前状态：`validated`
 - 生效日期：`2026-04-04`
 - 所属阶段：`Stage 7`
 
@@ -30,9 +30,9 @@
 - `npm run stage7:closeout:check`
 
 ## 当前 blocker
-- 设计 / 产品 / QA 三方仅能准备待签核评审包，尚未形成真人签核记录。
+- `Phase 18` 当前无独立技术 blocker；Stage 7 最终切换仅剩三方真人签核。
 
 ## 关闭条件
-- 所有 closeout 所需页面级视觉证据持续维持在 repo/Figma/文档三处中的可追踪状态。
-- `V18-01`、`V18-02`、`V18-03` 切到 `validated`。
-- Stage 7 主 summary 与 review packet 完成待签核版本。
+- 所有 closeout 所需页面级视觉证据已维持在 repo/Figma/文档三处中的可追踪状态。
+- `V18-01`、`V18-02`、`V18-03` 已切到 `validated`。
+- Stage 7 主 summary、review packet 与 signoff 记录宿主已完成待签核版本。

@@ -2,7 +2,7 @@
 
 ## 当前状态
 - 当前分支：`feature/stage-7-phase-15-audit`
-- 当前权威结论：`Stage 7 = in_progress`，`Phase 15-18 = in_progress`
+- 当前权威结论：`Stage 7 = in_progress`，`Phase 15-18 = validated`
 - 当前 refactor authority 以 `docs/refactor/README.md` 为准
 - 当前 Android 模块图保持为 `app + core-* + feature-* + macrobenchmark`
 
@@ -21,6 +21,9 @@
 - `2026-04-04` 已在新正式宿主中补下 `RecommendBookPage`、`BecomeWriterPage`、`MessagePage`、`SettingsPage`、`CategoryPage`、`MemberCenterPage`、`ProfilePage` 的亮 / 暗 / 标注样例
 - `2026-04-04` 已将新正式宿主中剩余 RN / Android placeholder evidence cards 全量替换为正式 light / dark / annotation 证据卡，当前 `51` 个 surface 均已进入可追踪状态
 - `2026-04-04` 已新增 `stage-7-signoff-record.md` 作为正式签核记录宿主，当前 Stage 7 在 repo 内仅剩设计 / 产品 / QA 真人签核待补录
+- `2026-04-04` 已将官方 Figma 宿主中的本地 token collection 扩展到 `120` 个变量，并将 `Phase 16` 切到 `validated`
+- `2026-04-04` 已跑通 `novel-design:assets`、showcase 相关 Jest 与 `app:compileDebugAndroidTestKotlin`，并将 `Phase 17` 切到 `validated`
+- `2026-04-04` 已将 `Phase 15` 与 `Phase 18` 切到 `validated`，当前 Stage 7 技术阶段已全部关闭，仅剩真人签核
 
 ## 默认下一主线
 - 当前 active refactor 主线仍为 `Stage 7 / Phase 15-18`

@@ -9,12 +9,14 @@
 - `Phase 15 = in_progress`
 - `Phase 16 = in_progress`
 - `Phase 17 = in_progress`
-- `Phase 18 = planned`
+- `Phase 18 = in_progress`
+- `Stage 7 technical status = ready_for_closeout_except_signoff`
 
 ## 项目现状
 - Android 主线重构已经完成到 `Stage 5`，当前稳定在 `app + core-* + feature-* + macrobenchmark` 模块图。
 - RN 主线重构已在 `Stage 6` 完成第一轮 runtime、page-domain 与 contract/maintainability 收口。
 - 当前默认主线切换到 `Stage 7`，目标是把视觉系统、资产治理、Token、展示基建和页面重皮肤沉淀为长期治理层。
+- 当前 repo、验证门禁与官方 Figma 宿主证据已闭环，剩余最终切换条件只差设计 / 产品 / QA 真人签核。
 
 ## Stage 摘要
 | Stage | Phase | 主题 | 当前状态 |

@@ -34,6 +34,15 @@ const capture = (text, pattern, fallback = 'unknown') => {
   return match ? match[1].trim() : fallback;
 };
 
+const captureSignoffField = (text, sectionTitle, label, fallback = 'unknown') => {
+  const escapedTitle = sectionTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(
+    `## ${escapedTitle}[\\s\\S]*?- ${escapedLabel}:\\s*` + '`?([^\\n`]+)`?',
+  );
+  return capture(text, pattern, fallback);
+};
+
 const collectSmokeTests = (repoRoot) => {
   const smokeDir = path.join(repoRoot, '__tests__', 'smoke');
   if (!fs.existsSync(smokeDir)) {
@@ -54,6 +63,10 @@ const buildReadinessModel = (repoRoot) => {
   const stageSummary = readText(
     repoRoot,
     'docs/refactor/stage-7-closeout-summary.md',
+  );
+  const signoffRecord = readText(
+    repoRoot,
+    'docs/refactor/stage-7-signoff-record.md',
   );
   const figmaFrameMap = parseJson(repoRoot, 'docs/refactor/phase-15/figma-frame-map.json');
   const copyrightLedger = parseJson(
@@ -77,6 +90,24 @@ const buildReadinessModel = (repoRoot) => {
   if (stageSummary.includes('三方评审') || stageSummary.includes('待签核')) {
     externalBlockers.push('Design / Product / QA signoff remains pending');
   }
+
+  const signoff = {
+    design: {
+      reviewer: captureSignoffField(signoffRecord, 'Design Signoff', 'Reviewer', 'pending'),
+      date: captureSignoffField(signoffRecord, 'Design Signoff', 'Date', 'pending'),
+      decision: captureSignoffField(signoffRecord, 'Design Signoff', 'Decision', 'pending'),
+    },
+    product: {
+      reviewer: captureSignoffField(signoffRecord, 'Product Signoff', 'Reviewer', 'pending'),
+      date: captureSignoffField(signoffRecord, 'Product Signoff', 'Date', 'pending'),
+      decision: captureSignoffField(signoffRecord, 'Product Signoff', 'Decision', 'pending'),
+    },
+    qa: {
+      reviewer: captureSignoffField(signoffRecord, 'QA Signoff', 'Reviewer', 'pending'),
+      date: captureSignoffField(signoffRecord, 'QA Signoff', 'Date', 'pending'),
+      decision: captureSignoffField(signoffRecord, 'QA Signoff', 'Decision', 'pending'),
+    },
+  };
 
   return {
     overallStatus: capture(stageSummary, /当前状态：`([^`]+)`/),
@@ -103,6 +134,7 @@ const buildReadinessModel = (repoRoot) => {
         ? copyrightLedger.entries.length
         : 0,
     },
+    signoff,
     externalBlockers,
   };
 };
@@ -125,6 +157,11 @@ const renderReadinessReport = (model) => [
   '',
   '## Asset governance',
   `- Copyright ledger entries: ${model.assets.copyrightLedgerEntries}`,
+  '',
+  '## Signoff status',
+  `- Design: ${model.signoff.design.decision} (reviewer: ${model.signoff.design.reviewer}, date: ${model.signoff.design.date})`,
+  `- Product: ${model.signoff.product.decision} (reviewer: ${model.signoff.product.reviewer}, date: ${model.signoff.product.date})`,
+  `- QA: ${model.signoff.qa.decision} (reviewer: ${model.signoff.qa.reviewer}, date: ${model.signoff.qa.date})`,
   '',
   '## Figma frame map',
   `- Total surfaces: ${model.figma.totalSurfaces}`,

@@ -31,6 +31,11 @@
 ## Asset governance
 - Copyright ledger entries: 1
 
+## Signoff status
+- Design: pending (reviewer: pending, date: pending)
+- Product: pending (reviewer: pending, date: pending)
+- QA: pending (reviewer: pending, date: pending)
+
 ## Figma frame map
 - Total surfaces: 51
 - Unmapped surfaces: 0

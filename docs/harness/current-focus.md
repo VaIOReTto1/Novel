@@ -20,6 +20,7 @@
 - `2026-04-04` 已切换新的正式 Figma 宿主 `7YaJPjyzLvGLfVPTkUx0Tf`，完成 `51` 个 audit frame id 回填，当前 `Unmapped figma frames = 0`
 - `2026-04-04` 已在新正式宿主中补下 `RecommendBookPage`、`BecomeWriterPage`、`MessagePage`、`SettingsPage`、`CategoryPage`、`MemberCenterPage`、`ProfilePage` 的亮 / 暗 / 标注样例
 - `2026-04-04` 已将新正式宿主中剩余 RN / Android placeholder evidence cards 全量替换为正式 light / dark / annotation 证据卡，当前 `51` 个 surface 均已进入可追踪状态
+- `2026-04-04` 已新增 `stage-7-signoff-record.md` 作为正式签核记录宿主，当前 Stage 7 在 repo 内仅剩设计 / 产品 / QA 真人签核待补录
 
 ## 默认下一主线
 - 当前 active refactor 主线仍为 `Stage 7 / Phase 15-18`

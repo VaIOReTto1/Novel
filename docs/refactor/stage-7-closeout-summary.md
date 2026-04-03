@@ -27,6 +27,7 @@
 - [Phase 17 closeout assessment](./phase-17/phase-17-closeout-assessment.md)
 - [Phase 18 closeout assessment](./phase-18/phase-18-closeout-assessment.md)
 - [Stage 7 closeout readiness](./phase-18/stage-7-closeout-readiness.md)
+- [Stage 7 signoff record](./stage-7-signoff-record.md)
 - [Phase 15-18 验证看板](./tracking/phase-15-18-validation-board.md)
 
 ## 外部 blocker
@@ -34,7 +35,7 @@
 - 三方评审按本轮口径属于“待签核，不阻塞技术完成”，但会继续阻塞 `Stage 7 = validated` 的最终切换。
 
 ## 下一步
-- 执行设计 / 产品 / QA 待签核评审包，并在官方宿主证据与 repo 技术基线之上补录真人签核记录。
+- 执行设计 / 产品 / QA 待签核评审包，并在 [stage-7-signoff-record.md](./stage-7-signoff-record.md) 中补录真人签核记录。
 - 随后切换：
   - `Phase 15-18 = validated`
   - `Stage 7 = validated`

@@ -19,6 +19,7 @@
 - Android showcase route：`novel_design_showcase`
 - 自动 readiness 报告：[phase-18/stage-7-closeout-readiness.md](./phase-18/stage-7-closeout-readiness.md)
 - 签核模板：[stage-7-signoff-template.md](./stage-7-signoff-template.md)
+- 签核记录宿主：[stage-7-signoff-record.md](./stage-7-signoff-record.md)
 - 正式 Figma 宿主 `7YaJPjyzLvGLfVPTkUx0Tf`：`51` 个 audit frame id 已回填，且 `51` 个 surface 的 light / dark / annotation 证据卡已全部进入官方宿主
 
 ## 待签核清单
@@ -36,6 +37,6 @@
 - 设计 / 产品 / QA 三方签核仍待人工落盘。
 
 ## 建议签核动作
-1. 基于当前官方宿主与 closeout 包执行设计 / 产品 / QA 三方签核
-2. 由设计 / 产品 / QA 分别在本包基础上追加签核结论
+1. 基于当前官方宿主、closeout 包与 [stage-7-signoff-record.md](./stage-7-signoff-record.md) 执行设计 / 产品 / QA 三方签核
+2. 由设计 / 产品 / QA 分别在签核记录宿主中补录 reviewer、date、decision、notes
 3. 切换 `Stage 7 = validated`

@@ -28,6 +28,7 @@
 - [Stage 7 计划](./stage-7-phase-15-18-plan.md)
 - [Stage 7 closeout summary](./stage-7-closeout-summary.md)
 - [Stage 7 closeout review packet](./stage-7-closeout-review-packet.md)
+- [Stage 7 signoff record](./stage-7-signoff-record.md)
 - [Phase 15 宿主文档](./phases/phase-15-visual-audit-and-control-plane.md)
 - [Phase 16 宿主文档](./phases/phase-16-figma-foundations-and-token-source.md)
 - [Phase 17 宿主文档](./phases/phase-17-asset-governance-and-shared-primitives.md)

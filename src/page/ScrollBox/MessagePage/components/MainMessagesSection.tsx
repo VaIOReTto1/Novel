@@ -1,19 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
-import { MessageItem as MessageItemComponent } from './MessageItem';
-import { MessageItem } from '../types';
 
-// 主消息列表的静态数据
+import { MessageItem } from '../types';
+import { MessageItem as MessageItemComponent } from './MessageItem';
+
 const mainMessages: MessageItem[] = [
   {
     id: 1,
     type: 'system',
     title: '系统通知',
-    content: '《暗星长曜》1&2，套装限时优惠20元',
+    content: '《暗星长歌》套装限时优惠 10 元。',
     time: '7-20',
     isRead: false,
     hasNotification: true,
-    icon: '🔔',
+    icon: '通知',
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const mainMessages: MessageItem[] = [
     time: '',
     isRead: true,
     hasNotification: false,
-    icon: '👤',
+    icon: '粉丝',
   },
 ];
 
@@ -32,20 +32,20 @@ interface MainMessagesSectionProps {
   onMessagePress: (item: MessageItem) => void;
 }
 
-// 使用React.memo包裹，只有在props变化时才会重新渲染
-export const MainMessagesSection: React.FC<MainMessagesSectionProps> = React.memo(({ styles, onMessagePress }) => {
-  console.log('[MainMessagesSection] Rendering');
-  return (
-    <View style={styles.mainMessagesSection}>
-      {mainMessages.map((message, index) => (
-        <MessageItemComponent
-          key={`main-${message.id}`}
-          item={message}
-          index={index}
-          onPress={() => onMessagePress(message)}
-          styles={styles}
-        />
-      ))}
-    </View>
-  );
-});
+export const MainMessagesSection: React.FC<MainMessagesSectionProps> = React.memo(
+  ({ styles, onMessagePress }) => {
+    return (
+      <View style={styles.mainMessagesSection}>
+        {mainMessages.map((message, index) => (
+          <MessageItemComponent
+            key={`main-${message.id}`}
+            item={message}
+            index={index}
+            onPress={() => onMessagePress(message)}
+            styles={styles}
+          />
+        ))}
+      </View>
+    );
+  },
+);

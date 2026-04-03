@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { EmptyStateProps } from '../types';
 
 interface EmptyStateComponentProps extends EmptyStateProps {
@@ -9,7 +9,7 @@ interface EmptyStateComponentProps extends EmptyStateProps {
 export const EmptyState: React.FC<EmptyStateComponentProps> = ({
   styles,
   message,
-  icon = '📦',
+  icon = '消息',
 }) => {
   return (
     <View style={styles.emptyContainer}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { TopBarProps } from '../types';
 
 interface TopBarComponentProps extends TopBarProps {
@@ -16,9 +16,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       <TouchableOpacity
         style={styles.backButton}
         onPress={onBackPress}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.backArrow}>‹</Text>
+        activeOpacity={0.7}>
+        <Text style={styles.backArrow}>{'<'}</Text>
       </TouchableOpacity>
 
       <View style={styles.titleContainer}>
@@ -28,9 +27,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       <TouchableOpacity
         style={styles.markAllButton}
         onPress={onMarkAllReadPress}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.markAllIcon}>🗑</Text>
+        activeOpacity={0.7}>
+        <Text style={styles.markAllIcon}>全部已读</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { MessageItemProps } from '../types';
 
 interface MessageItemComponentProps extends MessageItemProps {
@@ -12,7 +12,6 @@ export const MessageItem: React.FC<MessageItemComponentProps> = React.memo(({
   styles,
 }) => {
   const formatTime = (timeString: string): string => {
-    // 如果是具体日期格式如"7-20"，直接返回
     if (timeString.includes('-')) {
       return timeString;
     }
@@ -23,34 +22,22 @@ export const MessageItem: React.FC<MessageItemComponentProps> = React.memo(({
     <TouchableOpacity
       style={styles.messageItem}
       onPress={onPress}
-      activeOpacity={0.7}
-    >
-      {/* 消息图标 */}
+      activeOpacity={0.7}>
       <View style={styles.messageIcon}>
-        <Text style={styles.messageIconText}>
-          {item.icon || '📧'}
-        </Text>
+        <Text style={styles.messageIconText}>{item.icon || '消息'}</Text>
       </View>
 
-      {/* 消息内容 */}
       <View style={styles.messageContent}>
         <View style={styles.messageHeader}>
-          <Text style={styles.messageTitle}>
-            {item.title}
-          </Text>
-          <Text style={styles.messageTime}>
-            {formatTime(item.time)}
-          </Text>
+          <Text style={styles.messageTitle}>{item.title}</Text>
+          <Text style={styles.messageTime}>{formatTime(item.time)}</Text>
         </View>
 
         <View style={styles.messageBodyRow}>
           <Text style={styles.messageBody} numberOfLines={2}>
             {item.content}
           </Text>
-           {/* 未读标识 */}
-          {item.hasNotification && (
-            <View style={styles.notificationBadge} />
-          )}
+          {item.hasNotification ? <View style={styles.notificationBadge} /> : null}
         </View>
       </View>
     </TouchableOpacity>

@@ -349,6 +349,50 @@ describe('novelDesign audit scripts', () => {
     }
   });
 
+  test('check audit artifacts accepts repo state with backfilled figma frame ids', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-check-preserve-'));
+
+    try {
+      const phase15Dir = path.join(tempDir, 'docs', 'refactor', 'phase-15');
+      fs.mkdirSync(phase15Dir, { recursive: true });
+
+      novelDesignAudit.generateAuditArtifacts({
+        repoRoot,
+        outputDir: phase15Dir,
+      });
+
+      const figmaFrameMapPath = path.join(phase15Dir, 'figma-frame-map.json');
+      const frameMap = readJson(figmaFrameMapPath);
+      const updatedFrameMap = frameMap.map((entry) =>
+        entry.surface_id === 'rn-root-profile-page'
+          ? {
+              ...entry,
+              figma_frame_id: '123:456',
+              mapping_status: 'mapped',
+              sync_status: 'synced',
+            }
+          : entry,
+      );
+      fs.writeFileSync(figmaFrameMapPath, `${JSON.stringify(updatedFrameMap, null, 2)}\n`, 'utf8');
+      novelDesignAudit.generateAuditArtifacts({
+        repoRoot,
+        outputDir: phase15Dir,
+      });
+
+      const result = novelDesignAudit.checkAuditArtifacts({
+        repoRoot,
+        outputDir: phase15Dir,
+      });
+
+      expect(result).toEqual({
+        ok: true,
+        message: 'Novel design audit artifacts are up to date.',
+      });
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
   test('visual planning summary reports every surface and component as planned entries', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-visual-summary-'));
 

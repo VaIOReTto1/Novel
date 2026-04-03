@@ -2586,6 +2586,7 @@ const resolveOutputDir = (repoRoot, outputDir) =>
 const generateAuditArtifacts = ({
   repoRoot = path.resolve(__dirname, '..'),
   outputDir = DEFAULT_OUTPUT_DIR,
+  existingFigmaFrameMap = null,
 } = {}) => {
   const resolvedOutputDir = resolveOutputDir(repoRoot, outputDir);
   ensureDir(resolvedOutputDir);
@@ -2594,10 +2595,10 @@ const generateAuditArtifacts = ({
   const componentCatalog = buildComponentCatalog(repoRoot);
   const assetInventory = buildAssetInventory(repoRoot);
   const figmaFrameMapPath = path.join(resolvedOutputDir, 'figma-frame-map.json');
-  const existingFigmaFrameMap = readJsonIfExists(figmaFrameMapPath);
+  const resolvedExistingFigmaFrameMap = existingFigmaFrameMap || readJsonIfExists(figmaFrameMapPath);
   const figmaFrameMap = mergeExistingFigmaFrameMap(
     enrichFigmaFrameMap(buildFigmaFrameMap(surfaceInventory)),
-    existingFigmaFrameMap,
+    resolvedExistingFigmaFrameMap,
   );
   const surfaceVisualSpecs = buildSurfaceVisualSpecs(surfaceInventory);
   const componentVisualSpecs = enrichComponentVisualSpecs(buildComponentVisualSpecs(componentCatalog));
@@ -2646,7 +2647,6 @@ const checkAuditArtifacts = ({
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-check-'));
 
   try {
-    const freshOutputs = generateAuditArtifacts({ repoRoot, outputDir: tempDir });
     const expectedFiles = {
       surfaceInventoryPath: path.join(resolvedOutputDir, 'surface-inventory.json'),
       componentCatalogPath: path.join(resolvedOutputDir, 'component-catalog.json'),
@@ -2658,6 +2658,12 @@ const checkAuditArtifacts = ({
       governanceDriftReportPath: path.join(resolvedOutputDir, 'governance-drift-report.md'),
       visualPlanningSummaryPath: path.join(resolvedOutputDir, 'visual-planning-summary.md'),
     };
+    const existingFigmaFrameMap = readJsonIfExists(expectedFiles.figmaFrameMapPath);
+    const freshOutputs = generateAuditArtifacts({
+      repoRoot,
+      outputDir: tempDir,
+      existingFigmaFrameMap,
+    });
 
     const missing = Object.values(expectedFiles).filter((filePath) => !fs.existsSync(filePath));
     if (missing.length > 0) {

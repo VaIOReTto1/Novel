@@ -11,11 +11,11 @@
 ## Phase 15
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V15-01 | Stage 7 authority cutover | `README / roadmap / stage plan / harness` 一致切到 Stage 7 | 当前已建立 Stage 7 authority 宿主与导航入口 | `in_progress` | `yellow` |
-| V15-02 | surface inventory | RN Root / RN Host / RN Nested / Android Native / Android Shell 全覆盖 | 已由 `scripts/novel-design-audit.js` 生成 `surface-inventory.json` 与 `surface-visual-specs.json`，当前统计 `51` 个 surface，且每个 surface 都已记录 current/target look；Figma `00-现状审计` / `03-页面-亮色` / `04-页面-暗色` 已种入逐项 surface 卡片，仍待回填 frame id | `in_progress` | `yellow` |
+| V15-01 | Stage 7 authority cutover | `README / roadmap / stage plan / harness` 一致切到 Stage 7 | `docs/refactor/**`、`docs/harness/**`、closeout summary / review packet 与新正式 Figma 宿主 `7YaJPjyzLvGLfVPTkUx0Tf` 已统一切到 `Stage 7 = Phase 15-18` 口径 | `completed` | `green` |
+| V15-02 | surface inventory | RN Root / RN Host / RN Nested / Android Native / Android Shell 全覆盖 | 已由 `scripts/novel-design-audit.js` 生成 `surface-inventory.json` 与 `surface-visual-specs.json`，当前统计 `51` 个 surface，且每个 surface 都已记录 current/target look；`figma-frame-map.json` 中 `51` 个 audit frame id 已全部回填，当前 `Unmapped figma frames = 0` | `completed` | `green` |
 | V15-03 | component catalog | RN / Android 共享组件按类别收口 | 已生成 `component-catalog.json` 与 `component-visual-specs.json`，当前已收口 `225` 个组件条目（`143` 个 RN + `82` 个 Android），且每个 component 都已记录 current/target look；Figma `02-组件规范` 已种入逐项 component 卡片，后续继续补 Android 共享基元聚类深化 | `in_progress` | `yellow` |
-| V15-04 | asset inventory | 图标 / 图片 / 插画 / 字体入口可追踪 | 已生成 `asset-inventory.json`，当前已纳入本地 SVG、字体与 `react-native-vector-icons` family 基线 | `in_progress` | `yellow` |
-| V15-05 | governance drift report | catalog / smoke / registry / Figma frame 漂移可发现 | 已生成 `governance-drift-report.md` 与 `visual-planning-summary.md`，当前 registry drift 为 `none`、RN smoke tests 已扩到 `16` 条且 smoke catalog drift 为 `none`，Figma mapping 仍全部待补 | `in_progress` | `yellow` |
+| V15-04 | asset inventory | 图标 / 图片 / 插画 / 字体入口可追踪 | 已生成 `asset-inventory.json`，当前已纳入本地 SVG、字体与 `react-native-vector-icons` family 基线，并与后续 `Phase 17` manifest/ledger 宿主形成连续入口 | `completed` | `green` |
+| V15-05 | governance drift report | catalog / smoke / registry / Figma frame 漂移可发现 | 已生成 `governance-drift-report.md` 与 `visual-planning-summary.md`，当前 registry drift 为 `none`、RN smoke tests 已扩到 `16` 条且 smoke catalog drift 为 `none`；脚本与 harness regression 已纳入 Figma frame-map 完整性校验，当前 `Unmapped figma frames = 0` | `completed` | `green` |
 
 ## Phase 16
 | ID | Item | Expected | Actual | Status | Result |
@@ -34,6 +34,6 @@
 ## Phase 18
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
-| V18-01 | page rollout wave 1 | 壳层与高频入口换肤完成 | 已落地 `ProfilePage`、`SettingsPage`、`CategoryPage`、`BookshelfPage`、`MemberCenterPage`、`CommentPage`、`ReviewDetailPage`、`WriteReviewPage`、`WritePage`、`AIWriteAssistant`、`BookManagePage`，并切入统一 `NovelDesignUI` 配置层 | `in_progress` | `yellow` |
-| V18-02 | page rollout wave 2-4 | 核心内容页、评论创作线、次级页面完成 | 评论创作线与写作线持续推进中；本轮已继续收口 `BecomeWriterPage`、`RecommendBookPage`、`ViewedUsersPage`、`MyReservationPage`、`MessagePage` 的组件文案与可读 mock 数据，并补齐对应 RN 组件回归；新正式 Figma 宿主中已为 `rn-host-recommend-book-page-component` 与 `rn-host-become-writer-page-component` 补下亮/暗/标注样例；Bookshelf 四个内嵌子页与剩余次级页面仍待继续换肤 | `in_progress` | `yellow` |
-| V18-03 | visual regression and gates | 像素、无障碍、版权、性能门禁通过 | 已完成 `npm test -- --runInBand` 全量 Jest 回归，结果 `108` 个 suites / `260` 个 tests 全绿；已完成 Android 共享 gate `app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble`；已新增 `stage7-closeout-readiness.md` 作为 closeout 自动 readiness 报告；视觉稿、无障碍、版权核验与性能收尾仍待继续补齐 | `in_progress` | `yellow` |
+| V18-01 | page rollout wave 1 | 壳层与高频入口换肤完成 | 已落地 `ProfilePage`、`SettingsPage`、`CategoryPage`、`BookshelfPage`、`MemberCenterPage`、`CommentPage`、`ReviewDetailPage`、`WriteReviewPage`、`WritePage`、`AIWriteAssistant`、`BookManagePage`，并切入统一 `NovelDesignUI` 配置层；新正式 Figma 宿主中已为 wave 1 页面与 Android Native / Shell / Overlay surface 全量补齐亮 / 暗 / 标注证据卡 | `completed` | `green` |
+| V18-02 | page rollout wave 2-4 | 核心内容页、评论创作线、次级页面完成 | 评论创作线与写作线已完成 `BecomeWriterPage`、`RecommendBookPage`、`ViewedUsersPage`、`MyReservationPage`、`MessagePage`、`FeedbackHelpMainPage` 等页面的组件文案与可读 mock 数据收口，并已在新正式 Figma 宿主中将 RN Host / RN Nested 剩余 placeholder evidence cards 全量替换为正式 light / dark / annotation 内容 | `completed` | `green` |
+| V18-03 | visual regression and gates | 像素、无障碍、版权、性能门禁通过 | 已完成 `npm test -- --runInBand` 全量 Jest 回归，结果 `108` 个 suites / `260` 个 tests 全绿；已完成 Android 共享 gate `app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble`；已新增 `stage7-closeout-readiness.md` 作为 closeout 自动 readiness 报告；当前技术门禁与 Figma 证据链已闭环，剩余仅待设计 / 产品 / QA 真人签核 | `in_progress` | `yellow` |

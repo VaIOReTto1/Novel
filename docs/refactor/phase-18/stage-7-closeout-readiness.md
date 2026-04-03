@@ -1,7 +1,7 @@
 # Stage 7 Closeout Readiness
 
 ## Summary
-- Overall status: ready_for_closeout_except_figma_and_signoff
+- Overall status: ready_for_closeout_except_signoff
 - Latest update: 2026-04-04
 
 ## Technical gates
@@ -36,6 +36,5 @@
 - Unmapped surfaces: 0
 
 ## External blockers
-- Light / dark / annotation / component-mapping evidence in the official Figma host is still incomplete
 - Design / Product / QA signoff remains pending
 

@@ -45,6 +45,7 @@ describe('novelDesign naming guard', () => {
     const allowedFilePaths = new Set([
       'scripts/stage7-closeout-readiness.js',
       'scripts/stage7-signoff-check.js',
+      'scripts/stage7-finalize.js',
     ]);
     const allowedPatterns = new Map([
       [
@@ -53,8 +54,10 @@ describe('novelDesign naming guard', () => {
           /"stage7:closeout"/g,
           /"stage7:closeout:check"/g,
           /"stage7:signoff:check"/g,
+          /"stage7:finalize"/g,
           /scripts\/stage7-closeout-readiness\.js/g,
           /scripts\/stage7-signoff-check\.js/g,
+          /scripts\/stage7-finalize\.js/g,
         ],
       ],
     ]);

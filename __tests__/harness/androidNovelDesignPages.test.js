@@ -122,4 +122,16 @@ describe('android novelDesign page adoption', () => {
     expect(reactNativePage).toContain('NovelDesignTokens');
     expect(backButton).toContain('NovelDesignTokens');
   });
+
+  test('core shared page primitives use NovelDesignTokens as their visual source', () => {
+    const novelButton = read('android/core-ui/src/main/java/com/novel/page/component/NovelButton.kt');
+    const novelDivider = read('android/core-ui/src/main/java/com/novel/page/component/NovelDivider.kt');
+    const novelText = read('android/core-ui/src/main/java/com/novel/page/component/NovelText.kt');
+    const novelTextField = read('android/core-ui/src/main/java/com/novel/page/component/NovelTextField.kt');
+
+    expect(novelButton).toContain('NovelDesignTokens');
+    expect(novelDivider).toContain('NovelDesignTokens');
+    expect(novelText).toContain('NovelDesignTokens');
+    expect(novelTextField).toContain('NovelDesignTokens');
+  });
 });

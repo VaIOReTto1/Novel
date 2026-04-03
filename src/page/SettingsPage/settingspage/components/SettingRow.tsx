@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import IconComponent from '../../../../component/IconComponent';
-import { SettingItem } from '../types/index';
-import { createSettingsPageStyles } from '../styles/SettingsPageStyles';
 import { commonSizes } from '../../../../utils/theme/dimensions';
 import { useNovelColors } from '../../../../utils/theme/colors';
+import { createSettingsPageStyles } from '../styles/SettingsPageStyles';
+import { SettingItem } from '../types/index';
 import MoonSunSwitch from './ThemeSwitcher';
 
 interface SettingRowProps {
@@ -12,10 +13,6 @@ interface SettingRowProps {
   onPress?: () => void;
 }
 
-/**
- * 设置项行组件
- * 支持多种类型：开关、箭头、切换按钮、操作按钮
- */
 export const SettingRow: React.FC<SettingRowProps> = ({ item, onPress }) => {
   const colors = useNovelColors();
   const styles = createSettingsPageStyles(colors);
@@ -28,9 +25,6 @@ export const SettingRow: React.FC<SettingRowProps> = ({ item, onPress }) => {
     }
   };
 
-  /**
-   * 渲染右侧内容
-   */
   const renderRightContent = () => {
     switch (item.type) {
       case 'switch':
@@ -41,8 +35,7 @@ export const SettingRow: React.FC<SettingRowProps> = ({ item, onPress }) => {
             style={[
               styles.customSwitch,
               item.value && styles.customSwitchActive,
-            ]}
-          >
+            ]}>
             <View
               style={[
                 styles.customSwitchThumb,
@@ -63,38 +56,20 @@ export const SettingRow: React.FC<SettingRowProps> = ({ item, onPress }) => {
         );
 
       case 'action':
-        return (
-          <View style={styles.settingRight}>
-            {item.value && (
-              <Text style={styles.settingValue}>
-                {item.value}
-              </Text>
-            )}
-            <Text style={styles.arrow}>›</Text>
-          </View>
-        );
-
       case 'arrow':
       default:
         return (
           <View style={styles.settingRight}>
-            {item.value && (
-              <Text style={styles.settingValue}>
-                {item.value}
-              </Text>
-            )}
-            <Text style={styles.arrow}>›</Text>
+            {item.value ? <Text style={styles.settingValue}>{item.value}</Text> : null}
+            <Text style={styles.arrow}>&gt;</Text>
           </View>
         );
     }
   };
 
-  /**
-   * 渲染左侧内容
-   */
   const renderLeftContent = () => (
     <View style={styles.settingLeft}>
-      {item.icon && (
+      {item.icon ? (
         <View style={styles.settingIcon}>
           <IconComponent
             name={item.icon}
@@ -102,43 +77,34 @@ export const SettingRow: React.FC<SettingRowProps> = ({ item, onPress }) => {
             height={commonSizes.iconSize}
           />
         </View>
-      )}
-      <Text style={[
-        styles.settingTitle,
-        item.disabled && styles.disabledTitle,
-      ]}>
+      ) : null}
+      <Text
+        style={[
+          styles.settingTitle,
+          item.disabled && styles.disabledTitle,
+        ]}>
         {item.title}
       </Text>
     </View>
   );
 
-  const isInteractive = item.type === 'arrow' || item.type === 'action' || item.type === 'toggle';
+  const isInteractive =
+    item.type === 'arrow' || item.type === 'action' || item.type === 'toggle';
 
-  // 交互式设置项（可点击）
   if (isInteractive && !item.disabled) {
     return (
       <TouchableOpacity
-        style={[
-          styles.settingRow,
-          item.disabled && styles.disabledRow,
-        ]}
+        style={[styles.settingRow, item.disabled && styles.disabledRow]}
         onPress={handlePress}
-        activeOpacity={0.7}
-      >
+        activeOpacity={0.7}>
         {renderLeftContent()}
         {renderRightContent()}
       </TouchableOpacity>
     );
   }
 
-  // 非交互式设置项（仅显示）
   return (
-    <View
-      style={[
-        styles.settingRow,
-        item.disabled && styles.disabledRow,
-      ]}
-    >
+    <View style={[styles.settingRow, item.disabled && styles.disabledRow]}>
       {renderLeftContent()}
       {renderRightContent()}
     </View>

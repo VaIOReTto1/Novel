@@ -40,7 +40,7 @@ const ThemeSwitcher = memo(function ThemeSwitcher({
   isDark,
   onToggle,
   size = 28,
-  accessibilityLabel = 'Toggle theme',
+  accessibilityLabel = '切换主题',
   ...pressableProps
 }: ThemeSwitcherProps) {
   // 0 → 太阳；1 → 月亮

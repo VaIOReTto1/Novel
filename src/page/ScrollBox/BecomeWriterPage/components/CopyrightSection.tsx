@@ -13,15 +13,13 @@ export const CopyrightSection: React.FC<CopyrightSectionProps> = React.memo(({
 }) => {
   return (
     <View>
-      {/* 标题与副标题：移到外层 */}
       <View style={[styles.section, styles.transparentSectionHeader]}>
-        <Text style={styles.sectionTitle}>版权改编</Text>
+        <Text style={styles.sectionTitle}>版权衍生</Text>
         <Text style={styles.sectionSubtitle}>
-          助力你的作品改编为爆火动漫、优秀短剧
+          支持作品延展到动漫、短剧等更多内容形态
         </Text>
       </View>
 
-      {/* 白底卡片区域，只包裹网格 */}
       <View style={styles.section}>
         <View style={styles.copyrightGrid}>
           {copyrightWorks.map((work) => (

@@ -6,10 +6,10 @@ export const DATA_TABS: TabData[] = [
   { id: 'short', name: '短故事', type: 'short' },
 ];
 
-// 作家专属 Tabs
+// 作者专属 Tabs
 export const AUTHOR_TABS: TabData[] = [
   { id: 'benefits', name: '超多福利', type: 'benefits' },
-  { id: 'road', name: '成神之路', type: 'road' },
+  { id: 'road', name: '成长之路', type: 'road' },
   { id: 'platform', name: '平台实力', type: 'platform' },
 ];
 

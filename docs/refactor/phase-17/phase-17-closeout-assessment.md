@@ -2,7 +2,7 @@
 
 ## 当前结论
 - `Phase 17 = in_progress`
-- 当前状态：`ready_for_closeout_except_review`
+- 当前状态：`ready_for_closeout_except_signoff`
 - 生效日期：`2026-04-04`
 - 所属阶段：`Stage 7`
 
@@ -32,7 +32,7 @@
 - [Stage 7 Showcase Runbook](./showcase-runbook.md)
 
 ## 当前 blocker
-- 当前已具备可运行 showcase 入口，但 web 侧仍是 showcase 页面而非独立 Storybook 站点。
+- 设计 / 产品 / QA 真人签核仍待补录，`Phase 17` 暂不切 `validated`。
 
 ## 关闭条件
 - 保持 `copyright-ledger.json` 与实际展示/消费入口同步，不再回退到空账本基线。

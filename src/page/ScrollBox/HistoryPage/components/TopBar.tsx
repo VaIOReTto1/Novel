@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { TopBarProps } from '../types';
-import { commonSizes } from '../../../../utils/theme/dimensions';
 
 interface TopBarComponentProps extends TopBarProps {
   styles: any;
@@ -17,9 +17,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       <TouchableOpacity
         style={styles.backButton}
         onPress={onBackPress}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.backArrow}>‹</Text>
+        activeOpacity={0.7}>
+        <Text style={styles.backArrow}>{'<'}</Text>
       </TouchableOpacity>
 
       <View style={styles.titleContainer}>
@@ -29,9 +28,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
       <TouchableOpacity
         style={styles.searchButton}
         onPress={onSearchPress}
-        activeOpacity={0.7}
-      >
-        <Text style={{ fontSize: commonSizes.iconSize }}>🔍</Text>
+        activeOpacity={0.7}>
+        <Text style={{ fontSize: 18 }}>搜索</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { ActivityIndicator, Text, View } from 'react-native';
 
 interface RefreshIndicatorProps {
   styles: any;
@@ -17,7 +16,6 @@ export const RefreshIndicator: React.FC<RefreshIndicatorProps> = ({
   isRefreshing,
   pullDistance,
   threshold,
-  spinStyle,
 }) => {
   if (!isPullingDown && !isRefreshing) {
     return null;
@@ -38,14 +36,12 @@ export const RefreshIndicator: React.FC<RefreshIndicatorProps> = ({
   return (
     <View style={styles.refreshIndicator}>
       <View style={styles.refreshContent}>
-        {shouldShowSpinner && (
+        {shouldShowSpinner ? (
           <View style={styles.loadingSpinner}>
-            <Animated.Text style={[styles.spinnerText, spinStyle]}>⟳</Animated.Text>
+            <ActivityIndicator size="small" color="#C96A34" />
           </View>
-        )}
-        <Text style={styles.refreshText}>
-          {getRefreshText()}
-        </Text>
+        ) : null}
+        <Text style={styles.refreshText}>{getRefreshText()}</Text>
       </View>
     </View>
   );

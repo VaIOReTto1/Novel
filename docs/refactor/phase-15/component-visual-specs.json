@@ -12571,7 +12571,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -12653,7 +12653,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -12803,7 +12803,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -12878,7 +12878,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -12953,7 +12953,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {
@@ -12964,9 +12964,7 @@
     "current_visual_summary": {
       "structure": "top bars, headers, nav rows and tab controls with direct icon/text actions",
       "affordance": "utility-first navigation cues with minimal hierarchy depth",
-      "asset_sources": [
-        "theme-aware"
-      ],
+      "asset_sources": [],
       "anatomy": [
         "leading-action",
         "title-slot",
@@ -13032,7 +13030,7 @@
     "current_look_recorded": true,
     "target_look_planned": true,
     "implementation_progress": {
-      "novel_design_ready": false
+      "novel_design_ready": true
     }
   },
   {

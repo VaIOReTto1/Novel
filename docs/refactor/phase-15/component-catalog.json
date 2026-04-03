@@ -1395,9 +1395,7 @@
       "name": "TopBar",
       "platform": "react-native",
       "category": "navigation",
-      "asset_sources": [
-        "theme-aware"
-      ]
+      "asset_sources": []
     },
     {
       "path": "src/page/ScrollBox/MemberCenterPage/components/BenefitComparison.tsx",

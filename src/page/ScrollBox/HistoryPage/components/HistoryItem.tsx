@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { HistoryItemProps } from '../types';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+
 import NavigationBridge from '../../../../utils/bridge/NavigationBridge';
+import { HistoryItemProps } from '../types';
 
 interface HistoryItemComponentProps extends HistoryItemProps {
   styles: any;
@@ -14,12 +15,9 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
   viewType,
   styles,
 }) => {
-  const formatProgress = (progress: number): string => {
-    return `已读 ${progress}%`;
-  };
+  const formatProgress = (progress: number): string => `已读 ${progress}%`;
 
   const handlePress = () => {
-    console.log('[ScrollBox/HistoryPage] Book pressed:', item.title);
     NavigationBridge.navigateToReader(item.id.toString());
   };
 
@@ -28,8 +26,7 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
       <TouchableOpacity
         style={styles.listItem}
         onPress={handlePress}
-        activeOpacity={0.7}
-      >
+        activeOpacity={0.7}>
         <View style={styles.listCover}>
           {item.coverUrl ? (
             <Image
@@ -57,13 +54,11 @@ export const HistoryItem: React.FC<HistoryItemComponentProps> = React.memo(({
     );
   }
 
-  // 网格视图
   return (
     <TouchableOpacity
       style={styles.gridItem}
       onPress={handlePress}
-      activeOpacity={0.7}
-    >
+      activeOpacity={0.7}>
       <View style={styles.gridCover}>
         {item.coverUrl ? (
           <Image

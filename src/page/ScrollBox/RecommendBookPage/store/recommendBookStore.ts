@@ -61,7 +61,7 @@ const initialState: RecommendBookState = {
 // Mock data generators
 const generateMockUserInfo = (): UserInfo => ({
   id: 1,
-  name: '安国的尹锋',
+  name: '测试作者',
   avatar: 'https://placehold.co/80x80',
 });
 
@@ -91,7 +91,7 @@ const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
     {
       id: '1',
       title: '种草好书赚现金',
-      description: '在话题下写优质推书帖赚现金',
+      description: '发布优质推荐内容，完成推书任务',
       coverUrl: 'https://placehold.co/120x80',
       maxEarnings: 69033.62,
       type: 'recommend',

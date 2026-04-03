@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { TaskItem } from '../types';
 
 interface CreativeTaskSectionProps {
@@ -34,7 +34,7 @@ export const CreativeTaskSection: React.FC<CreativeTaskSectionProps> = React.mem
             <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>创作任务</Text>
                 <TouchableOpacity onPress={onViewAllPress}>
-                    <Text style={styles.moreLink}>更多 ›</Text>
+                    <Text style={styles.moreLink}>更多 &gt;</Text>
                 </TouchableOpacity>
             </View>
 
@@ -81,9 +81,7 @@ export const CreativeTaskSection: React.FC<CreativeTaskSectionProps> = React.mem
 
                                 <View style={styles.taskEarnings}>
                                     <Text style={styles.taskEarningsLabel}>当前最高收益</Text>
-                                    <Text style={styles.taskEarningsAmount}>
-                                        ¥{task.maxEarnings.toFixed(2)}
-                                    </Text>
+                                    <Text style={styles.taskEarningsAmount}>{`¥${task.maxEarnings.toFixed(2)}`}</Text>
                                 </View>
 
                                 {/* 底部一行：左侧标签，右侧按钮 */}
@@ -118,7 +116,7 @@ export const CreativeTaskSection: React.FC<CreativeTaskSectionProps> = React.mem
                     activeOpacity={0.7}
                 >
                     <Text style={styles.viewAllTasksText}>查看更多任务</Text>
-                    <Text style={styles.viewAllTasksArrow}>›</Text>
+                    <Text style={styles.viewAllTasksArrow}>{'>'}</Text>
                 </TouchableOpacity>
             </View>
         </View>

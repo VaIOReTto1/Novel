@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { ServiceItem } from '../types';
 
 interface CreativeServiceSectionProps {
@@ -38,7 +38,7 @@ export const CreativeServiceSection: React.FC<CreativeServiceSectionProps> = Rea
                         <View style={styles.serviceTextGroup}>
                             <Text style={styles.serviceTitle}>{service.title}</Text>
                         </View>
-                        <Text style={styles.serviceArrow}>›</Text>
+                        <Text style={styles.serviceArrow}>{'>'}</Text>
                     </TouchableOpacity>
                 ))}
             </View>

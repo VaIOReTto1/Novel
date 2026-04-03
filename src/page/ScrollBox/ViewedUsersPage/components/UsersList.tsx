@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 import { RecommendUser } from '../types';
 
 interface UsersListProps {
@@ -48,44 +49,35 @@ const UserItem: React.FC<{
     }
   };
 
-  const renderTags = () => {
-    return (
-      <View style={styles.tagsContainer}>
-        {user.tags.map((tag, index) => (
-          <LinearGradient
-            key={index}
-            colors={getTagGradient(tag.type)}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 1}}
-            style={styles.userTag}
-          >
-            <Text style={styles.userTagText}>{tag.text}</Text>
-          </LinearGradient>
-        ))}
-      </View>
-    );
-  };
+  const renderTags = () => (
+    <View style={styles.tagsContainer}>
+      {user.tags.map((tag, index) => (
+        <LinearGradient
+          key={index}
+          colors={getTagGradient(tag.type)}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.userTag}>
+          <Text style={styles.userTagText}>{tag.text}</Text>
+        </LinearGradient>
+      ))}
+    </View>
+  );
 
   return (
     <TouchableOpacity
       style={[styles.userItem, isLast && styles.lastUserItem]}
       onPress={handleUserPress}
-      activeOpacity={0.7}
-    >
-      {/* 头像区域 */}
+      activeOpacity={0.7}>
       <View style={styles.avatarContainer}>
-        <Image
-          source={{ uri: user.avatar }}
-          style={styles.avatar}
-        />
-        {user.hasVBadge && (
+        <Image source={{ uri: user.avatar }} style={styles.avatar} />
+        {user.hasVBadge ? (
           <View style={styles.vBadge}>
             <Text style={styles.vBadgeText}>V</Text>
           </View>
-        )}
+        ) : null}
       </View>
 
-      {/* 用户信息 */}
       <View style={styles.userInfo}>
         <View style={styles.userNameRow}>
           <Text style={styles.userName}>{user.name}</Text>
@@ -96,20 +88,16 @@ const UserItem: React.FC<{
         </Text>
       </View>
 
-      {/* 关注按钮 */}
       <TouchableOpacity
-        style={[
-          styles.followButton,
-          user.isFollowed && styles.followedButton,
-        ]}
+        style={[styles.followButton, user.isFollowed && styles.followedButton]}
         onPress={handleFollowPress}
-        activeOpacity={0.7}
-      >
-        <Text style={[
-          styles.followButtonText,
-          user.isFollowed && styles.followedButtonText,
-        ]}>
-          {user.isFollowed ? '已关注' : '＋ 关注'}
+        activeOpacity={0.7}>
+        <Text
+          style={[
+            styles.followButtonText,
+            user.isFollowed && styles.followedButtonText,
+          ]}>
+          {user.isFollowed ? '已关注' : '+ 关注'}
         </Text>
       </TouchableOpacity>
     </TouchableOpacity>
@@ -122,15 +110,18 @@ export const UsersList: React.FC<UsersListProps> = React.memo(({
   onUserPress,
   onFollowPress,
 }) => {
-  const renderItem = useCallback(({ item, index }: { item: RecommendUser; index: number }) => (
-    <UserItem
-      user={item}
-      styles={styles}
-      isLast={index === users.length - 1}
-      onUserPress={onUserPress}
-      onFollowPress={onFollowPress}
-    />
-  ), [styles, users.length, onUserPress, onFollowPress]);
+  const renderItem = useCallback(
+    ({ item, index }: { item: RecommendUser; index: number }) => (
+      <UserItem
+        user={item}
+        styles={styles}
+        isLast={index === users.length - 1}
+        onUserPress={onUserPress}
+        onFollowPress={onFollowPress}
+      />
+    ),
+    [styles, users.length, onUserPress, onFollowPress],
+  );
 
   const keyExtractor = useCallback((item: RecommendUser) => item.id, []);
 
@@ -141,7 +132,7 @@ export const UsersList: React.FC<UsersListProps> = React.memo(({
       keyExtractor={keyExtractor}
       style={styles.usersList}
       showsVerticalScrollIndicator={false}
-      bounces={true}
+      bounces
     />
   );
 });

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { EmptyStateData } from '../types';
 
 interface EmptyStateProps {
@@ -19,18 +20,15 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(({
         <Text style={styles.emptyIconText}>{data.icon}</Text>
       </View>
       <Text style={styles.emptyTitle}>{data.title}</Text>
-      {data.subtitle && (
-        <Text style={styles.emptyTitle}>{data.subtitle}</Text>
-      )}
-      {data.buttonText && onButtonPress && (
+      {data.subtitle ? <Text style={styles.emptyTitle}>{data.subtitle}</Text> : null}
+      {data.buttonText && onButtonPress ? (
         <TouchableOpacity
           style={styles.emptyButton}
           onPress={onButtonPress}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.emptyButtonText}>{data.buttonText}</Text>
         </TouchableOpacity>
-      )}
+      ) : null}
     </View>
   );
 });

@@ -14,3 +14,4 @@
 | 2026-03-31 | Stage 7 activation | 建立新的 `Stage 7 = Phase 15-18` 控制面，并把默认主线切到视觉系统与资产治理 | [stage-7-phase-15-18-plan.md](../refactor/stage-7-phase-15-18-plan.md) |
 | 2026-03-31 | Stage 7 foundations | 落地 `Phase 15` 审计脚本与机器清单，并补齐 `Phase 16-17` 的 Token / 资产治理脚手架 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |
 | 2026-04-01 | Stage 7 writer rollout | 新增统一 `NovelDesignUI` 全局配置层，推进 `WritePage`、`AIWriteAssistant`、`BookManagePage` 的 writer 线换肤，并把 surface / component 视觉记录细化到区块级 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |
+| 2026-04-03 | Stage 7 scrollbox rollout | 连续推进 `BecomeWriterPage`、`RecommendBookPage`、`ViewedUsersPage`、`MyReservationPage`、`MessagePage` 的次级页换肤收口，补齐组件回归与可读 mock 数据 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |

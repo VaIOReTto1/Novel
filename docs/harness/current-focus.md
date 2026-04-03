@@ -12,6 +12,7 @@
 - `2026-03-31` 已完成 `Stage 6` closeout
 - `2026-03-31` 已启动 `Stage 7`
 - `2026-03-31` 已落地 Stage 7 的审计脚本、Token 基线和资产治理基线
+- `2026-04-03` 已继续推进 ScrollBox 次级页换肤，补齐 `BecomeWriter / RecommendBook / ViewedUsers / MyReservation / Message` 的组件回归与 mock 文案收口
 
 ## 默认下一主线
 - 当前 active refactor 主线为 `Stage 7 / Phase 15`
@@ -40,4 +41,4 @@
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-03-31` by Stage 7 activation
+- `2026-04-03` by Stage 7 scrollbox rollout

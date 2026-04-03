@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ReservationItem } from '../types';
 
@@ -21,7 +21,7 @@ const ReservationCard: React.FC<{
   }, [item.id, onItemPress]);
 
   const handleReservePress = useCallback((e: any) => {
-    e.stopPropagation(); // 防止触发卡片点击
+    e.stopPropagation();
     onReservePress(item.id);
   }, [item.id, onReservePress]);
 
@@ -38,18 +38,15 @@ const ReservationCard: React.FC<{
           resizeMode="cover"
         />
 
-        {/* 标签 */}
         <View style={styles.cardBadge}>
           <Text style={styles.cardBadgeText}>即将上线</Text>
         </View>
 
-        {/* 渐变蒙版 */}
         <LinearGradient
           colors={['transparent', 'rgba(0,0,0,0.85)']}
           style={styles.cardGradient}
         />
 
-        {/* 内容 */}
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle} numberOfLines={1}>
             {item.title}
@@ -84,7 +81,6 @@ export const ReservationGrid: React.FC<ReservationGridProps> = React.memo(({
   onItemPress,
   onReservePress,
 }) => {
-  // 将数组分组为每行两个项目
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
     groupedItems.push(items.slice(i, i + 2));
@@ -99,11 +95,10 @@ export const ReservationGrid: React.FC<ReservationGridProps> = React.memo(({
               key={item.id}
               item={item}
               styles={styles}
-              onItemPress={onItemPress}
-              onReservePress={onReservePress}
-            />
-          ))}
-          {/* 如果是奇数个项目，最后一行添加占位 */}
+            onItemPress={onItemPress}
+            onReservePress={onReservePress}
+          />
+        ))}
           {row.length === 1 && <View style={styles.gridItem} />}
         </View>
       ))}

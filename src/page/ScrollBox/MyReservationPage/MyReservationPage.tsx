@@ -97,7 +97,7 @@ const MyReservationPage: React.FC = () => {
           onBackPress={handlers.handleBackPress}
         />
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>加载失败: {error}</Text>
+          <Text style={styles.loadingText}>{`加载失败: ${error}`}</Text>
         </View>
       </View>
     );

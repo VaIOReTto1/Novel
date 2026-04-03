@@ -6,7 +6,7 @@
 - Placeholder provider: picsum
 - Photo provider: pexels
 - Illustration provider: undraw
-- Copyright ledger entries: 0
+- Copyright ledger entries: 1
 
 ## Migration targets
 - Icons migrate to `iconify` with local manifest ownership.

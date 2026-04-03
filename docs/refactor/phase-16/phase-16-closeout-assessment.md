@@ -24,9 +24,9 @@
 
 ## 当前 blocker
 - Figma Variables 真实文件态尚未通过 MCP 回读与 repo Token 产物逐项核对。
-- `RTL / a11y` 规则虽然已有零散宿主与测试使用，但尚未形成 Stage 7 closeout 所需的集中规则文档和 Figma 对应证据。
+- Figma 侧的 token / variable 证据仍未与新建平台规则宿主形成逐项映射。
 
 ## 关闭条件
-- 补齐 `RTL / a11y / dark` 规则的集中宿主文档，并能映射到 Token 真源。
+- 将 [phase-16-token-platform-rules.md](./phase-16-token-platform-rules.md) 与 Figma Variables、RN、Android 三端证据对齐。
 - 完成 Figma Variables 与 repo Token 产物的一致性核验。
 - 切换 `V16-01`、`V16-02`、`V16-03` 到 `validated`。

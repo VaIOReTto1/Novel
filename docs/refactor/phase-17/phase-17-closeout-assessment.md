@@ -31,10 +31,9 @@
 - `cd android && ..\\android\\gradlew.bat app:compileDebugAndroidTestKotlin --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"`
 
 ## 当前 blocker
-- `copyright-ledger.json` 当前仍为空账本基线，尚未形成 closeout 所需的实际消费记录样本。
 - RN Storybook 正式入口尚未补到“团队可直接打开”的最终宿主；当前为 showcase / web flag 级别可运行。
 
 ## 关闭条件
-- 至少形成一版非空 `copyright-ledger` 示例或明确的“零实图消费”结论。
+- 保持 `copyright-ledger.json` 与实际展示/消费入口同步，不再回退到空账本基线。
 - 将 `V17-03` 的“可运行展示基建”补充为 closeout 级入口说明。
 - 切换 `V17-01`、`V17-02`、`V17-03` 到 `validated`。

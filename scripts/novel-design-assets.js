@@ -127,7 +127,16 @@ const buildIllustrationManifest = (providers) => ({
 
 const buildCopyrightLedger = () => ({
   schema_version: '1.0.0',
-  entries: [],
+  entries: [
+    {
+      asset_id: 'pexels-demo-showcase',
+      author_name: 'Novel Design Demo Author',
+      source_url: 'https://www.pexels.com/photo/example',
+      license_note: 'Showcase-only demo credit overlay example',
+      sync_timestamp: '2026-04-04T00:00:00Z',
+      consuming_surfaces: ['rn-showcase-novel-design-showcase'],
+    },
+  ],
 });
 
 const buildAssetGovernanceReport = ({ iconManifest, providers, ledger }) => [

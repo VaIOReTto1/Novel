@@ -81,7 +81,7 @@ describe('novelDesign asset scripts', () => {
     }
   });
 
-  test('copyright ledger starts with explicit schema and empty entries', () => {
+  test('copyright ledger captures showcase demo usage with explicit schema', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-ledger-'));
 
     try {
@@ -93,7 +93,15 @@ describe('novelDesign asset scripts', () => {
 
       expect(ledger.schema_version).toBe('1.0.0');
       expect(Array.isArray(ledger.entries)).toBe(true);
-      expect(ledger.entries).toHaveLength(0);
+      expect(ledger.entries).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            asset_id: 'pexels-demo-showcase',
+            author_name: 'Novel Design Demo Author',
+            source_url: 'https://www.pexels.com/photo/example',
+          }),
+        ]),
+      );
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }

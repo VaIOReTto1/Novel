@@ -14,8 +14,15 @@ const DEFAULT_OUTPUT_PATH = path.join(
 const readText = (repoRoot, relativePath) =>
   fs.readFileSync(path.join(repoRoot, relativePath), 'utf8');
 
+const parseJson = (repoRoot, relativePath) =>
+  JSON.parse(readText(repoRoot, relativePath));
+
+const ensureDir = (dirPath) => {
+  fs.mkdirSync(dirPath, { recursive: true });
+};
+
 const writeText = (absolutePath, content) => {
-  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  ensureDir(path.dirname(absolutePath));
   fs.writeFileSync(absolutePath, content, 'utf8');
 };
 
@@ -26,11 +33,6 @@ const capture = (text, pattern, fallback = 'unknown') => {
   const match = text.match(pattern);
   return match ? match[1].trim() : fallback;
 };
-
-const unique = (items) => [...new Set(items.filter(Boolean))];
-
-const parseJson = (repoRoot, relativePath) =>
-  JSON.parse(readText(repoRoot, relativePath));
 
 const collectSmokeTests = (repoRoot) => {
   const smokeDir = path.join(repoRoot, '__tests__', 'smoke');
@@ -59,15 +61,16 @@ const buildReadinessModel = (repoRoot) => {
     'design-system/assets/copyright-ledger.json',
   );
   const smokeTests = collectSmokeTests(repoRoot);
-
-  const overallStatus = capture(stageSummary, /当前状态：`([^`]+)`/);
-  const latestUpdate = capture(validationBoard, /最新更新：`([^`]+)`/);
-  const unmappedSurfaces = figmaFrameMap.filter((entry) => !entry.figma_frame_id).length;
   const externalBlockers = [];
 
-  if (stageSummary.includes('Starter plan tool-call limit')) {
+  if (
+    stageSummary.includes('亮色稿') ||
+    stageSummary.includes('暗色稿') ||
+    stageSummary.includes('标注稿') ||
+    stageSummary.includes('组件映射')
+  ) {
     externalBlockers.push(
-      'Figma MCP Starter plan tool-call limit blocks frame-id writeback',
+      'Light / dark / annotation / component-mapping evidence in the official Figma host is still incomplete',
     );
   }
 
@@ -76,76 +79,70 @@ const buildReadinessModel = (repoRoot) => {
   }
 
   return {
-    overallStatus,
-    latestUpdate,
+    overallStatus: capture(stageSummary, /当前状态：`([^`]+)`/),
+    latestUpdate: capture(validationBoard, /最新更新：`([^`]+)`/),
     technicalGates: {
       fullJest:
         validationBoard.includes('108` 个 suites / `260` 个 tests 全绿') ||
         validationBoard.includes('108` 个 suites / `260` 个 tests'),
-      androidSharedGate:
-        validationBoard.includes(
-          'app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble',
-        ),
-      smokeCatalogDriftNone: validationBoard.includes('smoke catalog drift 为 `none`') ||
-        validationBoard.includes('smoke catalog drift 涓?`none`') ||
-        validationBoard.includes('smoke catalog drift'),
-    },
-    figma: {
-      totalSurfaces: figmaFrameMap.length,
-      unmappedSurfaces,
+      androidSharedGate: validationBoard.includes(
+        'app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble',
+      ),
+      smokeCatalogDriftNone: validationBoard.includes('smoke catalog drift 为 `none`'),
     },
     smoke: {
       count: smokeTests.length,
-      names: smokeTests.sort(),
+      names: smokeTests,
+    },
+    figma: {
+      totalSurfaces: figmaFrameMap.length,
+      unmappedSurfaces: figmaFrameMap.filter((entry) => !entry.figma_frame_id).length,
     },
     assets: {
-      copyrightLedgerEntries: copyrightLedger.entries.length,
+      copyrightLedgerEntries: Array.isArray(copyrightLedger.entries)
+        ? copyrightLedger.entries.length
+        : 0,
     },
     externalBlockers,
   };
 };
 
-const renderReadinessReport = (model) => {
-  const lines = [
-    '# Stage 7 Closeout Readiness',
-    '',
-    '## Summary',
-    `- Overall status: ${model.overallStatus}`,
-    `- Latest update: ${model.latestUpdate}`,
-    '',
-    '## Technical gates',
-    `- Full Jest: ${model.technicalGates.fullJest ? 'pass' : 'missing'}`,
-    `- Android shared gate: ${model.technicalGates.androidSharedGate ? 'pass' : 'missing'}`,
-    `- Smoke catalog drift: ${model.technicalGates.smokeCatalogDriftNone ? 'none' : 'present'}`,
-    '',
-    '## Smoke coverage',
-    `- RN smoke tests: ${model.smoke.count}`,
-    ...model.smoke.names.map((name) => `- ${name}`),
-    '',
-    '## Asset governance',
-    `- Copyright ledger entries: ${model.assets.copyrightLedgerEntries}`,
-    '',
-    '## Figma frame map',
-    `- Total surfaces: ${model.figma.totalSurfaces}`,
-    `- Unmapped surfaces: ${model.figma.unmappedSurfaces}`,
-    '',
-    '## External blockers',
-    ...(model.externalBlockers.length
-      ? model.externalBlockers.map((item) => `- ${item}`)
-      : ['- none']),
-    '',
-  ];
-
-  return `${lines.join('\n')}\n`;
-};
+const renderReadinessReport = (model) => [
+  '# Stage 7 Closeout Readiness',
+  '',
+  '## Summary',
+  `- Overall status: ${model.overallStatus}`,
+  `- Latest update: ${model.latestUpdate}`,
+  '',
+  '## Technical gates',
+  `- Full Jest: ${model.technicalGates.fullJest ? 'pass' : 'missing'}`,
+  `- Android shared gate: ${model.technicalGates.androidSharedGate ? 'pass' : 'missing'}`,
+  `- Smoke catalog drift: ${model.technicalGates.smokeCatalogDriftNone ? 'none' : 'present'}`,
+  '',
+  '## Smoke coverage',
+  `- RN smoke tests: ${model.smoke.count}`,
+  ...model.smoke.names.map((name) => `- ${name}`),
+  '',
+  '## Asset governance',
+  `- Copyright ledger entries: ${model.assets.copyrightLedgerEntries}`,
+  '',
+  '## Figma frame map',
+  `- Total surfaces: ${model.figma.totalSurfaces}`,
+  `- Unmapped surfaces: ${model.figma.unmappedSurfaces}`,
+  '',
+  '## External blockers',
+  ...(model.externalBlockers.length
+    ? model.externalBlockers.map((item) => `- ${item}`)
+    : ['- none']),
+  '',
+].join('\n') + '\n';
 
 const generateStage7CloseoutReadiness = ({
   repoRoot = path.resolve(__dirname, '..'),
   outputPath = DEFAULT_OUTPUT_PATH,
 } = {}) => {
   const resolvedOutputPath = resolveOutputPath(repoRoot, outputPath);
-  const model = buildReadinessModel(repoRoot);
-  writeText(resolvedOutputPath, renderReadinessReport(model));
+  writeText(resolvedOutputPath, renderReadinessReport(buildReadinessModel(repoRoot)));
   return resolvedOutputPath;
 };
 

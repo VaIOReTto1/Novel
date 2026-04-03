@@ -303,6 +303,52 @@ describe('novelDesign audit scripts', () => {
     }
   });
 
+  test('figma frame mapping preserves previously backfilled frame ids', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-figma-map-preserve-'));
+
+    try {
+      const phase15Dir = path.join(tempDir, 'docs', 'refactor', 'phase-15');
+      fs.mkdirSync(phase15Dir, { recursive: true });
+      fs.writeFileSync(
+        path.join(phase15Dir, 'figma-frame-map.json'),
+        JSON.stringify(
+          [
+            {
+              surface_id: 'rn-root-profile-page',
+              figma_page: '00-现状审计/RN Root',
+              figma_frame_name: 'rn-root-profile-page',
+              figma_frame_id: '123:456',
+              mapping_status: 'mapped',
+              source_kind: 'surface',
+              frame_type: 'root-audit-frame',
+              sync_status: 'synced',
+              audit_frame_name: 'rn-root-profile-page',
+              target_frame_name_light: 'rn-root-profile-page/light',
+              target_frame_name_dark: 'rn-root-profile-page/dark',
+              annotation_frame_name: 'rn-root-profile-page/annotation',
+            },
+          ],
+          null,
+          2,
+        ),
+        'utf8',
+      );
+
+      const { figmaFrameMapPath } = novelDesignAudit.generateAuditArtifacts({
+        repoRoot,
+        outputDir: phase15Dir,
+      });
+      const frameMap = readJson(figmaFrameMapPath);
+      const profile = frameMap.find((entry) => entry.surface_id === 'rn-root-profile-page');
+
+      expect(profile.figma_frame_id).toBe('123:456');
+      expect(profile.mapping_status).toBe('mapped');
+      expect(profile.sync_status).toBe('synced');
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
   test('visual planning summary reports every surface and component as planned entries', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'novel-design-visual-summary-'));
 

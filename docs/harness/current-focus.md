@@ -18,6 +18,7 @@
 - `2026-04-03` 已新增 `RecommendBook / ViewedUsers / MyReservation / BecomeWriter / Message / FeedbackHelp` smoke，并将 smoke catalog drift 收口到 `none`
 - `2026-04-04` 已补齐 `Stage 7 closeout summary / review packet / Phase 15-18 closeout assessment / Phase 16 token rules / Phase 17 showcase runbook`
 - `2026-04-04` 已建立 Stage 7 closeout summary / review packet / Phase 15-18 closeout assessment 宿主，当前仅剩 Figma 证据链与待签核收尾
+- `2026-04-04` 已将新正式 Figma 宿主切到 `7YaJPjyzLvGLfVPTkUx0Tf`，完成 51 个 audit frame 回填，并补下 `RecommendBookPage` 的亮/暗/标注样例
 
 ## 默认下一主线
 - 当前 active refactor 主线为 `Stage 7 / Phase 15`

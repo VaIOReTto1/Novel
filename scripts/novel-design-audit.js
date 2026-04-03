@@ -47,6 +47,13 @@ const writeJson = (absolutePath, data) => {
   writeText(absolutePath, `${JSON.stringify(data, null, 2)}\n`);
 };
 
+const readJsonIfExists = (absolutePath) => {
+  if (!fs.existsSync(absolutePath)) {
+    return null;
+  }
+  return JSON.parse(fs.readFileSync(absolutePath, 'utf8'));
+};
+
 const relativeRepoPath = (repoRoot, absolutePath) =>
   toPosix(path.relative(repoRoot, absolutePath));
 
@@ -2431,6 +2438,37 @@ const enrichFigmaFrameMap = (figmaFrameMap) =>
     annotation_frame_name: `${entry.surface_id}/annotation`,
   }));
 
+const mergeExistingFigmaFrameMap = (nextFrameMap, existingFrameMap) => {
+  if (!Array.isArray(existingFrameMap) || existingFrameMap.length === 0) {
+    return nextFrameMap;
+  }
+
+  const existingBySurfaceId = new Map(
+    existingFrameMap.map((entry) => [entry.surface_id, entry]),
+  );
+
+  return nextFrameMap.map((entry) => {
+    const existing = existingBySurfaceId.get(entry.surface_id);
+    if (!existing) {
+      return entry;
+    }
+
+    return {
+      ...entry,
+      figma_frame_id: existing.figma_frame_id || entry.figma_frame_id,
+      mapping_status: existing.figma_frame_id ? (existing.mapping_status || 'mapped') : entry.mapping_status,
+      sync_status: existing.figma_frame_id ? (existing.sync_status || 'synced') : entry.sync_status,
+      figma_page: existing.figma_page || entry.figma_page,
+      figma_frame_name: existing.figma_frame_name || entry.figma_frame_name,
+      frame_type: existing.frame_type || entry.frame_type,
+      audit_frame_name: existing.audit_frame_name || entry.audit_frame_name,
+      target_frame_name_light: existing.target_frame_name_light || entry.target_frame_name_light,
+      target_frame_name_dark: existing.target_frame_name_dark || entry.target_frame_name_dark,
+      annotation_frame_name: existing.annotation_frame_name || entry.annotation_frame_name,
+    };
+  });
+};
+
 const buildFigmaSyncQueue = (surfaceVisualSpecs, componentVisualSpecs) => [
   ...surfaceVisualSpecs.map((entry) => ({
     source_id: entry.surface_id,
@@ -2555,7 +2593,12 @@ const generateAuditArtifacts = ({
   const surfaceInventory = buildSurfaceInventory(repoRoot);
   const componentCatalog = buildComponentCatalog(repoRoot);
   const assetInventory = buildAssetInventory(repoRoot);
-  const figmaFrameMap = enrichFigmaFrameMap(buildFigmaFrameMap(surfaceInventory));
+  const figmaFrameMapPath = path.join(resolvedOutputDir, 'figma-frame-map.json');
+  const existingFigmaFrameMap = readJsonIfExists(figmaFrameMapPath);
+  const figmaFrameMap = mergeExistingFigmaFrameMap(
+    enrichFigmaFrameMap(buildFigmaFrameMap(surfaceInventory)),
+    existingFigmaFrameMap,
+  );
   const surfaceVisualSpecs = buildSurfaceVisualSpecs(surfaceInventory);
   const componentVisualSpecs = enrichComponentVisualSpecs(buildComponentVisualSpecs(componentCatalog));
   const figmaSyncQueue = buildFigmaSyncQueue(surfaceVisualSpecs, componentVisualSpecs);
@@ -2576,7 +2619,7 @@ const generateAuditArtifacts = ({
     surfaceVisualSpecsPath: path.join(resolvedOutputDir, 'surface-visual-specs.json'),
     componentVisualSpecsPath: path.join(resolvedOutputDir, 'component-visual-specs.json'),
     assetInventoryPath: path.join(resolvedOutputDir, 'asset-inventory.json'),
-    figmaFrameMapPath: path.join(resolvedOutputDir, 'figma-frame-map.json'),
+    figmaFrameMapPath,
     figmaSyncQueuePath: path.join(resolvedOutputDir, 'figma-sync-queue.json'),
     governanceDriftReportPath: path.join(resolvedOutputDir, 'governance-drift-report.md'),
     visualPlanningSummaryPath: path.join(resolvedOutputDir, 'visual-planning-summary.md'),

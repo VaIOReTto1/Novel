@@ -35,5 +35,5 @@
 | ID | Item | Expected | Actual | Status | Result |
 | --- | --- | --- | --- | --- | --- |
 | V18-01 | page rollout wave 1 | 壳层与高频入口换肤完成 | 已落地 `ProfilePage`、`SettingsPage`、`CategoryPage`、`BookshelfPage`、`MemberCenterPage`、`CommentPage`、`ReviewDetailPage`、`WriteReviewPage`、`WritePage`、`AIWriteAssistant`、`BookManagePage`，并切入统一 `NovelDesignUI` 配置层 | `in_progress` | `yellow` |
-| V18-02 | page rollout wave 2-4 | 核心内容页、评论创作线、次级页面完成 | 评论创作线与写作线持续推进中；本轮已继续收口 `BecomeWriterPage`、`RecommendBookPage`、`ViewedUsersPage`、`MyReservationPage`、`MessagePage` 的组件文案与可读 mock 数据，并补齐对应 RN 组件回归；Bookshelf 四个内嵌子页与剩余次级页面仍待继续换肤 | `in_progress` | `yellow` |
+| V18-02 | page rollout wave 2-4 | 核心内容页、评论创作线、次级页面完成 | 评论创作线与写作线持续推进中；本轮已继续收口 `BecomeWriterPage`、`RecommendBookPage`、`ViewedUsersPage`、`MyReservationPage`、`MessagePage` 的组件文案与可读 mock 数据，并补齐对应 RN 组件回归；新正式 Figma 宿主中已为 `rn-host-recommend-book-page-component` 补下首套亮/暗/标注样例；Bookshelf 四个内嵌子页与剩余次级页面仍待继续换肤 | `in_progress` | `yellow` |
 | V18-03 | visual regression and gates | 像素、无障碍、版权、性能门禁通过 | 已完成 `npm test -- --runInBand` 全量 Jest 回归，结果 `108` 个 suites / `260` 个 tests 全绿；已完成 Android 共享 gate `app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble`；已新增 `stage7-closeout-readiness.md` 作为 closeout 自动 readiness 报告；视觉稿、无障碍、版权核验与性能收尾仍待继续补齐 | `in_progress` | `yellow` |

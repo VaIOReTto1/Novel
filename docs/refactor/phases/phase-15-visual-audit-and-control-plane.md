@@ -30,7 +30,7 @@
 - [figma-frame-map.json](../phase-15/figma-frame-map.json)
 - [governance-drift-report.md](../phase-15/governance-drift-report.md)
 - [visual-planning-summary.md](../phase-15/visual-planning-summary.md)
-- [Stage 7 Figma file](https://www.figma.com/design/iYUJgiIKNxjt78XHujzS4b)
+- [Stage 7 Figma file](https://www.figma.com/design/7YaJPjyzLvGLfVPTkUx0Tf)
 
 ## 关键规则
 - `App -> ProfilePage` 必须作为 RN Root 单独盘点，不得只看 `componentRegistry.ts`。

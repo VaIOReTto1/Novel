@@ -13,6 +13,7 @@
 - 当前真正阻塞 Stage 7 正式关闭的项已经收缩到两类：
   - Figma 证据链未闭环
   - 设计 / 产品 / QA 三方签核未落盘
+- 新正式宿主 `7YaJPjyzLvGLfVPTkUx0Tf` 中已完成 `51` 个 audit frame 回填，并为 `rn-host-recommend-book-page-component` 补下首套亮/暗/标注样例。
 - 因此当前最准确状态不是“未开始 closeout”，而是“closeout 宿主与证据包已建成，待外部证据与签核完成”。
 
 ## 阶段组成状态
@@ -30,11 +31,12 @@
 - [Phase 15-18 验证看板](./tracking/phase-15-18-validation-board.md)
 
 ## 外部 blocker
-- Stage 7 Figma 文件 `iYUJgiIKNxjt78XHujzS4b` 的 MCP 读取在当前会话中命中 Starter plan tool-call limit，导致 `figma-frame-map` 仍无法自动回填真实 frame id。
+- 原 Stage 7 Figma 文件 `iYUJgiIKNxjt78XHujzS4b` 对当前账号不可继续用作正式宿主；当前已切换到新宿主 `7YaJPjyzLvGLfVPTkUx0Tf`，并完成 `51` 个 audit frame 的初始回填。
+- 新宿主中 `03-页面-亮色 / 04-页面-暗色 / 05-标注与交付` 的页面级证据仍待继续补齐。
 - 三方评审按本轮口径属于“待签核，不阻塞技术完成”，但会继续阻塞 `Stage 7 = validated` 的最终切换。
 
 ## 下一步
-- 一旦恢复 Figma MCP 可用性，优先回填 `figma-frame-map` 与页面级标注/映射证据。
+- 在新宿主中继续按同一模式补齐其余高频页面的亮色稿、暗色稿、标注稿与组件映射证据。
 - 随后执行待签核评审包，并切换：
   - `Phase 15-18 = validated`
   - `Stage 7 = validated`

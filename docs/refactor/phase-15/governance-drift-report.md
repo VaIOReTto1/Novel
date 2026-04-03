@@ -5,7 +5,7 @@
 - Registry drift: none
 - RN smoke tests: 16
 - Missing smoke catalog entries: 0
-- Unmapped figma frames: 51
+- Unmapped figma frames: 0
 - Surface visual specs coverage: 51/51
 - Component visual specs coverage: 225/225
 - Detailed surface fields: viewport, frame_anatomy, primary_blocks, visual_density, state_panels, asset_profile, interaction_chrome
@@ -38,5 +38,5 @@
 - Missing from catalog: none
 
 ## Figma mapping status
-- Unmapped surfaces: 51
+- Unmapped surfaces: 0
 

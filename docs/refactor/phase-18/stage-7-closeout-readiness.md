@@ -33,9 +33,9 @@
 
 ## Figma frame map
 - Total surfaces: 51
-- Unmapped surfaces: 51
+- Unmapped surfaces: 0
 
 ## External blockers
-- Figma MCP Starter plan tool-call limit blocks frame-id writeback
+- Light / dark / annotation / component-mapping evidence in the official Figma host is still incomplete
 - Design / Product / QA signoff remains pending
 

@@ -24,9 +24,9 @@ describe('stage7 closeout readiness', () => {
       expect(report).toContain('Android shared gate');
       expect(report).toContain('RN smoke tests: 16');
       expect(report).toContain('Figma frame map');
-      expect(report).toContain('Unmapped surfaces: 51');
+      expect(report).toContain('Unmapped surfaces: 0');
       expect(report).toContain('External blockers');
-      expect(report).toContain('Starter plan tool-call limit');
+      expect(report).toContain('Design / Product / QA signoff remains pending');
       expect(report).toContain('Overall status: ready_for_closeout_except_figma_and_signoff');
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });

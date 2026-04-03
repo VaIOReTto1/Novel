@@ -16,6 +16,7 @@
 - `2026-04-03` 已跑通全量 Jest 与 Android 共享 gate，当前换肤波次具备继续推进 `Phase 18` 门禁收尾的验证基线
 - `2026-04-03` 已为 Android 侧 `NovelDesignShowcaseScreen` 接通 `novel_design_showcase` 路由，推进 `V17-03 showcase infrastructure`
 - `2026-04-03` 已新增 `RecommendBook / ViewedUsers / MyReservation / BecomeWriter / Message / FeedbackHelp` smoke，并将 smoke catalog drift 收口到 `none`
+- `2026-04-04` 已补齐 `Stage 7 closeout summary / review packet / Phase 15-18 closeout assessment / Phase 16 token rules / Phase 17 showcase runbook`
 - `2026-04-04` 已建立 Stage 7 closeout summary / review packet / Phase 15-18 closeout assessment 宿主，当前仅剩 Figma 证据链与待签核收尾
 
 ## 默认下一主线
@@ -45,4 +46,4 @@
 - [docs/refactor/tracking/decision-log.md](../refactor/tracking/decision-log.md)
 
 ## Last Reviewed
-- `2026-04-03` by Stage 7 scrollbox rollout
+- `2026-04-04` by Stage 7 closeout prep

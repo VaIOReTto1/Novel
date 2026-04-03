@@ -13,7 +13,7 @@
 - 当前真正阻塞 Stage 7 正式关闭的项已经收缩到两类：
   - Figma 证据链未闭环
   - 设计 / 产品 / QA 三方签核未落盘
-- 新正式宿主 `7YaJPjyzLvGLfVPTkUx0Tf` 中已完成 `51` 个 audit frame 回填，并为 `rn-host-recommend-book-page-component` 补下首套亮/暗/标注样例。
+- 新正式宿主 `7YaJPjyzLvGLfVPTkUx0Tf` 中已完成 `51` 个 audit frame 回填，并已为 `rn-host-recommend-book-page-component`、`rn-host-become-writer-page-component` 补下亮/暗/标注样例。
 - 因此当前最准确状态不是“未开始 closeout”，而是“closeout 宿主与证据包已建成，待外部证据与签核完成”。
 
 ## 阶段组成状态

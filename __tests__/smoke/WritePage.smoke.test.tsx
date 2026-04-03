@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Text, TextInput } from 'react-native';
 
 jest.mock('../../src/page/Writer/WritePage/styles/WritePageStyles', () => ({
   createWritePageStyles: () =>
@@ -98,5 +98,22 @@ describe('WritePage smoke', () => {
       .filter((value): value is string => typeof value === 'string');
 
     expect(texts).toEqual(expect.arrayContaining(['TopBar']));
+  });
+
+  it('uses readable editor placeholders', async () => {
+    let renderer!: ReactTestRenderer.ReactTestRenderer;
+
+    await ReactTestRenderer.act(async () => {
+      renderer = ReactTestRenderer.create(<WritePage />);
+    });
+
+    const placeholders = renderer.root
+      .findAllByType(TextInput)
+      .map((node) => node.props.placeholder)
+      .filter(Boolean);
+
+    expect(placeholders).toEqual(
+      expect.arrayContaining(['请输入标题', '开始整理这一章的内容...']),
+    );
   });
 });

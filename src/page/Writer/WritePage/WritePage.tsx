@@ -16,13 +16,13 @@ import {
   replaceSelectedText,
   runWritePageFocusSync,
 } from './domain/writePageModel';
+import { TopBar } from './components/TopBar';
+import { SelectionToolbar } from './components/SelectionToolbar';
+import { VolumeBar } from './components/VolumeBar';
+import { WelcomePanel } from './components/WelcomePanel';
 import { useWriteActions } from './hooks/useWriteActions';
 import { useWriteStore } from './store/writeStore';
 import { createWritePageStyles } from './styles/WritePageStyles';
-import { SelectionToolbar } from './components/SelectionToolbar';
-import { TopBar } from './components/TopBar';
-import { VolumeBar } from './components/VolumeBar';
-import { WelcomePanel } from './components/WelcomePanel';
 
 const WritePage: React.FC = () => {
   const colors = useNovelColors();
@@ -100,10 +100,12 @@ const WritePage: React.FC = () => {
     if (RN.Platform?.OS !== 'android') {
       return;
     }
+
     const node = RN.findNodeHandle?.(contentRef.current);
     if (node != null) {
       NavigationBridge.attachSelectionMenu?.(node as number);
     }
+
     const cleanupSelectionSubscription = subscribeWritePageSelectionMenuAction(
       (event: any) => {
         requestAnimationFrame(() => {
@@ -111,6 +113,7 @@ const WritePage: React.FC = () => {
         });
       },
     );
+
     return cleanupSelectionSubscription;
   }, [handlers]);
 

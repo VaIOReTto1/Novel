@@ -61,10 +61,9 @@ describe('harness control plane', () => {
     const snapshot = fs.readFileSync(snapshotPath, 'utf8');
     const currentBranch = runGit(['branch', '--show-current']);
     const refactorReadme = readText('docs/refactor/README.md');
-    const stageSummary = readText('docs/refactor/stage-3-closeout-summary.md');
     const currentPhase = capture(refactorReadme, /当前阶段：`([^`]+)`/);
     const currentPhaseStatus = capture(refactorReadme, /阶段状态：`([^`]+)`/);
-    const currentStageStatus = capture(stageSummary, /当前状态：`([^`]+)`/);
+    const currentStageStatus = capture(refactorReadme, /Stage 状态：`([^`]+)`/);
 
     expect(snapshot).toContain('generated, do not edit by hand');
     expect(snapshot).toContain(currentBranch);

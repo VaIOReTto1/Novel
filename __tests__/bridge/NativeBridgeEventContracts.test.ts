@@ -47,12 +47,8 @@ describe('Native bridge source contracts', () => {
     expect(producerSource).toMatch(
       new RegExp(`emit\\("${themeChangedFixture.eventName}", params\\)`),
     );
-    expect(themeStoreSource).toMatch(
-      new RegExp(`addListener\\('${themeChangedFixture.eventName}'`),
-    );
-    expect(timedSwitchSource).toMatch(
-      new RegExp(`addListener\\('${themeChangedFixture.eventName}'`),
-    );
+    expect(themeStoreSource).toMatch(/subscribeThemeChanged/);
+    expect(timedSwitchSource).toMatch(/subscribeThemeChanged/);
 
     themeChangedFixture.requiredKeys.forEach((key: string) => {
       expect(producerSource).toContain(`"${key}"`);
@@ -68,21 +64,22 @@ describe('Native bridge source contracts', () => {
     const consumerSource = readProjectFile(
       'src/page/Writer/WritePage/WritePage.tsx',
     );
+    const payloadHandlerSource = readProjectFile(
+      'src/page/Writer/WritePage/domain/writePageModel.ts',
+    );
 
     expect(producerSource).toMatch(
       new RegExp(`emit\\("${selectionMenuFixture.eventName}", map\\)`),
     );
-    expect(consumerSource).toMatch(
-      new RegExp(`addListener\\?\\.\\('${selectionMenuFixture.eventName}'`),
-    );
+    expect(consumerSource).toMatch(/subscribeWritePageSelectionMenuAction/);
 
     selectionMenuFixture.requiredKeys.forEach((key: string) => {
       expect(producerSource).toContain(`"${key}"`);
-      expect(consumerSource).toContain(`evt?.${key}`);
+      expect(payloadHandlerSource).toContain(`payload.${key}`);
     });
     selectionMenuFixture.optionalKeys.forEach((key: string) => {
       expect(producerSource).toContain(`"${key}"`);
-      expect(consumerSource).toContain(`evt?.${key}`);
+      expect(payloadHandlerSource).toContain(`payload.${key}`);
     });
   });
 });

@@ -29,11 +29,12 @@
 - `npm test -- --runInBand __tests__/web/webEntryConfig.test.ts`
 - `npm test -- --runInBand __tests__/design-system/NovelDesignShowcase.test.tsx`
 - `cd android && ..\\android\\gradlew.bat app:compileDebugAndroidTestKotlin --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"`
+- [Stage 7 Showcase Runbook](./showcase-runbook.md)
 
 ## 当前 blocker
-- RN Storybook 正式入口尚未补到“团队可直接打开”的最终宿主；当前为 showcase / web flag 级别可运行。
+- 当前已具备可运行 showcase 入口，但 web 侧仍是 showcase 页面而非独立 Storybook 站点。
 
 ## 关闭条件
 - 保持 `copyright-ledger.json` 与实际展示/消费入口同步，不再回退到空账本基线。
-- 将 `V17-03` 的“可运行展示基建”补充为 closeout 级入口说明。
+- 将 `V17-03` 的“可运行展示基建”维持在可操作 runbook 状态，并在后续需要时再升级为独立 Storybook 宿主。
 - 切换 `V17-01`、`V17-02`、`V17-03` 到 `validated`。

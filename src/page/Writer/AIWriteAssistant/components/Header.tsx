@@ -21,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ onBack, onMenu, quotaText }) => 
         <Icon name="arrow-back-ios" size={24} color={colors.novelText} />
       </TouchableOpacity>
       <View style={styles.headTitleRow}>
-        <Text style={styles.headTitle}>鍐欎綔鍔╂墜</Text>
+        <Text style={styles.headTitle}>写作助手</Text>
         <Text style={styles.quota}>{quotaText}</Text>
       </View>
       <TouchableOpacity style={styles.headerAction} onPress={onMenu}>

@@ -112,7 +112,7 @@ const BecomeWriterPage: React.FC = () => {
       <View style={styles.container}>
         <TopBar styles={styles} onBackPress={handlers.handleBackPress} />
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>加载失败: {error}</Text>
+          <Text style={styles.loadingText}>{`加载失败: ${error}`}</Text>
         </View>
       </View>
     );

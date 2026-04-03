@@ -15,6 +15,7 @@
 - `2026-04-03` 已继续推进 ScrollBox 次级页换肤，补齐 `BecomeWriter / RecommendBook / ViewedUsers / MyReservation / Message` 的组件回归与 mock 文案收口
 - `2026-04-03` 已跑通全量 Jest 与 Android 共享 gate，当前换肤波次具备继续推进 `Phase 18` 门禁收尾的验证基线
 - `2026-04-03` 已为 Android 侧 `NovelDesignShowcaseScreen` 接通 `novel_design_showcase` 路由，推进 `V17-03 showcase infrastructure`
+- `2026-04-03` 已新增 `RecommendBook / ViewedUsers / MyReservation` smoke，并将 smoke catalog drift 收口到 `none`
 
 ## 默认下一主线
 - 当前 active refactor 主线为 `Stage 7 / Phase 15`
@@ -33,7 +34,7 @@
 - Root `README.md` 仍可能滞后于当前 refactor authority
 - `android/gradle/libs.versions.toml` 仍缺失
 - 当前仓库仍无统一 Crash / ANR / 灰度平台
-- 当前 smoke catalog 与实际 smoke 用例存在漂移，需要由 Stage 7 校验脚本收口
+- Figma frame map 仍待继续回填，视觉稿/标注稿/组件映射尚未形成 Stage 7 closeout 所需证据
 
 ## Primary Source Refs
 - [docs/refactor/README.md](../refactor/README.md)

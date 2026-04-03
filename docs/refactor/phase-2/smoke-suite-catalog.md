@@ -58,3 +58,8 @@ cd android && ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentat
 
 - WriteReviewPage.smoke.test.tsx`r
   - 浣跨敤 RN render smoke锛岄獙璇佸啓涔﹁瘎椤甸《閮ㄦ爮銆佽瘎鍒嗗尯鍜屽啓璇勮〃鍗曞３灞傚彲娓叉煋銆?
+
+## Stage 7 Added RN Smoke
+- `__tests__/smoke/RecommendBookPage.smoke.test.tsx`
+- `__tests__/smoke/ViewedUsersPage.smoke.test.tsx`
+- `__tests__/smoke/MyReservationPage.smoke.test.tsx`

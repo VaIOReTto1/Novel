@@ -64,7 +64,7 @@ export const FeedbackHelpMainPage: React.FC = React.memo(() => {
         showSearch={true}
         onSearch={handlers.handleSearch}
         pageType="main"
-        searchPlaceholder="听书"
+        searchPlaceholder="搜索帮助内容"
       />
 
       <ScrollView

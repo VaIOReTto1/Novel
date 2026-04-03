@@ -1,5 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { Alert, View, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from 'react-native';
+import {
+  Alert,
+  Modal,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+
 import { TopBarProps } from '../types';
 
 interface TopBarComponentProps extends TopBarProps {
@@ -9,7 +17,6 @@ interface TopBarComponentProps extends TopBarProps {
 interface MenuOption {
   id: string;
   title: string;
-  icon: string;
   onPress: () => void;
 }
 
@@ -21,8 +28,8 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
   const [showMenu, setShowMenu] = useState(false);
 
   const handleMenuPress = useCallback(() => {
-    setShowMenu(!showMenu);
-  }, [showMenu]);
+    setShowMenu((current) => !current);
+  }, []);
 
   const handleMenuClose = useCallback(() => {
     setShowMenu(false);
@@ -32,30 +39,24 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
     {
       id: 'share',
       title: '分享会员',
-      icon: '📤',
       onPress: () => {
         handleMenuClose();
-        console.log('分享会员');
         Alert.alert('分享会员功能开发中...');
       },
     },
     {
       id: 'contact',
       title: '联系客服',
-      icon: '💬',
       onPress: () => {
         handleMenuClose();
-        console.log('联系客服');
         Alert.alert('联系客服功能开发中...');
       },
     },
     {
       id: 'help',
       title: '帮助中心',
-      icon: '❓',
       onPress: () => {
         handleMenuClose();
-        console.log('帮助中心');
         Alert.alert('帮助中心功能开发中...');
       },
     },
@@ -67,32 +68,27 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
         <TouchableOpacity
           style={styles.backButton}
           onPress={onBackPress}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.backArrow}>‹</Text>
+          activeOpacity={0.7}>
+          <Text style={styles.backArrow}>{'<'}</Text>
         </TouchableOpacity>
 
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
         </View>
 
-        {/* 右侧菜单按钮 */}
         <TouchableOpacity
           style={styles.menuButton}
           onPress={handleMenuPress}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.menuIcon}>⋯</Text>
+          activeOpacity={0.7}>
+          <Text style={styles.menuIcon}>更多</Text>
         </TouchableOpacity>
       </View>
 
-      {/* 下拉菜单模态 */}
       <Modal
         visible={showMenu}
         transparent
         animationType="fade"
-        onRequestClose={handleMenuClose}
-      >
+        onRequestClose={handleMenuClose}>
         <TouchableWithoutFeedback onPress={handleMenuClose}>
           <View style={styles.menuOverlay}>
             <View style={styles.menuDropdown}>
@@ -101,8 +97,7 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
                   key={option.id}
                   style={styles.menuItem}
                   onPress={option.onPress}
-                  activeOpacity={0.7}
-                >
+                  activeOpacity={0.7}>
                   <Text style={styles.menuItemText}>{option.title}</Text>
                 </TouchableOpacity>
               ))}

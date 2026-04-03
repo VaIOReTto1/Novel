@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
-import { Text } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 
 jest.mock('../../src/utils/theme/colors', () => ({
   useNovelColors: () => ({
@@ -26,6 +26,7 @@ jest.mock('../../src/utils/bridge/NavigationBridge', () => ({
   NavigationBridge: {
     navigateBack: jest.fn(),
     navigateToReviewDetail: jest.fn(),
+    navigateToWriteReview: jest.fn(),
   },
 }));
 
@@ -44,6 +45,8 @@ jest.mock('../../src/utils/time/timeUtils', () => ({
 
 import { CategorySection } from '../../src/page/comment/CommentPage/components/CategorySection';
 import { CommentList } from '../../src/page/comment/CommentPage/components/CommentList';
+import { RatingSection } from '../../src/page/comment/CommentPage/components/RatingSection';
+import { RefreshIndicator } from '../../src/page/comment/CommentPage/components/RefreshIndicator';
 import { TopBar } from '../../src/page/comment/CommentPage/components/TopBar';
 
 describe('Comment components novelDesign', () => {
@@ -85,6 +88,41 @@ describe('Comment components novelDesign', () => {
     expect(texts).toEqual(
       expect.arrayContaining(['暂无评论', '快来发表第一条评论吧']),
     );
+  });
+
+  it('renders readable rating summary and refresh feedback', () => {
+    let ratingRenderer!: ReactTestRenderer.ReactTestRenderer;
+    let refreshRenderer!: ReactTestRenderer.ReactTestRenderer;
+
+    ReactTestRenderer.act(() => {
+      ratingRenderer = ReactTestRenderer.create(
+        <RatingSection overallRating={4.6} totalReviews={1288} bookId="book-1" />,
+      );
+      refreshRenderer = ReactTestRenderer.create(<RefreshIndicator isRefreshing />);
+    });
+
+    const ratingTexts = ratingRenderer.root
+      .findAllByType(Text)
+      .flatMap((node) => {
+        const { children } = node.props;
+        return Array.isArray(children) ? children : [children];
+      })
+      .filter((value): value is string => typeof value === 'string');
+
+    expect(ratingTexts).toEqual(
+      expect.arrayContaining(['4.6', '分', '1288人评分', '点击星星进行评分']),
+    );
+
+    const indicator = refreshRenderer.root.findByType(ActivityIndicator);
+    expect(indicator).toBeTruthy();
+    const refreshTexts = refreshRenderer.root
+      .findAllByType(Text)
+      .flatMap((node) => {
+        const { children } = node.props;
+        return Array.isArray(children) ? children : [children];
+      })
+      .filter((value): value is string => typeof value === 'string');
+    expect(refreshTexts).toContain('正在刷新...');
   });
 
   it('renders readable top-bar search placeholder', () => {

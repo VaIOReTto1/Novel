@@ -61,6 +61,8 @@
 - npm run novel-design:tokens:check -> node scripts/novel-design-token-build.js check
 - npm run novel-design:assets -> node scripts/novel-design-assets.js generate
 - npm run novel-design:assets:check -> node scripts/novel-design-assets.js check
+- npm run stage7:closeout -> node scripts/stage7-closeout-readiness.js generate
+- npm run stage7:closeout:check -> node scripts/stage7-closeout-readiness.js check
 - npm run version:show -> node scripts/version-sync.js show
 - npm run version:patch -> node scripts/version-sync.js patch
 - npm run version:minor -> node scripts/version-sync.js minor

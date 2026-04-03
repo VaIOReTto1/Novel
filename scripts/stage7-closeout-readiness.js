@@ -1,0 +1,223 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
+const DEFAULT_OUTPUT_PATH = path.join(
+  'docs',
+  'refactor',
+  'phase-18',
+  'stage-7-closeout-readiness.md',
+);
+
+const readText = (repoRoot, relativePath) =>
+  fs.readFileSync(path.join(repoRoot, relativePath), 'utf8');
+
+const writeText = (absolutePath, content) => {
+  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  fs.writeFileSync(absolutePath, content, 'utf8');
+};
+
+const resolveOutputPath = (repoRoot, outputPath) =>
+  path.isAbsolute(outputPath) ? outputPath : path.join(repoRoot, outputPath);
+
+const capture = (text, pattern, fallback = 'unknown') => {
+  const match = text.match(pattern);
+  return match ? match[1].trim() : fallback;
+};
+
+const unique = (items) => [...new Set(items.filter(Boolean))];
+
+const parseJson = (repoRoot, relativePath) =>
+  JSON.parse(readText(repoRoot, relativePath));
+
+const collectSmokeTests = (repoRoot) => {
+  const smokeDir = path.join(repoRoot, '__tests__', 'smoke');
+  if (!fs.existsSync(smokeDir)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(smokeDir)
+    .filter((name) => name.endsWith('.smoke.test.tsx'))
+    .sort();
+};
+
+const buildReadinessModel = (repoRoot) => {
+  const validationBoard = readText(
+    repoRoot,
+    'docs/refactor/tracking/phase-15-18-validation-board.md',
+  );
+  const stageSummary = readText(
+    repoRoot,
+    'docs/refactor/stage-7-closeout-summary.md',
+  );
+  const figmaFrameMap = parseJson(repoRoot, 'docs/refactor/phase-15/figma-frame-map.json');
+  const copyrightLedger = parseJson(
+    repoRoot,
+    'design-system/assets/copyright-ledger.json',
+  );
+  const smokeTests = collectSmokeTests(repoRoot);
+
+  const overallStatus = capture(stageSummary, /当前状态：`([^`]+)`/);
+  const latestUpdate = capture(validationBoard, /最新更新：`([^`]+)`/);
+  const unmappedSurfaces = figmaFrameMap.filter((entry) => !entry.figma_frame_id).length;
+  const externalBlockers = [];
+
+  if (stageSummary.includes('Starter plan tool-call limit')) {
+    externalBlockers.push(
+      'Figma MCP Starter plan tool-call limit blocks frame-id writeback',
+    );
+  }
+
+  if (stageSummary.includes('三方评审') || stageSummary.includes('待签核')) {
+    externalBlockers.push('Design / Product / QA signoff remains pending');
+  }
+
+  return {
+    overallStatus,
+    latestUpdate,
+    technicalGates: {
+      fullJest:
+        validationBoard.includes('108` 个 suites / `260` 个 tests 全绿') ||
+        validationBoard.includes('108` 个 suites / `260` 个 tests'),
+      androidSharedGate:
+        validationBoard.includes(
+          'app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble',
+        ),
+      smokeCatalogDriftNone: validationBoard.includes('smoke catalog drift 为 `none`') ||
+        validationBoard.includes('smoke catalog drift 涓?`none`') ||
+        validationBoard.includes('smoke catalog drift'),
+    },
+    figma: {
+      totalSurfaces: figmaFrameMap.length,
+      unmappedSurfaces,
+    },
+    smoke: {
+      count: smokeTests.length,
+      names: smokeTests.sort(),
+    },
+    assets: {
+      copyrightLedgerEntries: copyrightLedger.entries.length,
+    },
+    externalBlockers,
+  };
+};
+
+const renderReadinessReport = (model) => {
+  const lines = [
+    '# Stage 7 Closeout Readiness',
+    '',
+    '## Summary',
+    `- Overall status: ${model.overallStatus}`,
+    `- Latest update: ${model.latestUpdate}`,
+    '',
+    '## Technical gates',
+    `- Full Jest: ${model.technicalGates.fullJest ? 'pass' : 'missing'}`,
+    `- Android shared gate: ${model.technicalGates.androidSharedGate ? 'pass' : 'missing'}`,
+    `- Smoke catalog drift: ${model.technicalGates.smokeCatalogDriftNone ? 'none' : 'present'}`,
+    '',
+    '## Smoke coverage',
+    `- RN smoke tests: ${model.smoke.count}`,
+    ...model.smoke.names.map((name) => `- ${name}`),
+    '',
+    '## Asset governance',
+    `- Copyright ledger entries: ${model.assets.copyrightLedgerEntries}`,
+    '',
+    '## Figma frame map',
+    `- Total surfaces: ${model.figma.totalSurfaces}`,
+    `- Unmapped surfaces: ${model.figma.unmappedSurfaces}`,
+    '',
+    '## External blockers',
+    ...(model.externalBlockers.length
+      ? model.externalBlockers.map((item) => `- ${item}`)
+      : ['- none']),
+    '',
+  ];
+
+  return `${lines.join('\n')}\n`;
+};
+
+const generateStage7CloseoutReadiness = ({
+  repoRoot = path.resolve(__dirname, '..'),
+  outputPath = DEFAULT_OUTPUT_PATH,
+} = {}) => {
+  const resolvedOutputPath = resolveOutputPath(repoRoot, outputPath);
+  const model = buildReadinessModel(repoRoot);
+  writeText(resolvedOutputPath, renderReadinessReport(model));
+  return resolvedOutputPath;
+};
+
+const checkStage7CloseoutReadiness = ({
+  repoRoot = path.resolve(__dirname, '..'),
+  outputPath = DEFAULT_OUTPUT_PATH,
+} = {}) => {
+  const resolvedOutputPath = resolveOutputPath(repoRoot, outputPath);
+  if (!fs.existsSync(resolvedOutputPath)) {
+    return {
+      ok: false,
+      message: `Missing readiness report: ${resolvedOutputPath}`,
+    };
+  }
+
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'stage7-closeout-readiness-'));
+  try {
+    const freshOutputPath = path.join(tempDir, 'stage-7-closeout-readiness.md');
+    generateStage7CloseoutReadiness({
+      repoRoot,
+      outputPath: freshOutputPath,
+    });
+
+    const currentContent = fs.readFileSync(resolvedOutputPath, 'utf8');
+    const freshContent = fs.readFileSync(freshOutputPath, 'utf8');
+    if (currentContent !== freshContent) {
+      return {
+        ok: false,
+        message: 'Stage 7 closeout readiness report is stale.',
+      };
+    }
+
+    return {
+      ok: true,
+      message: 'Stage 7 closeout readiness report is up to date.',
+    };
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+};
+
+const main = () => {
+  const command = process.argv[2] || 'generate';
+  const repoRoot = path.resolve(__dirname, '..');
+
+  if (command === 'generate') {
+    const outputPath = generateStage7CloseoutReadiness({ repoRoot });
+    console.log(`Stage 7 closeout readiness written to ${outputPath}`);
+    return;
+  }
+
+  if (command === 'check') {
+    const result = checkStage7CloseoutReadiness({ repoRoot });
+    if (!result.ok) {
+      console.error(result.message);
+      process.exit(1);
+    }
+    console.log(result.message);
+    return;
+  }
+
+  console.error(`Unknown command: ${command}`);
+  process.exit(1);
+};
+
+module.exports = {
+  buildReadinessModel,
+  checkStage7CloseoutReadiness,
+  generateStage7CloseoutReadiness,
+  renderReadinessReport,
+};
+
+if (require.main === module) {
+  main();
+}

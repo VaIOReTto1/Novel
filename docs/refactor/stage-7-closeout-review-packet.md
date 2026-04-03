@@ -17,6 +17,7 @@
 - smoke catalog drift：`none`
 - registry drift：`none`
 - Android showcase route：`novel_design_showcase`
+- 自动 readiness 报告：[phase-18/stage-7-closeout-readiness.md](./phase-18/stage-7-closeout-readiness.md)
 
 ## 待签核清单
 - 设计签核：

@@ -26,6 +26,8 @@
 - `npm test -- --runInBand __tests__/domains`
 - `npm test -- --runInBand __tests__/smoke`
 - `cd android && ..\\android\\gradlew.bat app:testDebugUnitTest app:lintDebug app:compileDebugAndroidTestKotlin :macrobenchmark:assemble --no-daemon "-Dkotlin.compiler.execution.strategy=in-process" "-Pkotlin.incremental=false" "-Pkapt.incremental.apt=false"`
+- `npm run stage7:closeout`
+- `npm run stage7:closeout:check`
 
 ## 当前 blocker
 - 亮色稿 / 暗色稿 / 标注稿 / 组件映射 / 视觉回归基线尚未形成 closeout 所需完整证据链。

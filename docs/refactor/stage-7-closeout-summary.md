@@ -26,6 +26,7 @@
 - [Phase 16 closeout assessment](./phase-16/phase-16-closeout-assessment.md)
 - [Phase 17 closeout assessment](./phase-17/phase-17-closeout-assessment.md)
 - [Phase 18 closeout assessment](./phase-18/phase-18-closeout-assessment.md)
+- [Stage 7 closeout readiness](./phase-18/stage-7-closeout-readiness.md)
 - [Phase 15-18 验证看板](./tracking/phase-15-18-validation-board.md)
 
 ## 外部 blocker

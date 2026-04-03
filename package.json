@@ -17,6 +17,8 @@
     "novel-design:tokens:check": "node scripts/novel-design-token-build.js check",
     "novel-design:assets": "node scripts/novel-design-assets.js generate",
     "novel-design:assets:check": "node scripts/novel-design-assets.js check",
+    "stage7:closeout": "node scripts/stage7-closeout-readiness.js generate",
+    "stage7:closeout:check": "node scripts/stage7-closeout-readiness.js check",
     "version:show": "node scripts/version-sync.js show",
     "version:patch": "node scripts/version-sync.js patch",
     "version:minor": "node scripts/version-sync.js minor",

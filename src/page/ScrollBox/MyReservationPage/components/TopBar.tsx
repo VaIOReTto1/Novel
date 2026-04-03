@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import { TopBarProps } from '../types';
 
 interface TopBarComponentProps extends TopBarProps {
@@ -19,40 +20,40 @@ export const TopBar: React.FC<TopBarComponentProps> = ({
   onTabChange,
   onBackPress,
 }) => {
-  const handleTabPress = useCallback((tab: 'new' | 'mine') => {
-    onTabChange(tab);
-  }, [onTabChange]);
+  const handleTabPress = useCallback(
+    (tab: 'new' | 'mine') => {
+      onTabChange(tab);
+    },
+    [onTabChange],
+  );
 
   return (
     <View style={styles.topBar}>
       <TouchableOpacity
         style={styles.backButton}
         onPress={onBackPress}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.backArrow}>‹</Text>
+        activeOpacity={0.7}>
+        <Text style={styles.backArrow}>{'<'}</Text>
       </TouchableOpacity>
 
-      {/* 中间的Tab切换 */}
       <View style={styles.topBarTabsContainer}>
-          {MAIN_TAB_DATA.map((tab) => (
-            <TouchableOpacity
-              key={tab.key}
-              style={styles.topBarTab}
-              onPress={() => handleTabPress(tab.key)}
-              activeOpacity={0.7}
-            >
-              <Text style={[
+        {MAIN_TAB_DATA.map((tab) => (
+          <TouchableOpacity
+            key={tab.key}
+            style={styles.topBarTab}
+            onPress={() => handleTabPress(tab.key)}
+            activeOpacity={0.7}>
+            <Text
+              style={[
                 styles.topBarTabText,
                 selectedTab === tab.key && styles.activeTopBarTabText,
               ]}>
-                {tab.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+              {tab.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
 
-      {/* 右侧占位，保持居中 */}
       <View style={styles.backButton} />
     </View>
   );

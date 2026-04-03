@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 interface SubTabsSectionProps {
   styles: any;
@@ -16,9 +16,12 @@ export const SubTabsSection: React.FC<SubTabsSectionProps> = React.memo(({
   offlineCount,
   onTabChange,
 }) => {
-  const handleTabPress = useCallback((tab: 'online' | 'offline') => {
-    onTabChange(tab);
-  }, [onTabChange]);
+  const handleTabPress = useCallback(
+    (tab: 'online' | 'offline') => {
+      onTabChange(tab);
+    },
+    [onTabChange],
+  );
 
   return (
     <View style={styles.subTabsContainer}>
@@ -28,13 +31,13 @@ export const SubTabsSection: React.FC<SubTabsSectionProps> = React.memo(({
           selectedTab === 'online' && styles.activeSubTab,
         ]}
         onPress={() => handleTabPress('online')}
-        activeOpacity={0.7}
-      >
-        <Text style={[
-          styles.subTabText,
-          selectedTab === 'online' && styles.activeSubTabText,
-        ]}>
-          已上线 {onlineCount}
+        activeOpacity={0.7}>
+        <Text
+          style={[
+            styles.subTabText,
+            selectedTab === 'online' && styles.activeSubTabText,
+          ]}>
+          {`已上线 ${onlineCount}`}
         </Text>
       </TouchableOpacity>
 
@@ -44,13 +47,13 @@ export const SubTabsSection: React.FC<SubTabsSectionProps> = React.memo(({
           selectedTab === 'offline' && styles.activeSubTab,
         ]}
         onPress={() => handleTabPress('offline')}
-        activeOpacity={0.7}
-      >
-        <Text style={[
-          styles.subTabText,
-          selectedTab === 'offline' && styles.activeSubTabText,
-        ]}>
-          待上线 {offlineCount}
+        activeOpacity={0.7}>
+        <Text
+          style={[
+            styles.subTabText,
+            selectedTab === 'offline' && styles.activeSubTabText,
+          ]}>
+          {`待上线 ${offlineCount}`}
         </Text>
       </TouchableOpacity>
     </View>

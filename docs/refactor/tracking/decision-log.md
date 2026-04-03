@@ -2,6 +2,7 @@
 
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-04-04 | Stage 7 closeout | governance | 建立 `Phase 15-18` closeout assessment、`Stage 7 closeout summary` 与 `review packet` 宿主，但在 Figma 证据链与三方签核完成前不切 `validated` | 当前 repo 内代码、测试、smoke、Android gate 与控制面已接近闭环，缺的是外部 Figma frame id 与签核记录；若继续维持“只有计划和看板、没有 closeout 宿主”，会造成 authority 缺口 | `Stage 7` 进入 `ready_for_closeout_except_figma_and_signoff` 的可追踪状态，但仍维持 `in_progress` | 恢复 Figma MCP 可用性后优先回填 `figma-frame-map`，再执行待签核收尾 |
 | 2026-03-31 | Stage 7 activation | execution | 启动新的 `Stage 7 = Phase 15-18`，以视觉系统、资产治理、Token、展示与回归门禁为新的 active refactor 主线 | 历史 `Stage 4 / Phase 7` 已关闭，且当前仓库缺少视觉系统控制面、机器盘点、Token 真源和资产治理宿主，继续沿用旧命名会造成 authority 冲突 | `Stage 7 = in_progress`，`Phase 15 = in_progress`，后续以 Stage 7 控制面为准 | 先落 `Phase 15` 控制面与机器清单，再推进 Token 真源与资产同步 |
 | 2026-03-31 | Phase 13 closeout | closeout | 在 page-domain 波次全面铺开并通过统一验证后关闭 `Phase 13` | 当前主要页面族已经完成首轮 `page -> domain model -> store/hook` 收口，继续维持 `in_progress` 会制造 authority 漂移 | `Phase 13 = validated` | 转入 `Phase 14` 的 contract / registry / maintainability 收口 |
 | 2026-03-31 | Phase 14 closeout | closeout | 在 registry consistency 护栏、mock/fallback 宿主与 maintainability guide 形成后关闭 `Phase 14` | Stage 6 后半段以 repo-local 治理层为目标，本轮已达到关闭条件 | `Phase 14 = validated` | 关闭 `Stage 6` |

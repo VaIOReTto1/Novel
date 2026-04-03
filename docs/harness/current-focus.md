@@ -16,6 +16,7 @@
 - `2026-04-03` 已跑通全量 Jest 与 Android 共享 gate，当前换肤波次具备继续推进 `Phase 18` 门禁收尾的验证基线
 - `2026-04-03` 已为 Android 侧 `NovelDesignShowcaseScreen` 接通 `novel_design_showcase` 路由，推进 `V17-03 showcase infrastructure`
 - `2026-04-03` 已新增 `RecommendBook / ViewedUsers / MyReservation / BecomeWriter / Message / FeedbackHelp` smoke，并将 smoke catalog drift 收口到 `none`
+- `2026-04-04` 已建立 Stage 7 closeout summary / review packet / Phase 15-18 closeout assessment 宿主，当前仅剩 Figma 证据链与待签核收尾
 
 ## 默认下一主线
 - 当前 active refactor 主线为 `Stage 7 / Phase 15`
@@ -31,10 +32,10 @@
 - `App -> ProfilePage` 仍是默认 App Root，必须纳入 Stage 7 盘点
 
 ## Blockers / Known Drift
-- Root `README.md` 仍可能滞后于当前 refactor authority
 - `android/gradle/libs.versions.toml` 仍缺失
 - 当前仓库仍无统一 Crash / ANR / 灰度平台
-- Figma frame map 仍待继续回填，视觉稿/标注稿/组件映射尚未形成 Stage 7 closeout 所需证据
+- Figma MCP 当前命中 Starter plan tool-call limit，`figma-frame-map` 真实 `frame_id` 暂无法继续回填
+- 视觉稿 / 标注稿 / 组件映射与设计、产品、QA 签核记录尚未形成 Stage 7 closeout 所需证据
 
 ## Primary Source Refs
 - [docs/refactor/README.md](../refactor/README.md)

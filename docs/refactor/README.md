@@ -26,10 +26,16 @@
 
 ## 当前权威入口
 - [Stage 7 计划](./stage-7-phase-15-18-plan.md)
+- [Stage 7 closeout summary](./stage-7-closeout-summary.md)
+- [Stage 7 closeout review packet](./stage-7-closeout-review-packet.md)
 - [Phase 15 宿主文档](./phases/phase-15-visual-audit-and-control-plane.md)
 - [Phase 16 宿主文档](./phases/phase-16-figma-foundations-and-token-source.md)
 - [Phase 17 宿主文档](./phases/phase-17-asset-governance-and-shared-primitives.md)
 - [Phase 18 宿主文档](./phases/phase-18-visual-rollout-and-quality-gates.md)
+- [Phase 15 closeout assessment](./phase-15/phase-15-closeout-assessment.md)
+- [Phase 16 closeout assessment](./phase-16/phase-16-closeout-assessment.md)
+- [Phase 17 closeout assessment](./phase-17/phase-17-closeout-assessment.md)
+- [Phase 18 closeout assessment](./phase-18/phase-18-closeout-assessment.md)
 - [Phase 15-18 验证看板](./tracking/phase-15-18-validation-board.md)
 - [decision-log.md](./tracking/decision-log.md)
 - [rollback-index.md](./tracking/rollback-index.md)

@@ -95,7 +95,12 @@ describe('Bookshelf UnifiedScrollView novelDesign', () => {
     expect(texts).toEqual(expect.arrayContaining(['GridView', 'RecommendationFlow']));
 
     expect(mockGridView).toHaveBeenCalledWith(expect.objectContaining({ styles: mockStyles }));
-    expect(mockRecommendationFlow).toHaveBeenCalledWith(expect.objectContaining({ styles: mockStyles }));
+    expect(mockRecommendationFlow).toHaveBeenCalledWith(
+      expect.objectContaining({
+        styles: mockStyles,
+        title: '为你推荐',
+      }),
+    );
   });
 
   it('routes shared styles into list and waterfall branches too', () => {

@@ -119,7 +119,7 @@ export const UnifiedScrollView: React.FC<UnifiedScrollViewProps> = ({
           onLoadMore={onLoadMoreRecommendations}
           hasMore={hasMoreRecommendations}
           isLoading={isRecommendationLoading}
-          title="涓轰綘鎺ㄨ崘"
+          title="为你推荐"
         />
       </View>
     </ScrollView>

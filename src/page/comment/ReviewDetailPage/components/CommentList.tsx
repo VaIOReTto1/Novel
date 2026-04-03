@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import { parseNewsDate } from '../../../../utils/time/timeUtils';
 import { useReviewDetailPageStyles } from '../hooks/useReviewDetailPageStyles';
 import { useReviewDetailStore } from '../store/reviewDetailStore';
-import { parseNewsDate } from '../../../../utils/time/timeUtils';
 import { Comment } from '../types/reviewDetailTypes';
 
 interface CommentListProps {
@@ -14,21 +15,32 @@ interface CommentListProps {
   onReply?: (commentId: string) => void;
 }
 
+const renderTagLabel = (tag?: string) => {
+  if (tag === 'first_comment') {
+    return '首评';
+  }
+  if (tag === 'true_fan') {
+    return '真爱粉';
+  }
+  if (tag === 'vip') {
+    return 'VIP';
+  }
+  return '';
+};
+
 export const CommentList: React.FC<CommentListProps> = ({
   onInputFocus,
   onViewMoreReplies,
-  onLike: _onLike,
-  onDislike: _onDislike,
-  onReply: _onReply,
 }) => {
   const { colors, styles } = useReviewDetailPageStyles();
-  const { hasMoreComments, isLoadingMore, toggleCommentLike, toggleCommentDislike } = useReviewDetailStore();
+  const {
+    hasMoreComments,
+    isLoadingMore,
+    toggleCommentLike,
+    toggleCommentDislike,
+    comments,
+  } = useReviewDetailStore();
 
-  // 使用store中的comments数据（这些是对当前评论的回复）
-  // commentData是当前评论的详情，comments是对这个评论的回复
-  const { comments } = useReviewDetailStore();
-
-  console.log('[CommentList] comments from store:', comments);
   const handleLikePress = (commentId: string) => {
     toggleCommentLike(commentId);
   };
@@ -37,30 +49,30 @@ export const CommentList: React.FC<CommentListProps> = ({
     toggleCommentDislike(commentId);
   };
 
-  const renderCommentInput = () => {
-    return (
-      <View style={styles.commentInputContainer}>
-        {/* 用户头像 */}
-        <View style={styles.commentInputAvatar}>
-          <Icon name="person" size={20} color={colors.novelTextGray} />
-        </View>
-
-        {/* 输入框 */}
-        <TouchableOpacity
-          style={styles.commentInputBox}
-          onPress={onInputFocus}
-          activeOpacity={0.8}
-        >
-          <Text style={[styles.commentInput, { color: colors.novelTextGray }]}>
-            写下你的评论...
-          </Text>
-        </TouchableOpacity>
+  const renderCommentInput = () => (
+    <View style={styles.commentInputContainer}>
+      <View style={styles.commentInputAvatar}>
+        <Icon name="person" size={20} color={colors.novelTextGray} />
       </View>
-    );
-  };
 
-  const renderCommentItem = ({ item, isReply = false, isFirst: _isFirst = false }: { item: Comment; isReply?: boolean; isFirst?: boolean }) => {
-    // 如果是二级评论，使用简化显示 - userName和content在同一个Text中，颜色不同
+      <TouchableOpacity
+        style={styles.commentInputBox}
+        onPress={onInputFocus}
+        activeOpacity={0.8}>
+        <Text style={[styles.commentInput, { color: colors.novelTextGray }]}>
+          写下你的评论...
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const renderCommentItem = ({
+    item,
+    isReply = false,
+  }: {
+    item: Comment;
+    isReply?: boolean;
+  }) => {
     if (isReply) {
       return (
         <View style={styles.replyCommentItem}>
@@ -74,7 +86,6 @@ export const CommentList: React.FC<CommentListProps> = ({
 
     return (
       <View style={styles.commentItem}>
-        {/* 用户信息 */}
         <View style={styles.commentUserInfo}>
           <View style={styles.commentAvatar}>
             {item.userAvatar ? (
@@ -90,25 +101,19 @@ export const CommentList: React.FC<CommentListProps> = ({
             <View style={styles.commentUserNameRow}>
               <View style={styles.commentUserNameContainer}>
                 <Text style={styles.commentUserName}>{item.userName}</Text>
-                {item.tag && (
+                {item.tag ? (
                   <View style={[styles.commentTag, styles[`commentTag_${item.tag}`]]}>
-                    <Text style={styles.commentTagText}>
-                      {item.tag === 'first_comment' ? '首评' :
-                       item.tag === 'true_fan' ? '真爱粉' :
-                       item.tag === 'vip' ? 'VIP' : ''}
-                    </Text>
+                    <Text style={styles.commentTagText}>{renderTagLabel(item.tag)}</Text>
                   </View>
-                )}
+                ) : null}
               </View>
               <TouchableOpacity style={styles.commentMenuButton} activeOpacity={0.7}>
                 <Icon name="more-vert" size={20} color={colors.novelTextGray} />
               </TouchableOpacity>
             </View>
 
-            {/* 评论内容 */}
             <Text style={styles.commentContent}>{item.content}</Text>
 
-            {/* 操作按钮 */}
             <View style={styles.commentActions}>
               <View style={styles.commentLeftActions}>
                 <Text style={styles.commentTime}>{parseNewsDate(item.createTime)}</Text>
@@ -120,8 +125,7 @@ export const CommentList: React.FC<CommentListProps> = ({
               <View style={styles.commentRightActions}>
                 <TouchableOpacity
                   style={styles.commentActionButton}
-                  onPress={() => handleLikePress(item.id)}
-                >
+                  onPress={() => handleLikePress(item.id)}>
                   <Icon
                     name={item.isLiked ? 'favorite' : 'favorite-border'}
                     size={20}
@@ -131,16 +135,14 @@ export const CommentList: React.FC<CommentListProps> = ({
                     style={[
                       styles.commentActionText,
                       item.isLiked && { color: colors.novelMain },
-                    ]}
-                  >
+                    ]}>
                     {item.likeCount}
                   </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.commentActionButton}
-                  onPress={() => handleDislikePress(item.id)}
-                >
+                  onPress={() => handleDislikePress(item.id)}>
                   <Icon
                     name={item.isDisliked ? 'thumb-down' : 'thumb-down-off-alt'}
                     size={20}
@@ -150,27 +152,27 @@ export const CommentList: React.FC<CommentListProps> = ({
               </View>
             </View>
 
-            {/* 二级评论 */}
-            {item.replies && item.replies.length > 0 && (
+            {item.replies && item.replies.length > 0 ? (
               <View style={styles.repliesContainer}>
                 {item.replies.slice(0, 2).map((reply) => (
-                  <View key={reply.id}>
-                    {renderCommentItem({ item: reply, isReply: true })}
-                  </View>
+                  <View key={reply.id}>{renderCommentItem({ item: reply, isReply: true })}</View>
                 ))}
-                {item.replies.length > 2 && (
+                {item.replies.length > 2 ? (
                   <TouchableOpacity
                     style={styles.viewMoreRepliesButton}
-                    onPress={() => onViewMoreReplies?.(item)}
-                  >
+                    onPress={() => onViewMoreReplies?.(item)}>
                     <Text style={styles.viewMoreRepliesText}>
-                      查看全部评论 ({item.replies.length})
+                      {`查看全部评论 (${item.replies.length})`}
                     </Text>
-                    <Icon name="keyboard-arrow-right" size={20} color={colors.novelMain} />
+                    <Icon
+                      name="keyboard-arrow-right"
+                      size={20}
+                      color={colors.novelMain}
+                    />
                   </TouchableOpacity>
-                )}
+                ) : null}
               </View>
-            )}
+            ) : null}
           </View>
         </View>
       </View>
@@ -181,6 +183,7 @@ export const CommentList: React.FC<CommentListProps> = ({
     if (isLoadingMore) {
       return (
         <View style={styles.loadingFooter}>
+          <ActivityIndicator size="small" color={colors.novelMain} />
           <Text style={styles.loadingText}>加载中...</Text>
         </View>
       );
@@ -197,15 +200,13 @@ export const CommentList: React.FC<CommentListProps> = ({
     return null;
   };
 
-  const renderEmpty = () => {
-    return (
-      <View style={styles.emptyContainer}>
-        <Icon name="comment" size={48} color={colors.novelDivider} />
-        <Text style={styles.emptyText}>暂无评论</Text>
-        <Text style={styles.emptySubText}>快来发表第一条评论吧</Text>
-      </View>
-    );
-  };
+  const renderEmpty = () => (
+    <View style={styles.emptyContainer}>
+      <Icon name="comment" size={48} color={colors.novelDivider} />
+      <Text style={styles.emptyText}>暂无评论</Text>
+      <Text style={styles.emptySubText}>快来发表第一条评论吧</Text>
+    </View>
+  );
 
   return (
     <View style={styles.commentListContainer}>
@@ -220,10 +221,8 @@ export const CommentList: React.FC<CommentListProps> = ({
         renderEmpty()
       ) : (
         <>
-          {comments.map((item, index) => (
-            <View key={item.id}>
-              {renderCommentItem({ item, isFirst: index === 0 })}
-            </View>
+          {comments.map((item) => (
+            <View key={item.id}>{renderCommentItem({ item })}</View>
           ))}
           {renderFooter()}
         </>

@@ -19,6 +19,7 @@
     "novel-design:assets:check": "node scripts/novel-design-assets.js check",
     "stage7:closeout": "node scripts/stage7-closeout-readiness.js generate",
     "stage7:closeout:check": "node scripts/stage7-closeout-readiness.js check",
+    "stage7:signoff:check": "node scripts/stage7-signoff-check.js",
     "version:show": "node scripts/version-sync.js show",
     "version:patch": "node scripts/version-sync.js patch",
     "version:minor": "node scripts/version-sync.js minor",

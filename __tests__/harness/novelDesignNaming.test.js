@@ -42,14 +42,19 @@ describe('novelDesign naming guard', () => {
     ];
 
     const offenders = [];
-    const allowedFilePaths = new Set(['scripts/stage7-closeout-readiness.js']);
+    const allowedFilePaths = new Set([
+      'scripts/stage7-closeout-readiness.js',
+      'scripts/stage7-signoff-check.js',
+    ]);
     const allowedPatterns = new Map([
       [
         'package.json',
         [
           /"stage7:closeout"/g,
           /"stage7:closeout:check"/g,
+          /"stage7:signoff:check"/g,
           /scripts\/stage7-closeout-readiness\.js/g,
+          /scripts\/stage7-signoff-check\.js/g,
         ],
       ],
     ]);

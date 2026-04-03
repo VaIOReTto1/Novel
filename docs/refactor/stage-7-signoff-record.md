@@ -65,3 +65,4 @@
 2. 产品在本记录中补录 reviewer、date、decision、notes。
 3. QA 在本记录中补录 reviewer、date、decision、notes。
 4. 三方均为 `approved` 或 `approved-with-notes` 后，将 `Closeout decision` 改为 `Stage 7 = validated`，并同步 [README](d:\program\Novel\docs\refactor\README.md)、[current-focus.md](d:\program\Novel\docs\harness\current-focus.md) 与验证看板。
+5. 执行 `npm run stage7:signoff:check`，只有通过后才允许正式切换 `Stage 7 = validated`。

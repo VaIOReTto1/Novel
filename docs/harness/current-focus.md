@@ -14,6 +14,7 @@
 - `2026-03-31` 已落地 Stage 7 的审计脚本、Token 基线和资产治理基线
 - `2026-04-03` 已继续推进 ScrollBox 次级页换肤，补齐 `BecomeWriter / RecommendBook / ViewedUsers / MyReservation / Message` 的组件回归与 mock 文案收口
 - `2026-04-03` 已跑通全量 Jest 与 Android 共享 gate，当前换肤波次具备继续推进 `Phase 18` 门禁收尾的验证基线
+- `2026-04-03` 已为 Android 侧 `NovelDesignShowcaseScreen` 接通 `novel_design_showcase` 路由，推进 `V17-03 showcase infrastructure`
 
 ## 默认下一主线
 - 当前 active refactor 主线为 `Stage 7 / Phase 15`

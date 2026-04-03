@@ -16,3 +16,4 @@
 | 2026-04-01 | Stage 7 writer rollout | 新增统一 `NovelDesignUI` 全局配置层，推进 `WritePage`、`AIWriteAssistant`、`BookManagePage` 的 writer 线换肤，并把 surface / component 视觉记录细化到区块级 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |
 | 2026-04-03 | Stage 7 scrollbox rollout | 连续推进 `BecomeWriterPage`、`RecommendBookPage`、`ViewedUsersPage`、`MyReservationPage`、`MessagePage` 的次级页换肤收口，补齐组件回归与可读 mock 数据 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |
 | 2026-04-03 | Stage 7 verification sweep | 跑通全量 `npm test -- --runInBand` 与 Android 共享 gate，确认当前 Stage 7 页面换肤波次在 Jest 与 Gradle 共享门禁下均可通过 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |
+| 2026-04-03 | Stage 7 showcase wiring | 为 Android 侧 `NovelDesignShowcaseScreen` 接通 `novel_design_showcase` 导航入口，并补齐 source-level 回归断言 | [phase-15-18-validation-board.md](../refactor/tracking/phase-15-18-validation-board.md) |

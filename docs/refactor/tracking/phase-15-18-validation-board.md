@@ -29,7 +29,7 @@
 | --- | --- | --- | --- | --- | --- |
 | V17-01 | Iconify governance | 图标命名、同步脚本、双端映射齐备 | 已生成 `icon-manifest.json` 与 RN `novelDesignIconRegistry.ts`，当前先以 legacy 本地 SVG 与 vector family 基线收口，后续继续替换为 Iconify 语义名 | `in_progress` | `yellow` |
 | V17-02 | media governance | Picsum / Pexels / unDraw 资产与版权闭环 | 已生成 `media-manifest.json`、`illustration-manifest.json` 与 `copyright-ledger.json`，当前为 provider 规则与空账本基线 | `in_progress` | `yellow` |
-| V17-03 | showcase infrastructure | RN Storybook 与 Android Showcase 可运行 | 已有 RN `NovelDesignShowcase.tsx`、web 显式入口开关与 web shim，`npx webpack --config webpack.config.js` 已跑通；Android 已补 `NovelDesignShowcaseScreen.kt` / `NovelDesignShowcaseModel.kt` 骨架与 unit test，正式 Storybook 与 Android 导航接线仍待补齐 | `in_progress` | `yellow` |
+| V17-03 | showcase infrastructure | RN Storybook 与 Android Showcase 可运行 | 已有 RN `NovelDesignShowcase.tsx`、web 显式入口开关与 web shim，`npx webpack --config webpack.config.js` 已跑通；Android 已补 `NovelDesignShowcaseScreen.kt` / `NovelDesignShowcaseModel.kt` 骨架与 unit test，并已在 `NavigationUtil.kt` 接通 `novel_design_showcase` compose route，后续继续补正式 Storybook 入口整合 | `in_progress` | `yellow` |
 
 ## Phase 18
 | ID | Item | Expected | Actual | Status | Result |

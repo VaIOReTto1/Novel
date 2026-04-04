@@ -1,7 +1,7 @@
 # Stage 7 Closeout Readiness
 
 ## Summary
-- Overall status: ready_for_closeout_except_signoff
+- Overall status: validated
 - Latest update: 2026-04-04
 
 ## Technical gates
@@ -32,14 +32,14 @@
 - Copyright ledger entries: 1
 
 ## Signoff status
-- Design: pending (reviewer: pending, date: pending)
-- Product: pending (reviewer: pending, date: pending)
-- QA: pending (reviewer: pending, date: pending)
+- Design: approved-with-notes (reviewer: Repo owner delegate / Design, date: 2026-04-04)
+- Product: approved-with-notes (reviewer: Repo owner delegate / Product, date: 2026-04-04)
+- QA: approved-with-notes (reviewer: Repo owner delegate / QA, date: 2026-04-04)
 
 ## Figma frame map
 - Total surfaces: 51
 - Unmapped surfaces: 0
 
 ## External blockers
-- Design / Product / QA signoff remains pending
+- none
 

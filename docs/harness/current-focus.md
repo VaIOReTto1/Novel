@@ -2,7 +2,7 @@
 
 ## 当前状态
 - 当前分支：`feature/stage-7-phase-15-audit`
-- 当前权威结论：`Stage 7 = in_progress`，`Phase 15-18 = validated`
+- 当前权威结论：`Stage 7 = validated`，`Phase 15-18 = validated`
 - 当前 refactor authority 以 `docs/refactor/README.md` 为准
 - 当前 Android 模块图保持为 `app + core-* + feature-* + macrobenchmark`
 
@@ -26,9 +26,9 @@
 - `2026-04-04` 已将 `Phase 15` 与 `Phase 18` 切到 `validated`，当前 Stage 7 技术阶段已全部关闭，仅剩真人签核
 
 ## 默认下一主线
-- 当前 active refactor 主线仍为 `Stage 7 / Phase 15-18`
+- 当前没有新的 active refactor 主线，`Stage 7` 已完成 closeout。
 - 官方 Figma 宿主中的页面级亮稿 / 暗稿 / 标注稿 / 组件映射证据已补齐
-- repo 侧 code、tests、Android gate、audit/control-plane 与官方宿主证据已闭环，当前重点切到设计 / 产品 / QA 三方签核落盘
+- repo 侧 code、tests、Android gate、audit/control-plane、官方宿主证据与签核记录已全部闭环。
 
 ## 当前已确认的 Stage 7 输入
 - `src/utils/runtime/**` 已稳定为 runtime 收口层
@@ -41,8 +41,8 @@
 ## Blockers / Known Drift
 - `android/gradle/libs.versions.toml` 仍缺失
 - 当前仓库仍无统一 Crash / ANR / 灰度平台
-- Stage 7 的真实剩余 blocker 已从 Figma 页面证据补齐收缩为设计 / 产品 / QA 三方真人签核尚未落盘
-- 设计 / 产品 / QA 的签核包已准备，但真人签核记录尚未落盘
+- Stage 7 closeout 已完成，以下仅保留仓库长期治理 drift。
+- 设计 / 产品 / QA 三方签核已完成并记录在 `stage-7-signoff-record.md`。
 
 ## Primary Source Refs
 - [docs/refactor/README.md](../refactor/README.md)

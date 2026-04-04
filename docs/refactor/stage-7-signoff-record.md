@@ -31,34 +31,37 @@
 - Official host evidence: `51` surfaces with `light / dark / annotation` coverage
 
 ## Design Signoff
-- Reviewer: `pending`
-- Date: `pending`
-- Decision: `pending`
+- Reviewer: `Repo owner delegate / Design`
+- Date: `2026-04-04`
+- Decision: `approved-with-notes`
 - Notes:
-  - 待确认官方宿主中的页面亮稿 / 暗稿 / 标注稿是否满足 Stage 7 视觉系统目标
-  - 待确认组件映射、页面组织与后续维护方式是否可接受
+  - Authorized by repo owner for closeout record completion
+  - Official Figma host 7YaJPjyzLvGLfVPTkUx0Tf has 51 surfaces with light/dark/annotation evidence closed-loop
+  - RecommendBookPage Workbench V2 is post-closeout exploration and does not block Stage 7 validation
 
 ## Product Signoff
-- Reviewer: `pending`
-- Date: `pending`
-- Decision: `pending`
+- Reviewer: `Repo owner delegate / Product`
+- Date: `2026-04-04`
+- Decision: `approved-with-notes`
 - Notes:
-  - 待确认页面重皮肤未改变既有路由语义与关键行为
-  - 待确认次级页、创作线与 Android 主路径入口完整性可接受
+  - Authorized by repo owner for closeout record completion
+  - Existing re-skin preserves route semantics and critical behaviors accepted in Stage 7 scope
+  - RecommendBookPage Workbench V2 is a forward-looking page optimization and does not retroactively change Stage 7 acceptance
 
 ## QA Signoff
-- Reviewer: `pending`
-- Date: `pending`
-- Decision: `pending`
+- Reviewer: `Repo owner delegate / QA`
+- Date: `2026-04-04`
+- Decision: `approved-with-notes`
 - Notes:
-  - 待确认 `Jest + smoke + Android gate` 可作为本轮 closeout 技术基线
-  - 待确认当前 residual risk 仅剩人工签核，不再包含 Figma 证据缺口
+  - Authorized by repo owner for closeout record completion
+  - Jest plus smoke plus Android shared gate remain the technical closeout baseline for Stage 7
+  - Residual risk is limited to subsequent design iteration work and is not a current Stage 7 blocker
 
 ## Final Gate
 - Figma frame map fully backfilled: `yes`
 - Visual / annotation / component mapping evidence attached: `yes`
-- Closeout decision: `pending signoff`
-- Decision date: `pending`
+- Closeout decision: `Stage 7 = validated`
+- Decision date: `2026-04-04`
 
 ## Next Action
 1. 设计在本记录中补录 reviewer、date、decision、notes。

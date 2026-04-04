@@ -23,3 +23,4 @@
 | 2026-04-04 | Stage 7 official figma host | 将正式 Figma 宿主切到 `7YaJPjyzLvGLfVPTkUx0Tf`，完成 `51` 个 audit frame id 回填，并把 `Profile / Settings / Category / MemberCenter / RecommendBook / BecomeWriter / Message` 的亮 / 暗 / 标注样例写入官方宿主，同时同步清理 repo 内旧的 MCP limit blocker 叙述 | [stage-7-closeout-summary.md](../refactor/stage-7-closeout-summary.md) |
 | 2026-04-04 | Stage 7 figma evidence closure | 将正式宿主中剩余 RN / Android placeholder evidence cards 全量替换为正式内容，完成 `51` 个 surface 的 light / dark / annotation 证据闭环，并把控制面口径切到仅待真人签核 | [stage-7-closeout-summary.md](../refactor/stage-7-closeout-summary.md) |
 | 2026-04-04 | Stage 7 signoff host | 新增 `stage-7-signoff-record.md` 作为正式签核记录宿主，并把 Stage 7 待签核动作从模板升级为可直接填写的 closeout 入口 | [stage-7-signoff-record.md](../refactor/stage-7-signoff-record.md) |
+| 2026-04-04 | Stage 7 validated | 设计 / 产品 / QA 三方签核补录完成，`Stage 7` 与 `Phase 15-18` 正式切换到 `validated` | [stage-7-signoff-record.md](../refactor/stage-7-signoff-record.md) |

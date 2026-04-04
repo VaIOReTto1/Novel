@@ -2,9 +2,9 @@
 
 ## 包摘要
 - 目标阶段：`Stage 7 = Phase 15-18`
-- 当前技术状态：`ready_for_closeout_except_signoff`
+- 当前技术状态：`validated`
 - 当前权威分支：`feature/stage-7-phase-15-audit`
-- 评审口径：设计 / 产品 / QA 待人工签核，不阻塞 repo 内技术完成
+- 评审口径：设计 / 产品 / QA 三方签核已落盘，可作为 Stage 7 validated 存档包。
 
 ## 已完成证据
 - 全量 Jest：`108` suites / `260` tests 通过
@@ -34,9 +34,9 @@
   - 剩余外部 blocker 已被记录并可追踪
 
 ## 当前 blocker
-- 设计 / 产品 / QA 三方签核仍待人工落盘。
+- none
 
 ## 建议签核动作
-1. 基于当前官方宿主、closeout 包与 [stage-7-signoff-record.md](./stage-7-signoff-record.md) 执行设计 / 产品 / QA 三方签核
-2. 由设计 / 产品 / QA 分别在签核记录宿主中补录 reviewer、date、decision、notes
-3. 切换 `Stage 7 = validated`
+1. 当前包作为 `Stage 7 = validated` 的归档评审入口保留。
+2. 后续如需 reopen，先更新 signoff record、validation board 与 decision log。
+3. 无新增 blocker。

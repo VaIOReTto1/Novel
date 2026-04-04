@@ -63,7 +63,9 @@
 - npm run novel-design:assets:check -> node scripts/novel-design-assets.js check
 - npm run stage7:closeout -> node scripts/stage7-closeout-readiness.js generate
 - npm run stage7:closeout:check -> node scripts/stage7-closeout-readiness.js check
+- npm run stage7:signoff:update -> node scripts/stage7-signoff-update.js
 - npm run stage7:signoff:check -> node scripts/stage7-signoff-check.js
+- npm run stage7:finalize -> node scripts/stage7-finalize.js
 - npm run version:show -> node scripts/version-sync.js show
 - npm run version:patch -> node scripts/version-sync.js patch
 - npm run version:minor -> node scripts/version-sync.js minor
@@ -93,8 +95,8 @@
 - ./gradlew app:detekt
 
 ## Refactor Summary
-- Current phase: Phase 15
-- Phase status: in_progress
+- Current phase: Stage 7 closeout
+- Phase status: validated
 - Latest closeout: see-control-panel
-- Stage summary: Stage 7 = in_progress
-- Effective date: 2026-03-31 Stage 7 activation
+- Stage summary: Stage 7 = validated
+- Effective date: 2026-04-04 Stage 7 validated

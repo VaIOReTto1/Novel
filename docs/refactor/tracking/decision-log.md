@@ -1,5 +1,6 @@
 # 决策日志
 
+| 2026-04-04 | Stage 7 closeout | closeout | 在三方签核补录完成并通过 `stage7:signoff:check` 后关闭 `Stage 7` | 当前 `Phase 15-18` 已全部 `validated`，官方宿主证据、门禁与签核记录已闭环，继续维持 `in_progress` 只会造成 authority 漂移 | `Stage 7 = validated`，默认 active refactor main line 清空 | 后续如需继续推进视觉系统与资产治理，走 reopen 或新 Stage |
 | 日期 | 阶段 | 类型 | 决策 | 原因 | 影响 | 后续动作 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-04-04 | Phase 18 closeout | closeout | 在页面重皮肤、视觉证据链与共享门禁全部闭环后关闭 `Phase 18` | 当前 wave 1-4 页面、Figma 证据、Jest、Android shared gate 与 readiness 报告均已形成闭环，继续维持 `in_progress` 只会让 Stage 7 最终切换前的技术状态失真 | `Phase 18 = validated`，Stage 7 最终剩余项收缩为三方真人签核 | 后续若需继续推进视觉回归基线深化，作为长期维护或新阶段推进 |

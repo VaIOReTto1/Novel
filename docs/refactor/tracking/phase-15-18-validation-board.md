@@ -1,7 +1,7 @@
 # Phase 15-18 验证看板
 
 ## 当前状态
-- `Stage 7`: `in_progress`
+- `Stage 7`: `validated`
 - `Phase 15`: `validated`
 - `Phase 16`: `validated`
 - `Phase 17`: `validated`

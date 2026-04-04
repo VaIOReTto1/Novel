@@ -24,9 +24,8 @@ jest.mock('../../src/page/ScrollBox/RecommendBookPage/components', () => {
 
   return {
     TopBar: () => ReactMock.createElement(MockText, null, 'RecommendBookTopBar'),
-    UserSection: () => ReactMock.createElement(MockText, null, 'RecommendBookUserSection'),
-    DataStatsSection: () => ReactMock.createElement(MockText, null, 'RecommendBookDataStats'),
-    CreativeServiceSection: () => ReactMock.createElement(MockText, null, 'RecommendBookServices'),
+    WorkbenchOverviewSection: () =>
+      ReactMock.createElement(MockText, null, 'RecommendBookWorkbenchOverview'),
     CreativeTaskSection: () => ReactMock.createElement(MockText, null, 'RecommendBookTasks'),
   };
 });
@@ -71,7 +70,7 @@ jest.mock('../../src/utils/bridge/NavigationBridge', () => ({
 import RecommendBookPage from '../../src/page/ScrollBox/RecommendBookPage/RecommendBookPage';
 
 describe('RecommendBookPage smoke', () => {
-  it('renders core recommend-book sections without crashing', () => {
+  it('renders the workbench overview and backlog sections without crashing', () => {
     let renderer!: ReactTestRenderer.ReactTestRenderer;
 
     ReactTestRenderer.act(() => {
@@ -89,9 +88,7 @@ describe('RecommendBookPage smoke', () => {
     expect(texts).toEqual(
       expect.arrayContaining([
         'RecommendBookTopBar',
-        'RecommendBookUserSection',
-        'RecommendBookDataStats',
-        'RecommendBookServices',
+        'RecommendBookWorkbenchOverview',
         'RecommendBookTasks',
       ]),
     );

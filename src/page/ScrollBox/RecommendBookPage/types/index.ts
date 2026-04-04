@@ -1,14 +1,14 @@
 export interface UserInfo {
   id: number;
   name: string;
-  avatar: string;
+  avatar?: string;
 }
 
 export interface DataStats {
-  fans: number;           // 近7天涨粉
-  likes: number;          // 近7天获赞
-  replies: number;        // 近7天回复
-  withdrawable: number;   // 可提现收益（元）
+  fans: number;
+  likes: number;
+  replies: number;
+  withdrawable: number;
 }
 
 export interface ServiceItem {
@@ -22,10 +22,13 @@ export interface TaskItem {
   id: string;
   title: string;
   description: string;
-  coverUrl: string;
-  maxEarnings: number;    // 最高收益
+  coverUrl?: string;
+  maxEarnings: number;
   type: 'recommend' | 'book';
   tags: string[];
+  growthGoal?: string;
+  coverLabel?: string;
+  coverTone?: 'sand' | 'sunrise' | 'sage' | 'ink';
 }
 
 export interface TabData {

@@ -1,21 +1,20 @@
-import React, { useEffect, useCallback } from 'react';
-import { Alert, View, ScrollView, Text } from 'react-native';
-import { useRecommendBookStore } from './store/recommendBookStore';
-import { useNovelColors } from '../../../utils/theme/colors';
-import { createRecommendBookPageStyles } from './styles/RecommendBookPageStyles';
+import React, { useEffect, useMemo } from 'react';
+import { Alert, ScrollView, Text, View } from 'react-native';
+
 import NavigationBridge from '../../../utils/bridge/NavigationBridge';
+import { useNovelColors } from '../../../utils/theme/colors';
 import { registerHardwareBackHandler } from '../../../utils/runtime/backNavigation';
 import {
-  TopBar,
-  UserSection,
-  DataStatsSection,
-  CreativeServiceSection,
   CreativeTaskSection,
+  TopBar,
+  WorkbenchOverviewSection,
 } from './components';
 import {
   bootstrapRecommendBookPage,
   createRecommendBookPageHandlers,
 } from './domain/recommendBookPageModel';
+import { createRecommendBookPageStyles } from './styles/RecommendBookPageStyles';
+import { useRecommendBookStore } from './store/recommendBookStore';
 
 const RecommendBookPage: React.FC = () => {
   const {
@@ -42,7 +41,7 @@ const RecommendBookPage: React.FC = () => {
     });
   }, [loadInitialData]);
 
-  const handlers = React.useMemo(
+  const handlers = useMemo(
     () =>
       createRecommendBookPageHandlers({
         navigateBack: () => NavigationBridge.navigateBack('RecommendBookPageComponent'),
@@ -62,10 +61,14 @@ const RecommendBookPage: React.FC = () => {
     });
   }, [handlers]);
 
+  const currentTasks = tasks[selectedTaskTab];
+  const focusTask = currentTasks[0] ?? null;
+  const focusCount = currentTasks.length;
+
   if (loading) {
     return (
       <View style={styles.container}>
-        <TopBar styles={styles} onBackPress={handlers.handleBackPress} />
+        <TopBar onBackPress={handlers.handleBackPress} styles={styles} />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>加载中...</Text>
         </View>
@@ -76,7 +79,7 @@ const RecommendBookPage: React.FC = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <TopBar styles={styles} onBackPress={handlers.handleBackPress} />
+        <TopBar onBackPress={handlers.handleBackPress} styles={styles} />
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>{`加载失败: ${error}`}</Text>
         </View>
@@ -86,35 +89,31 @@ const RecommendBookPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar styles={styles} onBackPress={handlers.handleBackPress} />
+      <TopBar onBackPress={handlers.handleBackPress} styles={styles} />
 
       <ScrollView
-        style={styles.scrollView}
+        bounces
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        bounces={true}
-      >
-        <UserSection styles={styles} userInfo={userInfo} />
-
-        <DataStatsSection
-          styles={styles}
+        style={styles.scrollView}>
+        <WorkbenchOverviewSection
           dataStats={dataStats}
-          onWithdrawPress={handlers.handleWithdrawPress}
-        />
-
-        <CreativeServiceSection
-          styles={styles}
-          services={services}
+          focusCount={focusCount}
+          focusTask={focusTask}
+          onFocusPress={handlers.handleTaskItemPress}
           onServicePress={handlers.handleServiceItemPress}
+          services={services}
+          styles={styles}
+          userInfo={userInfo}
         />
 
         <CreativeTaskSection
-          styles={styles}
-          selectedTab={selectedTaskTab}
-          tasks={tasks}
           onTabChange={handlers.handleTaskTabChange}
           onTaskPress={handlers.handleTaskItemPress}
           onViewAllPress={handlers.handleViewAllTasksPress}
+          selectedTab={selectedTaskTab}
+          styles={styles}
+          tasks={tasks}
         />
       </ScrollView>
     </View>

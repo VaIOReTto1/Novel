@@ -1,26 +1,29 @@
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Image, Text } from 'react-native';
 
+import { CreativeTaskSection } from '../../src/page/ScrollBox/RecommendBookPage/components/CreativeTaskSection';
+import { TopBar } from '../../src/page/ScrollBox/RecommendBookPage/components/TopBar';
+import { WorkbenchOverviewSection } from '../../src/page/ScrollBox/RecommendBookPage/components/WorkbenchOverviewSection';
 import { useRecommendBookStore } from '../../src/page/ScrollBox/RecommendBookPage/store/recommendBookStore';
 
-jest.mock('../../src/page/ScrollBox/RecommendBookPage/styles/RecommendBookPageStyles', () => ({
-  createRecommendBookPageStyles: () =>
-    new Proxy(
-      {},
-      {
-        get: () => ({}),
-      },
-    ),
-}));
+const styleProxy = new Proxy(
+  {},
+  {
+    get: () => ({}),
+  },
+);
 
-import { CreativeServiceSection } from '../../src/page/ScrollBox/RecommendBookPage/components/CreativeServiceSection';
-import { CreativeTaskSection } from '../../src/page/ScrollBox/RecommendBookPage/components/CreativeTaskSection';
-import { DataStatsSection } from '../../src/page/ScrollBox/RecommendBookPage/components/DataStatsSection';
-import { TopBar } from '../../src/page/ScrollBox/RecommendBookPage/components/TopBar';
-import { UserSection } from '../../src/page/ScrollBox/RecommendBookPage/components/UserSection';
+const readTexts = (renderer: ReactTestRenderer.ReactTestRenderer) =>
+  renderer.root
+    .findAllByType(Text)
+    .flatMap((node) => {
+      const { children } = node.props;
+      return Array.isArray(children) ? children : [children];
+    })
+    .filter((value): value is string => typeof value === 'string');
 
-describe('Recommend book components novelDesign', () => {
+describe('RecommendBookPage growth dashboard components', () => {
   afterEach(() => {
     useRecommendBookStore.setState({
       loading: false,
@@ -37,120 +40,137 @@ describe('Recommend book components novelDesign', () => {
     });
   });
 
-  it('renders readable top bar, profile, stats and service copy', () => {
+  it('renders a growth-first overview without the old utility label', () => {
     let renderer!: ReactTestRenderer.ReactTestRenderer;
 
     ReactTestRenderer.act(() => {
       renderer = ReactTestRenderer.create(
         <>
-          <TopBar
-            styles={new Proxy({}, { get: () => ({}) })}
-            onBackPress={jest.fn()}
-          />
-          <UserSection
-            styles={new Proxy({}, { get: () => ({}) })}
-            userInfo={{ avatar: '', name: '测试作者' } as any}
-          />
-          <DataStatsSection
-            styles={new Proxy({}, { get: () => ({}) })}
-            dataStats={{ fans: 12, likes: 34, replies: 5, withdrawable: 6 } as any}
-            onWithdrawPress={jest.fn()}
-          />
-          <CreativeServiceSection
-            styles={new Proxy({}, { get: () => ({}) })}
-            services={[
-              { id: 's1', icon: '分', title: '收益分析' },
-              { id: 's2', icon: '推', title: '推广统计' },
-            ] as any}
+          <TopBar onBackPress={jest.fn()} styles={styleProxy} />
+          <WorkbenchOverviewSection
+            dataStats={{ fans: 128, likes: 342, replies: 56, withdrawable: 680 }}
+            focusCount={2}
+            focusTask={{
+              id: 'focus',
+              title: '热门好书冲榜计划',
+              description: '连续推荐热门图书，提升曝光与转化。',
+              coverUrl: '',
+              maxEarnings: 520,
+              type: 'recommend',
+              tags: ['热门冲榜'],
+              growthGoal: '把评论回复率拉回到本周高点',
+              coverLabel: '冲榜',
+              coverTone: 'sunrise',
+            }}
+            onFocusPress={jest.fn()}
             onServicePress={jest.fn()}
+            services={[
+              { id: 'trend', icon: 'trend', title: '趋势复盘', description: '查看本周涨粉变化' },
+              { id: 'content', icon: 'content', title: '内容诊断', description: '复盘高表现内容' },
+              { id: 'engage', icon: 'engage', title: '互动维护', description: '跟进高意向读者' },
+              { id: 'settle', icon: 'settle', title: '收益节奏', description: '查看提现与收益' },
+            ]}
+            styles={styleProxy}
+            userInfo={{ avatar: '', name: '测试作者' } as any}
           />
         </>,
       );
     });
 
-    const texts = renderer.root
-      .findAllByType(Text)
-      .flatMap((node) => {
-        const { children } = node.props;
-        return Array.isArray(children) ? children : [children];
-      })
-      .filter((value): value is string => typeof value === 'string');
+    const texts = readTexts(renderer);
 
     expect(texts).toEqual(
       expect.arrayContaining([
         '<',
         '推书中心',
+        '增长总览',
         'Hi，测试作者',
-        '近7天涨粉',
-        '近7天获赞',
-        '近7天回复',
-        '可提现收益(元)',
-        '昨日 0',
-        '去提现',
-        '创作服务',
-        '收益分析',
-        '推广统计',
-        '>',
+        '今日重点 2 项',
+        '可提现',
+        '¥680',
+        '涨粉',
+        '获赞',
+        '回复',
+        '本日增长摘要',
+        '增长优先',
+        '查看重点任务',
+        '运营工具',
+        '趋势复盘',
+        '内容诊断',
+        '互动维护',
+        '收益节奏',
       ]),
     );
+    expect(texts).not.toContain('总览');
   });
 
-  it('renders readable task tabs, earnings copy and call-to-actions', () => {
+  it('renders the growth task queue with local media blocks instead of remote images', () => {
     let renderer!: ReactTestRenderer.ReactTestRenderer;
 
     ReactTestRenderer.act(() => {
       renderer = ReactTestRenderer.create(
         <CreativeTaskSection
-          styles={new Proxy({}, { get: () => ({}) })}
-          selectedTab="recommend"
-          tasks={{
-            recommend: [
-              {
-                id: 't1',
-                title: '种草好书赚现金',
-                description: '发布优质推荐内容，完成推书任务',
-                coverUrl: '',
-                maxEarnings: 1288.5,
-                tags: ['现金奖励', '推书任务'],
-              },
-            ],
-            book: [],
-          } as any}
           onTabChange={jest.fn()}
           onTaskPress={jest.fn()}
           onViewAllPress={jest.fn()}
+          selectedTab="recommend"
+          styles={styleProxy}
+          tasks={{
+            recommend: [
+              {
+                id: 'focus',
+                title: '热门好书冲榜计划',
+                description: '连续推荐热门图书，提升曝光与转化。',
+                coverUrl: '',
+                maxEarnings: 520,
+                type: 'recommend',
+                tags: ['热门冲榜', '连续任务'],
+                growthGoal: '把评论回复率拉回到本周高点',
+                coverLabel: '冲榜',
+                coverTone: 'sunrise',
+              },
+              {
+                id: 'followup',
+                title: '新书首推合作',
+                description: '提前锁定新书首推窗口，提升内容增长惯性。',
+                coverUrl: '',
+                maxEarnings: 360,
+                type: 'recommend',
+                tags: ['新书合作', '首推机会'],
+                growthGoal: '抢到首发曝光并带动新增收藏',
+                coverLabel: '首推',
+                coverTone: 'sand',
+              },
+            ],
+            book: [],
+          }}
         />,
       );
     });
 
-    const texts = renderer.root
-      .findAllByType(Text)
-      .flatMap((node) => {
-        const { children } = node.props;
-        return Array.isArray(children) ? children : [children];
-      })
-      .filter((value): value is string => typeof value === 'string');
+    const texts = readTexts(renderer);
 
     expect(texts).toEqual(
       expect.arrayContaining([
-        '创作任务',
-        '更多 >',
+        '增长任务队列',
+        '全部任务 >',
         '推荐',
         '推书',
-        '种草好书赚现金',
-        '发布优质推荐内容，完成推书任务',
-        '当前最高收益',
-        '¥1288.50',
-        '现金奖励',
-        '推书任务',
-        '查看任务',
-        '查看更多任务',
-        '>',
+        '增长目标',
+        '预计收益',
+        '热门好书冲榜计划',
+        '新书首推合作',
+        '冲榜',
+        '首推',
+        '立即跟进',
+        '热门冲榜',
+        '连续任务',
       ]),
     );
+    expect(renderer.root.findAllByType(Image)).toHaveLength(0);
   });
 
-  it('loads readable mock data into the recommend-book store', async () => {
+  it('loads growth-oriented dashboard mock data into the store', async () => {
     await ReactTestRenderer.act(async () => {
       await useRecommendBookStore.getState().loadInitialData();
     });
@@ -158,18 +178,19 @@ describe('Recommend book components novelDesign', () => {
     const state = useRecommendBookStore.getState();
 
     expect(state.userInfo?.name).toBe('测试作者');
+    expect(state.dataStats).toEqual({
+      fans: 128,
+      likes: 342,
+      replies: 56,
+      withdrawable: 680,
+    });
     expect(state.services.map((item) => item.title)).toEqual(
-      expect.arrayContaining(['收益分析', '推广统计', '任务中心']),
+      expect.arrayContaining(['趋势复盘', '内容诊断', '互动维护', '收益节奏']),
     );
     expect(state.tasks.recommend[0]).toMatchObject({
-      title: '种草好书赚现金',
-      description: '发布优质推荐内容，完成推书任务',
-      tags: ['现金奖励', '推书任务'],
-    });
-    expect(state.tasks.book[0]).toMatchObject({
-      title: '精品书单制作',
-      description: '制作高质量书单，吸引更多读者',
-      tags: ['书单制作', '读者增长'],
+      title: '热门好书冲榜计划',
+      description: '连续推荐热门图书，提升曝光与转化。',
+      tags: ['热门冲榜', '连续任务'],
     });
   });
 });

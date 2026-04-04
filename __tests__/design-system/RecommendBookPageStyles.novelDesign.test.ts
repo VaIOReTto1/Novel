@@ -15,15 +15,25 @@ const lightColors = {
   outline: '#E0E0E0',
 };
 
-describe('RecommendBookPage novelDesign styles', () => {
-  it('uses novelDesign shell surfaces for profile blocks, sections and service cards', () => {
+describe('RecommendBookPage growth dashboard styles', () => {
+  it('defines a stronger hero card and tone-based task covers with warm tokens', () => {
     const styles = createRecommendBookPageStyles(lightColors as any);
 
     expect(styles.container.backgroundColor).toBe('#FAF6F0');
-    expect(styles.section.backgroundColor).toBe('#FFFDFC');
-    expect(styles.subtab.backgroundColor).toBe('#F3ECE3');
-    expect(styles.serviceItem.backgroundColor).toBe('#F3ECE3');
-    expect(styles.serviceIconWrapper.backgroundColor).toBe('#FFFDFC');
-    expect(styles.withdrawButtonText.color).toBe('#C96A34');
+    expect(styles.overviewCard).toMatchObject({
+      backgroundColor: '#FFFDFC',
+      borderColor: '#E8DDD1',
+      shadowColor: '#C96A34',
+    });
+    expect(styles.kpiCard.backgroundColor).toBe('#F3ECE3');
+    expect(styles.insightCard.backgroundColor).toBe('#FAF6F0');
+    expect(styles.toolCard.backgroundColor).toBe('#FFFDFC');
+    expect(styles.primaryTaskCard.backgroundColor).toBe('#FFFDFC');
+    expect(styles.taskCoverSand.backgroundColor).toBe('#E8E3CF');
+    expect(styles.taskCoverSunrise.backgroundColor).toBeDefined();
+    expect(styles.taskCoverSage.backgroundColor).toBeDefined();
+    expect(styles.taskCoverInk.backgroundColor).toBeDefined();
+    expect(styles.taskActionButton.backgroundColor).toBe('#C96A34');
+    expect(styles.taskActionButtonText.color).toBe('#FFFDFC');
   });
 });

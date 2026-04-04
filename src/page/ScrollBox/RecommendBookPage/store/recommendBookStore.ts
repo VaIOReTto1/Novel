@@ -1,28 +1,16 @@
+import { Alert } from 'react-native';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { Alert } from 'react-native';
-import {
-  UserInfo,
-  DataStats,
-  ServiceItem,
-  TaskItem,
-} from '../types';
+
+import { DataStats, ServiceItem, TaskItem, UserInfo } from '../types';
 
 export interface RecommendBookState {
   loading: boolean;
   error: string | null;
-
-  // User Info
   userInfo: UserInfo | null;
-
-  // Data Stats
   selectedDataTab: 'recommend' | 'book';
   dataStats: DataStats;
-
-  // Creative Services
   services: ServiceItem[];
-
-  // Creative Tasks
   selectedTaskTab: 'recommend' | 'book';
   tasks: Record<'recommend' | 'book', TaskItem[]>;
 }
@@ -43,14 +31,10 @@ type RecommendBookStore = RecommendBookState & RecommendBookActions;
 const initialState: RecommendBookState = {
   loading: false,
   error: null,
-
   userInfo: null,
-
   selectedDataTab: 'recommend',
   dataStats: { fans: 0, likes: 0, replies: 0, withdrawable: 0 },
-
   services: [],
-
   selectedTaskTab: 'recommend',
   tasks: {
     recommend: [],
@@ -58,105 +42,123 @@ const initialState: RecommendBookState = {
   },
 };
 
-// Mock data generators
 const generateMockUserInfo = (): UserInfo => ({
   id: 1,
   name: '测试作者',
-  avatar: 'https://placehold.co/80x80',
 });
 
 const generateMockServices = (): ServiceItem[] => [
   {
-    id: '1',
-    icon: '📊',
-    title: '收益分析',
-    description: '查看详细收益数据和趋势',
+    id: 'trend-review',
+    icon: 'trend',
+    title: '趋势复盘',
+    description: '查看本周涨粉与互动波动',
   },
   {
-    id: '2',
-    icon: '📈',
-    title: '推广统计',
-    description: '查看推书效果统计',
+    id: 'content-diagnosis',
+    icon: 'content',
+    title: '内容诊断',
+    description: '复盘高表现选题与转化动作',
   },
   {
-    id: '3',
-    icon: '🎯',
-    title: '任务中心',
-    description: '发现更多推书任务',
+    id: 'engagement-followup',
+    icon: 'engage',
+    title: '互动维护',
+    description: '优先跟进高意向评论与回复',
+  },
+  {
+    id: 'revenue-rhythm',
+    icon: 'revenue',
+    title: '收益节奏',
+    description: '查看近期收益节奏与提现准备',
   },
 ];
 
 const generateMockTasks = (): Record<'recommend' | 'book', TaskItem[]> => ({
   recommend: [
     {
-      id: '1',
-      title: '种草好书赚现金',
-      description: '发布优质推荐内容，完成推书任务',
-      coverUrl: 'https://placehold.co/120x80',
-      maxEarnings: 69033.62,
+      id: 'recommend-hot-rank',
+      title: '热门好书冲榜计划',
+      description: '连续推荐热门图书，提升曝光与转化。',
+      maxEarnings: 520,
       type: 'recommend',
-      tags: ['现金奖励', '推书任务'],
+      tags: ['热门冲榜', '连续任务'],
+      growthGoal: '把评论回复率拉回到本周高点',
+      coverLabel: '冲榜',
+      coverTone: 'sunrise',
     },
     {
-      id: '2',
-      title: '热门图书推荐',
-      description: '推荐当下热门图书，获得佣金收益',
-      coverUrl: 'https://placehold.co/120x80',
-      maxEarnings: 45000.00,
+      id: 'recommend-new-book',
+      title: '新书首推合作',
+      description: '提前锁定新书首推窗口，提升内容增长惯性。',
+      maxEarnings: 360,
       type: 'recommend',
-      tags: ['佣金收益', '热门图书'],
+      tags: ['新书合作', '首推机会'],
+      growthGoal: '抢到首发曝光并带动新增收藏',
+      coverLabel: '首推',
+      coverTone: 'sand',
     },
     {
-      id: '3',
-      title: '新书首推计划',
-      description: '成为新书首推达人，享受专属奖励',
-      coverUrl: 'https://placehold.co/120x80',
-      maxEarnings: 28500.00,
+      id: 'recommend-comment-loop',
+      title: '评论区回流运营',
+      description: '围绕高反馈评论做二次推荐，提高互动回流。',
+      maxEarnings: 260,
       type: 'recommend',
-      tags: ['新书推广', '专属奖励'],
+      tags: ['评论回流', '互动维护'],
+      growthGoal: '提升回复深度和读者停留时长',
+      coverLabel: '回流',
+      coverTone: 'sage',
     },
   ],
   book: [
     {
-      id: '4',
-      title: '精品书单制作',
-      description: '制作高质量书单，吸引更多读者',
-      coverUrl: 'https://placehold.co/120x80',
-      maxEarnings: 35000.00,
+      id: 'book-list',
+      title: '精品书单策划',
+      description: '搭建可持续分发的书单内容矩阵，带动稳定增粉。',
+      maxEarnings: 450,
       type: 'book',
-      tags: ['书单制作', '读者增长'],
+      tags: ['书单策划', '长期分发'],
+      growthGoal: '提高书单收藏率和书架转化率',
+      coverLabel: '书单',
+      coverTone: 'ink',
     },
     {
-      id: '5',
-      title: '经典图书解读',
-      description: '深度解读经典图书，分享阅读心得',
-      coverUrl: 'https://placehold.co/120x80',
-      maxEarnings: 22000.00,
+      id: 'book-review',
+      title: '深度解读专栏',
+      description: '制作更完整的图书解读内容，提升读者信任度。',
+      maxEarnings: 300,
       type: 'book',
-      tags: ['经典解读', '阅读心得'],
+      tags: ['深度解读', '读者增长'],
+      growthGoal: '提升高价值读者留存和复访',
+      coverLabel: '解读',
+      coverTone: 'sand',
     },
   ],
 });
 
 export const useRecommendBookStore = create<RecommendBookStore>()(
-  immer((set, _get) => ({
+  immer((set) => ({
     ...initialState,
 
-    setLoading: (loading) => set((state) => {
-      state.loading = loading;
-    }),
+    setLoading: (loading) =>
+      set((state) => {
+        state.loading = loading;
+      }),
 
-    setError: (error) => set((state) => {
-      state.error = error;
-    }),
+    setError: (error) =>
+      set((state) => {
+        state.error = error;
+      }),
 
-    setSelectedDataTab: (tab) => set((state) => {
-      state.selectedDataTab = tab;
-    }),
+    setSelectedDataTab: (tab) =>
+      set((state) => {
+        state.selectedDataTab = tab;
+      }),
 
-    setSelectedTaskTab: (tab) => set((state) => {
-      state.selectedTaskTab = tab;
-    }),
+    setSelectedTaskTab: (tab) =>
+      set((state) => {
+        state.selectedTaskTab = tab;
+      }),
 
     loadInitialData: async () => {
       set((state) => {
@@ -165,27 +167,21 @@ export const useRecommendBookStore = create<RecommendBookStore>()(
       });
 
       try {
-        // Simulate API loading
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await Promise.resolve();
 
         set((state) => {
           state.userInfo = generateMockUserInfo();
           state.services = generateMockServices();
           state.tasks = generateMockTasks();
-          // Mock data for stats (all zeros as shown in UI)
           state.dataStats = {
-            fans: 0,
-            likes: 0,
-            replies: 0,
-            withdrawable: 0,
+            fans: 128,
+            likes: 342,
+            replies: 56,
+            withdrawable: 680,
           };
           state.loading = false;
         });
-
-        console.log('[RecommendBookStore] 初始数据加载完成');
-
       } catch (error) {
-        console.error('[RecommendBookStore] 加载失败:', error);
         set((state) => {
           state.loading = false;
           state.error = error instanceof Error ? error.message : '加载失败';
@@ -194,18 +190,15 @@ export const useRecommendBookStore = create<RecommendBookStore>()(
     },
 
     handleViewAllTasks: () => {
-      console.log('[RecommendBookStore] 查看更多任务');
-      Alert.alert('查看更多任务功能开发中...');
+      Alert.alert('全部任务功能开发中...');
     },
 
-    handleServicePress: (serviceId: string) => {
-      console.log(`[RecommendBookStore] 服务点击: ${serviceId}`);
-      Alert.alert('服务功能开发中...');
+    handleServicePress: (_serviceId: string) => {
+      Alert.alert('运营工具功能开发中...');
     },
 
-    handleTaskPress: (taskId: string) => {
-      console.log(`[RecommendBookStore] 任务点击: ${taskId}`);
+    handleTaskPress: (_taskId: string) => {
       Alert.alert('任务详情功能开发中...');
     },
-  }))
+  })),
 );
